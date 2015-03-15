@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{95AC11E8-9A36-474B-B8E7-6F01C838F52B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AppBrix.Console</RootNamespace>
+    <AssemblyName>AppBrix.Console</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj">
+      <Project>{3363eda9-2a58-4e32-8564-1fbeb7b5aef1}</Project>
+      <Name>AppBrix.Configuration.Memory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj">
+      <Project>{421a9925-b49c-41b9-86a5-3c98092bdd55}</Project>
+      <Name>AppBrix.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj">
+      <Project>{a448ba4e-6bab-4b36-a790-2636dc5d15ac}</Project>
+      <Name>AppBrix.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj">
+      <Project>{4903eb72-da02-4fbf-a7ae-b9c4b6d9508a}</Project>
+      <Name>AppBrix.Logging.Console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Logging.File\AppBrix.Logging.File.csproj">
+      <Project>{f0d56766-7c36-44b7-9920-1cffca9c8296}</Project>
+      <Name>AppBrix.Logging.File</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj">
+      <Project>{79fa6ebd-686a-4300-8fcd-dc2e848a26c7}</Project>
+      <Name>AppBrix.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj">
+      <Project>{9bd521a4-7604-4d73-b83b-2f622c3fd504}</Project>
+      <Name>AppBrix.Time</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix\AppBrix.csproj">
+      <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
+      <Name>AppBrix</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Modules.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
