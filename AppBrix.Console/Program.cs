@@ -21,7 +21,6 @@ namespace AppBrix.Console
             app.Start();
             try
             {
-                app.GetLog().Error("This sucks!");
                 Program.Run(app);
             }
             catch (Exception ex)
