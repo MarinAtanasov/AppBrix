@@ -12,6 +12,7 @@ namespace AppBrix.Events.Tests
     [TestClass]
     public class EventHubTests
     {
+        #region Tests
         [TestMethod]
         public void TestEvent()
         {
@@ -266,10 +267,13 @@ namespace AppBrix.Events.Tests
             Assert.AreEqual(calledCount, interfaceCalled, "The interface should be called exactly {0} times", calledCount);
             hub.Uninitialize();
         }
+        #endregion
 
+        #region Private methods
         private DefaultEventHub GetEventHub()
         {
             return new DefaultEventHub();
         }
+        #endregion
     }
 }

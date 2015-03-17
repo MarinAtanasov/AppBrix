@@ -8,9 +8,17 @@ using System.Linq;
 
 namespace AppBrix.Tests
 {
+    /// <summary>
+    /// Contains commonly used testing utilities.
+    /// </summary>
     public static class TestsUtils
     {
         #region Public methods
+        /// <summary>
+        /// Creates an app with an in-memory configuration using the list of provided modules.
+        /// </summary>
+        /// <param name="modules">The modules to load inside the application.</param>
+        /// <returns>The created application.</returns>
         public static IApp CreateTestApp(params Type[] modules)
         {
             var config = new MemoryAppConfig();

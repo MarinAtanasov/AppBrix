@@ -57,7 +57,7 @@
     <Compile Include="Mocks\InitializeContextMock.cs" />
     <Compile Include="TestsUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resolve\Mocks\ResolverMock.cs" />
+    <Compile Include="Resolve\Mocks\ResolverTestsChild.cs" />
     <Compile Include="Resolve\ResolverTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@ namespace AppBrix.Time.Tests
     [TestClass]
     public class TimeServiceTests
     {
+        #region Tests
         [TestMethod]
         public void TestUtcTimeService()
         {
@@ -46,7 +47,9 @@ namespace AppBrix.Time.Tests
             Assert.IsTrue(timeAfter >= time, "After < call");
             app.Stop();
         }
+        #endregion
 
+        #region Private methods
         private IApp CreateAppWithTimeModule()
         {
             return TestsUtils.CreateTestApp(
@@ -54,5 +57,6 @@ namespace AppBrix.Time.Tests
                 typeof(MemoryConfigModule),
                 typeof(TimeModule));
         }
+        #endregion
     }
 }

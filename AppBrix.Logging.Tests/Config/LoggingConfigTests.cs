@@ -19,6 +19,7 @@ namespace AppBrix.Logging.Tests.Config
     [TestClass]
     public class LoggingConfigTests
     {
+        #region Setup and cleanup
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -50,7 +51,9 @@ namespace AppBrix.Logging.Tests.Config
             LoggingConfigTests.app.GetConfig<LoggingConfig>().LogLevel = this.originalLogLevel;
             LoggingConfigTests.app.Reinitialize();
         }
+        #endregion
 
+        #region Tests
         [TestMethod]
         public void TestErrorLevelConfig()
         {
@@ -275,6 +278,7 @@ namespace AppBrix.Logging.Tests.Config
             Assert.IsTrue(debugCalled, "The debug event has not been called.");
             Assert.IsTrue(traceCalled, "The trace event has not been called.");
         }
+        #endregion
 
         #region Private fields and constants
         private static IApp app;

@@ -6,10 +6,20 @@ using System.Linq;
 
 namespace AppBrix.Events.Tests.Mocks
 {
+    /// <summary>
+    /// A child event type used for testing of hierarchical behavior.
+    /// </summary>
     internal class EventMockChild : EventMock
     {
-        public EventMockChild(int value) : base(value)
+        #region Construction
+        /// <summary>
+        /// Creates a new instance of <see cref="EventMockChild"/>.
+        /// </summary>
+        /// <param name="value">The value to store.</param>
+        public EventMockChild(int value)
+            : base(value)
         {
         }
+        #endregion
     }
 }

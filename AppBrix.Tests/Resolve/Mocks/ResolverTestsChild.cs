@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace AppBrix.Tests.Resolve.Mocks
 {
+    /// <summary>
+    /// Used for testing of parent-child relationship during resolver tests.
+    /// </summary>
     internal class ResolverTestsChild : ResolverTests
     {
     }

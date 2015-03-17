@@ -14,6 +14,7 @@ namespace AppBrix.Tests.Resolve
     [TestClass]
     public class ResolverTests
     {
+        #region Setup and cleanup
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -34,7 +35,9 @@ namespace AppBrix.Tests.Resolve
         {
             ResolverTests.app.Reinitialize();
         }
+        #endregion
 
+        #region Tests
         [TestMethod]
         public void TestGetResolver()
         {
@@ -184,12 +187,17 @@ namespace AppBrix.Tests.Resolve
                 resolver.ResolveAll();
             }
         }
+        #endregion
 
+        #region Private methods
         private IResolver GetResolver()
         {
             return ResolverTests.app.Resolver;
         }
+        #endregion
 
+        #region Private fields and constants
         private static IApp app;
+        #endregion
     }
 }

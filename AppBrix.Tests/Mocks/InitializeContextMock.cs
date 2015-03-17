@@ -4,20 +4,28 @@
 using AppBrix.Application;
 using AppBrix.Lifecycle;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppBrix.Tests.Mocks
 {
+    /// <summary>
+    /// Used for creating an <see cref="IInitializeContext"/> object for testing purposes.
+    /// </summary>
     public class InitializeContextMock : IInitializeContext
     {
+        #region Construction
+        /// <summary>
+        /// Creates a new instance of <see cref="InitializeContextMock"/>.
+        /// </summary>
+        /// <param name="app">The current application.</param>
         public InitializeContextMock(IApp app)
         {
             this.App = app;
         }
+        #endregion
 
+        #region IInitializeContext implementation
         public IApp App { get; private set; }
+        #endregion
     }
 }

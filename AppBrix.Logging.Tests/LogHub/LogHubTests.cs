@@ -22,6 +22,7 @@ namespace AppBrix.Logging.Tests.LogHub
     [TestClass]
     public class LogHubTests
     {
+        #region Setup and cleanup
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -46,7 +47,9 @@ namespace AppBrix.Logging.Tests.LogHub
         {
             LogHubTests.app.Reinitialize();
         }
+        #endregion
 
+        #region Tests
         [TestMethod]
         public void TestUnsubscribedTrace()
         {
@@ -206,7 +209,10 @@ namespace AppBrix.Logging.Tests.LogHub
             }
             Assert.AreEqual(repeat, called, "The event has not been called.");
         }
+        #endregion
 
+        #region Private fields and constants
         private static IApp app;
+        #endregion
     }
 }

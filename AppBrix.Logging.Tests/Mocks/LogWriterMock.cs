@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace AppBrix.Logging.Tests.Mocks
 {
+    /// <summary>
+    /// Used for storing the logged entries in-memory for testing purposes.
+    /// </summary>
     internal class LogWriterMock : ILogWriter
     {
         #region Properties

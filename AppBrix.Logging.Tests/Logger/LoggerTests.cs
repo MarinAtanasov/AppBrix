@@ -20,6 +20,7 @@ namespace AppBrix.Logging.Tests.Logger
     [TestClass]
     public class LoggerTests
     {
+        #region Setup and cleanup
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -38,7 +39,9 @@ namespace AppBrix.Logging.Tests.Logger
             LoggerTests.app.Stop();
             LoggerTests.app = null;
         }
+        #endregion
 
+        #region Tests
         [TestCleanup]
         public void Cleanup()
         {
@@ -92,7 +95,10 @@ namespace AppBrix.Logging.Tests.Logger
                 "The logged exception should be the same as the passed in exception.");
             Assert.IsFalse(writer.IsInitialized, "The writer should be uninitialized during the logger's uninitialization.");
         }
+        #endregion
 
+        #region Private fields and constants
         private static IApp app;
+        #endregion
     }
 }
