@@ -50,9 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\AppBrix.Tests\Properties\TestsCommonAssemblyInfo.cs">
-      <Link>Properties\TestsCommonAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="..\AppBrix\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
