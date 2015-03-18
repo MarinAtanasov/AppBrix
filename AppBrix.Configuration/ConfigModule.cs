@@ -22,14 +22,15 @@ namespace AppBrix.Configuration
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Resolver.Register(this);
-            var config = this.CreateConfig();
-            config.Initialize(context);
-            this.App.Resolver.Register(config);
+            this.config = this.CreateConfig();
+            this.config.Initialize(context);
+            this.App.Resolver.Register(this.config);
         }
 
         protected override void UninitializeModule()
         {
-            this.App.Get<DefaultConfig>().Uninitialize();
+            this.config.Uninitialize();
+            this.config = null;
         }
         #endregion
 
@@ -53,6 +54,7 @@ namespace AppBrix.Configuration
         /// Full, Minimal or Modified. Default is Minimal.
         /// </summary>
         public const string ConfigSaveModeProperty = "ConfigSaveMode";
+        private DefaultConfig config;
         #endregion
     }
 }
