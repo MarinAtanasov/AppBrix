@@ -36,10 +36,14 @@ namespace AppBrix.Console
 
         private static void Run(IApp app)
         {
+            var messageKey = "message";
+            var cache = app.GetCache();
+            cache[messageKey] = "Info log {0}";
             for (var i = 0; i < 20; i++)
             {
-                app.GetLog().Info("Info log " + (i + 1));
+                app.GetLog().Info(string.Format(cache.Get<string>(messageKey), (i + 1)));
             }
+            cache.Remove(messageKey);
         }
     }
 }

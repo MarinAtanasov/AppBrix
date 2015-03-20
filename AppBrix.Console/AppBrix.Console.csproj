@@ -35,6 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Caching\AppBrix.Caching.csproj">
+      <Project>{560e2863-f7b6-4e39-b1e0-218c7b29ad0f}</Project>
+      <Name>AppBrix.Caching</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj">
       <Project>{3363eda9-2a58-4e32-8564-1fbeb7b5aef1}</Project>
       <Name>AppBrix.Configuration.Memory</Name>
