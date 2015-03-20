@@ -27,11 +27,6 @@ namespace AppBrix.Resolve
         #endregion
 
         #region IResolver implementation
-        public void Register<T>(T obj) where T : class
-        {
-            this.Register(obj, typeof(T));
-        }
-
         public void Register(object obj, Type type)
         {
             if (obj == null)

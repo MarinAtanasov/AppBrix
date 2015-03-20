@@ -4,6 +4,7 @@
 using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Lifecycle;
+using AppBrix.Resolve;
 using System;
 using System.Linq;
 
@@ -52,6 +53,22 @@ namespace AppBrix
             {
                 return app.Resolver.Resolve<T>();
             }
+        }
+        #endregion
+
+        #region IResolver extensions
+        /// <summary>
+        /// Registers an object as the passed-in type, its parent types and interfaces.
+        /// This method can be used when the type is known during compile time.
+        /// </summary>
+        /// <typeparam name="T">The type to be used as base upon registration. Cannot be "object".</typeparam>
+        /// <param name="resolver">The resolver.</param>
+        /// <param name="obj">The object to be registered. Required.</param>
+        /// <exception cref="ArgumentNullException">obj</exception>
+        /// <exception cref="ArgumentException">T is of type object.</exception>
+        public static void Register<T>(this IResolver resolver, T obj) where T : class
+        {
+            resolver.Register(obj, typeof(T));
         }
         #endregion
 
