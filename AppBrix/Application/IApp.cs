@@ -15,6 +15,11 @@ namespace AppBrix.Application
     public interface IApp
     {
         /// <summary>
+        /// Gets the id of the application.
+        /// </summary>
+        Guid Id { get; }
+
+        /// <summary>
         /// Gets the application's configuration.
         /// </summary>
         IAppConfig AppConfig { get; }

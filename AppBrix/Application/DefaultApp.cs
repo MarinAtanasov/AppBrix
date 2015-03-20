@@ -24,10 +24,16 @@ namespace AppBrix.Application
         public DefaultApp(IAppConfig config)
         {
             this.AppConfig = config;
+            this.Id = Guid.NewGuid();
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the id of the application.
+        /// </summary>
+        public Guid Id { get; private set; }
+
         /// <summary>
         /// Gets the application's configuration.
         /// </summary>
