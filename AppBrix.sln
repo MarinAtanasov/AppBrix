@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Time.Tests", "AppBr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Caching", "AppBrix.Caching\AppBrix.Caching.csproj", "{560E2863-F7B6-4E39-B1E0-218C7B29AD0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Caching.Tests", "AppBrix.Caching.Tests\AppBrix.Caching.Tests.csproj", "{20F6030B-0950-44F5-AD37-2D9975046D0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{560E2863-F7B6-4E39-B1E0-218C7B29AD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{560E2863-F7B6-4E39-B1E0-218C7B29AD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{560E2863-F7B6-4E39-B1E0-218C7B29AD0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20F6030B-0950-44F5-AD37-2D9975046D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20F6030B-0950-44F5-AD37-2D9975046D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20F6030B-0950-44F5-AD37-2D9975046D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20F6030B-0950-44F5-AD37-2D9975046D0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,5 +120,6 @@ Global
 		{9BD521A4-7604-4D73-B83B-2F622C3FD504} = {CDC49DA6-B8FC-4C9D-AC47-86E530184E9E}
 		{BA426787-3E7D-43AD-B05D-7DC0E0463714} = {D23FCED7-308F-42D6-9B5C-32ED2A842F97}
 		{560E2863-F7B6-4E39-B1E0-218C7B29AD0F} = {CDC49DA6-B8FC-4C9D-AC47-86E530184E9E}
+		{20F6030B-0950-44F5-AD37-2D9975046D0C} = {D23FCED7-308F-42D6-9B5C-32ED2A842F97}
 	EndGlobalSection
 EndGlobal
