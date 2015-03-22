@@ -63,13 +63,15 @@ namespace AppBrix.Configuration
 
         public void Save()
         {
-            this.config.Save(ConfigurationSaveMode.Minimal);
+            var saveMode = this.Properties[DefaultAppConfig.SaveModePropertyName];
+            this.config.Save(saveMode != null ? saveMode.Value.ToEnum<ConfigurationSaveMode>() : ConfigurationSaveMode.Minimal);
         }
         #endregion
 
         #region Private fields and constants
         private const string ConfigExtension = ".config";
         private const string AppConfigElementName = "AppConfig";
+        private const string SaveModePropertyName = "ConfigSaveMode";
         private readonly System.Configuration.Configuration config;
         #endregion
     }
