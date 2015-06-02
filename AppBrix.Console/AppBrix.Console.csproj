@@ -63,6 +63,10 @@
       <Project>{a448ba4e-6bab-4b36-a790-2636dc5d15ac}</Project>
       <Name>AppBrix.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj">
+      <Project>{c179a5b6-b2cc-42d6-b42a-c134a4b93ec4}</Project>
+      <Name>AppBrix.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj">
       <Project>{4903eb72-da02-4fbf-a7ae-b9c4b6d9508a}</Project>
       <Name>AppBrix.Logging.Console</Name>
@@ -74,6 +78,10 @@
     <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj">
       <Project>{79fa6ebd-686a-4300-8fcd-dc2e848a26c7}</Project>
       <Name>AppBrix.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
+      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
+      <Name>AppBrix.Resolver</Name>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj">
       <Project>{9bd521a4-7604-4d73-b83b-2f622c3fd504}</Project>
@@ -89,7 +97,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,7 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Configuration.Memory;
-using AppBrix.Resolve;
+using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Time.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

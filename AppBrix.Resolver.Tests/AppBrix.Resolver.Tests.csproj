@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{20F6030B-0950-44F5-AD37-2D9975046D0C}</ProjectGuid>
+    <ProjectGuid>{8C88E069-0EAA-4B48-863A-5B4D895E0E02}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AppBrix.Caching.Tests</RootNamespace>
-    <AssemblyName>AppBrix.Caching.Tests</AssemblyName>
+    <RootNamespace>AppBrix.Resolver.Tests</RootNamespace>
+    <AssemblyName>AppBrix.Resolver.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -54,24 +53,11 @@
     <Compile Include="..\AppBrix\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CacheTests.cs" />
+    <Compile Include="Mocks\ResolverTestsChild.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResolverTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\LICENSE.txt">
-      <Link>LICENSE.txt</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\AppBrix.licenseheader">
-      <Link>AppBrix.licenseheader</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Caching\AppBrix.Caching.csproj">
-      <Project>{560e2863-f7b6-4e39-b1e0-218c7b29ad0f}</Project>
-      <Name>AppBrix.Caching</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
       <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
       <Name>AppBrix.Resolver</Name>
@@ -84,6 +70,16 @@
       <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
       <Name>AppBrix</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\LICENSE.txt">
+      <Link>LICENSE.txt</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\AppBrix.licenseheader">
+      <Link>AppBrix.licenseheader</Link>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

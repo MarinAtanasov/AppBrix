@@ -1,13 +1,12 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using System;
 using System.Linq;
 
-namespace AppBrix.Resolve
+namespace AppBrix.Resolver
 {
     /// <summary>
     /// Modules which registers the default object resolver.
@@ -31,7 +30,7 @@ namespace AppBrix.Resolve
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var resolver = this.resolver.Value; ;
+            var resolver = this.resolver.Value;
             resolver.Initialize(context);
             resolver.Register(this);
             resolver.Register(resolver);

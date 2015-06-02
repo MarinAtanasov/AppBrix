@@ -66,6 +66,10 @@
       <Project>{a448ba4e-6bab-4b36-a790-2636dc5d15ac}</Project>
       <Name>AppBrix.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
+      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
+      <Name>AppBrix.Resolver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj">
       <Project>{9bd521a4-7604-4d73-b83b-2f622c3fd504}</Project>
       <Name>AppBrix.Time</Name>

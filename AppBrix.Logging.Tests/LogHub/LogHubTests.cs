@@ -2,14 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Configuration;
 using AppBrix.Configuration.Memory;
 using AppBrix.Events;
-using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Entries;
-using AppBrix.Logging.Loggers;
-using AppBrix.Logging.Tests.Mocks;
-using AppBrix.Resolve;
+using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Time;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

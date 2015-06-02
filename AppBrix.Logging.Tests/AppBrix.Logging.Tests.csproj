@@ -77,6 +77,10 @@
       <Project>{79fa6ebd-686a-4300-8fcd-dc2e848a26c7}</Project>
       <Name>AppBrix.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
+      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
+      <Name>AppBrix.Resolver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj">
       <Project>{5b628efd-6543-490a-9ecd-8751db1231c0}</Project>
       <Name>AppBrix.Tests</Name>

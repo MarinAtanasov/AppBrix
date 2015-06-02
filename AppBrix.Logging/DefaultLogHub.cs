@@ -2,12 +2,9 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Configuration;
-using AppBrix.Events;
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Entries;
-using AppBrix.Resolve;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -114,7 +111,6 @@ namespace AppBrix.Logging
         #endregion
 
         #region Private fields and constants
-        private LogLevel logLevel;
         private IApp app;
         #endregion
     }

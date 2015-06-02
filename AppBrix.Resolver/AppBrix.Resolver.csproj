@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0D56766-7C36-44B7-9920-1CFFCA9C8296}</ProjectGuid>
+    <ProjectGuid>{A7D4F8F4-3FE2-48DE-B3EB-A68319AB9692}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AppBrix.Logging.File</RootNamespace>
-    <AssemblyName>AppBrix.Logging.File</AssemblyName>
+    <RootNamespace>AppBrix.Resolver</RootNamespace>
+    <AssemblyName>AppBrix.Resolver</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,32 +42,10 @@
     <Compile Include="..\AppBrix\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\FileLoggerConfig.cs" />
-    <Compile Include="FileLogWriter.cs" />
-    <Compile Include="FileLoggerModule.cs" />
+    <Compile Include="DefaultResolver.cs" />
+    <Compile Include="ResolverExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj">
-      <Project>{421a9925-b49c-41b9-86a5-3c98092bdd55}</Project>
-      <Name>AppBrix.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj">
-      <Project>{a448ba4e-6bab-4b36-a790-2636dc5d15ac}</Project>
-      <Name>AppBrix.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj">
-      <Project>{79fa6ebd-686a-4300-8fcd-dc2e848a26c7}</Project>
-      <Name>AppBrix.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
-      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
-      <Name>AppBrix.Resolver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix\AppBrix.csproj">
-      <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
-      <Name>AppBrix</Name>
-    </ProjectReference>
+    <Compile Include="ResolverModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\LICENSE.txt">
@@ -79,6 +56,12 @@
     <None Include="..\AppBrix.licenseheader">
       <Link>AppBrix.licenseheader</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix\AppBrix.csproj">
+      <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
+      <Name>AppBrix</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

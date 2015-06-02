@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Tests.Resolve.Mocks
+namespace AppBrix.Resolver.Tests.Mocks
 {
     /// <summary>
     /// Used for testing of parent-child relationship during resolver tests.

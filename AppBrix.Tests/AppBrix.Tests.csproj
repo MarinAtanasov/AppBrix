@@ -57,10 +57,12 @@
     <Compile Include="Mocks\InitializeContextMock.cs" />
     <Compile Include="TestsUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resolve\Mocks\ResolverTestsChild.cs" />
-    <Compile Include="Resolve\ResolverTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
+      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
+      <Name>AppBrix.Resolver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppBrix\AppBrix.csproj">
       <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
       <Name>AppBrix</Name>

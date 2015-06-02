@@ -3,7 +3,6 @@
 //
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
-using AppBrix.Resolve;
 using System;
 using System.Linq;
 

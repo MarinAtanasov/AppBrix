@@ -52,6 +52,10 @@
       <Project>{421a9925-b49c-41b9-86a5-3c98092bdd55}</Project>
       <Name>AppBrix.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
+      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
+      <Name>AppBrix.Resolver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppBrix\AppBrix.csproj">
       <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
       <Name>AppBrix</Name>

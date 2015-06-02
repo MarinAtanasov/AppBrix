@@ -2,14 +2,12 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Resolve;
+using AppBrix.Resolver;
 using AppBrix.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppBrix.Caching.Tests
 {

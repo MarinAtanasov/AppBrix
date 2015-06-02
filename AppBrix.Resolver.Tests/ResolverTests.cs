@@ -2,14 +2,13 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Configuration;
-using AppBrix.Resolve;
-using AppBrix.Tests.Resolve.Mocks;
+using AppBrix.Resolver.Tests.Mocks;
+using AppBrix.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace AppBrix.Tests.Resolve
+namespace AppBrix.Resolver.Tests
 {
     [TestClass]
     public class ResolverTests
