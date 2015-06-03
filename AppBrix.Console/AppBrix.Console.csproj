@@ -32,6 +32,50 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AppBrix, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Caching, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Configuration, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Configuration.Memory, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Configuration.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Events, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Factory, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Factory.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Logging, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Logging.Console, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Logging.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Logging.File, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Logging.File.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Resolver, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Resolver.dll</HintPath>
+    </Reference>
+    <Reference Include="AppBrix.Time, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AppBrix.Time.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -45,52 +89,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Caching\AppBrix.Caching.csproj">
-      <Project>{560e2863-f7b6-4e39-b1e0-218c7b29ad0f}</Project>
-      <Name>AppBrix.Caching</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj">
-      <Project>{3363eda9-2a58-4e32-8564-1fbeb7b5aef1}</Project>
-      <Name>AppBrix.Configuration.Memory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj">
-      <Project>{421a9925-b49c-41b9-86a5-3c98092bdd55}</Project>
-      <Name>AppBrix.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj">
-      <Project>{a448ba4e-6bab-4b36-a790-2636dc5d15ac}</Project>
-      <Name>AppBrix.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj">
-      <Project>{c179a5b6-b2cc-42d6-b42a-c134a4b93ec4}</Project>
-      <Name>AppBrix.Factory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj">
-      <Project>{4903eb72-da02-4fbf-a7ae-b9c4b6d9508a}</Project>
-      <Name>AppBrix.Logging.Console</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Logging.File\AppBrix.Logging.File.csproj">
-      <Project>{f0d56766-7c36-44b7-9920-1cffca9c8296}</Project>
-      <Name>AppBrix.Logging.File</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj">
-      <Project>{79fa6ebd-686a-4300-8fcd-dc2e848a26c7}</Project>
-      <Name>AppBrix.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
-      <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
-      <Name>AppBrix.Resolver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj">
-      <Project>{9bd521a4-7604-4d73-b83b-2f622c3fd504}</Project>
-      <Name>AppBrix.Time</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AppBrix\AppBrix.csproj">
-      <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
-      <Name>AppBrix</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Modules.config">

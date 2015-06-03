@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -64,34 +64,42 @@
     <ProjectReference Include="..\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj">
       <Project>{3363eda9-2a58-4e32-8564-1fbeb7b5aef1}</Project>
       <Name>AppBrix.Configuration.Memory</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj">
       <Project>{421a9925-b49c-41b9-86a5-3c98092bdd55}</Project>
       <Name>AppBrix.Configuration</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj">
       <Project>{a448ba4e-6bab-4b36-a790-2636dc5d15ac}</Project>
       <Name>AppBrix.Events</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj">
       <Project>{79fa6ebd-686a-4300-8fcd-dc2e848a26c7}</Project>
       <Name>AppBrix.Logging</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
       <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
       <Name>AppBrix.Resolver</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj">
       <Project>{5b628efd-6543-490a-9ecd-8751db1231c0}</Project>
       <Name>AppBrix.Tests</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj">
       <Project>{9bd521a4-7604-4d73-b83b-2f622c3fd504}</Project>
       <Name>AppBrix.Time</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix\AppBrix.csproj">
       <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
       <Name>AppBrix</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

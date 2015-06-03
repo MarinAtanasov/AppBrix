@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,18 +71,22 @@
     <ProjectReference Include="..\AppBrix.Caching\AppBrix.Caching.csproj">
       <Project>{560e2863-f7b6-4e39-b1e0-218c7b29ad0f}</Project>
       <Name>AppBrix.Caching</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
       <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
       <Name>AppBrix.Resolver</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj">
       <Project>{5b628efd-6543-490a-9ecd-8751db1231c0}</Project>
       <Name>AppBrix.Tests</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix\AppBrix.csproj">
       <Project>{fa433aa5-cc27-4699-bcc2-d47814aa7512}</Project>
       <Name>AppBrix</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Choose>
