@@ -80,7 +80,8 @@ namespace AppBrix
         {
             var constructor = type.GetConstructor(Type.EmptyTypes);
             if (constructor == null)
-                throw new DefaultConstructorMissingException("Unable to find constructor for type " + type);
+                throw new DefaultConstructorMissingException(
+                    "Unable to find constructor for type " + type.AssemblyQualifiedName);
             return constructor.Invoke(null);
         }
 
