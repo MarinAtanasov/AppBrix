@@ -1,6 +1,7 @@
 using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Logging;
+using AppBrix.Logging.Entries;
 using AppBrix.Logging.File.Configuration;
 using System;
 using System.Configuration;
@@ -36,14 +37,18 @@ namespace AppBrix.Console
 
         private static void Run(IApp app)
         {
-            var messageKey = "message";
+            var generatorKey = typeof(MessageGenerator).FullName;
+            app.GetFactory().Register<MessageGenerator>(() => new MessageGenerator("Test"));
+
             var cache = app.GetCache();
-            cache[messageKey] = "Info log {0}";
+            cache[generatorKey] = app.GetFactory().Get<MessageGenerator>();
+
             for (var i = 0; i < 20; i++)
             {
-                app.GetLog().Info(string.Format(cache.Get<string>(messageKey), (i + 1)));
+                app.GetLog().Info(cache.Get<MessageGenerator>(generatorKey).Generate());
             }
-            cache.Remove(messageKey);
+
+            cache.Remove(generatorKey);
         }
     }
 }

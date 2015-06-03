@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security;
 
-namespace AppBrix
+namespace AppBrix.Exceptions
 {
     public class DefaultConstructorMissingException : Exception
     {

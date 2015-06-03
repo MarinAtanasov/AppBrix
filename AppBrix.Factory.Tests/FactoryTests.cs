@@ -3,6 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Configuration;
+using AppBrix.Exceptions;
 using AppBrix.Factory;
 using AppBrix.Factory.Tests.Mocks;
 using AppBrix.Modules;
