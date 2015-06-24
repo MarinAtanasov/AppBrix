@@ -75,7 +75,7 @@ namespace AppBrix.Cloning
                     var clonedArray = (Array)cloned;
                     ((Array)original).ForEach((array, indices) => clonedArray.SetValue(this.Clone(array.GetValue(indices)), indices));
                 }
-                while (type != null)
+                while (type != typeof(object))
                 {
                     foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
                     {
