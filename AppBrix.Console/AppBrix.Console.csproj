@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\AppBrix.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="AppBrix.Cloning">
+      <HintPath>..\bin\AppBrix.Cloning.dll</HintPath>
+    </Reference>
     <Reference Include="AppBrix.Configuration, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\AppBrix.Configuration.dll</HintPath>

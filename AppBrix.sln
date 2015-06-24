@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Resolver.Tests", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Factory.Tests", "AppBrix.Factory.Tests\AppBrix.Factory.Tests.csproj", "{CAE7EEEA-53AB-48CA-8528-CD55342ACBE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Cloning", "AppBrix.Cloning\AppBrix.Cloning.csproj", "{33B1A8E3-7570-41BA-BDC0-BF8EECBCFE63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{CAE7EEEA-53AB-48CA-8528-CD55342ACBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAE7EEEA-53AB-48CA-8528-CD55342ACBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAE7EEEA-53AB-48CA-8528-CD55342ACBE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B1A8E3-7570-41BA-BDC0-BF8EECBCFE63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B1A8E3-7570-41BA-BDC0-BF8EECBCFE63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B1A8E3-7570-41BA-BDC0-BF8EECBCFE63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B1A8E3-7570-41BA-BDC0-BF8EECBCFE63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,5 +168,6 @@ Global
 		{A7D4F8F4-3FE2-48DE-B3EB-A68319AB9692} = {CDC49DA6-B8FC-4C9D-AC47-86E530184E9E}
 		{8C88E069-0EAA-4B48-863A-5B4D895E0E02} = {D23FCED7-308F-42D6-9B5C-32ED2A842F97}
 		{CAE7EEEA-53AB-48CA-8528-CD55342ACBE4} = {D23FCED7-308F-42D6-9B5C-32ED2A842F97}
+		{33B1A8E3-7570-41BA-BDC0-BF8EECBCFE63} = {CDC49DA6-B8FC-4C9D-AC47-86E530184E9E}
 	EndGlobalSection
 EndGlobal

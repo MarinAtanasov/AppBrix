@@ -12,12 +12,13 @@ namespace AppBrix.Modules
     public enum ModuleLoadPriority : int
     {
         Default = 0,
-        Logger = 1 << 23,
-        LogHub = 1 << 24,
-        Time = 1 << 25,
-        Events = 1 << 26,
-        Cache = 1 << 27,
-        Config = 1 << 28,
+        Logger = 1 << 22,
+        LogHub = 1 << 23,
+        Time = 1 << 24,
+        Events = 1 << 25,
+        Cache = 1 << 26,
+        Config = 1 << 27,
+        Cloning = 1 << 28,
         Factory = 1 << 29,
         Resolver = 1 << 30,
     }

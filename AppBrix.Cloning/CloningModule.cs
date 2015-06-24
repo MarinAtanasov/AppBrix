@@ -6,19 +6,20 @@ using AppBrix.Modules;
 using System;
 using System.Linq;
 
-namespace AppBrix.Factory
+namespace AppBrix.Cloning
 {
     /// <summary>
-    /// A module used for registering a default object factory.
+    /// A module used for registering a default object cloner.
+    /// The object cloner is used for creating deep copies of objects.
     /// </summary>
-    public sealed class FactoryModule : ModuleBase
+    public sealed class CloningModule : ModuleBase
     {
         #region Properties
         public override int LoadPriority
         {
             get
             {
-                return (int)ModuleLoadPriority.Factory;
+                return (int)ModuleLoadPriority.Cloning;
             }
         }
         #endregion
@@ -26,20 +27,20 @@ namespace AppBrix.Factory
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var factory = this.factory.Value;
-            factory.Initialize(context);
+            var cloner = this.cloner.Value;
+            cloner.Initialize(context);
             this.App.Resolver.Register(this);
-            this.App.Resolver.Register(factory);
+            this.App.Resolver.Register(cloner);
         }
 
         protected override void UninitializeModule()
         {
-            this.factory.Value.Uninitialize();
+            this.cloner.Value.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private Lazy<DefaultFactory> factory = new Lazy<DefaultFactory>();
+        private Lazy<DefaultCloner> cloner = new Lazy<DefaultCloner>();
         #endregion
     }
 }

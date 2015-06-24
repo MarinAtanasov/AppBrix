@@ -78,10 +78,14 @@ namespace AppBrix
         /// <returns>The constructed object.</returns>
         public static object CreateObject(this Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
             var constructor = type.GetConstructor(Type.EmptyTypes);
             if (constructor == null)
                 throw new DefaultConstructorMissingException(
                     "Unable to find constructor for type " + type.AssemblyQualifiedName);
+
             return constructor.Invoke(null);
         }
 
