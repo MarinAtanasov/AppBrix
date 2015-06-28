@@ -9,7 +9,7 @@ using System.Runtime.Caching;
 
 namespace AppBrix.Caching
 {
-    public sealed class CacheModule : ModuleBase
+    public sealed class CacheModule : ModuleBase, IDisposable
     {
         #region Properties
         public override int LoadPriority
@@ -30,6 +30,15 @@ namespace AppBrix.Caching
         }
 
         protected override void UninitializeModule()
+        {
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Code analysis CA1001: Types that own disposable fields should be disposable.
+        /// Do not use. Use Uninitialize instead.
+        /// </summary>
+        public void Dispose()
         {
             this.cache.Dispose();
             this.cache = null;

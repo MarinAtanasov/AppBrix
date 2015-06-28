@@ -5,3 +5,6 @@ using System.Reflection;
 
 [assembly: AssemblyTitle("AppBrix.Logging.Tests")]
 [assembly: AssemblyProduct("AppBrix.Logging.Tests")]
+
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]

@@ -5,3 +5,6 @@ using System.Reflection;
 
 [assembly: AssemblyTitle("AppBrix.Caching.Tests")]
 [assembly: AssemblyProduct("AppBrix.Caching.Tests")]
+
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]

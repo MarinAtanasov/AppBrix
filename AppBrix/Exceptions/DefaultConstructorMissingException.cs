@@ -6,6 +6,7 @@ using System.Security;
 
 namespace AppBrix.Exceptions
 {
+    [Serializable]
     public class DefaultConstructorMissingException : Exception
     {
         // Summary:

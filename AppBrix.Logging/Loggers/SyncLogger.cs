@@ -26,7 +26,7 @@ namespace AppBrix.Logging.Loggers
         /// <summary>
         /// Logs the entry synchronously.
         /// </summary>
-        /// <param name="entry">The log entry.</param>
+        /// <param name="entry">The log entry which will be logged.</param>
         /// <exception cref="ArgumentNullException">entry</exception>
         public override void LogEntry(ILogEntry entry)
         {

@@ -14,7 +14,7 @@ namespace AppBrix.Logging.Loggers
     /// <summary>
     /// A logger which logs the entries a separate thread.
     /// </summary>
-    internal sealed class AsyncLogger : Logger
+    internal sealed class AsyncLogger : Logger, IDisposable
     {
         #region Construciton
         /// <summary>
@@ -57,6 +57,15 @@ namespace AppBrix.Logging.Loggers
         /// </summary>
         public override void Uninitialize()
         {
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Code analysis CA1001: Types that own disposable fields should be disposable.
+        /// Do not use. Use Uninitialize instead.
+        /// </summary>
+        public void Dispose()
+        {
             if (this.task != null)
             {
                 this.cancelTokenSource.Cancel();
@@ -69,6 +78,7 @@ namespace AppBrix.Logging.Loggers
                 base.Uninitialize();
                 this.cancelTokenSource.Dispose();
                 this.cancelTokenSource = null;
+                this.logQueue.Dispose();
                 this.logQueue = null;
                 this.task = null;
             }
@@ -77,7 +87,7 @@ namespace AppBrix.Logging.Loggers
         /// <summary>
         /// Enqueues a log entry to the queue to be logged asynchronously.
         /// </summary>
-        /// <param name="entry"></param>
+        /// <param name="entry">The log entry which will be logged.</param>
         public override void LogEntry(ILogEntry entry)
         {
             if (entry == null)
