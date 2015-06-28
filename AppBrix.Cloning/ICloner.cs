@@ -7,16 +7,24 @@ using System.Linq;
 namespace AppBrix.Cloning
 {
     /// <summary>
-    /// Creates deep copies of objects.
+    /// Creates deep or shalow copies of objects.
     /// </summary>
     public interface ICloner
     {
         /// <summary>
         /// Creates a deep copy of the specified object.
         /// </summary>
-        /// <typeparam name="T">The type to be returned. Will be used only for casting the final result.</typeparam>
-        /// <param name="obj">The object to be cloned</param>
+        /// <typeparam name="T">The type to be returned.</typeparam>
+        /// <param name="obj">The object to be copied</param>
         /// <returns>A deep copy of the specified object.</returns>
-        T Clone<T>(T obj);
+        T DeepCopy<T>(T obj);
+
+        /// <summary>
+        /// Creates a shalow copy of the specified object.
+        /// </summary>
+        /// <typeparam name="T">The type to be returned.</typeparam>
+        /// <param name="obj">The object to be copied</param>
+        /// <returns>A shalow copy of the specified object.</returns>
+        T ShalowCopy<T>(T obj);
     }
 }

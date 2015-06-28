@@ -1,19 +1,13 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
-using AppBrix.Configuration;
 using AppBrix.Exceptions;
-using AppBrix.Factory;
 using AppBrix.Factory.Tests.Mocks;
-using AppBrix.Modules;
-using AppBrix.Resolver;
-using AppBrix.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace AppBrix.Resolver.Tests
+namespace AppBrix.Factory.Tests
 {
     [TestClass]
     public class FactoryTests

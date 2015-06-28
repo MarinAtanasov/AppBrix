@@ -12,15 +12,13 @@ namespace AppBrix
     public static class CloningExtensions
     {
         /// <summary>
-        /// Makes a deep copy of the specified object using the registered <see cref="ICloner"/>.
+        /// Gets the registered <see cref="ICloner"/>.
         /// </summary>
-        /// <typeparam name="T">The type of the returned object.</typeparam>
         /// <param name="app">The current application.</param>
-        /// <param name="obj">The object to be cloned.</param>
-        /// <returns>The cloned object.</returns>
-        public static T Clone<T>(this IApp app, T obj)
+        /// <returns>The registered <see cref="ICloner"/>.</returns>
+        public static ICloner GetCloner(this IApp app)
         {
-            return app.Get<ICloner>().Clone<T>(obj);
+            return app.Get<ICloner>();
         }
 
         /// <summary>

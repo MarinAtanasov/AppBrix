@@ -27,15 +27,12 @@ namespace AppBrix.Cloning
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var cloner = this.cloner.Value;
-            cloner.Initialize(context);
             this.App.Resolver.Register(this);
-            this.App.Resolver.Register(cloner);
+            this.App.Resolver.Register(this.cloner.Value);
         }
 
         protected override void UninitializeModule()
         {
-            this.cloner.Value.Uninitialize();
         }
         #endregion
 

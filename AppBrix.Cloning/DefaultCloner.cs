@@ -14,94 +14,75 @@ namespace AppBrix.Cloning
     /// Default factory which will execute the default constructor
     /// unless a different method has been registered.
     /// </summary>
-    internal sealed class DefaultCloner : ICloner, IApplicationLifecycle
+    internal sealed class DefaultCloner : ICloner
     {
-        #region IApplicationLifecycle implementation
-        public void Initialize(IInitializeContext context)
+        #region ICloner implementation
+        public T DeepCopy<T>(T obj)
         {
-            this.app = context.App;
+            return this.DeepCopy(obj, new Dictionary<object, object>());
         }
 
-        public void Uninitialize()
+        public T ShalowCopy<T>(T obj)
         {
-            this.app = null;
+            return (T)DefaultCloner.ShalowCopyMethod.Invoke(obj, null);
         }
         #endregion
 
-        #region ICloner implementation
-        public T Clone<T>(T obj)
+        #region Private methods
+        private T DeepCopy<T>(T original, IDictionary<object, object> visited)
         {
-            return new ClonerInternal().Clone<T>(obj);
+            if (original == null)
+                return original;
+
+            var type = original.GetType();
+
+            if (this.IsPrimitiveType(type) || this.IsSpecialType(type))
+                return original;
+
+            if (typeof(Delegate).IsAssignableFrom(type))
+                return (T)(object)null;
+
+            if (!visited.ContainsKey(original))
+            {
+                this.CloneReferenceType(original, type, visited);
+            }
+
+            return (T)visited[original];
+        }
+
+        private object CloneReferenceType(object original, Type type, IDictionary<object, object> visited)
+        {
+            var cloned = this.ShalowCopy(original);
+            visited[original] = cloned;
+            if (type.IsArray)
+            {
+                var clonedArray = (Array)cloned;
+                ((Array)original).ForEach((array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
+            }
+            while (type != typeof(object))
+            {
+                foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
+                {
+                    field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
+                }
+                type = type.BaseType;
+            }
+            return cloned;
+        }
+
+        private bool IsPrimitiveType(Type type)
+        {
+            return type == typeof(string) || type.IsEnum || (type.IsValueType && type.IsPrimitive);
+        }
+
+        private bool IsSpecialType(Type type)
+        {
+            return type.FullName.StartsWith("System.Reflection") || type.FullName.StartsWith("System.Runtime");
         }
         #endregion
 
         #region Private fields and constants
-        private IApp app;
-        #endregion
-
-        #region Private classes
-        private class ClonerInternal
-        {
-            #region Public methods
-            public T Clone<T>(T original)
-            {
-                if (original == null)
-                    return original;
-
-                var type = original.GetType();
-
-                if (this.IsPrimitiveType(type) || this.IsSpecialType(type))
-                    return original;
-
-                if (typeof(Delegate).IsAssignableFrom(type))
-                    return (T)(object)null;
-
-                if (!this.visited.ContainsKey(original))
-                {
-                    this.CloneReferenceType(original, type);
-                }
-
-                return (T)this.visited[original];
-            }
-            #endregion
-
-            #region Private methods
-            private object CloneReferenceType(object original, Type type)
-            {
-                var cloned = ClonerInternal.CloneMethod.Invoke(original, null);
-                this.visited[original] = cloned;
-                if (type.IsArray)
-                {
-                    var clonedArray = (Array)cloned;
-                    ((Array)original).ForEach((array, indices) => clonedArray.SetValue(this.Clone(array.GetValue(indices)), indices));
-                }
-                while (type != typeof(object))
-                {
-                    foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
-                    {
-                        field.SetValue(cloned, this.Clone(field.GetValue(original)));
-                    }
-                    type = type.BaseType;
-                }
-                return cloned;
-            }
-
-            private bool IsPrimitiveType(Type type)
-            {
-                return type == typeof(string) || type.IsEnum || (type.IsValueType && type.IsPrimitive);
-            }
-
-            private bool IsSpecialType(Type type)
-            {
-                return type.FullName.StartsWith("System.Reflection") || type.FullName.StartsWith("System.Runtime");
-            }
-            #endregion
-
-            #region Private fields and constants
-            private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
-            private IDictionary<object, object> visited = new Dictionary<object, object>(new ReferenceEqualityComparer());
-            #endregion
-        }
+        private static readonly MethodInfo ShalowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
         #endregion
     }
 }
