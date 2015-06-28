@@ -11,8 +11,7 @@ using System.Reflection;
 namespace AppBrix.Cloning
 {
     /// <summary>
-    /// Default factory which will execute the default constructor
-    /// unless a different method has been registered.
+    /// Default cloner used for shalow or deep copying.
     /// </summary>
     internal sealed class DefaultCloner : ICloner
     {
