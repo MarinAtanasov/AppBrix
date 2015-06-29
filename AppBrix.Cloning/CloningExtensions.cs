@@ -47,7 +47,7 @@ namespace AppBrix
             {
                 this.Position = new int[array.Rank];
                 this.maxLengths = new int[array.Rank];
-                for (int i = 0; i < array.Rank; ++i)
+                for (int i = 0; i < array.Rank; i++)
                 {
                     this.maxLengths[i] = array.GetLength(i) - 1;
                 }
