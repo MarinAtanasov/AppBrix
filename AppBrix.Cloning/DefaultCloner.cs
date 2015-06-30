@@ -71,7 +71,7 @@ namespace AppBrix.Cloning
 
         private bool IsPrimitiveType(Type type)
         {
-            return type == typeof(string) || type.IsEnum || (type.IsValueType && type.IsPrimitive);
+            return (type.IsValueType && type.IsPrimitive) || type.IsEnum || type == typeof(string);
         }
         #endregion
 
