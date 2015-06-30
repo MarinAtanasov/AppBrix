@@ -35,7 +35,7 @@ namespace AppBrix.Cloning
 
             var type = original.GetType();
 
-            if (this.IsPrimitiveType(type) || this.IsSpecialType(type))
+            if (this.IsPrimitiveType(type))
                 return original;
 
             if (typeof(Delegate).IsAssignableFrom(type))
@@ -72,11 +72,6 @@ namespace AppBrix.Cloning
         private bool IsPrimitiveType(Type type)
         {
             return type == typeof(string) || type.IsEnum || (type.IsValueType && type.IsPrimitive);
-        }
-
-        private bool IsSpecialType(Type type)
-        {
-            return type.FullName.StartsWith("System.Reflection") || type.FullName.StartsWith("System.Runtime");
         }
         #endregion
 

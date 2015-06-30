@@ -57,6 +57,7 @@
     <Compile Include="Mocks\ComplexPropertiesMock.cs" />
     <Compile Include="Mocks\PrimitivePropertiesMock.cs" />
     <Compile Include="Mocks\NumericPropertiesMock.cs" />
+    <Compile Include="Mocks\SelfReferencingMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

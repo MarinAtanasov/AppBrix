@@ -106,6 +106,31 @@ namespace AppBrix.Cloning.Tests
         }
 
         [TestMethod]
+        public void TestDeepCopyDirectRecursingMock()
+        {
+            var cloner = this.GetCloner();
+            var original = new SelfReferencingMock();
+            original.Other = original;
+            var clone = cloner.DeepCopy(original);
+            Assert.AreNotSame(original, clone, "The original and clone are the same object.");
+            Assert.AreSame(clone, clone.Other, "The clone should be referencing itself.");
+        }
+
+        [TestMethod]
+        public void TestDeepCopyIndirectRecursingMock()
+        {
+            var cloner = this.GetCloner();
+            var original = new SelfReferencingMock();
+            original.Other = new SelfReferencingMock();
+            original.Other.Other = original;
+            var clone = cloner.DeepCopy(original);
+            Assert.AreNotSame(original, clone, "The original and clone are the same object.");
+            Assert.AreNotSame(original.Other, clone.Other,
+                "The original's referenced object and clone's referenced object are the same object.");
+            Assert.AreSame(clone, clone.Other.Other, "The clone's reference should be referencing the clone.");
+        }
+
+        [TestMethod]
         [Timeout(20)]
         public void TestPerformanceDeepCopy()
         {

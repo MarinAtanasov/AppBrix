@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Cloning.Tests.Mocks
 {
-    internal class ComplexPropertiesMock
+    internal sealed class ComplexPropertiesMock
     {
         public ComplexPropertiesMock(int amount)
         {
