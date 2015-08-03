@@ -85,14 +85,14 @@ namespace AppBrix.Application
             }
             this.IsInitialized = false;
         }
+        #endregion
 
+        #region Private methods
         private IEnumerable<Type> GetModuleTypes()
         {
             return this.AppConfig.Modules.Select(m => Type.GetType(m.Type));
         }
-        #endregion
 
-        #region Private methods
         private void RegisterModules()
         {
             var moduleTypes = this.GetModuleTypes();
