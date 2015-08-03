@@ -2,7 +2,9 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Resolver;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix
@@ -10,6 +12,55 @@ namespace AppBrix
     public static class ResolverExtensions
     {
         #region IResolver extensions
+        /// <summary>
+        /// Gets the application's current resolver.
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <returns>The registered resolver.</returns>
+        public static IResolver GetResolver(this IApp app)
+        {
+            return ResolverExtensions.Resolvers.ContainsKey(app) ? ResolverExtensions.Resolvers[app] : null;
+        }
+
+        /// <summary>
+        /// Sets the application's current resolver.
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <param name="resolver">The resolver.</param>
+        public static void SetResolver(this IApp app, IResolver resolver)
+        {
+            if (resolver != null)
+            {
+                ResolverExtensions.Resolvers[app] = resolver;
+            }
+            else if (ResolverExtensions.Resolvers.ContainsKey(app))
+            {
+                ResolverExtensions.Resolvers.Remove(app);
+            }
+        }
+        
+        /// <summary>
+        /// Resolves an item by its type.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be resolved.</typeparam>
+        /// <param name="app">The application.</param>
+        /// <returns></returns>
+        public static T Get<T>(this IApp app) where T : class
+        {
+            if (typeof(T).IsAssignableFrom(app.GetType()))
+            {
+                return (T)app;
+            }
+            else if (typeof(T).IsAssignableFrom(app.AppConfig.GetType()))
+            {
+                return (T)app.AppConfig;
+            }
+            else
+            {
+                return app.GetResolver().Resolve<T>();
+            }
+        }
+
         /// <summary>
         /// Registers an object as the passed-in type, its parent types and interfaces.
         /// This method can be used when the type is known during compile time.
@@ -23,6 +74,10 @@ namespace AppBrix
         {
             resolver.Register(obj, typeof(T));
         }
+        #endregion
+
+        #region Private fields and constants
+        private static IDictionary<IApp, IResolver> Resolvers = new Dictionary<IApp, IResolver>();
         #endregion
     }
 }

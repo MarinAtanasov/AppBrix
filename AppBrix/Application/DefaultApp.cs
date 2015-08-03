@@ -37,12 +37,7 @@ namespace AppBrix.Application
         /// Gets the application's configuration.
         /// </summary>
         public IAppConfig AppConfig { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the currently loaded object resolver.
-        /// </summary>
-        public IResolver Resolver { get; set; }
-
+        
         /// <summary>
         /// Indicates whether the application is in an initialized state.
         /// </summary>

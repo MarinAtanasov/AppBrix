@@ -28,8 +28,8 @@ namespace AppBrix.Factory
         {
             var factory = this.factory.Value;
             factory.Initialize(context);
-            this.App.Resolver.Register(this);
-            this.App.Resolver.Register(factory);
+            this.App.GetResolver().Register(this);
+            this.App.GetResolver().Register(factory);
         }
 
         protected override void UninitializeModule()

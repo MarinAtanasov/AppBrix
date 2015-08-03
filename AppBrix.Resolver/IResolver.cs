@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Application
+namespace AppBrix.Resolver
 {
     /// <summary>
     /// Registers objects and enables resolving of registered objects.

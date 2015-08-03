@@ -28,11 +28,11 @@ namespace AppBrix.Logging.Console
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.Resolver.Register(this);
+            this.App.GetResolver().Register(this);
             var async = this.App.GetConfig<LoggingConfig>().Async;
             this.logger = Logger.Create(new ConsoleLogWriter(), async);
             this.logger.Initialize(context);
-            this.App.Resolver.Register(this.logger, this.logger.GetType());
+            this.App.GetResolver().Register(this.logger, this.logger.GetType());
         }
 
         protected override void UninitializeModule()

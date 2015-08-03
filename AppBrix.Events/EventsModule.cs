@@ -27,9 +27,9 @@ namespace AppBrix.Events
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.Resolver.Register(this);
+            this.App.GetResolver().Register(this);
             this.eventHub.Value.Initialize(context);
-            this.App.Resolver.Register(this.eventHub.Value);
+            this.App.GetResolver().Register(this.eventHub.Value);
         }
 
         protected override void UninitializeModule()

@@ -30,28 +30,6 @@ namespace AppBrix
             app.Uninitialize();
             app.Initialize();
         }
-
-        /// <summary>
-        /// Resolves an item by its type.
-        /// </summary>
-        /// <typeparam name="T">The type of the object to be resolved.</typeparam>
-        /// <param name="app">The application.</param>
-        /// <returns></returns>
-        public static T Get<T>(this IApp app) where T : class
-        {
-            if (typeof(T).IsAssignableFrom(app.GetType()))
-            {
-                return (T)app;
-            }
-            else if (typeof(T).IsAssignableFrom(app.AppConfig.GetType()))
-            {
-                return (T)app.AppConfig;
-            }
-            else
-            {
-                return app.Resolver.Resolve<T>();
-            }
-        }
         #endregion
 
         #region Types and enums extensions

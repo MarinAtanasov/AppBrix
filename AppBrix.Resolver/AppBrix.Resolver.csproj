@@ -43,6 +43,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DefaultResolver.cs" />
+    <Compile Include="IResolver.cs" />
     <Compile Include="ResolverExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResolverModule.cs" />

@@ -34,13 +34,13 @@ namespace AppBrix.Resolver
             resolver.Initialize(context);
             resolver.Register(this);
             resolver.Register(resolver);
-            this.App.Resolver = resolver;
+            this.App.SetResolver(resolver);
         }
 
         protected override void UninitializeModule()
         {
             this.resolver.Value.Uninitialize();
-            this.App.Resolver = null;
+            this.App.SetResolver(null);
         }
         #endregion
 

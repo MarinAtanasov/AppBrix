@@ -21,10 +21,10 @@ namespace AppBrix.Configuration
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.Resolver.Register(this);
+            this.App.GetResolver().Register(this);
             this.config = this.CreateConfig();
             this.config.Initialize(context);
-            this.App.Resolver.Register(this.config);
+            this.App.GetResolver().Register(this.config);
         }
 
         protected override void UninitializeModule()

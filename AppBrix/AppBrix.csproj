@@ -45,7 +45,6 @@
     <Compile Include="App.cs" />
     <Compile Include="AppBrixExtensions.cs" />
     <Compile Include="Exceptions\DefaultConstructorMissingException.cs" />
-    <Compile Include="Application\IResolver.cs" />
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Configuration\AppConfigSection.cs" />
     <Compile Include="Configuration\ConfigElement.cs" />

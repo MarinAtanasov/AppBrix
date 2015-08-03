@@ -35,8 +35,8 @@ namespace AppBrix.Cloning.Tests.Mocks
         #endregion
 
         #region Private fields and constants
-        private readonly int i;
-        private float f;
+        private readonly int i = 0;
+        private float f = 0;
         #endregion
     }
 }

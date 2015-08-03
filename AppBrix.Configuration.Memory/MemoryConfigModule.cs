@@ -25,8 +25,8 @@ namespace AppBrix.Configuration.Memory
         #region Public methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.Resolver.Register(this);
-            this.App.Resolver.Register(this.config.Value);
+            this.App.GetResolver().Register(this);
+            this.App.GetResolver().Register(this.config.Value);
         }
 
         protected override void UninitializeModule()

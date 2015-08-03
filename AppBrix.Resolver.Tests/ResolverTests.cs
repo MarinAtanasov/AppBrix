@@ -191,7 +191,7 @@ namespace AppBrix.Resolver.Tests
         #region Private methods
         private IResolver GetResolver()
         {
-            return ResolverTests.app.Resolver;
+            return ResolverTests.app.GetResolver();
         }
         #endregion
 
