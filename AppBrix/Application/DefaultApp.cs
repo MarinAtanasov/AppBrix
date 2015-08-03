@@ -44,7 +44,7 @@ namespace AppBrix.Application
         private bool IsInitialized { get; set; }
         #endregion
 
-        #region IAppModule implementation
+        #region IPublic and overriden methods
         public void Start()
         {
             this.RegisterModules();
@@ -57,9 +57,7 @@ namespace AppBrix.Application
             this.UnregisterModules();
             this.AppConfig.Save();
         }
-        #endregion
 
-        #region IApplicationLifecycle implementation
         public void Initialize()
         {
             if (this.IsInitialized)
@@ -79,6 +77,16 @@ namespace AppBrix.Application
                 module.Uninitialize();
             }
             this.IsInitialized = false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
         }
         #endregion
 
