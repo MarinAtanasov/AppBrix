@@ -49,7 +49,21 @@ namespace AppBrix.Time.Tests
         }
 
         [TestMethod]
-        public void TestToUtcTime()
+        public void TestUtcToUtcTime()
+        {
+            var app = this.CreateAppWithTimeModule();
+            app.Start();
+            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            app.Reinitialize();
+            var time = DateTime.UtcNow;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            Assert.AreEqual(DateTimeKind.Utc, appTime.Kind, "Kind not converted.");
+            Assert.AreEqual(time, appTime, "Time values do not match.");
+            app.Stop();
+        }
+
+        [TestMethod]
+        public void TestLocalToUtcTime()
         {
             var app = this.CreateAppWithTimeModule();
             app.Start();
@@ -63,7 +77,7 @@ namespace AppBrix.Time.Tests
         }
 
         [TestMethod]
-        public void TestToLocalTime()
+        public void TestUtcToLocalTime()
         {
             var app = this.CreateAppWithTimeModule();
             app.Start();
@@ -73,6 +87,20 @@ namespace AppBrix.Time.Tests
             var appTime = app.GetTimeService().ToAppTime(time);
             Assert.AreEqual(DateTimeKind.Local, appTime.Kind, "Kind not converted.");
             Assert.AreEqual(time.ToLocalTime(), appTime, "Time values do not match.");
+            app.Stop();
+        }
+
+        [TestMethod]
+        public void TestLocalToLocalTime()
+        {
+            var app = this.CreateAppWithTimeModule();
+            app.Start();
+            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            app.Reinitialize();
+            var time = DateTime.Now;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            Assert.AreEqual(DateTimeKind.Local, appTime.Kind, "Kind not converted.");
+            Assert.AreEqual(time, appTime, "Time values do not match.");
             app.Stop();
         }
         #endregion
