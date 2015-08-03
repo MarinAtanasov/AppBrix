@@ -2,10 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppBrix.Time
 {
@@ -17,5 +14,12 @@ namespace AppBrix.Time
         /// </summary>
         /// <returns></returns>
         DateTime GetTime();
+        
+        /// <summary>
+        /// Converts the specified time to the configured application time kind.
+        /// </summary>
+        /// <param name="time">The specified time.</param>
+        /// <returns>The converted time.</returns>
+        DateTime ToAppTime(DateTime time);
     }
 }

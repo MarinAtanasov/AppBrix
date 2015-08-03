@@ -47,6 +47,34 @@ namespace AppBrix.Time.Tests
             Assert.IsTrue(timeAfter >= time, "After < call");
             app.Stop();
         }
+
+        [TestMethod]
+        public void TestToUtcTime()
+        {
+            var app = this.CreateAppWithTimeModule();
+            app.Start();
+            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            app.Reinitialize();
+            var time = DateTime.Now;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            Assert.AreEqual(DateTimeKind.Utc, appTime.Kind, "Kind not converted.");
+            Assert.AreEqual(time.ToUniversalTime(), appTime, "Time values do not match.");
+            app.Stop();
+        }
+
+        [TestMethod]
+        public void TestToLocalTime()
+        {
+            var app = this.CreateAppWithTimeModule();
+            app.Start();
+            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            app.Reinitialize();
+            var time = DateTime.UtcNow;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            Assert.AreEqual(DateTimeKind.Local, appTime.Kind, "Kind not converted.");
+            Assert.AreEqual(time.ToLocalTime(), appTime, "Time values do not match.");
+            app.Stop();
+        }
         #endregion
 
         #region Private methods

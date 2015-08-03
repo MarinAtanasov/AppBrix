@@ -11,14 +11,24 @@ namespace AppBrix
     public static class TimeServiceExtensions
     {
         /// <summary>
+        /// Gets the application's currently registered <see cref="ITimeService"/>
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <returns>The registered time service.</returns>
+        public static ITimeService GetTimeService(this IApp app)
+        {
+            return app.Get<ITimeService>();
+        }
+        
+        /// <summary>
         /// A shorthand for getting the current time
-        /// from the registered time service.
+        /// from the registered <see cref="ITimeService"/>.
         /// </summary>
         /// <param name="app">The currently running application.</param>
-        /// <returns>The current DateTime.</returns>
+        /// <returns>The current <see cref="DateTime"/>.</returns>
         public static DateTime GetTime(this IApp app)
         {
-            return app.Get<ITimeService>().GetTime();
+            return app.GetTimeService().GetTime();
         }
     }
 }
