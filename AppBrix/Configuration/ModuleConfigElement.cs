@@ -19,7 +19,7 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <typeparam name="T">The type of the module.</typeparam>
         /// <returns>The module element.</returns>
-        public static ModuleConfigElement Create<T>() where T : ModuleBase
+        public static ModuleConfigElement Create<T>() where T : IModule
         {
             return ModuleConfigElement.Create(typeof(T));
         }
@@ -33,7 +33,7 @@ namespace AppBrix.Configuration
         {
             if (type == null)
                 throw new ArgumentNullException("type");
-            if (!typeof(ModuleBase).IsAssignableFrom(type))
+            if (!typeof(IModule).IsAssignableFrom(type))
                 throw new ArgumentException(string.Format("Type {0} is not of type IModule.", type));
 
             return new ModuleConfigElement()
@@ -60,6 +60,17 @@ namespace AppBrix.Configuration
         {
             get { return this.Key; }
             set { this.Key = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the module's current status.
+        /// Changing this property requires application restart.
+        /// </summary>
+        [ConfigurationProperty("status", DefaultValue = ModuleStatus.Enabled)]
+        public ModuleStatus Status
+        {
+            get { return (ModuleStatus)this["status"]; }
+            set { this["status"] = value; }
         }
         #endregion
     }

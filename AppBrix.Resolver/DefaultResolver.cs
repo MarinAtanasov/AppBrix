@@ -47,12 +47,12 @@ namespace AppBrix.Resolver
             this.RegisterInternal(obj, type);
         }
 
-        public T Resolve<T>() where T : class
+        public T Get<T>() where T : class
         {
             return this.objects.ContainsKey(typeof(T)) ? (T)this.objects[typeof(T)] : null;
         }
 
-        public IEnumerable<object> ResolveAll()
+        public IEnumerable<object> GetAll()
         {
             return this.registered;
         }

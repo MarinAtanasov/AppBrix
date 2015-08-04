@@ -91,11 +91,6 @@ namespace AppBrix.Application
         #endregion
 
         #region Private methods
-        private IEnumerable<Type> GetModuleTypes()
-        {
-            return this.AppConfig.Modules.Select(m => Type.GetType(m.Type));
-        }
-
         private void RegisterModules()
         {
             var moduleTypes = this.GetModuleTypes();
@@ -106,19 +101,26 @@ namespace AppBrix.Application
             }
         }
 
+        private IEnumerable<Type> GetModuleTypes()
+        {
+            return this.AppConfig.Modules
+                .Where(m => m.Status == ModuleStatus.Enabled)
+                .Select(m => Type.GetType(m.Type));
+        }
+
         private void UnregisterModules()
         {
             this.modules.Clear();
         }
 
-        private IEnumerable<ModuleBase> CreateModules(IEnumerable<Type> moduleTypes)
+        private IEnumerable<IModule> CreateModules(IEnumerable<Type> moduleTypes)
         {
-            return moduleTypes.Select(type => (ModuleBase)type.CreateObject());
+            return moduleTypes.Select(type => (IModule)type.CreateObject());
         }
         #endregion
 
         #region Private fields and constants
-        private readonly ICollection<ModuleBase> modules = new List<ModuleBase>();
+        private readonly ICollection<IModule> modules = new List<IModule>();
         #endregion
     }
 }

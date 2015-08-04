@@ -14,7 +14,7 @@ namespace AppBrix.Logging.Loggers
     /// Common base class for the loggers.
     /// Can be used to create a default sync/async logger.
     /// </summary>
-    public abstract class Logger : IApplicationLifecycle
+    public abstract class Logger : ILogger, IApplicationLifecycle
     {
         #region Construction
         /// <summary>
@@ -74,10 +74,6 @@ namespace AppBrix.Logging.Loggers
             this.App = null;
         }
 
-        /// <summary>
-        /// Logs the entry using the log writer.
-        /// </summary>
-        /// <param name="entry">The entry.</param>
         public abstract void LogEntry(ILogEntry entry);
         #endregion
 

@@ -11,13 +11,9 @@ namespace AppBrix.Modules
     /// <summary>
     /// Base interface for application modules.
     /// </summary>
-    public abstract class ModuleBase : IApplicationLifecycle
+    public abstract class ModuleBase : IModule
     {
         #region Properties
-        /// <summary>
-        /// The priority in which the module will be installed or initialized.
-        /// Higher priority mean that the module will load sooner and unload later.
-        /// </summary>
         public virtual int LoadPriority
         {
             get { return (int)ModuleLoadPriority.Default; }

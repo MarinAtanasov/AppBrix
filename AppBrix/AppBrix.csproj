@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppBrixExtensions.cs" />
+    <Compile Include="Configuration\ModuleStatus.cs" />
     <Compile Include="Exceptions\DefaultConstructorMissingException.cs" />
+    <Compile Include="Modules\IModule.cs" />
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Configuration\AppConfigSection.cs" />
     <Compile Include="Configuration\ConfigElement.cs" />

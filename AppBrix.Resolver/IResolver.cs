@@ -28,13 +28,13 @@ namespace AppBrix.Resolver
         /// </summary>
         /// <typeparam name="T">The type of the registered object.</typeparam>
         /// <returns>The last registered object.</returns>
-        T Resolve<T>() where T : class;
+        T Get<T>() where T : class;
 
         /// <summary>
         /// Resolves all registered objects.
         /// The objects are not necessarily in the order in which they were registered.
         /// </summary>
         /// <returns>All registered objects.</returns>
-        IEnumerable<object> ResolveAll();
+        IEnumerable<object> GetAll();
     }
 }

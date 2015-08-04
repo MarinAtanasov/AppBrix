@@ -57,7 +57,7 @@ namespace AppBrix
             }
             else
             {
-                return app.GetResolver().Resolve<T>();
+                return app.GetResolver().Get<T>();
             }
         }
 

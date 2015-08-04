@@ -53,7 +53,7 @@ namespace AppBrix.Resolver.Tests
         public void TestResolveByInterface()
         {
             var resolver = (DefaultResolver)this.GetResolver();
-            var iResolver = resolver.Resolve<IResolver>();
+            var iResolver = resolver.Get<IResolver>();
             Assert.IsNotNull(iResolver, "Unable to resolve the IResolver interface.");
             Assert.AreSame(resolver, iResolver, "Returned IResolver is a different instance.");
         }
@@ -62,7 +62,7 @@ namespace AppBrix.Resolver.Tests
         public void TestResolveByClass()
         {
             var resolver = (DefaultResolver)this.GetResolver();
-            var resolved = resolver.Resolve<DefaultResolver>();
+            var resolved = resolver.Get<DefaultResolver>();
             Assert.IsNotNull(resolved, "Unable to resolve the Resolver class.");
             Assert.AreSame(resolver, resolved, "Returned Resolver is a different instance.");
         }
@@ -73,7 +73,7 @@ namespace AppBrix.Resolver.Tests
             var resolver = this.GetResolver();
             var original = new ResolverTestsChild();
             resolver.Register(original);
-            var resolved = resolver.Resolve<ResolverTests>();
+            var resolved = resolver.Get<ResolverTests>();
             Assert.IsNotNull(resolved, "Unable to resolve the Parent class.");
             Assert.AreSame(original, resolved, "Returned Child is a different instance.");
         }
@@ -82,7 +82,7 @@ namespace AppBrix.Resolver.Tests
         public void TestResolveAllNoElements()
         {
             var resolver = this.GetResolver();
-            var resolved = resolver.ResolveAll().OfType<ResolverTests>();
+            var resolved = resolver.GetAll().OfType<ResolverTests>();
             Assert.IsNotNull(resolved, "Resolved collection should not be null.");
             Assert.AreEqual(0, resolved.Count(), "Resolved collection should be empty.");
         }
@@ -91,7 +91,7 @@ namespace AppBrix.Resolver.Tests
         public void TestResolveAllOneElement()
         {
             var resolver = (DefaultResolver)this.GetResolver();
-            var resolved = resolver.ResolveAll().OfType<IResolver>();
+            var resolved = resolver.GetAll().OfType<IResolver>();
             Assert.IsNotNull(resolved, "Resolved collection should not be null.");
             Assert.AreEqual(1, resolved.Count(), "Resolved collection should have 1 element.");
             Assert.AreEqual(resolver, resolved.Single(), "Resolved element should be the original resolver.");
@@ -104,7 +104,7 @@ namespace AppBrix.Resolver.Tests
             resolver.Register(this);
             var second = new ResolverTestsChild();
             resolver.Register(second, second.GetType());
-            var resolved = resolver.ResolveAll().OfType<ResolverTests>();
+            var resolved = resolver.GetAll().OfType<ResolverTests>();
             Assert.IsNotNull(resolved, "Resolved collection should not be null.");
             Assert.AreEqual(2, resolved.Count(), "Resolved collection should have 2 elements.");
             Assert.AreEqual(this, resolved.First(), "Resolved element 1 should be the original item.");
@@ -140,7 +140,7 @@ namespace AppBrix.Resolver.Tests
         {
             var resolver = this.GetResolver();
             resolver.Register(new ResolverTestsChild());
-            Assert.IsNull(resolver.Resolve<object>());
+            Assert.IsNull(resolver.Get<object>());
         }
 
         [TestMethod]
@@ -180,10 +180,10 @@ namespace AppBrix.Resolver.Tests
             }
             for (int i = 0; i < 10000; i++)
             {
-                resolver.Resolve<ResolverTestsChild>();
-                resolver.Resolve<DefaultResolver>();
-                resolver.Resolve<IResolver>();
-                resolver.ResolveAll();
+                resolver.Get<ResolverTestsChild>();
+                resolver.Get<DefaultResolver>();
+                resolver.Get<IResolver>();
+                resolver.GetAll();
             }
         }
         #endregion

@@ -12,6 +12,7 @@ namespace AppBrix.Time.Configuration
         /// <summary>
         /// Gets or sets the time kind to be used inside the application.
         /// Supported values: Utc, Local
+        /// Changing this property requires module reinitialization.
         /// </summary>
         [ConfigurationProperty("kind", DefaultValue = DateTimeKind.Utc)]
         public DateTimeKind Kind
