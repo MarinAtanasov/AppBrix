@@ -18,7 +18,7 @@ namespace AppBrix.Caching.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            CacheTests.app = TestsUtils.CreateTestApp(
+            CacheTests.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule),
                 typeof(CacheModule));
             CacheTests.app.Start();

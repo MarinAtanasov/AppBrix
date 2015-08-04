@@ -23,7 +23,7 @@ namespace AppBrix.Logging.Tests.Logger
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            LoggerTests.app = TestsUtils.CreateTestApp(
+            LoggerTests.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule),
                 typeof(MemoryConfigModule),
                 typeof(EventsModule),

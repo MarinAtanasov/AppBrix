@@ -11,7 +11,7 @@ namespace AppBrix.Tests
     /// <summary>
     /// Contains commonly used testing utilities.
     /// </summary>
-    public static class TestsUtils
+    public static class TestUtils
     {
         #region Public methods
         /// <summary>

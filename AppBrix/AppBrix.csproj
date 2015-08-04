@@ -45,8 +45,13 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppBrixExtensions.cs" />
+    <Compile Include="Application\ModuleInfo.cs" />
     <Compile Include="Configuration\ModuleStatus.cs" />
     <Compile Include="Exceptions\DefaultConstructorMissingException.cs" />
+    <Compile Include="Lifecycle\DefaultInstallContext.cs" />
+    <Compile Include="Lifecycle\DefaultUpgradeContext.cs" />
+    <Compile Include="Lifecycle\IInstallContext.cs" />
+    <Compile Include="Lifecycle\IUpgradeContext.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Configuration\AppConfigSection.cs" />
@@ -61,7 +66,7 @@
     <Compile Include="Application\IApp.cs" />
     <Compile Include="Lifecycle\IInitializeContext.cs" />
     <Compile Include="Lifecycle\IInstallable.cs" />
-    <Compile Include="Lifecycle\InitializeContext.cs" />
+    <Compile Include="Lifecycle\DefaultInitializeContext.cs" />
     <Compile Include="Modules\ModuleBase.cs" />
     <Compile Include="Modules\ModuleLoadPriority.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

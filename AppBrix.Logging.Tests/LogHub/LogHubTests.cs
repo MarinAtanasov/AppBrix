@@ -22,7 +22,7 @@ namespace AppBrix.Logging.Tests.LogHub
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            LogHubTests.app = TestsUtils.CreateTestApp(
+            LogHubTests.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule),
                 typeof(MemoryConfigModule),
                 typeof(EventsModule),

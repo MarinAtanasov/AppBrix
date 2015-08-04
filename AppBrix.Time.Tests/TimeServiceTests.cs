@@ -108,7 +108,7 @@ namespace AppBrix.Time.Tests
         #region Private methods
         private IApp CreateAppWithTimeModule()
         {
-            return TestsUtils.CreateTestApp(
+            return TestUtils.CreateTestApp(
                 typeof(ResolverModule),
                 typeof(MemoryConfigModule),
                 typeof(TimeModule));

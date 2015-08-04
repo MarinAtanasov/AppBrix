@@ -2,16 +2,15 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Modules;
 using System;
 using System.Linq;
 
 namespace AppBrix.Lifecycle
 {
-    internal class InitializeContext : IInitializeContext
+    internal class DefaultInstallContext : IInstallContext
     {
         #region Construction
-        public InitializeContext(IApp app)
+        public DefaultInstallContext(IApp app)
         {
             this.App = app;
         }

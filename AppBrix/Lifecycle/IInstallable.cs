@@ -15,17 +15,19 @@ namespace AppBrix.Lifecycle
         /// <summary>
         /// Used for permanent changes required by the object.
         /// </summary>
-        void Install();
+        /// <param name="context">The install context.</param>
+        void Install(IInstallContext context);
 
         /// <summary>
         /// Used to upgrade any permanent changes to the latest version.
         /// </summary>
-        /// <param name="upgradeFrom">The previous version of the object.</param>
-        void Upgrade(Version upgradeFrom);
+        /// <param name="context">The upgrade context.</param>
+        void Upgrade(IUpgradeContext context);
 
         /// <summary>
         /// Cleans up any permanent changes made by the install method.
         /// </summary>
-        void Uninstall();
+        /// <param name="context">The uninstall context.</param>
+        void Uninstall(IInstallContext context);
     }
 }

@@ -64,17 +64,40 @@ namespace AppBrix.Application
                 throw new ApplicationException("The application is already initialized.");
 
             this.IsInitialized = true;
-            foreach (var module in this.modules)
+
+            foreach (var moduleInfo in this.modules.Where(m => m.Status == ModuleStatus.Enabled))
             {
-                module.Initialize(new InitializeContext(this));
+                if (moduleInfo.Module is IInstallable)
+                {
+                    if (moduleInfo.Config.Version == null)
+                    {
+                        ((IInstallable)moduleInfo.Module).Install(new DefaultInstallContext(this));
+                        moduleInfo.Config.Version = moduleInfo.Module.GetType().Assembly.GetName().Version;
+                    }
+                    else if (moduleInfo.Config.Version < moduleInfo.Module.GetType().Assembly.GetName().Version)
+                    {
+                        ((IInstallable)moduleInfo.Module).Upgrade(new DefaultUpgradeContext(this, moduleInfo.Config.Version));
+                        moduleInfo.Config.Version = moduleInfo.Module.GetType().Assembly.GetName().Version;
+                    }
+                }
+                    
+                moduleInfo.Module.Initialize(new DefaultInitializeContext(this));
             }
         }
 
         public void Uninitialize()
         {
-            foreach (var module in this.modules.Reverse())
+            foreach (var moduleInfo in this.modules.Reverse())
             {
-                module.Uninitialize();
+                if (moduleInfo.Status == ModuleStatus.Enabled)
+                    moduleInfo.Module.Uninitialize();
+
+                if (moduleInfo.Module is IInstallable && moduleInfo.Config.Status == ModuleStatus.Uninstalling)
+                {
+                    ((IInstallable)moduleInfo.Module).Uninstall(new DefaultInstallContext(this));
+                    moduleInfo.Config.Status = ModuleStatus.Disabled;
+                    moduleInfo.Config.Version = null;
+                }
             }
             this.IsInitialized = false;
         }
@@ -93,34 +116,31 @@ namespace AppBrix.Application
         #region Private methods
         private void RegisterModules()
         {
-            var moduleTypes = this.GetModuleTypes();
-            var modules = this.CreateModules(moduleTypes);
-            foreach (var module in modules.OrderByDescending(m => m.LoadPriority))
+            var modules = this.GetModuleInfos();
+            foreach (var module in modules.OrderByDescending(m => m.Module.LoadPriority))
             {
                 this.modules.Add(module);
             }
         }
-
-        private IEnumerable<Type> GetModuleTypes()
-        {
-            return this.AppConfig.Modules
-                .Where(m => m.Status == ModuleStatus.Enabled)
-                .Select(m => Type.GetType(m.Type));
-        }
-
+        
         private void UnregisterModules()
         {
             this.modules.Clear();
         }
 
-        private IEnumerable<IModule> CreateModules(IEnumerable<Type> moduleTypes)
+        private IEnumerable<ModuleInfo> GetModuleInfos()
         {
-            return moduleTypes.Select(type => (IModule)type.CreateObject());
+            return this.AppConfig.Modules.Where(m => m.Status != ModuleStatus.Disabled).Select(m => new ModuleInfo(this.CreateModule(m), m));
+        }
+
+        private IModule CreateModule(ModuleConfigElement element)
+        {
+            return Type.GetType(element.Type).CreateObject<IModule>();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly ICollection<IModule> modules = new List<IModule>();
+        private readonly ICollection<ModuleInfo> modules = new List<ModuleInfo>();
         #endregion
     }
 }

@@ -72,6 +72,19 @@ namespace AppBrix.Configuration
             get { return (ModuleStatus)this["status"]; }
             set { this["status"] = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the module's installed version.
+        /// This property is automatically updated when the module is intalled or upgraded.
+        /// An install can be forced by removing the value.
+        /// An upgrade can be forced by lowering the value to a previous version of the assembly.
+        /// </summary>
+        [ConfigurationProperty("version")]
+        public Version Version
+        {
+            get { return (Version)this["version"]; }
+            set { this["version"] = value; }
+        }
         #endregion
     }
 }

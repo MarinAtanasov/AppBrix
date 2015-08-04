@@ -17,7 +17,7 @@ namespace AppBrix.Resolver.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            ResolverTests.app = TestsUtils.CreateTestApp(
+            ResolverTests.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule));
             ResolverTests.app.Start();
         }
