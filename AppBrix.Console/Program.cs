@@ -1,10 +1,5 @@
 using AppBrix.Application;
-using AppBrix.Configuration;
-using AppBrix.Logging;
-using AppBrix.Logging.Entries;
-using AppBrix.Logging.File.Configuration;
 using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 
