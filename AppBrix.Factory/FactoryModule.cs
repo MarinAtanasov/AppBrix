@@ -10,6 +10,7 @@ namespace AppBrix.Factory
 {
     /// <summary>
     /// A module used for registering a default object factory.
+    /// The object factory should be used only for simple objects which cannot be made immutable.
     /// </summary>
     public sealed class FactoryModule : ModuleBase
     {
