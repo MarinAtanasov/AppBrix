@@ -11,16 +11,6 @@ namespace AppBrix.Caching
 {
     public sealed class CacheModule : ModuleBase, IDisposable
     {
-        #region Properties
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Config;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

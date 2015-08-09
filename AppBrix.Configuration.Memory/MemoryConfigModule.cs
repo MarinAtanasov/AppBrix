@@ -15,13 +15,6 @@ namespace AppBrix.Configuration.Memory
     /// </summary>
     public sealed class MemoryConfigModule : ModuleBase
     {
-        #region Properties
-        public override int LoadPriority
-        {
-            get { return (int)ModuleLoadPriority.Config; }
-        }
-        #endregion
-
         #region Public methods
         protected override void InitializeModule(IInitializeContext context)
         {

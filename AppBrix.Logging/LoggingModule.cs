@@ -13,16 +13,6 @@ namespace AppBrix.Logging
     /// </summary>
     public sealed class LoggingModule : ModuleBase
     {
-        #region Properies
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.LogHub;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

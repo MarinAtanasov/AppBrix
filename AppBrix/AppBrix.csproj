@@ -68,7 +68,6 @@
     <Compile Include="Lifecycle\IInstallable.cs" />
     <Compile Include="Lifecycle\DefaultInitializeContext.cs" />
     <Compile Include="Modules\ModuleBase.cs" />
-    <Compile Include="Modules\ModuleLoadPriority.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

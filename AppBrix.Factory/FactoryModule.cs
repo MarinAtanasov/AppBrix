@@ -14,16 +14,6 @@ namespace AppBrix.Factory
     /// </summary>
     public sealed class FactoryModule : ModuleBase
     {
-        #region Properties
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Factory;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

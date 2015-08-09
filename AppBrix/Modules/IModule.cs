@@ -12,10 +12,5 @@ namespace AppBrix.Modules
     /// </summary>
     public interface IModule : IApplicationLifecycle
     {
-        /// <summary>
-        /// The priority in which the module will be installed or initialized.
-        /// Higher priority means that the module will load sooner and unload later than the rest of the modules.
-        /// </summary>
-        int LoadPriority { get; }
     }
 }

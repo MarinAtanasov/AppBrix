@@ -13,20 +13,6 @@ namespace AppBrix.Resolver
     /// </summary>
     public sealed class ResolverModule : ModuleBase
     {
-        #region Properties
-        /// <summary>
-        /// The resolver module should load first and unload last
-        /// because all other modules depend on the resolver module.
-        /// </summary>
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Resolver;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

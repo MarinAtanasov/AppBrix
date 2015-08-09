@@ -14,16 +14,6 @@ namespace AppBrix.Cloning
     /// </summary>
     public sealed class CloningModule : ModuleBase
     {
-        #region Properties
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Cloning;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

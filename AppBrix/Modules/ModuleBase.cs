@@ -14,11 +14,6 @@ namespace AppBrix.Modules
     public abstract class ModuleBase : IModule
     {
         #region Properties
-        public virtual int LoadPriority
-        {
-            get { return (int)ModuleLoadPriority.Default; }
-        }
-
         /// <summary>
         /// Gets the current module's app.
         /// </summary>

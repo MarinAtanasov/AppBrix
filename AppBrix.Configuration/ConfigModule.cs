@@ -11,13 +11,6 @@ namespace AppBrix.Configuration
 {
     public sealed class ConfigModule : ModuleBase
     {
-        #region Properties
-        public override int LoadPriority
-        {
-            get { return (int)ModuleLoadPriority.Config; }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

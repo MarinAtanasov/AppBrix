@@ -10,8 +10,6 @@ namespace AppBrix.Tests.Mocks
 {
     internal class SimpleModuleMock : IModule
     {
-        public int LoadPriority { get { return 25; } }
-
         public bool IsInitialized { get; private set; }
 
         public bool IsUninitialized { get; private set; }

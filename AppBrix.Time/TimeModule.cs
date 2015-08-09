@@ -14,16 +14,6 @@ namespace AppBrix.Time
     /// </summary>
     public class TimeModule : ModuleBase
     {
-        #region Priperties
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Time;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

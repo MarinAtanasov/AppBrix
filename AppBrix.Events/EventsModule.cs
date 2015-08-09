@@ -14,16 +14,6 @@ namespace AppBrix.Events
     /// </summary>
     public sealed class EventsModule : ModuleBase
     {
-        #region Properies
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Events;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {

@@ -15,16 +15,6 @@ namespace AppBrix.Logging.Console
     /// </summary>
     public sealed class ConsoleLoggerModule : ModuleBase
     {
-        #region Properties
-        public override int LoadPriority
-        {
-            get
-            {
-                return (int)ModuleLoadPriority.Logger;
-            }
-        }
-        #endregion
-
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
