@@ -9,7 +9,8 @@ using System.Linq;
 namespace AppBrix.Modules
 {
     /// <summary>
-    /// Base interface for application modules.
+    /// Base class for application modules.
+    /// This class will set <see cref="App"/> before calling the overriden methods.
     /// </summary>
     public abstract class ModuleBase : IModule
     {
@@ -40,8 +41,15 @@ namespace AppBrix.Modules
             this.App = null;
         }
 
+        /// <summary>
+        /// Called after <see cref="ModuleBase"/>'s <see cref="Initialize(IInitializeContext)"/>.
+        /// </summary>
+        /// <param name="context"></param>
         protected abstract void InitializeModule(IInitializeContext context);
 
+        /// <summary>
+        /// Called after <see cref="ModuleBase"/>'s <see cref="Uninitialize"/>
+        /// </summary>
         protected abstract void UninitializeModule();
         #endregion
     }
