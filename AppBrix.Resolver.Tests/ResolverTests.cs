@@ -144,13 +144,17 @@ namespace AppBrix.Resolver.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestDoubleRegistration()
         {
             var resolver = this.GetResolver();
             var resolved = new ResolverTestsChild();
+            var resolved2 = new ResolverTestsChild();
             resolver.Register(resolved);
+            resolver.Register(resolved2);
+            Assert.AreSame(resolved2, resolver.Get<ResolverTestsChild>(), "Object not replaced with second.");
             resolver.Register(resolved);
+            Assert.AreSame(resolved, resolver.Get<ResolverTestsChild>(), "Object not replaced with original.");
+            Assert.AreEqual(2, resolver.GetAll().OfType<ResolverTestsChild>().Count(), "First object has been removed from history.");
         }
 
         [TestMethod]

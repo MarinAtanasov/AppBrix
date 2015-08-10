@@ -40,8 +40,6 @@ namespace AppBrix.Resolver
                     obj.GetType().FullName, type.FullName));
             if (type == typeof(object))
                 throw new ArgumentException("Cannot register object as type System.Object.");
-            if (this.registered.Contains(obj))
-                throw new ArgumentException(string.Format("Object {0} already registered.", obj));
 
             this.registered.Add(obj);
             this.RegisterInternal(obj, type);
