@@ -39,24 +39,21 @@ namespace AppBrix.Application
             var all = new HashSet<string>(modules.Select(m => m.Module.GetType().Assembly.GetName().Name));
             var loaded = new HashSet<string>();
             var remaining = new LinkedList<ModuleInfo>(modules);
-
-            while (remaining.Count > 0)
+            
+            var item = remaining.First; ;
+            while (item != null)
             {
-                var item = remaining.First; ;
-                while (item != null)
+                var assembly = item.Value.Module.GetType().Assembly;
+                if (assembly.GetReferencedAssemblies().All(a => !all.Contains(a.Name) || loaded.Contains(a.Name)))
                 {
-                    var assembly = item.Value.Module.GetType().Assembly;
-                    if (assembly.GetReferencedAssemblies().All(a => !all.Contains(a.Name) || loaded.Contains(a.Name)))
-                    {
-                        result.Add(item.Value);
-                        loaded.Add(assembly.GetName().Name);
-                        remaining.Remove(item);
-                        item = remaining.First;
-                    }
-                    else
-                    {
-                        item = item.Next;
-                    }
+                    result.Add(item.Value);
+                    loaded.Add(assembly.GetName().Name);
+                    remaining.Remove(item);
+                    item = remaining.First;
+                }
+                else
+                {
+                    item = item.Next;
                 }
             }
 
