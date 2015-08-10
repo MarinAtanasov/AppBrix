@@ -42,8 +42,7 @@ namespace AppBrix.Application
 
             while (remaining.Count > 0)
             {
-                LinkedListNode<ModuleInfo> previousItem = null;
-                LinkedListNode<ModuleInfo> item = remaining.First; ;
+                var item = remaining.First; ;
                 while (item != null)
                 {
                     var assembly = item.Value.Module.GetType().Assembly;
@@ -52,12 +51,12 @@ namespace AppBrix.Application
                         result.Add(item.Value);
                         loaded.Add(assembly.GetName().Name);
                         remaining.Remove(item);
+                        item = remaining.First;
                     }
                     else
                     {
-                        previousItem = item;
+                        item = item.Next;
                     }
-                    item = previousItem != null ? previousItem.Next : remaining.First;
                 }
             }
 
