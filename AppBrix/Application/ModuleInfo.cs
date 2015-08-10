@@ -36,22 +36,21 @@ namespace AppBrix.Application
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
             var result = new List<ModuleInfo>();
-            var allAssemblies = new HashSet<string>(modules.Select(m => m.Module.GetType().Assembly.GetName().Name));
-            var previousWaves = new HashSet<string>();
+            var all = new HashSet<string>(modules.Select(m => m.Module.GetType().Assembly.GetName().Name));
+            var loaded = new HashSet<string>();
             var remaining = new LinkedList<ModuleInfo>(modules);
 
             while (remaining.Count > 0)
             {
-                var currentWave = new List<string>();
                 LinkedListNode<ModuleInfo> previousItem = null;
                 LinkedListNode<ModuleInfo> item = remaining.First; ;
                 while (item != null)
                 {
                     var assembly = item.Value.Module.GetType().Assembly;
-                    if (assembly.GetReferencedAssemblies().All(a => !allAssemblies.Contains(a.Name) || previousWaves.Contains(a.Name)))
+                    if (assembly.GetReferencedAssemblies().All(a => !all.Contains(a.Name) || loaded.Contains(a.Name)))
                     {
                         result.Add(item.Value);
-                        currentWave.Add(assembly.GetName().Name);
+                        loaded.Add(assembly.GetName().Name);
                         remaining.Remove(item);
                     }
                     else
@@ -59,11 +58,6 @@ namespace AppBrix.Application
                         previousItem = item;
                     }
                     item = previousItem != null ? previousItem.Next : remaining.First;
-                }
-
-                foreach (var waveItem in currentWave)
-                {
-                    previousWaves.Add(waveItem);
                 }
             }
 
