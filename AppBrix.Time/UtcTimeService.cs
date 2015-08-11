@@ -6,15 +6,25 @@ using System.Linq;
 
 namespace AppBrix.Time
 {
-    internal sealed class UtcTimeService : ITimeService
+    internal sealed class UtcTimeService : TimeServiceBase
     {
+        #region Construction
+        /// <summary>
+        /// Creates a new instance of <see cref="UtcTimeService"/>.
+        /// </summary>
+        /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
+        public UtcTimeService(string format) : base(format)
+        {
+        }
+        #endregion
+
         #region ITimeService implementation
-        public DateTime GetTime()
+        public override DateTime GetTime()
         {
             return DateTime.UtcNow;
         }
 
-        public DateTime ToAppTime(DateTime time)
+        public override DateTime ToAppTime(DateTime time)
         {
             return time.Kind == DateTimeKind.Utc ? time : time.ToUniversalTime();
         }

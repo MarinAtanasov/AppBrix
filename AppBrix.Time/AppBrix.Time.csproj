@@ -45,6 +45,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="LocalTimeService.cs" />
+    <Compile Include="TimeServiceBase.cs" />
     <Compile Include="TimeServiceExtensions.cs" />
     <Compile Include="UtcTimeService.cs" />
     <Compile Include="ITimeService.cs" />

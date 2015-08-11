@@ -23,7 +23,7 @@ namespace AppBrix.Logging
             if (this.ShouldLog(LogLevel.Error))
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(LogLevel.Error, this.GetTime(), message, error,
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Error, this.GetTime(), message, error,
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }
@@ -36,7 +36,7 @@ namespace AppBrix.Logging
             if (this.ShouldLog(LogLevel.Debug))
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(LogLevel.Debug, this.GetTime(), message, error,
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Debug, this.GetTime(), message, error,
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }
@@ -49,7 +49,7 @@ namespace AppBrix.Logging
             if (this.ShouldLog(LogLevel.Info))
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(LogLevel.Info, this.GetTime(), message, error,
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Info, this.GetTime(), message, error,
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }
@@ -62,7 +62,7 @@ namespace AppBrix.Logging
             if (this.ShouldLog(LogLevel.Trace))
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(LogLevel.Trace, this.GetTime(), message, error, new StackTrace(1, true),
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Trace, this.GetTime(), message, error, new StackTrace(1, true),
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }
@@ -75,7 +75,7 @@ namespace AppBrix.Logging
             if (this.ShouldLog(LogLevel.Warning))
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(LogLevel.Warning, this.GetTime(), message, error,
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Warning, this.GetTime(), message, error,
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }

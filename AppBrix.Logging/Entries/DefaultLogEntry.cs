@@ -1,24 +1,24 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AppBrix.Logging.Entries
 {
     internal sealed class DefaultLogEntry : ILogEntry
     {
         #region Construciton
-        public DefaultLogEntry(LogLevel level, DateTime created, string message, Exception error = null, StackTrace trace = null,
+        public DefaultLogEntry(IApp app, LogLevel level, DateTime created, string message, Exception error = null, StackTrace trace = null,
             string callerFile = null, string callerMember = null, int callerLineNumber = 0)
         {
+            this.app = app;
             this.Level = level;
             this.Error = error;
             this.Message = message;
@@ -66,7 +66,7 @@ namespace AppBrix.Logging.Entries
         public override string ToString()
         {
             var result = new StringBuilder();
-            result.Append(this.Created.ToString(@"yyyy-MM-ddTHH\:mm\:ss.fffK"));
+            result.Append(app.GetTimeService().ToString(this.Created));
             result.Append(DefaultLogEntry.Separator);
             result.Append(string.Format("{0,-5}", this.Level));
             result.Append(DefaultLogEntry.Separator);
@@ -98,7 +98,8 @@ namespace AppBrix.Logging.Entries
         #region Private fields and constants
         private const string Separator = " | ";
         private const string LineNumberSeparator = ":";
-        private StackTrace trace;
+        private readonly IApp app;
+        private readonly StackTrace trace;
         #endregion
     }
 }

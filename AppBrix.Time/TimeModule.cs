@@ -17,8 +17,10 @@ namespace AppBrix.Time
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var dateTimeKind = this.App.GetConfig<TimeConfig>().Kind;
-            this.timeService = this.CreateTimeService(dateTimeKind);
+            var config = this.App.GetConfig<TimeConfig>();
+            var dateTimeKind = config.Kind;
+            var format = config.Format;
+            this.timeService = this.CreateTimeService(dateTimeKind, format);
             this.App.GetResolver().Register(this);
             this.App.GetResolver().Register(this.timeService, this.timeService.GetType());
         }
@@ -29,14 +31,14 @@ namespace AppBrix.Time
         #endregion
 
         #region Private methods
-        private ITimeService CreateTimeService(DateTimeKind kind)
+        private ITimeService CreateTimeService(DateTimeKind kind, string format)
         {
             switch (kind)
             {
                 case DateTimeKind.Local:
-                    return new LocalTimeService();
+                    return new LocalTimeService(format);
                 case DateTimeKind.Utc:
-                    return new UtcTimeService();
+                    return new UtcTimeService(format);
                 case DateTimeKind.Unspecified:
                 default:
                     throw new NotSupportedException("The specified DateTimeKind is not supported: " + kind);

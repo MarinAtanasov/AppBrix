@@ -21,5 +21,19 @@ namespace AppBrix.Time
         /// <param name="time">The specified time.</param>
         /// <returns>The converted time.</returns>
         DateTime ToAppTime(DateTime time);
+
+        /// <summary>
+        /// Converts a given <see cref="DateTime"/> to a predefined <see cref="string"/> representation.
+        /// </summary>
+        /// <param name="time">The time.</param>
+        /// <returns>The string representation of the time.</returns>
+        string ToString(DateTime time);
+
+        /// <summary>
+        /// Converts a given <see cref="string"/> to a <see cref="DateTime"/> in a system time kind.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        DateTime ToDateTime(string time);
     }
 }

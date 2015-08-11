@@ -26,5 +26,16 @@ namespace AppBrix.Time.Configuration
                 this["kind"] = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the time string format to be used inside the application.
+        /// Changing this property requires module reinitialization.
+        /// </summary>
+        [ConfigurationProperty("format", DefaultValue = @"yyyy-MM-ddTHH:mm:ss.fffK")]
+        public string Format
+        {
+            get { return (string)this["format"]; }
+            set { this["format"] = value; }
+        }
     }
 }
