@@ -15,6 +15,19 @@ namespace AppBrix.Logging
     internal sealed class DefaultLogHub : ILogHub, IApplicationLifecycle
     {
         #region ILogHub implementation
+        public void Critical(string message, Exception error = null,
+            [CallerFilePath] string callerFile = null,
+            [CallerMemberName] string callerMember = null,
+            [CallerLineNumber] int callerLineNumber = 0)
+        {
+            if (this.ShouldLog(LogLevel.Critical))
+            {
+                this.app.GetEventHub()
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Critical, this.GetTime(), message, error,
+                        callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
+            }
+        }
+
         public void Error(string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
