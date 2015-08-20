@@ -19,5 +19,16 @@ namespace AppBrix
         {
             return app.Get<IFactory>();
         }
+
+        /// <summary>
+        /// Returns an object of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be returned.</typeparam>
+        /// <param name="factory">The factory.</param>
+        /// <returns>An instance of an object of type T.</returns>
+        public static T Get<T>(this IFactory factory)
+        {
+            return (T)factory.Get(typeof(T));
+        }
     }
 }

@@ -18,14 +18,7 @@ namespace AppBrix.Factory
         /// <typeparam name="T">The type to be returned by the factory.</typeparam>
         /// <param name="factory">The factory method.</param>
         void Register<T>(Func<T> factory);
-
-        /// <summary>
-        /// Returns an object of the specified type.
-        /// </summary>
-        /// <typeparam name="T">The type of the object to be returned.</typeparam>
-        /// <returns>An instance of an object of type T.</returns>
-        T Get<T>();
-
+        
         /// <summary>
         /// Returns an object of the specified type.
         /// </summary>

@@ -31,11 +31,6 @@ namespace AppBrix.Factory
             this.factories[typeof(T)] = (() => factory());
         }
         
-        public T Get<T>()
-        {
-            return (T)this.Get(typeof(T));
-        }
-
         public object Get(Type type)
         {
             return this.factories.ContainsKey(type) ?
