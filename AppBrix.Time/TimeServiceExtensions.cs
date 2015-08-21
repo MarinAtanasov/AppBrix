@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for the <see cref="TimeModule"/>.
+    /// </summary>
     public static class TimeServiceExtensions
     {
         /// <summary>

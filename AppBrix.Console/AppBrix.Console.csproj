@@ -80,6 +80,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\AppBrix.Time.dll</HintPath>
     </Reference>
+    <Reference Include="AppBrix.Web">
+      <HintPath>..\bin\AppBrix.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
