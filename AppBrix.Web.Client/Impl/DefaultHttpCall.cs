@@ -51,9 +51,6 @@ namespace AppBrix.Web.Client.Impl
 
         public IHttpCall SetContent<T>(T content)
         {
-            if (content == null)
-                throw new ArgumentNullException("content");
-
             this.content = content;
             
             return this;
