@@ -18,23 +18,31 @@ namespace AppBrix.Web.Client.Impl
             {
                 ((IDisposable)this.content).Dispose();
             }
+            this.content = null;
         }
 
         public IHttpResponse<T> MakeCall<T>()
         {
-            using (var client = new HttpClient())
+            try
             {
-                var response = this.GetResponse(client);
-                var headers = response.Headers;
-                var content = response.Content;
-                var contentHeaders = content.Headers;
-                var contentValue = this.GetResponseContent<T>(content);
-                return new DefaultHttpResponse<T>(
-                    new DefaultHttpHeaders(headers),
-                    new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(contentHeaders)),
-                    (int)response.StatusCode,
-                    response.ReasonPhrase,
-                    response.Version);
+                using (var client = new HttpClient())
+                {
+                    var response = this.GetResponse(client);
+                    var headers = response.Headers;
+                    var content = response.Content;
+                    var contentHeaders = content.Headers;
+                    var contentValue = this.GetResponseContent<T>(content);
+                    return new DefaultHttpResponse<T>(
+                        new DefaultHttpHeaders(headers),
+                        new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(contentHeaders)),
+                        (int)response.StatusCode,
+                        response.ReasonPhrase,
+                        response.Version);
+                }
+            }
+            finally
+            {
+                this.Dispose();
             }
         }
 
