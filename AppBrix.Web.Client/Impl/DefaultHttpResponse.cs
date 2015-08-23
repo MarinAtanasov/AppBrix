@@ -4,12 +4,12 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Web.Impl
+namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultRestResponse<T> : IRestResponse<T>
+    internal sealed class DefaultHttpResponse<T> : IHttpResponse<T>
     {
         #region Construction
-        public DefaultRestResponse(IRestMessageHeaders headers, IRestContent<T> content, int statusCode, string reasonPhrase, Version version)
+        public DefaultHttpResponse(IHttpMessageHeaders headers, IHttpContent<T> content, int statusCode, string reasonPhrase, Version version)
         {
             this.Headers = headers;
             this.Content = content;
@@ -20,9 +20,9 @@ namespace AppBrix.Web.Impl
         #endregion
 
         #region Properties
-        public IRestMessageHeaders Headers { get; private set; }
+        public IHttpMessageHeaders Headers { get; private set; }
 
-        public IRestContent<T> Content { get; private set; }
+        public IHttpContent<T> Content { get; private set; }
 
         public int StatusCode { get; private set; }
 

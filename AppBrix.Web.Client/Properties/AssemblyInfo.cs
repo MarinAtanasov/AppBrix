@@ -4,8 +4,8 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("AppBrix.Web")]
-[assembly: AssemblyProduct("AppBrix.Web")]
+[assembly: AssemblyTitle("AppBrix.Web.Client")]
+[assembly: AssemblyProduct("AppBrix.Web.Client")]
 
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]

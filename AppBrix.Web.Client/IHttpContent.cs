@@ -4,18 +4,18 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Web
+namespace AppBrix.Web.Client
 {
     /// <summary>
     /// HTTP message content.
     /// </summary>
     /// <typeparam name="T">The type of the content object.</typeparam>
-    public interface IRestContent<T>
+    public interface IHttpContent<T>
     {
         /// <summary>
         /// Gets the content headers.
         /// </summary>
-        IRestContentHeaders Headers { get; }
+        IHttpContentHeaders Headers { get; }
 
         /// <summary>
         /// Gets the message content.

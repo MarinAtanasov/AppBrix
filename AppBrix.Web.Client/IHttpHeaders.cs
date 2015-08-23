@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Web
+namespace AppBrix.Web.Client
 {
     /// <summary>
     /// HTTP REST headers.
     /// </summary>
-    public interface IRestHeaders : IDictionary<string, string[]>
+    public interface IHttpHeaders : IDictionary<string, string[]>
     {
     }
 }

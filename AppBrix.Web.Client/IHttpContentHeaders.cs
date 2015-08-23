@@ -4,19 +4,12 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Web
+namespace AppBrix.Web.Client
 {
     /// <summary>
-    /// An enumeration of HTTP method calls.
+    /// HTTP content headers.
     /// </summary>
-    public enum RestCallMethod
+    public interface IHttpContentHeaders : IHttpHeaders
     {
-        GET,
-        HEAD,
-        POST,
-        PUT,
-        DELETE,
-        OPTIONS,
-        TRACE,
     }
 }

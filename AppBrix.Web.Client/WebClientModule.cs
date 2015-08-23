@@ -3,21 +3,21 @@
 //
 using AppBrix.Modules;
 using AppBrix.Lifecycle;
-using AppBrix.Web.Impl;
+using AppBrix.Web.Client.Impl;
 using System;
 using System.Linq;
 
-namespace AppBrix.Web
+namespace AppBrix.Web.Client
 {
     /// <summary>
-    /// Modules which registers a factory for creating <see cref="IRestCall"/> objects.
+    /// Modules which registers a factory for creating <see cref="IHttpCall"/> objects.
     /// </summary>
-    public class WebModule : ModuleBase
+    public class WebClientModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetFactory().Register<IRestCall>(() => new DefaultRestCall());
+            this.App.GetFactory().Register<IHttpCall>(() => new DefaultHttpCall());
         }
 
         protected override void UninitializeModule()

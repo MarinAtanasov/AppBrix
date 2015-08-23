@@ -63,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Cloning", "AppBrix.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Cloning.Tests", "AppBrix.Cloning.Tests\AppBrix.Cloning.Tests.csproj", "{72873CE2-C954-4EF2-AE1A-5DFC20032790}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Web", "AppBrix.Web\AppBrix.Web.csproj", "{38EB8F79-7A29-494F-9383-DABC826997A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Web.Client", "AppBrix.Web.Client\AppBrix.Web.Client.csproj", "{38EB8F79-7A29-494F-9383-DABC826997A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

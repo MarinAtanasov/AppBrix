@@ -4,12 +4,12 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Web.Impl
+namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultRestContent<T> : IRestContent<T>
+    internal sealed class DefaultHttpContent<T> : IHttpContent<T>
     {
         #region Construction
-        public DefaultRestContent(T content, IRestContentHeaders headers)
+        public DefaultHttpContent(T content, IHttpContentHeaders headers)
         {
             this.Content = content;
             this.Headers = headers;
@@ -19,7 +19,7 @@ namespace AppBrix.Web.Impl
         #region Properties
         public T Content { get; private set; }
 
-        public IRestContentHeaders Headers { get; private set; }
+        public IHttpContentHeaders Headers { get; private set; }
         #endregion
     }
 }

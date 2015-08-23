@@ -4,19 +4,19 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Web
+namespace AppBrix.Web.Client
 {
     /// <summary>
     /// An object used for making an HTTP REST service call.
     /// </summary>
-    public interface IRestCall
+    public interface IHttpCall
     {
         /// <summary>
         /// Executes the REST call.
         /// </summary>
         /// <typeparam name="T">The type of the response object to be returned.</typeparam>
         /// <returns>The REST response.</returns>
-        IRestResponse<T> MakeCall<T>();
+        IHttpResponse<T> MakeCall<T>();
 
         /// <summary>
         /// Sets an HTTP message header.
@@ -24,7 +24,7 @@ namespace AppBrix.Web
         /// <param name="header">The header's key.</param>
         /// <param name="values">The header's values.</param>
         /// <returns></returns>
-        IRestCall SetHeader(string header, params string[] values);
+        IHttpCall SetHeader(string header, params string[] values);
 
         /// <summary>
         /// Sets the HTTP message content.
@@ -32,7 +32,7 @@ namespace AppBrix.Web
         /// <typeparam name="T">The type of the content.</typeparam>
         /// <param name="content">The content to be added to the request.</param>
         /// <returns></returns>
-        IRestCall SetContent<T>(T content);
+        IHttpCall SetContent<T>(T content);
 
         /// <summary>
         /// Sets an HTTP content header.
@@ -40,19 +40,19 @@ namespace AppBrix.Web
         /// <param name="header">The header's key.</param>
         /// <param name="values">The header's values.</param>
         /// <returns></returns>
-        IRestCall SetContentHeader(string header, params string[] values);
+        IHttpCall SetContentHeader(string header, params string[] values);
 
         /// <summary>
         /// Sets the URL to the REST service.
         /// </summary>
         /// <param name="url">The URL to the REST service.</param>
         /// <returns></returns>
-        IRestCall SetUrl(string url);
+        IHttpCall SetUrl(string url);
 
-        IRestCall SetMethod(string method);
+        IHttpCall SetMethod(string method);
 
-        IRestCall SetTimeout(TimeSpan timeout);
+        IHttpCall SetTimeout(TimeSpan timeout);
 
-        IRestCall SetVersion(Version version);
+        IHttpCall SetVersion(Version version);
     }
 }

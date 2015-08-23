@@ -4,12 +4,12 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Web
+namespace AppBrix.Web.Client
 {
     /// <summary>
-    /// HTTP content headers.
+    /// HTTP response message headers.
     /// </summary>
-    public interface IRestContentHeaders : IRestHeaders
+    public interface IHttpMessageHeaders : IHttpHeaders
     {
     }
 }

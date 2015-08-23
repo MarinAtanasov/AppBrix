@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Web.Impl
+namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultRestHeaders : Dictionary<string, string[]>, IRestMessageHeaders, IRestContentHeaders
+    internal sealed class DefaultHttpHeaders : Dictionary<string, string[]>, IHttpMessageHeaders, IHttpContentHeaders
     {
-        public DefaultRestHeaders()
+        public DefaultHttpHeaders()
         {
         }
 
-        public DefaultRestHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+        public DefaultHttpHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
         {
             foreach (var header in headers)
             {
