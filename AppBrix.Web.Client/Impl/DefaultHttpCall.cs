@@ -9,9 +9,17 @@ using System.Net.Http;
 
 namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultHttpCall : IHttpCall
+    internal sealed class DefaultHttpCall : IHttpCall, IDisposable
     {
         #region Public and overriden methods
+        public void Dispose()
+        {
+            if (this.content as IDisposable != null)
+            {
+                ((IDisposable)this.content).Dispose();
+            }
+        }
+
         public IHttpResponse<T> MakeCall<T>()
         {
             using (var client = new HttpClient())
