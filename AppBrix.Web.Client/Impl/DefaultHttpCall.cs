@@ -9,40 +9,24 @@ using System.Net.Http;
 
 namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultHttpCall : IHttpCall, IDisposable
+    internal sealed class DefaultHttpCall : IHttpCall
     {
         #region Public and overriden methods
-        public void Dispose()
-        {
-            if (this.content as IDisposable != null)
-            {
-                ((IDisposable)this.content).Dispose();
-            }
-            this.content = null;
-        }
-
         public IHttpResponse<T> MakeCall<T>()
         {
-            try
+            using (var client = new HttpClient())
             {
-                using (var client = new HttpClient())
-                {
-                    var response = this.GetResponse(client);
-                    var headers = response.Headers;
-                    var content = response.Content;
-                    var contentHeaders = content.Headers;
-                    var contentValue = this.GetResponseContent<T>(content);
-                    return new DefaultHttpResponse<T>(
-                        new DefaultHttpHeaders(headers),
-                        new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(contentHeaders)),
-                        (int)response.StatusCode,
-                        response.ReasonPhrase,
-                        response.Version);
-                }
-            }
-            finally
-            {
-                this.Dispose();
+                var response = this.GetResponse(client);
+                var headers = response.Headers;
+                var content = response.Content;
+                var contentHeaders = content.Headers;
+                var contentValue = this.GetResponseContent<T>(content);
+                return new DefaultHttpResponse<T>(
+                    new DefaultHttpHeaders(headers),
+                    new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(contentHeaders)),
+                    (int)response.StatusCode,
+                    response.ReasonPhrase,
+                    response.Version);
             }
         }
 
@@ -70,24 +54,8 @@ namespace AppBrix.Web.Client.Impl
             if (content == null)
                 throw new ArgumentNullException("content");
 
-            object objContent = content;
-
-            if (typeof(Stream).IsAssignableFrom(typeof(T)))
-            {
-                this.content = new StreamContent((Stream)objContent);
-            }
-            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(typeof(T)))
-            {
-                this.content = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)objContent);
-            }
-            else if (typeof(byte[]).IsAssignableFrom(typeof(T)))
-            {
-                this.content = new ByteArrayContent((byte[])objContent);
-            }
-            else
-            {
-                this.content = new StringContent(content.ToString());
-            }
+            this.content = content;
+            
             return this;
         }
 
@@ -159,7 +127,7 @@ namespace AppBrix.Web.Client.Impl
 
             if (this.content != null)
             {
-                message.Content = this.content;
+                message.Content = this.CreateContent();
                 foreach (var header in this.contentHeaders)
                 {
                     if (message.Content.Headers.Contains(header.Key))
@@ -173,6 +141,30 @@ namespace AppBrix.Web.Client.Impl
                 message.Version = this.httpMessageVersion;
 
             return client.SendAsync(message).Result;
+        }
+
+        private HttpContent CreateContent()
+        {
+            var type = this.content.GetType();
+
+            HttpContent result;
+            if (typeof(Stream).IsAssignableFrom(type))
+            {
+                result = new StreamContent((Stream)this.content);
+            }
+            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(type))
+            {
+                result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
+            }
+            else if (typeof(byte[]).IsAssignableFrom(type))
+            {
+                result = new ByteArrayContent((byte[])this.content);
+            }
+            else
+            {
+                result = new StringContent(this.content.ToString());
+            }
+            return result;
         }
 
         private T GetResponseContent<T>(HttpContent content)
@@ -197,7 +189,7 @@ namespace AppBrix.Web.Client.Impl
         private readonly IDictionary<string, ICollection<string>> headers = new Dictionary<string, ICollection<string>>();
         private readonly IDictionary<string, ICollection<string>> contentHeaders = new Dictionary<string, ICollection<string>>();
         private string callMethod = "GET";
-        private HttpContent content;
+        private object content;
         private TimeSpan timeout;
         private string requestUrl;
         private Version httpMessageVersion;
