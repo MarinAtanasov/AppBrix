@@ -26,7 +26,7 @@ namespace AppBrix.Tests
             Assert.IsFalse(module.IsUninitialized, "Uninitialize should not be called before uninitializing the application.");
             app.Uninitialize();
             Assert.IsTrue(module.IsUninitialized, "Uninitialize should be called after uninitializing the application.");
-            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be chaged.");
+            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be changed.");
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace AppBrix.Tests
             var module = this.GetModules(app).Select(x => x.Module).Cast<SimpleModuleMock>().SingleOrDefault();
             Assert.IsNull(module, "Default modules should not be loaded in memory.");
             app.Uninitialize();
-            Assert.AreEqual(ModuleStatus.Disabled, app.AppConfig.Modules.Single().Status, "Module status should not be chaged.");
+            Assert.AreEqual(ModuleStatus.Disabled, app.AppConfig.Modules.Single().Status, "Module status should not be changed.");
         }
 
         [TestMethod]
@@ -56,7 +56,7 @@ namespace AppBrix.Tests
             Assert.IsTrue(module.IsUninitialized, "Uninitialize should be called after uninitializing the application.");
             Assert.IsFalse(module.IsUpgraded, "Upgrade should not be called after uninitializing the application.");
             Assert.IsFalse(module.IsUninstalled, "Uninstall should not be called after uninitializing the application.");
-            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be chaged.");
+            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be changed.");
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace AppBrix.Tests
             Assert.IsTrue(module.IsUninitialized, "Uninitialize should be called after uninitializing the application.");
             Assert.IsFalse(module.IsInstalled, "Install should not be called after uninitializing the application.");
             Assert.IsFalse(module.IsUninstalled, "Uninstall should not be called after uninitializing the application.");
-            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be chaged.");
+            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be changed.");
         }
 
         [TestMethod]
@@ -95,7 +95,7 @@ namespace AppBrix.Tests
             Assert.IsFalse(module.IsInstalled, "Install should not be called after uninitializing the application.");
             Assert.IsFalse(module.IsUpgraded, "Upgrade should not be called after uninitializing the application.");
             Assert.IsFalse(module.IsUninstalled, "Uninstall should not be called after uninitializing the application.");
-            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be chaged.");
+            Assert.AreEqual(ModuleStatus.Enabled, app.AppConfig.Modules.Single().Status, "Module status should not be changed.");
         }
 
         [TestMethod]
