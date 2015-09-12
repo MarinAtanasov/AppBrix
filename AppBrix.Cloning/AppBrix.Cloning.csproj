@@ -61,11 +61,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj">
-      <Project>{c179a5b6-b2cc-42d6-b42a-c134a4b93ec4}</Project>
-      <Name>AppBrix.Factory</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
       <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
       <Name>AppBrix.Resolver</Name>
