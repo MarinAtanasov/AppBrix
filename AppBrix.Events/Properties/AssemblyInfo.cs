@@ -11,4 +11,3 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyFileVersion("0.1.0.0")]
 
 [assembly: InternalsVisibleTo("AppBrix.Events.Tests")]
-[assembly: InternalsVisibleTo("AppBrix.Logging.Tests")]
