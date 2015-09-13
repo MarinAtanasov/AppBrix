@@ -3,19 +3,28 @@
 //
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
+using Microsoft.Framework.Caching.Distributed;
+using Microsoft.Framework.Caching.Memory;
 using System;
 using System.Linq;
-using System.Runtime.Caching;
 
 namespace AppBrix.Caching
 {
+    /// <summary>
+    /// TODO: FIX THIS MAZALYAK!!!
+    /// </summary>
     public sealed class CacheModule : ModuleBase, IDisposable
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetResolver().Register(this);
-            this.cache = new MemoryCache(this.App.Id.ToString());
+
+            this.serializer = new DefaultCacheSerializer();
+            this.App.GetResolver().Register(this.serializer);
+
+            var distributedCache = new LocalCache(new MemoryCache(null));
+            this.cache = new DefaultCache(this.App, distributedCache);
             this.App.GetResolver().Register(this.cache);
         }
 
@@ -30,13 +39,13 @@ namespace AppBrix.Caching
         /// </summary>
         public void Dispose()
         {
-            this.cache.Dispose();
             this.cache = null;
         }
         #endregion
 
         #region Private fields and constants
-        private MemoryCache cache;
+        private DefaultCacheSerializer serializer;
+        private DefaultCache cache;
         #endregion
     }
 }

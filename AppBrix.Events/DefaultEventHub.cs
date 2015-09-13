@@ -5,6 +5,7 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.Events
 {
@@ -77,11 +78,11 @@ namespace AppBrix.Events
 
         private void RaiseBaseClassesEvents<T>(T args) where T : IEvent
         {
-            var baseType = typeof(T).BaseType;
+            var baseType = typeof(T).GetTypeInfo().BaseType;
             while (baseType != null && typeof(IEvent).IsAssignableFrom(baseType))
             {
                 this.RaiseEvent(args, baseType);
-                baseType = baseType.BaseType;
+                baseType = baseType.GetTypeInfo().BaseType;
             }
         }
 

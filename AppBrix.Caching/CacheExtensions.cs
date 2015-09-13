@@ -2,9 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Caching;
+using Microsoft.Framework.Caching.Distributed;
 using System;
 using System.Linq;
-using System.Runtime.Caching;
 
 namespace AppBrix
 {
@@ -15,24 +16,34 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The currently running application.</param>
         /// <returns>The cache.</returns>
-        public static ObjectCache GetCache(this IApp app)
+        public static ICache GetCache(this IApp app)
         {
-            return app.Get<ObjectCache>();
+            return app.Get<ICache>();
         }
 
+
         /// <summary>
-        /// Gets the item from the cache and casts it to the desired type.
-        /// Return null if the item is not found.
+        /// Serializes an item to <see cref="byte[]"/>.
         /// </summary>
         /// <typeparam name="T">The type of the item.</typeparam>
-        /// <param name="cache">The cache.</param>
-        /// <param name="key">The key of the cached item.</param>
-        /// <param name="regionName">The region of the item. Optional.</param>
-        /// <returns>The cached item. Null if not found.</returns>
-        public static T Get<T>(this ObjectCache cache, string key, string regionName = null)
-            where T : class
+        /// <param name="serializer">The serializer.</param>
+        /// <param name="item">The item to be serialized.</param>
+        /// <returns>The byte array representation of the item.</returns>
+        public static byte[] Serialize<T>(this ICacheSerializer serializer, T item)
         {
-            return (T)cache.Get(key, regionName);
+            return serializer.Serialize(typeof(T), item);
+        }
+        
+        /// <summary>
+        /// Deserializes an item from a byte array.
+        /// </summary>
+        /// <typeparam name="T">The type of the item</typeparam>
+        /// <param name="serializer">The serializer.</param>
+        /// <param name="serialized">The item to be deserialized.</param>
+        /// <returns>The deserialized item.</returns>
+        public static T Deserialize<T>(this ICacheSerializer serializer, byte[] serialized)
+        {
+            return (T)serializer.Deserialize(typeof(T), serialized);
         }
     }
 }

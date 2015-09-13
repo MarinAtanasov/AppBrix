@@ -1,0 +1,6 @@
+{
+  "projects": [ "Application", "Modules", "Projects", "Tests" ],
+  "sdk": {
+    "version": "1.0.0-beta7"
+  }
+}

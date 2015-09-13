@@ -3,8 +3,6 @@
 //
 using AppBrix.Application;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,14 +13,13 @@ namespace AppBrix.Logging.Entries
     internal sealed class DefaultLogEntry : ILogEntry
     {
         #region Construciton
-        public DefaultLogEntry(IApp app, LogLevel level, DateTime created, string message, Exception error = null, StackTrace trace = null,
+        public DefaultLogEntry(IApp app, LogLevel level, DateTime created, string message, Exception error = null,
             string callerFile = null, string callerMember = null, int callerLineNumber = 0)
         {
             this.app = app;
             this.Level = level;
             this.Error = error;
             this.Message = message;
-            this.trace = trace;
             this.CallerFile = callerFile;
             this.CallerMember = callerMember;
             this.CallerLineNumber = callerLineNumber;
@@ -47,14 +44,6 @@ namespace AppBrix.Logging.Entries
         public DateTime Created { get; private set; }
 
         public int ThreadId { get; private set; }
-
-        public string Trace
-        {
-            get
-            {
-                return this.trace != null ? this.trace.ToString().TrimEnd() : null;
-            }
-        }
         #endregion
 
         #region Public and overriden methods
@@ -79,12 +68,7 @@ namespace AppBrix.Logging.Entries
             result.Append(this.CallerMember);
             result.Append(DefaultLogEntry.Separator);
             result.Append(this.Message);
-
-            if (this.trace != null)
-            {
-                result.Append(Environment.NewLine);
-                result.Append(this.Trace);
-            }
+            
             if (this.Error != null)
             {
                 result.Append(Environment.NewLine);
@@ -99,7 +83,6 @@ namespace AppBrix.Logging.Entries
         private const string Separator = " | ";
         private const string LineNumberSeparator = ":";
         private readonly IApp app;
-        private readonly StackTrace trace;
         #endregion
     }
 }

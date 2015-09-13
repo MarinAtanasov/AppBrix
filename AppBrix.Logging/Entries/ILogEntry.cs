@@ -31,13 +31,7 @@ namespace AppBrix.Logging.Entries
         /// Gets the time when the log entry was created.
         /// </summary>
         DateTime Created { get; }
-
-        /// <summary>
-        /// Gets the stack trace where the entry was created.
-        /// Available for trace level log entries only.
-        /// </summary>
-        string Trace { get; }
-
+        
         /// <summary>
         /// Gets the full path to the file of the caller.
         /// </summary>

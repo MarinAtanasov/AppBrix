@@ -1,21 +1,39 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
 using AppBrix.Cloning.Tests.Mocks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AppBrix.Resolver;
+using AppBrix.Tests;
+using FluentAssertions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Xunit;
 
 namespace AppBrix.Cloning.Tests
 {
-    [TestClass]
-    public class CloningTests
+    public class CloningTests : IDisposable
     {
+        #region Setup and cleanup
+        public CloningTests()
+        {
+            this.app = TestUtils.CreateTestApp(
+                typeof(ResolverModule),
+                typeof(CloningModule));
+            this.app.Start();
+        }
+
+        public void Dispose()
+        {
+            this.app.Stop();
+        }
+        #endregion
+
         #region Tests
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyInteger()
         {
             var cloner = this.GetCloner();
@@ -24,7 +42,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShalowCopyInteger()
         {
             var cloner = this.GetCloner();
@@ -33,7 +51,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShalowCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyString()
         {
             var cloner = this.GetCloner();
@@ -42,7 +60,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShalowCopyString()
         {
             var cloner = this.GetCloner();
@@ -51,7 +69,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShalowCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyNumericPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -60,7 +78,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShalowCopyNumericPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -69,7 +87,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShalowCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -78,7 +96,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShalowCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -87,7 +105,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShalowCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyComplexPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -96,7 +114,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShalowCopyComplexPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -105,18 +123,18 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShalowCopy(original, clone);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyDirectRecursingMock()
         {
             var cloner = this.GetCloner();
             var original = new SelfReferencingMock();
             original.Other = original;
             var clone = cloner.DeepCopy(original);
-            Assert.AreNotSame(original, clone, "The original and clone are the same object.");
-            Assert.AreSame(clone, clone.Other, "The clone should be referencing itself.");
+            clone.Should().NotBeSameAs(original, "the original should be deep cloned");
+            clone.Other.Should().BeSameAs(clone, "the clone should be referencing itself after the deep copy");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDeepCopyIndirectRecursingMock()
         {
             var cloner = this.GetCloner();
@@ -124,65 +142,56 @@ namespace AppBrix.Cloning.Tests
             original.Other = new SelfReferencingMock();
             original.Other.Other = original;
             var clone = cloner.DeepCopy(original);
-            Assert.AreNotSame(original, clone, "The original and clone are the same object.");
-            Assert.AreNotSame(original.Other, clone.Other,
-                "The original's referenced object and clone's referenced object are the same object.");
-            Assert.AreSame(clone, clone.Other.Other, "The clone's reference should be referencing the clone.");
+            clone.Should().NotBeSameAs(original, "the original should be deep cloned");
+            clone.Other.Should().NotBeSameAs(original.Other,
+                "the original's referenced object and clone's referenced object should not be the same object");
+            clone.Other.Other.Should().BeSameAs(clone, "the clone's reference should be referencing the clone");
         }
 
-        [TestMethod]
-        [Timeout(20)]
+        [Fact]
         public void TestPerformanceDeepCopy()
         {
-            var cloner = this.GetCloner();
-            for (int i = 0; i < 25; i++)
-            {
-                var original = new ComplexPropertiesMock(20);
-                var clone = cloner.DeepCopy(original);
-            }
+            Action action = () => this.TestPerformanceDeepCopyInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
         }
 
-        [TestMethod]
-        [Timeout(20)]
+        [Fact]
         public void TestPerformanceShalowCopy()
         {
-            var cloner = this.GetCloner();
-            for (int i = 0; i < 1000; i++)
-            {
-                var original = new ComplexPropertiesMock(20);
-                var clone = cloner.ShalowCopy(original);
-            }
+            Action action = () => this.TestPerformanceShalowCopyInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
         }
         #endregion
 
         #region Private methods
         private ICloner GetCloner()
         {
-            return new DefaultCloner();
+            return this.app.GetCloner();
         }
 
         private void AssertIsDeepCopy(object original, object copy)
         {
             if (original == null)
             {
-                Assert.IsNull(copy, "Original is null but the copy is not.");
+                copy.Should().BeNull("the copy should be null when the original is null");
                 return;
             }
 
-            Assert.IsNotNull(copy, "Original is not null but the copy is.");
+            copy.Should().NotBeNull("the copy should not be null when the original is not");
 
             var type = original.GetType();
-            Assert.AreEqual(type, copy.GetType(), "The shallow clone is not of the same type.");
+            copy.GetType().Should().Be(type, "the type of the copy should be the same as the original");
 
-            if ((type.IsValueType && type.IsPrimitive) || type == typeof(string) || type.IsEnum)
+            var typeInfo = type.GetTypeInfo();
+            if ((typeInfo.IsValueType && typeInfo.IsPrimitive) || typeInfo.IsEnum || type == typeof(string))
             {
-                Assert.AreEqual(original, copy, "Original and copied values are different.");
-                if (type.IsPrimitive || type == typeof(string))
+                copy.Should().Be(original, "the value of the copy should be the same as the original");
+                if (typeInfo.IsPrimitive || type == typeof(string))
                     return;
             }
-            else if (!type.IsValueType)
+            else if (!typeInfo.IsValueType)
             {
-                Assert.AreNotSame(original, copy, "Original and copied values are the same object.");
+                copy.Should().NotBeSameAs(original, "the copied object should not be the same instance as the original");
             }
 
             foreach (var field in this.GetFields(type))
@@ -196,18 +205,18 @@ namespace AppBrix.Cloning.Tests
                 var copiedEnumerator = ((IEnumerable)copy).GetEnumerator();
 
                 bool moveNext = originalEnumerator.MoveNext();
-                Assert.AreEqual(moveNext, copiedEnumerator.MoveNext(),
-                    string.Format("Original enumeration elements are {0}. Copied enumeration elements are {1}.",
+                copiedEnumerator.MoveNext().Should().Be(moveNext,
+                    "original enumeration elements are {0}, copied enumeration elements are {1}",
                     ((IEnumerable)original).Cast<object>().Count(),
-                    ((IEnumerable)copy).Cast<object>().Count()));
+                    ((IEnumerable)copy).Cast<object>().Count());
                 while (moveNext)
                 {
                     this.AssertIsDeepCopy(originalEnumerator.Current, copiedEnumerator.Current);
                     moveNext = originalEnumerator.MoveNext();
-                    Assert.AreEqual(moveNext, copiedEnumerator.MoveNext(),
-                        string.Format("Original enumeration elements are {0}. Copied enumeration elements are {1}.",
+                    copiedEnumerator.MoveNext().Should().Be(moveNext,
+                        "original enumeration elements are {0}, copied enumeration elements are {1}",
                         ((IEnumerable)original).Cast<object>().Count(),
-                        ((IEnumerable)copy).Cast<object>().Count()));
+                        ((IEnumerable)copy).Cast<object>().Count());
                 }
             }
         }
@@ -216,24 +225,25 @@ namespace AppBrix.Cloning.Tests
         {
             if (original == null)
             {
-                Assert.IsNull(copy, "Original is null but the copy is not.");
+                copy.Should().BeNull("the copy should be null when the original is null");
                 return;
             }
 
-            Assert.IsNotNull(copy, "Original is not null but the copy is.");
+            copy.Should().NotBeNull("the copy should not be null when the original is not");
 
             var type = original.GetType();
-            Assert.AreEqual(type, copy.GetType(), "The shallow clone is not of the same type.");
+            copy.GetType().Should().Be(type, "the type of the copy should be the same as the original");
 
-            if (type.IsValueType || type == typeof(string))
+            var typeInfo = type.GetTypeInfo();
+            if (typeInfo.IsValueType || type == typeof(string))
             {
-                Assert.AreEqual(original, copy, "Original and copied values are different.");
-                if (type.IsPrimitive || type == typeof(string))
+                copy.Should().Be(original, "the value of the copy should be the same as the original");
+                if (typeInfo.IsPrimitive || type == typeof(string))
                     return;
             }
             else if (!isInitialObject)
             {
-                Assert.AreSame(original, copy, "Original and copied values are different objects.");
+                copy.Should().BeSameAs(original, "the copied object should be the same instance as the original");
             }
 
             foreach (var field in this.GetFields(type))
@@ -253,9 +263,33 @@ namespace AppBrix.Cloning.Tests
                 {
                     yield return field;
                 }
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
 	        }
         }
+
+        private void TestPerformanceDeepCopyInternal()
+        {
+            var cloner = this.GetCloner();
+            for (int i = 0; i < 10; i++)
+            {
+                var original = new ComplexPropertiesMock(10);
+                var clone = cloner.DeepCopy(original);
+            }
+        }
+
+        private void TestPerformanceShalowCopyInternal()
+        {
+            var cloner = this.GetCloner();
+            for (int i = 0; i < 1000; i++)
+            {
+                var original = new ComplexPropertiesMock(10);
+                var clone = cloner.ShalowCopy(original);
+            }
+        }
+        #endregion
+
+        #region Private fields and constants
+        private readonly IApp app;
         #endregion
     }
 }

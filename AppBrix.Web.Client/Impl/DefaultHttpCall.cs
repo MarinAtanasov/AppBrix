@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 
 namespace AppBrix.Web.Client.Impl
 {
@@ -142,18 +143,18 @@ namespace AppBrix.Web.Client.Impl
 
         private HttpContent CreateContent()
         {
-            var type = this.content.GetType();
+            var typeInfo = this.content.GetType();
 
             HttpContent result;
-            if (typeof(Stream).IsAssignableFrom(type))
+            if (typeof(Stream).IsAssignableFrom(typeInfo))
             {
                 result = new StreamContent((Stream)this.content);
             }
-            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(type))
+            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(typeInfo))
             {
                 result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
             }
-            else if (typeof(byte[]).IsAssignableFrom(type))
+            else if (typeof(byte[]).IsAssignableFrom(typeInfo))
             {
                 result = new ByteArrayContent((byte[])this.content);
             }

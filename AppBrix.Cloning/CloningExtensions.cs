@@ -27,7 +27,7 @@ namespace AppBrix
         /// <param name="action">The action to be executed on every element.</param>
         internal static void ForEach(this Array array, Action<Array, int[]> action)
         {
-            if (array.LongLength == 0)
+            if (array.Length == 0)
                 return;
 
             var walker = new ArrayTraverse(array);

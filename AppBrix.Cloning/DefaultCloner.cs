@@ -62,14 +62,15 @@ namespace AppBrix.Cloning
                 {
                     field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
                 }
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
             }
             return cloned;
         }
 
         private bool IsPrimitiveType(Type type)
         {
-            return (type.IsValueType && type.IsPrimitive) || type.IsEnum || type == typeof(string);
+            var typeInfo = type.GetTypeInfo();
+            return (typeInfo.IsValueType && typeInfo.IsPrimitive) || typeInfo.IsEnum || type == typeof(string);
         }
         #endregion
 

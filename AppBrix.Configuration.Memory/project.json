@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0-*",
+  "description": "Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.",
+  "authors": [ "Marin Atanasov" ],
+  "tags": [ "AppBrix" ],
+  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
+  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+
+  "dependencies": {
+    "AppBrix.Configuration": "0.1.0-*",
+    "Microsoft.CSharp": "4.0.1-beta-23225"
+  },
+
+  "frameworks": {
+    "dnxcore50": { }
+  }
+}

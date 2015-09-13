@@ -6,7 +6,6 @@ using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Entries;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -75,7 +74,7 @@ namespace AppBrix.Logging
             if (this.ShouldLog(LogLevel.Trace))
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Trace, this.GetTime(), message, error, new StackTrace(1, true),
+                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, LogLevel.Trace, this.GetTime(), message, error,
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }

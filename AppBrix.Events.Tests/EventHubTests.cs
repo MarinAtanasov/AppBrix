@@ -1,19 +1,37 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
 using AppBrix.Events.Tests.Mocks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AppBrix.Resolver;
+using AppBrix.Tests;
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace AppBrix.Events.Tests
 {
-    [TestClass]
-    public class EventHubTests
+    public class EventHubTests : IDisposable
     {
+        #region Setup and cleanup
+        public EventHubTests()
+        {
+            this.app = TestUtils.CreateTestApp(
+                typeof(ResolverModule),
+                typeof(EventsModule));
+            this.app.Start();
+        }
+
+        public void Dispose()
+        {
+            this.app.Stop();
+        }
+        #endregion
+
         #region Tests
-        [TestMethod]
+        [Fact]
         public void TestEvent()
         {
             var hub = this.GetEventHub();
@@ -21,14 +39,14 @@ namespace AppBrix.Events.Tests
             int called = 0;
             hub.Subscribe<EventMock>((e) =>
             {
-                Assert.AreSame(args, e, "The passed arguments are not the same.");
+                e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
                 called++;
             });
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once.");
+            called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestEventChild()
         {
             var hub = this.GetEventHub();
@@ -36,14 +54,14 @@ namespace AppBrix.Events.Tests
             int called = 0;
             hub.Subscribe<EventMock>((e) =>
             {
-                Assert.AreSame(args, e, "The passed arguments are not the same.");
+                e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
                 called++;
             });
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once.");
+            called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestEventInterface()
         {
             var hub = this.GetEventHub();
@@ -51,14 +69,14 @@ namespace AppBrix.Events.Tests
             int called = 0;
             hub.Subscribe<IEvent>((e) =>
             {
-                Assert.AreSame(args, e, "The passed arguments are not the same.");
+                e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
                 called++;
             });
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once.");
+            called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestNoSubscription()
         {
             var hub = this.GetEventHub();
@@ -66,7 +84,7 @@ namespace AppBrix.Events.Tests
             hub.Raise(args);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestParentAndChildSubscription()
         {
             var hub = this.GetEventHub();
@@ -76,10 +94,10 @@ namespace AppBrix.Events.Tests
             hub.Subscribe<EventMock>(handler);
             hub.Subscribe<EventMockChild>(handler);
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once.");
+            called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDoubleSubscription()
         {
             var hub = this.GetEventHub();
@@ -89,10 +107,10 @@ namespace AppBrix.Events.Tests
             hub.Subscribe<IEvent>(handler);
             hub.Subscribe<IEvent>(handler);
             hub.Raise(args);
-            Assert.AreEqual(2, called, "Event handler should be called exactly twice.");
+            called.Should().Be(2, "event handler should be called exactly twice");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestHierarchyCallingOrder()
         {
             var hub = this.GetEventHub();
@@ -102,29 +120,29 @@ namespace AppBrix.Events.Tests
             var interfaceCalled = false;
             hub.Subscribe<EventMock>((e) =>
             {
-                Assert.IsTrue(childCalled, "Child should be called before parent.");
+                childCalled.Should().BeTrue("child should be called before parent");
                 parentCalled = true;
-                Assert.IsFalse(interfaceCalled, "Interface should be called after parent.");
+                interfaceCalled.Should().BeFalse("interface should be called after parent");
             });
             hub.Subscribe<EventMockChild>((e) =>
             {
                 childCalled = true;
-                Assert.IsFalse(parentCalled, "Parent should be called after child.");
-                Assert.IsFalse(interfaceCalled, "Interface should be called after child.");
+                parentCalled.Should().BeFalse("parent should be called after child");
+                interfaceCalled.Should().BeFalse("interface should be called after child");
             });
             hub.Subscribe<IEvent>((e) =>
             {
-                Assert.IsTrue(parentCalled, "Parent should be called before interface.");
-                Assert.IsTrue(childCalled, "Child should be called before interface.");
+                parentCalled.Should().BeTrue("parent should be called before interface");
+                childCalled.Should().BeTrue("child should be called before interface");
                 interfaceCalled = true;
             });
             hub.Raise(args);
-            Assert.IsTrue(parentCalled, "Parent should be called.");
-            Assert.IsTrue(parentCalled, "Child should be called.");
-            Assert.IsTrue(parentCalled, "Interface should be called.");
+            parentCalled.Should().BeTrue("parent should be called");
+            parentCalled.Should().BeTrue("child should be called");
+            parentCalled.Should().BeTrue("interface should be called");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestCallBaseSubscribeParent()
         {
             var hub = this.GetEventHub();
@@ -132,10 +150,10 @@ namespace AppBrix.Events.Tests
             int called = 0;
             hub.Subscribe<EventMockChild>((e => { called++; }));
             hub.Raise<EventMock>(args);
-            Assert.AreEqual(0, called, "Event handler should not be called if the arguments are passed as base class.");
+            called.Should().Be(0, "event handler should not be called if the arguments are passed as base class");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDoubleRaise()
         {
             var hub = this.GetEventHub();
@@ -144,12 +162,12 @@ namespace AppBrix.Events.Tests
             Action<IEvent> handler = (e => { called++; });
             hub.Subscribe<IEvent>(handler);
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once after the first raise.");
+            called.Should().Be(1, "event handler should be called exactly once after the first raise");
             hub.Raise(args);
-            Assert.AreEqual(2, called, "Event handler should be called exactly twice after the second raise.");
+            called.Should().Be(2, "event handler should be called exactly twice after the second raise");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestUnsubscribe()
         {
             var hub = this.GetEventHub();
@@ -158,13 +176,13 @@ namespace AppBrix.Events.Tests
             Action<EventMock> handler = (e => { called++; });
             hub.Subscribe<EventMock>(handler);
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once after the first raise.");
+            called.Should().Be(1, "event handler should be called exactly once after the first raise");
             hub.Unsubscribe(handler);
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once after the unsubscription.");
+            called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestUninitialize()
         {
             var hub = this.GetEventHub();
@@ -173,39 +191,65 @@ namespace AppBrix.Events.Tests
             Action<EventMock> handler = (e => { called++; });
             hub.Subscribe<EventMock>(handler);
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once after the first raise.");
+            called.Should().Be(1, "event handler should be called exactly once after the first raise");
             hub.Uninitialize();
             hub.Raise(args);
-            Assert.AreEqual(1, called, "Event handler should be called exactly once after the uninitialization.");
+            called.Should().Be(1, "event handler should be called exactly once after the uninitialization");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void TestNullArgumentSubscribe()
         {
             var hub = this.GetEventHub();
-            hub.Subscribe<IEvent>(null);
+            Action action = () => hub.Subscribe<IEvent>(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void TestNullArgumentUnsubscribe()
         {
             var hub = this.GetEventHub();
-            hub.Unsubscribe<IEvent>(null);
+            Action action = () => hub.Unsubscribe<IEvent>(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void TestNullArgumentRaise()
         {
             var hub = this.GetEventHub();
-            hub.Raise<IEvent>(null);
+            Action action = () => hub.Raise<IEvent>(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
 
-        [TestMethod]
-        [Timeout(20)]
+        [Fact]
         public void TestPerformanceEventsSubscribe()
+        {
+            Action action = () => this.TestPerformanceEventsSubscribeInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+        }
+
+        [Fact]
+        public void TestPerformanceEventsUnsubscribe()
+        {
+            Action action = () => this.TestPerformanceEventsUnsubscribeInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+        }
+
+        [Fact]
+        public void TestPerformanceEventsRaise()
+        {
+            Action action = () => this.TestPerformanceEventsRaiseInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+        }
+        #endregion
+
+        #region Private methods
+        private DefaultEventHub GetEventHub()
+        {
+            return this.app.Get<DefaultEventHub>();
+        }
+
+        private void TestPerformanceEventsSubscribeInternal()
         {
             var hub = this.GetEventHub();
             var calledCount = 40000;
@@ -222,9 +266,7 @@ namespace AppBrix.Events.Tests
             hub.Uninitialize();
         }
 
-        [TestMethod]
-        [Timeout(20)]
-        public void TestPerformanceEventsUnsubscribe()
+        private void TestPerformanceEventsUnsubscribeInternal()
         {
             var hub = this.GetEventHub();
             var calledCount = 20000;
@@ -245,9 +287,7 @@ namespace AppBrix.Events.Tests
             hub.Uninitialize();
         }
 
-        [TestMethod]
-        [Timeout(20)]
-        public void TestPerformanceEventsRaise()
+        private void TestPerformanceEventsRaiseInternal()
         {
             var hub = this.GetEventHub();
             var args = new EventMockChild(10);
@@ -262,18 +302,15 @@ namespace AppBrix.Events.Tests
             {
                 hub.Raise(args);
             }
-            Assert.AreEqual(calledCount, parentCalled, "The parent should be called exactly {0} times", calledCount);
-            Assert.AreEqual(calledCount, childCalled, "The child should be called exactly {0} times", calledCount);
-            Assert.AreEqual(calledCount, interfaceCalled, "The interface should be called exactly {0} times", calledCount);
+            parentCalled.Should().Be(calledCount, "The parent should be called exactly {0} times", calledCount);
+            childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
+            interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
             hub.Uninitialize();
         }
         #endregion
 
-        #region Private methods
-        private DefaultEventHub GetEventHub()
-        {
-            return new DefaultEventHub();
-        }
+        #region Private fields and constants
+        private readonly IApp app;
         #endregion
     }
 }

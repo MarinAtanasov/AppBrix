@@ -1,11 +1,11 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.Resolver
 {
@@ -66,11 +66,11 @@ namespace AppBrix.Resolver
 
         private void RegisterBaseClasses(object obj, Type type)
         {
-            var baseType = type.BaseType;
+            var baseType = type.GetTypeInfo().BaseType;
             while (baseType != null && baseType != typeof(object))
             {
-                this.RegisterType(obj, type.BaseType);
-                baseType = baseType.BaseType;
+                this.RegisterType(obj, baseType);
+                baseType = baseType.GetTypeInfo().BaseType;
             }
         }
 

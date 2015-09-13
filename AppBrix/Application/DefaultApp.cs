@@ -7,22 +7,23 @@ using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.Application
 {
     /// <summary>
-    /// The default app used when no app has been specified.
+    /// The default implementation of an application.
     /// </summary>
     internal sealed class DefaultApp : IApp
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of the default app with the specified configuration.
+        /// Creates a new instance of the default app with the specified configuration manager.
         /// </summary>
-        /// <param name="config"></param>
-        public DefaultApp(IAppConfig config)
+        /// <param name="configManager">The configuration manager.</param>
+        public DefaultApp(IConfigManager configManager)
         {
-            this.AppConfig = config;
+            this.ConfigManager = configManager;
             this.Id = Guid.NewGuid();
         }
         #endregion
@@ -34,9 +35,9 @@ namespace AppBrix.Application
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// Gets the application's configuration.
+        /// Gets the application's configuration manager.
         /// </summary>
-        public IAppConfig AppConfig { get; private set; }
+        public IConfigManager ConfigManager { get; private set; }
         
         /// <summary>
         /// Indicates whether the application is in an initialized state.
@@ -55,13 +56,13 @@ namespace AppBrix.Application
         {
             this.Uninitialize();
             this.UnregisterModules();
-            this.AppConfig.Save();
+            this.ConfigManager.SaveAll();
         }
 
         public void Initialize()
         {
             if (this.IsInitialized)
-                throw new ApplicationException("The application is already initialized.");
+                throw new InvalidOperationException("The application is already initialized.");
 
             this.IsInitialized = true;
 
@@ -72,12 +73,12 @@ namespace AppBrix.Application
                     if (moduleInfo.Config.Version == null)
                     {
                         ((IInstallable)moduleInfo.Module).Install(new DefaultInstallContext(this));
-                        moduleInfo.Config.Version = moduleInfo.Module.GetType().Assembly.GetName().Version;
+                        moduleInfo.Config.Version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
                     }
-                    else if (moduleInfo.Config.Version < moduleInfo.Module.GetType().Assembly.GetName().Version)
+                    else if (moduleInfo.Config.Version < moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version)
                     {
                         ((IInstallable)moduleInfo.Module).Upgrade(new DefaultUpgradeContext(this, moduleInfo.Config.Version));
-                        moduleInfo.Config.Version = moduleInfo.Module.GetType().Assembly.GetName().Version;
+                        moduleInfo.Config.Version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
                     }
                 }
                     
@@ -117,7 +118,7 @@ namespace AppBrix.Application
         private void RegisterModules()
         {
             var modules = this.GetModuleInfos();
-            foreach (var module in ModuleInfo.SortByPriority(modules))
+            foreach (var module in modules)
             {
                 this.modules.Add(module);
             }
@@ -130,7 +131,9 @@ namespace AppBrix.Application
 
         private IEnumerable<ModuleInfo> GetModuleInfos()
         {
-            return this.AppConfig.Modules.Where(m => m.Status != ModuleStatus.Disabled).Select(m => new ModuleInfo(this.CreateModule(m), m));
+            return this.ConfigManager.GetConfig<AppConfig>().Modules
+                .Where(m => m.Status != ModuleStatus.Disabled)
+                .Select(m => new ModuleInfo(this.CreateModule(m), m));
         }
 
         private IModule CreateModule(ModuleConfigElement element)

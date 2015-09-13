@@ -1,0 +1,44 @@
+{
+  "Modules": [
+    {
+      "Type": "AppBrix.Resolver.ResolverModule, AppBrix.Resolver",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Factory.FactoryModule, AppBrix.Factory",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Cloning.CloningModule, AppBrix.Cloning",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Caching.CacheModule, AppBrix.Caching",
+      "Status": "Disabled"
+    },
+    {
+      "Type": "AppBrix.Events.EventsModule, AppBrix.Events",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Time.TimeModule, AppBrix.Time",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Logging.LoggingModule, AppBrix.Logging",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Logging.Console.ConsoleLoggerModule, AppBrix.Logging.Console",
+      "Status": "Enabled"
+    },
+    {
+      "Type": "AppBrix.Logging.File.FileLoggerModule, AppBrix.Logging.File",
+      "Status": "Disabled"
+    },
+    {
+      "Type": "AppBrix.Web.Client.WebClientModule, AppBrix.Web.Client",
+      "Status": "Enabled"
+    }
+  ]
+}

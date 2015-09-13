@@ -6,6 +6,7 @@ using AppBrix.Resolver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix
 {
@@ -38,7 +39,7 @@ namespace AppBrix
                 else if (ResolverExtensions.Resolvers.ContainsKey(app))
                 {
                     ResolverExtensions.Resolvers.Remove(app);
-                } 
+                }
             }
         }
         
@@ -54,9 +55,9 @@ namespace AppBrix
             {
                 return (T)app;
             }
-            else if (typeof(T).IsAssignableFrom(app.AppConfig.GetType()))
+            else if (typeof(T).IsAssignableFrom(app.ConfigManager.GetType()))
             {
-                return (T)app.AppConfig;
+                return (T)app.ConfigManager;
             }
             else
             {
@@ -78,7 +79,7 @@ namespace AppBrix
             resolver.Register(obj, typeof(T));
         }
         #endregion
-
+        
         #region Private fields and constants
         private static IDictionary<IApp, IResolver> Resolvers = new Dictionary<IApp, IResolver>();
         #endregion

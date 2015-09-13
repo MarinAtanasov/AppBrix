@@ -2,213 +2,214 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Configuration.Memory;
 using AppBrix.Events;
 using AppBrix.Logging.Entries;
 using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Time;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using System;
 using System.Linq;
 using System.Threading;
+using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub
 {
-    [TestClass]
-    public class LogHubTests
+    public class LogHubTests : IDisposable
     {
         #region Setup and cleanup
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
+        public LogHubTests()
         {
-            LogHubTests.app = TestUtils.CreateTestApp(
+            this.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule),
-                typeof(MemoryConfigModule),
                 typeof(EventsModule),
                 typeof(TimeModule),
                 typeof(LoggingModule));
-            LogHubTests.app.Start();
+            this.app.Start();
         }
 
-        [ClassCleanup]
-        public static void ClassCleanup()
+        public void Dispose()
         {
-            LogHubTests.app.Stop();
-            LogHubTests.app = null;
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            LogHubTests.app.Reinitialize();
+            this.app.Stop();
         }
         #endregion
 
         #region Tests
-        [TestMethod]
+        [Fact]
         public void TestUnsubscribedTrace()
         {
-            LogHubTests.app.GetLog().Trace(string.Empty);
+            this.app.GetLog().Trace(string.Empty);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestErrorLog()
         {
             var message = "Test message";
             var error = new ArgumentException("Test exception");
             var called = false;
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x =>
+            this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 called = true;
-                Assert.AreEqual(message, x.Message, "Error message is different than the passed in message.");
-                Assert.AreEqual(error, x.Error, "Error is different than the passed in error.");
-                Assert.AreEqual(LogLevel.Error, x.Level, "Log level is not Error.");
+                x.Message.Should().Be(message, "the error message same as the passed in error");
+                x.Error.Should().Be(error, "the error message same as the passed in error");
+                x.Level.Should().Be(LogLevel.Error, "log level should be Error");
             });
-            LogHubTests.app.GetLog().Error(message, error);
-            Assert.IsTrue(called, "The event has not been called.");
+            this.app.GetLog().Error(message, error);
+            called.Should().BeTrue("the event should have been called");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDebugLog()
         {
             var message = "Test message";
             var error = new ArgumentException("Test exception");
             var called = false;
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x =>
+            this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 called = true;
-                Assert.AreEqual(message, x.Message, "Debug message is different than the passed in message.");
-                Assert.AreEqual(error, x.Error, "Error is different than the passed in error.");
-                Assert.AreEqual(LogLevel.Debug, x.Level, "Log level is not Debug.");
+                x.Message.Should().Be(message, "the debug message is different than the passed in message");
+                x.Error.Should().Be(error, "the error message same as the passed in error");
+                x.Level.Should().Be(LogLevel.Debug, "log level should be Debug");
             });
-            LogHubTests.app.GetLog().Debug(message, error);
-            Assert.IsTrue(called, "The event has not been called.");
+            this.app.GetLog().Debug(message, error);
+            called.Should().BeTrue("the event should have been called");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestInfoLog()
         {
             var message = "Test message";
             var called = false;
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x =>
+            this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 called = true;
-                Assert.AreEqual(message, x.Message, "Info message is different than the passed in message.");
-                Assert.AreEqual(LogLevel.Info, x.Level, "Log level is not Info.");
+                x.Message.Should().Be(message, "the info message is different than the passed in message");
+                x.Level.Should().Be(LogLevel.Info, "log level should be Info");
             });
-            LogHubTests.app.GetLog().Info(message);
-            Assert.IsTrue(called, "The event has not been called.");
+            this.app.GetLog().Info(message);
+            called.Should().BeTrue("the event should have been called");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestWarningLog()
         {
             var message = "Test message";
             var error = new ArgumentException("Test exception");
             var called = false;
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x =>
+            this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 called = true;
-                Assert.AreEqual(message, x.Message, "Warning message is different than the passed in message.");
-                Assert.AreEqual(error, x.Error, "Error is different than the passed in error.");
-                Assert.AreEqual(LogLevel.Warning, x.Level, "Log level is not Warning.");
+                x.Message.Should().Be(message, "the warning message is different than the passed in message");
+                x.Error.Should().Be(error, "the error message same as the passed in error");
+                x.Level.Should().Be(LogLevel.Warning, "log level should be Warning");
             });
-            LogHubTests.app.GetLog().Warning(message, error);
-            Assert.IsTrue(called, "The event has not been called.");
+            this.app.GetLog().Warning(message, error);
+            called.Should().BeTrue("the event should have been called");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestTraceLog()
         {
             var message = "Test message";
             var called = false;
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x =>
+            this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 called = true;
-                Assert.AreEqual(message, x.Message, "Trace message is different than the passed in message.");
-                Assert.AreEqual(LogLevel.Trace, x.Level, "Log level is not Trace.");
+                x.Message.Should().Be(message, "the trace message is different than the passed in message");
+                x.Level.Should().Be(LogLevel.Trace, "log level should be Trace");
             });
-            LogHubTests.app.GetLog().Trace(message);
-            Assert.IsTrue(called, "The event has not been called.");
+            this.app.GetLog().Trace(message);
+            called.Should().BeTrue("the event should have been called");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestCallerFile()
         {
             var message = "Test message";
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x => Assert.IsTrue(x.CallerFile.EndsWith(typeof(LogHubTests).Name + ".cs"), "Incorrect file name."));
-            LogHubTests.app.GetLog().Warning(message);
+            this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(typeof(LogHubTests).Name + ".cs", "caller file should be set to current file"));
+            this.app.GetLog().Warning(message);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestCallerMemberName()
         {
             var message = "Test message";
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x => Assert.AreEqual("TestCallerMemberName", x.CallerMember, "Incorrect member name."));
-            LogHubTests.app.GetLog().Error(message);
+            this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerMember.Should().Be("TestCallerMemberName", "member name should be the current function"));
+            this.app.GetLog().Error(message);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestThreadId()
         {
             var message = "Test message";
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x => Assert.AreEqual(Thread.CurrentThread.ManagedThreadId, x.ThreadId, "Incorrect member name."));
-            LogHubTests.app.GetLog().Info(message);
+            this.app.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Thread.CurrentThread.ManagedThreadId, "thread id should be current thread id"));
+            this.app.GetLog().Info(message);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestTimeLogEntry()
         {
             var message = "Test message";
-            var before = LogHubTests.app.GetTime();
+            var before = this.app.GetTime();
             DateTime executed = DateTime.MinValue;
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
-            LogHubTests.app.GetLog().Debug(message);
-            Assert.IsTrue(before <= executed, "Created date time should be greated than the time before creation.");
-            Assert.IsTrue(executed <= LogHubTests.app.GetTime(), "Created date time should be lower than the time after creation.");
+            this.app.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
+            this.app.GetLog().Debug(message);
+            executed.Should().BeOnOrAfter(before, "created date time should be greater than the time before creation");
+            executed.Should().BeOnOrBefore(this.app.GetTime(), "created date time should be greater than the time after creation");
         }
 
-        [TestMethod]
-        [Timeout(20)]
+        [Fact]
         public void TestPerformanceLogging()
+        {
+            Action action = () => this.TestPerformanceLoggingInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+        }
+
+        [Fact]
+        public void TestPerformanceTraceLog()
+        {
+            Action action = () => this.TestPerformanceTraceLogInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+        }
+        #endregion
+
+        #region Private methods
+        private void TestPerformanceLoggingInternal()
         {
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
             var repeat = 1000;
             Action<ILogEntry> handler = x => { called++; };
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(handler);
+            this.app.GetEventHub().Subscribe<ILogEntry>(handler);
             for (int i = 0; i < repeat; i++)
             {
-                LogHubTests.app.GetLog().Error(message, error);
-                LogHubTests.app.GetLog().Debug(message);
-                LogHubTests.app.GetLog().Info(message);
-                LogHubTests.app.GetLog().Warning(message, error);
+                this.app.GetLog().Error(message, error);
+                this.app.GetLog().Debug(message);
+                this.app.GetLog().Info(message);
+                this.app.GetLog().Warning(message, error);
             }
-            Assert.AreEqual(repeat * 4, called, "The event has not been called.");
+            called.Should().Be(repeat * 4, "the event should have been called");
         }
 
-        [TestMethod]
-        [Timeout(20)]
-        public void TestPerformanceTraceLog()
+        private void TestPerformanceTraceLogInternal()
         {
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
             var repeat = 150;
             Action<ILogEntry> handler = x => { called++; };
-            LogHubTests.app.GetEventHub().Subscribe<ILogEntry>(handler);
+            this.app.GetEventHub().Subscribe<ILogEntry>(handler);
             for (int i = 0; i < repeat; i++)
             {
-                LogHubTests.app.GetLog().Trace(message);
+                this.app.GetLog().Trace(message);
             }
-            Assert.AreEqual(repeat, called, "The event has not been called.");
+            called.Should().Be(repeat, "the event should have been called");
         }
         #endregion
 
         #region Private fields and constants
-        private static IApp app;
+        private readonly IApp app;
         #endregion
     }
 }

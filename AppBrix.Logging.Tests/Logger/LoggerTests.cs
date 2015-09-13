@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Configuration.Memory;
 using AppBrix.Events;
 using AppBrix.Logging.Loggers;
 using AppBrix.Logging.Tests.Mocks;
@@ -10,94 +9,80 @@ using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Tests.Mocks;
 using AppBrix.Time;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace AppBrix.Logging.Tests.Logger
 {
-    [TestClass]
-    public class LoggerTests
+    public class LoggerTests : IDisposable
     {
         #region Setup and cleanup
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
+        public LoggerTests()
         {
-            LoggerTests.app = TestUtils.CreateTestApp(
+            this.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule),
-                typeof(MemoryConfigModule),
                 typeof(EventsModule),
                 typeof(TimeModule),
                 typeof(LoggingModule));
-            LoggerTests.app.Start();
+            this.app.Start();
         }
 
-        [ClassCleanup]
-        public static void ClassCleanup()
+        public void Dispose()
         {
-            LoggerTests.app.Stop();
-            LoggerTests.app = null;
+            this.app.Stop();
         }
         #endregion
 
         #region Tests
-        [TestCleanup]
-        public void Cleanup()
-        {
-            LoggerTests.app.Reinitialize();
-        }
-
-        [TestMethod]
+        [Fact]
         public void TestSyncLogger()
         {
             var writer = new LogWriterMock();
             var logger = new SyncLogger(writer);
-            Assert.IsFalse(writer.IsInitialized, "The writer should not initialize before the logger.");
-            Assert.IsFalse(writer.LoggedEntries.Any(), "No entries should be logged before initialization.");
-            logger.Initialize(new InitializeContextMock(LoggerTests.app));
-            Assert.IsTrue(writer.IsInitialized, "The writer should be initialized during the logger's initialization.");
-            Assert.IsFalse(writer.LoggedEntries.Any(), "No entries should be logged just after initialization.");
+            writer.IsInitialized.Should().BeFalse("the writer should not initialize before the logger");
+            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
+            logger.Initialize(new InitializeContextMock(this.app));
+            writer.IsInitialized.Should().BeTrue("the writer should be initialized during the logger's initialization");
+            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
 
             string message = "Message";
             Exception ex = new ArgumentException("Test");
-            LoggerTests.app.GetLog().Info("Message", ex);
-            Assert.AreEqual(1, writer.LoggedEntries.Count(), "Writer should have 1 entry passed in to it.");
-            Assert.AreEqual(message, writer.LoggedEntries.Single().Message,
-                "The logged message should be the same as the passed in message");
-            Assert.AreEqual(ex, writer.LoggedEntries.Single().Error,
-                "The logged exception should be the same as the passed in exception.");
+            this.app.GetLog().Info("Message", ex);
+            writer.LoggedEntries.Count().Should().Be(1, "writer should have 1 entry passed in to it");
+            writer.LoggedEntries.Single().Message.Should().Be(message, "the logged message should be the same as the passed in message");
+            writer.LoggedEntries.Single().Error.Should().Be(ex, "the logged exception should be the same as the passed in exception");
 
             logger.Uninitialize();
-            Assert.IsFalse(writer.IsInitialized, "The writer should be uninitialized during the logger's uninitialization.");
+            writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestAsyncSyncLogger()
         {
             var writer = new LogWriterMock();
             var logger = new AsyncLogger(writer);
-            Assert.IsFalse(writer.IsInitialized, "The writer should not initialize before the logger.");
-            Assert.IsFalse(writer.LoggedEntries.Any(), "No entries should be logged before initialization.");
-            logger.Initialize(new InitializeContextMock(LoggerTests.app));
-            Assert.IsTrue(writer.IsInitialized, "The writer should be initialized during the logger's initialization.");
-            Assert.IsFalse(writer.LoggedEntries.Any(), "No entries should be logged just after initialization.");
+            writer.IsInitialized.Should().BeFalse("the writer should not initialize before the logger");
+            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
+            logger.Initialize(new InitializeContextMock(this.app));
+            writer.IsInitialized.Should().BeTrue("the writer should be initialized during the logger's initialization");
+            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
 
             string message = "Message";
             Exception ex = new ArgumentException("Test");
-            LoggerTests.app.GetLog().Info("Message", ex);
+            this.app.GetLog().Info("Message", ex);
             logger.Uninitialize();
             var entries = writer.LoggedEntries.ToList();
-            Assert.AreEqual(1, entries.Count, "Writer should have 1 entry passed in to it.");
-            Assert.AreEqual(message, entries[0].Message,
-                "The logged message should be the same as the passed in message");
-            Assert.AreEqual(ex, entries[0].Error,
-                "The logged exception should be the same as the passed in exception.");
-            Assert.IsFalse(writer.IsInitialized, "The writer should be uninitialized during the logger's uninitialization.");
+            entries.Count.Should().Be(1, "writer should have 1 entry passed in to it");
+            entries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
+            entries[0].Error.Should().Be(ex, "the logged exception should be the same as the passed in exception");
+            writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
         }
         #endregion
 
         #region Private fields and constants
-        private static IApp app;
+        private readonly IApp app;
         #endregion
     }
 }

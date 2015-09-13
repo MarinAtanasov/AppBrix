@@ -1,34 +1,35 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Configuration;
 using AppBrix.Logging.Entries;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 
 namespace AppBrix.Logging.Configuration
 {
-    public sealed class LoggingConfig : ConfigurationSection
+    public sealed class LoggingConfig : IConfig
     {
+        #region Construction
+        /// <summary>
+        /// Creates a new instance of <see cref="LoggingConfig"/> with default property values.
+        /// </summary>
+        public LoggingConfig()
+        {
+            this.Async = true;
+            this.LogLevel = LogLevel.All;
+        }
+        #endregion
+
         /// <summary>
         /// Gets or sets whether to use an asychronous logger.
+        /// Changing this value requires module/application restart.
         /// </summary>
-        [ConfigurationProperty("async", DefaultValue = true)]
-        public bool Async
-        {
-            get { return (bool)this["async"]; }
-            set { this["async"] = value; }
-        }
+        public bool Async { get; set; }
 
         /// <summary>
         /// Gets or sets the minimal level in which the log entry events should be raised.
         /// </summary>
-        [ConfigurationProperty("level")]
-        public LogLevel LogLevel
-        {
-            get { return (LogLevel)this["level"]; }
-            set { this["level"] = value; }
-        }
+        public LogLevel LogLevel { get; set; }
     }
 }

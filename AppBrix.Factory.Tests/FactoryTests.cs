@@ -1,48 +1,78 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Exceptions;
+using AppBrix.Utils.Exceptions;
 using AppBrix.Factory.Tests.Mocks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using System;
 using System.Linq;
+using Xunit;
+using AppBrix.Tests;
+using AppBrix.Resolver;
+using AppBrix.Application;
 
 namespace AppBrix.Factory.Tests
 {
-    [TestClass]
-    public class FactoryTests
+    public class FactoryTests : IDisposable
     {
+        #region Setup and cleanup
+        public FactoryTests()
+        {
+            this.app = TestUtils.CreateTestApp(
+                typeof(ResolverModule),
+                typeof(FactoryModule));
+            this.app.Start();
+        }
+
+        public void Dispose()
+        {
+            this.app.Stop();
+        }
+        #endregion
+
         #region Tests
-        [TestMethod]
+        [Fact]
         public void TestFactoryDefaultConstructorCall()
         {
             var factory = this.GetFactory();
             var defConstObj = factory.Get<DefaultConstructorClass>();
-            Assert.IsNotNull(defConstObj, "Should not return null. Should call default constructor.");
-            Assert.IsTrue(defConstObj.ConstructorCalled, "Default constructor not called.");
+            defConstObj.Should().NotBeNull("the factory should call the default constructor");
+            defConstObj.ConstructorCalled.Should().BeTrue("the default constructor should be called");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(DefaultConstructorMissingException))]
+        [Fact]
         public void TestFactoryNonDefaultConstructorCall()
         {
             var factory = this.GetFactory();
-            var defConstObj = factory.Get<NonDefaultConstructorClass>();
+            Action action = () => factory.Get<NonDefaultConstructorClass>();
+            action.ShouldThrow<DefaultConstructorNotFoundException>();
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFactoryRegistered()
         {
             var factory = this.GetFactory();
             factory.Register<FactoryTests>(() => this);
             var returned = factory.Get<FactoryTests>();
-            Assert.IsNotNull(returned, "Should not return null.");
-            Assert.AreSame(this, returned, "The factory should return the same object.");
+            returned.Should().NotBeNull("the factory should return an object");
+            returned.Should().BeSameAs(this, "the factory should return the same object");
         }
 
-        [TestMethod]
-        [Timeout(20)]
+        [Fact]
         public void TestPerformanceFactory()
+        {
+            Action action = () => this.TestPerformanceFactoryInternal();
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+        }
+        #endregion
+
+        #region Private methods
+        private IFactory GetFactory()
+        {
+            return this.app.GetFactory();
+        }
+
+        private void TestPerformanceFactoryInternal()
         {
             var factory = this.GetFactory();
             factory.Register<FactoryTests>(() => this);
@@ -53,11 +83,8 @@ namespace AppBrix.Factory.Tests
         }
         #endregion
 
-        #region Private methods
-        private IFactory GetFactory()
-        {
-            return new DefaultFactory();
-        }
+        #region Private fields and constants
+        private readonly IApp app;
         #endregion
     }
 }

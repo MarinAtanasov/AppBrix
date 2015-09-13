@@ -4,203 +4,200 @@
 using AppBrix.Application;
 using AppBrix.Resolver.Tests.Mocks;
 using AppBrix.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace AppBrix.Resolver.Tests
 {
-    [TestClass]
-    public class ResolverTests
+    public class ResolverTests : IDisposable
     {
         #region Setup and cleanup
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
+        public ResolverTests()
         {
-            ResolverTests.app = TestUtils.CreateTestApp(
+            this.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule));
-            ResolverTests.app.Start();
+            this.app.Start();
         }
 
-        [ClassCleanup]
-        public static void ClassCleanup()
+        public void Dispose()
         {
-            ResolverTests.app.Stop();
-            ResolverTests.app = null;
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            ResolverTests.app.Reinitialize();
+            this.app.Stop();
         }
         #endregion
 
         #region Tests
-        [TestMethod]
+        [Fact]
         public void TestGetResolver()
         {
             var resolver = this.GetResolver();
-            Assert.IsNotNull(resolver, "Unable to get the resolver.");
-            Assert.IsInstanceOfType(resolver, typeof(DefaultResolver), "Returned resolver is not of default type.");
+            resolver.Should().NotBeNull("unable to get the resolver");
+            resolver.Should().BeOfType<DefaultResolver>("returned resolver is not of default type");
             var resolver2 = this.GetResolver();
-            Assert.IsNotNull(resolver2, "Second call did not return a resolver.");
-            Assert.IsInstanceOfType(resolver2, typeof(DefaultResolver), "Second returned resolver is not of default type.");
-            Assert.AreSame(resolver, resolver2, "Returned a different instance of the resolver.");
+            resolver2.Should().NotBeNull("second call did not return a resolver");
+            resolver2.Should().BeOfType<DefaultResolver>("second returned resolver is not of default type");
+            resolver2.Should().BeSameAs(resolver, "returned a different instance of the resolver");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestResolveByInterface()
         {
             var resolver = (DefaultResolver)this.GetResolver();
             var iResolver = resolver.Get<IResolver>();
-            Assert.IsNotNull(iResolver, "Unable to resolve the IResolver interface.");
-            Assert.AreSame(resolver, iResolver, "Returned IResolver is a different instance.");
+            iResolver.Should().NotBeNull("unable to resolve the IResolver interface");
+            iResolver.Should().BeSameAs(resolver, "returned IResolver is a different instance");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestResolveByClass()
         {
             var resolver = (DefaultResolver)this.GetResolver();
             var resolved = resolver.Get<DefaultResolver>();
-            Assert.IsNotNull(resolved, "Unable to resolve the Resolver class.");
-            Assert.AreSame(resolver, resolved, "Returned Resolver is a different instance.");
+            resolved.Should().NotBeNull("unable to resolve the Resolver class");
+            resolved.Should().BeSameAs(resolver, "returned Resolver is a different instance");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestResolveByBaseClass()
         {
             var resolver = this.GetResolver();
-            var original = new ResolverTestsChild();
+            var original = new ChildMock();
             resolver.Register(original);
-            var resolved = resolver.Get<ResolverTests>();
-            Assert.IsNotNull(resolved, "Unable to resolve the Parent class.");
-            Assert.AreSame(original, resolved, "Returned Child is a different instance.");
+            var resolved = resolver.Get<ParentMock>();
+            resolved.Should().NotBeNull("unable to resolve the Parent class");
+            resolved.Should().BeSameAs(original, "returned Child is a different instance");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestResolveAllNoElements()
         {
             var resolver = this.GetResolver();
             var resolved = resolver.GetAll().OfType<ResolverTests>();
-            Assert.IsNotNull(resolved, "Resolved collection should not be null.");
-            Assert.AreEqual(0, resolved.Count(), "Resolved collection should be empty.");
+            resolved.Should().NotBeNull("resolved collection should not be null");
+            resolved.Count().Should().Be(0, "resolved collection should be empty");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestResolveAllOneElement()
         {
             var resolver = (DefaultResolver)this.GetResolver();
             var resolved = resolver.GetAll().OfType<IResolver>();
-            Assert.IsNotNull(resolved, "Resolved collection should not be null.");
-            Assert.AreEqual(1, resolved.Count(), "Resolved collection should have 1 element.");
-            Assert.AreEqual(resolver, resolved.Single(), "Resolved element should be the original resolver.");
+            resolved.Should().NotBeNull("resolved collection should not be null");
+            resolved.Count().Should().Be(1, "resolved collection should have 1 element");
+            resolved.Single().Should().Be(resolver, "resolved element should be the original resolver");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestResolveAllTwoElements()
         {
             var resolver = (DefaultResolver)this.GetResolver();
-            resolver.Register(this);
-            var second = new ResolverTestsChild();
+            var first = new ParentMock();
+            resolver.Register(first);
+            var second = new ChildMock();
             resolver.Register(second, second.GetType());
-            var resolved = resolver.GetAll().OfType<ResolverTests>();
-            Assert.IsNotNull(resolved, "Resolved collection should not be null.");
-            Assert.AreEqual(2, resolved.Count(), "Resolved collection should have 2 elements.");
-            Assert.AreEqual(this, resolved.First(), "Resolved element 1 should be the original item.");
-            Assert.AreEqual(second, resolved.Last(), "Resolved element 2 should be the new item.");
+            var resolved = resolver.GetAll().OfType<ParentMock>();
+            resolved.Should().NotBeNull("resolved collection should not be null");
+            resolved.Count().Should().Be(2, "resolved collection should have 2 elements");
+            resolved.First().Should().BeSameAs(first, "resolved element 1 should be the original item");
+            resolved.Last().Should().BeSameAs(second, "resolved element 2 should be the new item");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void TestRegisterNull()
         {
             var resolver = this.GetResolver();
-            resolver.Register<IResolver>(null);
+            Action action = () => resolver.Register<IResolver>(null);
+            action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void TestRegisterNullObjectExcplicitType()
         {
             var resolver = this.GetResolver();
-            resolver.Register(null, typeof(IResolver));
+            Action action = () => resolver.Register(null, typeof(IResolver));
+            action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void TestRegisterNullTypeExcplicitType()
         {
             var resolver = this.GetResolver();
-            resolver.Register(resolver, null);
+            Action action = () => resolver.Register(resolver, null);
+            action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestObjectBaseTypeNotRegistered()
         {
             var resolver = this.GetResolver();
-            resolver.Register(new ResolverTestsChild());
-            Assert.IsNull(resolver.Get<object>());
+            resolver.Register(new ChildMock());
+            resolver.Get<object>().Should().BeNull("items should not be registered as type of object");
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDoubleRegistration()
         {
             var resolver = this.GetResolver();
-            var resolved = new ResolverTestsChild();
-            var resolved2 = new ResolverTestsChild();
+            var resolved = new ChildMock();
+            var resolved2 = new ChildMock();
             resolver.Register(resolved);
             resolver.Register(resolved2);
-            Assert.AreSame(resolved2, resolver.Get<ResolverTestsChild>(), "Object not replaced with second.");
+            resolver.Get<ChildMock>().Should().BeSameAs(resolved2, "object not replaced with second");
             resolver.Register(resolved);
-            Assert.AreSame(resolved, resolver.Get<ResolverTestsChild>(), "Object not replaced with original.");
-            Assert.AreEqual(2, resolver.GetAll().OfType<ResolverTestsChild>().Count(), "First object has been removed from history.");
+            resolver.Get<ChildMock>().Should().BeSameAs(resolved, "object not replaced with original");
+            resolver.GetAll().OfType<ChildMock>().Count().Should().Be(2, "first object has been removed from history");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void TestRegisterGenericObjectError()
         {
             var resolver = this.GetResolver();
-            resolver.Register<object>(resolver);
+            Action action = () => resolver.Register<object>(resolver);
+            action.ShouldThrow<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void TestRegisterExplicitObjectTypeError()
         {
             var resolver = this.GetResolver();
-            resolver.Register<object>(resolver);
+            Action action = () => resolver.Register(resolver, typeof(object));
+            action.ShouldThrow<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 
-        [TestMethod]
-        [Timeout(20)]
+        [Fact]
         public void TestPerformanceResolver()
         {
-            var resolver = (DefaultResolver)this.GetResolver();
-            for (int i = 0; i < 10000; i++)
-            {
-                resolver.Register(new ResolverTestsChild());
-            }
-            for (int i = 0; i < 10000; i++)
-            {
-                resolver.Get<ResolverTestsChild>();
-                resolver.Get<DefaultResolver>();
-                resolver.Get<IResolver>();
-                resolver.GetAll();
-            }
+            Action action = this.TestPerformanceResolverInternal;
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
         }
         #endregion
 
         #region Private methods
         private IResolver GetResolver()
         {
-            return ResolverTests.app.GetResolver();
+            return this.app.GetResolver();
+        }
+
+        private void TestPerformanceResolverInternal()
+        {
+            var resolver = (DefaultResolver)this.GetResolver();
+            for (int i = 0; i < 10000; i++)
+            {
+                resolver.Register(new ChildMock());
+            }
+            for (int i = 0; i < 10000; i++)
+            {
+                resolver.Get<ChildMock>();
+                resolver.Get<ParentMock>();
+                resolver.Get<IResolver>();
+                resolver.GetAll();
+            }
         }
         #endregion
 
         #region Private fields and constants
-        private static IApp app;
+        private readonly IApp app;
         #endregion
     }
 }

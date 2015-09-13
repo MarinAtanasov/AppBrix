@@ -1,0 +1,20 @@
+﻿{
+  "version": "0.1.0-*",
+  "description": "Module used for making HTTP REST requests.",
+  "authors": [ "Marin Atanasov" ],
+  "tags": [ "AppBrix" ],
+  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
+  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  
+  "dependencies": {
+    "AppBrix": "0.1.0-*",
+    "AppBrix.Factory": "0.1.0-*",
+    "AppBrix.Resolver": "0.1.0-*",
+    "Microsoft.CSharp": "4.0.1-beta-23225",
+    "System.Net.Http": "4.0.1-beta-23225"
+  },
+
+  "frameworks": {
+    "dnxcore50": { }
+  }
+}

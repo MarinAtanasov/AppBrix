@@ -35,7 +35,7 @@ namespace AppBrix.Logging.Loggers
         public override void Initialize(IInitializeContext context)
         {
             if (this.task != null)
-                throw new ApplicationException("Logger already initialized.");
+                throw new InvalidOperationException("Logger already initialized.");
 
             this.logQueue = new BlockingCollection<ILogEntry>();
             this.cancelTokenSource = new CancellationTokenSource();

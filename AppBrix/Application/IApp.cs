@@ -20,7 +20,7 @@ namespace AppBrix.Application
         /// <summary>
         /// Gets the application's configuration.
         /// </summary>
-        IAppConfig AppConfig { get; }
+        IConfigManager ConfigManager { get; }
         
         /// <summary>
         /// Initializes and starts the application.

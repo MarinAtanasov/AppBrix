@@ -2,117 +2,113 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Configuration.Memory;
 using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Time.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace AppBrix.Time.Tests
 {
-    [TestClass]
-    public class TimeServiceTests
+    public class TimeServiceTests : IDisposable
     {
-        #region Tests
-        [TestMethod]
-        public void TestUtcTimeService()
+        #region Setup and cleanup
+        public TimeServiceTests()
         {
-            var app = this.CreateAppWithTimeModule();
-            app.Start();
-            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
-            app.Reinitialize();
-            var timeBefore = DateTime.UtcNow;
-            var time = app.GetTime();
-            var timeAfter = DateTime.UtcNow;
-            Assert.IsTrue(timeBefore <= time, "Before > call");
-            Assert.IsTrue(time.Kind == DateTimeKind.Utc, "Kind is not Utc");
-            Assert.IsTrue(timeAfter >= time, "After < call");
-            app.Stop();
+            this.app = TestUtils.CreateTestApp(
+                typeof(ResolverModule),
+                typeof(TimeModule));
+            this.app.Start();
         }
 
-        [TestMethod]
-        public void TestLocalTimeService()
+        public void Dispose()
         {
-            var app = this.CreateAppWithTimeModule();
-            app.Start();
-            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
-            app.Reinitialize();
-            var timeBefore = DateTime.Now;
-            var time = app.GetTime();
-            var timeAfter = DateTime.Now;
-            Assert.IsTrue(timeBefore <= time, "Before > call");
-            Assert.IsTrue(time.Kind == DateTimeKind.Local, "Kind is not Local");
-            Assert.IsTrue(timeAfter >= time, "After < call");
-            app.Stop();
-        }
-
-        [TestMethod]
-        public void TestUtcToUtcTime()
-        {
-            var app = this.CreateAppWithTimeModule();
-            app.Start();
-            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
-            app.Reinitialize();
-            var time = DateTime.UtcNow;
-            var appTime = app.GetTimeService().ToAppTime(time);
-            Assert.AreEqual(DateTimeKind.Utc, appTime.Kind, "Kind not converted.");
-            Assert.AreEqual(time, appTime, "Time values do not match.");
-            app.Stop();
-        }
-
-        [TestMethod]
-        public void TestLocalToUtcTime()
-        {
-            var app = this.CreateAppWithTimeModule();
-            app.Start();
-            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
-            app.Reinitialize();
-            var time = DateTime.Now;
-            var appTime = app.GetTimeService().ToAppTime(time);
-            Assert.AreEqual(DateTimeKind.Utc, appTime.Kind, "Kind not converted.");
-            Assert.AreEqual(time.ToUniversalTime(), appTime, "Time values do not match.");
-            app.Stop();
-        }
-
-        [TestMethod]
-        public void TestUtcToLocalTime()
-        {
-            var app = this.CreateAppWithTimeModule();
-            app.Start();
-            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
-            app.Reinitialize();
-            var time = DateTime.UtcNow;
-            var appTime = app.GetTimeService().ToAppTime(time);
-            Assert.AreEqual(DateTimeKind.Local, appTime.Kind, "Kind not converted.");
-            Assert.AreEqual(time.ToLocalTime(), appTime, "Time values do not match.");
-            app.Stop();
-        }
-
-        [TestMethod]
-        public void TestLocalToLocalTime()
-        {
-            var app = this.CreateAppWithTimeModule();
-            app.Start();
-            app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
-            app.Reinitialize();
-            var time = DateTime.Now;
-            var appTime = app.GetTimeService().ToAppTime(time);
-            Assert.AreEqual(DateTimeKind.Local, appTime.Kind, "Kind not converted.");
-            Assert.AreEqual(time, appTime, "Time values do not match.");
-            app.Stop();
+            this.app.Stop();
         }
         #endregion
 
-        #region Private methods
-        private IApp CreateAppWithTimeModule()
+        #region Tests
+        [Fact]
+        public void TestUtcTimeService()
         {
-            return TestUtils.CreateTestApp(
-                typeof(ResolverModule),
-                typeof(MemoryConfigModule),
-                typeof(TimeModule));
+            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            this.app.Reinitialize();
+            var timeBefore = DateTime.UtcNow;
+            var time = this.app.GetTime();
+            var timeAfter = DateTime.UtcNow;
+            time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
+            time.Kind.Should().Be(DateTimeKind.Utc, "kind is not Utc");
+            time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
+            app.Stop();
         }
+
+        [Fact]
+        public void TestLocalTimeService()
+        {
+            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            this.app.Reinitialize();
+            var timeBefore = DateTime.Now;
+            var time = this.app.GetTime();
+            var timeAfter = DateTime.Now;
+            time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
+            time.Kind.Should().Be(DateTimeKind.Local, "kind is not Local");
+            time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
+            app.Stop();
+        }
+
+        [Fact]
+        public void TestUtcToUtcTime()
+        {
+            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            this.app.Reinitialize();
+            var time = DateTime.UtcNow;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
+            appTime.Should().Be(time, "returned time should be the same as passed in");
+            app.Stop();
+        }
+
+        [Fact]
+        public void TestLocalToUtcTime()
+        {
+            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            this.app.Reinitialize();
+            var time = DateTime.Now;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
+            appTime.Should().Be(time.ToUniversalTime(), "returned time should be equal to the passed in");
+            app.Stop();
+        }
+
+        [Fact]
+        public void TestUtcToLocalTime()
+        {
+            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            this.app.Reinitialize();
+            var time = DateTime.UtcNow;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
+            appTime.Should().Be(time.ToLocalTime(), "returned time should be equal to the passed in");
+            app.Stop();
+        }
+
+        [Fact]
+        public void TestLocalToLocalTime()
+        {
+            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            this.app.Reinitialize();
+            var time = DateTime.Now;
+            var appTime = app.GetTimeService().ToAppTime(time);
+            appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
+            appTime.Should().Be(time, "returned time should be the same as passed in");
+            app.Stop();
+        }
+        #endregion
+        
+        #region Private fields and constants
+        private readonly IApp app;
         #endregion
     }
 }

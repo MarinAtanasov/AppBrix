@@ -3,6 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Configuration;
+using AppBrix.Configuration.Memory;
 using System;
 using System.Linq;
 
@@ -21,12 +22,13 @@ namespace AppBrix.Tests
         /// <returns>The created application.</returns>
         public static IApp CreateTestApp(params Type[] modules)
         {
-            var config = new MemoryAppConfig();
+            var manager = new MemoryConfigManager();
+            var config = manager.GetConfig<AppConfig>();
             foreach (var module in modules)
             {
                 config.Modules.Add(ModuleConfigElement.Create(module));
             }
-            return new DefaultApp(config);
+            return new DefaultApp(manager);
         }
         #endregion
     }
