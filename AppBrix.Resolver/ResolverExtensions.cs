@@ -29,13 +29,16 @@ namespace AppBrix
         /// <param name="resolver">The resolver.</param>
         public static void SetResolver(this IApp app, IResolver resolver)
         {
-            if (resolver != null)
+            lock (ResolverExtensions.Resolvers)
             {
-                ResolverExtensions.Resolvers[app] = resolver;
-            }
-            else if (ResolverExtensions.Resolvers.ContainsKey(app))
-            {
-                ResolverExtensions.Resolvers.Remove(app);
+                if (resolver != null)
+                {
+                    ResolverExtensions.Resolvers[app] = resolver;
+                }
+                else if (ResolverExtensions.Resolvers.ContainsKey(app))
+                {
+                    ResolverExtensions.Resolvers.Remove(app);
+                } 
             }
         }
         
