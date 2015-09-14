@@ -14,7 +14,7 @@
     },
     {
       "Type": "AppBrix.Caching.CacheModule, AppBrix.Caching",
-      "Status": "Disabled"
+      "Status": "Enabled"
     },
     {
       "Type": "AppBrix.Events.EventsModule, AppBrix.Events",

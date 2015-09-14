@@ -38,13 +38,13 @@ namespace AppBrix.Caching
         public T Get<T>(string key)
         {
             var bytes = this.cache.Get(key);
-            return this.GetSerializer().Deserialize<T>(bytes);
+            return bytes != null ? this.GetSerializer().Deserialize<T>(bytes) : default(T);
         }
 
         public async Task<T> GetAsync<T>(string key)
         {
             var bytes = await this.cache.GetAsync(key);
-            return this.GetSerializer().Deserialize<T>(bytes);
+            return bytes != null ? this.GetSerializer().Deserialize<T>(bytes) : default(T);
         }
 
         public void Refresh(string key)

@@ -23,7 +23,7 @@ namespace AppBrix.Caching
             this.serializer = new DefaultCacheSerializer();
             this.App.GetResolver().Register(this.serializer);
 
-            var distributedCache = new LocalCache(new MemoryCache(null));
+            var distributedCache = new LocalCache(new MemoryCache(new MemoryCacheOptions()));
             this.cache = new DefaultCache(this.App, distributedCache);
             this.App.GetResolver().Register(this.cache);
         }

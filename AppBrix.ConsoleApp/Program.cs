@@ -35,13 +35,17 @@ namespace AppBrix.ConsoleApp
 
         private static void Run(IApp app)
         {
+            var generatorKey = typeof(MessageGenerator).FullName;
             app.GetFactory().Register<MessageGenerator>(() => new MessageGenerator("Test"));
-            var generator = app.GetFactory().Get<MessageGenerator>();
 
+            var cache = app.GetCache();
+            
             for (var i = 0; i < 20; i++)
             {
-                app.GetLog().Info(generator.Generate());
+                app.GetLog().Info(cache.Get<MessageGenerator>(generatorKey).Generate());
             }
+
+            cache.Remove(generatorKey);
         }
     }
 }
