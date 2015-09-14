@@ -16,7 +16,7 @@ namespace AppBrix.Caching
         #region Public and overriden methods
         public byte[] Serialize(Type type, object item)
         {
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.Indented, this.GetSettings()));
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.None, this.GetSettings()));
         }
 
         public object Deserialize(Type type, byte[] serialized)
