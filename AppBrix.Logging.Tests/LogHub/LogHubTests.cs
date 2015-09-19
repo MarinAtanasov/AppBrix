@@ -179,17 +179,19 @@ namespace AppBrix.Logging.Tests.LogHub
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
-            var repeat = 1000;
+            var repeat = 100;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe<ILogEntry>(handler);
             for (int i = 0; i < repeat; i++)
             {
+                this.app.GetLog().Critical(message, error);
                 this.app.GetLog().Error(message, error);
                 this.app.GetLog().Debug(message);
                 this.app.GetLog().Info(message);
+                this.app.GetLog().Trace(message);
                 this.app.GetLog().Warning(message, error);
             }
-            called.Should().Be(repeat * 4, "the event should have been called");
+            called.Should().Be(repeat * 6, "the event should have been called");
         }
 
         private void TestPerformanceTraceLogInternal()

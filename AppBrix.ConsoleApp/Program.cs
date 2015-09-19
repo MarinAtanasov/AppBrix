@@ -15,6 +15,9 @@ namespace AppBrix.ConsoleApp
     {
         internal static void Main(string[] args)
         {
+            // Required when using the web client and receiving windows-1251 result.
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             var stopwatch = Stopwatch.StartNew();
             var app = App.Create(new ConfigManager(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer()));
             app.Start();
