@@ -21,6 +21,9 @@ namespace AppBrix.Cloning
 
         public T ShalowCopy<T>(T obj)
         {
+            if (this.IsPrimitiveType(typeof(T)))
+                return obj;
+
             return (T)DefaultCloner.ShalowCopyMethod.Invoke(obj, null);
         }
         #endregion

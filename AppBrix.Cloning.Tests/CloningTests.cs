@@ -47,7 +47,7 @@ namespace AppBrix.Cloning.Tests
         {
             var cloner = this.GetCloner();
             var original = 5;
-            var clone = cloner.DeepCopy(original);
+            var clone = cloner.ShalowCopy(original);
             this.AssertIsShalowCopy(original, clone);
         }
 
@@ -65,7 +65,7 @@ namespace AppBrix.Cloning.Tests
         {
             var cloner = this.GetCloner();
             var original = "Test";
-            var clone = cloner.DeepCopy(original);
+            var clone = cloner.ShalowCopy(original);
             this.AssertIsShalowCopy(original, clone);
         }
 
@@ -253,7 +253,7 @@ namespace AppBrix.Cloning.Tests
                 this.AssertIsShalowCopy(field.GetValue(original), field.GetValue(copy), false);
             }
         }
-
+        
         private IEnumerable<FieldInfo> GetFields(Type type)
         {
             while (type != null)
