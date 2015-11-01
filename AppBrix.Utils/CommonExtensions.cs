@@ -69,7 +69,9 @@ namespace AppBrix
         {
             return string.Concat(type.FullName, ", ", type.GetTypeInfo().Assembly.GetName().Name);
         }
-
+        #endregion
+        
+        #region Strings and encodings
         /// <summary>
         /// Shorthand for getting the string from a whole byte array.
         /// </summary>
