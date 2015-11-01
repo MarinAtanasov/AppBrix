@@ -43,10 +43,11 @@ namespace AppBrix.ConsoleApp
 
             var cache = app.GetCache();
             cache.Set(generatorKey, app.GetFactory().Get<MessageGenerator>());
-            
+            var generator = cache.Get<MessageGenerator>(generatorKey);
+
             for (var i = 0; i < 20; i++)
             {
-                app.GetLog().Info(cache.Get<MessageGenerator>(generatorKey).Generate());
+                app.GetLog().Info(generator.Generate());
             }
 
             cache.Remove(generatorKey);
