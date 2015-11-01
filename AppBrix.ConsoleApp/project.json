@@ -23,9 +23,9 @@
         "AppBrix.Time": "0.1.0-*",
         "AppBrix.Utils": "0.1.0-*",
         "AppBrix.Web.Client": "0.1.0-*",
-        "Microsoft.CSharp": "4.0.1-beta-23225",
-        "System.Console": "4.0.0-beta-23225",
-        "System.Text.Encoding.CodePages": "4.0.1-beta-23225"
+        "dnx-clr-win-x86": "1.0.0-*",
+        "System.Console": "4.0.0-*",
+        "System.Text.Encoding.CodePages": "4.0.1-*"
     },
 
   "commands": {

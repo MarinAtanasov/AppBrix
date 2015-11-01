@@ -6,9 +6,9 @@
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
 
-  "dependencies": {
-    "Microsoft.CSharp": "4.0.1-beta-23225"
-  },
+    "dependencies": {
+        "Microsoft.CSharp": "4.0.1-*"
+    },
 
   "frameworks": {
     "dnxcore50": { }

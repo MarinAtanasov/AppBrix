@@ -5,6 +5,7 @@ using AppBrix.Utils.Exceptions;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace AppBrix
 {
@@ -67,6 +68,17 @@ namespace AppBrix
         public static string GetAssemblyQualifiedName(this Type type)
         {
             return string.Concat(type.FullName, ", ", type.GetTypeInfo().Assembly.GetName().Name);
+        }
+
+        /// <summary>
+        /// Shorthand for getting the string from a whole byte array.
+        /// </summary>
+        /// <param name="encoding">The current encoding.</param>
+        /// <param name="bytes">The byte array containing the data to be stringified.</param>
+        /// <returns>The string which corresponds to the data inside the byte array.</returns>
+        public static string GetString(this Encoding encoding, byte[] bytes)
+        {
+            return encoding.GetString(bytes, 0, bytes.Length);
         }
         #endregion
     }
