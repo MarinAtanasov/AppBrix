@@ -23,12 +23,12 @@ namespace AppBrix.Application
         IConfigManager ConfigManager { get; }
         
         /// <summary>
-        /// Initializes and starts the application.
+        /// Loads and initializes the application and initializes.
         /// </summary>
         void Start();
 
         /// <summary>
-        /// Uninitializes and stops the application
+        /// Uninitializes and unloads the application.
         /// </summary>
         void Stop();
 

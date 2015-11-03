@@ -11,7 +11,7 @@ namespace AppBrix
     public static class AppBrixExtensions
     {
         /// <summary>
-        /// Unloads and loads the application.
+        /// Unloads and reloads the application.
         /// </summary>
         /// <param name="app">The application.</param>
         public static void Restart(this IApp app)
