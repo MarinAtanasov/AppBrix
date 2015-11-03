@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Contains tests for the AppBrix.Web.Server module",
+  "authors": [ "Marin Atanasov" ],
+  "tags": [ "AppBrix" ],
+  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
+  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+
+  "dependencies": {
+    "AppBrix.Tests": "0.1.0-*",
+    "AppBrix.Web.Server": "0.1.0-*",
+    "Microsoft.AspNet.TestHost": "1.0.0-*"
+  },
+
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+
+  "frameworks": {
+    "dnxcore50": { }
+  }
+}
