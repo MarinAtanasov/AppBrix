@@ -9,32 +9,27 @@ using AppBrix.Application;
 namespace AppBrix.Web.Server
 {
     /// <summary>
-    /// A simple controller which can be used to test the connection to the application.
+    /// A simple controller which can be used to get the current application's id.
     /// </summary>
     [Route("api/[controller]")]
-    public class TestConnectionController : Controller
+    public class AppIdController : Controller
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of <see cref="TestConnectionController"/>.
+        /// Creates a new instance of <see cref="AppIdController"/>.
         /// </summary>
         /// <param name="app">The current app.</param>
-        public TestConnectionController(IApp app)
+        public AppIdController(IApp app)
         {
             this.app = app;
         }
         #endregion
         
         #region Public methods
-        /// <summary>
-        /// Returns true to indicate that the service has been reached as expected.
-        /// Returns false if the current application is null.
-        /// </summary>
-        /// <returns></returns>
-        [HttpDelete, HttpGet, HttpHead, HttpPatch, HttpPost, HttpPut]
-        public bool TestConnection()
+        [HttpGet]
+        public string GetAppId()
         {
-            return true;
+            return this.app.Id.ToString();
         }
         #endregion
 

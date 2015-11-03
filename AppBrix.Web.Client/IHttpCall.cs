@@ -3,6 +3,7 @@
 //
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppBrix.Web.Client
 {
@@ -13,10 +14,11 @@ namespace AppBrix.Web.Client
     {
         /// <summary>
         /// Executes the REST call.
+        /// Can return <see cref="string"/>, <see cref="System.IO.Stream"/> or <see cref="byte[]"/>.
         /// </summary>
         /// <typeparam name="T">The type of the response object to be returned.</typeparam>
         /// <returns>The REST response.</returns>
-        IHttpResponse<T> MakeCall<T>();
+        Task<IHttpResponse<T>> MakeCall<T>();
 
         /// <summary>
         /// Sets an HTTP message header.
@@ -49,10 +51,25 @@ namespace AppBrix.Web.Client
         /// <returns></returns>
         IHttpCall SetUrl(string url);
 
+        /// <summary>
+        /// Sets the HTTP method which will be used when making the call.
+        /// </summary>
+        /// <param name="method">The HTTP method.</param>
+        /// <returns></returns>
         IHttpCall SetMethod(string method);
 
+        /// <summary>
+        /// Sets the timeout for the call.
+        /// </summary>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns></returns>
         IHttpCall SetTimeout(TimeSpan timeout);
-
+        
+        /// <summary>
+        /// Return the HTTP version to be used.
+        /// </summary>
+        /// <param name="version">The HTTP version.</param>
+        /// <returns></returns>
         IHttpCall SetVersion(Version version);
     }
 }

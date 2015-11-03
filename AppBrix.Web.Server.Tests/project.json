@@ -8,6 +8,7 @@
 
   "dependencies": {
     "AppBrix.Tests": "0.1.0-*",
+    "AppBrix.Web.Client": "0.1.0-*",
     "AppBrix.Web.Server": "0.1.0-*",
     "Microsoft.AspNet.TestHost": "1.0.0-*"
   },

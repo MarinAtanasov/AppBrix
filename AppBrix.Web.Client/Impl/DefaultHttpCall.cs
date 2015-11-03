@@ -1,27 +1,36 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace AppBrix.Web.Client.Impl
 {
     internal sealed class DefaultHttpCall : IHttpCall
     {
-        #region Public and overriden methods
-        public IHttpResponse<T> MakeCall<T>()
+        #region Construction
+        public DefaultHttpCall(IApp app)
         {
-            using (var client = new HttpClient())
+            this.app = app;
+        }
+        #endregion
+
+        #region Public and overriden methods
+        public async Task<IHttpResponse<T>> MakeCall<T>()
+        {
+            using (var client = app.GetFactory().Get<HttpClient>())
             {
-                var response = this.GetResponse(client);
+                var response = await this.GetResponse(client);
                 var headers = response.Headers;
                 var content = response.Content;
                 var contentHeaders = content.Headers;
-                var contentValue = this.GetResponseContent<T>(content);
+                var contentValue = await this.GetResponseContent<T>(content);
                 return new DefaultHttpResponse<T>(
                     new DefaultHttpHeaders(headers),
                     new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(contentHeaders)),
@@ -108,7 +117,7 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Private methods
-        private HttpResponseMessage GetResponse(HttpClient client)
+        private async Task<HttpResponseMessage> GetResponse(HttpClient client)
         {
             if (this.timeout.TotalMilliseconds > 0)
                 client.Timeout = this.timeout;
@@ -138,7 +147,7 @@ namespace AppBrix.Web.Client.Impl
             if (this.httpMessageVersion != null)
                 message.Version = this.httpMessageVersion;
 
-            return client.SendAsync(message).Result;
+            return await client.SendAsync(message);
         }
 
         private HttpContent CreateContent()
@@ -165,17 +174,17 @@ namespace AppBrix.Web.Client.Impl
             return result;
         }
 
-        private T GetResponseContent<T>(HttpContent content)
+        private async Task<T> GetResponseContent<T>(HttpContent content)
         {
             object contentValue;
 
             var type = typeof(T);
             if (type == typeof(string))
-                contentValue = content.ReadAsStringAsync().Result;
+                contentValue = await content.ReadAsStringAsync();
             else if (type == typeof(byte[]))
-                contentValue = content.ReadAsByteArrayAsync().Result;
+                contentValue = await content.ReadAsByteArrayAsync();
             else if (type == typeof(Stream))
-                contentValue = content.ReadAsStreamAsync().Result;
+                contentValue = await content.ReadAsStreamAsync();
             else
                 throw new ArgumentException(string.Format("Unsupported type: {0}. Supported types are string, Stream and byte[].", typeof(T)));
 
@@ -186,6 +195,7 @@ namespace AppBrix.Web.Client.Impl
         #region Private fields and constants
         private readonly IDictionary<string, ICollection<string>> headers = new Dictionary<string, ICollection<string>>();
         private readonly IDictionary<string, ICollection<string>> contentHeaders = new Dictionary<string, ICollection<string>>();
+        private readonly IApp app;
         private string callMethod = "GET";
         private object content;
         private TimeSpan timeout;
