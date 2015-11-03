@@ -23,6 +23,7 @@
         "AppBrix.Time": "0.1.0-*",
         "AppBrix.Utils": "0.1.0-*",
         "AppBrix.Web.Client": "0.1.0-*",
+        "AppBrix.Web.Server": "0.1.0-*",
         "System.Console": "4.0.0-*",
         "System.Text.Encoding.CodePages": "4.0.1-*"
     },

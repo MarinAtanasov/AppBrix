@@ -38,7 +38,11 @@
     },
     {
       "Type": "AppBrix.Web.Client.WebClientModule, AppBrix.Web.Client",
-      "Status": "Enabled"
+      "Status": "Disabled"
+    },
+    {
+      "Type": "AppBrix.Web.Server.WebServerModule, AppBrix.Web.Server",
+      "Status": "Disabled"
     }
   ]
 }

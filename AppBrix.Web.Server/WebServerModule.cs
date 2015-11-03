@@ -6,7 +6,7 @@ using AppBrix.Lifecycle;
 using System;
 using System.Linq;
 
-namespace AppBrix.Web.Client
+namespace AppBrix.Web.Server
 {
     /// <summary>
     /// Modules used for working with Mvc or Web Api controllers.
