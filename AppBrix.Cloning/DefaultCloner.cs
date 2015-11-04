@@ -21,7 +21,7 @@ namespace AppBrix.Cloning
 
         public T ShalowCopy<T>(T obj)
         {
-            if (this.IsPrimitiveType(typeof(T)))
+            if (this.IsValueType(typeof(T)))
                 return obj;
 
             return (T)DefaultCloner.ShalowCopyMethod.Invoke(obj, null);
@@ -74,6 +74,11 @@ namespace AppBrix.Cloning
         {
             var typeInfo = type.GetTypeInfo();
             return (typeInfo.IsValueType && typeInfo.IsPrimitive) || typeInfo.IsEnum || type == typeof(string);
+        }
+
+        private bool IsValueType(Type type)
+        {
+            return type == typeof(string) || type.GetTypeInfo().IsValueType;
         }
         #endregion
 
