@@ -7,7 +7,7 @@ using System.Linq;
 namespace AppBrix.Cloning
 {
     /// <summary>
-    /// Creates deep or shalow copies of objects.
+    /// Creates deep or shallow copies of objects.
     /// </summary>
     public interface ICloner
     {

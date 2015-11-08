@@ -10,7 +10,7 @@ namespace AppBrix.Cloning
 {
     /// <summary>
     /// A module used for registering a default object cloner.
-    /// The object cloner is used for creating deep copies of objects.
+    /// The object cloner is used for creating deep and shallow copies of objects.
     /// </summary>
     public sealed class CloningModule : ModuleBase
     {
