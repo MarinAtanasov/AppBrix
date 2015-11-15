@@ -2,7 +2,7 @@
   "version": "0.1.0-*",
   "description": "Module which allows creation of simple mutable classes.",
   "authors": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix, Module" ],
+  "tags": [ "AppBrix Module" ],
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
 

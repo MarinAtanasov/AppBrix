@@ -2,7 +2,7 @@
   "version": "0.1.0-*",
   "description": "Module used for working with web services. Register the current application inside the web application's Startup class (services.AddInstance<IApp>(app);)",
   "authors": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix, Module" ],
+  "tags": [ "AppBrix Module" ],
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
 

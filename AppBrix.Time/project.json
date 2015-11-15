@@ -2,7 +2,7 @@
   "version": "0.1.0-*",
   "description": "Module which is used for getting the current time. This should be used instead of DateTime.(Utc)Now in order for the time to always be of the same kind and the code to be more easily testable.",
   "authors": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix, Module" ],
+  "tags": [ "AppBrix Module" ],
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
 
