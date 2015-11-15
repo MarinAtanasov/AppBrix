@@ -2,7 +2,7 @@
   "version": "0.1.0-*",
   "description": "Module used for caching objects.",
   "authors": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix" ],
+  "tags": [ "AppBrix, Module" ],
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
 
@@ -10,7 +10,7 @@
         "AppBrix": "0.1.0-*",
         "AppBrix.Resolver": "0.1.0-*",
         "Microsoft.Framework.Caching.Memory": "1.0.0-*",
-        "Newtonsoft.Json": "8.0.1-beta1"
+        "Newtonsoft.Json": "8.0.1-*"
     },
 
   "frameworks": {

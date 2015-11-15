@@ -2,7 +2,7 @@
   "version": "0.1.0-*",
   "description": "Module which enables throwing of logging events and subscribing to those events.",
   "authors": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix" ],
+  "tags": [ "AppBrix, Module" ],
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
 
