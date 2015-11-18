@@ -1,14 +1,21 @@
 {
   "version": "0.1.0-*",
-  "description": "Base class for managing configurations.",
+  "title": "AppBrix.Configuration",
+  "summary": "Base classes and interfaces for managing configurations.",
+  "description": "Base classes and interfaces for managing configurations.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix.Utils": "0.1.0-*"
-    },
+  "dependencies": {
+    "AppBrix.Utils": "0.1.0-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

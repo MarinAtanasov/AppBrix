@@ -1,18 +1,25 @@
 {
   "version": "0.1.0-*",
+  "title": "AppBrix.Tests",
+  "summary": "Contains tests for creating AppBrix applications",
   "description": "Contains tests for creating AppBrix applications",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix": "0.1.0-*",
-        "AppBrix.Configuration.Memory": "0.1.0-*",
-        "FluentAssertions": "4.0.1",
-        "xunit": "2.1.0-*",
-        "xunit.runner.dnx": "2.1.0-*"
-    },
+  "dependencies": {
+    "AppBrix": "0.1.0-*",
+    "AppBrix.Configuration.Memory": "0.1.0-*",
+    "FluentAssertions": "4.0.1",
+    "xunit": "2.1.0-*",
+    "xunit.runner.dnx": "2.1.0-*"
+  },
 
   "commands": {
     "test": "xunit.runner.dnx"

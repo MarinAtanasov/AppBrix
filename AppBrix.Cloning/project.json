@@ -1,15 +1,22 @@
 {
   "version": "0.1.0-*",
+  "title": "AppBrix.Cloning",
+  "summary": "Module used for making shallow or deep copies of items.",
   "description": "Module used for making shallow or deep copies of items.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix": "0.1.0-*",
-        "AppBrix.Resolver": "0.1.0-*"
-    },
+  "dependencies": {
+    "AppBrix": "0.1.0-*",
+    "AppBrix.Resolver": "0.1.0-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

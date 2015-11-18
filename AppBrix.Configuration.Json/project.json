@@ -1,15 +1,22 @@
 {
   "version": "0.1.0-*",
-  "description": "Contains serializer for JSON based configurations.",
+  "title": "AppBrix.Configuration.Json",
+  "summary": "Contains serializer for JSON based configurations.",
+  "description": "Contains serializer/deserializer for JSON based configurations.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix.Configuration": "0.1.0-*",
-        "Newtonsoft.Json": "8.0.1-*"
-    },
+  "dependencies": {
+    "AppBrix.Configuration": "0.1.0-*",
+    "Newtonsoft.Json": "8.0.1-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

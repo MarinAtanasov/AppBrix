@@ -1,10 +1,17 @@
 ﻿{
   "version": "1.0.0-*",
+  "title": "AppBrix.Web.Server.Tests",
+  "summary": "Contains tests for the AppBrix.Web.Server module",
   "description": "Contains tests for the AppBrix.Web.Server module",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
   "dependencies": {
     "AppBrix.Tests": "0.1.0-*",

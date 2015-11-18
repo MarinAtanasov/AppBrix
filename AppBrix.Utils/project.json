@@ -1,14 +1,21 @@
 {
   "version": "0.1.0-*",
-  "description": "Commonly used utils and extension methods.",
+  "title": "AppBrix.Utils",
+  "summary": "Commonly used utils and extension methods.",
+  "description": "Commonly used utils and extension methods. Automatically included as dependency of all other AppBrix packages.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "Microsoft.CSharp": "4.0.1-*"
-    },
+  "dependencies": {
+    "Microsoft.CSharp": "4.0.1-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

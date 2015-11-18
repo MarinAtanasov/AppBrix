@@ -1,14 +1,21 @@
 {
   "version": "0.1.0-*",
+  "title": "AppBrix.Resolver",
+  "summary": "Module which allows registration and resolving of single-instance objects.",
   "description": "Module which allows registration and resolving of single-instance objects.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix": "0.1.0-*"
-    },
+  "dependencies": {
+    "AppBrix": "0.1.0-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

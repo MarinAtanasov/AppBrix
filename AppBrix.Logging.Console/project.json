@@ -1,16 +1,23 @@
 {
   "version": "0.1.0-*",
+  "title": "AppBrix.Logging.Console",
+  "summary": "Module used for creating logging messages.",
   "description": "Module which attaches to logging events and writes the information to the console.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix": "0.1.0-*",
-        "AppBrix.Logging": "0.1.0-*",
-        "System.Console": "4.0.0-*"
-    },
+  "dependencies": {
+    "AppBrix": "0.1.0-*",
+    "AppBrix.Logging": "0.1.0-*",
+    "System.Console": "4.0.0-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

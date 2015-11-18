@@ -1,17 +1,24 @@
 {
   "version": "0.1.0-*",
+  "title": "AppBrix.Caching",
+  "summary": "Module used for caching objects.",
   "description": "Module used for caching objects.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix": "0.1.0-*",
-        "AppBrix.Resolver": "0.1.0-*",
-        "Microsoft.Framework.Caching.Memory": "1.0.0-*",
-        "Newtonsoft.Json": "8.0.1-*"
-    },
+  "dependencies": {
+    "AppBrix": "0.1.0-*",
+    "AppBrix.Resolver": "0.1.0-*",
+    "Microsoft.Framework.Caching.Memory": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.1-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }

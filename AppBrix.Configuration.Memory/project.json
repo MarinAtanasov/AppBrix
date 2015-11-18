@@ -1,14 +1,21 @@
 {
   "version": "0.1.0-*",
+  "title": "AppBrix.Configuration.Memory",
+  "summary": "Adds configuration provider which reads and writes into memory.",
   "description": "Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.",
+  "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
+  "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
+  "iconUrl": "",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
+  "requireLicenseAcceptance": false,
+  "copyright": "",
 
-    "dependencies": {
-        "AppBrix.Configuration": "0.1.0-*"
-    },
+  "dependencies": {
+    "AppBrix.Configuration": "0.1.0-*"
+  },
 
   "frameworks": {
     "dnxcore50": { }
