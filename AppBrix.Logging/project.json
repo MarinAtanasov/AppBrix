@@ -24,6 +24,6 @@
   },
 
   "frameworks": {
-    "dnxcore50": { }
+    "dotnet5.4": { }
   }
 }

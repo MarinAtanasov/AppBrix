@@ -13,11 +13,11 @@
   "requireLicenseAcceptance": false,
   "copyright": "",
 
-  "dependencies": {
-    "Microsoft.CSharp": "4.0.1-*"
-  },
+    "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516"
+    },
 
   "frameworks": {
-    "dnxcore50": { }
+    "dotnet5.4": { }
   }
 }

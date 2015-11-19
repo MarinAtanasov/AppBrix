@@ -9,7 +9,7 @@ using AppBrix.Web.Client;
 using FluentAssertions;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.TestHost;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Net;
