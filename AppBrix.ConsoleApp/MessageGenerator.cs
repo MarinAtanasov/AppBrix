@@ -6,22 +6,24 @@ namespace AppBrix.ConsoleApp
     internal class MessageGenerator
     {
         #region Construction
-        public MessageGenerator(string level)
+        public MessageGenerator(string level, int messagesSent = 0 )
         {
-            this.level = level;
+            this.Level = level;
+            this.MessagesSent = messagesSent;
         }
+        #endregion
+
+        #region Properties
+        public string Level { get; private set; }
+
+        public int MessagesSent { get; private set; }
         #endregion
 
         #region Public methods
         public string Generate()
         {
-            return string.Format("{0} message: {1}", this.level, this.number++);
+            return string.Format("{0} message: {1}", this.Level, ++this.MessagesSent);
         }
-        #endregion
-
-        #region Private fields and constants
-        private int number = 1;
-        private readonly string level;
         #endregion
     }
 }
