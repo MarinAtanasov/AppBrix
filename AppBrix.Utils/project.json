@@ -7,11 +7,11 @@
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
-  "iconUrl": "",
+  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
   "requireLicenseAcceptance": false,
-  "copyright": "",
+  "copyright": "Copyright 2015",
 
     "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516"
