@@ -1,5 +1,5 @@
 # AppBrix
-This framework has been written using the latest DNX Core.
+This framework has been written using the latest version of DNX Core.
 
 AppBrix has been created with the following priorities:
 * Everything should be testable and covered with tests.
