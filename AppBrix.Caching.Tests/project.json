@@ -6,7 +6,7 @@
   "releaseNotes": "Initial version.",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix" ],
+  "tags": [ "AppBrix Cache Tests" ],
   "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
