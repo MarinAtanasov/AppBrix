@@ -11,41 +11,28 @@ using System.Linq;
 namespace AppBrix.Caching
 {
     /// <summary>
-    /// TODO: FIX THIS MAZALYAK!!!
+    /// Module used for caching objects.
     /// </summary>
-    public sealed class CacheModule : ModuleBase, IDisposable
+    public sealed class CacheModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetResolver().Register(this);
-
-            this.serializer = new DefaultCacheSerializer();
-            this.App.GetResolver().Register(this.serializer);
+            this.App.GetResolver().Register(this.serializer.Value);
 
             var distributedCache = new LocalCache(new MemoryCache(new MemoryCacheOptions()));
-            this.cache = new DefaultCache(this.App, distributedCache);
-            this.App.GetResolver().Register(this.cache);
+            var cache = new DefaultCache(this.App, distributedCache);
+            this.App.GetResolver().Register(cache);
         }
 
         protected override void UninitializeModule()
         {
-            this.Dispose();
-        }
-
-        /// <summary>
-        /// Code analysis CA1001: Types that own disposable fields should be disposable.
-        /// Do not use. Use Uninitialize instead.
-        /// </summary>
-        public void Dispose()
-        {
-            this.cache = null;
         }
         #endregion
 
         #region Private fields and constants
-        private DefaultCacheSerializer serializer;
-        private DefaultCache cache;
+        private Lazy<DefaultCacheSerializer> serializer = new Lazy<DefaultCacheSerializer>();
         #endregion
     }
 }

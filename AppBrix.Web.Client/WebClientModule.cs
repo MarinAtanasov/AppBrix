@@ -17,8 +17,7 @@ namespace AppBrix.Web.Client
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var app = context.App;
-            this.App.GetFactory().Register<IHttpCall>(() => new DefaultHttpCall(app));
+            this.App.GetFactory().Register<IHttpCall>(() => new DefaultHttpCall(this.App));
         }
 
         protected override void UninitializeModule()

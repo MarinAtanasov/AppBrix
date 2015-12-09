@@ -9,19 +9,41 @@ namespace AppBrix.Caching
 {
     public interface ICache
     {
-        void Connect();
-        Task ConnectAsync();
+        /// <summary>
+        /// Connects to the caching entity.
+        /// </summary>
+        /// <returns></returns>
+        Task Connect();
 
-        void Refresh(string key);
-        Task RefreshAsync(string key);
+        /// <summary>
+        /// Refreshes the cache for a key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        Task Refresh(string key);
 
-        T Get<T>(string key);
-        Task<T> GetAsync<T>(string key);
+        /// <summary>
+        /// Gets a cached object by its key.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<T> Get<T>(string key);
 
-        void Set<T>(string key, T item);
-        Task SetAsync<T>(string key, T item);
+        /// <summary>
+        /// Sets a cached object.
+        /// </summary>
+        /// <typeparam name="T">The type of the object.</typeparam>
+        /// <param name="key">The key which will be used when storing the object.</param>
+        /// <param name="item">The object to be cached.</param>
+        /// <returns></returns>
+        Task Set<T>(string key, T item);
 
-        void Remove(string key);
-        Task RemoveAsync(string key);
+        /// <summary>
+        /// Removes an object from the cache.
+        /// </summary>
+        /// <param name="key">The key to the object.</param>
+        /// <returns></returns>
+        Task Remove(string key);
     }
 }

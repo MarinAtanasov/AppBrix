@@ -46,7 +46,7 @@ namespace AppBrix.ConsoleApp
 
             for (var i = 0; i < 20; i++)
             {
-                var generator = cache.Get<MessageGenerator>(generatorKey);
+                var generator = cache.Get<MessageGenerator>(generatorKey).Result;
                 app.GetLog().Info(generator.Generate());
                 cache.Set(generatorKey, generator);
             }

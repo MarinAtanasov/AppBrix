@@ -20,9 +20,9 @@ namespace AppBrix.Time
             var config = this.App.GetConfig<TimeConfig>();
             var dateTimeKind = config.Kind;
             var format = config.Format;
-            this.timeService = this.CreateTimeService(dateTimeKind, format);
+            var timeService = this.CreateTimeService(dateTimeKind, format);
             this.App.GetResolver().Register(this);
-            this.App.GetResolver().Register(this.timeService, this.timeService.GetType());
+            this.App.GetResolver().Register(timeService, timeService.GetType());
         }
 
         protected override void UninitializeModule()
@@ -44,10 +44,6 @@ namespace AppBrix.Time
                     throw new NotSupportedException("The specified DateTimeKind is not supported: " + kind);
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private ITimeService timeService;
         #endregion
     }
 }

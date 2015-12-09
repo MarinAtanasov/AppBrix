@@ -9,7 +9,7 @@ using System.Linq;
 namespace AppBrix.Resolver
 {
     /// <summary>
-    /// Modules which registers the default object resolver.
+    /// Module which registers the default object resolver.
     /// </summary>
     public sealed class ResolverModule : ModuleBase
     {

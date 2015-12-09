@@ -43,11 +43,11 @@ namespace AppBrix.Caching.Tests
             var key = "key";
             var value = "Test Value";
             cache.Set(key, value);
-            var cached = cache.Get<object>(key);
+            var cached = cache.Get<object>(key).Result;
             cached.Should().NotBeNull("the item should be in the cache");
             cached.Should().Be(value, "the returned object should be equal to the original");
-            cache.Remove(key);
-            cache.Get<object>(key).Should().BeNull("item should have been removed");
+            cache.Remove(key).Wait();
+            cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
         }
 
         [Fact]
@@ -57,16 +57,16 @@ namespace AppBrix.Caching.Tests
             var key = "key";
             var value = "Test Value";
             cache.Set(key, value);
-            var cached = cache.Get<object>(key);
+            var cached = cache.Get<object>(key).Result;
             cached.Should().NotBeNull("the item should be in the cache");
             cached.Should().Be(value, "the returned object should be equal to the original");
             value = "Test Replaced Value";
-            cache.Set(key, value);
-            cached = cache.Get<object>(key);
+            cache.Set(key, value).Wait();
+            cached = cache.Get<object>(key).Result;
             cached.Should().NotBeNull("the item should be in the cache after being replaced");
             cached.Should().Be(value, "the returned object should be equal to the replaced");
-            cache.Remove(key);
-            cache.Get<object>(key).Should().BeNull("item should have been removed");
+            cache.Remove(key).Wait();
+            cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
         }
         #endregion
 

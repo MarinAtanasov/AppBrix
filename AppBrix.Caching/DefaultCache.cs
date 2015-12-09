@@ -25,55 +25,28 @@ namespace AppBrix.Caching
         #endregion
 
         #region Public and overriden methods
-        public void Connect()
-        {
-            this.cache.Connect();
-        }
-
-        public Task ConnectAsync()
+        public Task Connect()
         {
             return this.cache.ConnectAsync();
         }
-
-        public T Get<T>(string key)
-        {
-            var bytes = this.cache.Get(key);
-            return bytes != null ? this.GetSerializer().Deserialize<T>(bytes) : default(T);
-        }
-
-        public async Task<T> GetAsync<T>(string key)
+        
+        public async Task<T> Get<T>(string key)
         {
             var bytes = await this.cache.GetAsync(key);
             return bytes != null ? this.GetSerializer().Deserialize<T>(bytes) : default(T);
         }
-
-        public void Refresh(string key)
-        {
-            this.cache.Refresh(key);
-        }
-
-        public Task RefreshAsync(string key)
+        
+        public Task Refresh(string key)
         {
             return this.cache.RefreshAsync(key);
         }
-
-        public void Remove(string key)
-        {
-            this.cache.Remove(key);
-        }
-
-        public Task RemoveAsync(string key)
+        
+        public Task Remove(string key)
         {
             return this.cache.RemoveAsync(key);
         }
-
-        public void Set<T>(string key, T item)
-        {
-            var serialized = this.GetSerializer().Serialize<T>(item);
-            this.cache.Set(key, serialized);
-        }
-
-        public Task SetAsync<T>(string key, T item)
+        
+        public Task Set<T>(string key, T item)
         {
             var serialized = this.GetSerializer().Serialize<T>(item);
             return this.cache.SetAsync(key, serialized);
