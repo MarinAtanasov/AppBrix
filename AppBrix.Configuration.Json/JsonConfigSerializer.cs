@@ -35,7 +35,7 @@ namespace AppBrix.Configuration.Json
                 this.settings = new JsonSerializerSettings()
                 {
                     Culture = CultureInfo.InvariantCulture,
-                    DefaultValueHandling = DefaultValueHandling.Include,
+                    DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
                     NullValueHandling = NullValueHandling.Ignore,
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
                 };
