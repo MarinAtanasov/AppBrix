@@ -1,9 +1,9 @@
 ﻿{
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Events.Tests",
   "summary": "Contains tests for the AppBrix.Events module",
   "description": "Contains tests for the AppBrix.Events module",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Events Tests" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Events": "0.1.0-*",
-    "AppBrix.Tests": "0.1.0-*"
+    "AppBrix.Events": "0.2.0-*",
+    "AppBrix.Tests": "0.2.0-*"
   },
 
   "commands": {

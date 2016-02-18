@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 		NuGet.Config = NuGet.Config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FE5803DF-2805-4190-AE4C-82E778BC2106}"

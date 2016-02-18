@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Resolver",
   "summary": "Module which allows registration and resolving of single-instance objects.",
   "description": "Module which allows registration and resolving of single-instance objects.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Resolver" ],
@@ -14,7 +14,7 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.1.0-*"
+    "AppBrix": "0.2.0-*"
   },
 
   "frameworks": {

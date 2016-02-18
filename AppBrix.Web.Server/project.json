@@ -1,9 +1,9 @@
 ﻿{
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Web.Server",
   "summary": "Module used for working with web services.",
   "description": "Module used for working with web services. Register the current application inside the web application's Startup class (services.AddInstance<IApp>(app);)",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Web Server" ],
@@ -14,7 +14,7 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.1.0-*",
+    "AppBrix": "0.2.0-*",
     "Microsoft.AspNet.Mvc": "6.0.0-*"
   },
 

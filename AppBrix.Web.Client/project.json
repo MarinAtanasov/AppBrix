@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Web.Client",
   "summary": "Module used for making HTTP REST requests.",
   "description": "Module used for making HTTP REST requests. You can override the factory for HttpClient to change the behavior.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Web Client" ],
@@ -14,9 +14,9 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.1.0-*",
-    "AppBrix.Factory": "0.1.0-*",
-    "AppBrix.Resolver": "0.1.0-*",
+    "AppBrix": "0.2.0-*",
+    "AppBrix.Factory": "0.2.0-*",
+    "AppBrix.Resolver": "0.2.0-*",
     "System.Net.Http": "4.0.1-*"
   },
 

@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix",
   "summary": "AppBrix Core containing the application and module classes and interfaces.",
   "description": "AppBrix Core containing the application and module classes and interfaces.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix" ],
@@ -14,7 +14,7 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Configuration": "0.1.0-*"
+    "AppBrix.Configuration": "0.2.0-*"
   },
 
   "frameworks": {

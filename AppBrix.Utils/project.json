@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Utils",
   "summary": "Commonly used utils and extension methods.",
   "description": "Commonly used utils and extension methods. Automatically included as dependency of all other AppBrix packages.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Utils" ],

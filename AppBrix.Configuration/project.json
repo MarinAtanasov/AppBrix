@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Configuration",
   "summary": "Base classes and interfaces for managing configurations.",
   "description": "Base classes and interfaces for managing configurations.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Config" ],
@@ -14,7 +14,7 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Utils": "0.1.0-*"
+    "AppBrix.Utils": "0.2.0-*"
   },
 
   "frameworks": {

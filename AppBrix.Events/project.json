@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Events",
   "summary": "Module which allows subscribing and raising application level events.",
   "description": "Module which allows subscribing and raising application level events.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Events" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.1.0-*",
-    "AppBrix.Resolver": "0.1.0-*"
+    "AppBrix": "0.2.0-*",
+    "AppBrix.Resolver": "0.2.0-*"
   },
 
   "frameworks": {

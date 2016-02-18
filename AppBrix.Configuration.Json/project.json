@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Configuration.Json",
   "summary": "Contains serializer for JSON based configurations.",
   "description": "Contains serializer/deserializer for JSON based configurations.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Config JSON" ],
@@ -13,10 +13,10 @@
   "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
-  "dependencies": {
-    "AppBrix.Configuration": "0.1.0-*",
-    "Newtonsoft.Json": "8.0.1-*"
-  },
+    "dependencies": {
+        "AppBrix.Configuration": "0.2.0-*",
+        "Newtonsoft.Json": "8.0.1"
+    },
 
   "frameworks": {
     "dotnet5.4": { }

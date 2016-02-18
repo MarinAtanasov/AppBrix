@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "title": "AppBrix.Logging",
   "summary": "Module which enables throwing of logging events and subscribing to those events.",
   "description": "Module which enables throwing of logging events and subscribing to those events.",
-  "releaseNotes": "Initial version.",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Log" ],
@@ -14,10 +14,10 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.1.0-*",
-    "AppBrix.Events": "0.1.0-*",
-    "AppBrix.Resolver": "0.1.0-*",
-    "AppBrix.Time": "0.1.0-*",
+    "AppBrix": "0.2.0-*",
+    "AppBrix.Events": "0.2.0-*",
+    "AppBrix.Resolver": "0.2.0-*",
+    "AppBrix.Time": "0.2.0-*",
     "System.Collections.Concurrent": "4.0.11-*",
     "System.Diagnostics.Process": "4.1.0-*",
     "System.Threading.Thread": "4.0.0-*"
