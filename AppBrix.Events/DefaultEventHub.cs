@@ -105,7 +105,7 @@ namespace AppBrix.Events
                     handler(args);
 
                     // Check if the handler has unsubscribed itself.
-                    if (i >= subscriptions.Count || !Object.ReferenceEquals(handler, subscriptions[i]))
+                    if (i < subscriptions.Count && !Object.ReferenceEquals(handler, subscriptions[i]))
                         i--;
                 }
             }
