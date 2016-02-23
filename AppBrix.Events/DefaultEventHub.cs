@@ -98,9 +98,15 @@ namespace AppBrix.Events
         {
             if (this.subscriptions.ContainsKey(eventType))
             {
-                foreach (Action<T> handler in this.subscriptions[eventType])
+                var subscriptions = this.subscriptions[eventType];
+                for (int i = 0; i < subscriptions.Count; i++)
                 {
+                    var handler = (Action<T>)subscriptions[i];
                     handler(args);
+
+                    // Check if the handler has unsubscribed itself.
+                    if (i >= subscriptions.Count || !Object.ReferenceEquals(handler, subscriptions[i]))
+                        i--;
                 }
             }
         }
