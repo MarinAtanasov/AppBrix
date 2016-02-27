@@ -28,7 +28,7 @@ namespace AppBrix.Tests
             {
                 config.Modules.Add(ModuleConfigElement.Create(module));
             }
-            return new DefaultApp(manager);
+            return App.Create(manager);
         }
         #endregion
     }
