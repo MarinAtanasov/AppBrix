@@ -20,7 +20,7 @@
     "AppBrix.Configuration.Files": "0.2.0-*",
     "AppBrix.Configuration.Json": "0.2.0-*",
     "AppBrix.Configuration.Memory": "0.2.0-*",
-    "AppBrix.Events": "0.2.0-*",
+    "AppBrix.Events": "0.2.1-*",
     "AppBrix.Factory": "0.2.0-*",
     "AppBrix.Logging": "0.2.0-*",
     "AppBrix.Logging.Console": "0.2.0-*",

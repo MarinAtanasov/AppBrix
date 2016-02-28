@@ -192,9 +192,6 @@ namespace AppBrix.Events.Tests
             hub.Subscribe<EventMock>(handler);
             hub.Raise(args);
             called.Should().Be(1, "event handler should be called exactly once after the first raise");
-            hub.Uninitialize();
-            hub.Raise(args);
-            called.Should().Be(1, "event handler should be called exactly once after the uninitialization");
         }
 
         [Fact]
@@ -274,9 +271,9 @@ namespace AppBrix.Events.Tests
         #endregion
 
         #region Private methods
-        private DefaultEventHub GetEventHub()
+        private IEventHub GetEventHub()
         {
-            return this.app.Get<DefaultEventHub>();
+            return this.app.Get<IEventHub>();
         }
 
         private void TestPerformanceEventsSubscribeInternal()
@@ -293,7 +290,6 @@ namespace AppBrix.Events.Tests
             {
                 hub.Subscribe<EventMockChild>(handler);
             }
-            hub.Uninitialize();
         }
 
         private void TestPerformanceEventsUnsubscribeInternal()
@@ -314,7 +310,6 @@ namespace AppBrix.Events.Tests
             {
                 hub.Unsubscribe<EventMockChild>(handlers[i]);
             }
-            hub.Uninitialize();
         }
 
         private void TestPerformanceEventsRaiseInternal()
@@ -335,7 +330,6 @@ namespace AppBrix.Events.Tests
             parentCalled.Should().Be(calledCount, "The parent should be called exactly {0} times", calledCount);
             childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
-            hub.Uninitialize();
         }
         #endregion
 

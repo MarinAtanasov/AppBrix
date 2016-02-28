@@ -14,7 +14,7 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Events": "0.2.0-*",
+    "AppBrix.Events": "0.2.1-*",
     "AppBrix.Tests": "0.2.0-*"
   },
 

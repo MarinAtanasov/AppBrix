@@ -33,17 +33,15 @@ namespace AppBrix.Resolver.Tests
         {
             var resolver = this.GetResolver();
             resolver.Should().NotBeNull("unable to get the resolver");
-            resolver.Should().BeOfType<DefaultResolver>("returned resolver is not of default type");
             var resolver2 = this.GetResolver();
             resolver2.Should().NotBeNull("second call did not return a resolver");
-            resolver2.Should().BeOfType<DefaultResolver>("second returned resolver is not of default type");
             resolver2.Should().BeSameAs(resolver, "returned a different instance of the resolver");
         }
 
         [Fact]
         public void TestResolveByInterface()
         {
-            var resolver = (DefaultResolver)this.GetResolver();
+            var resolver = this.GetResolver();
             var iResolver = resolver.Get<IResolver>();
             iResolver.Should().NotBeNull("unable to resolve the IResolver interface");
             iResolver.Should().BeSameAs(resolver, "returned IResolver is a different instance");
@@ -52,10 +50,11 @@ namespace AppBrix.Resolver.Tests
         [Fact]
         public void TestResolveByClass()
         {
-            var resolver = (DefaultResolver)this.GetResolver();
-            var resolved = resolver.Get<DefaultResolver>();
-            resolved.Should().NotBeNull("unable to resolve the Resolver class");
-            resolved.Should().BeSameAs(resolver, "returned Resolver is a different instance");
+            var resolver = this.GetResolver();
+            var registered = new ChildMock();
+            var resolved = resolver.Get<ChildMock>();
+            resolved.Should().NotBeNull("unable to resolve the item by class");
+            resolved.Should().BeSameAs(registered, "returned item is a different instance than the registered");
         }
 
         [Fact]
@@ -81,7 +80,7 @@ namespace AppBrix.Resolver.Tests
         [Fact]
         public void TestResolveAllOneElement()
         {
-            var resolver = (DefaultResolver)this.GetResolver();
+            var resolver = this.GetResolver();
             var resolved = resolver.GetAll().OfType<IResolver>();
             resolved.Should().NotBeNull("resolved collection should not be null");
             resolved.Count().Should().Be(1, "resolved collection should have 1 element");
@@ -91,7 +90,7 @@ namespace AppBrix.Resolver.Tests
         [Fact]
         public void TestResolveAllTwoElements()
         {
-            var resolver = (DefaultResolver)this.GetResolver();
+            var resolver = this.GetResolver();
             var first = new ParentMock();
             resolver.Register(first);
             var second = new ChildMock();
@@ -181,7 +180,7 @@ namespace AppBrix.Resolver.Tests
 
         private void TestPerformanceResolverInternal()
         {
-            var resolver = (DefaultResolver)this.GetResolver();
+            var resolver = this.GetResolver();
             for (int i = 0; i < 10000; i++)
             {
                 resolver.Register(new ChildMock());
