@@ -52,6 +52,7 @@ namespace AppBrix.Resolver.Tests
         {
             var resolver = this.GetResolver();
             var registered = new ChildMock();
+            resolver.Register(registered);
             var resolved = resolver.Get<ChildMock>();
             resolved.Should().NotBeNull("unable to resolve the item by class");
             resolved.Should().BeSameAs(registered, "returned item is a different instance than the registered");
