@@ -186,7 +186,9 @@ namespace AppBrix.Web.Client.Impl
             else if (type == typeof(Stream))
                 contentValue = await content.ReadAsStreamAsync();
             else
-                throw new ArgumentException(string.Format("Unsupported type: {0}. Supported types are string, Stream and byte[].", typeof(T)));
+                throw new ArgumentException(string.Format(
+                    "Unsupported type: {0}. Supported types are {1}, {2} and {3}.",
+                    typeof(T), typeof(string).FullName, typeof(Stream).FullName, typeof(byte[]).FullName));
 
             return (T)contentValue;
         }

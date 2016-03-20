@@ -24,7 +24,7 @@ namespace AppBrix
         public static T ToEnum<T>(this string value) where T : struct
         {
             if (!typeof(T).GetTypeInfo().IsEnum)
-                throw new ArgumentException("T must be an enumerated type. T is: " + typeof(T).FullName);
+                throw new ArgumentException(string.Format("{0} must be an enumerated type. {0} is: {1}", nameof(T), typeof(T).FullName));
 
             T result;
             Enum.TryParse<T>(value, true, out result);
