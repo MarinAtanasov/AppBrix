@@ -26,7 +26,7 @@ namespace AppBrix.Events
         public void Subscribe<T>(Action<T> handler) where T : IEvent
         {
             if (handler == null)
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
 
             this.SubscribeInternal<T>(handler);
         }
@@ -34,7 +34,7 @@ namespace AppBrix.Events
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
         {
             if (handler == null)
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
 
             this.UnsubscribeInternal<T>(handler);
         }
@@ -42,7 +42,7 @@ namespace AppBrix.Events
         public void Raise<T>(T args) where T : IEvent
         {
             if (args == null)
-                throw new ArgumentNullException("args");
+                throw new ArgumentNullException(nameof(args));
 
             this.RaiseEvent(args, typeof(T));
             this.RaiseBaseClassesEvents(args);

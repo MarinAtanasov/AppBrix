@@ -39,7 +39,7 @@ namespace AppBrix
         public static object CreateObject(this Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             var constructor = type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(x => x.GetParameters().Length == 0);
             if (constructor == null)

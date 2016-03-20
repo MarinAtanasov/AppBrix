@@ -21,9 +21,9 @@ namespace AppBrix.Configuration.Files
         public FilesConfigProvider(string directory, string fileExtension = FilesConfigProvider.DefaultExtension)
         {
             if (string.IsNullOrEmpty(directory))
-                throw new ArgumentNullException("directory");
+                throw new ArgumentNullException(nameof(directory));
             if (string.IsNullOrEmpty(fileExtension))
-                throw new ArgumentNullException("fileExtension");
+                throw new ArgumentNullException(nameof(fileExtension));
 
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);

@@ -23,9 +23,9 @@ namespace AppBrix.Configuration
         public ConfigManager(IConfigProvider provider, IConfigSerializer serializer)
         {
             if (provider == null)
-                throw new ArgumentNullException("provider");
+                throw new ArgumentNullException(nameof(provider));
             if (serializer == null)
-                throw new ArgumentNullException("serializer");
+                throw new ArgumentNullException(nameof(serializer));
 
             this.provider = provider;
             this.serializer = serializer;
@@ -54,9 +54,9 @@ namespace AppBrix.Configuration
         public void Save(Type type, IConfig config)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             if (config == null)
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
             if (type != config.GetType())
                 throw new ArgumentException(string.Format("Passed in type ({0}) and config type ({1}) are different.", type, config.GetType()));
 

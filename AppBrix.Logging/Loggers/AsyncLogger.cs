@@ -91,7 +91,7 @@ namespace AppBrix.Logging.Loggers
         public override void LogEntry(ILogEntry entry)
         {
             if (entry == null)
-                throw new ArgumentNullException("entry");
+                throw new ArgumentNullException(nameof(entry));
             this.logQueue.Add(entry);
         }
         #endregion

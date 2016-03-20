@@ -31,9 +31,9 @@ namespace AppBrix.Resolver
         public void Register(object obj, Type type)
         {
             if (obj == null)
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             if (!type.IsAssignableFrom(obj.GetType()))
                 throw new ArgumentException(string.Format(
                     "Target object is of type {0} which cannot be cast to target type {1}.",

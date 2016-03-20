@@ -15,9 +15,9 @@ namespace AppBrix.Caching
         public DefaultCache(IApp app, IDistributedCache cache)
         {
             if (app == null)
-                throw new ArgumentNullException("app");
+                throw new ArgumentNullException(nameof(app));
             if (cache == null)
-                throw new ArgumentNullException("cache");
+                throw new ArgumentNullException(nameof(cache));
 
             this.app = app;
             this.cache = cache;

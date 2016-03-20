@@ -43,7 +43,7 @@ namespace AppBrix.Web.Client.Impl
         public IHttpCall SetHeader(string header, params string[] values)
         {
             if (string.IsNullOrEmpty(header))
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
 
             if (values == null || values.Length == 0)
             {
@@ -69,7 +69,7 @@ namespace AppBrix.Web.Client.Impl
         public IHttpCall SetContentHeader(string header, params string[] values)
         {
             if (string.IsNullOrEmpty(header))
-                throw new ArgumentNullException("header");
+                throw new ArgumentNullException(nameof(header));
 
             if (values == null || values.Length == 0)
             {
@@ -88,7 +88,7 @@ namespace AppBrix.Web.Client.Impl
         public IHttpCall SetMethod(string method)
         {
             if (string.IsNullOrEmpty(method))
-                throw new ArgumentNullException("method");
+                throw new ArgumentNullException(nameof(method));
 
             this.callMethod = method.ToUpperInvariant();
             return this;
@@ -103,7 +103,7 @@ namespace AppBrix.Web.Client.Impl
         public IHttpCall SetUrl(string url)
         {
             if (string.IsNullOrEmpty(url))
-                throw new ArgumentNullException("url");
+                throw new ArgumentNullException(nameof(url));
 
             this.requestUrl = url;
             return this;
