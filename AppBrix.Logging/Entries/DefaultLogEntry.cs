@@ -13,12 +13,12 @@ namespace AppBrix.Logging.Entries
     internal sealed class DefaultLogEntry : ILogEntry
     {
         #region Construciton
-        public DefaultLogEntry(IApp app, LogLevel level, DateTime created, string message, Exception error = null,
+        public DefaultLogEntry(IApp app, LogLevel level, DateTime created, string message, Exception exception = null,
             string callerFile = null, string callerMember = null, int callerLineNumber = 0)
         {
             this.app = app;
             this.Level = level;
-            this.Error = error;
+            this.Exception = exception;
             this.Message = message;
             this.CallerFile = callerFile;
             this.CallerMember = callerMember;
@@ -37,7 +37,7 @@ namespace AppBrix.Logging.Entries
 
         public int CallerLineNumber { get; }
 
-        public Exception Error { get; }
+        public Exception Exception { get; }
 
         public string Message { get; }
 
@@ -69,10 +69,10 @@ namespace AppBrix.Logging.Entries
             result.Append(DefaultLogEntry.Separator);
             result.Append(this.Message);
             
-            if (this.Error != null)
+            if (this.Exception != null)
             {
                 result.Append(Environment.NewLine);
-                result.Append(this.Error);
+                result.Append(this.Exception);
             }
             
             return result.ToString();

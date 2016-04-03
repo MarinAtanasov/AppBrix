@@ -51,7 +51,7 @@ namespace AppBrix.Logging.Tests.LogHub
             {
                 called = true;
                 x.Message.Should().Be(message, "the error message same as the passed in error");
-                x.Error.Should().Be(error, "the error message same as the passed in error");
+                x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Error, "log level should be Error");
             });
             this.app.GetLog().Error(message, error);
@@ -68,7 +68,7 @@ namespace AppBrix.Logging.Tests.LogHub
             {
                 called = true;
                 x.Message.Should().Be(message, "the debug message is different than the passed in message");
-                x.Error.Should().Be(error, "the error message same as the passed in error");
+                x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Debug, "log level should be Debug");
             });
             this.app.GetLog().Debug(message, error);
@@ -100,7 +100,7 @@ namespace AppBrix.Logging.Tests.LogHub
             {
                 called = true;
                 x.Message.Should().Be(message, "the warning message is different than the passed in message");
-                x.Error.Should().Be(error, "the error message same as the passed in error");
+                x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Warning, "log level should be Warning");
             });
             this.app.GetLog().Warning(message, error);

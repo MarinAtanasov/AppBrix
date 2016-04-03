@@ -52,7 +52,7 @@ namespace AppBrix.Logging.Tests.Logger
             this.app.GetLog().Info("Message", ex);
             writer.LoggedEntries.Count().Should().Be(1, "writer should have 1 entry passed in to it");
             writer.LoggedEntries.Single().Message.Should().Be(message, "the logged message should be the same as the passed in message");
-            writer.LoggedEntries.Single().Error.Should().Be(ex, "the logged exception should be the same as the passed in exception");
+            writer.LoggedEntries.Single().Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
 
             logger.Uninitialize();
             writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
@@ -76,7 +76,7 @@ namespace AppBrix.Logging.Tests.Logger
             var entries = writer.LoggedEntries.ToList();
             entries.Count.Should().Be(1, "writer should have 1 entry passed in to it");
             entries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
-            entries[0].Error.Should().Be(ex, "the logged exception should be the same as the passed in exception");
+            entries[0].Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
             writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
         }
         #endregion
