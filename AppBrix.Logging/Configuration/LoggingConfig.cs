@@ -21,6 +21,7 @@ namespace AppBrix.Logging.Configuration
         }
         #endregion
 
+        #region Properties
         /// <summary>
         /// Gets or sets whether to use an asychronous logger.
         /// Changing this value requires module/application restart.
@@ -31,5 +32,6 @@ namespace AppBrix.Logging.Configuration
         /// Gets or sets the minimal level in which the log entry events should be raised.
         /// </summary>
         public LogLevel LogLevel { get; set; }
+        #endregion
     }
 }

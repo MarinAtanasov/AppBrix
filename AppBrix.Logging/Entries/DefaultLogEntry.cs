@@ -29,21 +29,21 @@ namespace AppBrix.Logging.Entries
         #endregion
 
         #region Properties
-        public LogLevel Level { get; private set; }
+        public LogLevel Level { get; }
 
-        public string CallerFile { get; private set; }
+        public string CallerFile { get; }
 
-        public string CallerMember { get; private set; }
+        public string CallerMember { get; }
 
-        public int CallerLineNumber { get; private set; }
+        public int CallerLineNumber { get; }
 
-        public Exception Error { get; private set; }
+        public Exception Error { get; }
 
-        public string Message { get; private set; }
+        public string Message { get; }
 
-        public DateTime Created { get; private set; }
+        public DateTime Created { get; }
 
-        public int ThreadId { get; private set; }
+        public int ThreadId { get; }
         #endregion
 
         #region Public and overriden methods

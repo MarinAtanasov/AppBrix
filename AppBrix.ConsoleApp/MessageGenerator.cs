@@ -14,7 +14,7 @@ namespace AppBrix.ConsoleApp
         #endregion
 
         #region Properties
-        public string Level { get; private set; }
+        public string Level { get; }
 
         public int MessagesSent { get; private set; }
         #endregion

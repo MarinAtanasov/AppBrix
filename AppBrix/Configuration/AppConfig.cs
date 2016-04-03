@@ -12,21 +12,11 @@ namespace AppBrix.Configuration
     /// </summary>
     public sealed class AppConfig : IConfig
     {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="AppConfig"/> with default property values.
-        /// </summary>
-        public AppConfig()
-        {
-            this.Modules = new List<ModuleConfigElement>();
-        }
-        #endregion
-
         #region Properties
         /// <summary>
         /// Contains a collection of modules to be loaded by the application.
         /// </summary>
-        public ICollection<ModuleConfigElement> Modules { get; set; }
+        public ICollection<ModuleConfigElement> Modules { get; } = new List<ModuleConfigElement>();
         #endregion
     }
 }

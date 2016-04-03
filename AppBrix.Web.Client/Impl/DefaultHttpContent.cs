@@ -17,9 +17,9 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Properties
-        public T Content { get; private set; }
+        public T Content { get; }
 
-        public IHttpContentHeaders Headers { get; private set; }
+        public IHttpContentHeaders Headers { get; }
         #endregion
     }
 }

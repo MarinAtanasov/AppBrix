@@ -25,11 +25,11 @@ namespace AppBrix.Application
         #endregion
 
         #region Properties
-        public IModule Module { get; private set; }
+        public IModule Module { get; }
 
-        public ModuleConfigElement Config { get; private set; }
+        public ModuleConfigElement Config { get; }
 
-        public ModuleStatus Status { get; private set; }
+        public ModuleStatus Status { get; }
         #endregion
     }
 }

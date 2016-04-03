@@ -20,15 +20,15 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Properties
-        public IHttpMessageHeaders Headers { get; private set; }
+        public IHttpMessageHeaders Headers { get; }
 
-        public IHttpContent<T> Content { get; private set; }
+        public IHttpContent<T> Content { get; }
 
-        public int StatusCode { get; private set; }
+        public int StatusCode { get; }
 
-        public string ReasonPhrase { get; private set; }
+        public string ReasonPhrase { get; }
 
-        public Version Version { get; private set; }
+        public Version Version { get; }
         #endregion
     }
 }

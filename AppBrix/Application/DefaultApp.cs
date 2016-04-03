@@ -32,17 +32,17 @@ namespace AppBrix.Application
         /// <summary>
         /// Gets the id of the application.
         /// </summary>
-        public Guid Id { get; private set; }
+        public Guid Id { get; }
 
         /// <summary>
         /// Gets the application's configuration manager.
         /// </summary>
-        public IConfigManager ConfigManager { get; private set; }
+        public IConfigManager ConfigManager { get; }
         
         /// <summary>
         /// Indicates whether the application is in an initialized state.
         /// </summary>
-        private bool IsInitialized { get; set; }
+        public bool IsInitialized { get; private set; }
         #endregion
 
         #region IPublic and overriden methods

@@ -17,7 +17,7 @@ namespace AppBrix.Lifecycle
         #endregion
 
         #region Properties
-        public IApp App { get; private set; }
+        public IApp App { get; }
         #endregion
     }
 }

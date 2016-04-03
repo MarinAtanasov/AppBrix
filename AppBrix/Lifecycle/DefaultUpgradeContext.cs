@@ -17,7 +17,7 @@ namespace AppBrix.Lifecycle
         #endregion
 
         #region Properties
-        public Version UpgradeFrom { get; private set; }
+        public Version UpgradeFrom { get; }
         #endregion
     }
 }
