@@ -10,6 +10,16 @@ namespace AppBrix
     public static class ConfigurationExtensions
     {
         /// <summary>
+        /// Saves one cached configuration.
+        /// </summary>
+        /// <typeparam name="T">The type of the configuraton.</typeparam>
+        /// <param name="manager">The configuration manager.</param>
+        public static void Save<T>(this IConfigManager manager) where T : class, IConfig
+        {
+            manager.Save(typeof(T), manager.GetConfig<T>());
+        }
+
+        /// <summary>
         /// Saves one configuration.
         /// </summary>
         /// <typeparam name="T">The type of the configuraton.</typeparam>

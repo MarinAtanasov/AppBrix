@@ -74,11 +74,13 @@ namespace AppBrix.Application
                     {
                         ((IInstallable)moduleInfo.Module).Install(new DefaultInstallContext(this));
                         moduleInfo.Config.Version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
+                        this.ConfigManager.Save<AppConfig>();
                     }
                     else if (moduleInfo.Config.Version < moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version)
                     {
                         ((IInstallable)moduleInfo.Module).Upgrade(new DefaultUpgradeContext(this, moduleInfo.Config.Version));
                         moduleInfo.Config.Version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
+                        this.ConfigManager.Save<AppConfig>();
                     }
                 }
                     
@@ -98,6 +100,7 @@ namespace AppBrix.Application
                     ((IInstallable)moduleInfo.Module).Uninstall(new DefaultInstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
+                    this.ConfigManager.Save<AppConfig>();
                 }
             }
             this.IsInitialized = false;
