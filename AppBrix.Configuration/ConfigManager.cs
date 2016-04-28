@@ -47,20 +47,16 @@ namespace AppBrix.Configuration
         {
             foreach (var config in this.configs)
             {
-                this.SaveInternal(config.Key, config.Value);
+                this.SaveInternal(config.Value);
             }
         }
 
-        public void Save(Type type, IConfig config)
+        public void Save(IConfig config)
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
             if (config == null)
                 throw new ArgumentNullException(nameof(config));
-            if (type != config.GetType())
-                throw new ArgumentException(string.Format("Passed in type ({0}) and config type ({1}) are different.", type, config.GetType()));
 
-            this.SaveInternal(type, config);
+            this.SaveInternal(config);
         }
         #endregion
 
@@ -73,8 +69,9 @@ namespace AppBrix.Configuration
             return stringed != null ? (T)this.serializer.Deserialize(type, stringed) : null;
         }
 
-        private void SaveInternal(Type type, IConfig config)
+        private void SaveInternal(IConfig config)
         {
+            var type = config.GetType();
             var stringed = this.serializer.Serialize(type, config);
             if (!this.configStringed.ContainsKey(type) || stringed != this.configStringed[type])
             {

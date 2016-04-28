@@ -27,7 +27,7 @@ namespace AppBrix.Configuration.Memory
         {
         }
 
-        public void Save(Type type, IConfig config)
+        public void Save(IConfig config)
         {
         }
         #endregion

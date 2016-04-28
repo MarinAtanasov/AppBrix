@@ -16,18 +16,7 @@ namespace AppBrix
         /// <param name="manager">The configuration manager.</param>
         public static void Save<T>(this IConfigManager manager) where T : class, IConfig
         {
-            manager.Save(typeof(T), manager.GetConfig<T>());
-        }
-
-        /// <summary>
-        /// Saves one configuration.
-        /// </summary>
-        /// <typeparam name="T">The type of the configuraton.</typeparam>
-        /// <param name="manager">The configuration manager.</param>
-        /// <param name="config">The configuration.</param>
-        public static void Save<T>(this IConfigManager manager, T config) where T : class, IConfig
-        {
-            manager.Save(typeof(T), config);
+            manager.Save(manager.GetConfig<T>());
         }
         
         /// <summary>

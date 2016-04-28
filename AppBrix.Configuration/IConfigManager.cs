@@ -27,8 +27,7 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Saves one configuration.
         /// </summary>
-        /// <param name="type">The type of the configuraton.</param>
         /// <param name="config">The configuration.</param>
-        void Save(Type type, IConfig config);
+        void Save(IConfig config);
     }
 }
