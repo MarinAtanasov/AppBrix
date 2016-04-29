@@ -13,6 +13,7 @@ namespace AppBrix.Configuration
     {
         /// <summary>
         /// Reads a configuration by a given configuration type.
+        /// Returns null if the configuration does not exist.
         /// </summary>
         /// <param name="type">The type of the configuration to be read.</param>
         /// <returns>The read configuration.</returns>
