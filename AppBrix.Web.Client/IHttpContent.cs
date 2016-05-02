@@ -13,13 +13,13 @@ namespace AppBrix.Web.Client
     public interface IHttpContent<T>
     {
         /// <summary>
+        /// Gets the message content.
+        /// </summary>
+        T Data { get; }
+
+        /// <summary>
         /// Gets the content headers.
         /// </summary>
         IHttpContentHeaders Headers { get; }
-
-        /// <summary>
-        /// Gets the message content.
-        /// </summary>
-        T Content { get; }
     }
 }

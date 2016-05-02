@@ -9,15 +9,15 @@ namespace AppBrix.Web.Client.Impl
     internal sealed class DefaultHttpContent<T> : IHttpContent<T>
     {
         #region Construction
-        public DefaultHttpContent(T content, IHttpContentHeaders headers)
+        public DefaultHttpContent(T data, IHttpContentHeaders headers)
         {
-            this.Content = content;
+            this.Data = data;
             this.Headers = headers;
         }
         #endregion
 
         #region Properties
-        public T Content { get; }
+        public T Data { get; }
 
         public IHttpContentHeaders Headers { get; }
         #endregion
