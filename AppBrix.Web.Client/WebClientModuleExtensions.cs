@@ -20,7 +20,7 @@ namespace AppBrix
         /// <returns>The current REST call.</returns>
         public static IHttpCall SetMethod(this IHttpCall call, HttpCallMethod method)
         {
-            return call.SetMethod(method.ToString());
+            return call.SetMethod(method.ToString().ToUpperInvariant());
         }
     }
 }

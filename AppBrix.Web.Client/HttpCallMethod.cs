@@ -11,12 +11,12 @@ namespace AppBrix.Web.Client
     /// </summary>
     public enum HttpCallMethod
     {
-        GET,
-        HEAD,
-        POST,
-        PUT,
-        DELETE,
-        OPTIONS,
-        TRACE,
+        Get,
+        Head,
+        Post,
+        Put,
+        Delete,
+        Options,
+        Trace,
     }
 }
