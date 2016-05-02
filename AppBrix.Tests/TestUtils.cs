@@ -23,7 +23,7 @@ namespace AppBrix.Tests
         public static IApp CreateTestApp(params Type[] modules)
         {
             var manager = new MemoryConfigManager();
-            var config = manager.GetConfig<AppConfig>();
+            var config = manager.Get<AppConfig>();
             foreach (var module in modules)
             {
                 config.Modules.Add(ModuleConfigElement.Create(module));

@@ -38,7 +38,7 @@ namespace AppBrix
         /// <returns>The config.</returns>
         public static T GetConfig<T>(this IApp app) where T : class, IConfig
         {
-            return app.ConfigManager.GetConfig<T>();
+            return app.ConfigManager.Get<T>();
         }
     }
 }

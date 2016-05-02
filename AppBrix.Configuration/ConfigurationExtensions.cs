@@ -16,7 +16,7 @@ namespace AppBrix
         /// <param name="manager">The configuration manager.</param>
         public static void Save<T>(this IConfigManager manager) where T : class, IConfig
         {
-            manager.Save(manager.GetConfig<T>());
+            manager.Save(manager.Get<T>());
         }
         
         /// <summary>

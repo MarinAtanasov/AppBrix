@@ -20,11 +20,11 @@ namespace AppBrix.Cloning
         T DeepCopy<T>(T obj);
 
         /// <summary>
-        /// Creates a shalow copy of the specified object.
+        /// Creates a shallow copy of the specified object.
         /// </summary>
         /// <typeparam name="T">The type to be returned.</typeparam>
         /// <param name="obj">The object to be copied</param>
-        /// <returns>A shalow copy of the specified object.</returns>
-        T ShalowCopy<T>(T obj);
+        /// <returns>A shallow copy of the specified object.</returns>
+        T ShallowCopy<T>(T obj);
     }
 }

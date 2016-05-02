@@ -134,7 +134,7 @@ namespace AppBrix.Application
 
         private IEnumerable<ModuleInfo> GetModuleInfos()
         {
-            return this.ConfigManager.GetConfig<AppConfig>().Modules
+            return this.ConfigManager.Get<AppConfig>().Modules
                 .Where(m => m.Status != ModuleStatus.Disabled)
                 .Select(m => new ModuleInfo(this.CreateModule(m), m));
         }

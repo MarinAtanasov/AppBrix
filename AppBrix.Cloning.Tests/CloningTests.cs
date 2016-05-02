@@ -43,12 +43,12 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact]
-        public void TestShalowCopyInteger()
+        public void TestShallowCopyInteger()
         {
             var cloner = this.GetCloner();
             var original = 5;
-            var clone = cloner.ShalowCopy(original);
-            this.AssertIsShalowCopy(original, clone);
+            var clone = cloner.ShallowCopy(original);
+            this.AssertIsShallowCopy(original, clone);
         }
 
         [Fact]
@@ -61,12 +61,12 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact]
-        public void TestShalowCopyString()
+        public void TestShallowCopyString()
         {
             var cloner = this.GetCloner();
             var original = "Test";
-            var clone = cloner.ShalowCopy(original);
-            this.AssertIsShalowCopy(original, clone);
+            var clone = cloner.ShallowCopy(original);
+            this.AssertIsShallowCopy(original, clone);
         }
 
         [Fact]
@@ -79,12 +79,12 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact]
-        public void TestShalowCopyNumericPropertiesMock()
+        public void TestShallowCopyNumericPropertiesMock()
         {
             var cloner = this.GetCloner();
             var original = new NumericPropertiesMock(1, 2, 3, 4, 5.5f, 6.6, (decimal)7.7);
-            var clone = cloner.ShalowCopy(original);
-            this.AssertIsShalowCopy(original, clone);
+            var clone = cloner.ShallowCopy(original);
+            this.AssertIsShallowCopy(original, clone);
         }
 
         [Fact]
@@ -97,12 +97,12 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact]
-        public void TestShalowCopyPrimitivePropertiesMock()
+        public void TestShallowCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
             var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now);
-            var clone = cloner.ShalowCopy(original);
-            this.AssertIsShalowCopy(original, clone);
+            var clone = cloner.ShallowCopy(original);
+            this.AssertIsShallowCopy(original, clone);
         }
 
         [Fact]
@@ -115,12 +115,12 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact]
-        public void TestShalowCopyComplexPropertiesMock()
+        public void TestShallowCopyComplexPropertiesMock()
         {
             var cloner = this.GetCloner();
             var original = new ComplexPropertiesMock(10);
-            var clone = cloner.ShalowCopy(original);
-            this.AssertIsShalowCopy(original, clone);
+            var clone = cloner.ShallowCopy(original);
+            this.AssertIsShallowCopy(original, clone);
         }
 
         [Fact]
@@ -156,9 +156,9 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact]
-        public void TestPerformanceShalowCopy()
+        public void TestPerformanceShallowCopy()
         {
-            Action action = () => this.TestPerformanceShalowCopyInternal();
+            Action action = () => this.TestPerformanceShallowCopyInternal();
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
         }
         #endregion
@@ -221,7 +221,7 @@ namespace AppBrix.Cloning.Tests
             }
         }
 
-        private void AssertIsShalowCopy(object original, object copy, bool isInitialObject = true)
+        private void AssertIsShallowCopy(object original, object copy, bool isInitialObject = true)
         {
             if (original == null)
             {
@@ -250,7 +250,7 @@ namespace AppBrix.Cloning.Tests
             {
                 var originalField = field.GetValue(original);
                 var copiedField = field.GetValue(copy);
-                this.AssertIsShalowCopy(field.GetValue(original), field.GetValue(copy), false);
+                this.AssertIsShallowCopy(field.GetValue(original), field.GetValue(copy), false);
             }
         }
         
@@ -277,13 +277,13 @@ namespace AppBrix.Cloning.Tests
             }
         }
 
-        private void TestPerformanceShalowCopyInternal()
+        private void TestPerformanceShallowCopyInternal()
         {
             var cloner = this.GetCloner();
             for (int i = 0; i < 1000; i++)
             {
                 var original = new ComplexPropertiesMock(10);
-                var clone = cloner.ShalowCopy(original);
+                var clone = cloner.ShallowCopy(original);
             }
         }
         #endregion

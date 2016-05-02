@@ -9,7 +9,7 @@ using System.Reflection;
 namespace AppBrix.Cloning
 {
     /// <summary>
-    /// Default cloner used for shalow or deep copying.
+    /// Default cloner used for shallow or deep copying.
     /// </summary>
     internal sealed class DefaultCloner : ICloner
     {
@@ -19,12 +19,12 @@ namespace AppBrix.Cloning
             return this.DeepCopy(obj, new Dictionary<object, object>());
         }
 
-        public T ShalowCopy<T>(T obj)
+        public T ShallowCopy<T>(T obj)
         {
             if (this.IsValueType(typeof(T)))
                 return obj;
 
-            return (T)DefaultCloner.ShalowCopyMethod.Invoke(obj, null);
+            return (T)DefaultCloner.ShallowCopyMethod.Invoke(obj, null);
         }
         #endregion
 
@@ -52,7 +52,7 @@ namespace AppBrix.Cloning
 
         private object CloneReferenceType(object original, Type type, IDictionary<object, object> visited)
         {
-            var cloned = this.ShalowCopy(original);
+            var cloned = this.ShallowCopy(original);
             visited[original] = cloned;
             if (type.IsArray)
             {
@@ -83,7 +83,7 @@ namespace AppBrix.Cloning
         #endregion
 
         #region Private fields and constants
-        private static readonly MethodInfo ShalowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
         #endregion
     }
 }

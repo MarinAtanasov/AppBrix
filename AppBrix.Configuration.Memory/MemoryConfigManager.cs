@@ -13,7 +13,7 @@ namespace AppBrix.Configuration.Memory
     public sealed class MemoryConfigManager : IConfigManager
     {
         #region Public and overriden methods
-        public T GetConfig<T>() where T : class, IConfig
+        public T Get<T>() where T : class, IConfig
         {
             var type = typeof(T);
 
@@ -23,11 +23,11 @@ namespace AppBrix.Configuration.Memory
             return (T)configs[type];
         }
 
-        public void SaveAll()
+        public void Save(IConfig config)
         {
         }
 
-        public void Save(IConfig config)
+        public void SaveAll()
         {
         }
         #endregion

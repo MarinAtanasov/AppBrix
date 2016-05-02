@@ -33,7 +33,7 @@ namespace AppBrix.Configuration
         #endregion
 
         #region Public and overriden methods
-        public T GetConfig<T>() where T : class, IConfig
+        public T Get<T>() where T : class, IConfig
         {
             var type = typeof(T);
 
@@ -43,20 +43,20 @@ namespace AppBrix.Configuration
             return (T)configs[type];
         }
 
-        public void SaveAll()
-        {
-            foreach (var config in this.configs)
-            {
-                this.SaveInternal(config.Value);
-            }
-        }
-
         public void Save(IConfig config)
         {
             if (config == null)
                 throw new ArgumentNullException(nameof(config));
 
             this.SaveInternal(config);
+        }
+
+        public void SaveAll()
+        {
+            foreach (var config in this.configs)
+            {
+                this.SaveInternal(config.Value);
+            }
         }
         #endregion
 
@@ -65,17 +65,25 @@ namespace AppBrix.Configuration
         {
             var type = typeof(T);
             var stringed = this.provider.ReadConfig(type);
-            this.configStringed[type] = stringed;
-            return stringed != null ? (T)this.serializer.Deserialize(type, stringed) : null;
+            if (string.IsNullOrEmpty(stringed))
+            {
+                return null;
+            }
+            else
+            {
+                this.configStringed[type] = stringed;
+                return (T)this.serializer.Deserialize(type, stringed);
+            }
         }
 
         private void SaveInternal(IConfig config)
         {
             var type = config.GetType();
             var stringed = this.serializer.Serialize(type, config);
-            if (!this.configStringed.ContainsKey(type) || stringed != this.configStringed[type])
+            if (!this.configStringed.ContainsKey(type) || this.configStringed[type] != stringed)
             {
                 this.provider.WriteConfig(type, stringed);
+                this.configStringed[type] = stringed;
             }
         }
         #endregion

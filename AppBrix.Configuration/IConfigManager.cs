@@ -17,17 +17,17 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <typeparam name="T">Type of the configuration.</typeparam>
         /// <returns>The configuration</returns>
-        T GetConfig<T>() where T : class, IConfig;
-
-        /// <summary>
-        /// Saves all modified configurations.
-        /// </summary>
-        void SaveAll();
+        T Get<T>() where T : class, IConfig;
 
         /// <summary>
         /// Saves one configuration.
         /// </summary>
         /// <param name="config">The configuration.</param>
         void Save(IConfig config);
+
+        /// <summary>
+        /// Saves all modified configurations.
+        /// </summary>
+        void SaveAll();
     }
 }
