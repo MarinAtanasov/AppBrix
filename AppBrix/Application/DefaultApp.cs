@@ -50,6 +50,7 @@ namespace AppBrix.Application
         {
             this.RegisterModules();
             this.Initialize();
+            this.ConfigManager.SaveAll();
         }
 
         public void Stop()
