@@ -19,7 +19,6 @@
     "AppBrix.Resolver": "0.2.0-*",
     "AppBrix.Time": "0.2.0-*",
     "System.Collections.Concurrent": "4.0.11-*",
-    "System.Diagnostics.Process": "4.1.0-*",
     "System.Threading.Thread": "4.0.0-*"
   },
 

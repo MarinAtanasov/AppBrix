@@ -185,3 +185,5 @@ FakesAssemblies/
 
 # Lock files
 */project.lock.json
+*.sln.iml
+.idea

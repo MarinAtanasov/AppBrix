@@ -13,12 +13,12 @@
   "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
-    "dependencies": {
-        "AppBrix": "0.2.0-*",
-        "AppBrix.Resolver": "0.2.0-*",
-        "Microsoft.Framework.Caching.Memory": "1.0.0-*",
-        "Newtonsoft.Json": "8.0.2"
-    },
+  "dependencies": {
+    "AppBrix": "0.2.0-*",
+    "AppBrix.Resolver": "0.2.0-*",
+    "Microsoft.Framework.Caching.Memory": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.3"
+  },
 
   "frameworks": {
     "dotnet5.4": { }
