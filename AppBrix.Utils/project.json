@@ -13,9 +13,9 @@
   "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
-    "dependencies": {
-        "Microsoft.CSharp": "4.0.1-*"
-    },
+  "dependencies": {
+    "Microsoft.CSharp": "4.0.1-*"
+  },
 
   "frameworks": {
     "dotnet5.4": { }

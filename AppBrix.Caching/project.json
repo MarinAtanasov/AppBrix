@@ -16,7 +16,7 @@
   "dependencies": {
     "AppBrix": "0.2.0-*",
     "AppBrix.Resolver": "0.2.0-*",
-    "Microsoft.Framework.Caching.Memory": "1.0.0-*",
+    "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
     "Newtonsoft.Json": "8.0.3"
   },
 

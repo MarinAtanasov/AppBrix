@@ -3,8 +3,8 @@
 //
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
-using Microsoft.Framework.Caching.Distributed;
-using Microsoft.Framework.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Linq;
 

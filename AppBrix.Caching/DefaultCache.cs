@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using Microsoft.Framework.Caching.Distributed;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

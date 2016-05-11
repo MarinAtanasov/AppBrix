@@ -3,7 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Caching;
-using Microsoft.Framework.Caching.Distributed;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Linq;
 
