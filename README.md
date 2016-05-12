@@ -9,7 +9,7 @@ AppBrix has been created with the following priorities:
 * Every part of the framework should be easily replaceable without changing the original source code.
 
 ## Building the source
-Building the source requires [ASP.NET MVC 5 RC1](https://get.asp.net/) and [Web Tools 2015 RC1 Update 1](https://www.microsoft.com/en-us/download/details.aspx?id=49959).
+Building the source requires [ASP.NET MVC 5 RC1](https://get.asp.net/) and [Web Tools 2015 RC1 Update 2](https://www.microsoft.com/en-us/download/details.aspx?id=49959).
 
 ## Sample Application
 AppBrix.ConsoleApp is a simple console application which uses the framework.

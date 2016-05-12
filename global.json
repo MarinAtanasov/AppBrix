@@ -1,6 +1,8 @@
 {
   "projects": [ "Application", "Modules", "Projects", "Tests" ],
   "sdk": {
-    "version": "1.0.0-rc1-update1"
+    "architecture": "x64",
+    "runtime": "coreclr",
+    "version": "1.0.0-rc1-update2"
   }
 }
