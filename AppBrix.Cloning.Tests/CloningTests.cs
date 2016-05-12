@@ -152,14 +152,14 @@ namespace AppBrix.Cloning.Tests
         public void TestPerformanceDeepCopy()
         {
             Action action = () => this.TestPerformanceDeepCopyInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceShallowCopy()
         {
             Action action = () => this.TestPerformanceShallowCopyInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
 

@@ -162,14 +162,14 @@ namespace AppBrix.Logging.Tests.LogHub
         public void TestPerformanceLogging()
         {
             Action action = () => this.TestPerformanceLoggingInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceTraceLog()
         {
             Action action = () => this.TestPerformanceTraceLogInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
 

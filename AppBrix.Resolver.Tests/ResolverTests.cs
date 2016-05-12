@@ -169,7 +169,7 @@ namespace AppBrix.Resolver.Tests
         public void TestPerformanceResolver()
         {
             Action action = this.TestPerformanceResolverInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
 

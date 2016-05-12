@@ -62,7 +62,7 @@ namespace AppBrix.Factory.Tests
         public void TestPerformanceFactory()
         {
             Action action = () => this.TestPerformanceFactoryInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
 

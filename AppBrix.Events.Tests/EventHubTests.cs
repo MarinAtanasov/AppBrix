@@ -252,21 +252,21 @@ namespace AppBrix.Events.Tests
         public void TestPerformanceEventsSubscribe()
         {
             Action action = () => this.TestPerformanceEventsSubscribeInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceEventsUnsubscribe()
         {
             Action action = () => this.TestPerformanceEventsUnsubscribeInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceEventsRaise()
         {
             Action action = () => this.TestPerformanceEventsRaiseInternal();
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(20), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
 
