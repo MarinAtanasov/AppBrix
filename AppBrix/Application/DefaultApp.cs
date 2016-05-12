@@ -122,6 +122,7 @@ namespace AppBrix.Application
         private void RegisterModules()
         {
             var modules = this.GetModuleInfos();
+            modules = ModuleInfo.SortByPriority(modules);
             foreach (var module in modules)
             {
                 this.modules.Add(module);

@@ -1,3 +1,4 @@
 {
-  "Async": true
+  "Async": true,
+  "LogLevel": "All"
 }
