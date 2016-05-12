@@ -52,7 +52,7 @@ namespace AppBrix.Factory.Tests
         public void TestFactoryRegistered()
         {
             var factory = this.GetFactory();
-            factory.Register<FactoryTests>(() => this);
+            factory.Register(() => this);
             var returned = factory.Get<FactoryTests>();
             returned.Should().NotBeNull("the factory should return an object");
             returned.Should().BeSameAs(this, "the factory should return the same object");
@@ -61,7 +61,7 @@ namespace AppBrix.Factory.Tests
         [Fact]
         public void TestPerformanceFactory()
         {
-            Action action = () => this.TestPerformanceFactoryInternal();
+            Action action = this.TestPerformanceFactoryInternal;
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
@@ -75,7 +75,7 @@ namespace AppBrix.Factory.Tests
         private void TestPerformanceFactoryInternal()
         {
             var factory = this.GetFactory();
-            factory.Register<FactoryTests>(() => this);
+            factory.Register(() => this);
             for (int i = 0; i < 100000; i++)
             {
                 factory.Get<FactoryTests>();

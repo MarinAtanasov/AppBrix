@@ -25,7 +25,7 @@ namespace AppBrix.Logging.Console
 
         public void WriteEntry(ILogEntry entry)
         {
-            System.Console.WriteLine(entry.ToString().Replace("\r\n", "\n"));
+            System.Console.WriteLine(entry.ToString().Replace(Environment.NewLine, "\n"));
         }
         #endregion
     }

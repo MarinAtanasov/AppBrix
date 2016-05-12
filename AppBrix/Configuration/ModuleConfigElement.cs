@@ -27,7 +27,7 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Creates a new element for the selected module.
         /// </summary>
-        /// <param name="type">The type of the module.</typeparam>
+        /// <param name="type">The type of the module.</param>
         /// <returns>The module element.</returns>
         public static ModuleConfigElement Create(Type type)
         {

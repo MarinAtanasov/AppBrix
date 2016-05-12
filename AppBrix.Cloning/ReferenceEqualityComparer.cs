@@ -17,7 +17,7 @@ namespace AppBrix.Cloning
 
         public override int GetHashCode(object obj)
         {
-            return obj == null ? 0 : obj.GetHashCode();
+            return obj?.GetHashCode() ?? 0;
         }
         #endregion
     }

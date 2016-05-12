@@ -29,7 +29,7 @@ namespace AppBrix.Events
         #endregion
 
         #region Private fields and constants
-        private Lazy<DefaultEventHub> eventHub = new Lazy<DefaultEventHub>();
+        private readonly Lazy<DefaultEventHub> eventHub = new Lazy<DefaultEventHub>();
         #endregion
     }
 }

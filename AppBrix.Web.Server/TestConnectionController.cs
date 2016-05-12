@@ -21,7 +21,6 @@ namespace AppBrix.Web.Server
         /// <param name="app">The current app.</param>
         public TestConnectionController(IApp app)
         {
-            this.app = app;
         }
         #endregion
         
@@ -36,10 +35,6 @@ namespace AppBrix.Web.Server
         {
             return true;
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

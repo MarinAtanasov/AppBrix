@@ -69,18 +69,19 @@ namespace AppBrix.Application
 
             foreach (var moduleInfo in this.modules.Where(m => m.Status == ModuleStatus.Enabled))
             {
-                if (moduleInfo.Module is IInstallable)
+                var module = moduleInfo.Module as IInstallable;
+                if (module != null)
                 {
                     if (moduleInfo.Config.Version == null)
                     {
-                        ((IInstallable)moduleInfo.Module).Install(new DefaultInstallContext(this));
-                        moduleInfo.Config.Version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
+                        module.Install(new DefaultInstallContext(this));
+                        moduleInfo.Config.Version = module.GetType().GetTypeInfo().Assembly.GetName().Version;
                         this.ConfigManager.Save<AppConfig>();
                     }
-                    else if (moduleInfo.Config.Version < moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version)
+                    else if (moduleInfo.Config.Version < module.GetType().GetTypeInfo().Assembly.GetName().Version)
                     {
-                        ((IInstallable)moduleInfo.Module).Upgrade(new DefaultUpgradeContext(this, moduleInfo.Config.Version));
-                        moduleInfo.Config.Version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
+                        module.Upgrade(new DefaultUpgradeContext(this, moduleInfo.Config.Version));
+                        moduleInfo.Config.Version = module.GetType().GetTypeInfo().Assembly.GetName().Version;
                         this.ConfigManager.Save<AppConfig>();
                     }
                 }
@@ -96,9 +97,10 @@ namespace AppBrix.Application
                 if (moduleInfo.Status == ModuleStatus.Enabled)
                     moduleInfo.Module.Uninitialize();
 
-                if (moduleInfo.Module is IInstallable && moduleInfo.Config.Status == ModuleStatus.Uninstalling)
+                var module = moduleInfo.Module as IInstallable;
+                if (module != null && moduleInfo.Config.Status == ModuleStatus.Uninstalling)
                 {
-                    ((IInstallable)moduleInfo.Module).Uninstall(new DefaultInstallContext(this));
+                    module.Uninstall(new DefaultInstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
                     this.ConfigManager.Save<AppConfig>();
@@ -121,9 +123,9 @@ namespace AppBrix.Application
         #region Private methods
         private void RegisterModules()
         {
-            var modules = this.GetModuleInfos();
-            modules = ModuleInfo.SortByPriority(modules);
-            foreach (var module in modules)
+            var moduleInfos = this.GetModuleInfos();
+            moduleInfos = ModuleInfo.SortByPriority(moduleInfos);
+            foreach (var module in moduleInfos)
             {
                 this.modules.Add(module);
             }

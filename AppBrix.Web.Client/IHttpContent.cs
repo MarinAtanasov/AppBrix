@@ -10,7 +10,7 @@ namespace AppBrix.Web.Client
     /// HTTP message content.
     /// </summary>
     /// <typeparam name="T">The type of the content object.</typeparam>
-    public interface IHttpContent<T>
+    public interface IHttpContent<out T>
     {
         /// <summary>
         /// Gets the message content.

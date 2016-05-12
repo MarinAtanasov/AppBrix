@@ -25,7 +25,7 @@ namespace AppBrix.Tests.Mocks
         #endregion
 
         #region IInitializeContext implementation
-        public IApp App { get; private set; }
+        public IApp App { get; }
         #endregion
     }
 }

@@ -32,7 +32,7 @@ namespace AppBrix.Caching
         #endregion
 
         #region Private fields and constants
-        private Lazy<DefaultCacheSerializer> serializer = new Lazy<DefaultCacheSerializer>();
+        private readonly Lazy<DefaultCacheSerializer> serializer = new Lazy<DefaultCacheSerializer>();
         #endregion
     }
 }

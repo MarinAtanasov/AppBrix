@@ -14,7 +14,7 @@ namespace AppBrix.Web.Client
     {
         /// <summary>
         /// Executes the REST call.
-        /// Can return <see cref="string"/>, <see cref="System.IO.Stream"/> or <see cref="byte[]"/>.
+        /// Can return <see cref="string"/>, <see cref="System.IO.Stream"/> or <see cref="T:byte[]"/>.
         /// </summary>
         /// <typeparam name="T">The type of the response object to be returned.</typeparam>
         /// <returns>The REST response.</returns>

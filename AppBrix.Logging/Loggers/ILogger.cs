@@ -8,11 +8,14 @@ using System.Linq;
 namespace AppBrix.Logging.Loggers
 {
     /// <summary>
-    /// Logs the log entry.
+    /// A logger class which can be used to pass in log entries.
     /// </summary>
-    /// <param name="entry">The log entry.</param>
     public interface ILogger
     {
+        /// <summary>
+        /// Logs the log entry.
+        /// </summary>
+        /// <param name="entry">The log entry.</param>
         void LogEntry(ILogEntry entry);
     }
 }

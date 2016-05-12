@@ -51,11 +51,11 @@ namespace AppBrix
         /// <returns></returns>
         public static T Get<T>(this IApp app) where T : class
         {
-            if (typeof(T).IsAssignableFrom(app.GetType()))
+            if (app is T)
             {
                 return (T)app;
             }
-            else if (typeof(T).IsAssignableFrom(app.ConfigManager.GetType()))
+            else if (app.ConfigManager is T)
             {
                 return (T)app.ConfigManager;
             }
@@ -81,7 +81,7 @@ namespace AppBrix
         #endregion
         
         #region Private fields and constants
-        private static IDictionary<IApp, IResolver> Resolvers = new Dictionary<IApp, IResolver>();
+        private static readonly IDictionary<IApp, IResolver> Resolvers = new Dictionary<IApp, IResolver>();
         #endregion
     }
 }

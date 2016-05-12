@@ -11,8 +11,8 @@ namespace AppBrix.Web.Server
     /// <summary>
     /// Modules used for working with Mvc or Web Api controllers.
     /// For dependency injection of the current app inside the controllers' constructors,
-    /// use the <see cref="IServiceCollection.AddApp"/> extension method inside the
-    /// <see cref="ConfigureServices"/> method.
+    /// use the <see cref="T:IServiceCollection.AddApp"/> extension method inside the
+    /// <see cref="M:ConfigureServices"/> method.
     /// </summary>
     public class WebServerModule : ModuleBase
     {

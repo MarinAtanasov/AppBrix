@@ -32,6 +32,7 @@ namespace AppBrix.Cloning
         private T DeepCopy<T>(T original, IDictionary<object, object> visited)
         {
             if (original == null)
+                // ReSharper disable once ExpressionIsAlwaysNull
                 return original;
 
             var type = original.GetType();
@@ -50,7 +51,7 @@ namespace AppBrix.Cloning
             return (T)visited[original];
         }
 
-        private object CloneReferenceType(object original, Type type, IDictionary<object, object> visited)
+        private void CloneReferenceType(object original, Type type, IDictionary<object, object> visited)
         {
             var cloned = this.ShallowCopy(original);
             visited[original] = cloned;
@@ -67,7 +68,6 @@ namespace AppBrix.Cloning
                 }
                 type = type.GetTypeInfo().BaseType;
             }
-            return cloned;
         }
 
         private bool IsPrimitiveType(Type type)

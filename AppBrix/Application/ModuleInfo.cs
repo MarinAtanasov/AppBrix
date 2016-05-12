@@ -36,13 +36,13 @@ namespace AppBrix.Application
         #region Public methods
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
-            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().GetTypeInfo().Assembly.GetName().Name));
+            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().GetTypeInfo().Assembly.GetName().Name)).ToList();
             var assemblyReferences = ModuleInfo.GetAssemblyReferences(new HashSet<string>(moduleToAssembly.Select(x => x.Item2)));
             var sortedModuleInfos = new List<ModuleInfo>();
             var loaded = new HashSet<string>();
             var remaining = new LinkedList<Tuple<ModuleInfo, string>>(moduleToAssembly);
 
-            var item = remaining.First; ;
+            var item = remaining.First;
             while (item != null)
             {
                 if (assemblyReferences[item.Value.Item2].All(x => loaded.Contains(x)))

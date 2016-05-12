@@ -27,7 +27,7 @@ namespace AppBrix.Cloning
         #endregion
 
         #region Private fields and constants
-        private Lazy<DefaultCloner> cloner = new Lazy<DefaultCloner>();
+        private readonly Lazy<DefaultCloner> cloner = new Lazy<DefaultCloner>();
         #endregion
     }
 }

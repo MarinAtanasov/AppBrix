@@ -73,18 +73,18 @@ namespace AppBrix.Resolver.Tests
         public void TestResolveAllNoElements()
         {
             var resolver = this.GetResolver();
-            var resolved = resolver.GetAll().OfType<ResolverTests>();
+            var resolved = resolver.GetAll().OfType<ResolverTests>().ToList();
             resolved.Should().NotBeNull("resolved collection should not be null");
-            resolved.Count().Should().Be(0, "resolved collection should be empty");
+            resolved.Count.Should().Be(0, "resolved collection should be empty");
         }
 
         [Fact]
         public void TestResolveAllOneElement()
         {
             var resolver = this.GetResolver();
-            var resolved = resolver.GetAll().OfType<IResolver>();
+            var resolved = resolver.GetAll().OfType<IResolver>().ToList();
             resolved.Should().NotBeNull("resolved collection should not be null");
-            resolved.Count().Should().Be(1, "resolved collection should have 1 element");
+            resolved.Count.Should().Be(1, "resolved collection should have 1 element");
             resolved.Single().Should().Be(resolver, "resolved element should be the original resolver");
         }
 
@@ -96,9 +96,9 @@ namespace AppBrix.Resolver.Tests
             resolver.Register(first);
             var second = new ChildMock();
             resolver.Register(second, second.GetType());
-            var resolved = resolver.GetAll().OfType<ParentMock>();
+            var resolved = resolver.GetAll().OfType<ParentMock>().ToList();
             resolved.Should().NotBeNull("resolved collection should not be null");
-            resolved.Count().Should().Be(2, "resolved collection should have 2 elements");
+            resolved.Count.Should().Be(2, "resolved collection should have 2 elements");
             resolved.First().Should().BeSameAs(first, "resolved element 1 should be the original item");
             resolved.Last().Should().BeSameAs(second, "resolved element 2 should be the new item");
         }

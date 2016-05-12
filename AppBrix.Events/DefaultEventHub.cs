@@ -28,7 +28,7 @@ namespace AppBrix.Events
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            this.SubscribeInternal<T>(handler);
+            this.SubscribeInternal(handler);
         }
 
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
@@ -36,7 +36,7 @@ namespace AppBrix.Events
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            this.UnsubscribeInternal<T>(handler);
+            this.UnsubscribeInternal(handler);
         }
 
         public void Raise<T>(T args) where T : IEvent
@@ -98,14 +98,14 @@ namespace AppBrix.Events
         {
             if (this.subscriptions.ContainsKey(eventType))
             {
-                var subscriptions = this.subscriptions[eventType];
-                for (int i = 0; i < subscriptions.Count; i++)
+                var handlers = this.subscriptions[eventType];
+                for (var i = 0; i < handlers.Count; i++)
                 {
-                    var handler = (Action<T>)subscriptions[i];
+                    var handler = (Action<T>)handlers[i];
                     handler(args);
 
                     // Check if the handler has unsubscribed itself.
-                    if (i < subscriptions.Count && !Object.ReferenceEquals(handler, subscriptions[i]))
+                    if (i < handlers.Count && !Object.ReferenceEquals(handler, handlers[i]))
                         i--;
                 }
             }

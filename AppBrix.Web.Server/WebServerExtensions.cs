@@ -16,7 +16,7 @@ namespace AppBrix
         #region Public methods
         /// <summary>
         /// Adds the current application to be resolved in MVC and Web Api controllers.
-        /// This method must be called from <see cref="ConfigureServices"/> method.
+        /// This method must be called from <see cref="M:ConfigureServices"/> method.
         /// </summary>
         /// <param name="services">The service collection.</param>
         /// <param name="app"></param>

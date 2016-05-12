@@ -27,13 +27,13 @@ namespace AppBrix.Web.Client.Impl
             using (var client = app.GetFactory().Get<HttpClient>())
             {
                 var response = await this.GetResponse(client);
-                var headers = response.Headers;
-                var content = response.Content;
-                var contentHeaders = content.Headers;
-                var contentValue = await this.GetResponseContent<T>(content);
+                var httpResponseHeaders = response.Headers;
+                var httpContent = response.Content;
+                var httpContentHeaders = httpContent.Headers;
+                var contentValue = await this.GetResponseContent<T>(httpContent);
                 return new DefaultHttpResponse<T>(
-                    new DefaultHttpHeaders(headers),
-                    new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(contentHeaders)),
+                    new DefaultHttpHeaders(httpResponseHeaders),
+                    new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(httpContentHeaders)),
                     (int)response.StatusCode,
                     response.ReasonPhrase,
                     response.Version);
@@ -186,9 +186,8 @@ namespace AppBrix.Web.Client.Impl
             else if (type == typeof(Stream))
                 contentValue = await content.ReadAsStreamAsync();
             else
-                throw new ArgumentException(string.Format(
-                    "Unsupported type: {0}. Supported types are {1}, {2} and {3}.",
-                    typeof(T), typeof(string).FullName, typeof(Stream).FullName, typeof(byte[]).FullName));
+                throw new ArgumentException(
+                    $"Unsupported type: {typeof(T)}. Supported types are {typeof(string).FullName}, {typeof(Stream).FullName} and {typeof(byte[]).FullName}.");
 
             return (T)contentValue;
         }

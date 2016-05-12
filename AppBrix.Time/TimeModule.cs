@@ -39,7 +39,6 @@ namespace AppBrix.Time
                     return new LocalTimeService(format);
                 case DateTimeKind.Utc:
                     return new UtcTimeService(format);
-                case DateTimeKind.Unspecified:
                 default:
                     throw new NotSupportedException(string.Concat("The specified " + kind.GetType().Name +  " is not supported: ", kind));
             }

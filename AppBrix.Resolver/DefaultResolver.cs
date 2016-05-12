@@ -34,7 +34,7 @@ namespace AppBrix.Resolver
                 throw new ArgumentNullException(nameof(obj));
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!type.IsAssignableFrom(obj.GetType()))
+            if (!type.IsInstanceOfType(obj))
                 throw new ArgumentException(string.Format(
                     "Target object is of type {0} which cannot be cast to target type {1}.",
                     obj.GetType().FullName, type.FullName));
@@ -90,7 +90,7 @@ namespace AppBrix.Resolver
 
         #region Private fields and constants
         private readonly IDictionary<Type, object> objects = new Dictionary<Type, object>();
-        private HashSet<object> registered = new HashSet<object>();
+        private readonly HashSet<object> registered = new HashSet<object>();
         #endregion
     }
 }

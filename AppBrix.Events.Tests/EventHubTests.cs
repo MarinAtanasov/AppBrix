@@ -91,7 +91,7 @@ namespace AppBrix.Events.Tests
             var args = new EventMock(10);
             int called = 0;
             Action<EventMock> handler = (e => called++);
-            hub.Subscribe<EventMock>(handler);
+            hub.Subscribe(handler);
             hub.Subscribe<EventMockChild>(handler);
             hub.Raise(args);
             called.Should().Be(1, "event handler should be called exactly once");
@@ -104,8 +104,8 @@ namespace AppBrix.Events.Tests
             var args = new EventMock(10);
             int called = 0;
             Action<IEvent> handler = (e => called++);
-            hub.Subscribe<IEvent>(handler);
-            hub.Subscribe<IEvent>(handler);
+            hub.Subscribe(handler);
+            hub.Subscribe(handler);
             hub.Raise(args);
             called.Should().Be(2, "event handler should be called exactly twice");
         }
@@ -160,7 +160,7 @@ namespace AppBrix.Events.Tests
             var args = new EventMock(10);
             int called = 0;
             Action<IEvent> handler = (e => called++);
-            hub.Subscribe<IEvent>(handler);
+            hub.Subscribe(handler);
             hub.Raise(args);
             called.Should().Be(1, "event handler should be called exactly once after the first raise");
             hub.Raise(args);
@@ -174,7 +174,7 @@ namespace AppBrix.Events.Tests
             var args = new EventMock(10);
             int called = 0;
             Action<EventMock> handler = (e => called++);
-            hub.Subscribe<EventMock>(handler);
+            hub.Subscribe(handler);
             hub.Raise(args);
             called.Should().Be(1, "event handler should be called exactly once after the first raise");
             hub.Unsubscribe(handler);
@@ -189,7 +189,7 @@ namespace AppBrix.Events.Tests
             var args = new EventMock(10);
             int called = 0;
             Action<EventMock> handler = (e => called++);
-            hub.Subscribe<EventMock>(handler);
+            hub.Subscribe(handler);
             hub.Raise(args);
             called.Should().Be(1, "event handler should be called exactly once after the first raise");
         }
@@ -226,16 +226,16 @@ namespace AppBrix.Events.Tests
 
             int beforeHandlerCalled = 0;
             Action<IEvent> beforeHandler = (e => beforeHandlerCalled++);
-            hub.Subscribe<IEvent>(beforeHandler);
+            hub.Subscribe(beforeHandler);
 
             int unsubscribingHandlerCalled = 0;
             Action<IEvent> unsubscribingHandler = null;
-            unsubscribingHandler = (e => { unsubscribingHandlerCalled++; hub.Unsubscribe<IEvent>(unsubscribingHandler); });
-            hub.Subscribe<IEvent>(unsubscribingHandler);
+            unsubscribingHandler = (e => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); });
+            hub.Subscribe(unsubscribingHandler);
 
             int afterHandlerCalled = 0;
             Action<IEvent> afterHandler = (e => afterHandlerCalled++);
-            hub.Subscribe<IEvent>(afterHandler);
+            hub.Subscribe(afterHandler);
 
             hub.Raise(args);
             beforeHandlerCalled.Should().Be(1, "before event handler should be called exactly once after the first raise");
@@ -251,21 +251,21 @@ namespace AppBrix.Events.Tests
         [Fact]
         public void TestPerformanceEventsSubscribe()
         {
-            Action action = () => this.TestPerformanceEventsSubscribeInternal();
+            Action action = this.TestPerformanceEventsSubscribeInternal;
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceEventsUnsubscribe()
         {
-            Action action = () => this.TestPerformanceEventsUnsubscribeInternal();
+            Action action = this.TestPerformanceEventsUnsubscribeInternal;
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceEventsRaise()
         {
-            Action action = () => this.TestPerformanceEventsRaiseInternal();
+            Action action = this.TestPerformanceEventsRaiseInternal;
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
@@ -281,14 +281,14 @@ namespace AppBrix.Events.Tests
             var hub = this.GetEventHub();
             var calledCount = 40000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
-            for (int i = 0; i < calledCount; i++)
+            for (var i = 0; i < calledCount; i++)
             {
                 var j = i;
                 handlers.Add(e => j++);
             }
             foreach (var handler in handlers)
             {
-                hub.Subscribe<EventMockChild>(handler);
+                hub.Subscribe(handler);
             }
         }
 
@@ -297,18 +297,18 @@ namespace AppBrix.Events.Tests
             var hub = this.GetEventHub();
             var calledCount = 20000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
-            for (int i = 0; i < calledCount; i++)
+            for (var i = 0; i < calledCount; i++)
             {
                 var j = i;
                 handlers.Add(e => j++);
             }
             foreach (var handler in handlers)
             {
-                hub.Subscribe<EventMockChild>(handler);
+                hub.Subscribe(handler);
             }
-            for (int i = handlers.Count - 1; i >= 0; i--)
+            for (var i = handlers.Count - 1; i >= 0; i--)
             {
-                hub.Unsubscribe<EventMockChild>(handlers[i]);
+                hub.Unsubscribe(handlers[i]);
             }
         }
 

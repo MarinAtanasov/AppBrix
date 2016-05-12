@@ -9,7 +9,7 @@ namespace AppBrix.Logging.Entries
     /// <summary>
     /// Used for selecting what log level is the current log entry.
     /// </summary>
-    public enum LogLevel : int
+    public enum LogLevel
     {
         All = 0,
         Trace = 1,

@@ -23,7 +23,7 @@ namespace AppBrix
 
 
         /// <summary>
-        /// Serializes an item to <see cref="byte[]"/>.
+        /// Serializes an item to <see cref="T:byte[]"/>.
         /// </summary>
         /// <typeparam name="T">The type of the item.</typeparam>
         /// <param name="serializer">The serializer.</param>

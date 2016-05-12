@@ -17,10 +17,10 @@ namespace AppBrix.Factory
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var factory = this.factory.Value;
-            factory.Initialize(context);
+            var defaultFactory = this.factory.Value;
+            defaultFactory.Initialize(context);
             this.App.GetResolver().Register(this);
-            this.App.GetResolver().Register(factory);
+            this.App.GetResolver().Register(defaultFactory);
         }
 
         protected override void UninitializeModule()
@@ -30,7 +30,7 @@ namespace AppBrix.Factory
         #endregion
 
         #region Private fields and constants
-        private Lazy<DefaultFactory> factory = new Lazy<DefaultFactory>();
+        private readonly Lazy<DefaultFactory> factory = new Lazy<DefaultFactory>();
         #endregion
     }
 }

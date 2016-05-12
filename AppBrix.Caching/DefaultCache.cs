@@ -48,7 +48,7 @@ namespace AppBrix.Caching
         
         public Task Set<T>(string key, T item)
         {
-            var serialized = this.GetSerializer().Serialize<T>(item);
+            var serialized = this.GetSerializer().Serialize(item);
             return this.cache.SetAsync(key, serialized);
         }
         #endregion

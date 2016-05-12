@@ -10,7 +10,7 @@ namespace AppBrix.Web.Client
     /// HTTP response object which is returned by <see cref="IHttpCall"/>.
     /// </summary>
     /// <typeparam name="T">The type of the response content.</typeparam>
-    public interface IHttpResponse<T>
+    public interface IHttpResponse<out T>
     {
         /// <summary>
         /// Gets the HTTP response headers.

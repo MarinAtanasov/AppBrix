@@ -139,8 +139,7 @@ namespace AppBrix.Cloning.Tests
         {
             var cloner = this.GetCloner();
             var original = new SelfReferencingMock();
-            original.Other = new SelfReferencingMock();
-            original.Other.Other = original;
+            original.Other = new SelfReferencingMock { Other = original };
             var clone = cloner.DeepCopy(original);
             clone.Should().NotBeSameAs(original, "the original should be deep cloned");
             clone.Other.Should().NotBeSameAs(original.Other,
@@ -151,14 +150,14 @@ namespace AppBrix.Cloning.Tests
         [Fact]
         public void TestPerformanceDeepCopy()
         {
-            Action action = () => this.TestPerformanceDeepCopyInternal();
+            Action action = this.TestPerformanceDeepCopyInternal;
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceShallowCopy()
         {
-            Action action = () => this.TestPerformanceShallowCopyInternal();
+            Action action = this.TestPerformanceShallowCopyInternal;
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
         }
         #endregion
