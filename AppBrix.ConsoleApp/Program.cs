@@ -20,7 +20,9 @@ namespace AppBrix.ConsoleApp
 
             var stopwatch = Stopwatch.StartNew();
             var configManager = new ConfigManager(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
-            new ConfigInitializer().Initialize(configManager);
+            if (configManager.Get<AppConfig>().Modules.Count == 0)
+                configManager.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
+
             var app = App.Create(configManager);
             app.Start();
             try

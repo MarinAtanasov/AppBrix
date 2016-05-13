@@ -6,9 +6,11 @@ using AppBrix.Cloning;
 using AppBrix.Configuration;
 using AppBrix.Events;
 using AppBrix.Factory;
+using AppBrix.Lifecycle;
 using AppBrix.Logging;
 using AppBrix.Logging.Console;
 using AppBrix.Logging.File;
+using AppBrix.Modules;
 using AppBrix.Resolver;
 using AppBrix.Time;
 using AppBrix.Web.Client;
@@ -17,21 +19,33 @@ using AppBrix.Web.Server;
 namespace AppBrix.ConsoleApp
 {
     /// <summary>
-    /// Initializes the default configuration no configuration has been loaded.
+    /// Initializes application configuration.
+    /// This module should be first on the list in order to configure the application's configuration.
     /// </summary>
-    internal class ConfigInitializer
+    public class ConfigInitializerModule : IModule, IInstallable
     {
-        #region Public methods
-        /// <summary>
-        /// If a configuration has not been loaded, initializes the default configuration.
-        /// </summary>
-        /// <param name="manager">The configuration manager.</param>
-        public void Initialize(IConfigManager manager)
+        #region Public and overriden methods
+        public void Install(IInstallContext context)
         {
-            if (manager.Get<AppConfig>().Modules.Count > 0)
-                return;
+            this.InitializeAppConfig(context.App.ConfigManager);
+            context.RequestedAction = RequestedAction.Restart;
+        }
 
-            this.InitializeAppConfig(manager);
+        public void Upgrade(IUpgradeContext context)
+        {
+        }
+
+        public void Uninstall(IUninstallContext context)
+        {
+            throw new NotSupportedException($@"Module {nameof(ConfigInitializerModule)} does not support uninstallation.");
+        }
+
+        public void Initialize(IInitializeContext context)
+        {
+        }
+
+        public void Uninitialize()
+        {
         }
         #endregion
 
@@ -39,10 +53,13 @@ namespace AppBrix.ConsoleApp
         private void InitializeAppConfig(IConfigManager manager)
         {
             var config = manager.Get<AppConfig>();
-            foreach (var module in ConfigInitializer.Modules)
+            if (config.Modules.Count > 1)
+                throw new InvalidOperationException($@"Module {nameof(ConfigInitializerModule)} found other modules registered besides itself.");
+
+            foreach (var module in ConfigInitializerModule.Modules)
             {
                 var element = ModuleConfigElement.Create(module);
-                if (ConfigInitializer.DisabledModules.Contains(module))
+                if (ConfigInitializerModule.DisabledModules.Contains(module))
                     element.Status = ModuleStatus.Disabled;
                 config.Modules.Add(element);
             }

@@ -40,7 +40,9 @@ namespace AppBrix.Configuration.Json
                     TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
                 };
 
+                this.settings.Converters.Add(new IsoDateTimeConverter());
                 this.settings.Converters.Add(new StringEnumConverter());
+                this.settings.Converters.Add(new VersionConverter());
             }
             return this.settings;
         }
