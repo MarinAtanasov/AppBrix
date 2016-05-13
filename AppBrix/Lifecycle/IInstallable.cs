@@ -28,6 +28,6 @@ namespace AppBrix.Lifecycle
         /// Cleans up any permanent changes made by the install method.
         /// </summary>
         /// <param name="context">The uninstall context.</param>
-        void Uninstall(IInstallContext context);
+        void Uninstall(IUninstallContext context);
     }
 }

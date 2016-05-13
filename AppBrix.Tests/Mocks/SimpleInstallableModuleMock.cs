@@ -20,7 +20,7 @@ namespace AppBrix.Tests.Mocks
             this.IsInstalled = true;
         }
 
-        public void Uninstall(IInstallContext context)
+        public void Uninstall(IUninstallContext context)
         {
             this.IsUninstalled = true;
         }

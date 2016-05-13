@@ -67,26 +67,28 @@ namespace AppBrix.Application
 
             this.IsInitialized = true;
 
+            var initializeContext = new DefaultInitializeContext(this);
             foreach (var moduleInfo in this.modules.Where(m => m.Status == ModuleStatus.Enabled))
             {
                 var module = moduleInfo.Module as IInstallable;
                 if (module != null)
                 {
+                    var version = module.GetType().GetTypeInfo().Assembly.GetName().Version;
                     if (moduleInfo.Config.Version == null)
                     {
                         module.Install(new DefaultInstallContext(this));
-                        moduleInfo.Config.Version = module.GetType().GetTypeInfo().Assembly.GetName().Version;
+                        moduleInfo.Config.Version = version;
                         this.ConfigManager.Save<AppConfig>();
                     }
-                    else if (moduleInfo.Config.Version < module.GetType().GetTypeInfo().Assembly.GetName().Version)
+                    else if (moduleInfo.Config.Version < version)
                     {
                         module.Upgrade(new DefaultUpgradeContext(this, moduleInfo.Config.Version));
-                        moduleInfo.Config.Version = module.GetType().GetTypeInfo().Assembly.GetName().Version;
+                        moduleInfo.Config.Version = version;
                         this.ConfigManager.Save<AppConfig>();
                     }
                 }
                     
-                moduleInfo.Module.Initialize(new DefaultInitializeContext(this));
+                moduleInfo.Module.Initialize(initializeContext);
             }
         }
 
@@ -100,7 +102,7 @@ namespace AppBrix.Application
                 var module = moduleInfo.Module as IInstallable;
                 if (module != null && moduleInfo.Config.Status == ModuleStatus.Uninstalling)
                 {
-                    module.Uninstall(new DefaultInstallContext(this));
+                    module.Uninstall(new DefaultUninstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
                     this.ConfigManager.Save<AppConfig>();

@@ -8,9 +8,9 @@ using System.Linq;
 namespace AppBrix.Lifecycle
 {
     /// <summary>
-    /// Context passed down during application installation.
+    /// Context passed down during application uninstallation.
     /// </summary>
-    public interface IInstallContext
+    public interface IUninstallContext
     {
         /// <summary>
         /// Gets the current application.
