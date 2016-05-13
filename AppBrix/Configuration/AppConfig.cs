@@ -16,7 +16,7 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Contains a collection of modules to be loaded by the application.
         /// </summary>
-        public ICollection<ModuleConfigElement> Modules { get; } = new List<ModuleConfigElement>();
+        public ICollection<ModuleConfigElement> Modules { get; private set; } = new List<ModuleConfigElement>();
         #endregion
     }
 }

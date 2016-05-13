@@ -13,10 +13,10 @@
   "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
-    "dependencies": {
-        "AppBrix.Configuration": "0.2.0-*",
-        "Newtonsoft.Json": "8.0.3"
-    },
+  "dependencies": {
+    "AppBrix.Configuration": "0.2.0-*",
+    "Newtonsoft.Json": "8.0.3-*"
+  },
 
   "frameworks": {
     "dotnet5.4": { }

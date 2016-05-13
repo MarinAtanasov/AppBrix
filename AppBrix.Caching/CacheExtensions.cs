@@ -3,7 +3,6 @@
 //
 using AppBrix.Application;
 using AppBrix.Caching;
-using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Linq;
 
@@ -20,7 +19,6 @@ namespace AppBrix
         {
             return app.Get<ICache>();
         }
-
 
         /// <summary>
         /// Serializes an item to <see cref="T:byte[]"/>.

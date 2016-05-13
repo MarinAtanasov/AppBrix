@@ -19,7 +19,9 @@ namespace AppBrix.ConsoleApp
             //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             var stopwatch = Stopwatch.StartNew();
-            var app = App.Create(new ConfigManager(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer()));
+            var configManager = new ConfigManager(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
+            new ConfigInitializer().Initialize(configManager);
+            var app = App.Create(configManager);
             app.Start();
             try
             {

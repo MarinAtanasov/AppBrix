@@ -1,12 +1,12 @@
-{
+﻿{
   "version": "0.2.0-*",
-  "title": "AppBrix.Tests",
-  "summary": "Contains tests for creating AppBrix applications",
-  "description": "Contains tests for creating AppBrix applications",
+  "title": "AppBrix.Configuration.Yaml",
+  "summary": "Contains serializer for YAML based configurations.",
+  "description": "Contains serializer/deserializer for YAML based configurations.",
   "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Tests Common" ],
+  "tags": [ "AppBrix Config YAML" ],
   "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
   "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
   "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
@@ -14,19 +14,11 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.2.0-*",
-    "AppBrix.Configuration.Memory": "0.2.0-*",
-    "FluentAssertions": "4.5.0-*",
-    "System.Runtime": "4.0.21-*",
-    "xunit": "2.2.0-*",
-    "xunit.runner.dnx": "2.1.0-*"
-  },
-
-  "commands": {
-    "test": "xunit.runner.dnx"
+    "AppBrix.Configuration": "0.2.0-*",
+    "YamlDotNet": "3.8.0-*"
   },
 
   "frameworks": {
-    "dnxcore50": { }
+    "dotnet5.4": { }
   }
 }
