@@ -1,9 +1,9 @@
 ﻿{
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Configuration.Tests",
   "summary": "Contains tests for the AppBrix.Configuration library",
   "description": "Contains tests for the AppBrix.Configuration library",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Configuration Tests" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Configuration": "0.2.0-*",
-    "AppBrix.Tests": "0.2.0-*"
+    "AppBrix.Configuration": "0.3.1-*",
+    "AppBrix.Tests": "0.3.1-*"
   },
 
   "commands": {

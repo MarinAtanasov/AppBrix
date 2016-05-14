@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Time",
   "summary": "Module which is used for getting the current time.",
   "description": "Module which is used for getting the current time. This should be used instead of DateTime.(Utc)Now in order for the time to always be of the same kind and the code to be more easily testable.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Date Time" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.2.0-*",
-    "AppBrix.Resolver": "0.2.0-*"
+    "AppBrix": "0.3.1-*",
+    "AppBrix.Resolver": "0.3.1-*"
   },
 
   "frameworks": {

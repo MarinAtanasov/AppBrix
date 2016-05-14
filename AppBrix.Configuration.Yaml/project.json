@@ -1,9 +1,9 @@
 ﻿{
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Configuration.Yaml",
   "summary": "Contains serializer for YAML based configurations.",
   "description": "Contains serializer/deserializer for YAML based configurations.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Config YAML" ],
@@ -14,7 +14,7 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Configuration": "0.2.0-*",
+    "AppBrix.Configuration": "0.3.1-*",
     "YamlDotNet": "3.8.0-*"
   },
 

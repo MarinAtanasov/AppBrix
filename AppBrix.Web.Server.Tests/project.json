@@ -1,9 +1,9 @@
 ﻿{
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Web.Server.Tests",
   "summary": "Contains tests for the AppBrix.Web.Server module",
   "description": "Contains tests for the AppBrix.Web.Server module",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Web Server Tests" ],
@@ -14,9 +14,9 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Tests": "0.2.0-*",
-    "AppBrix.Web.Client": "0.2.0-*",
-    "AppBrix.Web.Server": "0.2.0-*",
+    "AppBrix.Tests": "0.3.1-*",
+    "AppBrix.Web.Client": "0.3.1-*",
+    "AppBrix.Web.Server": "0.3.1-*",
     "Microsoft.AspNet.TestHost": "1.0.0-*"
   },
 

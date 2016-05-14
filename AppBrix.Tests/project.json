@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Tests",
   "summary": "Contains tests for creating AppBrix applications",
   "description": "Contains tests for creating AppBrix applications",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Tests Common" ],
@@ -13,14 +13,14 @@
   "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
-  "dependencies": {
-    "AppBrix": "0.2.0-*",
-    "AppBrix.Configuration.Memory": "0.2.0-*",
-    "FluentAssertions": "4.5.0-*",
-    "System.Runtime": "4.0.21-*",
-    "xunit": "2.2.0-*",
-    "xunit.runner.dnx": "2.1.0-*"
-  },
+    "dependencies": {
+        "AppBrix": "0.3.1-*",
+        "AppBrix.Configuration.Memory": "0.3.1-*",
+        "FluentAssertions": "4.6.1-*",
+        "System.Runtime": "4.0.21-*",
+        "xunit": "2.2.0-*",
+        "xunit.runner.dnx": "2.1.0-*"
+    },
 
   "commands": {
     "test": "xunit.runner.dnx"

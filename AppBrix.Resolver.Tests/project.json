@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Resolver.Tests",
   "summary": "Contains tests for the AppBrix.Resolver module",
   "description": "Contains tests for the AppBrix.Resolver module",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Resolver Tests" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Resolver": "0.2.0-*",
-    "AppBrix.Tests": "0.2.0-*"
+    "AppBrix.Resolver": "0.3.1-*",
+    "AppBrix.Tests": "0.3.1-*"
   },
 
   "commands": {

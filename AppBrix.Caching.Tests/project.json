@@ -1,9 +1,9 @@
 ﻿{
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Caching.Tests",
   "summary": "Contains tests for the AppBrix.Caching module",
   "description": "Contains tests for the AppBrix.Caching module",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Cache Tests" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix.Caching": "0.2.0-*",
-    "AppBrix.Tests": "0.2.0-*"
+    "AppBrix.Caching": "0.3.1-*",
+    "AppBrix.Tests": "0.3.1-*"
   },
 
   "commands": {

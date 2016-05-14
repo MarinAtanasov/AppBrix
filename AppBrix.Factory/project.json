@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Factory",
   "summary": "Module which allows creation of simple mutable classes.",
   "description": "Module which allows creation of simple mutable classes.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Factory" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.2.0-*",
-    "AppBrix.Resolver": "0.2.0-*"
+    "AppBrix": "0.3.1-*",
+    "AppBrix.Resolver": "0.3.1-*"
   },
 
   "frameworks": {

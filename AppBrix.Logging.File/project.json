@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Logging.File",
   "summary": "Module which attaches to logging events and writes the information to a file.",
   "description": "Module which attaches to logging events and writes the information to a file.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Log File" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.2.0-*",
-    "AppBrix.Logging": "0.2.0-*",
+    "AppBrix": "0.3.1-*",
+    "AppBrix.Logging": "0.3.1-*",
     "System.IO.FileSystem": "4.0.1-*"
   },
 

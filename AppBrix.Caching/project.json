@@ -1,9 +1,9 @@
 {
-  "version": "0.2.0-*",
+  "version": "0.3.1-*",
   "title": "AppBrix.Caching",
   "summary": "Module used for caching objects.",
   "description": "Module used for caching objects.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update1",
+  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
   "owners": [ "Marin Atanasov" ],
   "tags": [ "AppBrix Module Cache" ],
@@ -14,8 +14,8 @@
   "copyright": "Copyright 2015",
 
   "dependencies": {
-    "AppBrix": "0.2.0-*",
-    "AppBrix.Resolver": "0.2.0-*",
+    "AppBrix": "0.3.1-*",
+    "AppBrix.Resolver": "0.3.1-*",
     "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
     "Newtonsoft.Json": "8.0.3"
   },
