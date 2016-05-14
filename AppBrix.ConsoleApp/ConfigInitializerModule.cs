@@ -69,7 +69,7 @@ namespace AppBrix.ConsoleApp
         #region Private fields and constants
         private static readonly IEnumerable<Type> Modules = new List<Type>()
         {
-            typeof(CacheModule),
+            typeof(CachingModule),
             typeof(CloningModule),
             typeof(EventsModule),
             typeof(FactoryModule),

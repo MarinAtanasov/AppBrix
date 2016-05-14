@@ -18,7 +18,7 @@ namespace AppBrix.Caching.Tests
         {
             this.app = TestUtils.CreateTestApp(
                 typeof(ResolverModule),
-                typeof(CacheModule));
+                typeof(CachingModule));
             this.app.Start();
         }
 
