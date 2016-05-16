@@ -6,7 +6,6 @@ using AppBrix.Resolver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix
 {
@@ -20,11 +19,14 @@ namespace AppBrix
         /// <returns>The registered resolver.</returns>
         public static IResolver GetResolver(this IApp app)
         {
-            return ResolverExtensions.Resolvers.ContainsKey(app) ? ResolverExtensions.Resolvers[app] : null;
+            IResolver resolver;
+            ResolverExtensions.Resolvers.TryGetValue(app, out resolver);
+            return resolver;
         }
 
         /// <summary>
         /// Sets the application's current resolver.
+        /// Pass in null to unregister the resolver.
         /// </summary>
         /// <param name="app">The application.</param>
         /// <param name="resolver">The resolver.</param>
@@ -51,18 +53,7 @@ namespace AppBrix
         /// <returns></returns>
         public static T Get<T>(this IApp app) where T : class
         {
-            if (app is T)
-            {
-                return (T)app;
-            }
-            else if (app.ConfigManager is T)
-            {
-                return (T)app.ConfigManager;
-            }
-            else
-            {
-                return app.GetResolver().Get<T>();
-            }
+            return app.GetResolver().Get<T>();
         }
 
         /// <summary>

@@ -182,11 +182,11 @@ namespace AppBrix.Resolver.Tests
         private void TestPerformanceResolverInternal()
         {
             var resolver = this.GetResolver();
-            for (int i = 0; i < 10000; i++)
+            for (var i = 0; i < 10000; i++)
             {
                 resolver.Register(new ChildMock());
             }
-            for (int i = 0; i < 10000; i++)
+            for (var i = 0; i < 10000; i++)
             {
                 resolver.Get<ChildMock>();
                 resolver.Get<ParentMock>();

@@ -18,6 +18,9 @@ namespace AppBrix.Resolver
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
         {
+            this.Register(context.App, context.App.GetType());
+            this.Register(context.App.ConfigManager, context.App.ConfigManager.GetType());
+            this.Register(this);
         }
 
         public void Uninitialize()
@@ -39,7 +42,7 @@ namespace AppBrix.Resolver
                     "Target object is of type {0} which cannot be cast to target type {1}.",
                     obj.GetType().FullName, type.FullName));
             if (type == typeof(object))
-                throw new ArgumentException(string.Format("Cannot register object as type {0}.", typeof(object).FullName));
+                throw new ArgumentException($"Cannot register object as type {typeof(object).FullName}.");
 
             this.registered.Add(obj);
             this.RegisterInternal(obj, type);

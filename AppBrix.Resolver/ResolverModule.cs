@@ -19,7 +19,6 @@ namespace AppBrix.Resolver
             var defaultResolver = this.resolver.Value;
             defaultResolver.Initialize(context);
             defaultResolver.Register(this);
-            defaultResolver.Register(defaultResolver);
             this.App.SetResolver(defaultResolver);
         }
 
