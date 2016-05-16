@@ -50,7 +50,7 @@ namespace AppBrix.Resolver
 
         public T Get<T>() where T : class
         {
-            return this.objects.ContainsKey(typeof(T)) ? (T)this.objects[typeof(T)] : null;
+            return (T)this.objects[typeof(T)];
         }
 
         public IEnumerable<object> GetAll()

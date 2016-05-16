@@ -6,6 +6,7 @@ using AppBrix.Resolver.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -132,7 +133,8 @@ namespace AppBrix.Resolver.Tests
         {
             var resolver = this.GetResolver();
             resolver.Register(new ChildMock());
-            resolver.Get<object>().Should().BeNull("items should not be registered as type of object");
+            Action action = () => resolver.Get<object>();
+            action.ShouldThrow<KeyNotFoundException>("items should not be registered as type of object");
         }
 
         [Fact]
