@@ -154,7 +154,7 @@ namespace AppBrix.Tests
         #endregion
 
         #region Private fields and constants
-        private readonly FieldInfo modulesField = typeof(DefaultApp).GetField("modules", BindingFlags.NonPublic | BindingFlags.Instance);
+        private readonly FieldInfo modulesField = typeof(DefaultApp).GetTypeInfo().GetField("modules", BindingFlags.NonPublic | BindingFlags.Instance);
         #endregion
     }
 }

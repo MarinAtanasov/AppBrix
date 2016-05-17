@@ -25,11 +25,6 @@ namespace AppBrix.Caching
         #endregion
 
         #region Public and overriden methods
-        public Task Connect()
-        {
-            return this.cache.ConnectAsync();
-        }
-        
         public async Task<T> Get<T>(string key)
         {
             var bytes = await this.cache.GetAsync(key);

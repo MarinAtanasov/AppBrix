@@ -40,7 +40,7 @@ namespace AppBrix.Cloning
             if (this.IsPrimitiveType(type))
                 return original;
 
-            if (typeof(Delegate).IsAssignableFrom(type))
+            if (typeof(Delegate).GetTypeInfo().IsAssignableFrom(type))
                 return (T)(object)null;
 
             if (!visited.ContainsKey(original))
@@ -62,7 +62,7 @@ namespace AppBrix.Cloning
             }
             while (type != typeof(object))
             {
-                foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (var field in type.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
                 }
@@ -83,7 +83,7 @@ namespace AppBrix.Cloning
         #endregion
 
         #region Private fields and constants
-        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetTypeInfo().GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
         #endregion
     }
 }

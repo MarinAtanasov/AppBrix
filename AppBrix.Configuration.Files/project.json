@@ -1,24 +1,33 @@
 {
-  "version": "0.3.1-*",
+  "version": "0.4.0-*",
   "title": "AppBrix.Configuration.Files",
-  "summary": "Adds configuration provider which reads and writes into files.",
   "description": "Adds configuration provider which reads and writes into files.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
-  "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Config Files" ],
-  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
-  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
-  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
-  "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
+  "packOptions": {
+    "summary": "Adds configuration provider which reads and writes into files.",
+    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "owners": [ "Marin Atanasov" ],
+    "tags": [ "AppBrix Config Files" ],
+    "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
+    "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
+    "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MarinAtanasov/AppBrix.NetCore"
+    }
+  },
+
   "dependencies": {
-    "AppBrix.Configuration": "0.3.1-*",
+    "AppBrix.Configuration": "0.4.0-*",
     "System.IO.FileSystem": "4.0.1-*"
   },
 
   "frameworks": {
-    "dotnet5.4": { }
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ]
+    }
   }
 }

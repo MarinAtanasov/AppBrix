@@ -1,28 +1,37 @@
 {
-  "version": "0.3.1-*",
+  "version": "0.4.0-*",
   "title": "AppBrix.Logging",
-  "summary": "Module which enables throwing of logging events and subscribing to those events.",
   "description": "Module which enables throwing of logging events and subscribing to those events.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
-  "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Module Log" ],
-  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
-  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
-  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
-  "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
+  "packOptions": {
+    "summary": "Module which enables throwing of logging events and subscribing to those events.",
+    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "owners": [ "Marin Atanasov" ],
+    "tags": [ "AppBrix Module Log" ],
+    "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
+    "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
+    "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MarinAtanasov/AppBrix.NetCore"
+    }
+  },
+
   "dependencies": {
-    "AppBrix": "0.3.1-*",
-    "AppBrix.Events": "0.3.1-*",
-    "AppBrix.Resolver": "0.3.1-*",
-    "AppBrix.Time": "0.3.1-*",
-    "System.Collections.Concurrent": "4.0.11-*",
+    "AppBrix": "0.4.0-*",
+    "AppBrix.Events": "0.4.0-*",
+    "AppBrix.Resolver": "0.4.0-*",
+    "AppBrix.Time": "0.4.0-*",
+    "System.Collections.Concurrent": "4.0.12-*",
     "System.Threading.Thread": "4.0.0-*"
   },
 
   "frameworks": {
-    "dotnet5.4": { }
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ]
+    }
   }
 }

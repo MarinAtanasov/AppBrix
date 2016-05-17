@@ -1,25 +1,34 @@
 {
-  "version": "0.3.1-*",
+  "version": "0.4.0-*",
   "title": "AppBrix.Logging.File",
-  "summary": "Module which attaches to logging events and writes the information to a file.",
   "description": "Module which attaches to logging events and writes the information to a file.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
-  "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Module Log File" ],
-  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
-  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
-  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
-  "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
+  "packOptions": {
+    "summary": "Module which attaches to logging events and writes the information to a file.",
+    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "owners": [ "Marin Atanasov" ],
+    "tags": [ "AppBrix Module Log File" ],
+    "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
+    "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
+    "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MarinAtanasov/AppBrix.NetCore"
+    }
+  },
+
   "dependencies": {
-    "AppBrix": "0.3.1-*",
-    "AppBrix.Logging": "0.3.1-*",
+    "AppBrix": "0.4.0-*",
+    "AppBrix.Logging": "0.4.0-*",
     "System.IO.FileSystem": "4.0.1-*"
   },
 
   "frameworks": {
-    "dotnet5.4": { }
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ]
+    }
   }
 }

@@ -22,7 +22,7 @@ namespace AppBrix
         /// <param name="app"></param>
         public static void AddApp(this IServiceCollection services, IApp app)
         {
-            services.AddInstance(app);
+            services.AddSingleton(app);
         }
         #endregion
     }

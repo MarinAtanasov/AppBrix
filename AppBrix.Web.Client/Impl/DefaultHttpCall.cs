@@ -155,15 +155,15 @@ namespace AppBrix.Web.Client.Impl
             var typeInfo = this.content.GetType();
 
             HttpContent result;
-            if (typeof(Stream).IsAssignableFrom(typeInfo))
+            if (typeof(Stream).GetTypeInfo().IsAssignableFrom(typeInfo))
             {
                 result = new StreamContent((Stream)this.content);
             }
-            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(typeInfo))
+            else if (typeof(IEnumerable<KeyValuePair<string, string>>).GetTypeInfo().IsAssignableFrom(typeInfo))
             {
                 result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
             }
-            else if (typeof(byte[]).IsAssignableFrom(typeInfo))
+            else if (typeof(byte[]).GetTypeInfo().IsAssignableFrom(typeInfo))
             {
                 result = new ByteArrayContent((byte[])this.content);
             }

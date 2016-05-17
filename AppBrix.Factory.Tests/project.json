@@ -1,28 +1,39 @@
 ﻿{
-  "version": "0.3.1-*",
+  "version": "0.4.0-*",
   "title": "AppBrix.Factory.Tests",
-  "summary": "Contains tests for the AppBrix.Factory module",
   "description": "Contains tests for the AppBrix.Factory module",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
-  "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Factory Tests" ],
-  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
-  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
-  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
-  "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
-  "dependencies": {
-    "AppBrix.Factory": "0.3.1-*",
-    "AppBrix.Tests": "0.3.1-*"
+  "packOptions": {
+    "summary": "Contains tests for the AppBrix.Factory module",
+    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "owners": [ "Marin Atanasov" ],
+    "tags": [ "AppBrix Factory Tests" ],
+    "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
+    "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
+    "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MarinAtanasov/AppBrix.NetCore"
+    }
   },
 
-  "commands": {
-    "test": "xunit.runner.dnx"
+  "dependencies": {
+    "AppBrix.Factory": "0.4.0-*",
+    "AppBrix.Tests": "0.4.0-*",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0-*"
+    }
   },
 
   "frameworks": {
-    "dnxcore50": { }
-  }
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net451+win8" ]
+    }
+  },
+
+  "testRunner": "xunit"
 }

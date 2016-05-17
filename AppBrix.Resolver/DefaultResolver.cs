@@ -37,7 +37,7 @@ namespace AppBrix.Resolver
                 throw new ArgumentNullException(nameof(obj));
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!type.IsInstanceOfType(obj))
+            if (!type.GetTypeInfo().IsInstanceOfType(obj))
                 throw new ArgumentException(string.Format(
                     "Target object is of type {0} which cannot be cast to target type {1}.",
                     obj.GetType().FullName, type.FullName));
@@ -79,7 +79,7 @@ namespace AppBrix.Resolver
 
         private void RegisterInterfaces(object obj, Type type)
         {
-            foreach (var i in type.GetInterfaces())
+            foreach (var i in type.GetTypeInfo().GetInterfaces())
             {
                 this.RegisterType(obj, i);
             }

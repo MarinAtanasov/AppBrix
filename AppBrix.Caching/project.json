@@ -1,26 +1,35 @@
 {
-  "version": "0.3.1-*",
+  "version": "0.4.0-*",
   "title": "AppBrix.Caching",
-  "summary": "Module used for caching objects.",
   "description": "Module used for caching objects.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
-  "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Module Cache" ],
-  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
-  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
-  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
-  "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
+  "packOptions": {
+    "summary": "Module used for caching objects.",
+    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "owners": [ "Marin Atanasov" ],
+    "tags": [ "AppBrix Module Cache" ],
+    "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
+    "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
+    "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MarinAtanasov/AppBrix.NetCore"
+    }
+  },
+
   "dependencies": {
-    "AppBrix": "0.3.1-*",
-    "AppBrix.Resolver": "0.3.1-*",
+    "AppBrix": "0.4.0-*",
+    "AppBrix.Resolver": "0.4.0-*",
     "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
     "Newtonsoft.Json": "8.0.3"
   },
 
   "frameworks": {
-    "dotnet5.4": { }
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ]
+    }
   }
 }

@@ -33,8 +33,8 @@ namespace AppBrix.Configuration
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(IModule).IsAssignableFrom(type))
-                throw new ArgumentException(string.Format("Type {0} is not of type {1}.", type, nameof(IModule)));
+            if (!typeof(IModule).GetTypeInfo().IsAssignableFrom(type))
+                throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");
 
             return new ModuleConfigElement()
             {

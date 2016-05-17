@@ -1,23 +1,32 @@
 {
-  "version": "0.3.1-*",
+  "version": "0.4.0-*",
   "title": "AppBrix.Configuration.Memory",
-  "summary": "Adds configuration provider which reads and writes into memory.",
   "description": "Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.",
-  "releaseNotes": "Updated DNX SDK to 1.0.0-rc1-update2",
   "authors": [ "Marin Atanasov" ],
-  "owners": [ "Marin Atanasov" ],
-  "tags": [ "AppBrix Config Memory" ],
-  "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
-  "projectUrl": "https://github.com/MarinAtanasov/AppBrix",
-  "licenseUrl": "https://github.com/MarinAtanasov/AppBrix/blob/master/LICENSE.txt",
-  "requireLicenseAcceptance": false,
   "copyright": "Copyright 2015",
 
+  "packOptions": {
+    "summary": "Adds configuration provider which reads and writes into memory.",
+    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "owners": [ "Marin Atanasov" ],
+    "tags": [ "AppBrix Config Memory" ],
+    "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
+    "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
+    "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MarinAtanasov/AppBrix.NetCore"
+    }
+  },
+
   "dependencies": {
-    "AppBrix.Configuration": "0.3.1-*"
+    "AppBrix.Configuration": "0.4.0-*"
   },
 
   "frameworks": {
-    "dotnet5.4": { }
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ]
+    }
   }
 }

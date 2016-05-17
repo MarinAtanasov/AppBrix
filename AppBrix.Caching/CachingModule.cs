@@ -20,8 +20,8 @@ namespace AppBrix.Caching
         {
             this.App.GetResolver().Register(this);
             this.App.GetResolver().Register(this.serializer.Value);
-
-            var distributedCache = new LocalCache(new MemoryCache(new MemoryCacheOptions()));
+            
+            var distributedCache = new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions()));
             var cache = new DefaultCache(this.App, distributedCache);
             this.App.GetResolver().Register(cache);
         }

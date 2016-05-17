@@ -3,7 +3,6 @@
 //
 using AppBrix.Configuration;
 using AppBrix.Modules;
-using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +35,12 @@ namespace AppBrix.Application
         #region Public methods
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
-            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().GetTypeInfo().Assembly.GetName().Name)).ToList();
-            var assemblyReferences = ModuleInfo.GetAssemblyReferences(new HashSet<string>(moduleToAssembly.Select(x => x.Item2)));
+            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().GetTypeInfo().Assembly)).ToList();
+            var assemblyReferences = ModuleInfo.GetAssemblyReferences(moduleToAssembly.Select(x => x.Item2).ToList());
             var sortedModuleInfos = new List<ModuleInfo>();
             var loaded = new HashSet<string>();
-            var remaining = new LinkedList<Tuple<ModuleInfo, string>>(moduleToAssembly);
+            var remaining = new LinkedList<Tuple<ModuleInfo, string>>(
+                moduleToAssembly.Select(x => Tuple.Create(x.Item1, x.Item2.GetName().Name)));
 
             var item = remaining.First;
             while (item != null)
@@ -63,28 +63,29 @@ namespace AppBrix.Application
         #endregion
 
         #region Private methods
-        private static IDictionary<string, HashSet<string>> GetAssemblyReferences(HashSet<string> assemblies)
+        private static IDictionary<string, HashSet<string>> GetAssemblyReferences(ICollection<Assembly> assemblies)
         {
-            var libraryManager = PlatformServices.Default.LibraryManager;
-            var assembliesToReferencing = assemblies
-                .Select(x => Tuple.Create(
-                    x, libraryManager.GetReferencingLibraries(x).Select(l => l.Name).Where(l => assemblies.Contains(l))))
-                .ToList();
+            var assemblyNames = new HashSet<string>(assemblies.Select(x => x.GetName().Name));
+            return assemblies
+                .Distinct(new AssemblyNameComparer())
+                .ToDictionary(
+                    x => x.GetName().Name,
+                    x => new HashSet<string>(x.GetReferencedAssemblies().Select(a => a.Name).Where(a => assemblyNames.Contains(a))));
+        }
+        #endregion
 
-            var assemblyReferences = new Dictionary<string, HashSet<string>>();
-            foreach (var assemblyToReferencing in assembliesToReferencing)
+        #region Private classes
+        private class AssemblyNameComparer : IEqualityComparer<Assembly>
+        {
+            public bool Equals(Assembly x, Assembly y)
             {
-                assemblyReferences.Add(assemblyToReferencing.Item1, new HashSet<string>());
-            }
-            foreach (var assemblyToReferencing in assembliesToReferencing)
-            {
-                foreach (var referencing in assemblyToReferencing.Item2)
-                {
-                    assemblyReferences[referencing].Add(assemblyToReferencing.Item1);
-                }
+                return x.GetName().Name.Equals(y.GetName().Name);
             }
 
-            return assemblyReferences;
+            public int GetHashCode(Assembly obj)
+            {
+                return obj.GetName().Name.GetHashCode();
+            }
         }
         #endregion
     }

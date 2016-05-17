@@ -1,10 +1,10 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
-using AppBrix.Application;
 
 namespace AppBrix.Web.Server
 {

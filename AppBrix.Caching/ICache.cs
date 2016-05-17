@@ -10,12 +10,6 @@ namespace AppBrix.Caching
     public interface ICache
     {
         /// <summary>
-        /// Connects to the caching entity.
-        /// </summary>
-        /// <returns></returns>
-        Task Connect();
-
-        /// <summary>
         /// Refreshes the cache for a key.
         /// </summary>
         /// <param name="key">The key.</param>

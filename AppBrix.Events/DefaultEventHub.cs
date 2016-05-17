@@ -79,7 +79,7 @@ namespace AppBrix.Events
         private void RaiseBaseClassesEvents<T>(T args) where T : IEvent
         {
             var baseType = typeof(T).GetTypeInfo().BaseType;
-            while (baseType != null && typeof(IEvent).IsAssignableFrom(baseType))
+            while (baseType != null && typeof(IEvent).GetTypeInfo().IsAssignableFrom(baseType))
             {
                 this.RaiseEvent(args, baseType);
                 baseType = baseType.GetTypeInfo().BaseType;
@@ -88,7 +88,7 @@ namespace AppBrix.Events
 
         private void RaiseInterfacesEvents<T>(T args) where T : IEvent
         {
-            foreach (var iface in typeof(T).GetInterfaces().Where(i => typeof(IEvent).IsAssignableFrom(i)))
+            foreach (var iface in typeof(T).GetTypeInfo().GetInterfaces().Where(i => typeof(IEvent).GetTypeInfo().IsAssignableFrom(i)))
             {
                 this.RaiseEvent(args, iface);
             }
