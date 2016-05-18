@@ -184,6 +184,6 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 # Lock files
-*/project.lock.json
+*/**/project.lock.json
 *.sln.iml
 .idea

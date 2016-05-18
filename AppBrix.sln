@@ -19,63 +19,63 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{F6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{9C8A720D-7382-4C91-9B62-86EB554B2C29}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.ConsoleApp", "AppBrix.ConsoleApp\AppBrix.ConsoleApp.xproj", "{80E1FF2A-A37B-460F-A3B4-98112217C883}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.ConsoleApp", "src\AppBrix.ConsoleApp\AppBrix.ConsoleApp.xproj", "{80E1FF2A-A37B-460F-A3B4-98112217C883}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix", "AppBrix\AppBrix.xproj", "{FA682555-B7AE-4027-A794-A2B865EB4FD2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix", "src\AppBrix\AppBrix.xproj", "{FA682555-B7AE-4027-A794-A2B865EB4FD2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration", "AppBrix.Configuration\AppBrix.Configuration.xproj", "{9363EB91-F90B-4FEE-9EF9-667C60B7813A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration", "src\AppBrix.Configuration\AppBrix.Configuration.xproj", "{9363EB91-F90B-4FEE-9EF9-667C60B7813A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Files", "AppBrix.Configuration.Files\AppBrix.Configuration.Files.xproj", "{1DA579B9-5019-47C8-9BBB-F3203AB0A179}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Files", "src\AppBrix.Configuration.Files\AppBrix.Configuration.Files.xproj", "{1DA579B9-5019-47C8-9BBB-F3203AB0A179}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Json", "AppBrix.Configuration.Json\AppBrix.Configuration.Json.xproj", "{5C6FD648-93E5-4DF0-BB04-7221F590DD00}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Json", "src\AppBrix.Configuration.Json\AppBrix.Configuration.Json.xproj", "{5C6FD648-93E5-4DF0-BB04-7221F590DD00}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Utils", "AppBrix.Utils\AppBrix.Utils.xproj", "{8DF190AB-96BE-44B0-B42C-7007889863CC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Utils", "src\AppBrix.Utils\AppBrix.Utils.xproj", "{8DF190AB-96BE-44B0-B42C-7007889863CC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Resolver", "AppBrix.Resolver\AppBrix.Resolver.xproj", "{6FD57C5F-2DB5-420E-BC71-D0F9547797E2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Resolver", "src\AppBrix.Resolver\AppBrix.Resolver.xproj", "{6FD57C5F-2DB5-420E-BC71-D0F9547797E2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Tests", "AppBrix.Tests\AppBrix.Tests.xproj", "{3EE0E0A5-AD83-4D97-BAB7-88ABD3877D77}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Tests", "test\AppBrix.Tests\AppBrix.Tests.xproj", "{3EE0E0A5-AD83-4D97-BAB7-88ABD3877D77}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Memory", "AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.xproj", "{C5FD7816-FF36-4BB9-A123-FA2A9892D944}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Memory", "src\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.xproj", "{C5FD7816-FF36-4BB9-A123-FA2A9892D944}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Resolver.Tests", "AppBrix.Resolver.Tests\AppBrix.Resolver.Tests.xproj", "{CE05FF78-7F0A-45FA-A749-CEA23B821BB7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Resolver.Tests", "test\AppBrix.Resolver.Tests\AppBrix.Resolver.Tests.xproj", "{CE05FF78-7F0A-45FA-A749-CEA23B821BB7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Factory", "AppBrix.Factory\AppBrix.Factory.xproj", "{53A97857-AD8F-4A1D-8231-F23B8AD6149D}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Factory", "src\AppBrix.Factory\AppBrix.Factory.xproj", "{53A97857-AD8F-4A1D-8231-F23B8AD6149D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Factory.Tests", "AppBrix.Factory.Tests\AppBrix.Factory.Tests.xproj", "{1A5BA967-F0D5-4640-95B1-DA44F35284CB}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Factory.Tests", "test\AppBrix.Factory.Tests\AppBrix.Factory.Tests.xproj", "{1A5BA967-F0D5-4640-95B1-DA44F35284CB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Cloning", "AppBrix.Cloning\AppBrix.Cloning.xproj", "{3DE96A80-A043-4EDB-905A-787471C82E63}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Cloning", "src\AppBrix.Cloning\AppBrix.Cloning.xproj", "{3DE96A80-A043-4EDB-905A-787471C82E63}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Cloning.Tests", "AppBrix.Cloning.Tests\AppBrix.Cloning.Tests.xproj", "{BF4AD230-4096-41BD-A4CF-F19C237277FB}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Cloning.Tests", "test\AppBrix.Cloning.Tests\AppBrix.Cloning.Tests.xproj", "{BF4AD230-4096-41BD-A4CF-F19C237277FB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Caching", "AppBrix.Caching\AppBrix.Caching.xproj", "{127C6E7E-9F3A-4314-981C-B04C77E9BAA3}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Caching", "src\AppBrix.Caching\AppBrix.Caching.xproj", "{127C6E7E-9F3A-4314-981C-B04C77E9BAA3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Caching.Tests", "AppBrix.Caching.Tests\AppBrix.Caching.Tests.xproj", "{CB37668E-84BE-40B8-9CB9-A94C48C5BA65}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Caching.Tests", "test\AppBrix.Caching.Tests\AppBrix.Caching.Tests.xproj", "{CB37668E-84BE-40B8-9CB9-A94C48C5BA65}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events", "AppBrix.Events\AppBrix.Events.xproj", "{315DE6BF-EA9D-4B82-B487-AE8A8F2CFB64}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events", "src\AppBrix.Events\AppBrix.Events.xproj", "{315DE6BF-EA9D-4B82-B487-AE8A8F2CFB64}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Tests", "AppBrix.Events.Tests\AppBrix.Events.Tests.xproj", "{F987BA5F-3B58-4316-9232-0253C47743E2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Tests", "test\AppBrix.Events.Tests\AppBrix.Events.Tests.xproj", "{F987BA5F-3B58-4316-9232-0253C47743E2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Time", "AppBrix.Time\AppBrix.Time.xproj", "{9E000495-459F-4E1F-B6E4-6431092C3823}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Time", "src\AppBrix.Time\AppBrix.Time.xproj", "{9E000495-459F-4E1F-B6E4-6431092C3823}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Time.Tests", "AppBrix.Time.Tests\AppBrix.Time.Tests.xproj", "{F9F1F6D5-1DA0-459A-851C-325A4D4426F2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Time.Tests", "test\AppBrix.Time.Tests\AppBrix.Time.Tests.xproj", "{F9F1F6D5-1DA0-459A-851C-325A4D4426F2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging", "AppBrix.Logging\AppBrix.Logging.xproj", "{CFA23309-E788-4AD3-957D-7F1E88BFA461}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging", "src\AppBrix.Logging\AppBrix.Logging.xproj", "{CFA23309-E788-4AD3-957D-7F1E88BFA461}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging.Tests", "AppBrix.Logging.Tests\AppBrix.Logging.Tests.xproj", "{92DB36E3-273B-412E-80F4-21489FDB6276}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging.Tests", "test\AppBrix.Logging.Tests\AppBrix.Logging.Tests.xproj", "{92DB36E3-273B-412E-80F4-21489FDB6276}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging.Console", "AppBrix.Logging.Console\AppBrix.Logging.Console.xproj", "{E6F23839-21C4-4CA6-91E4-F66EDAC0262C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging.Console", "src\AppBrix.Logging.Console\AppBrix.Logging.Console.xproj", "{E6F23839-21C4-4CA6-91E4-F66EDAC0262C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging.File", "AppBrix.Logging.File\AppBrix.Logging.File.xproj", "{6E991EC7-D79E-4CD1-B39F-4DE8E062569A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Logging.File", "src\AppBrix.Logging.File\AppBrix.Logging.File.xproj", "{6E991EC7-D79E-4CD1-B39F-4DE8E062569A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Web.Client", "AppBrix.Web.Client\AppBrix.Web.Client.xproj", "{5DDE07B5-38AC-413E-8D36-0DEB7FB2DBF2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Web.Client", "src\AppBrix.Web.Client\AppBrix.Web.Client.xproj", "{5DDE07B5-38AC-413E-8D36-0DEB7FB2DBF2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Web.Server", "AppBrix.Web.Server\AppBrix.Web.Server.xproj", "{2E08B1F8-B0B8-4FB3-A165-9D774361F7C3}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Web.Server", "src\AppBrix.Web.Server\AppBrix.Web.Server.xproj", "{2E08B1F8-B0B8-4FB3-A165-9D774361F7C3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Web.Server.Tests", "AppBrix.Web.Server.Tests\AppBrix.Web.Server.Tests.xproj", "{7DB372D5-0673-4852-B9C1-8F31EF57493F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Web.Server.Tests", "test\AppBrix.Web.Server.Tests\AppBrix.Web.Server.Tests.xproj", "{7DB372D5-0673-4852-B9C1-8F31EF57493F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Tests", "AppBrix.Configuration.Tests\AppBrix.Configuration.Tests.xproj", "{7989699F-7924-4230-AD0F-675E57C633B8}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Tests", "test\AppBrix.Configuration.Tests\AppBrix.Configuration.Tests.xproj", "{7989699F-7924-4230-AD0F-675E57C633B8}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Yaml", "AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.xproj", "{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Yaml", "src\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.xproj", "{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
