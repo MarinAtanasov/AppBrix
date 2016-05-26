@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Resolver;
+using AppBrix.Container;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -17,7 +17,7 @@ namespace AppBrix.Caching.Tests
         public CacheTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ResolverModule),
+                typeof(ContainerModule),
                 typeof(CachingModule));
             this.app.Start();
         }

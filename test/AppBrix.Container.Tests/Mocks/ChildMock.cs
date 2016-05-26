@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Resolver.Tests.Mocks
+namespace AppBrix.Container.Tests.Mocks
 {
     internal sealed class ChildMock : ParentMock
     {

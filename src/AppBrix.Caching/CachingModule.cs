@@ -18,12 +18,12 @@ namespace AppBrix.Caching
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetResolver().Register(this);
-            this.App.GetResolver().Register(this.serializer.Value);
+            this.App.GetContainer().Register(this);
+            this.App.GetContainer().Register(this.serializer.Value);
             
             var distributedCache = new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions()));
             var cache = new DefaultCache(this.App, distributedCache);
-            this.App.GetResolver().Register(cache);
+            this.App.GetContainer().Register(cache);
         }
 
         protected override void UninitializeModule()

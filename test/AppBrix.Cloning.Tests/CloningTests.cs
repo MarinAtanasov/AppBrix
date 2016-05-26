@@ -3,7 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Cloning.Tests.Mocks;
-using AppBrix.Resolver;
+using AppBrix.Container;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -21,7 +21,7 @@ namespace AppBrix.Cloning.Tests
         public CloningTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ResolverModule),
+                typeof(ContainerModule),
                 typeof(CloningModule));
             this.app.Start();
         }

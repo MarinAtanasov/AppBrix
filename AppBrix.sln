@@ -31,13 +31,13 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Json"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Utils", "src\AppBrix.Utils\AppBrix.Utils.xproj", "{8DF190AB-96BE-44B0-B42C-7007889863CC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Resolver", "src\AppBrix.Resolver\AppBrix.Resolver.xproj", "{6FD57C5F-2DB5-420E-BC71-D0F9547797E2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Container", "src\AppBrix.Container\AppBrix.Container.xproj", "{6FD57C5F-2DB5-420E-BC71-D0F9547797E2}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Tests", "test\AppBrix.Tests\AppBrix.Tests.xproj", "{3EE0E0A5-AD83-4D97-BAB7-88ABD3877D77}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Memory", "src\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.xproj", "{C5FD7816-FF36-4BB9-A123-FA2A9892D944}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Resolver.Tests", "test\AppBrix.Resolver.Tests\AppBrix.Resolver.Tests.xproj", "{CE05FF78-7F0A-45FA-A749-CEA23B821BB7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Container.Tests", "test\AppBrix.Container.Tests\AppBrix.Container.Tests.xproj", "{CE05FF78-7F0A-45FA-A749-CEA23B821BB7}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Factory", "src\AppBrix.Factory\AppBrix.Factory.xproj", "{53A97857-AD8F-4A1D-8231-F23B8AD6149D}"
 EndProject

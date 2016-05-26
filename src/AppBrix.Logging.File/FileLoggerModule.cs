@@ -18,10 +18,10 @@ namespace AppBrix.Logging.File
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetResolver().Register(this);
+            this.App.GetContainer().Register(this);
             var async = this.App.GetConfig<LoggingConfig>().Async;
             this.logger = Logger.Create(new FileLogWriter(), async);
-            this.App.GetResolver().Register(this.logger, this.logger.GetType());
+            this.App.GetContainer().Register(this.logger, this.logger.GetType());
         }
 
         protected override void UninitializeModule()

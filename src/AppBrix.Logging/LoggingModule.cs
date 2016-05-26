@@ -16,10 +16,10 @@ namespace AppBrix.Logging
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetResolver().Register(this);
+            this.App.GetContainer().Register(this);
             var defaultLogHub = this.logHub.Value;
             defaultLogHub.Initialize(context);
-            this.App.GetResolver().Register(defaultLogHub);
+            this.App.GetContainer().Register(defaultLogHub);
         }
 
         protected override void UninitializeModule()

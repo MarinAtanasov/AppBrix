@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace AppBrix.Resolver
+namespace AppBrix.Container
 {
     /// <summary>
-    /// Default resolver which will be used when no other resolver has been registered.
-    /// To override, register your resolver immediately after the ResolverModule registers this.
+    /// Default container which will be used when no other container has been registered.
+    /// To override, register your container immediately after the ContainerModule registers this.
     /// </summary>
-    internal sealed class DefaultResolver : IResolver, IApplicationLifecycle
+    internal sealed class DefaultContainer : IContainer, IApplicationLifecycle
     {
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
@@ -30,7 +30,7 @@ namespace AppBrix.Resolver
         }
         #endregion
 
-        #region IResolver implementation
+        #region IContainer implementation
         public void Register(object obj, Type type)
         {
             if (obj == null)

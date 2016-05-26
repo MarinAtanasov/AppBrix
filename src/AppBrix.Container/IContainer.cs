@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Resolver
+namespace AppBrix.Container
 {
     /// <summary>
     /// Registers objects and enables resolving of registered objects.
     /// </summary>
-    public interface IResolver
+    public interface IContainer
     {
         /// <summary>
         /// Registers an object as the passed-in type, its parent types and interfaces.
@@ -27,6 +27,7 @@ namespace AppBrix.Resolver
         /// Returns null if no object is found.
         /// </summary>
         /// <typeparam name="T">The type of the registered object.</typeparam>
+        /// <exception cref="ArgumentException">No object of the specified type has been registered.</exception>
         /// <returns>The last registered object.</returns>
         T Get<T>() where T : class;
 

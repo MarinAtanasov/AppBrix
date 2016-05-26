@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Resolver;
+using AppBrix.Container;
 using AppBrix.Tests;
 using AppBrix.Time.Configuration;
 using FluentAssertions;
@@ -18,7 +18,7 @@ namespace AppBrix.Time.Tests
         public TimeServiceTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ResolverModule),
+                typeof(ContainerModule),
                 typeof(TimeModule));
             this.app.Start();
         }

@@ -17,8 +17,8 @@ namespace AppBrix.Cloning
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetResolver().Register(this);
-            this.App.GetResolver().Register(this.cloner.Value);
+            this.App.GetContainer().Register(this);
+            this.App.GetContainer().Register(this.cloner.Value);
         }
 
         protected override void UninitializeModule()

@@ -19,8 +19,8 @@ namespace AppBrix.Factory
         {
             var defaultFactory = this.factory.Value;
             defaultFactory.Initialize(context);
-            this.App.GetResolver().Register(this);
-            this.App.GetResolver().Register(defaultFactory);
+            this.App.GetContainer().Register(this);
+            this.App.GetContainer().Register(defaultFactory);
         }
 
         protected override void UninitializeModule()

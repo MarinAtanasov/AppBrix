@@ -1,15 +1,15 @@
 {
   "version": "0.4.0-*",
-  "title": "AppBrix.Resolver.Tests",
-  "description": "Contains tests for the AppBrix.Resolver module",
+  "title": "AppBrix.Container",
+  "description": "Module which allows registration and resolving of single-instance objects.",
   "authors": [ "Marin Atanasov" ],
   "copyright": "Copyright 2015",
 
   "packOptions": {
-    "summary": "Contains tests for the AppBrix.Resolver module",
+    "summary": "Module which allows registration and resolving of single-instance objects.",
     "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
     "owners": [ "Marin Atanasov" ],
-    "tags": [ "AppBrix Resolver Tests" ],
+    "tags": [ "AppBrix Module Container" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
     "projectUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore",
     "licenseUrl": "https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt",
@@ -21,19 +21,12 @@
   },
 
   "dependencies": {
-    "AppBrix.Resolver": "0.4.0-*",
-    "AppBrix.Tests": "0.4.0-*",
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.0-*"
-    }
+    "AppBrix": "0.4.0-*"
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
-      "imports": [ "dnxcore50", "portable-net451+win8" ]
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ]
     }
-  },
-
-  "testRunner": "xunit"
+  }
 }

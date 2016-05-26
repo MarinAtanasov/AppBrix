@@ -4,6 +4,7 @@ using System.Linq;
 using AppBrix.Caching;
 using AppBrix.Cloning;
 using AppBrix.Configuration;
+using AppBrix.Container;
 using AppBrix.Events;
 using AppBrix.Factory;
 using AppBrix.Lifecycle;
@@ -11,7 +12,6 @@ using AppBrix.Logging;
 using AppBrix.Logging.Console;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
-using AppBrix.Resolver;
 using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
@@ -71,12 +71,12 @@ namespace AppBrix.ConsoleApp
         {
             typeof(CachingModule),
             typeof(CloningModule),
+            typeof(ContainerModule),
             typeof(EventsModule),
             typeof(FactoryModule),
             typeof(LoggingModule),
             typeof(ConsoleLoggerModule),
             typeof(FileLoggerModule),
-            typeof(ResolverModule),
             typeof(TimeModule),
             typeof(WebClientModule),
             typeof(WebServerModule)

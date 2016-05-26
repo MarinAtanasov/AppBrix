@@ -2,9 +2,9 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Container;
 using AppBrix.Events;
 using AppBrix.Logging.Entries;
-using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Time;
 using FluentAssertions;
@@ -21,7 +21,7 @@ namespace AppBrix.Logging.Tests.LogHub
         public LogHubTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ResolverModule),
+                typeof(ContainerModule),
                 typeof(EventsModule),
                 typeof(TimeModule),
                 typeof(LoggingModule));

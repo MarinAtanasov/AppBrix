@@ -2,45 +2,45 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Resolver;
+using AppBrix.Container;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix
 {
-    public static class ResolverExtensions
+    public static class ContainerExtensions
     {
-        #region IResolver extensions
+        #region IContainer extensions
         /// <summary>
-        /// Gets the application's current resolver.
+        /// Gets the application's current container.
         /// </summary>
         /// <param name="app">The application.</param>
-        /// <returns>The registered resolver.</returns>
-        public static IResolver GetResolver(this IApp app)
+        /// <returns>The registered container.</returns>
+        public static IContainer GetContainer(this IApp app)
         {
-            IResolver resolver;
-            ResolverExtensions.Resolvers.TryGetValue(app, out resolver);
-            return resolver;
+            IContainer container;
+            ContainerExtensions.Containers.TryGetValue(app, out container);
+            return container;
         }
 
         /// <summary>
-        /// Sets the application's current resolver.
-        /// Pass in null to unregister the resolver.
+        /// Sets the application's current container.
+        /// Pass in null to unregister the container.
         /// </summary>
         /// <param name="app">The application.</param>
-        /// <param name="resolver">The resolver.</param>
-        public static void SetResolver(this IApp app, IResolver resolver)
+        /// <param name="container">The container.</param>
+        public static void SetContainer(this IApp app, IContainer container)
         {
-            lock (ResolverExtensions.Resolvers)
+            lock (ContainerExtensions.Containers)
             {
-                if (resolver != null)
+                if (container != null)
                 {
-                    ResolverExtensions.Resolvers[app] = resolver;
+                    ContainerExtensions.Containers[app] = container;
                 }
-                else if (ResolverExtensions.Resolvers.ContainsKey(app))
+                else if (ContainerExtensions.Containers.ContainsKey(app))
                 {
-                    ResolverExtensions.Resolvers.Remove(app);
+                    ContainerExtensions.Containers.Remove(app);
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace AppBrix
         /// <returns></returns>
         public static T Get<T>(this IApp app) where T : class
         {
-            return app.GetResolver().Get<T>();
+            return app.GetContainer().Get<T>();
         }
 
         /// <summary>
@@ -61,18 +61,18 @@ namespace AppBrix
         /// This method can be used when the type is known during compile time.
         /// </summary>
         /// <typeparam name="T">The type to be used as base upon registration. Cannot be "object".</typeparam>
-        /// <param name="resolver">The resolver.</param>
+        /// <param name="container">The container.</param>
         /// <param name="obj">The object to be registered. Required.</param>
         /// <exception cref="ArgumentNullException">obj</exception>
         /// <exception cref="ArgumentException">T is of type object.</exception>
-        public static void Register<T>(this IResolver resolver, T obj) where T : class
+        public static void Register<T>(this IContainer container, T obj) where T : class
         {
-            resolver.Register(obj, typeof(T));
+            container.Register(obj, typeof(T));
         }
         #endregion
         
         #region Private fields and constants
-        private static readonly IDictionary<IApp, IResolver> Resolvers = new Dictionary<IApp, IResolver>();
+        private static readonly IDictionary<IApp, IContainer> Containers = new Dictionary<IApp, IContainer>();
         #endregion
     }
 }

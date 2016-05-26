@@ -22,8 +22,8 @@
 
   "dependencies": {
     "AppBrix": "0.4.0-*",
+    "AppBrix.Container": "0.4.0-*",
     "AppBrix.Events": "0.4.0-*",
-    "AppBrix.Resolver": "0.4.0-*",
     "AppBrix.Time": "0.4.0-*",
     "System.Collections.Concurrent": "4.0.12-*",
     "System.Threading.Thread": "4.0.0-*"

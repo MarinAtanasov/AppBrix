@@ -1,15 +1,15 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Utils.Exceptions;
+using AppBrix.Application;
+using AppBrix.Container;
 using AppBrix.Factory.Tests.Mocks;
+using AppBrix.Tests;
+using AppBrix.Utils.Exceptions;
 using FluentAssertions;
 using System;
 using System.Linq;
 using Xunit;
-using AppBrix.Tests;
-using AppBrix.Resolver;
-using AppBrix.Application;
 
 namespace AppBrix.Factory.Tests
 {
@@ -19,7 +19,7 @@ namespace AppBrix.Factory.Tests
         public FactoryTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ResolverModule),
+                typeof(ContainerModule),
                 typeof(FactoryModule));
             this.app.Start();
         }

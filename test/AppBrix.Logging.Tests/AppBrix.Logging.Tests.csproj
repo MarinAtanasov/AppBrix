@@ -82,9 +82,9 @@
       <Name>AppBrix.Logging</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\AppBrix.Resolver\AppBrix.Resolver.csproj">
+    <ProjectReference Include="..\AppBrix.Container\AppBrix.Container.csproj">
       <Project>{a7d4f8f4-3fe2-48de-b3eb-a68319ab9692}</Project>
-      <Name>AppBrix.Resolver</Name>
+      <Name>AppBrix.Container</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj">

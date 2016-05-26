@@ -22,7 +22,7 @@
 
   "dependencies": {
     "AppBrix": "0.4.0-*",
-    "AppBrix.Resolver": "0.4.0-*"
+    "AppBrix.Container": "0.4.0-*"
   },
 
   "frameworks": {

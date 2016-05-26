@@ -6,31 +6,31 @@ using AppBrix.Modules;
 using System;
 using System.Linq;
 
-namespace AppBrix.Resolver
+namespace AppBrix.Container
 {
     /// <summary>
-    /// Module which registers the default object resolver.
+    /// Module which registers the default object container.
     /// </summary>
-    public sealed class ResolverModule : ModuleBase
+    public sealed class ContainerModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var defaultResolver = this.resolver.Value;
-            defaultResolver.Initialize(context);
-            defaultResolver.Register(this);
-            this.App.SetResolver(defaultResolver);
+            var defaultContainer = this.container.Value;
+            defaultContainer.Initialize(context);
+            defaultContainer.Register(this);
+            this.App.SetContainer(defaultContainer);
         }
 
         protected override void UninitializeModule()
         {
-            this.resolver.Value.Uninitialize();
-            this.App.SetResolver(null);
+            this.container.Value.Uninitialize();
+            this.App.SetContainer(null);
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultResolver> resolver = new Lazy<DefaultResolver>();
+        private readonly Lazy<DefaultContainer> container = new Lazy<DefaultContainer>();
         #endregion
     }
 }

@@ -2,8 +2,8 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Container;
 using AppBrix.Factory;
-using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Web.Client;
 using FluentAssertions;
@@ -37,9 +37,9 @@ namespace AppBrix.Web.Server.Tests
         //[Fact] Unable to access controller from the current library.
         public async void TestConnectionBetweenTwoApps()
         {
-            var app1 = TestUtils.CreateTestApp(typeof(ResolverModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
+            var app1 = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
             app1.Start();
-            var app2 = TestUtils.CreateTestApp(typeof(ResolverModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
+            var app2 = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
             app2.Start();
             try
             {

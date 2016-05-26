@@ -2,10 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Container;
 using AppBrix.Events;
 using AppBrix.Logging.Loggers;
 using AppBrix.Logging.Tests.Mocks;
-using AppBrix.Resolver;
 using AppBrix.Tests;
 using AppBrix.Tests.Mocks;
 using AppBrix.Time;
@@ -22,7 +22,7 @@ namespace AppBrix.Logging.Tests.Logger
         public LoggerTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ResolverModule),
+                typeof(ContainerModule),
                 typeof(EventsModule),
                 typeof(TimeModule),
                 typeof(LoggingModule));

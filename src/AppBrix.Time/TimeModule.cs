@@ -21,8 +21,8 @@ namespace AppBrix.Time
             var dateTimeKind = config.Kind;
             var format = config.Format;
             var timeService = this.CreateTimeService(dateTimeKind, format);
-            this.App.GetResolver().Register(this);
-            this.App.GetResolver().Register(timeService, timeService.GetType());
+            this.App.GetContainer().Register(this);
+            this.App.GetContainer().Register(timeService, timeService.GetType());
         }
 
         protected override void UninitializeModule()
