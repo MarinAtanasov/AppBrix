@@ -50,7 +50,15 @@ namespace AppBrix.Resolver
 
         public T Get<T>() where T : class
         {
-            return (T)this.objects[typeof(T)];
+            try
+            {
+                return (T)this.objects[typeof(T)];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ArgumentException(
+                    $"Object of type '{typeof(T).GetAssemblyQualifiedName()}' has not been registered.");
+            }
         }
 
         public IEnumerable<object> GetAll()
