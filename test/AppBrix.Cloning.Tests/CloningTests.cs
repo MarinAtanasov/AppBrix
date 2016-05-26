@@ -151,14 +151,14 @@ namespace AppBrix.Cloning.Tests
         public void TestPerformanceDeepCopy()
         {
             Action action = this.TestPerformanceDeepCopyInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceShallowCopy()
         {
             Action action = this.TestPerformanceShallowCopyInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
 
@@ -269,7 +269,7 @@ namespace AppBrix.Cloning.Tests
         private void TestPerformanceDeepCopyInternal()
         {
             var cloner = this.GetCloner();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 25; i++)
             {
                 var original = new ComplexPropertiesMock(10);
                 var clone = cloner.DeepCopy(original);
@@ -279,7 +279,7 @@ namespace AppBrix.Cloning.Tests
         private void TestPerformanceShallowCopyInternal()
         {
             var cloner = this.GetCloner();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 var original = new ComplexPropertiesMock(10);
                 var clone = cloner.ShallowCopy(original);

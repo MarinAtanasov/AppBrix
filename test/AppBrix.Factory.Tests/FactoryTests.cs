@@ -62,7 +62,7 @@ namespace AppBrix.Factory.Tests
         public void TestPerformanceFactory()
         {
             Action action = this.TestPerformanceFactoryInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
 
@@ -76,7 +76,7 @@ namespace AppBrix.Factory.Tests
         {
             var factory = this.GetFactory();
             factory.Register(() => this);
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 250000; i++)
             {
                 factory.Get<FactoryTests>();
             }

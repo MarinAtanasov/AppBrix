@@ -170,7 +170,7 @@ namespace AppBrix.Container.Tests
         public void TestPerformanceContainer()
         {
             Action action = this.TestPerformanceContainerInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
 
@@ -183,11 +183,11 @@ namespace AppBrix.Container.Tests
         private void TestPerformanceContainerInternal()
         {
             var container = this.GetContainer();
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 50000; i++)
             {
                 container.Register(new ChildMock());
             }
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 50000; i++)
             {
                 container.Get<ChildMock>();
                 container.Get<ParentMock>();

@@ -162,14 +162,14 @@ namespace AppBrix.Logging.Tests.LogHub
         public void TestPerformanceLogging()
         {
             Action action = this.TestPerformanceLoggingInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceTraceLog()
         {
             Action action = this.TestPerformanceTraceLogInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
 
@@ -179,7 +179,7 @@ namespace AppBrix.Logging.Tests.LogHub
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
-            var repeat = 750;
+            var repeat = 2000;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
             for (int i = 0; i < repeat; i++)
@@ -198,7 +198,7 @@ namespace AppBrix.Logging.Tests.LogHub
         {
             var message = "Test message";
             var called = 0;
-            var repeat = 3000;
+            var repeat = 25000;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
             for (int i = 0; i < repeat; i++)

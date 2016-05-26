@@ -252,21 +252,21 @@ namespace AppBrix.Events.Tests
         public void TestPerformanceEventsSubscribe()
         {
             Action action = this.TestPerformanceEventsSubscribeInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceEventsUnsubscribe()
         {
             Action action = this.TestPerformanceEventsUnsubscribeInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
         [Fact]
         public void TestPerformanceEventsRaise()
         {
             Action action = this.TestPerformanceEventsRaiseInternal;
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(30), "this is a performance test");
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
 
@@ -279,7 +279,7 @@ namespace AppBrix.Events.Tests
         private void TestPerformanceEventsSubscribeInternal()
         {
             var hub = this.GetEventHub();
-            var calledCount = 40000;
+            var calledCount = 100000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {
@@ -295,7 +295,7 @@ namespace AppBrix.Events.Tests
         private void TestPerformanceEventsUnsubscribeInternal()
         {
             var hub = this.GetEventHub();
-            var calledCount = 20000;
+            var calledCount = 50000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {
@@ -322,7 +322,7 @@ namespace AppBrix.Events.Tests
             hub.Subscribe<EventMock>(e => parentCalled++);
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 5000;
+            var calledCount = 25000;
             for (int i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
