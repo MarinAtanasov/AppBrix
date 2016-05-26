@@ -23,8 +23,7 @@ namespace AppBrix.Container
         void Register(object obj, Type type);
 
         /// <summary>
-        /// Resolves the last registered object of a given type.
-        /// Returns null if no object is found.
+        /// Returns the last registered object of a given type.
         /// </summary>
         /// <typeparam name="T">The type of the registered object.</typeparam>
         /// <exception cref="ArgumentException">No object of the specified type has been registered.</exception>
