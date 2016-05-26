@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0-*",
+  "version": "0.4.1-*",
   "title": "AppBrix.Time",
   "description": "Module which is used for getting the current time. This should be used instead of DateTime.(Utc)Now in order for the time to always be of the same kind and the code to be more easily testable.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module which is used for getting the current time.",
-    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Date Time" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,8 +21,8 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.0-*",
-    "AppBrix.Container": "0.4.0-*"
+    "AppBrix": "0.4.1-*",
+    "AppBrix.Container": "0.4.1-*"
   },
 
   "frameworks": {

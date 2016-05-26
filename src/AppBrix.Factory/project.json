@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0-*",
+  "version": "0.4.1-*",
   "title": "AppBrix.Factory",
   "description": "Module which allows creation of simple mutable classes.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module which allows creation of simple mutable classes.",
-    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Factory" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,8 +21,8 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.0-*",
-    "AppBrix.Container": "0.4.0-*"
+    "AppBrix": "0.4.1-*",
+    "AppBrix.Container": "0.4.1-*"
   },
 
   "frameworks": {

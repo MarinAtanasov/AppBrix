@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0-*",
+  "version": "0.4.1-*",
   "title": "AppBrix.Container.Tests",
   "description": "Contains tests for the AppBrix.Container module",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Contains tests for the AppBrix.Container module",
-    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Container Tests" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,8 +21,8 @@
   },
 
   "dependencies": {
-    "AppBrix.Container": "0.4.0-*",
-    "AppBrix.Tests": "0.4.0-*",
+    "AppBrix.Container": "0.4.1-*",
+    "AppBrix.Tests": "0.4.1-*",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0-*"

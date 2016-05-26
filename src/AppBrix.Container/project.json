@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0-*",
+  "version": "0.4.1-*",
   "title": "AppBrix.Container",
   "description": "Module which allows registration and resolving of single-instance objects.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module which allows registration and resolving of single-instance objects.",
-    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Container" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.0-*"
+    "AppBrix": "0.4.1-*"
   },
 
   "frameworks": {

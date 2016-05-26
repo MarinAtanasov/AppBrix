@@ -1,5 +1,5 @@
 ﻿{
-  "version": "0.4.0-*",
+  "version": "0.4.1-*",
   "title": "AppBrix.Web.Server",
   "description": "Module used for working with web services. Register the current application inside the web application's Startup class (services.AddInstance<IApp>(app);)",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module used for working with web services.",
-    "releaseNotes": "Migrated from DNX SDK rc1-update2 to CoreCLR rc2",
+    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Web Server" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.0-*",
+    "AppBrix": "0.4.1-*",
     "Microsoft.AspNetCore.Mvc": "1.0.0-*"
   },
 
