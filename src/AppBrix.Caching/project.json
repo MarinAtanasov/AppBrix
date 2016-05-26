@@ -24,7 +24,7 @@
     "AppBrix": "0.4.0-*",
     "AppBrix.Container": "0.4.0-*",
     "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
-    "Newtonsoft.Json": "8.0.3"
+    "Newtonsoft.Json": "8.0.4-*"
   },
 
   "frameworks": {

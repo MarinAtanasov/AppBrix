@@ -24,7 +24,7 @@
     "AppBrix": "0.4.0-*",
     "AppBrix.Configuration.Memory": "0.4.0-*",
     "dotnet-test-xunit": "1.0.0-*",
-    "FluentAssertions": "4.6.1-*",
+    "FluentAssertions": "4.6.3-*",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0-*"
