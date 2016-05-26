@@ -6,7 +6,6 @@ using AppBrix.Container.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -134,7 +133,7 @@ namespace AppBrix.Container.Tests
             var container = this.GetContainer();
             container.Register(new ChildMock());
             Action action = () => container.Get<object>();
-            action.ShouldThrow<KeyNotFoundException>("items should not be registered as type of object");
+            action.ShouldThrow<ArgumentException>("items should not be registered as type of object");
         }
 
         [Fact]
