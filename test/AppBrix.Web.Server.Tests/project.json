@@ -24,6 +24,7 @@
     "AppBrix.Tests": "0.4.0-*",
     "AppBrix.Web.Client": "0.4.0-*",
     "AppBrix.Web.Server": "0.4.0-*",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
     "Microsoft.NETCore.App": {
       "type": "platform",

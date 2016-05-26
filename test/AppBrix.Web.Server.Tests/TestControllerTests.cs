@@ -34,7 +34,7 @@ namespace AppBrix.Web.Server.Tests
             }
         }
 
-        //[Fact] Unable to access controller from the current library.
+        [Fact]
         public async void TestConnectionBetweenTwoApps()
         {
             var app1 = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
