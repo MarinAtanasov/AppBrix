@@ -57,14 +57,14 @@ namespace AppBrix.Logging.Loggers
         /// </summary>
         public override void Uninitialize()
         {
-            this.Dispose();
+            ((IDisposable)this).Dispose();
         }
 
         /// <summary>
         /// Code analysis CA1001: Types that own disposable fields should be disposable.
         /// Do not use. Use Uninitialize instead.
         /// </summary>
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             if (this.task != null)
             {
