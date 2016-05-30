@@ -12,18 +12,6 @@ namespace AppBrix.Events.Async
     internal interface ITaskQueue
     {
         /// <summary>
-        /// Subscribes a handler to be called by the task queue.
-        /// </summary>
-        /// <param name="handler">The handler to be subscribed.</param>
-        void Subscribe(Action<IEvent> handler);
-
-        /// <summary>
-        /// Unsubscribes a handler from the task queue.
-        /// </summary>
-        /// <param name="handler">The handler to be unsubscribed.</param>
-        void Unsubscribe(Action<IEvent> handler);
-
-        /// <summary>
         /// Adds a task to the runner queue.
         /// </summary>
         /// <param name="task">The task to be added to the queue.</param>

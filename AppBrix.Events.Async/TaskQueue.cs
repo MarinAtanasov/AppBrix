@@ -71,24 +71,12 @@ namespace AppBrix.Events.Async
                 this.handlers.Clear();
             }
         }
-
-        void ITaskQueue.Subscribe(Action<IEvent> handler)
-        {
-            object obj = handler;
-            this.Subscribe((Action<T>)obj);
-        }
-
+        
         public void Subscribe(Action<T> handler)
         {
             this.handlers.Add(handler);
         }
-
-        void ITaskQueue.Unsubscribe(Action<IEvent> handler)
-        {
-            object obj = handler;
-            this.Unsubscribe((Action<T>)obj);
-        }
-
+        
         public void Unsubscribe(Action<T> handler)
         {
             // Optimize for unsubscribing the last element since this is the most common scenario.
