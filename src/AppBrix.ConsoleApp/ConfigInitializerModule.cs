@@ -16,6 +16,7 @@ using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
 using AppBrix.Events.Async;
+using AppBrix.Logging.Configuration;
 
 namespace AppBrix.ConsoleApp
 {
@@ -29,6 +30,7 @@ namespace AppBrix.ConsoleApp
         public void Install(IInstallContext context)
         {
             this.InitializeAppConfig(context.App.ConfigManager);
+            this.InitializeLoggingConfig(context.App.ConfigManager);
             context.RequestedAction = RequestedAction.Restart;
         }
 
@@ -64,6 +66,11 @@ namespace AppBrix.ConsoleApp
                     element.Status = ModuleStatus.Disabled;
                 config.Modules.Add(element);
             }
+        }
+
+        private void InitializeLoggingConfig(IConfigManager manager)
+        {
+            manager.Get<LoggingConfig>().Async = false;
         }
         #endregion
 
