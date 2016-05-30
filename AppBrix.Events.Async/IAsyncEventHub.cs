@@ -4,12 +4,12 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Events
+namespace AppBrix.Events.Async
 {
     /// <summary>
-    /// Used for subscribing to events, unsubscribing from events and raising events.
+    /// Used for subscribing to events, unsubscribing from events and raising asynchronous events.
     /// </summary>
-    public interface IEventHub
+    public interface IAsyncEventHub
     {
         /// <summary>
         /// Subscribes the event handler to the event.

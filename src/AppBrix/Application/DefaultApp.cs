@@ -104,6 +104,9 @@ namespace AppBrix.Application
 
         public void Uninitialize()
         {
+            if (!this.IsInitialized)
+                throw new InvalidOperationException("The application is not initialized.");
+
             this.Uninitialize(this.modules.Count - 1);
         }
 

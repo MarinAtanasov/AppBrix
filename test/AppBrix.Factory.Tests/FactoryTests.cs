@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Factory.Tests
 {
-    public class FactoryTests : IDisposable
+    public class FactoryTests
     {
         #region Setup and cleanup
         public FactoryTests()
@@ -22,11 +22,6 @@ namespace AppBrix.Factory.Tests
                 typeof(ContainerModule),
                 typeof(FactoryModule));
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
@@ -62,6 +57,11 @@ namespace AppBrix.Factory.Tests
         public void TestPerformanceFactory()
         {
             Action action = this.TestPerformanceFactoryInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+            this.app.Reinitialize();
+
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion

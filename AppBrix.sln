@@ -77,6 +77,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Tests
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Yaml", "src\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.xproj", "{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Async", "AppBrix.Events.Async\AppBrix.Events.Async.xproj", "{9AD49682-94FB-424B-8DEE-529BB06823FC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Async.Tests", "AppBrix.Events.Async.Tests\AppBrix.Events.Async.Tests.xproj", "{904C8597-DB45-4709-BBB0-983548DD4675}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -200,6 +204,14 @@ Global
 		{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD49682-94FB-424B-8DEE-529BB06823FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD49682-94FB-424B-8DEE-529BB06823FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD49682-94FB-424B-8DEE-529BB06823FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD49682-94FB-424B-8DEE-529BB06823FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{904C8597-DB45-4709-BBB0-983548DD4675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{904C8597-DB45-4709-BBB0-983548DD4675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{904C8597-DB45-4709-BBB0-983548DD4675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{904C8597-DB45-4709-BBB0-983548DD4675}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,5 +246,7 @@ Global
 		{7DB372D5-0673-4852-B9C1-8F31EF57493F} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{7989699F-7924-4230-AD0F-675E57C633B8} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3} = {9C8A720D-7382-4C91-9B62-86EB554B2C29}
+		{9AD49682-94FB-424B-8DEE-529BB06823FC} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
+		{904C8597-DB45-4709-BBB0-983548DD4675} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 	EndGlobalSection
 EndGlobal

@@ -15,7 +15,7 @@ using Xunit;
 
 namespace AppBrix.Cloning.Tests
 {
-    public class CloningTests : IDisposable
+    public class CloningTests
     {
         #region Setup and cleanup
         public CloningTests()
@@ -24,11 +24,6 @@ namespace AppBrix.Cloning.Tests
                 typeof(ContainerModule),
                 typeof(CloningModule));
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
@@ -151,6 +146,10 @@ namespace AppBrix.Cloning.Tests
         public void TestPerformanceDeepCopy()
         {
             Action action = this.TestPerformanceDeepCopyInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
@@ -158,6 +157,10 @@ namespace AppBrix.Cloning.Tests
         public void TestPerformanceShallowCopy()
         {
             Action action = this.TestPerformanceShallowCopyInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
@@ -279,7 +282,7 @@ namespace AppBrix.Cloning.Tests
         private void TestPerformanceShallowCopyInternal()
         {
             var cloner = this.GetCloner();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 12000; i++)
             {
                 var original = new ComplexPropertiesMock(10);
                 var clone = cloner.ShallowCopy(original);

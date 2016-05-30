@@ -2,37 +2,33 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Configuration;
-using AppBrix.Logging.Loggers;
 using AppBrix.Modules;
 using System;
 using System.Linq;
 
-namespace AppBrix.Logging.File
+namespace AppBrix.Events.Async
 {
     /// <summary>
-    /// Class that registers a console logger.
+    /// Module used for registering an asynchronous event hub.
     /// </summary>
-    public sealed class FileLoggerModule : ModuleBase
+    public sealed class AsyncEventsModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            var async = this.App.GetConfig<LoggingConfig>().Async;
-            this.logger = Logger.Create(new FileLogWriter(), async);
-            this.App.GetContainer().Register(this.logger, this.logger.GetType());
+            this.eventHub.Value.Initialize(context);
+            this.App.GetContainer().Register(this.eventHub.Value);
         }
 
         protected override void UninitializeModule()
         {
-            this.logger.Uninitialize();
-            this.logger = null;
+            this.eventHub.Value.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private ILogger logger;
+        private readonly Lazy<DefaultAsyncEventHub> eventHub = new Lazy<DefaultAsyncEventHub>();
         #endregion
     }
 }

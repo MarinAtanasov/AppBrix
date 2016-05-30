@@ -15,7 +15,7 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub
 {
-    public class LogHubTests : IDisposable
+    public class LogHubTests
     {
         #region Setup and cleanup
         public LogHubTests()
@@ -26,11 +26,6 @@ namespace AppBrix.Logging.Tests.LogHub
                 typeof(TimeModule),
                 typeof(LoggingModule));
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
@@ -162,6 +157,11 @@ namespace AppBrix.Logging.Tests.LogHub
         public void TestPerformanceLogging()
         {
             Action action = this.TestPerformanceLoggingInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+            this.app.Reinitialize();
+
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
@@ -169,6 +169,11 @@ namespace AppBrix.Logging.Tests.LogHub
         public void TestPerformanceTraceLog()
         {
             Action action = this.TestPerformanceTraceLogInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+            this.app.Reinitialize();
+
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
@@ -179,7 +184,7 @@ namespace AppBrix.Logging.Tests.LogHub
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
-            var repeat = 2000;
+            var repeat = 4000;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
             for (int i = 0; i < repeat; i++)

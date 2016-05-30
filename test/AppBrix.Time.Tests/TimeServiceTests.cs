@@ -12,7 +12,7 @@ using Xunit;
 
 namespace AppBrix.Time.Tests
 {
-    public class TimeServiceTests : IDisposable
+    public class TimeServiceTests
     {
         #region Setup and cleanup
         public TimeServiceTests()
@@ -21,11 +21,6 @@ namespace AppBrix.Time.Tests
                 typeof(ContainerModule),
                 typeof(TimeModule));
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
@@ -41,7 +36,6 @@ namespace AppBrix.Time.Tests
             time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
             time.Kind.Should().Be(DateTimeKind.Utc, "kind is not Utc");
             time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
-            app.Stop();
         }
 
         [Fact]
@@ -55,7 +49,6 @@ namespace AppBrix.Time.Tests
             time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
             time.Kind.Should().Be(DateTimeKind.Local, "kind is not Local");
             time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
-            app.Stop();
         }
 
         [Fact]
@@ -67,7 +60,6 @@ namespace AppBrix.Time.Tests
             var appTime = app.GetTimeService().ToAppTime(time);
             appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
             appTime.Should().Be(time, "returned time should be the same as passed in");
-            app.Stop();
         }
 
         [Fact]
@@ -79,7 +71,6 @@ namespace AppBrix.Time.Tests
             var appTime = app.GetTimeService().ToAppTime(time);
             appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
             appTime.Should().Be(time.ToUniversalTime(), "returned time should be equal to the passed in");
-            app.Stop();
         }
 
         [Fact]
@@ -91,7 +82,6 @@ namespace AppBrix.Time.Tests
             var appTime = app.GetTimeService().ToAppTime(time);
             appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
             appTime.Should().Be(time.ToLocalTime(), "returned time should be equal to the passed in");
-            app.Stop();
         }
 
         [Fact]
@@ -103,7 +93,6 @@ namespace AppBrix.Time.Tests
             var appTime = app.GetTimeService().ToAppTime(time);
             appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
             appTime.Should().Be(time, "returned time should be the same as passed in");
-            app.Stop();
         }
         #endregion
         

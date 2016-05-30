@@ -33,7 +33,7 @@ namespace AppBrix.Logging.Console
         #endregion
 
         #region Private fields and constants
-        private Logger logger;
+        private ILogger logger;
         #endregion
     }
 }

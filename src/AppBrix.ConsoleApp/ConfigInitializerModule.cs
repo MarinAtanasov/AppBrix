@@ -15,6 +15,7 @@ using AppBrix.Modules;
 using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
+using AppBrix.Events.Async;
 
 namespace AppBrix.ConsoleApp
 {
@@ -69,6 +70,7 @@ namespace AppBrix.ConsoleApp
         #region Private fields and constants
         private static readonly IEnumerable<Type> Modules = new List<Type>()
         {
+            typeof(AsyncEventsModule),
             typeof(CachingModule),
             typeof(CloningModule),
             typeof(ContainerModule),

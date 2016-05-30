@@ -11,7 +11,7 @@ using Xunit;
 
 namespace AppBrix.Caching.Tests
 {
-    public class CacheTests : IDisposable
+    public class CacheTests
     {
         #region Setup and cleanup
         public CacheTests()
@@ -20,11 +20,6 @@ namespace AppBrix.Caching.Tests
                 typeof(ContainerModule),
                 typeof(CachingModule));
             this.app.Start();
-        }
-
-        public  void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace AppBrix.Container.Tests
 {
-    public class ContainerTests : IDisposable
+    public class ContainerTests
     {
         #region Setup and cleanup
         public ContainerTests()
@@ -19,11 +19,6 @@ namespace AppBrix.Container.Tests
             this.app = TestUtils.CreateTestApp(
                 typeof(ContainerModule));
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
@@ -170,6 +165,11 @@ namespace AppBrix.Container.Tests
         public void TestPerformanceContainer()
         {
             Action action = this.TestPerformanceContainerInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+            this.app.Reinitialize();
+
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion

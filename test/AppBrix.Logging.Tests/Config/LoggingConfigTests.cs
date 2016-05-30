@@ -15,7 +15,7 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.Config
 {
-    public class LoggingConfigTests : IDisposable
+    public class LoggingConfigTests
     {
         #region Setup and cleanup
         public LoggingConfigTests()
@@ -26,11 +26,6 @@ namespace AppBrix.Logging.Tests.Config
                 typeof(TimeModule),
                 typeof(LoggingModule));
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
