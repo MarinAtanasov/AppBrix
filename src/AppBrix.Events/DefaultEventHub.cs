@@ -53,18 +53,22 @@ namespace AppBrix.Events
         #region Private methods
         private void SubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
-            if (!this.subscriptions.ContainsKey(typeof(T)))
-                this.subscriptions[typeof(T)] = new List<object>();
+            IList<object> handlers;
+            if (!this.subscriptions.TryGetValue(typeof(T), out handlers))
+            {
+                handlers = new List<object>();
+                this.subscriptions[typeof(T)] = handlers;
+            }
 
-            this.subscriptions[typeof(T)].Add(handler);
+            handlers.Add(handler);
         }
 
         private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
-            if (this.subscriptions.ContainsKey(typeof(T)))
+            IList<object> handlers;
+            if (this.subscriptions.TryGetValue(typeof(T), out handlers))
             {
                 // Optimize for unsubscribing the last element since this is the most common scenario.
-                var handlers = this.subscriptions[typeof(T)];
                 for (int i = handlers.Count - 1; i >= 0; i--)
                 {
                     if (handlers[i].Equals(handler))
@@ -96,16 +100,16 @@ namespace AppBrix.Events
 
         private void RaiseEvent<T>(T args, Type eventType) where T : IEvent
         {
-            if (this.subscriptions.ContainsKey(eventType))
+            IList<object> handlers;
+            if (this.subscriptions.TryGetValue(eventType, out handlers))
             {
-                var handlers = this.subscriptions[eventType];
                 for (var i = 0; i < handlers.Count; i++)
                 {
                     var handler = (Action<T>)handlers[i];
                     handler(args);
 
                     // Check if the handler has unsubscribed itself.
-                    if (i < handlers.Count && !Object.ReferenceEquals(handler, handlers[i]))
+                    if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
                         i--;
                 }
             }
