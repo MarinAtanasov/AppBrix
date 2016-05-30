@@ -63,6 +63,37 @@ namespace AppBrix.Caching.Tests
             cache.Remove(key).Wait();
             cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
         }
+
+        [Fact]
+        public void TestPerformanceCache()
+        {
+            Action action = this.TestPerformanceCacheInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
+        #endregion
+
+        #region Private methods
+        private void TestPerformanceCacheInternal()
+        {
+            var cache = this.app.GetCache();
+            var items = 5000;
+            for (int i = 0; i < items; i++)
+            {
+                cache.Set(i.ToString(), i);
+            }
+            for (int i = 0; i < items; i++)
+            {
+                cache.Get<int>(i.ToString());
+            }
+            for (int i = 0; i < items; i++)
+            {
+                cache.Remove(i.ToString());
+            }
+        }
         #endregion
 
         #region Private fields and constants
