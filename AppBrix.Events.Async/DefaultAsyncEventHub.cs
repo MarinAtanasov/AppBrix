@@ -20,9 +20,7 @@ namespace AppBrix.Events.Async
 
         public void Uninitialize()
         {
-            var queues = this.taskQueues.Values.ToList();
-            this.taskQueues.Clear();
-            queues.ForEach(x => x.Dispose());
+            this.taskQueues.Keys.ToList().ForEach(this.RemoveTaskQueue);
         }
         #endregion
 
@@ -64,11 +62,17 @@ namespace AppBrix.Events.Async
             }
             else
             {
-                var queue = new TaskQueue<T>();
-                queue.Subscribe(handler);
-                this.taskQueues[typeof(T)] = queue;
-                this.app.GetEventHub().Subscribe<T>(this.RaiseEvent);
+                this.CreateTaskQueue<T>().Subscribe(handler);
             }
+        }
+
+        private TaskQueue<T> CreateTaskQueue<T>() where T : IEvent
+        {
+            var queue = new TaskQueue<T>();
+            this.taskQueues[typeof(T)] = queue;
+            this.app.GetEventHub().Subscribe<T>(this.RaiseEvent);
+            this.taskQueueUnsubscribers[typeof(T)] = () => this.app.GetEventHub().Unsubscribe<T>(this.RaiseEvent);
+            return queue;
         }
 
         private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
@@ -80,11 +84,17 @@ namespace AppBrix.Events.Async
                 queue.Unsubscribe(handler);
                 if (queue.Count == 0)
                 {
-                    this.app.GetEventHub().Unsubscribe<T>(this.RaiseEvent);
-                    taskQueues.Remove(typeof(T));
-                    queue.Dispose();
+                    this.RemoveTaskQueue(typeof(T));
                 }
             }
+        }
+
+        private void RemoveTaskQueue(Type type)
+        {
+            this.taskQueueUnsubscribers[type].Invoke();
+            this.taskQueueUnsubscribers.Remove(type);
+            this.taskQueues[type].Dispose();
+            this.taskQueues.Remove(type);
         }
 
         private void RaiseBaseClassesEvents<T>(T args) where T : IEvent
@@ -122,6 +132,7 @@ namespace AppBrix.Events.Async
 
         #region Private fields and constants
         private readonly IDictionary<Type, ITaskQueue> taskQueues = new Dictionary<Type, ITaskQueue>();
+        private readonly IDictionary<Type, Action> taskQueueUnsubscribers = new Dictionary<Type, Action>();
         private IApp app;
         #endregion
     }

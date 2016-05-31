@@ -56,7 +56,7 @@ namespace AppBrix.Container
             }
             catch (KeyNotFoundException)
             {
-                throw new ArgumentException(
+                throw new InvalidOperationException(
                     $"Object of type '{typeof(T).GetAssemblyQualifiedName()}' has not been registered.");
             }
         }
