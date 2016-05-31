@@ -2,11 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Entries;
 using System;
 using System.Linq;
 
-namespace AppBrix.Logging.Loggers
+namespace AppBrix.Logging
 {
     /// <summary>
     /// A logger class which can be used to pass in log entries.

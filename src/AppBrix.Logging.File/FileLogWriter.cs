@@ -1,11 +1,8 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Configuration;
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Entries;
 using AppBrix.Logging.File.Configuration;
-using AppBrix.Logging.Loggers;
 using System;
 using System.IO;
 using System.Linq;

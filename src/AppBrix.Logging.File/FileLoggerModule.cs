@@ -2,8 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Configuration;
-using AppBrix.Logging.Loggers;
 using AppBrix.Modules;
 using System;
 using System.Linq;
@@ -19,8 +17,9 @@ namespace AppBrix.Logging.File
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            var async = this.App.GetConfig<LoggingConfig>().Async;
-            this.logger = Logger.Create(new FileLogWriter(), async);
+            this.App.GetFactory().Register<ILogWriter>(() => new FileLogWriter());
+            this.logger = this.App.GetFactory().Get<ILogger>();
+            this.logger.Initialize(context);
             this.App.GetContainer().Register(this.logger, this.logger.GetType());
         }
 

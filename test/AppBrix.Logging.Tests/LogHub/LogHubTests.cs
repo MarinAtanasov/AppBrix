@@ -4,6 +4,7 @@
 using AppBrix.Application;
 using AppBrix.Container;
 using AppBrix.Events;
+using AppBrix.Factory;
 using AppBrix.Logging.Entries;
 using AppBrix.Tests;
 using AppBrix.Time;
@@ -24,6 +25,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 typeof(ContainerModule),
                 typeof(EventsModule),
                 typeof(TimeModule),
+                typeof(FactoryModule),
                 typeof(LoggingModule));
             this.app.Start();
         }

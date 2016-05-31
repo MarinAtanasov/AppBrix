@@ -25,6 +25,7 @@
     "AppBrix.Container": "0.4.1-*",
     "AppBrix.Events": "0.4.1-*",
     "AppBrix.Events.Async": "0.4.1-*",
+    "AppBrix.Factory": "0.4.1",
     "AppBrix.Time": "0.4.1-*",
     "System.Collections.Concurrent": "4.0.12-*",
     "System.Threading.Thread": "4.0.0-*"

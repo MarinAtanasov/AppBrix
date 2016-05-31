@@ -2,10 +2,11 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Events;
+using AppBrix.Logging.Entries;
 using System;
 using System.Linq;
 
-namespace AppBrix.Logging.Entries
+namespace AppBrix.Logging
 {
     /// <summary>
     /// Base interface for all logging entry events.

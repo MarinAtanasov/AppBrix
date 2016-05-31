@@ -2,8 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Entries;
-using AppBrix.Logging.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,11 +3,10 @@
 //
 using AppBrix.Application;
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Entries;
 using System;
 using System.Linq;
 
-namespace AppBrix.Logging.Loggers
+namespace AppBrix.Logging.Impl
 {
     /// <summary>
     /// A logger which logs the entries on the same thread on which they were created.

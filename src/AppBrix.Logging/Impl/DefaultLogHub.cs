@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace AppBrix.Logging
+namespace AppBrix.Logging.Impl
 {
     internal sealed class DefaultLogHub : ILogHub, IApplicationLifecycle
     {

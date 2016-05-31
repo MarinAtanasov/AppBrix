@@ -5,7 +5,8 @@ using AppBrix.Application;
 using AppBrix.Container;
 using AppBrix.Events;
 using AppBrix.Events.Async;
-using AppBrix.Logging.Loggers;
+using AppBrix.Factory;
+using AppBrix.Logging.Impl;
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Tests;
 using AppBrix.Tests.Mocks;
@@ -27,6 +28,7 @@ namespace AppBrix.Logging.Tests.Logger
                 typeof(EventsModule),
                 typeof(AsyncEventsModule),
                 typeof(TimeModule),
+                typeof(FactoryModule),
                 typeof(LoggingModule));
             this.app.Start();
         }

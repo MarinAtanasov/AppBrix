@@ -2,13 +2,14 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Logging.Entries;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace AppBrix.Logging.Entries
+namespace AppBrix.Logging.Impl
 {
     internal sealed class DefaultLogEntry : ILogEntry
     {
