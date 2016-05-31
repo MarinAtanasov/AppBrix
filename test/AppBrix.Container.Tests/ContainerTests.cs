@@ -142,7 +142,7 @@ namespace AppBrix.Container.Tests
             container.Get<ChildMock>().Should().BeSameAs(resolved2, "object not replaced with second");
             container.Register(resolved);
             container.Get<ChildMock>().Should().BeSameAs(resolved, "object not replaced with original");
-            container.GetAll().OfType<ChildMock>().Count().Should().Be(2, "first object has been removed from history");
+            container.GetAll().OfType<ChildMock>().Count().Should().Be(3, "first object has been removed from history");
         }
 
         [Fact]

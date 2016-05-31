@@ -58,7 +58,7 @@ namespace AppBrix.Cloning
             if (type.IsArray)
             {
                 var clonedArray = (Array)cloned;
-                ((Array)original).ForEach((array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
+                this.ForEach(((Array)original), (array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
             }
             while (type != typeof(object))
             {
@@ -79,6 +79,24 @@ namespace AppBrix.Cloning
         private bool IsValueType(Type type)
         {
             return type == typeof(string) || type.GetTypeInfo().IsValueType;
+        }
+
+        /// <summary>
+        /// Traverses a multidimentional array and executes an action for every item.
+        /// </summary>
+        /// <param name="array">The array to be traversed.</param>
+        /// <param name="action">The action to be executed on every element.</param>
+        private void ForEach(Array array, Action<Array, int[]> action)
+        {
+            if (array.Length == 0)
+                return;
+
+            var walker = new ArrayTraverse(array);
+            do
+            {
+                action(array, walker.Position);
+            }
+            while (walker.Step());
         }
         #endregion
 
