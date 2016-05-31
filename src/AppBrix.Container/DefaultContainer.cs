@@ -101,7 +101,7 @@ namespace AppBrix.Container
 
         #region Private fields and constants
         private readonly IDictionary<Type, object> objects = new Dictionary<Type, object>();
-        private readonly HashSet<object> registered = new HashSet<object>();
+        private readonly ICollection<object> registered = new List<object>();
         #endregion
     }
 }

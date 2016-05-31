@@ -31,8 +31,7 @@ namespace AppBrix.Container
         T Get<T>() where T : class;
 
         /// <summary>
-        /// Resolves all registered objects.
-        /// The objects are not necessarily in the order in which they were registered.
+        /// Resolves all registered objects in the order in which they were registered.
         /// </summary>
         /// <returns>All registered objects.</returns>
         IEnumerable<object> GetAll();

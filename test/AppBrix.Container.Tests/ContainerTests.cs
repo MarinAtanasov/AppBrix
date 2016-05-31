@@ -183,11 +183,11 @@ namespace AppBrix.Container.Tests
         private void TestPerformanceContainerInternal()
         {
             var container = this.GetContainer();
-            for (var i = 0; i < 50000; i++)
+            for (var i = 0; i < 12000; i++)
             {
                 container.Register(new ChildMock());
             }
-            for (var i = 0; i < 50000; i++)
+            for (var i = 0; i < 120000; i++)
             {
                 container.Get<ChildMock>();
                 container.Get<ParentMock>();
