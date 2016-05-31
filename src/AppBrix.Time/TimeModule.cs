@@ -17,11 +17,9 @@ namespace AppBrix.Time
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            var config = this.App.GetConfig<TimeConfig>();
-            var dateTimeKind = config.Kind;
-            var format = config.Format;
-            var timeService = this.CreateTimeService(dateTimeKind, format);
             this.App.GetContainer().Register(this);
+            var config = this.App.GetConfig<TimeConfig>();
+            var timeService = this.CreateTimeService(config.Kind, config.Format);
             this.App.GetContainer().Register(timeService, timeService.GetType());
         }
 
