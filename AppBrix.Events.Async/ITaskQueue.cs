@@ -9,7 +9,7 @@ namespace AppBrix.Events.Async
     /// <summary>
     /// Defines a task queue which runs subscribed tasks asynchronously.
     /// </summary>
-    internal interface ITaskQueue
+    internal interface ITaskQueue : IDisposable
     {
         /// <summary>
         /// Adds a task to the runner queue.

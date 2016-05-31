@@ -13,7 +13,7 @@ namespace AppBrix.Events.Async
     /// <summary>
     /// An asynchronous task runner.
     /// </summary>
-    internal sealed class TaskQueue<T> : ITaskQueue, IDisposable
+    internal sealed class TaskQueue<T> : ITaskQueue
     {
         #region Construciton
         /// <summary>
@@ -23,25 +23,8 @@ namespace AppBrix.Events.Async
         {
             this.tasks = new BlockingCollection<T>();
             this.cancelTokenSource = new CancellationTokenSource();
-            this.runner = Task.Factory.StartNew(() =>
-            {
-                foreach (var args in this.tasks.GetConsumingEnumerable())
-                {
-                    // Throw only after flushing the queue.
-                    if (args == null)
-                        this.cancelTokenSource.Token.ThrowIfCancellationRequested();
-
-                    for (var i = 0; i < this.handlers.Count; i++)
-                    {
-                        var handler = this.handlers[i];
-                        handler(args);
-
-                        // Check if the handler has unsubscribed itself.
-                        if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
-                            i--;
-                    }
-                }
-            }, this.cancelTokenSource.Token, TaskCreationOptions.LongRunning | TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
+            this.runner = Task.Factory.StartNew(this.Run, this.cancelTokenSource.Token,
+                TaskCreationOptions.LongRunning | TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
         }
         #endregion
 
@@ -101,6 +84,32 @@ namespace AppBrix.Events.Async
                 throw new ArgumentNullException(nameof(task));
 
             this.tasks.Add(task);
+        }
+        #endregion
+
+        #region Private methods
+        /// <summary>
+        /// Iterates over the scheduled tasks and executes them in order. Should be called only from the constructor.
+        /// This method executes continuously inside a separate thread until it is cancelled during <see cref="Dispose"/>.
+        /// </summary>
+        private void Run()
+        {
+            foreach (var args in this.tasks.GetConsumingEnumerable())
+            {
+                // Throw only after flushing the queue.
+                if (args == null)
+                    this.cancelTokenSource.Token.ThrowIfCancellationRequested();
+
+                for (var i = 0; i < this.handlers.Count; i++)
+                {
+                    var handler = this.handlers[i];
+                    handler(args);
+
+                    // Check if the handler has unsubscribed itself.
+                    if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
+                        i--;
+                }
+            }
         }
         #endregion
 

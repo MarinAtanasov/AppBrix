@@ -20,8 +20,9 @@ namespace AppBrix.Events.Async
 
         public void Uninitialize()
         {
-            this.taskQueues.Values.Cast<IDisposable>().ToList().ForEach(x => x.Dispose());
+            var queues = this.taskQueues.Values.ToList();
             this.taskQueues.Clear();
+            queues.ForEach(x => x.Dispose());
         }
         #endregion
 
