@@ -10,8 +10,22 @@ namespace AppBrix.Configuration
     /// </summary>
     public enum ModuleStatus
     {
+        /// <summary>
+        /// The module is enabled.
+        /// If it is <see cref="AppBrix.Lifecycle.IInstallable"/> and has not been installed yet, it will be installed.
+        /// If the module has been installed from a previous version of the module assembly, it will be upgraded.
+        /// </summary>
         Enabled,
+        /// <summary>
+        /// The module is disabled and will not be loaded during application initialization.
+        /// </summary>
         Disabled,
+        /// <summary>
+        /// Schedules an <see cref="AppBrix.Lifecycle.IInstallable"/> module for uninstallation.
+        /// The module will be uninstalled during the next application uninitialization.
+        /// If the module was disabled during application start,
+        /// an application restart might be required to uninstall during the next uninitialization.
+        /// </summary>
         Uninstalling
     }
 }

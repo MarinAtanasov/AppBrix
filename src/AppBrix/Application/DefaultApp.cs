@@ -65,6 +65,31 @@ namespace AppBrix.Application
             if (this.IsInitialized)
                 throw new InvalidOperationException("The application is already initialized.");
 
+            this.InitializeInternal();
+        }
+
+        public void Uninitialize()
+        {
+            if (!this.IsInitialized)
+                throw new InvalidOperationException("The application is not initialized.");
+
+            this.UninitializeInternal(this.modules.Count - 1);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
+        }
+        #endregion
+
+        #region Private methods
+        private void InitializeInternal()
+        {
             this.IsInitialized = true;
 
             var initializeContext = new DefaultInitializeContext(this);
@@ -84,12 +109,12 @@ namespace AppBrix.Application
                             break;
                         case RequestedAction.Reinitialize:
                             this.ConfigManager.SaveAll();
-                            this.Uninitialize(i - 1);
+                            this.UninitializeInternal(i - 1);
                             this.Initialize();
                             return;
                         case RequestedAction.Restart:
                             this.ConfigManager.SaveAll();
-                            this.Uninitialize(i - 1);
+                            this.UninitializeInternal(i - 1);
                             this.UnregisterModules();
                             this.Start();
                             return;
@@ -102,26 +127,6 @@ namespace AppBrix.Application
             }
         }
 
-        public void Uninitialize()
-        {
-            if (!this.IsInitialized)
-                throw new InvalidOperationException("The application is not initialized.");
-
-            this.Uninitialize(this.modules.Count - 1);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return this.Id.GetHashCode();
-        }
-        #endregion
-
-        #region Private methods
         private RequestedAction InstallOrUpgradeModule(IInstallable module, ModuleInfo moduleInfo)
         {
             RequestedAction? requestedAction = null;
@@ -148,7 +153,7 @@ namespace AppBrix.Application
             return requestedAction ?? RequestedAction.None;
         }
 
-        private void Uninitialize(int lastInitialized)
+        private void UninitializeInternal(int lastInitialized)
         {
             for (var i = lastInitialized; i >= 0; i--)
             {

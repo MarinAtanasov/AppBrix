@@ -25,14 +25,28 @@ namespace AppBrix.Application
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the instance of the module which is used by the application.
+        /// </summary>
         public IModule Module { get; }
 
+        /// <summary>
+        /// Gets the configuration element for the module.
+        /// </summary>
         public ModuleConfigElement Config { get; }
 
+        /// <summary>
+        /// Gets the initial status of the module when this instance of <see cref="ModuleInfo"/> was created.
+        /// </summary>
         public ModuleStatus Status { get; }
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Sorts the modules by assembly load priority based on assembly references.
+        /// </summary>
+        /// <param name="modules">The modules to be sorted.</param>
+        /// <returns>The sorted modules.</returns>
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
             var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().GetTypeInfo().Assembly)).ToList();
