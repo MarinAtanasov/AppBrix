@@ -21,8 +21,8 @@ namespace AppBrix.Cloning.Tests
         public CloningTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ContainerModule),
-                typeof(CloningModule));
+                typeof(CloningModule),
+                typeof(ContainerModule));
             this.app.Start();
         }
         #endregion

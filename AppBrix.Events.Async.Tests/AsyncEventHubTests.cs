@@ -20,9 +20,9 @@ namespace AppBrix.Events.Async.Tests
         public AsyncEventHubTests()
         {
             this.app = TestUtils.CreateTestApp(
+                typeof(AsyncEventsModule),
                 typeof(ContainerModule),
-                typeof(EventsModule),
-                typeof(AsyncEventsModule));
+                typeof(EventsModule));
             this.app.Start();
         }
         #endregion

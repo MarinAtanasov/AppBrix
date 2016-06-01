@@ -24,9 +24,9 @@ namespace AppBrix.Logging.Tests.LogHub
             this.app = TestUtils.CreateTestApp(
                 typeof(ContainerModule),
                 typeof(EventsModule),
-                typeof(TimeModule),
                 typeof(FactoryModule),
-                typeof(LoggingModule));
+                typeof(LoggingModule),
+                typeof(TimeModule));
             this.app.Start();
         }
         #endregion

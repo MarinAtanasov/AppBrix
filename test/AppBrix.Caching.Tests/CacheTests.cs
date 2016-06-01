@@ -17,8 +17,8 @@ namespace AppBrix.Caching.Tests
         public CacheTests()
         {
             this.app = TestUtils.CreateTestApp(
-                typeof(ContainerModule),
-                typeof(CachingModule));
+                typeof(CachingModule),
+                typeof(ContainerModule));
             this.app.Start();
         }
         #endregion

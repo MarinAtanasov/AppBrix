@@ -27,9 +27,9 @@ namespace AppBrix.Logging.Tests.Logger
                 typeof(ContainerModule),
                 typeof(EventsModule),
                 typeof(AsyncEventsModule),
-                typeof(TimeModule),
                 typeof(FactoryModule),
-                typeof(LoggingModule));
+                typeof(LoggingModule),
+                typeof(TimeModule));
             this.app.Start();
         }
         #endregion
