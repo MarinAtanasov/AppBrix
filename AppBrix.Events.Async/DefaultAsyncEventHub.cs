@@ -58,7 +58,7 @@ namespace AppBrix.Events.Async
             ITaskQueue queueObject;
             if (this.taskQueues.TryGetValue(typeof(T), out queueObject))
             {
-                ((TaskQueue<T>)queueObject).Subscribe(handler);
+                ((ITaskQueue<T>)queueObject).Subscribe(handler);
             }
             else
             {
@@ -66,7 +66,7 @@ namespace AppBrix.Events.Async
             }
         }
 
-        private TaskQueue<T> CreateTaskQueue<T>() where T : IEvent
+        private ITaskQueue<T> CreateTaskQueue<T>() where T : IEvent
         {
             var queue = new TaskQueue<T>();
             this.taskQueues[typeof(T)] = queue;
@@ -80,7 +80,7 @@ namespace AppBrix.Events.Async
             ITaskQueue queueObject;
             if (this.taskQueues.TryGetValue(typeof(T), out queueObject))
             {
-                var queue = (TaskQueue<T>)queueObject;
+                var queue = (ITaskQueue<T>)queueObject;
                 queue.Unsubscribe(handler);
                 if (queue.Count == 0)
                 {

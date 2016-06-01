@@ -13,7 +13,7 @@ namespace AppBrix.Events.Async
     /// <summary>
     /// An asynchronous task runner.
     /// </summary>
-    internal sealed class TaskQueue<T> : ITaskQueue
+    internal sealed class TaskQueue<T> : ITaskQueue<T>
     {
         #region Construciton
         /// <summary>
@@ -29,9 +29,6 @@ namespace AppBrix.Events.Async
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets how many handlers are subscribed in the queue.
-        /// </summary>
         public int Count => this.handlers.Count;
         #endregion
 
@@ -73,9 +70,9 @@ namespace AppBrix.Events.Async
             }
         }
 
-        void ITaskQueue.Enqueue(IEvent args)
+        void ITaskQueue.Enqueue(IEvent task)
         {
-            this.Enqueue((T)args);
+            this.Enqueue((T)task);
         }
         
         public void Enqueue(T task)
