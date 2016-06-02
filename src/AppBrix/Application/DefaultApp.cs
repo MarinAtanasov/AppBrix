@@ -168,6 +168,7 @@ namespace AppBrix.Application
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
                     this.ConfigManager.Save<AppConfig>();
+                    this.modules.RemoveAt(i);
                 }
             }
 
