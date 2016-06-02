@@ -4,11 +4,11 @@
 using AppBrix.Application;
 using AppBrix.Container;
 using AppBrix.Events.Async.Tests.Mocks;
-using AppBrix.Lifecycle;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xunit;
 
@@ -215,7 +215,23 @@ namespace AppBrix.Events.Async.Tests
             unsubscribingHandlerCalled.Should().Be(1, "unsubscribing event handler should not be called after the second raise since it has unsubscribed itself during the first");
             afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
         }
-        
+
+        [Fact]
+        public void TestThreadManagement()
+        {
+            var initialThreads = Process.GetCurrentProcess().Threads.Count;
+            var hub = this.GetAsyncEventHub();
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when getting the async event hub");
+            hub.Subscribe<IEvent>(e => { });
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads + 1, "a thread should be created when subscribing to a new event");
+            hub.Subscribe<IEvent>(e => { });
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads + 1, "no new threads should be created when subscribing to an event with subscribers");
+            hub.Subscribe<EventMock>(e => { });
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads + 2, "a thread should be created when subscribing to a second new event");
+            this.app.Stop();
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "threads should be disposed of on uninitialization");
+        }
+
         //[Fact] // Skip automatic execution. Test is flaky during multithreaded execution
         public void TestPerformanceEventsSubscribe()
         {
