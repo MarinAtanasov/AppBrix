@@ -77,9 +77,9 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Tests
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Configuration.Yaml", "src\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.xproj", "{BDBBA5BD-3213-421B-B24C-0F50AA1A2AA3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Async", "AppBrix.Events.Async\AppBrix.Events.Async.xproj", "{9AD49682-94FB-424B-8DEE-529BB06823FC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Async", "src\AppBrix.Events.Async\AppBrix.Events.Async.xproj", "{9AD49682-94FB-424B-8DEE-529BB06823FC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Async.Tests", "AppBrix.Events.Async.Tests\AppBrix.Events.Async.Tests.xproj", "{904C8597-DB45-4709-BBB0-983548DD4675}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Events.Async.Tests", "test\AppBrix.Events.Async.Tests\AppBrix.Events.Async.Tests.xproj", "{904C8597-DB45-4709-BBB0-983548DD4675}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
