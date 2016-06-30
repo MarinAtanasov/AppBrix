@@ -1,5 +1,5 @@
 {
-  "version": "0.4.1-*",
+  "version": "0.5.0-*",
   "title": "AppBrix.Configuration.Files",
   "description": "Adds configuration provider which reads and writes into files.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Adds configuration provider which reads and writes into files.",
-    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Config Files" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,12 +21,12 @@
   },
 
   "dependencies": {
-    "AppBrix.Configuration": "0.4.1-*",
+    "AppBrix.Configuration": "0.5.0-*",
     "System.IO.FileSystem": "4.0.1-*"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [ "dnxcore50" ]
     }
   }

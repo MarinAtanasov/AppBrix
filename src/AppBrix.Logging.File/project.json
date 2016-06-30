@@ -1,5 +1,5 @@
 {
-  "version": "0.4.1-*",
+  "version": "0.5.0-*",
   "title": "AppBrix.Logging.File",
   "description": "Module which attaches to logging events and writes the information to a file.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module which attaches to logging events and writes the information to a file.",
-    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Log File" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,13 +21,13 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.1-*",
-    "AppBrix.Logging": "0.4.1-*",
+    "AppBrix": "0.5.0-*",
+    "AppBrix.Logging": "0.5.0-*",
     "System.IO.FileSystem": "4.0.1-*"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [ "dnxcore50" ]
     }
   }

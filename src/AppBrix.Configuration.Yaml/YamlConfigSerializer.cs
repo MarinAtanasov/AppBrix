@@ -21,7 +21,7 @@ namespace AppBrix.Configuration.Yaml
             using (var writer = new StringWriter())
             {
                 var serializer = new Serializer(SerializationOptions.EmitDefaults, new NullNamingConvention());
-                serializer.RegisterTypeConverter(new GuidConverter());
+                serializer.RegisterTypeConverter(new GuidConverter(false));
                 serializer.RegisterTypeConverter(new VersionConverter());
                 serializer.Serialize(writer, config);
                 return writer.ToString();
@@ -33,7 +33,7 @@ namespace AppBrix.Configuration.Yaml
             using (var reader = new StringReader(config))
             {
                 var deserializer = new Deserializer(namingConvention: new NullNamingConvention(), ignoreUnmatched: true);
-                deserializer.RegisterTypeConverter(new GuidConverter());
+                deserializer.RegisterTypeConverter(new GuidConverter(false));
                 deserializer.RegisterTypeConverter(new VersionConverter());
                 return (IConfig)deserializer.Deserialize(reader, type);
             }

@@ -1,5 +1,5 @@
 {
-  "version": "0.4.1-*",
+  "version": "0.5.0-*",
   "title": "AppBrix.Logging",
   "description": "Module which enables throwing of logging events and subscribing to those events.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module which enables throwing of logging events and subscribing to those events.",
-    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Log" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,18 +21,18 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.1-*",
-    "AppBrix.Container": "0.4.1-*",
-    "AppBrix.Events": "0.4.1-*",
-    "AppBrix.Events.Async": "0.4.1-*",
-    "AppBrix.Factory": "0.4.1",
-    "AppBrix.Time": "0.4.1-*",
+    "AppBrix": "0.5.0-*",
+    "AppBrix.Container": "0.5.0-*",
+    "AppBrix.Events": "0.5.0-*",
+    "AppBrix.Events.Async": "0.5.0-*",
+    "AppBrix.Factory": "0.5.0-*",
+    "AppBrix.Time": "0.5.0-*",
     "System.Collections.Concurrent": "4.0.12-*",
     "System.Threading.Thread": "4.0.0-*"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [ "dnxcore50" ]
     }
   }

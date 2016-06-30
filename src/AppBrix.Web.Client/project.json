@@ -1,5 +1,5 @@
 {
-  "version": "0.4.1-*",
+  "version": "0.5.0-*",
   "title": "AppBrix.Web.Client",
   "description": "Module used for making HTTP REST requests. You can override the factory for HttpClient to change the behavior.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module used for making HTTP REST requests.",
-    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Web Client" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,14 +21,14 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.1-*",
-    "AppBrix.Container": "0.4.1-*",
-    "AppBrix.Factory": "0.4.1-*",
-    "System.Net.Http": "4.0.1-*"
+    "AppBrix": "0.5.0-*",
+    "AppBrix.Container": "0.5.0-*",
+    "AppBrix.Factory": "0.5.0-*",
+    "System.Net.Http": "4.1.0-*"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [ "dnxcore50" ]
     }
   }

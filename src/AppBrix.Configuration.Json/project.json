@@ -1,5 +1,5 @@
 {
-  "version": "0.4.1-*",
+  "version": "0.5.0-*",
   "title": "AppBrix.Configuration.Json",
   "description": "Contains serializer/deserializer for JSON based configurations.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Contains serializer for JSON based configurations.",
-    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Config JSON" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,12 +21,12 @@
   },
 
   "dependencies": {
-    "AppBrix.Configuration": "0.4.1-*",
-    "Newtonsoft.Json": "8.0.4-*"
+    "AppBrix.Configuration": "0.5.0-*",
+    "Newtonsoft.Json": "9.0.1-*"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [ "dnxcore50" ]
     }
   }

@@ -1,5 +1,5 @@
 {
-  "version": "0.4.1-*",
+  "version": "0.5.0-*",
   "title": "AppBrix.Caching",
   "description": "Module used for caching objects.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module used for caching objects.",
-    "releaseNotes": "Moved AppBrix.Resolver to AppBrix.Container.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Cache" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,14 +21,14 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.4.1-*",
-    "AppBrix.Container": "0.4.1-*",
+    "AppBrix": "0.5.0-*",
+    "AppBrix.Container": "0.5.0-*",
     "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
-    "Newtonsoft.Json": "8.0.4-*"
+    "Newtonsoft.Json": "9.0.1-*"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [ "dnxcore50" ]
     }
   }
