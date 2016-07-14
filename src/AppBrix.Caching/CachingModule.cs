@@ -22,17 +22,20 @@ namespace AppBrix.Caching
             this.App.GetContainer().Register(this.serializer.Value);
             this.memoryCache = new MemoryCache(new MemoryCacheOptions());
             this.App.GetContainer().Register(new MemoryDistributedCache(memoryCache));
-            this.App.GetContainer().Register(new DefaultCache(this.App));
+            this.cache.Value.Initialize(context);
+            this.App.GetContainer().Register(this.cache.Value);
         }
 
         protected override void UninitializeModule()
         {
+            this.cache.Value.Uninitialize();
             this.memoryCache?.Dispose();
             this.memoryCache = null;
         }
         #endregion
 
         #region Private fields and constants
+        private readonly Lazy<DefaultCache> cache = new Lazy<DefaultCache>();
         private readonly Lazy<DefaultCacheSerializer> serializer = new Lazy<DefaultCacheSerializer>();
         private IMemoryCache memoryCache;
         #endregion

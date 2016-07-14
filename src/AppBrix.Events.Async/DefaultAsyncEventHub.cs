@@ -21,6 +21,7 @@ namespace AppBrix.Events.Async
         public void Uninitialize()
         {
             this.taskQueues.Keys.ToList().ForEach(this.RemoveTaskQueue);
+            this.app = null;
         }
         #endregion
 

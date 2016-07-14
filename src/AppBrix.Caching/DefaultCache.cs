@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Lifecycle;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Linq;
@@ -9,19 +10,21 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Caching
 {
-    internal class DefaultCache : ICache
+    internal class DefaultCache : ICache, IApplicationLifecycle
     {
-        #region Construction
-        public DefaultCache(IApp app)
+        #region IApplicationLifecycle implementation
+        public void Initialize(IInitializeContext context)
         {
-            if (app == null)
-                throw new ArgumentNullException(nameof(app));
+            this.app = context.App;
+        }
 
-            this.app = app;
+        public void Uninitialize()
+        {
+            this.app = null;
         }
         #endregion
-        
-        #region Public and overriden methods
+
+        #region ICache implementation
         public async Task<T> Get<T>(string key)
         {
             var bytes = await this.GetCache().GetAsync(key);
@@ -58,7 +61,7 @@ namespace AppBrix.Caching
         #endregion
 
         #region Private fields and constants
-        private readonly IApp app;
+        private IApp app;
         #endregion
     }
 }

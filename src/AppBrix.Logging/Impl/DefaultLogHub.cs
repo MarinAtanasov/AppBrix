@@ -13,6 +13,18 @@ namespace AppBrix.Logging.Impl
 {
     internal sealed class DefaultLogHub : ILogHub, IApplicationLifecycle
     {
+        #region IApplicationLifecycle implementation
+        public void Initialize(IInitializeContext context)
+        {
+            this.app = context.App;
+        }
+
+        public void Uninitialize()
+        {
+            this.app = null;
+        }
+        #endregion
+
         #region ILogHub implementation
         public void Critical(string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
@@ -91,18 +103,6 @@ namespace AppBrix.Logging.Impl
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }
-        #endregion
-
-        #region IApplicationLifecycle implementation
-        public void Initialize(IInitializeContext context)
-        {
-            this.app = context.App;
-        }
-
-        public void Uninitialize()
-        {
-            this.app = null;
-        } 
         #endregion
 
         #region Private methods
