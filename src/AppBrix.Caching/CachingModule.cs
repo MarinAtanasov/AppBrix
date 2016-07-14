@@ -20,19 +20,21 @@ namespace AppBrix.Caching
         {
             this.App.GetContainer().Register(this);
             this.App.GetContainer().Register(this.serializer.Value);
-            
-            var distributedCache = new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions()));
-            var cache = new DefaultCache(this.App, distributedCache);
-            this.App.GetContainer().Register(cache);
+            this.memoryCache = new MemoryCache(new MemoryCacheOptions());
+            this.App.GetContainer().Register(new MemoryDistributedCache(memoryCache));
+            this.App.GetContainer().Register(new DefaultCache(this.App));
         }
 
         protected override void UninitializeModule()
         {
+            this.memoryCache?.Dispose();
+            this.memoryCache = null;
         }
         #endregion
 
         #region Private fields and constants
         private readonly Lazy<DefaultCacheSerializer> serializer = new Lazy<DefaultCacheSerializer>();
+        private IMemoryCache memoryCache;
         #endregion
     }
 }

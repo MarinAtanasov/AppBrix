@@ -95,7 +95,7 @@ namespace AppBrix.Container
 
         private void RegisterType(object obj, Type type)
         {
-            this.objects[type] = (obj);
+            this.objects[type] = obj;
         }
         #endregion
 

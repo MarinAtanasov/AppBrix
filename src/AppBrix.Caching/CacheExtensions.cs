@@ -29,7 +29,7 @@ namespace AppBrix
         /// <returns>The byte array representation of the item.</returns>
         public static byte[] Serialize<T>(this ICacheSerializer serializer, T item)
         {
-            return serializer.Serialize(typeof(T), item);
+            return serializer.Serialize(item, typeof(T));
         }
         
         /// <summary>
@@ -41,7 +41,7 @@ namespace AppBrix
         /// <returns>The deserialized item.</returns>
         public static T Deserialize<T>(this ICacheSerializer serializer, byte[] serialized)
         {
-            return (T)serializer.Deserialize(typeof(T), serialized);
+            return (T)serializer.Deserialize(serialized, typeof(T));
         }
     }
 }

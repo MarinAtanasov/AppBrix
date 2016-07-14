@@ -14,12 +14,12 @@ namespace AppBrix.Caching
     internal class DefaultCacheSerializer : ICacheSerializer
     {
         #region Public and overriden methods
-        public byte[] Serialize(Type type, object item)
+        public byte[] Serialize(object item, Type type)
         {
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.None, this.GetSettings()));
         }
 
-        public object Deserialize(Type type, byte[] serialized)
+        public object Deserialize(byte[] serialized, Type type)
         {
             return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(serialized), type, this.GetSettings());
         }

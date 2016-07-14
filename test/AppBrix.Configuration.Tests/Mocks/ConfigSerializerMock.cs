@@ -16,13 +16,13 @@ namespace AppBrix.Configuration.Tests.Mocks
         #endregion
 
         #region Public and overriden methods
-        public string Serialize(Type type, IConfig config)
+        public string Serialize(IConfig config, Type type)
         {
             this.Serialized.Add(new KeyValuePair<Type, IConfig>(type, config));
             return type.FullName + " Serialized";
         }
 
-        public IConfig Deserialize(Type type, string config)
+        public IConfig Deserialize(string config, Type type)
         {
             this.Deserialized.Add(new KeyValuePair<Type, string>(type, config));
             return null;

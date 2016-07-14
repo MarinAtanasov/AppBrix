@@ -22,8 +22,8 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Writes a configuraton.
         /// </summary>
-        /// <param name="type">The type of the configuration.</param>
         /// <param name="config">The configuration.</param>
-        void WriteConfig(Type type, string config);
+        /// <param name="type">The type of the configuration.</param>
+        void WriteConfig(string config, Type type);
     }
 }

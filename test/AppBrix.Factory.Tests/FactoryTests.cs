@@ -75,7 +75,10 @@ namespace AppBrix.Factory.Tests
         private void TestPerformanceFactoryInternal()
         {
             var factory = this.GetFactory();
-            factory.Register(() => this);
+            for (int i = 0; i < 5000; i++)
+            {
+                factory.Register(() => this);
+            }
             for (int i = 0; i < 250000; i++)
             {
                 factory.Get<FactoryTests>();

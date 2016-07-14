@@ -185,5 +185,8 @@ FakesAssemblies/
 
 # Lock files
 */**/project.lock.json
+
+# IntelliJ IDEA and Project Rider
 *.sln.iml
-.idea
+.idea/
+.idea.*/

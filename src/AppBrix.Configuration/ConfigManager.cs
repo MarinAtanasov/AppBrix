@@ -72,17 +72,17 @@ namespace AppBrix.Configuration
             else
             {
                 this.configStringed[type] = stringed;
-                return (T)this.serializer.Deserialize(type, stringed);
+                return (T)this.serializer.Deserialize(stringed, type);
             }
         }
 
         private void SaveInternal(IConfig config)
         {
             var type = config.GetType();
-            var stringed = this.serializer.Serialize(type, config);
+            var stringed = this.serializer.Serialize(config, type);
             if (!this.configStringed.ContainsKey(type) || this.configStringed[type] != stringed)
             {
-                this.provider.WriteConfig(type, stringed);
+                this.provider.WriteConfig(stringed, type);
                 this.configStringed[type] = stringed;
             }
         }

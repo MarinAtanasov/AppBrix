@@ -17,7 +17,7 @@ namespace AppBrix.Logging.File
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.App.GetFactory().Register<ILogWriter>(() => new FileLogWriter());
+            this.App.GetFactory().Register(() => new FileLogWriter());
             this.logger = this.App.GetFactory().Get<ILogger>();
             this.logger.Initialize(context);
             this.App.GetContainer().Register(this.logger, this.logger.GetType());
@@ -25,7 +25,7 @@ namespace AppBrix.Logging.File
 
         protected override void UninitializeModule()
         {
-            this.logger.Uninitialize();
+            this.logger?.Uninitialize();
             this.logger = null;
         }
         #endregion

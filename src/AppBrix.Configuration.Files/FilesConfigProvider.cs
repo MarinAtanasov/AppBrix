@@ -40,7 +40,7 @@ namespace AppBrix.Configuration.Files
             return File.Exists(path) ? File.ReadAllText(path) : null;
         }
 
-        public void WriteConfig(Type type, string config)
+        public void WriteConfig(string config, Type type)
         {
             File.WriteAllText(this.BuildFilePath(type), config);
         }

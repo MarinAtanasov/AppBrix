@@ -16,12 +16,12 @@ namespace AppBrix.Configuration.Json
     public class JsonConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
-        public string Serialize(Type type, IConfig config)
+        public string Serialize(IConfig config, Type type)
         {
             return JsonConvert.SerializeObject(config, Formatting.Indented, this.GetSettings());
         }
 
-        public IConfig Deserialize(Type type, string config)
+        public IConfig Deserialize(string config, Type type)
         {
             return (IConfig)JsonConvert.DeserializeObject(config, type, this.GetSettings());
         }

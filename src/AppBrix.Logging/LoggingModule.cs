@@ -22,7 +22,7 @@ namespace AppBrix.Logging
             var defaultLogHub = this.logHub.Value;
             defaultLogHub.Initialize(context);
             this.App.GetContainer().Register(defaultLogHub);
-            this.App.GetFactory().Register<ILogger>(() =>
+            this.App.GetFactory().Register(() =>
                 this.App.GetConfig<LoggingConfig>().Async ? (ILogger)
                 new AsyncLogger(this.App.GetFactory().Get<ILogWriter>()) :
                 new SyncLogger(this.App.GetFactory().Get<ILogWriter>()));

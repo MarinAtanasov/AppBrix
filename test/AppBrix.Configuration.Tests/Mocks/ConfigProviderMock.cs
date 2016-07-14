@@ -22,7 +22,7 @@ namespace AppBrix.Configuration.Tests.Mocks
             return type.FullName + " Read";
         }
 
-        public void WriteConfig(Type type, string config)
+        public void WriteConfig(string config, Type type)
         {
             this.WrittenConfigs.Add(new KeyValuePair<Type, string>(type, config));
         }

@@ -12,43 +12,45 @@ namespace AppBrix.Caching
     internal class DefaultCache : ICache
     {
         #region Construction
-        public DefaultCache(IApp app, IDistributedCache cache)
+        public DefaultCache(IApp app)
         {
             if (app == null)
                 throw new ArgumentNullException(nameof(app));
-            if (cache == null)
-                throw new ArgumentNullException(nameof(cache));
 
             this.app = app;
-            this.cache = cache;
         }
         #endregion
-
+        
         #region Public and overriden methods
         public async Task<T> Get<T>(string key)
         {
-            var bytes = await this.cache.GetAsync(key);
+            var bytes = await this.GetCache().GetAsync(key);
             return bytes != null ? this.GetSerializer().Deserialize<T>(bytes) : default(T);
         }
         
         public Task Refresh(string key)
         {
-            return this.cache.RefreshAsync(key);
+            return this.GetCache().RefreshAsync(key);
         }
         
         public Task Remove(string key)
         {
-            return this.cache.RemoveAsync(key);
+            return this.GetCache().RemoveAsync(key);
         }
         
         public Task Set<T>(string key, T item)
         {
             var serialized = this.GetSerializer().Serialize(item);
-            return this.cache.SetAsync(key, serialized);
+            return this.GetCache().SetAsync(key, serialized);
         }
         #endregion
 
         #region Private methods
+        private IDistributedCache GetCache()
+        {
+            return this.app.Get<IDistributedCache>();
+        }
+
         private ICacheSerializer GetSerializer()
         {
             return this.app.Get<ICacheSerializer>();
@@ -57,7 +59,6 @@ namespace AppBrix.Caching
 
         #region Private fields and constants
         private readonly IApp app;
-        private readonly IDistributedCache cache;
         #endregion
     }
 }

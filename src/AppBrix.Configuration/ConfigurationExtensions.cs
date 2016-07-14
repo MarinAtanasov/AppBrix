@@ -38,7 +38,7 @@ namespace AppBrix
         /// <param name="config">The configuration.</param>
         public static void WriteConfig<T>(this IConfigProvider provider, string config) where T : class, IConfig
         {
-            provider.WriteConfig(typeof(T), config);
+            provider.WriteConfig(config, typeof(T));
         }
         
         /// <summary>
@@ -50,7 +50,7 @@ namespace AppBrix
         /// <returns>The string representation of the configuration.</returns>
         public static string Serialize<T>(this IConfigSerializer serializer, T config) where T : class, IConfig
         {
-            return serializer.Serialize(typeof(T), config);
+            return serializer.Serialize(config, typeof(T));
         }
         
         /// <summary>
@@ -62,7 +62,7 @@ namespace AppBrix
         /// <returns>The deserialized configuration.</returns>
         public static T Deserialize<T>(this IConfigSerializer serializer, string config) where T : class, IConfig
         {
-            return (T)serializer.Deserialize(typeof(T), config);
+            return (T)serializer.Deserialize(config, typeof(T));
         }
     }
 }

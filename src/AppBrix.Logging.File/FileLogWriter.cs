@@ -12,7 +12,7 @@ namespace AppBrix.Logging.File
     /// <summary>
     /// A log writer which writes entries to the console.
     /// </summary>
-    internal sealed class FileLogWriter : ILogWriter, IDisposable
+    internal sealed class FileLogWriter : ILogWriter
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)
@@ -23,15 +23,10 @@ namespace AppBrix.Logging.File
 
         public void Uninitialize()
         {
-            ((IDisposable)this).Dispose();
+            this.writer?.Dispose();
             this.writer = null;
         }
-
-        void IDisposable.Dispose()
-        {
-            this.writer.Dispose();
-        }
-
+        
         public void WriteEntry(ILogEntry entry)
         {
             this.writer.WriteLine(entry.ToString());

@@ -5,6 +5,7 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.Factory
 {
@@ -28,7 +29,7 @@ namespace AppBrix.Factory
         #region IFactory implementation
         public void Register<T>(Func<T> factory)
         {
-            this.factories[typeof(T)] = (() => factory());
+            this.RegisterInternal((Func<object>)(object)factory, typeof(T));
         }
         
         public object Get(Type type)
@@ -36,6 +37,38 @@ namespace AppBrix.Factory
             return this.factories.ContainsKey(type) ?
                 this.factories[type]() :
                 type.CreateObject();
+        }
+        #endregion
+
+        #region Private methods
+        private void RegisterInternal(Func<object> factory, Type type)
+        {
+            this.RegisterType(factory, type);
+            this.RegisterBaseClasses(factory, type);
+            this.RegisterInterfaces(factory, type);
+        }
+
+        private void RegisterBaseClasses(Func<object> factory, Type type)
+        {
+            var baseType = type.GetTypeInfo().BaseType;
+            while (baseType != null && baseType != typeof(object))
+            {
+                this.RegisterType(factory, baseType);
+                baseType = baseType.GetTypeInfo().BaseType;
+            }
+        }
+
+        private void RegisterInterfaces(Func<object> factory, Type type)
+        {
+            foreach (var i in type.GetTypeInfo().GetInterfaces())
+            {
+                this.RegisterType(factory, i);
+            }
+        }
+
+        private void RegisterType(Func<object> factory, Type type)
+        {
+            this.factories[type] = factory;
         }
         #endregion
 
