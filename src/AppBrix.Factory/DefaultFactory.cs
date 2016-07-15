@@ -34,9 +34,15 @@ namespace AppBrix.Factory
         
         public object Get(Type type)
         {
-            return this.factories.ContainsKey(type) ?
-                this.factories[type]() :
-                type.CreateObject();
+            Func<object> factory;
+            if (this.factories.TryGetValue(type, out factory))
+            {
+                return factory();
+            }
+            else
+            {
+                return type.CreateObject();
+            }
         }
         #endregion
 
