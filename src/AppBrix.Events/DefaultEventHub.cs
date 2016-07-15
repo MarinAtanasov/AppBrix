@@ -83,7 +83,7 @@ namespace AppBrix.Events
             var iEventTypeInfo = typeof(IEvent).GetTypeInfo();
 
             var baseType = typeof(T);
-            while (iEventTypeInfo.IsAssignableFrom(baseType))
+            while (baseType != null && iEventTypeInfo.IsAssignableFrom(baseType))
             {
                 this.RaiseEvent(args, baseType);
                 baseType = baseType.GetTypeInfo().BaseType;
