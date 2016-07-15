@@ -70,32 +70,14 @@ namespace AppBrix.Container
         #region Private methods
         private void RegisterInternal(object obj, Type type)
         {
-            this.RegisterType(obj, type);
-            this.RegisterBaseClasses(obj, type);
-            this.RegisterInterfaces(obj, type);
-        }
+            var hierarchy = type.GetClassHierarchy()
+                .Where(c => c != typeof(object))
+                .Concat(type.GetTypeInfo().GetInterfaces());
 
-        private void RegisterBaseClasses(object obj, Type type)
-        {
-            var baseType = type.GetTypeInfo().BaseType;
-            while (baseType != null && baseType != typeof(object))
+            foreach (var item in hierarchy)
             {
-                this.RegisterType(obj, baseType);
-                baseType = baseType.GetTypeInfo().BaseType;
+                this.objects[item] = obj;
             }
-        }
-
-        private void RegisterInterfaces(object obj, Type type)
-        {
-            foreach (var i in type.GetTypeInfo().GetInterfaces())
-            {
-                this.RegisterType(obj, i);
-            }
-        }
-
-        private void RegisterType(object obj, Type type)
-        {
-            this.objects[type] = obj;
         }
         #endregion
 

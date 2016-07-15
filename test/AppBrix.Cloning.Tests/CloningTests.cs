@@ -258,15 +258,9 @@ namespace AppBrix.Cloning.Tests
         
         private IEnumerable<FieldInfo> GetFields(Type type)
         {
-            while (type != null)
-	        {
-                foreach (var field in type.GetFields(BindingFlags.Instance |
-                    BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    yield return field;
-                }
-                type = type.GetTypeInfo().BaseType;
-	        }
+            return type.GetClassHierarchy()
+                .Where(c => c != typeof(object))
+                .SelectMany(c => c.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public));
         }
 
         private void TestPerformanceDeepCopyInternal()

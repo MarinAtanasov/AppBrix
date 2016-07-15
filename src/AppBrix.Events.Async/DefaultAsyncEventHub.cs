@@ -47,9 +47,7 @@ namespace AppBrix.Events.Async
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            this.RaiseEvent(args, typeof(T));
-            this.RaiseBaseClassesEvents(args);
-            this.RaiseInterfacesEvents(args);
+            this.RaiseInternal(args);
         }
         #endregion
 
@@ -98,21 +96,16 @@ namespace AppBrix.Events.Async
             this.taskQueues.Remove(type);
         }
 
-        private void RaiseBaseClassesEvents<T>(T args) where T : IEvent
+        private void RaiseInternal<T>(T args) where T : IEvent
         {
-            var baseType = typeof(T).GetTypeInfo().BaseType;
-            while (baseType != null && typeof(IEvent).GetTypeInfo().IsAssignableFrom(baseType))
-            {
-                this.RaiseEvent(args, baseType);
-                baseType = baseType.GetTypeInfo().BaseType;
-            }
-        }
+            var iEventTypeInfo = typeof(IEvent).GetTypeInfo();
+            var hierarchy = typeof(T).GetClassHierarchy()
+                .Concat(typeof(T).GetTypeInfo().GetInterfaces())
+                .Where(item => iEventTypeInfo.IsAssignableFrom(item));
 
-        private void RaiseInterfacesEvents<T>(T args) where T : IEvent
-        {
-            foreach (var iface in typeof(T).GetTypeInfo().GetInterfaces().Where(i => typeof(IEvent).GetTypeInfo().IsAssignableFrom(i)))
+            foreach (var item in hierarchy)
             {
-                this.RaiseEvent(args, iface);
+                this.RaiseEvent(args, item);
             }
         }
 

@@ -44,9 +44,7 @@ namespace AppBrix.Events
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            this.RaiseEvent(args, typeof(T));
-            this.RaiseBaseClassesEvents(args);
-            this.RaiseInterfacesEvents(args);
+            this.RaiseInternal(args);
         }
         #endregion
 
@@ -80,24 +78,19 @@ namespace AppBrix.Events
             }
         }
 
-        private void RaiseBaseClassesEvents<T>(T args) where T : IEvent
+        private void RaiseInternal<T>(T args) where T : IEvent
         {
-            var baseType = typeof(T).GetTypeInfo().BaseType;
-            while (baseType != null && typeof(IEvent).GetTypeInfo().IsAssignableFrom(baseType))
+            var iEventTypeInfo = typeof(IEvent).GetTypeInfo();
+            var hierarchy = typeof(T).GetClassHierarchy()
+                .Concat(typeof(T).GetTypeInfo().GetInterfaces())
+                .Where(item => iEventTypeInfo.IsAssignableFrom(item));
+
+            foreach (var item in hierarchy)
             {
-                this.RaiseEvent(args, baseType);
-                baseType = baseType.GetTypeInfo().BaseType;
+                this.RaiseEvent(args, item);
             }
         }
-
-        private void RaiseInterfacesEvents<T>(T args) where T : IEvent
-        {
-            foreach (var iface in typeof(T).GetTypeInfo().GetInterfaces().Where(i => typeof(IEvent).GetTypeInfo().IsAssignableFrom(i)))
-            {
-                this.RaiseEvent(args, iface);
-            }
-        }
-
+        
         private void RaiseEvent<T>(T args, Type eventType) where T : IEvent
         {
             IList<object> handlers;
