@@ -59,7 +59,7 @@ namespace AppBrix.Web.Client.Impl
             return this;
         }
 
-        public IHttpCall SetContent<T>(T content)
+        public IHttpCall SetContent(object content)
         {
             this.content = content;
             

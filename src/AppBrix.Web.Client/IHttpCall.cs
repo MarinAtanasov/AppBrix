@@ -31,10 +31,9 @@ namespace AppBrix.Web.Client
         /// <summary>
         /// Sets the HTTP message content.
         /// </summary>
-        /// <typeparam name="T">The type of the content.</typeparam>
         /// <param name="content">The content to be added to the request.</param>
         /// <returns></returns>
-        IHttpCall SetContent<T>(T content);
+        IHttpCall SetContent(object content);
 
         /// <summary>
         /// Sets an HTTP content header.
