@@ -51,12 +51,12 @@ namespace AppBrix.Caching
         #region Private methods
         private IDistributedCache GetCache()
         {
-            return this.app.Get<IDistributedCache>();
+            return (IDistributedCache)this.app.Get(typeof(IDistributedCache));
         }
 
         private ICacheSerializer GetSerializer()
         {
-            return this.app.Get<ICacheSerializer>();
+            return (ICacheSerializer)this.app.Get(typeof(ICacheSerializer));
         }
         #endregion
 

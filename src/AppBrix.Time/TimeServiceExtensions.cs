@@ -20,7 +20,7 @@ namespace AppBrix
         /// <returns>The registered time service.</returns>
         public static ITimeService GetTimeService(this IApp app)
         {
-            return app.Get<ITimeService>();
+            return (ITimeService)app.Get(typeof(ITimeService));
         }
         
         /// <summary>

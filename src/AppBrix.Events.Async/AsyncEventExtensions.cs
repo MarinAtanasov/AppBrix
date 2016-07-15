@@ -17,7 +17,7 @@ namespace AppBrix
         /// <returns>The event hub.</returns>
         public static IAsyncEventHub GetAsyncEventHub(this IApp app)
         {
-            return app.Get<IAsyncEventHub>();
+            return (IAsyncEventHub)app.Get(typeof(IAsyncEventHub));
         }
     }
 }

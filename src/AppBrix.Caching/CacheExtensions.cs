@@ -17,7 +17,7 @@ namespace AppBrix
         /// <returns>The cache.</returns>
         public static ICache GetCache(this IApp app)
         {
-            return app.Get<ICache>();
+            return (ICache)app.GetContainer().Get(typeof(ICache));
         }
 
         /// <summary>

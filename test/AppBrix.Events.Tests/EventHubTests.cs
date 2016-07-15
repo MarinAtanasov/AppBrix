@@ -283,7 +283,7 @@ namespace AppBrix.Events.Tests
         #region Private methods
         private IEventHub GetEventHub()
         {
-            return this.app.Get<IEventHub>();
+            return this.app.GetEventHub();
         }
 
         private void TestPerformanceEventsSubscribeInternal()

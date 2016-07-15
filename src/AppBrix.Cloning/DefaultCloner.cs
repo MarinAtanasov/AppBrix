@@ -14,26 +14,25 @@ namespace AppBrix.Cloning
     internal sealed class DefaultCloner : ICloner
     {
         #region ICloner implementation
-        public T DeepCopy<T>(T obj)
+        public object DeepCopy(object obj)
         {
             return this.DeepCopy(obj, new Dictionary<object, object>());
         }
 
-        public T ShallowCopy<T>(T obj)
+        public object ShallowCopy(object obj)
         {
-            if (this.IsValueType(typeof(T)))
+            if (obj == null || this.IsValueType(obj.GetType()))
                 return obj;
 
-            return (T)DefaultCloner.ShallowCopyMethod.Invoke(obj, null);
+            return DefaultCloner.ShallowCopyMethod.Invoke(obj, null);
         }
         #endregion
 
         #region Private methods
-        private T DeepCopy<T>(T original, IDictionary<object, object> visited)
+        private object DeepCopy(object original, IDictionary<object, object> visited)
         {
             if (original == null)
-                // ReSharper disable once ExpressionIsAlwaysNull
-                return original;
+                return null;
 
             var type = original.GetType();
 
@@ -41,14 +40,14 @@ namespace AppBrix.Cloning
                 return original;
 
             if (typeof(Delegate).GetTypeInfo().IsAssignableFrom(type))
-                return (T)(object)null;
+                return null;
 
             if (!visited.ContainsKey(original))
             {
                 this.CloneReferenceType(original, type, visited);
             }
 
-            return (T)visited[original];
+            return visited[original];
         }
 
         private void CloneReferenceType(object original, Type type, IDictionary<object, object> visited)

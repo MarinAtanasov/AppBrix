@@ -124,7 +124,7 @@ namespace AppBrix.Cloning.Tests
             var cloner = this.GetCloner();
             var original = new SelfReferencingMock();
             original.Other = original;
-            var clone = cloner.DeepCopy(original);
+            var clone = cloner.DeepCopy<SelfReferencingMock>(original);
             clone.Should().NotBeSameAs(original, "the original should be deep cloned");
             clone.Other.Should().BeSameAs(clone, "the clone should be referencing itself after the deep copy");
         }
@@ -135,7 +135,7 @@ namespace AppBrix.Cloning.Tests
             var cloner = this.GetCloner();
             var original = new SelfReferencingMock();
             original.Other = new SelfReferencingMock { Other = original };
-            var clone = cloner.DeepCopy(original);
+            var clone = cloner.DeepCopy<SelfReferencingMock>(original);
             clone.Should().NotBeSameAs(original, "the original should be deep cloned");
             clone.Other.Should().NotBeSameAs(original.Other,
                 "the original's referenced object and clone's referenced object should not be the same object");
@@ -273,20 +273,20 @@ namespace AppBrix.Cloning.Tests
         private void TestPerformanceDeepCopyInternal()
         {
             var cloner = this.GetCloner();
+            var original = new ComplexPropertiesMock(10);
             for (int i = 0; i < 25; i++)
             {
-                var original = new ComplexPropertiesMock(10);
-                var clone = cloner.DeepCopy(original);
+                cloner.DeepCopy(original);
             }
         }
 
         private void TestPerformanceShallowCopyInternal()
         {
             var cloner = this.GetCloner();
-            for (int i = 0; i < 12000; i++)
+            var original = new ComplexPropertiesMock(10);
+            for (int i = 0; i < 100000; i++)
             {
-                var original = new ComplexPropertiesMock(10);
-                var clone = cloner.ShallowCopy(original);
+                cloner.ShallowCopy(original);
             }
         }
         #endregion

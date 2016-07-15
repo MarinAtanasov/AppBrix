@@ -166,18 +166,6 @@ namespace AppBrix.Logging.Tests.LogHub
 
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
-
-        [Fact]
-        public void TestPerformanceTraceLog()
-        {
-            Action action = this.TestPerformanceTraceLogInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
-        }
         #endregion
 
         #region Private methods
@@ -186,33 +174,20 @@ namespace AppBrix.Logging.Tests.LogHub
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
-            var repeat = 4000;
+            var repeat = 6000;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
+            var logHub = this.app.GetLog();
             for (int i = 0; i < repeat; i++)
             {
-                this.app.GetLog().Critical(message, error);
-                this.app.GetLog().Error(message, error);
-                this.app.GetLog().Debug(message);
-                this.app.GetLog().Info(message);
-                this.app.GetLog().Trace(message);
-                this.app.GetLog().Warning(message, error);
+                logHub.Critical(message, error);
+                logHub.Error(message, error);
+                logHub.Debug(message);
+                logHub.Info(message);
+                logHub.Trace(message);
+                logHub.Warning(message, error);
             }
             called.Should().Be(repeat * 6, "the event should have been called");
-        }
-
-        private void TestPerformanceTraceLogInternal()
-        {
-            var message = "Test message";
-            var called = 0;
-            var repeat = 25000;
-            Action<ILogEntry> handler = x => { called++; };
-            this.app.GetEventHub().Subscribe(handler);
-            for (int i = 0; i < repeat; i++)
-            {
-                this.app.GetLog().Trace(message);
-            }
-            called.Should().Be(repeat, "the event should have been called");
         }
         #endregion
 

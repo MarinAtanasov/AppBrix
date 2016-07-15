@@ -17,7 +17,7 @@ namespace AppBrix
         /// <returns>The log hub.</returns>
         public static ILogHub GetLog(this IApp app)
         {
-            return app.Get<ILogHub>();
+            return (ILogHub)app.Get(typeof(ILogHub));
         }
     }
 }
