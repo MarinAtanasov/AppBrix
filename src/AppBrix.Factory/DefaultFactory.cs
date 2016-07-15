@@ -43,13 +43,16 @@ namespace AppBrix.Factory
         #region Private methods
         private void RegisterInternal(Func<object> factory, Type type)
         {
-            var hierarchy = type.GetClassHierarchy()
-                .Where(c => c != typeof(object))
-                .Concat(type.GetTypeInfo().GetInterfaces());
-
-            foreach (var item in hierarchy)
+            var baseType = type;
+            while (baseType != null && baseType != typeof(object))
             {
-                this.factories[item] = factory;
+                this.factories[baseType] = factory;
+                baseType = baseType.GetTypeInfo().BaseType;
+            }
+
+            foreach (var @interface in type.GetTypeInfo().GetInterfaces())
+            {
+                this.factories[@interface] = factory;
             }
         }
         #endregion

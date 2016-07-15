@@ -61,12 +61,15 @@ namespace AppBrix.Cloning
                 this.ForEach(((Array)original), (array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
             }
 
-            var fields = type.GetClassHierarchy()
-                .Where(c => c != typeof(object))
-                .SelectMany(c => c.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public));
-            foreach (var field in fields)
+            var baseType = type;
+            while (baseType != null && baseType != typeof(object))
             {
-                field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
+                var fields = baseType.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
+                foreach (var field in fields)
+                {
+                    field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
+                }
+                baseType = baseType.GetTypeInfo().BaseType;
             }
         }
 

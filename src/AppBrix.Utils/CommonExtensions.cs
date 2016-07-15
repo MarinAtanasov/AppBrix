@@ -70,26 +70,8 @@ namespace AppBrix
         {
             return string.Concat(type.FullName, ", ", type.GetTypeInfo().Assembly.GetName().Name);
         }
-
-        /// <summary>
-        /// Gets the hierarchy of classes starting from the current <see cref="Type"/> and ending with <see cref="object"/>.
-        /// </summary>
-        /// <param name="type">The class at the bottom of the hierarchy</param>
-        /// <returns>The provided type and its parent classes, including <see cref="object"/>.</returns>
-        public static IEnumerable<Type> GetClassHierarchy(this Type type)
-        {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
-
-            var baseType = type;
-            while (baseType != null)
-            {
-                yield return baseType;
-                baseType = baseType.GetTypeInfo().BaseType;
-            }
-        }
         #endregion
-        
+
         #region Strings and encodings
         /// <summary>
         /// Shorthand for getting the string from a whole byte array.

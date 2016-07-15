@@ -255,12 +255,19 @@ namespace AppBrix.Cloning.Tests
                 this.AssertIsShallowCopy(field.GetValue(original), field.GetValue(copy), false);
             }
         }
-        
+
         private IEnumerable<FieldInfo> GetFields(Type type)
         {
-            return type.GetClassHierarchy()
-                .Where(c => c != typeof(object))
-                .SelectMany(c => c.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public));
+            var baseType = type;
+            while (baseType != null && baseType != typeof(object))
+            {
+                var fields = baseType.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
+                foreach (var field in fields)
+                {
+                    yield return field;
+                }
+                baseType = baseType.GetTypeInfo().BaseType;
+            }
         }
 
         private void TestPerformanceDeepCopyInternal()

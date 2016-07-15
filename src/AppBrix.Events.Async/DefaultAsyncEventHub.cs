@@ -99,13 +99,20 @@ namespace AppBrix.Events.Async
         private void RaiseInternal<T>(T args) where T : IEvent
         {
             var iEventTypeInfo = typeof(IEvent).GetTypeInfo();
-            var hierarchy = typeof(T).GetClassHierarchy()
-                .Concat(typeof(T).GetTypeInfo().GetInterfaces())
-                .Where(item => iEventTypeInfo.IsAssignableFrom(item));
 
-            foreach (var item in hierarchy)
+            var baseType = typeof(T);
+            while (iEventTypeInfo.IsAssignableFrom(baseType))
             {
-                this.RaiseEvent(args, item);
+                this.RaiseEvent(args, baseType);
+                baseType = baseType.GetTypeInfo().BaseType;
+            }
+
+            foreach (var @interface in typeof(T).GetTypeInfo().GetInterfaces())
+            {
+                if (iEventTypeInfo.IsAssignableFrom(@interface))
+                {
+                    this.RaiseEvent(args, @interface);
+                }
             }
         }
 
