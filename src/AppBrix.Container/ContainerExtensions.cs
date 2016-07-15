@@ -74,8 +74,19 @@ namespace AppBrix
         {
             container.Register(obj, typeof(T));
         }
+
+        /// <summary>
+        /// Returns the last registered object of a given type.
+        /// </summary>
+        /// <typeparam name="T">The type of the registered object.</typeparam>
+        /// <exception cref="ArgumentException">No object of the specified type has been registered.</exception>
+        /// <returns>The last registered object.</returns>
+        public static T Get<T>(this IContainer container) where T : class
+        {
+            return (T)container.Get(typeof(T));
+        }
         #endregion
-        
+
         #region Private fields and constants
         private static readonly IDictionary<IApp, IContainer> Containers = new Dictionary<IApp, IContainer>();
         #endregion

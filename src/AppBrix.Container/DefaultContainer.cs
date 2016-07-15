@@ -37,27 +37,33 @@ namespace AppBrix.Container
                 throw new ArgumentNullException(nameof(obj));
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!type.GetTypeInfo().IsInstanceOfType(obj))
+            if (type == typeof(object))
+                throw new ArgumentException($"Cannot register object as type {typeof(object).FullName}.");
+            if (type == typeof(string))
+                throw new ArgumentException($"Cannot register object as type {typeof(string).FullName}.");
+
+            var typeInfo = type.GetTypeInfo();
+            if (typeInfo.IsValueType)
+                throw new ArgumentException("Container does not support value types.");
+            if (!typeInfo.IsInstanceOfType(obj))
                 throw new ArgumentException(string.Format(
                     "Target object is of type {0} which cannot be cast to target type {1}.",
                     obj.GetType().FullName, type.FullName));
-            if (type == typeof(object))
-                throw new ArgumentException($"Cannot register object as type {typeof(object).FullName}.");
 
             this.registered.Add(obj);
             this.RegisterInternal(obj, type);
         }
-
-        public T Get<T>() where T : class
+        
+        public object Get(Type type)
         {
             try
             {
-                return (T)this.objects[typeof(T)];
+                return this.objects[type];
             }
             catch (KeyNotFoundException)
             {
                 throw new InvalidOperationException(
-                    $"Object of type '{typeof(T).GetAssemblyQualifiedName()}' has not been registered.");
+                    $"Object of type '{type.GetAssemblyQualifiedName()}' has not been registered.");
             }
         }
 

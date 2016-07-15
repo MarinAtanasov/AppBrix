@@ -17,7 +17,7 @@ namespace AppBrix.Container
         /// This method can be used when the type is not known during compile time.
         /// </summary>
         /// <param name="obj">The object to be registered. Required.</param>
-        /// <param name="type">The type to be used as base upon registration. Required. Cannot be "object".</param>
+        /// <param name="type">The type to be used as base upon registration. Required. Cannot be <see cref="object"/>.</param>
         /// <exception cref="ArgumentNullException">obj, type</exception>
         /// <exception cref="ArgumentException">T is of type object, obj is not of type T, obj already registered.</exception>
         void Register(object obj, Type type);
@@ -25,10 +25,10 @@ namespace AppBrix.Container
         /// <summary>
         /// Returns the last registered object of a given type.
         /// </summary>
-        /// <typeparam name="T">The type of the registered object.</typeparam>
+        /// <param name="type">The type of the registered object.</param>
         /// <exception cref="ArgumentException">No object of the specified type has been registered.</exception>
         /// <returns>The last registered object.</returns>
-        T Get<T>() where T : class;
+        object Get(Type type);
 
         /// <summary>
         /// Resolves all registered objects in the order in which they were registered.
