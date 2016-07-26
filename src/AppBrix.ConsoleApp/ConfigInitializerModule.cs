@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AppBrix.Caching;
+﻿using AppBrix.Caching;
+using AppBrix.Caching.Memory;
 using AppBrix.Cloning;
 using AppBrix.Configuration;
 using AppBrix.Container;
 using AppBrix.Events;
+using AppBrix.Events.Async;
 using AppBrix.Factory;
 using AppBrix.Lifecycle;
 using AppBrix.Logging;
+using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Console;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
 using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
-using AppBrix.Events.Async;
-using AppBrix.Logging.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AppBrix.ConsoleApp
 {
@@ -79,6 +80,7 @@ namespace AppBrix.ConsoleApp
         {
             typeof(AsyncEventsModule),
             typeof(CachingModule),
+            typeof(MemoryCachingModule),
             typeof(CloningModule),
             typeof(ContainerModule),
             typeof(EventsModule),

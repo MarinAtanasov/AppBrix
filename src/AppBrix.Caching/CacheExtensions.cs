@@ -5,6 +5,7 @@ using AppBrix.Application;
 using AppBrix.Caching;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppBrix
 {
@@ -21,17 +22,17 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Serializes an item to <see cref="T:byte[]"/>.
+        /// Gets a cached object by its key.
         /// </summary>
-        /// <typeparam name="T">The type of the item.</typeparam>
-        /// <param name="serializer">The serializer.</param>
-        /// <param name="item">The item to be serialized.</param>
-        /// <returns>The byte array representation of the item.</returns>
-        public static byte[] Serialize<T>(this ICacheSerializer serializer, T item)
+        /// <typeparam name="T">The type of the object to get.</typeparam>
+        /// <param name="cache">The object cache.</param>
+        /// <param name="key">The key which is used to store the object in the cache.</param>
+        /// <returns></returns>
+        public static async Task<T> Get<T>(this ICache cache, string key)
         {
-            return serializer.Serialize(item, typeof(T));
+            return (T)(await cache.Get(key, typeof(T)));
         }
-        
+
         /// <summary>
         /// Deserializes an item from a byte array.
         /// </summary>

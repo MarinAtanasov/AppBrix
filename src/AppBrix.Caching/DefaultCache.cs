@@ -25,10 +25,10 @@ namespace AppBrix.Caching
         #endregion
 
         #region ICache implementation
-        public async Task<T> Get<T>(string key)
+        public async Task<object> Get(string key, Type type)
         {
             var bytes = await this.GetCache().GetAsync(key);
-            return bytes != null ? this.GetSerializer().Deserialize<T>(bytes) : default(T);
+            return bytes != null ? this.GetSerializer().Deserialize(bytes, type) : null;
         }
         
         public Task Refresh(string key)
@@ -41,7 +41,7 @@ namespace AppBrix.Caching
             return this.GetCache().RemoveAsync(key);
         }
         
-        public Task Set<T>(string key, T item)
+        public Task Set(string key, object item)
         {
             var serialized = this.GetSerializer().Serialize(item);
             return this.GetCache().SetAsync(key, serialized);

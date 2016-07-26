@@ -15,9 +15,8 @@ namespace AppBrix.Caching
         /// Serializes an item to <see cref="T:byte[]"/>.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <param name="type">The type of the item.</param>
         /// <returns>The byte array representation of the item.</returns>
-        byte[] Serialize(object item, Type type);
+        byte[] Serialize(object item);
 
         /// <summary>
         /// Deserializes an item from a byte array.

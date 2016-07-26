@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Caching
 {
+    /// <summary>
+    /// Defines a remote cache which holds serializable data objects.
+    /// </summary>
     public interface ICache
     {
         /// <summary>
@@ -19,19 +22,18 @@ namespace AppBrix.Caching
         /// <summary>
         /// Gets a cached object by its key.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key"></param>
+        /// <param name="key">The key which is used to store the object in the cache.</param>
+        /// <param name="type">The type of the object to get.</param>
         /// <returns></returns>
-        Task<T> Get<T>(string key);
+        Task<object> Get(string key, Type type);
 
         /// <summary>
         /// Sets a cached object.
         /// </summary>
-        /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="key">The key which will be used when storing the object.</param>
         /// <param name="item">The object to be cached.</param>
         /// <returns></returns>
-        Task Set<T>(string key, T item);
+        Task Set(string key, object item);
 
         /// <summary>
         /// Removes an object from the cache.

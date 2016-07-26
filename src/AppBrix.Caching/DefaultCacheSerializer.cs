@@ -14,7 +14,7 @@ namespace AppBrix.Caching
     internal class DefaultCacheSerializer : ICacheSerializer
     {
         #region Public and overriden methods
-        public byte[] Serialize(object item, Type type)
+        public byte[] Serialize(object item)
         {
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.None, this.GetSettings()));
         }
