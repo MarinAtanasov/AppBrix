@@ -119,7 +119,11 @@ namespace AppBrix.Caching.Memory
                 }
             }
 
-            this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
+            try
+            {
+                this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
+            }
+            catch (Exception) { /* Handles the case when the timer ticks while uninitializing. */ }
 
             foreach (var item in expired)
             {
