@@ -8,6 +8,7 @@ namespace AppBrix.Caching.Memory
 {
     internal sealed class CacheItem : IDisposable
     {
+        #region Construction
         public CacheItem(object item, Action dispose, TimeSpan absoluteExpiration, TimeSpan rollingExpirationSpan, DateTime now)
         {
             this.Item = item;
@@ -19,7 +20,9 @@ namespace AppBrix.Caching.Memory
             this.rollingExpirationSpan = rollingExpirationSpan > TimeSpan.Zero ? rollingExpirationSpan : TimeSpan.FromDays(365);
             this.RollingExpiration = this.LastAccessed.Add(this.rollingExpirationSpan);
         }
+        #endregion
 
+        #region Properties
         public object Item { get; }
 
         public DateTime Created { get; }
@@ -43,20 +46,25 @@ namespace AppBrix.Caching.Memory
         public DateTime AbsoluteExpiration { get; }
 
         public DateTime RollingExpiration { get; private set; }
+        #endregion
 
-        public bool HasExpired(DateTime now)
-        {
-            return this.AbsoluteExpiration < now || this.RollingExpiration < now;
-        }
-
+        #region Public and overriden methods
         public void Dispose()
         {
             this.dispose?.Invoke();
         }
 
+        public bool HasExpired(DateTime now)
+        {
+            return this.AbsoluteExpiration < now || this.RollingExpiration < now;
+        }
+        #endregion
+
+        #region Private fields and constants
         private readonly object item;
         private readonly Action dispose;
         private DateTime lastAccessed;
         private TimeSpan rollingExpirationSpan;
+        #endregion
     }
 }
