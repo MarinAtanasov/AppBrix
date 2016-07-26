@@ -13,12 +13,10 @@ namespace AppBrix.Caching.Memory
         {
             this.Item = item;
             this.dispose = dispose;
+            this.AbsoluteExpiration = now.Add(absoluteExpiration);
+            this.rollingExpirationSpan = rollingExpirationSpan;
             this.Created = now;
             this.LastAccessed = now;
-            var absoluteExpirationSpan = absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : TimeSpan.FromDays(365);
-            this.AbsoluteExpiration = this.Created.Add(absoluteExpirationSpan);
-            this.rollingExpirationSpan = rollingExpirationSpan > TimeSpan.Zero ? rollingExpirationSpan : TimeSpan.FromDays(365);
-            this.RollingExpiration = this.LastAccessed.Add(this.rollingExpirationSpan);
         }
         #endregion
 
@@ -36,10 +34,7 @@ namespace AppBrix.Caching.Memory
             set
             {
                 this.lastAccessed = value;
-                if (this.rollingExpirationSpan > TimeSpan.Zero)
-                {
-                    this.RollingExpiration = this.LastAccessed.Add(this.rollingExpirationSpan);
-                }
+                this.RollingExpiration = this.LastAccessed.Add(this.rollingExpirationSpan);
             }
         }
 

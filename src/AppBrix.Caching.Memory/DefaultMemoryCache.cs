@@ -58,12 +58,16 @@ namespace AppBrix.Caching.Memory
             if (rollingExpiration < TimeSpan.Zero)
                 throw new ArgumentException($"Negative rolling expiration: {rollingExpiration}.");
 
+            var config = this.app.GetConfig<MemoryCachingConfig>();
             lock (this.cache)
             {
                 var existing = this.GetInternal(key);
                 existing?.Dispose();
                 var now = this.app.GetTime();
-                this.cache[key] = new CacheItem(item, dispose, absoluteExpiration, rollingExpiration, now);
+                this.cache[key] = new CacheItem(item, dispose,
+                    absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
+                    rollingExpiration > TimeSpan.Zero ? rollingExpiration : config.DefaultRollingExpiration,
+                    now);
             }
         }
 

@@ -18,11 +18,23 @@ namespace AppBrix.Caching.Memory
         /// </summary>
         public MemoryCachingConfig()
         {
-            this.ExpirationCheck = TimeSpan.FromSeconds(1);
+            this.DefaultAbsoluteExpiration = TimeSpan.FromHours(6);
+            this.DefaultRollingExpiration = TimeSpan.FromMinutes(30);
+            this.ExpirationCheck = TimeSpan.FromSeconds(15);
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets or sets the default absolute expiration to be used when the user does not specify a value explicitly.
+        /// </summary>
+        public TimeSpan DefaultAbsoluteExpiration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default rolling expiration to be used when the user does not specify a value explicitly.
+        /// </summary>
+        public TimeSpan DefaultRollingExpiration { get; set; }
+
         /// <summary>
         /// Gets or sets how often the local in-memory cache should check for rolling and absolute expiration.
         /// </summary>
