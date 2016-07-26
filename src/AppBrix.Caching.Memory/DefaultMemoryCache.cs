@@ -104,6 +104,7 @@ namespace AppBrix.Caching.Memory
         private void RemoveExpiredEntries(object unused)
         {
             var now = this.app.GetTime();
+
             IEnumerable<KeyValuePair<string, CacheItem>> expired;
             lock (this.cache)
             {
@@ -113,12 +114,13 @@ namespace AppBrix.Caching.Memory
                     this.cache.Remove(item.Key);
                 }
             }
+
+            this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
+
             foreach (var item in expired)
             {
                 item.Value.Dispose();
             }
-
-            this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
         }
         #endregion
 
