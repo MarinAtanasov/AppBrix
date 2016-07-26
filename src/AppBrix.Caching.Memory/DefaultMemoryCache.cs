@@ -24,7 +24,12 @@ namespace AppBrix.Caching.Memory
         {
             this.expirationTimer?.Dispose();
             this.expirationTimer = null;
-            this.cache.Keys.ToList().ForEach(this.Remove);
+
+            lock (this.cache)
+            {
+                this.cache.Keys.ToList().ForEach(this.Remove);
+            }
+
             this.app = null;
         }
         #endregion
@@ -109,25 +114,20 @@ namespace AppBrix.Caching.Memory
         {
             var now = this.app.GetTime();
 
-            IEnumerable<KeyValuePair<string, CacheItem>> expired;
             lock (this.cache)
             {
-                expired = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
-                foreach (var item in expired)
+                try
                 {
-                    this.cache.Remove(item.Key);
+                    foreach (var item in this.cache.Where(x => x.Value.HasExpired(now)).ToList())
+                    {
+                        this.cache.Remove(item.Key);
+                        item.Value.Dispose();
+                    }
                 }
-            }
-
-            try
-            {
-                this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
-            }
-            catch (Exception) { /* Handles the case when the timer ticks while uninitializing. */ }
-
-            foreach (var item in expired)
-            {
-                item.Value.Dispose();
+                finally
+                {
+                    this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
+                }
             }
         }
         #endregion
