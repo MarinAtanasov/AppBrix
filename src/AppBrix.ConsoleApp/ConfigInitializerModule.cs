@@ -1,4 +1,5 @@
 ﻿using AppBrix.Caching;
+using AppBrix.Caching.Json;
 using AppBrix.Caching.Memory;
 using AppBrix.Cloning;
 using AppBrix.Configuration;
@@ -80,6 +81,7 @@ namespace AppBrix.ConsoleApp
         {
             typeof(AsyncEventsModule),
             typeof(CachingModule),
+            typeof(JsonCachingModule),
             typeof(MemoryCachingModule),
             typeof(CloningModule),
             typeof(ContainerModule),

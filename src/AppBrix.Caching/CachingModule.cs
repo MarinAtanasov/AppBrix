@@ -19,7 +19,6 @@ namespace AppBrix.Caching
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.App.GetContainer().Register(this.serializer.Value);
             this.memoryCache = new MemoryCache(new MemoryCacheOptions());
             this.App.GetContainer().Register(new MemoryDistributedCache(memoryCache));
             this.cache.Value.Initialize(context);
@@ -36,7 +35,6 @@ namespace AppBrix.Caching
 
         #region Private fields and constants
         private readonly Lazy<DefaultCache> cache = new Lazy<DefaultCache>();
-        private readonly Lazy<DefaultCacheSerializer> serializer = new Lazy<DefaultCacheSerializer>();
         private IMemoryCache memoryCache;
         #endregion
     }

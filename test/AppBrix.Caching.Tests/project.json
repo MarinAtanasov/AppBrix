@@ -22,6 +22,7 @@
 
   "dependencies": {
     "AppBrix.Caching": "0.5.0-*",
+    "AppBrix.Caching.Json": "0.5.0-*",
     "AppBrix.Tests": "0.5.0-*",
     "Microsoft.NETCore.App": {
       "type": "platform",

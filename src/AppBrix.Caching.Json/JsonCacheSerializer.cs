@@ -9,9 +9,9 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 
-namespace AppBrix.Caching
+namespace AppBrix.Caching.Json
 {
-    internal class DefaultCacheSerializer : ICacheSerializer
+    internal class JsonCacheSerializer : ICacheSerializer
     {
         #region Public and overriden methods
         public byte[] Serialize(object item)
