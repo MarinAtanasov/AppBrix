@@ -1,5 +1,5 @@
 ﻿{
-  "version": "0.5.0-*",
+  "version": "0.6.0-*",
   "title": "AppBrix.Caching.Memory",
   "description": "Module used for caching objects locally in-memory.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module used for caching objects locally in-memory.",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Cache Memory" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,9 +21,9 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.5.0-*",
-    "AppBrix.Container": "0.5.0-*",
-    "AppBrix.Time": "0.5.0-*"
+    "AppBrix": "0.6.0-*",
+    "AppBrix.Container": "0.6.0-*",
+    "AppBrix.Time": "0.6.0-*"
   },
 
   "frameworks": {

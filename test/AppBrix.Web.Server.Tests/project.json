@@ -1,5 +1,5 @@
 ﻿{
-  "version": "0.5.0-*",
+  "version": "0.6.0-*",
   "title": "AppBrix.Web.Server.Tests",
   "description": "Contains tests for the AppBrix.Web.Server module",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Contains tests for the AppBrix.Web.Server module",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Web Server Tests" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,9 +21,9 @@
   },
 
   "dependencies": {
-    "AppBrix.Tests": "0.5.0-*",
-    "AppBrix.Web.Client": "0.5.0-*",
-    "AppBrix.Web.Server": "0.5.0-*",
+    "AppBrix.Tests": "0.6.0-*",
+    "AppBrix.Web.Client": "0.6.0-*",
+    "AppBrix.Web.Server": "0.6.0-*",
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
     "Microsoft.NETCore.App": {

@@ -56,7 +56,6 @@ namespace AppBrix.Caching.Memory
         #endregion
 
         #region Private fields and constants
-        private readonly object item;
         private readonly Action dispose;
         private DateTime lastAccessed;
         private TimeSpan rollingExpirationSpan;

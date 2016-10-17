@@ -1,5 +1,5 @@
 ﻿{
-  "version": "0.5.0-*",
+  "version": "0.6.0-*",
   "title": "AppBrix.Caching.Memory.Tests",
   "description": "Contains tests for the AppBrix.Caching.Memory module",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Contains tests for the AppBrix.Caching.Memory module",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0 official release and SDK 1.0.0-preview2.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Cache Memory Tests" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,8 +21,8 @@
   },
 
   "dependencies": {
-    "AppBrix.Caching.Memory": "0.5.0-*",
-    "AppBrix.Tests": "0.5.0-*",
+    "AppBrix.Caching.Memory": "0.6.0-*",
+    "AppBrix.Tests": "0.6.0-*",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1-*"
