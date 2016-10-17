@@ -42,7 +42,7 @@
     "AppBrix.Web.Server": "0.5.0-*",
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.0-*"
+      "version": "1.0.1-*"
     },
     "System.Text.Encoding.CodePages": "4.0.1-*"
   },
