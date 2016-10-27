@@ -17,7 +17,7 @@ namespace AppBrix.Logging.Configuration
         public LoggingConfig()
         {
             this.Async = true;
-            this.LogLevel = LogLevel.All;
+            this.LogLevel = LogLevel.Trace;
         }
         #endregion
 

@@ -7,17 +7,15 @@ using System.Linq;
 namespace AppBrix.Logging.Entries
 {
     /// <summary>
-    /// Used for selecting what log level is the current log entry.
+    /// Used for selecting the severity level of the log entry.
     /// </summary>
     public enum LogLevel
     {
-        All = 0,
         Trace = 1,
         Debug = 2,
         Info = 3,
         Warning = 4,
         Error = 5,
-        Critical = 6,
-        None = int.MaxValue
+        Critical = 6
     }
 }
