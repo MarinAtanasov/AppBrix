@@ -289,7 +289,7 @@ namespace AppBrix.Events.Tests
         private void TestPerformanceEventsSubscribeInternal()
         {
             var hub = this.GetEventHub();
-            var calledCount = 120000;
+            var calledCount = 130000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {
@@ -332,7 +332,7 @@ namespace AppBrix.Events.Tests
             hub.Subscribe<EventMock>(e => parentCalled++);
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 40000;
+            var calledCount = 50000;
             for (int i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
