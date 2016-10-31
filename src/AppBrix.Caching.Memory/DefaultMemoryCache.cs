@@ -66,13 +66,11 @@ namespace AppBrix.Caching.Memory
             var config = this.app.GetConfig<MemoryCachingConfig>();
             lock (this.cache)
             {
-                var existing = this.GetInternal(key);
-                existing?.Dispose();
-                var now = this.app.GetTime();
+                this.GetInternal(key)?.Dispose();
                 this.cache[key] = new CacheItem(item, dispose,
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
                     rollingExpiration > TimeSpan.Zero ? rollingExpiration : config.DefaultRollingExpiration,
-                    now);
+                    this.app.GetTime());
             }
         }
 
@@ -100,13 +98,7 @@ namespace AppBrix.Caching.Memory
         private CacheItem GetInternal(object key)
         {
             CacheItem result;
-
             this.cache.TryGetValue(key, out result);
-            if (result != null)
-            {
-                result.LastAccessed = this.app.GetTime();
-            }
-
             return result;
         }
 
