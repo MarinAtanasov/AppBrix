@@ -35,9 +35,9 @@ namespace AppBrix.Caching.Memory
         #endregion
 
         #region ILocalCache implementation
-        public object Get(string key)
+        public object Get(object key)
         {
-            if (string.IsNullOrEmpty(key))
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
             CacheItem cacheItem;
@@ -52,9 +52,9 @@ namespace AppBrix.Caching.Memory
             return cacheItem?.Item;
         }
 
-        public void Set(string key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan rollingExpiration = default(TimeSpan))
+        public void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan rollingExpiration = default(TimeSpan))
         {
-            if (string.IsNullOrEmpty(key))
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
@@ -76,9 +76,9 @@ namespace AppBrix.Caching.Memory
             }
         }
 
-        public void Remove(string key)
+        public void Remove(object key)
         {
-            if (string.IsNullOrEmpty(key))
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
             CacheItem item;
@@ -97,7 +97,7 @@ namespace AppBrix.Caching.Memory
         #endregion
 
         #region Private methods
-        private CacheItem GetInternal(string key)
+        private CacheItem GetInternal(object key)
         {
             CacheItem result;
 
@@ -133,7 +133,7 @@ namespace AppBrix.Caching.Memory
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<string, CacheItem> cache = new Dictionary<string, CacheItem>();
+        private readonly IDictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private IApp app;
         private Timer expirationTimer;
         #endregion
