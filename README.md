@@ -1,5 +1,7 @@
 # AppBrix
-This framework has been written using the latest version of DNX Core.
+AppBrix is a way of thinking about and building scalable modular applications.
+
+This framework has been written using the latest version of [.NET Core](https://www.microsoft.com/net/).
 
 AppBrix has been created with the following priorities:
 * Everything should be testable and covered with tests.
@@ -8,11 +10,14 @@ AppBrix has been created with the following priorities:
 * Nothing should be dependent on the default implementations.
 * Every part of the framework should be easily replaceable without changing the original source code.
 
-## Building the source
-Building the source requires [ASP.NET MVC 5 RC1](https://get.asp.net/) and [Web Tools 2015 RC1 Update 2](https://www.microsoft.com/en-us/download/details.aspx?id=49959).
-
 ## Sample Application
 AppBrix.ConsoleApp is a simple console application which uses the framework.
 
 ## Running Tests
-The tests are using xUnit. They require the Test Explorer to be opened before building the test projects in order to discover the tests.
+The tests are using xUnit.
+* In Visual Studio, they require the Test Explorer to be opened before building the test projects in order to discover the tests.
+* In Project Rider, they can be ran with right click on *Tests* solution folder and selecting *Run Unit Tests*.
+* In PowerShell, they can be run using the following command while in the project's root folder:
+```
+ForEach ($folder in (Get-ChildItem -Path test -Directory)) { dotnet test $folder.FullName }
+```
