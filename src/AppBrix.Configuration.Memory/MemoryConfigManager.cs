@@ -17,10 +17,14 @@ namespace AppBrix.Configuration.Memory
         {
             var type = typeof(T);
 
-            if (!configs.ContainsKey(type))
-                configs[type] = type.CreateObject<T>();
+            IConfig config;
+            if (!configs.TryGetValue(type, out config))
+            {
+                config = type.CreateObject<T>();
+                configs[type] = config;
+            }
 
-            return (T)configs[type];
+            return (T)config;
         }
 
         public void Save(IConfig config)

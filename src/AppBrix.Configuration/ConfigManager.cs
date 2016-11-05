@@ -37,10 +37,14 @@ namespace AppBrix.Configuration
         {
             var type = typeof(T);
 
-            if (!configs.ContainsKey(type))
-                configs[type] = this.ReadFromProvider<T>() ?? type.CreateObject<T>();
+            IConfig config;
+            if (!configs.TryGetValue(type, out config))
+            {
+                config = this.ReadFromProvider<T>() ?? type.CreateObject<T>();
+                configs[type] = config;
+            }
 
-            return (T)configs[type];
+            return (T)config;
         }
 
         public void Save(IConfig config)
@@ -80,7 +84,9 @@ namespace AppBrix.Configuration
         {
             var type = config.GetType();
             var stringed = this.serializer.Serialize(config, type);
-            if (!this.configStringed.ContainsKey(type) || this.configStringed[type] != stringed)
+
+            string cached;
+            if (!this.configStringed.TryGetValue(type, out cached) || cached != stringed)
             {
                 this.provider.WriteConfig(stringed, type);
                 this.configStringed[type] = stringed;
