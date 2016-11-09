@@ -57,7 +57,7 @@ namespace AppBrix.Cloning
             if (type.IsArray)
             {
                 var clonedArray = (Array)cloned;
-                this.ForEach(((Array)original), (array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
+                this.ForEach((Array)original, (array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
             }
 
             var baseType = type;
@@ -75,7 +75,8 @@ namespace AppBrix.Cloning
         private bool IsPrimitiveType(Type type)
         {
             var typeInfo = type.GetTypeInfo();
-            return (typeInfo.IsValueType && typeInfo.IsPrimitive) || typeInfo.IsEnum || type == typeof(string);
+            return (typeInfo.IsValueType && typeInfo.IsPrimitive) ||
+                   typeInfo.IsEnum || type == typeof(string) || type == typeof(DateTime);
         }
 
         private bool IsValueType(Type type)

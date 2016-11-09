@@ -17,29 +17,27 @@ namespace AppBrix.Cloning.Tests.Mocks
         {
         }
 
-        public PrimitivePropertiesMock(bool b, char c, string s, DateTime d)
+        public PrimitivePropertiesMock(bool b, char c, string s, DateTime d, TimeSpan t)
             : base(1, 2, 3, 4, 5.5f, 6.6, (decimal)7.7)
         {
             this.Bool = b;
-            this.c = c;
+            this.Char = c;
             this.String = s;
-            this.dateTime = d;
+            this.DateTime = d;
+            this.TimeSpan = t;
         }
         #endregion
 
         #region Properties
         public bool Bool { get; set; }
 
-        public char Char { get { return this.c; } }
+        public char Char { get; }
 
         public string String { get; private set; }
 
-        public DateTime DateTime { get { return this.dateTime; } }
-        #endregion
+        public DateTime DateTime { get; protected set; }
 
-        #region Private fields and constants
-        private readonly char c;
-        private DateTime dateTime;
+        public TimeSpan TimeSpan { get; internal set; }
         #endregion
     }
 }

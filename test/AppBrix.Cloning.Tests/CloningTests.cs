@@ -86,7 +86,7 @@ namespace AppBrix.Cloning.Tests
         public void TestDeepCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
-            var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now);
+            var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now, TimeSpan.FromMilliseconds(42));
             var clone = cloner.DeepCopy(original);
             this.AssertIsDeepCopy(original, clone);
         }
@@ -95,7 +95,7 @@ namespace AppBrix.Cloning.Tests
         public void TestShallowCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
-            var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now);
+            var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now, TimeSpan.FromMilliseconds(42));
             var clone = cloner.ShallowCopy(original);
             this.AssertIsShallowCopy(original, clone);
         }
@@ -171,34 +171,34 @@ namespace AppBrix.Cloning.Tests
             return this.app.GetCloner();
         }
 
-        private void AssertIsDeepCopy(object original, object copy)
+        private void AssertIsDeepCopy(object original, object copy, string property = "this")
         {
             if (original == null)
             {
-                copy.Should().BeNull("the copy should be null when the original is null");
+                copy.Should().BeNull($"{property}'s copy should be null when the original is null");
                 return;
             }
 
-            copy.Should().NotBeNull("the copy should not be null when the original is not");
+            copy.Should().NotBeNull($"{property}'s copy should not be null when the original is not");
 
             var type = original.GetType();
-            copy.GetType().Should().Be(type, "the type of the copy should be the same as the original");
+            copy.GetType().Should().Be(type, $"{property}'s type of the copy should be the same as the original");
 
             var typeInfo = type.GetTypeInfo();
             if ((typeInfo.IsValueType && typeInfo.IsPrimitive) || typeInfo.IsEnum || type == typeof(string))
             {
-                copy.Should().Be(original, "the value of the copy should be the same as the original");
+                copy.Should().Be(original, $"{property}'s value of the copy should be the same as the original");
                 if (typeInfo.IsPrimitive || type == typeof(string))
                     return;
             }
             else if (!typeInfo.IsValueType)
             {
-                copy.Should().NotBeSameAs(original, "the copied object should not be the same instance as the original");
+                copy.Should().NotBeSameAs(original, $"{property}'s copied object should not be the same instance as the original");
             }
 
             foreach (var field in this.GetFields(type))
             {
-                this.AssertIsDeepCopy(field.GetValue(original), field.GetValue(copy));
+                this.AssertIsDeepCopy(field.GetValue(original), field.GetValue(copy), $"{property}.{field.Name}");
             }
 
             if (typeof(IEnumerable).IsAssignableFrom(type))
@@ -206,17 +206,17 @@ namespace AppBrix.Cloning.Tests
                 var originalEnumerator = ((IEnumerable)original).GetEnumerator();
                 var copiedEnumerator = ((IEnumerable)copy).GetEnumerator();
 
-                bool moveNext = originalEnumerator.MoveNext();
+                var moveNext = originalEnumerator.MoveNext();
                 copiedEnumerator.MoveNext().Should().Be(moveNext,
-                    "original enumeration elements are {0}, copied enumeration elements are {1}",
+                    $"{property}'s original enumeration elements are {0}, copied enumeration elements are {1}",
                     ((IEnumerable)original).Cast<object>().Count(),
                     ((IEnumerable)copy).Cast<object>().Count());
                 while (moveNext)
                 {
-                    this.AssertIsDeepCopy(originalEnumerator.Current, copiedEnumerator.Current);
+                    this.AssertIsDeepCopy(originalEnumerator.Current, copiedEnumerator.Current, $"{property}[i]");
                     moveNext = originalEnumerator.MoveNext();
                     copiedEnumerator.MoveNext().Should().Be(moveNext,
-                        "original enumeration elements are {0}, copied enumeration elements are {1}",
+                        $"{property}'s original enumeration elements are {0}, copied enumeration elements are {1}",
                         ((IEnumerable)original).Cast<object>().Count(),
                         ((IEnumerable)copy).Cast<object>().Count());
                 }

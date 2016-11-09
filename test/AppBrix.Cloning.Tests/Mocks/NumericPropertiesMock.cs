@@ -15,6 +15,13 @@ namespace AppBrix.Cloning.Tests.Mocks
 
         public NumericPropertiesMock(byte b, short s, int i, long l, float f, double d, decimal dec)
         {
+            this.Byte = b;
+            this.Short = s;
+            this.Int = i;
+            this.Long = l;
+            this.f = f;
+            this.Double = d;
+            this.Decimal = dec;
         }
         #endregion
 
@@ -23,7 +30,7 @@ namespace AppBrix.Cloning.Tests.Mocks
 
         public short Short { get; set; }
 
-        public int Int { get { return this.i; } }
+        public int Int { get; }
 
         public long Long { get; private set; }
 
@@ -35,7 +42,6 @@ namespace AppBrix.Cloning.Tests.Mocks
         #endregion
 
         #region Private fields and constants
-        private readonly int i = 0;
         private float f = 0;
         #endregion
     }
