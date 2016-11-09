@@ -48,14 +48,6 @@ namespace AppBrix.Caching.Memory.Tests
         }
 
         [Fact]
-        public void TestGetEmptyStringKey()
-        {
-            var cache = this.app.GetMemoryCache();
-            Action action = () => cache.Get(string.Empty);
-            action.ShouldThrow<ArgumentNullException>("key should not be an empty string");
-        }
-
-        [Fact]
         public void TestGetUnregisteredItem()
         {
             var cache = this.app.GetMemoryCache();
@@ -77,14 +69,6 @@ namespace AppBrix.Caching.Memory.Tests
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Set(null, this);
             action.ShouldThrow<ArgumentNullException>("key should not be null");
-        }
-
-        [Fact]
-        public void TestSetEmptyStringKey()
-        {
-            var cache = this.app.GetMemoryCache();
-            Action action = () => cache.Set(string.Empty, this);
-            action.ShouldThrow<ArgumentNullException>("key should not be an empty string");
         }
 
         [Fact]
@@ -117,14 +101,6 @@ namespace AppBrix.Caching.Memory.Tests
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Remove(null);
             action.ShouldThrow<ArgumentNullException>("key should not be null");
-        }
-
-        [Fact]
-        public void TestRemoveEmptyStringKey()
-        {
-            var cache = this.app.GetMemoryCache();
-            Action action = () => cache.Remove(string.Empty);
-            action.ShouldThrow<ArgumentNullException>("key should not be an empty string");
         }
 
         [Fact]
