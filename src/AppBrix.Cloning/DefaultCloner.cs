@@ -39,7 +39,7 @@ namespace AppBrix.Cloning
             if (this.IsPrimitiveType(type))
                 return original;
 
-            if (typeof(Delegate).GetTypeInfo().IsAssignableFrom(type))
+            if (this.IsDelegate(type))
                 return null;
 
             if (!visited.ContainsKey(original))
@@ -63,12 +63,13 @@ namespace AppBrix.Cloning
             var baseType = type;
             while (baseType != null && baseType != typeof(object))
             {
-                var fields = baseType.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
+                var baseTypeInfo = baseType.GetTypeInfo();
+                var fields = baseTypeInfo.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
                 foreach (var field in fields)
                 {
                     field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
                 }
-                baseType = baseType.GetTypeInfo().BaseType;
+                baseType = baseTypeInfo.BaseType;
             }
         }
 
@@ -82,6 +83,11 @@ namespace AppBrix.Cloning
         private bool IsValueType(Type type)
         {
             return type == typeof(string) || type.GetTypeInfo().IsValueType;
+        }
+
+        private bool IsDelegate(Type type)
+        {
+            return DefaultCloner.DelegateTypeInfo.IsAssignableFrom(type);
         }
 
         /// <summary>
@@ -105,6 +111,7 @@ namespace AppBrix.Cloning
 
         #region Private fields and constants
         private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetTypeInfo().GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly TypeInfo DelegateTypeInfo = typeof(Delegate).GetTypeInfo();
         #endregion
     }
 }
