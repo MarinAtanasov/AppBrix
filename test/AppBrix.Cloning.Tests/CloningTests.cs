@@ -206,19 +206,20 @@ namespace AppBrix.Cloning.Tests
                 var originalEnumerator = ((IEnumerable)original).GetEnumerator();
                 var copiedEnumerator = ((IEnumerable)copy).GetEnumerator();
 
-                var moveNext = originalEnumerator.MoveNext();
-                copiedEnumerator.MoveNext().Should().Be(moveNext,
-                    $"{property}'s original enumeration elements are {0}, copied enumeration elements are {1}",
-                    ((IEnumerable)original).Cast<object>().Count(),
-                    ((IEnumerable)copy).Cast<object>().Count());
-                while (moveNext)
+                var index = -1;
+                while (true)
                 {
-                    this.AssertIsDeepCopy(originalEnumerator.Current, copiedEnumerator.Current, $"{property}[i]");
-                    moveNext = originalEnumerator.MoveNext();
+                    var moveNext = originalEnumerator.MoveNext();
                     copiedEnumerator.MoveNext().Should().Be(moveNext,
-                        $"{property}'s original enumeration elements are {0}, copied enumeration elements are {1}",
+                        $"{property}'s original enumeration elements are {{0}}, copied enumeration elements are {{1}}",
                         ((IEnumerable)original).Cast<object>().Count(),
                         ((IEnumerable)copy).Cast<object>().Count());
+                    index++;
+
+                    if (!moveNext)
+                        break;
+
+                    this.AssertIsDeepCopy(originalEnumerator.Current, copiedEnumerator.Current, $"{property}[{index}]");
                 }
             }
         }
