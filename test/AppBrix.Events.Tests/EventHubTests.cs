@@ -305,16 +305,16 @@ namespace AppBrix.Events.Tests
         private void TestPerformanceEventsUnsubscribeInternal()
         {
             var hub = this.GetEventHub();
-            var calledCount = 80000;
+            var calledCount = 60000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {
                 var j = i;
                 handlers.Add(e => j++);
             }
-            foreach (var handler in handlers)
+            for (int i = 0; i < handlers.Count; i++)
             {
-                hub.Subscribe(handler);
+                hub.Subscribe(handlers[i]);
             }
             for (var i = handlers.Count - 1; i >= 0; i--)
             {

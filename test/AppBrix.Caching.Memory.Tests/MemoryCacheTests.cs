@@ -207,6 +207,37 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().BeNull("the item shold have been removed from the cache");
             disposed.Should().BeTrue("the item should have expired");
         }
+
+        [Fact]
+        public void TestPerformanceMemoryCache()
+        {
+            Action action = this.TestPerformanceMemoryCacheInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
+        #endregion
+
+        #region Private methods
+        private void TestPerformanceMemoryCacheInternal()
+        {
+            var cache = this.app.GetMemoryCache();
+            var items = 800;
+            for (int i = 0; i < items; i++)
+            {
+                cache.Set(i.ToString(), i);
+            }
+            for (int i = 0; i < items * 100; i++)
+            {
+                cache.Get<int>((i % items).ToString());
+            }
+            for (int i = 0; i < items; i++)
+            {
+                cache.Remove(i.ToString());
+            }
+        }
         #endregion
 
         #region Private fields and constants

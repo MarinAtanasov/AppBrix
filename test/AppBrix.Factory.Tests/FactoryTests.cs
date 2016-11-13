@@ -79,7 +79,7 @@ namespace AppBrix.Factory.Tests
             {
                 factory.Register(() => this);
             }
-            for (int i = 0; i < 700000; i++)
+            for (int i = 0; i < 500000; i++)
             {
                 factory.Get<FactoryTests>();
             }
