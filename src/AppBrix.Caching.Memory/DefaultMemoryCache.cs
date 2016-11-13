@@ -40,15 +40,12 @@ namespace AppBrix.Caching.Memory
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            CacheItem cacheItem;
-            lock (this.cache)
+            var cacheItem = this.GetInternal(key);
+            if (cacheItem != null)
             {
-                cacheItem = this.GetInternal(key);
-                if (cacheItem != null)
-                {
-                    cacheItem.LastAccessed = this.app.GetTime();
-                }
+                cacheItem.LastAccessed = this.app.GetTime();
             }
+
             return cacheItem?.Item;
         }
 
