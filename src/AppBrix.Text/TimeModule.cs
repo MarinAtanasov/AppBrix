@@ -19,18 +19,19 @@ namespace AppBrix.Text
         {
             this.App.GetContainer().Register(this);
             this.App.GetContainer().Register(CodePagesEncodingProvider.Instance);
-            encodingProvider.Value.Initialize(context);
-            Encoding.RegisterProvider(encodingProvider.Value);
+            this.wrapper.Value.Initialize(context);
+            Encoding.RegisterProvider(this.wrapper.Value);
         }
 
         protected override void UninitializeModule()
         {
-            encodingProvider.Value.Uninitialize();
+            Encoding.RegisterProvider(this.App.Get<EncodingProvider>());
+            this.wrapper.Value.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<EncodingProviderWrapper> encodingProvider = new Lazy<EncodingProviderWrapper>();
+        private readonly Lazy<EncodingProviderWrapper> wrapper = new Lazy<EncodingProviderWrapper>();
         #endregion
     }
 }

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
+using AppBrix.Lifecycle;
 using System;
 using System.Linq;
 using System.Text;
-using AppBrix.Application;
-using AppBrix.Lifecycle;
 
 namespace AppBrix.Text
 {
