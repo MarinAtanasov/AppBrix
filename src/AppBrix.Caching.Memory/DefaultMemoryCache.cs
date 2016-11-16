@@ -17,16 +17,18 @@ namespace AppBrix.Caching.Memory
         {
             this.app = context.App;
             var timeout = this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck;
-            this.expirationTimer = new Timer(this.RemoveExpiredEntries, null, timeout, TimeSpan.FromMilliseconds(-1));
+            lock (this.cache)
+            {
+                this.expirationTimer = new Timer(this.RemoveExpiredEntries, null, timeout, TimeSpan.FromMilliseconds(-1));
+            }
         }
 
         public void Uninitialize()
         {
-            this.expirationTimer?.Dispose();
-            this.expirationTimer = null;
-
             lock (this.cache)
             {
+                this.expirationTimer?.Dispose();
+                this.expirationTimer = null;
                 this.cache.Keys.ToList().ForEach(this.Remove);
             }
 
@@ -104,10 +106,13 @@ namespace AppBrix.Caching.Memory
 
         private void RemoveExpiredEntries(object unused)
         {
-            var now = this.app.GetTime();
-
             lock (this.cache)
             {
+                if (this.expirationTimer == null)
+                    return; // Unintialized
+
+                var now = this.app.GetTime();
+
                 try
                 {
                     foreach (var item in this.cache.Where(x => x.Value.HasExpired(now)).ToList())
