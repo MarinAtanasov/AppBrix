@@ -36,6 +36,7 @@
     "AppBrix.Logging": "0.6.0-*",
     "AppBrix.Logging.Console": "0.6.0-*",
     "AppBrix.Logging.File": "0.6.0-*",
+    "AppBrix.Text": "0.6.0-*",
     "AppBrix.Time": "0.6.0-*",
     "AppBrix.Utils": "0.6.0-*",
     "AppBrix.Web.Client": "0.6.0-*",

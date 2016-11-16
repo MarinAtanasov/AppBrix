@@ -13,6 +13,7 @@ using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Console;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
+using AppBrix.Text;
 using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
@@ -90,6 +91,7 @@ namespace AppBrix.ConsoleApp
             typeof(LoggingModule),
             typeof(ConsoleLoggerModule),
             typeof(FileLoggerModule),
+            typeof(TextModule),
             typeof(TimeModule),
             typeof(WebClientModule),
             typeof(WebServerModule)
@@ -98,7 +100,6 @@ namespace AppBrix.ConsoleApp
         private static readonly HashSet<Type> DisabledModules = new HashSet<Type>()
         {
             typeof(FileLoggerModule),
-            typeof(WebClientModule),
             typeof(WebServerModule)
         };
         #endregion
