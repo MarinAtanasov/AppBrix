@@ -47,13 +47,13 @@ namespace AppBrix.Web.Server.Tests
                 using (var server2 = this.CreateTestServer(TestControllerTests.Server2BaseAddress, app2))
                 {
                     app1.GetFactory().Register(server2.CreateClient);
-                    var response1 = await app1.GetFactory().Get<IHttpCall>().SetUrl(TestControllerTests.AppIdService2Url).MakeCall<string>();
+                    var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
                     response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
                     var result1 = Guid.Parse(response1.Content.Data);
                     result1.Should().Be(app2.Id, "the first app should receive the second app's id");
 
                     app2.GetFactory().Register(server1.CreateClient);
-                    var response2 = await app2.GetFactory().Get<IHttpCall>().SetUrl(TestControllerTests.AppIdServiceUrl).MakeCall<string>();
+                    var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
                     response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
                     var result2 = Guid.Parse(response2.Content.Data);
                     result2.Should().Be(app1.Id, "the second app should receive the first app's id");

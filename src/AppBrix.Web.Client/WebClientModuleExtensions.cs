@@ -13,14 +13,14 @@ namespace AppBrix
     public static class WebModuleExtensions
     {
         /// <summary>
-        /// Sets the HTTP method using the given <see cref="HttpCallMethod"/>.
+        /// Sets the HTTP method using the given <see cref="HttpMethod"/>.
         /// </summary>
-        /// <param name="call">The current REST call.</param>
+        /// <param name="request">The current REST request.</param>
         /// <param name="method">The HTTP method.</param>
-        /// <returns>The current REST call.</returns>
-        public static IHttpCall SetMethod(this IHttpCall call, HttpCallMethod method)
+        /// <returns>The current REST request.</returns>
+        public static IHttpRequest SetMethod(this IHttpRequest request, HttpMethod method)
         {
-            return call.SetMethod(method.ToString().ToUpperInvariant());
+            return request.SetMethod(method.ToString().ToUpperInvariant());
         }
     }
 }

@@ -9,14 +9,16 @@ namespace AppBrix.Web.Client
     /// <summary>
     /// An enumeration of HTTP method calls.
     /// </summary>
-    public enum HttpCallMethod
+    public enum HttpMethod
     {
+        Connect,
+        Delete,
         Get,
         Head,
+        Options,
+        Patch,
         Post,
         Put,
-        Delete,
-        Options,
-        Trace,
+        Trace
     }
 }

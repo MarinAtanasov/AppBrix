@@ -7,20 +7,14 @@ using System.Linq;
 namespace AppBrix.Web.Client
 {
     /// <summary>
-    /// HTTP response object which is returned by <see cref="IHttpCall"/>.
+    /// HTTP response object which is returned by <see cref="IHttpRequest"/>.
     /// </summary>
-    /// <typeparam name="T">The type of the response content.</typeparam>
-    public interface IHttpResponse<out T>
+    public interface IHttpResponse
     {
         /// <summary>
         /// Gets the HTTP response headers.
         /// </summary>
         IHttpMessageHeaders Headers { get; }
-
-        /// <summary>
-        /// Gets the HTTP response content.
-        /// </summary>
-        IHttpContent<T> Content { get; }
 
         /// <summary>
         /// Gets the HTTP response status code.
@@ -36,5 +30,17 @@ namespace AppBrix.Web.Client
         /// Gets the HTTP version.
         /// </summary>
         Version Version { get; }
+    }
+
+    /// <summary>
+    /// HTTP response object which is returned by <see cref="IHttpRequest"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the response content.</typeparam>
+    public interface IHttpResponse<out T> : IHttpResponse
+    {
+        /// <summary>
+        /// Gets the HTTP response content.
+        /// </summary>
+        IHttpContent<T> Content { get; }
     }
 }

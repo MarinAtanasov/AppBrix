@@ -8,17 +8,23 @@ using System.Threading.Tasks;
 namespace AppBrix.Web.Client
 {
     /// <summary>
-    /// An object used for making an HTTP REST service call.
+    /// An object used for making an HTTP request.
     /// </summary>
-    public interface IHttpCall
+    public interface IHttpRequest
     {
         /// <summary>
-        /// Executes the REST call.
+        /// Executes the HTTP request without returning the response content.
+        /// </summary>
+        /// <returns>The HTTP response.</returns>
+        Task<IHttpResponse> Send();
+
+        /// <summary>
+        /// Executes the HTTP request.
         /// Can return <see cref="string"/>, <see cref="System.IO.Stream"/> or <see cref="T:byte[]"/>.
         /// </summary>
         /// <typeparam name="T">The type of the response object to be returned.</typeparam>
-        /// <returns>The REST response.</returns>
-        Task<IHttpResponse<T>> MakeCall<T>();
+        /// <returns>The HTTP response.</returns>
+        Task<IHttpResponse<T>> Send<T>();
 
         /// <summary>
         /// Sets an HTTP message header.
@@ -26,49 +32,49 @@ namespace AppBrix.Web.Client
         /// <param name="header">The header's key.</param>
         /// <param name="values">The header's values.</param>
         /// <returns></returns>
-        IHttpCall SetHeader(string header, params string[] values);
+        IHttpRequest SetHeader(string header, params string[] values);
 
         /// <summary>
-        /// Sets the HTTP message content.
+        /// Sets the HTTP request message content.
         /// </summary>
         /// <param name="content">The content to be added to the request.</param>
         /// <returns></returns>
-        IHttpCall SetContent(object content);
+        IHttpRequest SetContent(object content);
 
         /// <summary>
-        /// Sets an HTTP content header.
+        /// Sets an HTTP request content header.
         /// </summary>
         /// <param name="header">The header's key.</param>
         /// <param name="values">The header's values.</param>
         /// <returns></returns>
-        IHttpCall SetContentHeader(string header, params string[] values);
+        IHttpRequest SetContentHeader(string header, params string[] values);
 
         /// <summary>
-        /// Sets the URL to the REST service.
+        /// Sets the target URL of the HTTP request.
         /// </summary>
         /// <param name="url">The URL to the REST service.</param>
         /// <returns></returns>
-        IHttpCall SetUrl(string url);
+        IHttpRequest SetUrl(string url);
 
         /// <summary>
-        /// Sets the HTTP method which will be used when making the call.
+        /// Sets the HTTP method which will be used when making the request.
         /// </summary>
         /// <param name="method">The HTTP method.</param>
         /// <returns></returns>
-        IHttpCall SetMethod(string method);
+        IHttpRequest SetMethod(string method);
 
         /// <summary>
-        /// Sets the timeout for the call.
+        /// Sets the timeout for the request.
         /// </summary>
         /// <param name="timeout">The timeout.</param>
         /// <returns></returns>
-        IHttpCall SetTimeout(TimeSpan timeout);
+        IHttpRequest SetTimeout(TimeSpan timeout);
         
         /// <summary>
         /// Return the HTTP version to be used.
         /// </summary>
         /// <param name="version">The HTTP version.</param>
         /// <returns></returns>
-        IHttpCall SetVersion(Version version);
+        IHttpRequest SetVersion(Version version);
     }
 }

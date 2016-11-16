@@ -10,7 +10,7 @@ namespace AppBrix.Web.Client
     /// <summary>
     /// HTTP REST headers.
     /// </summary>
-    public interface IHttpHeaders : IDictionary<string, string[]>
+    public interface IHttpHeaders : IDictionary<string, IEnumerable<string>>
     {
     }
 }

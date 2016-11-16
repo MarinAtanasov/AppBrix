@@ -10,14 +10,14 @@ using System.Linq;
 namespace AppBrix.Web.Client
 {
     /// <summary>
-    /// Modules which registers a factory for creating <see cref="IHttpCall"/> objects.
+    /// Modules which registers a factory for creating <see cref="IHttpRequest"/> objects.
     /// </summary>
     public class WebClientModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetFactory().Register(() => new DefaultHttpCall(this.App));
+            this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
         }
 
         protected override void UninitializeModule()

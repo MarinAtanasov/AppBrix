@@ -12,17 +12,31 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultHttpCall : IHttpCall
+    internal sealed class DefaultHttpRequest : IHttpRequest
     {
         #region Construction
-        public DefaultHttpCall(IApp app)
+        public DefaultHttpRequest(IApp app)
         {
             this.app = app;
         }
         #endregion
 
         #region Public and overriden methods
-        public async Task<IHttpResponse<T>> MakeCall<T>()
+        public async Task<IHttpResponse> Send()
+        {
+            using (var client = app.GetFactory().Get<HttpClient>())
+            {
+                var response = await this.GetResponse(client);
+                return new DefaultHttpResponse<string>(
+                    new DefaultHttpHeaders(response.Headers),
+                    null,
+                    (int)response.StatusCode,
+                    response.ReasonPhrase,
+                    response.Version);
+            }
+        }
+
+        public async Task<IHttpResponse<T>> Send<T>()
         {
             using (var client = app.GetFactory().Get<HttpClient>())
             {
@@ -40,7 +54,7 @@ namespace AppBrix.Web.Client.Impl
             }
         }
 
-        public IHttpCall SetHeader(string header, params string[] values)
+        public IHttpRequest SetHeader(string header, params string[] values)
         {
             if (string.IsNullOrEmpty(header))
                 throw new ArgumentNullException(nameof(header));
@@ -59,14 +73,14 @@ namespace AppBrix.Web.Client.Impl
             return this;
         }
 
-        public IHttpCall SetContent(object content)
+        public IHttpRequest SetContent(object content)
         {
             this.content = content;
             
             return this;
         }
 
-        public IHttpCall SetContentHeader(string header, params string[] values)
+        public IHttpRequest SetContentHeader(string header, params string[] values)
         {
             if (string.IsNullOrEmpty(header))
                 throw new ArgumentNullException(nameof(header));
@@ -85,7 +99,7 @@ namespace AppBrix.Web.Client.Impl
             return this;
         }
 
-        public IHttpCall SetMethod(string method)
+        public IHttpRequest SetMethod(string method)
         {
             if (string.IsNullOrEmpty(method))
                 throw new ArgumentNullException(nameof(method));
@@ -94,13 +108,13 @@ namespace AppBrix.Web.Client.Impl
             return this;
         }
 
-        public IHttpCall SetTimeout(TimeSpan timeout)
+        public IHttpRequest SetTimeout(TimeSpan timeout)
         {
             this.timeout = timeout;
             return this;
         }
 
-        public IHttpCall SetUrl(string url)
+        public IHttpRequest SetUrl(string url)
         {
             if (string.IsNullOrEmpty(url))
                 throw new ArgumentNullException(nameof(url));
@@ -109,7 +123,7 @@ namespace AppBrix.Web.Client.Impl
             return this;
         } 
 
-        public IHttpCall SetVersion(Version version)
+        public IHttpRequest SetVersion(Version version)
         {
             this.httpMessageVersion = version;
             return this;
@@ -122,7 +136,7 @@ namespace AppBrix.Web.Client.Impl
             if (this.timeout.TotalMilliseconds > 0)
                 client.Timeout = this.timeout;
 
-            var message = new HttpRequestMessage(new HttpMethod(this.callMethod), this.requestUrl);
+            var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
 
             foreach (var header in this.headers)
             {
