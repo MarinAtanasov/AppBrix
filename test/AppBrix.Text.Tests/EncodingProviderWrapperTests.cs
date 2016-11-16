@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Text.Tests
 {
-    public class EncodingProviderWrapper
+    public sealed class EncodingProviderWrapper
     {
         #region Setup and cleanup
         public EncodingProviderWrapper()

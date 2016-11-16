@@ -12,7 +12,7 @@ using Xunit;
 
 namespace AppBrix.Caching.Tests
 {
-    public class CacheTests
+    public sealed class CacheTests
     {
         #region Setup and cleanup
         public CacheTests()

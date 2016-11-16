@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Configuration.Tests.Mocks
 {
-    internal class ConfigSerializerMock : IConfigSerializer
+    internal sealed class ConfigSerializerMock : IConfigSerializer
     {
         #region Properties
         public IList<KeyValuePair<Type, IConfig>> Serialized { get; } = new List<KeyValuePair<Type, IConfig>>();

@@ -15,7 +15,7 @@ using Xunit;
 
 namespace AppBrix.Cloning.Tests
 {
-    public class CloningTests
+    public sealed class CloningTests
     {
         #region Setup and cleanup
         public CloningTests()

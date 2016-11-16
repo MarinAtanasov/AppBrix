@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Tests
 {
-    public class DefaultAppTests
+    public sealed class DefaultAppTests
     {
         #region Tests
         [Fact]

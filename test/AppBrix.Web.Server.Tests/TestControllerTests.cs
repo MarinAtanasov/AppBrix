@@ -18,7 +18,7 @@ using Xunit;
 
 namespace AppBrix.Web.Server.Tests
 {
-    public class TestControllerTests
+    public sealed class TestControllerTests
     {
         #region Tests
         [Fact]

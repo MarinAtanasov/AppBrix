@@ -12,7 +12,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
     /// A simple controller which can be used to get the current application's id.
     /// </summary>
     [Route("api/[controller]")]
-    public class AppIdController : Controller
+    public sealed class AppIdController : Controller
     {
         #region Construction
         /// <summary>

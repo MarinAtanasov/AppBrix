@@ -11,7 +11,7 @@ namespace AppBrix.Logging.Tests.Mocks
     /// <summary>
     /// Used for storing the logged entries in-memory for testing purposes.
     /// </summary>
-    internal class LogWriterMock : ILogWriter
+    internal sealed class LogWriterMock : ILogWriter
     {
         #region Properties
         public bool IsInitialized { get; private set; }

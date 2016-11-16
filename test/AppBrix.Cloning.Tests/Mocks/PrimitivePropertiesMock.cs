@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Cloning.Tests.Mocks
 {
-    internal class PrimitivePropertiesMock : NumericPropertiesMock
+    internal sealed class PrimitivePropertiesMock : NumericPropertiesMock
     {
         #region Construction
         public PrimitivePropertiesMock()

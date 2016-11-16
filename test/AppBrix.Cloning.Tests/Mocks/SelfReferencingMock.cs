@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Cloning.Tests.Mocks
 {
-    internal class SelfReferencingMock
+    internal sealed class SelfReferencingMock
     {
         public SelfReferencingMock Other { get; set; }
     }

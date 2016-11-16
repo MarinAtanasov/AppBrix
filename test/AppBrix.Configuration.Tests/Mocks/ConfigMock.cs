@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AppBrix.Configuration.Tests.Mocks
 {
-    internal class ConfigMock : IConfig
+    internal sealed class ConfigMock : IConfig
     {
     }
 }

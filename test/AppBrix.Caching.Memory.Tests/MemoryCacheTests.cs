@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Caching.Memory.Tests
 {
-    public class MemoryCacheTests : IDisposable
+    public sealed class MemoryCacheTests : IDisposable
     {
         #region Setup and cleanup
         public MemoryCacheTests()

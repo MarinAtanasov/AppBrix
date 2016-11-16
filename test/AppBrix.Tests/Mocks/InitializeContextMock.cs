@@ -11,7 +11,7 @@ namespace AppBrix.Tests.Mocks
     /// <summary>
     /// Used for creating an <see cref="IInitializeContext"/> object for testing purposes.
     /// </summary>
-    public class InitializeContextMock : IInitializeContext
+    public sealed class InitializeContextMock : IInitializeContext
     {
         #region Construction
         /// <summary>

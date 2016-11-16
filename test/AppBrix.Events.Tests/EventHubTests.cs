@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Events.Tests
 {
-    public class EventHubTests
+    public sealed class EventHubTests
     {
         #region Setup and cleanup
         public EventHubTests()

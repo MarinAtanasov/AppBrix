@@ -11,7 +11,7 @@ using Xunit;
 
 namespace AppBrix.Container.Tests
 {
-    public class ContainerTests
+    public sealed class ContainerTests
     {
         #region Setup and cleanup
         public ContainerTests()

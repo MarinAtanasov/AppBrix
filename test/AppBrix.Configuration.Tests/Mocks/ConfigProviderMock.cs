@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Configuration.Tests.Mocks
 {
-    internal class ConfigProviderMock : IConfigProvider
+    internal sealed class ConfigProviderMock : IConfigProvider
     {
         #region Properties
         public IList<Type> ReadConfigs { get; } = new List<Type>();

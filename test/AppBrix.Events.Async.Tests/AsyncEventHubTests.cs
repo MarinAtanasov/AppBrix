@@ -14,7 +14,7 @@ using Xunit;
 
 namespace AppBrix.Events.Async.Tests
 {
-    public class AsyncEventHubTests
+    public sealed class AsyncEventHubTests
     {
         #region Setup and cleanup
         public AsyncEventHubTests()

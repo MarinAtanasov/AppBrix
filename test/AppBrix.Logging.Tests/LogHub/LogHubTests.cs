@@ -16,7 +16,7 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub
 {
-    public class LogHubTests
+    public sealed class LogHubTests
     {
         #region Setup and cleanup
         public LogHubTests()

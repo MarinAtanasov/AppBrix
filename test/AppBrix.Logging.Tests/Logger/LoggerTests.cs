@@ -18,7 +18,7 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.Logger
 {
-    public class LoggerTests
+    public sealed class LoggerTests
     {
         #region Setup and cleanup
         public LoggerTests()

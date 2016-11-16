@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Factory.Tests
 {
-    public class FactoryTests
+    public sealed class FactoryTests
     {
         #region Setup and cleanup
         public FactoryTests()

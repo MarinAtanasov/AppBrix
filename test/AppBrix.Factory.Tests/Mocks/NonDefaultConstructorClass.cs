@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AppBrix.Factory.Tests.Mocks
 {
-    internal class NonDefaultConstructorClass
+    internal sealed class NonDefaultConstructorClass
     {
         public NonDefaultConstructorClass(bool val)
         {

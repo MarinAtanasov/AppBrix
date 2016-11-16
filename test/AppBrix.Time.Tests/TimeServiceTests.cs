@@ -12,7 +12,7 @@ using Xunit;
 
 namespace AppBrix.Time.Tests
 {
-    public class TimeServiceTests
+    public sealed class TimeServiceTests
     {
         #region Setup and cleanup
         public TimeServiceTests()

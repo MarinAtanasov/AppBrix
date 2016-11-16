@@ -9,7 +9,7 @@ namespace AppBrix.Events.Tests.Mocks
     /// <summary>
     /// A child event type used for testing of hierarchical behavior.
     /// </summary>
-    internal class EventMockChild : EventMock
+    internal sealed class EventMockChild : EventMock
     {
         #region Construction
         /// <summary>

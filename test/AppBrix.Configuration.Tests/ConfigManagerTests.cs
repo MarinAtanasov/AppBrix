@@ -9,7 +9,7 @@ using Xunit;
 
 namespace AppBrix.Configuration.Tests
 {
-    public class ConfigManagerTests
+    public sealed class ConfigManagerTests
     {
         #region Tests
         [Fact]
