@@ -13,7 +13,7 @@ namespace AppBrix.Application
     /// <summary>
     /// Used for storing a part of module and its configuration element.
     /// </summary>
-    internal class ModuleInfo
+    internal sealed class ModuleInfo
     {
         #region Construction
         public ModuleInfo(IModule module, ModuleConfigElement config)

@@ -13,7 +13,7 @@ namespace AppBrix.Configuration.Json
     /// <summary>
     /// A configuration serializer that serializes to/from JSON.
     /// </summary>
-    public class JsonConfigSerializer : IConfigSerializer
+    public sealed class JsonConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
         public string Serialize(IConfig config, Type type)

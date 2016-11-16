@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Lifecycle
 {
-    internal class DefaultUpgradeContext : DefaultInstallContext, IUpgradeContext
+    internal sealed class DefaultUpgradeContext : DefaultInstallContext, IUpgradeContext
     {
         #region Construction
         public DefaultUpgradeContext(IApp app, Version upgradeFrom) : base(app)

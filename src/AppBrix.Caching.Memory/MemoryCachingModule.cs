@@ -6,7 +6,7 @@ using AppBrix.Modules;
 using System;
 using System.Linq;
 
-namespace AppBrix.Caching.Memory
+namespace AppBrix.Caching.Memory.Config
 {
     /// <summary>
     /// Module used for caching objects locally in-memory.

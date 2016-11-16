@@ -11,7 +11,7 @@ using System.Text;
 
 namespace AppBrix.Caching.Json
 {
-    internal class JsonCacheSerializer : ICacheSerializer
+    internal sealed class JsonCacheSerializer : ICacheSerializer
     {
         #region Public and overriden methods
         public byte[] Serialize(object item)

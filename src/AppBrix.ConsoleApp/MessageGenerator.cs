@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AppBrix.ConsoleApp
 {
-    internal class MessageGenerator
+    internal sealed class MessageGenerator
     {
         #region Construction
         public MessageGenerator(string level, int messagesSent = 0 )

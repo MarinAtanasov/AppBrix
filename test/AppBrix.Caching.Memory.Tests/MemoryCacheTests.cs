@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-namespace AppBrix.Caching.Memory.Tests
+namespace AppBrix.Caching.Memory.Config.Config.Tests
 {
     public sealed class MemoryCacheTests : IDisposable
     {

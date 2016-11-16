@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AppBrix.Caching
 {
-    internal class DefaultCache : ICache, IApplicationLifecycle
+    internal sealed class DefaultCache : ICache, IApplicationLifecycle
     {
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)

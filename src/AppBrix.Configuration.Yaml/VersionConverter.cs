@@ -9,7 +9,7 @@ using YamlDotNet.Serialization;
 
 namespace AppBrix.Configuration.Yaml
 {
-    internal class VersionConverter : IYamlTypeConverter
+    internal sealed class VersionConverter : IYamlTypeConverter
     {
         public bool Accepts(Type type)
         {

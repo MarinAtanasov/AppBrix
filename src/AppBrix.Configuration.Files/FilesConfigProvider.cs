@@ -10,7 +10,7 @@ namespace AppBrix.Configuration.Files
     /// <summary>
     /// An implementation of a file provider which stores each config inside its own file.
     /// </summary>
-    public class FilesConfigProvider : IConfigProvider
+    public sealed class FilesConfigProvider : IConfigProvider
     {
         #region Construction
         /// <summary>

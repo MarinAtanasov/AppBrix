@@ -14,7 +14,7 @@ namespace AppBrix.Web.Server
     /// use the <see cref="T:IServiceCollection.AddApp"/> extension method inside the
     /// <see cref="M:ConfigureServices"/> method.
     /// </summary>
-    public class WebServerModule : ModuleBase
+    public sealed class WebServerModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)

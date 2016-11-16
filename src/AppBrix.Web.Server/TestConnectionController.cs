@@ -12,7 +12,7 @@ namespace AppBrix.Web.Server
     /// A simple controller which can be used to test the connection to the application.
     /// </summary>
     [Route("api/[controller]")]
-    public class TestConnectionController : Controller
+    public sealed class TestConnectionController : Controller
     {
         #region Construction
         /// <summary>

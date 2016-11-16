@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AppBrix.Utils.Exceptions
 {
-    public class DefaultConstructorNotFoundException : Exception
+    public sealed class DefaultConstructorNotFoundException : Exception
     {
         // Summary:
         //     Initializes a new instance of the AppBrix.DefaultConstructorMissingException class.

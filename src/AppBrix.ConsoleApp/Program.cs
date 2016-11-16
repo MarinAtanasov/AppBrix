@@ -11,7 +11,7 @@ namespace AppBrix.ConsoleApp
     /// <summary>
     /// This is a sample console application using an AppBrix app.
     /// </summary>
-    internal class Program
+    internal sealed class Program
     {
         internal static void Main(string[] args)
         {

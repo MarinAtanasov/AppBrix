@@ -5,7 +5,7 @@ using AppBrix.Configuration;
 using System;
 using System.Linq;
 
-namespace AppBrix.Caching.Memory
+namespace AppBrix.Caching.Memory.Config
 {
     /// <summary>
     /// Configuration which sets how the local in-memory cache should behave.

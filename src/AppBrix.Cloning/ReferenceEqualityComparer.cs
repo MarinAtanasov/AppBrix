@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Cloning
 {
-    internal class ReferenceEqualityComparer : EqualityComparer<object>
+    internal sealed class ReferenceEqualityComparer : EqualityComparer<object>
     {
         #region Public and overriden methods
         public override bool Equals(object x, object y)

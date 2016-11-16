@@ -10,9 +10,9 @@ using System.Text;
 namespace AppBrix.Text
 {
     /// <summary>
-    /// A module which registers a default time service used for getting the current time.
+    /// A module which is used for enhanced text and encoding support.
     /// </summary>
-    public class TextModule : ModuleBase
+    public sealed class TextModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)

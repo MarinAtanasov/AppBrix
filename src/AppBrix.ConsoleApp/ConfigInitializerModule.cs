@@ -1,6 +1,6 @@
 ﻿using AppBrix.Caching;
 using AppBrix.Caching.Json;
-using AppBrix.Caching.Memory;
+using AppBrix.Caching.Memory.Config;
 using AppBrix.Cloning;
 using AppBrix.Configuration;
 using AppBrix.Container;
@@ -27,7 +27,7 @@ namespace AppBrix.ConsoleApp
     /// Initializes application configuration.
     /// This module should be first on the list in order to configure the application's configuration.
     /// </summary>
-    public class ConfigInitializerModule : IModule, IInstallable
+    public sealed class ConfigInitializerModule : IModule, IInstallable
     {
         #region Public and overriden methods
         public void Install(IInstallContext context)

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Lifecycle
 {
-    internal class DefaultInitializeContext : IInitializeContext
+    internal sealed class DefaultInitializeContext : IInitializeContext
     {
         #region Construction
         public DefaultInitializeContext(IApp app)

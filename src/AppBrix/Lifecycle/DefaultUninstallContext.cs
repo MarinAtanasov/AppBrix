@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Lifecycle
 {
-    internal class DefaultUninstallContext : IUninstallContext
+    internal sealed class DefaultUninstallContext : IUninstallContext
     {
         #region Construction
         public DefaultUninstallContext(IApp app)

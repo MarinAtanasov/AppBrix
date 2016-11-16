@@ -13,7 +13,7 @@ namespace AppBrix.Configuration.Yaml
     /// <summary>
     /// A configuration serializer that serializes to/from YAML.
     /// </summary>
-    public class YamlConfigSerializer : IConfigSerializer
+    public sealed class YamlConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
         public string Serialize(IConfig config, Type type)

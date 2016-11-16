@@ -12,7 +12,7 @@ namespace AppBrix.Time
     /// <summary>
     /// A module which registers a default time service used for getting the current time.
     /// </summary>
-    public class TimeModule : ModuleBase
+    public sealed class TimeModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)

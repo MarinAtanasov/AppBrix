@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Time.Configuration
 {
-    public class TimeConfig : IConfig
+    public sealed class TimeConfig : IConfig
     {
         #region Construction
         /// <summary>

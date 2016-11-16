@@ -12,7 +12,7 @@ namespace AppBrix.Web.Client
     /// <summary>
     /// Modules which registers a factory for creating <see cref="IHttpRequest"/> objects.
     /// </summary>
-    public class WebClientModule : ModuleBase
+    public sealed class WebClientModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
