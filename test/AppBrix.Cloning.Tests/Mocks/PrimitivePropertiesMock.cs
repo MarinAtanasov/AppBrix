@@ -35,7 +35,7 @@ namespace AppBrix.Cloning.Tests.Mocks
 
         public string String { get; private set; }
 
-        public DateTime DateTime { get; protected set; }
+        public DateTime DateTime { get; set; }
 
         public TimeSpan TimeSpan { get; internal set; }
         #endregion

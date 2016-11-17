@@ -36,7 +36,7 @@ namespace AppBrix.Cloning.Tests.Mocks
 
         public float Float { get { return this.f; } }
 
-        public double Double { get; set; }
+        public double Double { get; protected set; }
 
         public decimal Decimal { get; private set; }
         #endregion
