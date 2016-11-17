@@ -9,7 +9,7 @@ namespace AppBrix.Web.Client.Impl
     internal sealed class DefaultHttpResponse<T> : IHttpResponse<T>
     {
         #region Construction
-        public DefaultHttpResponse(IHttpMessageHeaders headers, IHttpContent<T> content, int statusCode, string reasonPhrase, Version version)
+        public DefaultHttpResponse(IHttpMessageHeaders headers, T content, int statusCode, string reasonPhrase, Version version)
         {
             this.Headers = headers;
             this.Content = content;
@@ -22,7 +22,7 @@ namespace AppBrix.Web.Client.Impl
         #region Properties
         public IHttpMessageHeaders Headers { get; }
 
-        public IHttpContent<T> Content { get; }
+        public T Content { get; }
 
         public int StatusCode { get; }
 

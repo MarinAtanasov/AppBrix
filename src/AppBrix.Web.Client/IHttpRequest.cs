@@ -42,14 +42,6 @@ namespace AppBrix.Web.Client
         IHttpRequest SetContent(object content);
 
         /// <summary>
-        /// Sets an HTTP request content header.
-        /// </summary>
-        /// <param name="header">The header's key.</param>
-        /// <param name="values">The header's values.</param>
-        /// <returns></returns>
-        IHttpRequest SetContentHeader(string header, params string[] values);
-
-        /// <summary>
         /// Sets the target URL of the HTTP request.
         /// </summary>
         /// <param name="url">The URL to the REST service.</param>

@@ -27,12 +27,12 @@ namespace AppBrix.Text
 
         public override Encoding GetEncoding(string name)
         {
-            return app.Get<EncodingProvider>().GetEncoding(name);
+            return this.app?.Get<EncodingProvider>().GetEncoding(name);
         }
 
         public override Encoding GetEncoding(int codepage)
         {
-            return app.Get<EncodingProvider>().GetEncoding(codepage);
+            return this.app?.Get<EncodingProvider>().GetEncoding(codepage);
         }
         #endregion
 

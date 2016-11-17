@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace AppBrix.Web.Client.Impl
             {
                 var response = await this.GetResponse(client);
                 return new DefaultHttpResponse<string>(
-                    new DefaultHttpHeaders(response.Headers),
+                    new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
                     null,
                     (int)response.StatusCode,
                     response.ReasonPhrase,
@@ -41,13 +42,11 @@ namespace AppBrix.Web.Client.Impl
             using (var client = app.GetFactory().Get<HttpClient>())
             {
                 var response = await this.GetResponse(client);
-                var httpResponseHeaders = response.Headers;
-                var httpContent = response.Content;
-                var httpContentHeaders = httpContent.Headers;
-                var contentValue = await this.GetResponseContent<T>(httpContent);
+                var content = response.Content;
+                var contentValue = await this.GetResponseContent<T>(content);
                 return new DefaultHttpResponse<T>(
-                    new DefaultHttpHeaders(httpResponseHeaders),
-                    new DefaultHttpContent<T>(contentValue, new DefaultHttpHeaders(httpContentHeaders)),
+                    new DefaultHttpHeaders(response.Headers.Concat(content.Headers)),
+                    contentValue,
                     (int)response.StatusCode,
                     response.ReasonPhrase,
                     response.Version);
@@ -80,25 +79,6 @@ namespace AppBrix.Web.Client.Impl
             return this;
         }
 
-        public IHttpRequest SetContentHeader(string header, params string[] values)
-        {
-            if (string.IsNullOrEmpty(header))
-                throw new ArgumentNullException(nameof(header));
-
-            if (values == null || values.Length == 0)
-            {
-                if (this.contentHeaders.ContainsKey(header))
-                {
-                    this.contentHeaders.Remove(header);
-                }
-            }
-            else
-            {
-                this.contentHeaders[header] = new List<string>(values);
-            }
-            return this;
-        }
-
         public IHttpRequest SetMethod(string method)
         {
             if (string.IsNullOrEmpty(method))
@@ -121,7 +101,7 @@ namespace AppBrix.Web.Client.Impl
 
             this.requestUrl = url;
             return this;
-        } 
+        }
 
         public IHttpRequest SetVersion(Version version)
         {
@@ -138,30 +118,42 @@ namespace AppBrix.Web.Client.Impl
 
             var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
 
-            foreach (var header in this.headers)
-            {
-                if (message.Headers.Contains(header.Key))
-                    message.Headers.Remove(header.Key);
-
-                message.Headers.Add(header.Key, header.Value);
-            }
+            this.SetHeaders(message.Headers, this.headers.Where(x => !this.IsContentHeader(x.Key)));
 
             if (this.content != null)
             {
                 message.Content = this.CreateContent();
-                foreach (var header in this.contentHeaders)
-                {
-                    if (message.Content.Headers.Contains(header.Key))
-                        message.Content.Headers.Remove(header.Key);
-
-                    message.Content.Headers.Add(header.Key, header.Value);
-                }
+                this.SetHeaders(message.Content.Headers, this.headers.Where(x => this.IsContentHeader(x.Key)));
             }
 
             if (this.httpMessageVersion != null)
                 message.Version = this.httpMessageVersion;
 
             return await client.SendAsync(message);
+        }
+
+        private void SetHeaders(HttpHeaders headers, IEnumerable<KeyValuePair<string, ICollection<string>>> toAdd)
+        {
+            foreach (var header in toAdd)
+            {
+                if (headers.Contains(header.Key))
+                    headers.Remove(header.Key);
+
+                headers.Add(header.Key, header.Value);
+            }
+        }
+
+        private bool IsContentHeader(string header)
+        {
+            var caps = header.ToUpperInvariant();
+            switch (caps)
+            {
+                case "EXPIRES":
+                case "LAST-MODIFIED":
+                    return true;
+                default:
+                    return caps.StartsWith("CONTENT-");
+            }
         }
 
         private HttpContent CreateContent()
@@ -209,7 +201,6 @@ namespace AppBrix.Web.Client.Impl
 
         #region Private fields and constants
         private readonly IDictionary<string, ICollection<string>> headers = new Dictionary<string, ICollection<string>>();
-        private readonly IDictionary<string, ICollection<string>> contentHeaders = new Dictionary<string, ICollection<string>>();
         private readonly IApp app;
         private string callMethod = "GET";
         private object content;

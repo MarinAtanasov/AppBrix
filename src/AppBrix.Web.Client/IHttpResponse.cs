@@ -39,8 +39,8 @@ namespace AppBrix.Web.Client
     public interface IHttpResponse<out T> : IHttpResponse
     {
         /// <summary>
-        /// Gets the HTTP response content.
+        /// Gets the HTTP response content body.
         /// </summary>
-        IHttpContent<T> Content { get; }
+        T Content { get; }
     }
 }
