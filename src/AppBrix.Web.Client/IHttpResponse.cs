@@ -14,7 +14,7 @@ namespace AppBrix.Web.Client
         /// <summary>
         /// Gets the HTTP response headers.
         /// </summary>
-        IHttpMessageHeaders Headers { get; }
+        IHttpHeaders Headers { get; }
 
         /// <summary>
         /// Gets the HTTP response status code.

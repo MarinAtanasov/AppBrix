@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Web.Client.Impl
 {
-    internal sealed class DefaultHttpHeaders : Dictionary<string, IEnumerable<string>>, IHttpMessageHeaders, IHttpContentHeaders
+    internal sealed class DefaultHttpHeaders : Dictionary<string, IEnumerable<string>>, IHttpHeaders
     {
         public DefaultHttpHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
         {
