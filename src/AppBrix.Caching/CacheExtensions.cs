@@ -30,19 +30,8 @@ namespace AppBrix
         /// <returns></returns>
         public static async Task<T> Get<T>(this ICache cache, string key)
         {
-            return (T)(await cache.Get(key, typeof(T)));
-        }
-
-        /// <summary>
-        /// Deserializes an item from a byte array.
-        /// </summary>
-        /// <typeparam name="T">The type of the item</typeparam>
-        /// <param name="serializer">The serializer.</param>
-        /// <param name="serialized">The item to be deserialized.</param>
-        /// <returns>The deserialized item.</returns>
-        public static T Deserialize<T>(this ICacheSerializer serializer, byte[] serialized)
-        {
-            return (T)serializer.Deserialize(serialized, typeof(T));
+            var result = await cache.Get(key, typeof(T));
+            return result != null ? (T)result : default(T);
         }
     }
 }
