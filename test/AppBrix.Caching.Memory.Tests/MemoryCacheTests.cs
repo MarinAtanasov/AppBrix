@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Caching.Memory.Config;
 using AppBrix.Container;
 using AppBrix.Tests;
 using AppBrix.Time;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-namespace AppBrix.Caching.Memory.Config.Config.Tests
+namespace AppBrix.Caching.Memory.Tests
 {
     public sealed class MemoryCacheTests : IDisposable
     {
@@ -145,11 +146,11 @@ namespace AppBrix.Caching.Memory.Config.Config.Tests
             this.app.Reinitialize();
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestRollingExpiration), this, rollingExpiration: TimeSpan.FromMilliseconds(20));
+            cache.Set(nameof(TestRollingExpiration), this, rollingExpiration: TimeSpan.FromMilliseconds(50));
             var item = cache.Get(nameof(TestRollingExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 100; i++)
             {
                 item = cache.Get(nameof(TestRollingExpiration));
                 item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
