@@ -4,6 +4,9 @@ using AppBrix.Caching.Memory.Config;
 using AppBrix.Cloning;
 using AppBrix.Configuration;
 using AppBrix.Container;
+using AppBrix.Data;
+using AppBrix.Data.Sqlite;
+using AppBrix.Data.SqlServer;
 using AppBrix.Events;
 using AppBrix.Events.Async;
 using AppBrix.Factory;
@@ -86,6 +89,9 @@ namespace AppBrix.ConsoleApp
             typeof(MemoryCachingModule),
             typeof(CloningModule),
             typeof(ContainerModule),
+            typeof(DataModule),
+            typeof(SqliteDataModule),
+            typeof(SqlServerDataModule),
             typeof(EventsModule),
             typeof(FactoryModule),
             typeof(LoggingModule),
@@ -99,6 +105,7 @@ namespace AppBrix.ConsoleApp
 
         private static readonly HashSet<Type> DisabledModules = new HashSet<Type>()
         {
+            typeof(SqlServerDataModule),
             typeof(FileLoggerModule),
             typeof(WebServerModule)
         };

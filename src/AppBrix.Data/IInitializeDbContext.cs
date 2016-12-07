@@ -5,16 +5,21 @@ using AppBrix.Application;
 using System;
 using System.Linq;
 
-namespace AppBrix.Lifecycle
+namespace AppBrix.Data
 {
     /// <summary>
-    /// Context passed down during application initialization.
+    /// Context passed down during <see cref="DbContextBase"/> initialization.
     /// </summary>
-    public interface IInitializeContext
+    public interface IInitializeDbContext
     {
         /// <summary>
         /// Gets the current application.
         /// </summary>
         IApp App { get; }
+
+        /// <summary>
+        /// Gets the migrations assembly.
+        /// </summary>
+        string MigrationsAssembly { get; }
     }
 }
