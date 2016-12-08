@@ -1,5 +1,5 @@
 ﻿{
-  "version": "0.6.0-*",
+  "version": "0.7.0-*",
   "title": "AppBrix.Data.Sqlite",
   "description": "Module used for regitering a Sqlite provider.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module used for regitering a Sqlite provider.",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Data Sqlite" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,8 +21,7 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.6.0-*",
-    "AppBrix.Data": "0.6.0-*",
+    "AppBrix.Data": "0.7.0-*",
     "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0"
   },
 

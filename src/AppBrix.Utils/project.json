@@ -1,5 +1,5 @@
 {
-  "version": "0.6.0-*",
+  "version": "0.7.0-*",
   "title": "AppBrix.Utils",
   "description": "Commonly used utils and extension methods. Automatically included as dependency of all other AppBrix packages.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Commonly used utils and extension methods.",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Utils" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "NETStandard.Library": "1.6.0-*"
+    "NETStandard.Library": "1.6.1"
   },
 
   "frameworks": {

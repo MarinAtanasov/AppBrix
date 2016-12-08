@@ -1,5 +1,5 @@
 {
-  "version": "0.6.0-*",
+  "version": "0.7.0-*",
   "title": "AppBrix.Logging.Console",
   "description": "Module which attaches to logging events and writes the information to the console.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Module used for creating logging messages.",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Module Log Console" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,9 +21,8 @@
   },
 
   "dependencies": {
-    "AppBrix": "0.6.0-*",
-    "AppBrix.Logging": "0.6.0-*",
-    "System.Console": "4.0.0-*"
+    "AppBrix.Logging": "0.7.0-*",
+    "System.Console": "4.3.0-*"
   },
 
   "frameworks": {

@@ -1,5 +1,5 @@
 {
-  "version": "0.6.0-*",
+  "version": "0.7.0-*",
   "title": "AppBrix.Configuration.Memory",
   "description": "Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.",
   "authors": [ "Marin Atanasov" ],
@@ -7,7 +7,7 @@
 
   "packOptions": {
     "summary": "Adds configuration provider which reads and writes into memory.",
-    "releaseNotes": "Updated dependencies to use DotNetCore 1.0.1.",
+    "releaseNotes": "Updated dependencies to use DotNetCore 1.1.",
     "owners": [ "Marin Atanasov" ],
     "tags": [ "AppBrix Config Memory" ],
     "iconUrl": "https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png",
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "AppBrix.Configuration": "0.6.0-*"
+    "AppBrix.Configuration": "0.7.0-*"
   },
 
   "frameworks": {
