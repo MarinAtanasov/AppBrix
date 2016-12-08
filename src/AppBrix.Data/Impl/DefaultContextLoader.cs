@@ -73,43 +73,30 @@ namespace AppBrix.Data.Impl
         private void MigrateContext(Type type)
         {
             SnapshotData snapshot;
-            var assemblyVersion = type.GetTypeInfo().Assembly.GetName().Version;
             using (var context = this.App.GetFactory().Get<MigrationsContext>())
             {
-                snapshot = context.Snapshots.FirstOrDefault(x => x.Context == type.Name);
+                snapshot = context.Snapshots.SingleOrDefault(x => x.Context == type.Name);
             }
 
+            var assemblyVersion = type.GetTypeInfo().Assembly.GetName().Version;
             if (snapshot == null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
+                var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
                 var oldVersion = Version.Parse(snapshot?.Version ?? DefaultContextLoader.EmptyVersion);
                 var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
-                this.LoadAssembly(oldMigrationsAssembly, type, snapshot?.Snapshot ?? string.Empty);
+                this.LoadAssembly(oldMigrationsAssembly, type, oldSnapshotCode);
 
                 var newVersion = type.GetTypeInfo().Assembly.GetName().Version;
                 var newMigrationName = this.GenerateMigrationName(type, newVersion);
-                var newMigrationsAssembly = this.GenerateMigrationAssemblyName(type, newVersion);
-                ScaffoldedMigration scaffoldedMigration;
-                using (var context = (DbContextBase)this.App.GetFactory().Get(type))
-                {
-                    context.Initialize(new DefaultInitializeDbContext(this.App, oldMigrationsAssembly));
-                    scaffoldedMigration = this.CreateMigration(context, newMigrationName);
-                }
+                var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
 
-                var migration = new MigrationData()
+                MigrationData migration = null;
+                if (scaffoldedMigration.SnapshotCode != oldSnapshotCode)
                 {
-                    Context = type.Name,
-                    Version = newVersion.ToString(),
-                    Migration = scaffoldedMigration.MigrationCode,
-                    Metadata = scaffoldedMigration.MetadataCode
-                };
-                this.LoadAssembly(newMigrationsAssembly, type, scaffoldedMigration.SnapshotCode, migration);
-                using (var context = (DbContextBase)this.App.GetFactory().Get(type))
-                {
-                    context.Initialize(new DefaultInitializeDbContext(this.App, newMigrationsAssembly));
-                    context.Database.Migrate();
+                    migration = this.ApplyMigration(type, newVersion, scaffoldedMigration);
                 }
                 
-                this.UpdateSnapshot(type.Name, newVersion.ToString(), scaffoldedMigration.SnapshotCode, snapshot == null, migration);
+                this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot == null);
             }
         }
 
@@ -191,20 +178,46 @@ namespace AppBrix.Data.Impl
             }
         }
 
-        private ScaffoldedMigration CreateMigration(DbContextBase context, string migrationName)
+        private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)
         {
-            var codeHelper = new CSharpHelper();
-            var scaffolder = ActivatorUtilities.CreateInstance<MigrationsScaffolder>(
-                ((IInfrastructure<IServiceProvider>)context).Instance,
-                new CSharpMigrationsGenerator(
-                    codeHelper,
-                    new CSharpMigrationOperationGenerator(codeHelper),
-                    new CSharpSnapshotGenerator(codeHelper)));
+            using (var context = (DbContextBase)this.App.GetFactory().Get(type))
+            {
+                context.Initialize(new DefaultInitializeDbContext(this.App, oldMigrationsAssembly));
 
-            return scaffolder.ScaffoldMigration(migrationName, context.GetType().Namespace);
+                var codeHelper = new CSharpHelper();
+                var scaffolder = ActivatorUtilities.CreateInstance<MigrationsScaffolder>(
+                    ((IInfrastructure<IServiceProvider>)context).Instance,
+                    new CSharpMigrationsGenerator(
+                        codeHelper,
+                        new CSharpMigrationOperationGenerator(codeHelper),
+                        new CSharpSnapshotGenerator(codeHelper)));
+
+                return scaffolder.ScaffoldMigration(migrationName, context.GetType().Namespace);
+            }
         }
 
-        private void UpdateSnapshot(string contextName, string version, string snapshot, bool createNew, MigrationData migration)
+        private MigrationData ApplyMigration(Type type, Version version, ScaffoldedMigration scaffoldedMigration)
+        {
+            var migration = new MigrationData()
+            {
+                Context = type.Name,
+                Version = version.ToString(),
+                Migration = scaffoldedMigration.MigrationCode,
+                Metadata = scaffoldedMigration.MetadataCode
+            };
+
+            var migrationAssemblyName = this.GenerateMigrationAssemblyName(type, version);
+            this.LoadAssembly(migrationAssemblyName, type, scaffoldedMigration.SnapshotCode, migration);
+            using (var context = (DbContextBase)this.App.GetFactory().Get(type))
+            {
+                context.Initialize(new DefaultInitializeDbContext(this.App, migrationAssemblyName));
+                context.Database.Migrate();
+            }
+
+            return migration;
+        }
+
+        private void AddMigration(string contextName, string version, MigrationData migration, string snapshot, bool createNew)
         {
             using (var context = this.App.GetFactory().Get<MigrationsContext>())
             {
@@ -216,11 +229,16 @@ namespace AppBrix.Data.Impl
                 }
                 else
                 {
-                    newSnapshot = context.Snapshots.First(x => x.Context == contextName);
+                    newSnapshot = context.Snapshots.Single(x => x.Context == contextName);
                 }
+
                 newSnapshot.Version = version;
-                newSnapshot.Snapshot = snapshot;
-                context.Migrations.Add(migration);
+                if (migration != null)
+                {
+                    newSnapshot.Snapshot = snapshot;
+                    context.Migrations.Add(migration);
+                }
+
                 context.SaveChanges();
             }
         }
