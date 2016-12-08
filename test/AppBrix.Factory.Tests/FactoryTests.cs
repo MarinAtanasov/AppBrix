@@ -5,7 +5,6 @@ using AppBrix.Application;
 using AppBrix.Container;
 using AppBrix.Factory.Tests.Mocks;
 using AppBrix.Tests;
-using AppBrix.Utils.Exceptions;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -40,7 +39,7 @@ namespace AppBrix.Factory.Tests
         {
             var factory = this.GetFactory();
             Action action = () => factory.Get<NonDefaultConstructorClass>();
-            action.ShouldThrow<DefaultConstructorNotFoundException>();
+            action.ShouldThrow<MissingMethodException>();
         }
 
         [Fact]
