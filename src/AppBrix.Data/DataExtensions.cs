@@ -21,5 +21,10 @@ namespace AppBrix.Data
         {
             return (IContextLoader)app.Get(typeof(IContextLoader));
         }
+
+        internal static IDbContextConfigurer GetDbContextConfigurer(this IApp app)
+        {
+            return (IDbContextConfigurer)app.Get(typeof(IDbContextConfigurer));
+        }
     }
 }

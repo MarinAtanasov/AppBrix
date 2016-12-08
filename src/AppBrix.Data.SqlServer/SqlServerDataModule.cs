@@ -19,19 +19,18 @@ namespace AppBrix.Data.SqlServer
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.App.GetEventHub().Subscribe<IOnConfiguringDbContext>(this.OnConfiguringDbContext);
+            this.configurer.Value.Initialize(context);
+            this.App.GetContainer().Register(this.configurer.Value);
         }
 
         protected override void UninitializeModule()
         {
+            this.configurer.Value.Uninitialize();
         }
         #endregion
 
-        #region Private methods
-        private void OnConfiguringDbContext(IOnConfiguringDbContext context)
-        {
-            context.OptionsBuilder.UseSqlServer(this.App.GetConfig<SqlServerDataConfig>().ConnectionString);
-        }
+        #region Private fields and constants
+        private readonly Lazy<SqlServerDbContextConfigurer> configurer = new Lazy<SqlServerDbContextConfigurer>();
         #endregion
     }
 }

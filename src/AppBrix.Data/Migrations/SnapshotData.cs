@@ -6,7 +6,10 @@ using System.Linq;
 
 namespace AppBrix.Data.Migrations
 {
-    public class SnapshotData
+    /// <summary>
+    /// Database snapshot created after a database migration.
+    /// </summary>
+    public sealed class SnapshotData
     {
         public string Context { get; set; }
 

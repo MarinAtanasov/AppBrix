@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Data.Impl
 {
-    internal class DefaultInitializeDbContext : IInitializeDbContext
+    internal sealed class DefaultInitializeDbContext : IInitializeDbContext
     {
         #region Construction
         public DefaultInitializeDbContext(IApp app, string migrationsAssembly)

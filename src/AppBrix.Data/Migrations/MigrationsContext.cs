@@ -12,10 +12,13 @@ namespace AppBrix.Data.Migrations
     /// <summary>
     /// Database context used for database migrations.
     /// </summary>
-    public class MigrationsContext : DbContext
+    public sealed class MigrationsContext : DbContext
     {
         public MigrationsContext(IApp app)
         {
+            if (app == null)
+                throw new ArgumentNullException(nameof(app));
+
             this.app = app;
         }
 
@@ -25,7 +28,7 @@ namespace AppBrix.Data.Migrations
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            this.app?.GetEventHub().Raise<IOnConfiguringDbContext>(new DefaultOnConfiguringDbContext(optionsBuilder));
+            this.app.GetDbContextConfigurer().Configure(new DefaultOnConfiguringDbContext(this, optionsBuilder));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -27,15 +27,13 @@ namespace AppBrix.Data
         protected string MigrationsAssembly { get; private set; }
         #endregion
 
-        #region IApplicationLifecycle implementation
+        #region Public and overriden methods
         public void Initialize(IInitializeDbContext context)
         {
             this.App = context.App;
             this.MigrationsAssembly = context.MigrationsAssembly;
         }
-        #endregion
 
-        #region Public and overriden methods
         public override void Dispose()
         {
             base.Dispose();
@@ -45,9 +43,7 @@ namespace AppBrix.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // TODO: Call object to initialize server / migration assembly (last could be hardcoded)
-            //optionsBuilder.UseSqlServer(@"Server=.\sqlexpress;Database=MyDatabase;Trusted_Connection=True;");
-            this.App.GetEventHub().Raise<IOnConfiguringDbContext>(new DefaultOnConfiguringDbContext(optionsBuilder));
+            this.App.GetDbContextConfigurer().Configure(new DefaultOnConfiguringDbContext(this, optionsBuilder));
             var relationalOptionsExtension = optionsBuilder.Options.Extensions.OfType<RelationalOptionsExtension>().SingleOrDefault();
             if (relationalOptionsExtension != null)
             {

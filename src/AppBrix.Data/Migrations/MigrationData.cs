@@ -6,7 +6,10 @@ using System.Linq;
 
 namespace AppBrix.Data.Migrations
 {
-    public class MigrationData
+    /// <summary>
+    /// Data about a single database migration.
+    /// </summary>
+    public sealed class MigrationData
     {
         public string Context { get; set; }
         public string Version { get; set; }

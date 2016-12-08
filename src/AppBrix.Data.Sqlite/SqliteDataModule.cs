@@ -1,10 +1,8 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Sqlite.Configuration;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -19,19 +17,18 @@ namespace AppBrix.Data.Sqlite
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.App.GetEventHub().Subscribe<IOnConfiguringDbContext>(this.OnConfiguringDbContext);
+            this.configurer.Value.Initialize(context);
+            this.App.GetContainer().Register(this.configurer.Value);
         }
 
         protected override void UninitializeModule()
         {
+            this.configurer.Value.Uninitialize();
         }
         #endregion
 
-        #region Private methods
-        private void OnConfiguringDbContext(IOnConfiguringDbContext context)
-        {
-            context.OptionsBuilder.UseSqlite(this.App.GetConfig<SqliteDataConfig>().ConnectionString);
-        }
+        #region Private fields and constants
+        private readonly Lazy<SqliteDbContextConfigurer> configurer = new Lazy<SqliteDbContextConfigurer>();
         #endregion
     }
 }

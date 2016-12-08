@@ -7,16 +7,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix.Data.Impl
 {
-    internal class DefaultOnConfiguringDbContext : IOnConfiguringDbContext
+    internal sealed class DefaultOnConfiguringDbContext : IOnConfiguringDbContext
     {
         #region Construction
-        public DefaultOnConfiguringDbContext(DbContextOptionsBuilder builder)
+        public DefaultOnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder)
         {
+            this.Context = context;
             this.OptionsBuilder = builder;
         }
         #endregion
 
         #region Properties
+        public DbContext Context { get; }
+
         public DbContextOptionsBuilder OptionsBuilder { get; }
         #endregion
     }

@@ -19,7 +19,7 @@ using System.Runtime.Loader;
 
 namespace AppBrix.Data.Impl
 {
-    internal class DefaultContextLoader : IContextLoader, IApplicationLifecycle
+    internal sealed class DefaultContextLoader : IContextLoader, IApplicationLifecycle
     {
         #region Properties
         public IApp App { get; private set; }
