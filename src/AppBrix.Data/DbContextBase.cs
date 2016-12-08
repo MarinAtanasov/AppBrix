@@ -48,7 +48,11 @@ namespace AppBrix.Data
             // TODO: Call object to initialize server / migration assembly (last could be hardcoded)
             //optionsBuilder.UseSqlServer(@"Server=.\sqlexpress;Database=MyDatabase;Trusted_Connection=True;");
             this.App.GetEventHub().Raise<IOnConfiguringDbContext>(new DefaultOnConfiguringDbContext(optionsBuilder));
-            optionsBuilder.Options.Extensions.OfType<RelationalOptionsExtension>().Single().MigrationsAssembly = this.MigrationsAssembly;
+            var relationalOptionsExtension = optionsBuilder.Options.Extensions.OfType<RelationalOptionsExtension>().SingleOrDefault();
+            if (relationalOptionsExtension != null)
+            {
+                relationalOptionsExtension.MigrationsAssembly = this.MigrationsAssembly;
+            }
         }
         #endregion
 

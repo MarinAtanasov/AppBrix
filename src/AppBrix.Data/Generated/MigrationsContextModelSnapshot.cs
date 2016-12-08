@@ -45,13 +45,13 @@ namespace AppBrix.Data.Generated
                     b.Property<string>("Context")
                         .IsUnicode(true);
 
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .IsUnicode(true);
+
                     b.Property<string>("Snapshot")
                         .IsRequired()
                         .HasColumnType("ntext")
-                        .IsUnicode(true);
-
-                    b.Property<string>("Version")
-                        .IsRequired()
                         .IsUnicode(true);
 
                     b.HasKey("Context");

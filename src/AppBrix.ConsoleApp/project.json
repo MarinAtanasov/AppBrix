@@ -32,6 +32,7 @@
     "AppBrix.Configuration.Yaml": "0.6.0-*",
     "AppBrix.Container": "0.6.0-*",
     "AppBrix.Data": "0.6.0-*",
+    "AppBrix.Data.InMemory": "0.6.0-*",
     "AppBrix.Data.Sqlite": "0.6.0-*",
     "AppBrix.Data.SqlServer": "0.6.0-*",
     "AppBrix.Events": "0.6.0-*",

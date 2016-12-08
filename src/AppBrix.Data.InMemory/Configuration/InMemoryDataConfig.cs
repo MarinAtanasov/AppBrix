@@ -5,26 +5,26 @@ using AppBrix.Configuration;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Sqlite.Configuration
+namespace AppBrix.Data.InMemory.Configuration
 {
     /// <summary>
-    /// Configures the Sqlite data provider.
+    /// Configures the InMemory data provider.
     /// </summary>
-    public sealed class SqliteDataConfig : IConfig
+    public sealed class InMemoryDataConfig : IConfig
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of <see cref="SqliteDataConfig"/> with default property values.
+        /// Creates a new instance of <see cref="InMemoryDataConfig"/> with default property values.
         /// </summary>
-        public SqliteDataConfig()
+        public InMemoryDataConfig()
         {
-            this.ConnectionString = @"Data Source=AppBrix.sqlite3;";
+            this.ConnectionString = "AppBrix";
         }
         #endregion
 
         #region Properties
         /// <summary>
-        /// Gets or sets the connection string to the Sqlite database instance.
+        /// Gets or sets the connection string to the InMemory database instance.
         /// </summary>
         public string ConnectionString { get; set; }
         #endregion

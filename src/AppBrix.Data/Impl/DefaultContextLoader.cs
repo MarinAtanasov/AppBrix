@@ -5,17 +5,15 @@ using AppBrix.Application;
 using AppBrix.Data.Migrations;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -40,17 +38,24 @@ namespace AppBrix.Data.Impl
 
         public T Get<T>() where T : DbContextBase
         {
-            T context;
-            
             var type = typeof(T);
-            if (!this.InitializedContexts.Contains(type))
+            if (!this.InitializedContexts.Contains(type) && this.dbSupportsMigrations)
             {
-                this.InitializedContexts.Add(type);
-                this.MigrateMigrationsContext();
-                this.MigrateContext(type);
+                lock (this.InitializedContexts)
+                {
+                    if (!this.InitializedContexts.Contains(type) && this.dbSupportsMigrations)
+                    {
+                        this.InitializedContexts.Add(type);
+                        this.MigrateMigrationsContext();
+                        if (this.dbSupportsMigrations)
+                        {
+                            this.MigrateContext(type);
+                        }
+                    }
+                }
             }
 
-            context = this.App.GetFactory().Get<T>();
+            var context = this.App.GetFactory().Get<T>();
             context.Initialize(new DefaultInitializeDbContext(this.App, null));
             return context;
         }
@@ -60,12 +65,21 @@ namespace AppBrix.Data.Impl
         private void MigrateMigrationsContext()
         {
             var migrationsContextType = typeof(MigrationsContext);
-            if (!this.InitializedContexts.Contains(migrationsContextType))
+            if (this.InitializedContexts.Contains(migrationsContextType))
+                return;
+
+            this.InitializedContexts.Add(migrationsContextType);
+            using (var context = (DbContext)this.App.GetFactory().Get(migrationsContextType))
             {
-                this.InitializedContexts.Add(migrationsContextType);
-                using (var context = (DbContext)this.App.GetFactory().Get(migrationsContextType))
+                try
                 {
                     context.Database.Migrate();
+                }
+                catch (InvalidOperationException)
+                {
+                    // Context does not support migrations.
+                    this.dbSupportsMigrations = false;
+                    context.Database.EnsureCreated();
                 }
             }
         }
@@ -261,6 +275,7 @@ namespace AppBrix.Data.Impl
         #region Private fields and constants
         private const string EmptyVersion = "0.0.0.0";
         private readonly HashSet<Type> InitializedContexts = new HashSet<Type>();
+        private bool dbSupportsMigrations = true;
         #endregion
     }
 }

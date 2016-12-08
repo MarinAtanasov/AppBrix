@@ -1,19 +1,19 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Sqlite.Configuration;
+using AppBrix.Data.InMemory.Configuration;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Sqlite
+namespace AppBrix.Data.InMemory
 {
     /// <summary>
-    /// Module used for regitering a SqlServer provider.
+    /// Module used for regitering an InMemory data provider.
     /// </summary>
-    public sealed class SqliteDataModule : ModuleBase
+    public sealed class InMemoryDataModule : ModuleBase
     {
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
@@ -30,7 +30,7 @@ namespace AppBrix.Data.Sqlite
         #region Private methods
         private void OnConfiguringDbContext(IOnConfiguringDbContext context)
         {
-            context.OptionsBuilder.UseSqlite(this.App.GetConfig<SqliteDataConfig>().ConnectionString);
+            context.OptionsBuilder.UseInMemoryDatabase(this.App.GetConfig<InMemoryDataConfig>().ConnectionString);
         }
         #endregion
     }

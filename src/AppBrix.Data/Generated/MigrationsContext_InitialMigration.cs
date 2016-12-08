@@ -30,8 +30,8 @@ namespace AppBrix.Data.Generated
                 columns: table => new
                 {
                     Context = table.Column<string>(nullable: false),
-                    Snapshot = table.Column<string>(type: "ntext", nullable: false),
-                    Version = table.Column<string>(nullable: false)
+                    Version = table.Column<string>(nullable: false),
+                    Snapshot = table.Column<string>(type: "ntext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,11 +41,9 @@ namespace AppBrix.Data.Generated
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Migrations");
+            migrationBuilder.DropTable(name: "Migrations");
 
-            migrationBuilder.DropTable(
-                name: "Snapshots");
+            migrationBuilder.DropTable(name: "Snapshots");
         }
     }
 }
