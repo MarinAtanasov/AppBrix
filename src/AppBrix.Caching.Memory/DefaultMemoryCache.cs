@@ -2,13 +2,14 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Caching.Memory.Config;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace AppBrix.Caching.Memory.Config
+namespace AppBrix.Caching.Memory
 {
     internal sealed class DefaultMemoryCache : IMemoryCache, IApplicationLifecycle
     {
