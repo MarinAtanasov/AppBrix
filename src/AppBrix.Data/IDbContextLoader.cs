@@ -9,13 +9,13 @@ namespace AppBrix.Data
     /// <summary>
     /// Defines a database context loader to be used when initializing context deriving from <see cref="DbContextBase"/>.
     /// </summary>
-    public interface IContextLoader
+    public interface IDbContextLoader
     {
         /// <summary>
         /// Gets an instance of a <see cref="DbContextBase"/> of type <see cref="T"/>.
         /// </summary>
-        /// <typeparam name="T">The type of the context.</typeparam>
+        /// <param name="type">The type of the context.</param>
         /// <returns>A databse context of the provided type.</returns>
-        T Get<T>() where T : DbContextBase;
+        DbContextBase Get(Type type);
     }
 }

@@ -19,7 +19,7 @@ using System.Runtime.Loader;
 
 namespace AppBrix.Data.Impl
 {
-    internal sealed class DefaultContextLoader : IContextLoader, IApplicationLifecycle
+    internal sealed class DefaultDbContextLoader : IDbContextLoader, IApplicationLifecycle
     {
         #region Properties
         public IApp App { get; private set; }
@@ -36,9 +36,15 @@ namespace AppBrix.Data.Impl
             this.App = null;
         }
 
-        public T Get<T>() where T : DbContextBase
+        public DbContextBase Get(Type type)
         {
-            var type = typeof(T);
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+            if (!typeof(DbContextBase).GetTypeInfo().IsAssignableFrom(type))
+                throw new ArgumentException($"Provided type must inherit from {typeof(DbContextBase)}.");
+            if (type.GetTypeInfo().IsAbstract)
+                throw new ArgumentException($"Cannot create instance of abstract type {type}.");
+
             if (!this.InitializedContexts.Contains(type) && this.dbSupportsMigrations)
             {
                 lock (this.InitializedContexts)
@@ -55,7 +61,7 @@ namespace AppBrix.Data.Impl
                 }
             }
 
-            var context = this.App.GetFactory().Get<T>();
+            var context = (DbContextBase)this.App.GetFactory().Get(type);
             context.Initialize(new DefaultInitializeDbContext(this.App, null));
             return context;
         }
@@ -96,9 +102,9 @@ namespace AppBrix.Data.Impl
             if (snapshot == null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
                 var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
-                var oldVersion = Version.Parse(snapshot?.Version ?? DefaultContextLoader.EmptyVersion);
+                var oldVersion = Version.Parse(snapshot?.Version ?? DefaultDbContextLoader.EmptyVersion);
                 var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
-                this.LoadAssembly(oldMigrationsAssembly, type, oldSnapshotCode);
+                this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
 
                 var newVersion = type.GetTypeInfo().Assembly.GetName().Version;
                 var newMigrationName = this.GenerateMigrationName(type, newVersion);
@@ -114,25 +120,22 @@ namespace AppBrix.Data.Impl
             }
         }
 
-        private void LoadAssembly(string assemblyName, Type type, string snapshot, params MigrationData[] migrations)
+        private void LoadAssembly(string assemblyName, string snapshot, params MigrationData[] migrations)
         {
-            var parseOptions =
-                CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp6)
-                    .WithDocumentationMode(DocumentationMode.None);
             var compilation = CSharpCompilation.Create(assemblyName,
                 syntaxTrees: this.GetSyntaxTrees(snapshot, migrations),
-                references: this.GetReferences(type),
+                references: this.GetReferences(),
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
             using (var ms = new MemoryStream())
             {
-                var result = compilation.Emit(ms);
+                compilation.Emit(ms);
                 ms.Seek(0, SeekOrigin.Begin);
                 AssemblyLoadContext.Default.LoadFromStream(ms);
             }
         }
         
-        private ICollection<SyntaxTree> GetSyntaxTrees(string snapshot, params MigrationData[] migrations)
+        private IEnumerable<SyntaxTree> GetSyntaxTrees(string snapshot, params MigrationData[] migrations)
         {
             var trees = new List<SyntaxTree>();
 
@@ -153,7 +156,7 @@ namespace AppBrix.Data.Impl
             return trees;
         }
 
-        private IEnumerable<MetadataReference> GetReferences(Type type)
+        private IEnumerable<MetadataReference> GetReferences()
         {
             var assemblies = new HashSet<string>();
             this.GetReferences(Assembly.GetEntryAssembly(), assemblies);
@@ -221,7 +224,7 @@ namespace AppBrix.Data.Impl
             };
 
             var migrationAssemblyName = this.GenerateMigrationAssemblyName(type, version);
-            this.LoadAssembly(migrationAssemblyName, type, scaffoldedMigration.SnapshotCode, migration);
+            this.LoadAssembly(migrationAssemblyName, scaffoldedMigration.SnapshotCode, migration);
             using (var context = (DbContextBase)this.App.GetFactory().Get(type))
             {
                 context.Initialize(new DefaultInitializeDbContext(this.App, migrationAssemblyName));

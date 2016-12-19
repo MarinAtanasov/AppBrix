@@ -31,7 +31,7 @@ namespace AppBrix.Data
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultContextLoader> contextLoader = new Lazy<DefaultContextLoader>();
+        private readonly Lazy<DefaultDbContextLoader> contextLoader = new Lazy<DefaultDbContextLoader>();
         #endregion
     }
 }
