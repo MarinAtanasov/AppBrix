@@ -29,7 +29,10 @@ namespace AppBrix.Logging.File
         
         public void WriteEntry(ILogEntry entry)
         {
-            this.writer.WriteLine(entry.ToString());
+            lock (this.writer)
+            {
+                this.writer.WriteLine(entry.ToString());
+            }
         }
         #endregion
 
