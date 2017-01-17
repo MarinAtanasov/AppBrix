@@ -99,6 +99,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Data.Sqlite", "src\
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Data.InMemory", "src\AppBrix.Data.InMemory\AppBrix.Data.InMemory.xproj", "{D5388A44-FDAC-47D0-A7F9-8778C982FDFD}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AppBrix.Data.Migration", "src\AppBrix.Data.Migration\AppBrix.Data.Migration.xproj", "{D516DD88-8B17-42CB-BAE5-569ECFE38196}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -266,6 +268,10 @@ Global
 		{D5388A44-FDAC-47D0-A7F9-8778C982FDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5388A44-FDAC-47D0-A7F9-8778C982FDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5388A44-FDAC-47D0-A7F9-8778C982FDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -311,5 +317,6 @@ Global
 		{60CF343A-BD69-4EE1-9A42-0EFD44C07DB5} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{EAF71732-68EF-4242-A335-8EC175725D0A} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{D5388A44-FDAC-47D0-A7F9-8778C982FDFD} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
+		{D516DD88-8B17-42CB-BAE5-569ECFE38196} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 	EndGlobalSection
 EndGlobal

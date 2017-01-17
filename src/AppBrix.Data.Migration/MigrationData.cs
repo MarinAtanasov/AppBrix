@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Migrations
+namespace AppBrix.Data.Migration
 {
     /// <summary>
     /// Data about a single database migration.

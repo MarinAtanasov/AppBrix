@@ -4,11 +4,10 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using AppBrix.Data.Migrations;
 
-namespace AppBrix.Data.Generated
+namespace AppBrix.Data.Migration.Generated
 {
-    [DbContext(typeof(MigrationsContext))]
+    [DbContext(typeof(MigrationContext))]
     partial class MigrationsContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

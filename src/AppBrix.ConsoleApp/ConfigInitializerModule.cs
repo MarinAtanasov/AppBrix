@@ -6,6 +6,7 @@ using AppBrix.Configuration;
 using AppBrix.Container;
 using AppBrix.Data;
 using AppBrix.Data.InMemory;
+using AppBrix.Data.Migration;
 using AppBrix.Data.Sqlite;
 using AppBrix.Data.SqlServer;
 using AppBrix.Events;
@@ -92,6 +93,7 @@ namespace AppBrix.ConsoleApp
             typeof(ContainerModule),
             typeof(DataModule),
             typeof(InMemoryDataModule),
+            typeof(MigrationDataModule),
             typeof(SqliteDataModule),
             typeof(SqlServerDataModule),
             typeof(EventsModule),

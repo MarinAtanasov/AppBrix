@@ -33,6 +33,7 @@
     "AppBrix.Container": "0.7.0-*",
     "AppBrix.Data": "0.7.0-*",
     "AppBrix.Data.InMemory": "0.7.0-*",
+    "AppBrix.Data.Migration": "0.7.0-*",
     "AppBrix.Data.Sqlite": "0.7.0-*",
     "AppBrix.Data.SqlServer": "0.7.0-*",
     "AppBrix.Events": "0.7.0-*",

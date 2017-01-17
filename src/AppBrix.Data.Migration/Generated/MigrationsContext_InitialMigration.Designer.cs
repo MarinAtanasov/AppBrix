@@ -5,11 +5,10 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using AppBrix.Data.Migrations;
 
-namespace AppBrix.Data.Generated
+namespace AppBrix.Data.Migration.Generated
 {
-    [DbContext(typeof(MigrationsContext))]
+    [DbContext(typeof(MigrationContext))]
     [Migration("MigrationsContext_InitialMigration")]
     partial class MigrationsContext_InitialMigration
     {

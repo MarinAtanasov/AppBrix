@@ -2,19 +2,19 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Data.Impl;
+using AppBrix.Data.Migration.Impl;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Migrations
+namespace AppBrix.Data.Migration
 {
     /// <summary>
     /// Database context used for database migrations.
     /// </summary>
-    public sealed class MigrationsContext : DbContext
+    public sealed class MigrationContext : DbContext
     {
-        public MigrationsContext(IApp app)
+        public MigrationContext(IApp app)
         {
             if (app == null)
                 throw new ArgumentNullException(nameof(app));
