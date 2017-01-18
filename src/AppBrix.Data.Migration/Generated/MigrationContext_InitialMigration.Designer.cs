@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppBrix.Data.Migration.Generated
 {
     [DbContext(typeof(MigrationContext))]
-    [Migration("MigrationsContext_InitialMigration")]
-    partial class MigrationsContext_InitialMigration
+    [Migration("MigrationContext_InitialMigration")]
+    partial class MigrationContext_InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

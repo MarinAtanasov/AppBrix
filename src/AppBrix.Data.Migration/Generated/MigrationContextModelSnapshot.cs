@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace AppBrix.Data.Migration.Generated
 {
     [DbContext(typeof(MigrationContext))]
-    partial class MigrationsContextModelSnapshot : ModelSnapshot
+    partial class MigrationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

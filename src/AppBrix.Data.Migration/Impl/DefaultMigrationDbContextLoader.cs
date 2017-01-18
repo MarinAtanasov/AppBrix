@@ -44,35 +44,41 @@ namespace AppBrix.Data.Migration.Impl
             if (type.GetTypeInfo().IsAbstract)
                 throw new ArgumentException($"Cannot create instance of abstract type {type}.");
 
-            if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
-            {
-                lock (this.initializedContexts)
-                {
-                    if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
-                    {
-                        this.initializedContexts.Add(type);
-                        this.MigrateMigrationsContext();
-                        if (this.dbSupportsMigrations)
-                        {
-                            this.MigrateContext(type);
-                        }
-                    }
-                }
-            }
-            
+            this.MigrateContextIfNeeded(type);
+
             return this.contextLoader.Get(type);
         }
         #endregion
 
         #region Private methods
-        private void MigrateMigrationsContext()
+        private void MigrateContextIfNeeded(Type type)
         {
-            var migrationsContextType = typeof(MigrationContext);
-            if (this.initializedContexts.Contains(migrationsContextType))
+            if ((typeof(DbContextBase).GetTypeInfo().IsAssignableFrom(type) || type == typeof(MigrationContext)) &&
+                !this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
+            {
+                lock (this.initializedContexts)
+                {
+                    if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
+                    {
+                        this.MigrateMigrationContext();
+                        if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
+                        {
+                            this.initializedContexts.Add(type);
+                            this.MigrateContext(type);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void MigrateMigrationContext()
+        {
+            var migrationContextType = typeof(MigrationContext);
+            if (this.initializedContexts.Contains(migrationContextType))
                 return;
 
-            this.initializedContexts.Add(migrationsContextType);
-            using (var context = this.contextLoader.Get(migrationsContextType))
+            this.initializedContexts.Add(migrationContextType);
+            using (var context = this.contextLoader.Get(migrationContextType))
             {
                 try
                 {

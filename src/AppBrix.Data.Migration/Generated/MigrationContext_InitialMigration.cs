@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppBrix.Data.Migration.Generated
 {
-    public partial class MigrationsContext_InitialMigration : Microsoft.EntityFrameworkCore.Migrations.Migration
+    public partial class MigrationContext_InitialMigration : Microsoft.EntityFrameworkCore.Migrations.Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
