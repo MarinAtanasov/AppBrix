@@ -10,8 +10,23 @@ AppBrix has been created with the following priorities:
 * Nothing should be dependent on the default implementations.
 * Every part of the framework should be easily replaceable without changing the original source code.
 
-## Sample Application
-AppBrix.ConsoleApp is a simple console application which uses the framework.
+## Setup
+* Clone project locally.
+```
+git clone https://github.com/MarinAtanasov/AppBrix.NetCore.git
+```
+* Go to project root directory.
+```
+cd AppBrix.NetCore
+```
+* Restore nuget dependencies.
+```
+dotnet restore
+```
+* Build all projects.
+```
+ForEach ($folder in (Get-ChildItem -Path src -Directory)) { dotnet build $folder.FullName }
+```
 
 ## Running Tests
 The tests are using xUnit.
@@ -21,3 +36,6 @@ The tests are using xUnit.
 ```
 ForEach ($folder in (Get-ChildItem -Path test -Directory)) { dotnet test $folder.FullName }
 ```
+
+## Sample Application
+AppBrix.ConsoleApp is a simple console application which uses the framework.
