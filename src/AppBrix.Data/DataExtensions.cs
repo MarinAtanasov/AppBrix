@@ -38,7 +38,7 @@ namespace AppBrix.Data
         /// </summary>
         /// <param name="app">The current <see cref="IApp"/>.</param>
         /// <returns>The registered context configurer.</returns>
-        public static IDbContextConfigurer GetDbContextConfigurer(this IApp app)
+        internal static IDbContextConfigurer GetDbContextConfigurer(this IApp app)
         {
             return (IDbContextConfigurer)app.Get(typeof(IDbContextConfigurer));
         }

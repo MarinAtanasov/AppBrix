@@ -28,7 +28,7 @@ namespace AppBrix.Data.Migration
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            this.app.GetDbContextConfigurer().Configure(new DefaultOnConfiguringDbContext(this, optionsBuilder));
+            this.app.Get<IDbContextConfigurer>().Configure(new DefaultOnConfiguringDbContext(this, optionsBuilder));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
