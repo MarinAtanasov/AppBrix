@@ -18,19 +18,19 @@ namespace AppBrix.Data.Migration
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.contextLoader.Value.Initialize(context);
-            this.App.GetContainer().Register(this.contextLoader.Value);
+            this.contextService.Value.Initialize(context);
+            this.App.GetContainer().Register(this.contextService.Value);
             this.App.GetFactory().Register(() => new MigrationContext(this.App));
         }
 
         protected override void UninitializeModule()
         {
-            this.contextLoader.Value.Uninitialize();
+            this.contextService.Value.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultMigrationDbContextLoader> contextLoader = new Lazy<DefaultMigrationDbContextLoader>();
+        private readonly Lazy<DefaultMigrationDbContextService> contextService = new Lazy<DefaultMigrationDbContextService>();
         #endregion
     }
 }

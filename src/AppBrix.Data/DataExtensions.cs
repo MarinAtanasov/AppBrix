@@ -14,13 +14,13 @@ namespace AppBrix.Data
     public static class DataExtensions
     {
         /// <summary>
-        /// Gets the application's currently registered <see cref="IDbContextLoader"/>
+        /// Gets the application's currently registered <see cref="IDbContextService"/>
         /// </summary>
         /// <param name="app">The application.</param>
-        /// <returns>The registered databse context loader.</returns>
-        public static IDbContextLoader GetDbContextLoader(this IApp app)
+        /// <returns>The registered databse context service.</returns>
+        public static IDbContextService GetDbContextService(this IApp app)
         {
-            return (IDbContextLoader)app.Get(typeof(IDbContextLoader));
+            return (IDbContextService)app.Get(typeof(IDbContextService));
         }
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace AppBrix.Data
         /// </summary>
         /// <typeparam name="T">The type of the context.</typeparam>
         /// <returns>A databse context of the provided type.</returns>
-        public static T Get<T>(this IDbContextLoader loader) where T : DbContext
+        public static T Get<T>(this IDbContextService service) where T : DbContext
         {
-            return (T)loader.Get(typeof(T));
+            return (T)service.Get(typeof(T));
         }
 
         /// <summary>

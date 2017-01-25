@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace AppBrix.Data.Impl
 {
-    internal sealed class DefaultDbContextLoader : IDbContextLoader, IApplicationLifecycle
+    internal sealed class DefaultDbContextService : IDbContextService, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)

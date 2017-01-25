@@ -18,18 +18,18 @@ namespace AppBrix.Data
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.contextLoader.Value.Initialize(context);
-            this.App.GetContainer().Register(this.contextLoader.Value);
+            this.contextService.Value.Initialize(context);
+            this.App.GetContainer().Register(this.contextService.Value);
         }
 
         protected override void UninitializeModule()
         {
-            this.contextLoader.Value.Uninitialize();
+            this.contextService.Value.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultDbContextLoader> contextLoader = new Lazy<DefaultDbContextLoader>();
+        private readonly Lazy<DefaultDbContextService> contextService = new Lazy<DefaultDbContextService>();
         #endregion
     }
 }

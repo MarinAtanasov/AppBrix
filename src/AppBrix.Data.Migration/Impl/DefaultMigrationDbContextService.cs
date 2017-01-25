@@ -18,13 +18,13 @@ using System.Runtime.Loader;
 
 namespace AppBrix.Data.Migration.Impl
 {
-    internal sealed class DefaultMigrationDbContextLoader : IDbContextLoader, IApplicationLifecycle
+    internal sealed class DefaultMigrationDbContextService : IDbContextService, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.contextLoader = this.app.GetDbContextLoader();
+            this.contextService = this.app.GetDbContextService();
             this.dbSupportsMigrations = true;
         }
 
@@ -46,7 +46,7 @@ namespace AppBrix.Data.Migration.Impl
 
             this.MigrateContextIfNeeded(type);
 
-            return this.contextLoader.Get(type);
+            return this.contextService.Get(type);
         }
         #endregion
 
@@ -78,7 +78,7 @@ namespace AppBrix.Data.Migration.Impl
                 return;
 
             this.initializedContexts.Add(migrationContextType);
-            using (var context = this.contextLoader.Get(migrationContextType))
+            using (var context = this.contextService.Get(migrationContextType))
             {
                 try
                 {
@@ -96,7 +96,7 @@ namespace AppBrix.Data.Migration.Impl
         private void MigrateContext(Type type)
         {
             SnapshotData snapshot;
-            using (var context = this.contextLoader.Get<MigrationContext>())
+            using (var context = this.contextService.Get<MigrationContext>())
             {
                 snapshot = context.Snapshots.SingleOrDefault(x => x.Context == type.Name);
             }
@@ -105,7 +105,7 @@ namespace AppBrix.Data.Migration.Impl
             if (snapshot == null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
                 var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
-                var oldVersion = Version.Parse(snapshot?.Version ?? DefaultMigrationDbContextLoader.EmptyVersion);
+                var oldVersion = Version.Parse(snapshot?.Version ?? DefaultMigrationDbContextService.EmptyVersion);
                 var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
                 this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
 
@@ -200,7 +200,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)
         {
-            using (var context = (DbContextBase)this.contextLoader.Get(type))
+            using (var context = (DbContextBase)this.contextService.Get(type))
             {
                 context.Initialize(new DefaultInitializeDbContext(this.app, oldMigrationsAssembly));
 
@@ -228,7 +228,7 @@ namespace AppBrix.Data.Migration.Impl
 
             var migrationAssemblyName = this.GenerateMigrationAssemblyName(type, version);
             this.LoadAssembly(migrationAssemblyName, scaffoldedMigration.SnapshotCode, migration);
-            using (var context = (DbContextBase)this.contextLoader.Get(type))
+            using (var context = (DbContextBase)this.contextService.Get(type))
             {
                 context.Initialize(new DefaultInitializeDbContext(this.app, migrationAssemblyName));
                 context.Database.Migrate();
@@ -239,7 +239,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private void AddMigration(string contextName, string version, MigrationData migration, string snapshot, bool createNew)
         {
-            using (var context = this.contextLoader.Get<MigrationContext>())
+            using (var context = this.contextService.Get<MigrationContext>())
             {
                 SnapshotData newSnapshot;
                 if (createNew)
@@ -282,7 +282,7 @@ namespace AppBrix.Data.Migration.Impl
         private const string EmptyVersion = "0.0.0.0";
         private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
         private IApp app;
-        private IDbContextLoader contextLoader;
+        private IDbContextService contextService;
         private bool dbSupportsMigrations;
         #endregion
     }

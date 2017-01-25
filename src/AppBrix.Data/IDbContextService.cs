@@ -8,9 +8,9 @@ using System.Linq;
 namespace AppBrix.Data
 {
     /// <summary>
-    /// Defines a database context loader to be used when initializing context deriving from <see cref="DbContext"/>.
+    /// Defines a database context service to be used when initializing context deriving from <see cref="DbContext"/>.
     /// </summary>
-    public interface IDbContextLoader
+    public interface IDbContextService
     {
         /// <summary>
         /// Gets an instance of a <see cref="DbContext"/> of type <see cref="T"/>.
