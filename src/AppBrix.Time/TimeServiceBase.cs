@@ -14,7 +14,7 @@ namespace AppBrix.Time
         /// Creates a new instance of <see cref="TimeServiceBase"/>.
         /// </summary>
         /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
-        public TimeServiceBase(string format)
+        protected TimeServiceBase(string format)
         {
             this.format = format;
         }
