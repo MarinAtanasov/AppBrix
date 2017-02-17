@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
-namespace AppBrix.Web.Server
+namespace AppBrix.Web.Server.Tests
 {
     /// <summary>
     /// A simple controller which can be used to test the connection to the application.
