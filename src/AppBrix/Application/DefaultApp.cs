@@ -40,6 +40,11 @@ namespace AppBrix.Application
         public IConfigManager ConfigManager { get; }
         
         /// <summary>
+        /// Indicates whether the application has been started.
+        /// </summary>
+        public bool IsStarted { get; private set; }
+
+        /// <summary>
         /// Indicates whether the application is in an initialized state.
         /// </summary>
         public bool IsInitialized { get; private set; }
@@ -48,32 +53,54 @@ namespace AppBrix.Application
         #region IPublic and overriden methods
         public void Start()
         {
-            this.RegisterModules();
-            this.Initialize();
-            this.ConfigManager.SaveAll();
+            lock (this.modules)
+            {
+                if (this.IsStarted)
+                    throw new InvalidOperationException("The application is already started.");
+
+                this.RegisterModules();
+                this.Initialize();
+                this.ConfigManager.SaveAll();
+            }
         }
 
         public void Stop()
         {
-            this.Uninitialize();
-            this.UnregisterModules();
-            this.ConfigManager.SaveAll();
+            lock (this.modules)
+            {
+                if (!this.IsStarted)
+                    throw new InvalidOperationException("The application is not started.");
+
+                this.Uninitialize();
+                this.UnregisterModules();
+                this.ConfigManager.SaveAll();
+            }
         }
 
         public void Initialize()
         {
-            if (this.IsInitialized)
-                throw new InvalidOperationException("The application is already initialized.");
+            lock (this.modules)
+            {
+                if (!this.IsStarted)
+                    throw new InvalidOperationException("The application is stopped.");
+                if (this.IsInitialized)
+                    throw new InvalidOperationException("The application is already initialized.");
 
-            this.InitializeInternal();
+                this.InitializeInternal();
+            }
         }
 
         public void Uninitialize()
         {
-            if (!this.IsInitialized)
-                throw new InvalidOperationException("The application is not initialized.");
+            lock (this.modules)
+            {
+                if (!this.IsStarted)
+                    throw new InvalidOperationException("The application is stopped.");
+                if (!this.IsInitialized)
+                    throw new InvalidOperationException("The application is not initialized.");
 
-            this.UninitializeInternal(this.modules.Count - 1);
+                this.UninitializeInternal(this.modules.Count - 1);
+            }
         }
 
         public override bool Equals(object obj)
@@ -177,6 +204,8 @@ namespace AppBrix.Application
 
         private void RegisterModules()
         {
+            this.IsStarted = true;
+
             var moduleInfos = this.GetModuleInfos();
             moduleInfos = ModuleInfo.SortByPriority(moduleInfos);
             foreach (var module in moduleInfos)
@@ -188,6 +217,8 @@ namespace AppBrix.Application
         private void UnregisterModules()
         {
             this.modules.Clear();
+
+            this.IsStarted = false;
         }
 
         private IEnumerable<ModuleInfo> GetModuleInfos()
