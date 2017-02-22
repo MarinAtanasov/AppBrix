@@ -84,7 +84,7 @@ namespace AppBrix.Application
                 if (!this.IsStarted)
                     throw new InvalidOperationException("The application is stopped.");
                 if (this.IsInitialized)
-                    throw new InvalidOperationException("The application is already initialized.");
+                    return; // The application is already initialized.
 
                 this.InitializeInternal();
             }
@@ -97,7 +97,7 @@ namespace AppBrix.Application
                 if (!this.IsStarted)
                     throw new InvalidOperationException("The application is stopped.");
                 if (!this.IsInitialized)
-                    throw new InvalidOperationException("The application is not initialized.");
+                    return; // The application is not initialized.
 
                 this.UninitializeInternal(this.modules.Count - 1);
             }
