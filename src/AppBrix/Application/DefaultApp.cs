@@ -188,14 +188,22 @@ namespace AppBrix.Application
                 if (moduleInfo.Status == ModuleStatus.Enabled)
                     moduleInfo.Module.Uninitialize();
 
-                var module = moduleInfo.Module as IInstallable;
-                if (module != null && moduleInfo.Config.Status == ModuleStatus.Uninstalling)
+                if (moduleInfo.Config.Status == ModuleStatus.Uninstalling)
                 {
+                    var module = (IInstallable)moduleInfo.Module;
                     module.Uninstall(new DefaultUninstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
                     this.ConfigManager.Save<AppConfig>();
-                    this.modules.RemoveAt(i);
+                }
+            }
+
+            for (var i = 0; i < this.modules.Count; i++)
+            {
+                var moduleInfo = this.modules[i];
+                if (moduleInfo.Status != moduleInfo.Config.Status)
+                {
+                    this.modules[i] = new ModuleInfo(moduleInfo.Module, moduleInfo.Config);
                 }
             }
 
@@ -223,7 +231,9 @@ namespace AppBrix.Application
 
         private IEnumerable<ModuleInfo> GetModuleInfos()
         {
-            return this.ConfigManager.Get<AppConfig>().Modules.Where(m => m.Status != ModuleStatus.Disabled).Select(m => new ModuleInfo(this.CreateModule(m), m));
+            return this.ConfigManager.Get<AppConfig>().Modules
+                .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
+                .Select(m => new ModuleInfo(this.CreateModule(m), m));
         }
 
         private IModule CreateModule(ModuleConfigElement element)

@@ -23,8 +23,6 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Schedules an <see cref="AppBrix.Lifecycle.IInstallable"/> module for uninstallation.
         /// The module will be uninstalled during the next application uninitialization.
-        /// If the module was disabled during application start,
-        /// an application restart might be required to uninstall during the next uninitialization.
         /// </summary>
         Uninstalling
     }

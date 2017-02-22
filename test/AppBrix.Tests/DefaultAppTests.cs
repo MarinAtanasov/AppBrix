@@ -120,6 +120,28 @@ namespace AppBrix.Tests
         }
 
         [Fact]
+        public void TestUninstallDisabledModule()
+        {
+            var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
+            app.GetConfig<AppConfig>().Modules.Single().Version = new Version(0, 0, 0, 0);
+            app.GetConfig<AppConfig>().Modules.Single().Status = ModuleStatus.Disabled;
+            app.Start();
+            var module = this.GetModules(app).Select(x => x.Module).Cast<SimpleInstallableModuleMock>().Single();
+            module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
+            module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
+            module.IsUpgraded.Should().BeFalse("Upgrade should not be called after starting the application");
+            module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+            app.GetConfig<AppConfig>().Modules.Single().Status = ModuleStatus.Uninstalling;
+            app.Uninitialize();
+            module.IsInitialized.Should().BeFalse("Initialize should not be called after starting the application");
+            module.IsUninitialized.Should().BeFalse("Uninitialize should not be called after uninitializing the application");
+            module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
+            module.IsUninstalled.Should().BeTrue("Uninstall should be called after uninitializing the application");
+            app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Disabled, "module status be set to disabled after uninstall");
+            app.GetConfig<AppConfig>().Modules.Single().Version.Should().BeNull("module version should be cleared after uninstall");
+        }
+
+        [Fact]
         public void TestUninstallUninstallingModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
