@@ -8,18 +8,18 @@ using AppBrix.Lifecycle;
 
 namespace AppBrix.Tests.Mocks
 {
-    internal class SimpleModuleMock : IModule
+    internal class SimpleModuleMock : ModuleBase
     {
         public bool IsInitialized { get; private set; }
 
         public bool IsUninitialized { get; private set; }
 
-        public void Initialize(IInitializeContext context)
+        protected override void InitializeModule(IInitializeContext context)
         {
             this.IsInitialized = true;
         }
 
-        public void Uninitialize()
+        protected override void UninitializeModule()
         {
             this.IsUninitialized = true;
         }

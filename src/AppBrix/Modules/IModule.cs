@@ -10,7 +10,7 @@ namespace AppBrix.Modules
     /// <summary>
     /// Interface for an application module.
     /// </summary>
-    public interface IModule : IApplicationLifecycle
+    public interface IModule : IApplicationLifecycle, IInstallable
     {
     }
 }

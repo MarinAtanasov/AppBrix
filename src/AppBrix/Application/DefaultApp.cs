@@ -126,48 +126,44 @@ namespace AppBrix.Application
                 if (moduleInfo.Status != ModuleStatus.Enabled)
                     continue;
 
-                var module = moduleInfo.Module as IInstallable;
-                if (module != null)
+                var requestedAction = this.InstallOrUpgradeModule(moduleInfo);
+                switch (requestedAction)
                 {
-                    var requestedAction = this.InstallOrUpgradeModule(module, moduleInfo);
-                    switch (requestedAction)
-                    {
-                        case RequestedAction.None:
-                            break;
-                        case RequestedAction.Reinitialize:
-                            this.ConfigManager.SaveAll();
-                            this.UninitializeInternal(i - 1);
-                            this.Initialize();
-                            return;
-                        case RequestedAction.Restart:
-                            this.ConfigManager.SaveAll();
-                            this.UninitializeInternal(i - 1);
-                            this.UnregisterModules();
-                            this.Start();
-                            return;
-                        default:
-                            throw new ArgumentOutOfRangeException($@"{nameof(requestedAction)}: {requestedAction}");
-                    }
+                    case RequestedAction.None:
+                        break;
+                    case RequestedAction.Reinitialize:
+                        this.ConfigManager.SaveAll();
+                        this.UninitializeInternal(i - 1);
+                        this.Initialize();
+                        return;
+                    case RequestedAction.Restart:
+                        this.ConfigManager.SaveAll();
+                        this.UninitializeInternal(i - 1);
+                        this.UnregisterModules();
+                        this.Start();
+                        return;
+                    default:
+                        throw new ArgumentOutOfRangeException($@"{nameof(RequestedAction)}: {requestedAction}");
                 }
 
                 moduleInfo.Module.Initialize(initializeContext);
             }
         }
 
-        private RequestedAction InstallOrUpgradeModule(IInstallable module, ModuleInfo moduleInfo)
+        private RequestedAction InstallOrUpgradeModule(ModuleInfo moduleInfo)
         {
             RequestedAction? requestedAction = null;
-            var version = module.GetType().GetTypeInfo().Assembly.GetName().Version;
+            var version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
             if (moduleInfo.Config.Version == null)
             {
                 var context = new DefaultInstallContext(this);
-                module.Install(context);
+                moduleInfo.Module.Install(context);
                 requestedAction = context.RequestedAction;
             }
             else if (moduleInfo.Config.Version < version)
             {
                 var context = new DefaultUpgradeContext(this, moduleInfo.Config.Version);
-                module.Upgrade(context);
+                moduleInfo.Module.Upgrade(context);
                 requestedAction = context.RequestedAction;
             }
 
@@ -190,8 +186,7 @@ namespace AppBrix.Application
 
                 if (moduleInfo.Config.Status == ModuleStatus.Uninstalling)
                 {
-                    var module = (IInstallable)moduleInfo.Module;
-                    module.Uninstall(new DefaultUninstallContext(this));
+                    moduleInfo.Module.Uninstall(new DefaultUninstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
                     this.ConfigManager.Save<AppConfig>();

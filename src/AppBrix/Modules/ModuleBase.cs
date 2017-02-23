@@ -23,6 +23,31 @@ namespace AppBrix.Modules
 
         #region Public methods
         /// <summary>
+        /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
+        /// </summary>
+        /// <param name="context">The install context.</param>
+        void IInstallable.Install(IInstallContext context)
+        {
+        }
+
+        /// <summary>
+        /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
+        /// </summary>
+        /// <param name="context">The upgrade context.</param>
+        void IInstallable.Upgrade(IUpgradeContext context)
+        {
+        }
+
+
+        /// <summary>
+        /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
+        /// </summary>
+        /// <param name="context">The uninstall context.</param>
+        void IInstallable.Uninstall(IUninstallContext context)
+        {
+        }
+
+        /// <summary>
         /// Initializes the common module logic and calls the implemented InitializeModule method.
         /// </summary>
         /// <param name="context">The current initialization context.</param>
