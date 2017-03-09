@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Module used for regitering a SqlServer provider.</Description>
+    <Copyright>Copyright 2015</Copyright>
+    <AssemblyTitle>AppBrix.Data.SqlServer</AssemblyTitle>
+    <VersionPrefix>0.7.0</VersionPrefix>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>AppBrix.Data.SqlServer</AssemblyName>
+    <PackageId>AppBrix.Data.SqlServer</PackageId>
+    <PackageTags>AppBrix Module Data SqlServer</PackageTags>
+    <PackageReleaseNotes>Updated dependencies to use DotNetCore 1.1.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Data\AppBrix.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.</Description>
+    <Copyright>Copyright 2015</Copyright>
+    <AssemblyTitle>AppBrix.Configuration.Memory</AssemblyTitle>
+    <VersionPrefix>0.7.0</VersionPrefix>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>AppBrix.Configuration.Memory</AssemblyName>
+    <PackageId>AppBrix.Configuration.Memory</PackageId>
+    <PackageTags>AppBrix Config Memory</PackageTags>
+    <PackageReleaseNotes>Updated dependencies to use DotNetCore 1.1.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

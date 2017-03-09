@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Module which enables throwing of logging events and subscribing to those events.</Description>
+    <Copyright>Copyright 2015</Copyright>
+    <AssemblyTitle>AppBrix.Logging</AssemblyTitle>
+    <VersionPrefix>0.7.0</VersionPrefix>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>AppBrix.Logging</AssemblyName>
+    <PackageId>AppBrix.Logging</PackageId>
+    <PackageTags>AppBrix Module Log</PackageTags>
+    <PackageReleaseNotes>Updated dependencies to use DotNetCore 1.1.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Container\AppBrix.Container.csproj" />
+    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj" />
+    <ProjectReference Include="..\AppBrix.Events.Async\AppBrix.Events.Async.csproj" />
+    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
+    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

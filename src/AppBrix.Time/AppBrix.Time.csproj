@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Module which is used for getting the current time. This should be used instead of DateTime.(Utc)Now in order for the time to always be of the same kind and the code to be more easily testable.</Description>
+    <Copyright>Copyright 2015</Copyright>
+    <AssemblyTitle>AppBrix.Time</AssemblyTitle>
+    <VersionPrefix>0.7.0</VersionPrefix>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>AppBrix.Time</AssemblyName>
+    <PackageId>AppBrix.Time</PackageId>
+    <PackageTags>AppBrix Module Date Time</PackageTags>
+    <PackageReleaseNotes>Updated dependencies to use DotNetCore 1.1.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Container\AppBrix.Container.csproj" />
+  </ItemGroup>
+
+</Project>

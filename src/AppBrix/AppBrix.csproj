@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>AppBrix Core containing the application and module classes and interfaces.</Description>
+    <Copyright>Copyright 2015</Copyright>
+    <AssemblyTitle>AppBrix</AssemblyTitle>
+    <VersionPrefix>0.7.0</VersionPrefix>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>AppBrix</AssemblyName>
+    <PackageId>AppBrix</PackageId>
+    <PackageTags>AppBrix</PackageTags>
+    <PackageReleaseNotes>Updated dependencies to use DotNetCore 1.1.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -34,7 +34,8 @@ The tests are using xUnit.
 * In Project Rider, they can be ran with right click on *Tests* solution folder and selecting *Run Unit Tests*.
 * In PowerShell, they can be run using the following command while in the project's root folder:
 ```
-ForEach ($folder in (Get-ChildItem -Path test -Directory)) { dotnet test $folder.FullName }
+ForEach ($folder in (Get-ChildItem -Path test -Directory)) { dotnet build $folder.FullName }
+dotnet vstest (Get-ChildItem test | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") })
 ```
 
 ## Sample Application
