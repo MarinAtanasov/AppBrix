@@ -12,19 +12,19 @@ AppBrix has been created with the following priorities:
 
 ## Setup
 * Clone project locally.
-```
+```Powershell
 git clone https://github.com/MarinAtanasov/AppBrix.NetCore.git
 ```
 * Go to project root directory.
-```
+```Powershell
 cd AppBrix.NetCore
 ```
 * Restore nuget dependencies.
-```
+```Powershell
 dotnet restore
 ```
 * Build all projects.
-```
+```Powershell
 ForEach ($folder in (Get-ChildItem -Path src -Directory)) { dotnet build $folder.FullName }
 ```
 
@@ -33,7 +33,7 @@ The tests are using xUnit.
 * In Visual Studio, they require the Test Explorer to be opened before building the test projects in order to discover the tests.
 * In Project Rider, they can be ran with right click on *Tests* solution folder and selecting *Run Unit Tests*.
 * In PowerShell, they can be run using the following command while in the project's root folder:
-```
+```Powershell
 ForEach ($folder in (Get-ChildItem -Path test -Directory)) { dotnet build $folder.FullName }
 dotnet vstest (Get-ChildItem test | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") })
 ```
