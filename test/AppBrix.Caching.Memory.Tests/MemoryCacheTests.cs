@@ -126,60 +126,50 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact]
         public void TestAbsoluteExpiration()
         {
-            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(5);
+            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(20));
+            cache.Set(nameof(TestAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(5));
             var item = cache.Get(nameof(TestAbsoluteExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
-
-            Thread.Sleep(200);
-            item = cache.Get(nameof(TestAbsoluteExpiration));
-            item.Should().BeNull("the item shold have been removed from the cache");
+            
+            new Func<object>(() => cache.Get(nameof(TestAbsoluteExpiration)))
+                .ShouldReturn(null, TimeSpan.FromMilliseconds(1000), "the item shold have been removed from the cache");
         }
 
         [Fact]
-        public void TestRollingExpiration()
+        public void TestMixedExpiration()
         {
             this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(5);
             this.app.Reinitialize();
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestRollingExpiration), this, rollingExpiration: TimeSpan.FromMilliseconds(50));
-            var item = cache.Get(nameof(TestRollingExpiration));
+            cache.Set(nameof(TestMixedExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50), rollingExpiration: TimeSpan.FromMilliseconds(25));
+            var item = cache.Get(nameof(TestMixedExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
-            for (var i = 0; i < 100; i++)
-            {
-                item = cache.Get(nameof(TestRollingExpiration));
-                item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
-                Thread.Sleep(1);
-            }
-
-            Thread.Sleep(200);
-            item = cache.Get(nameof(TestRollingExpiration));
-            item.Should().BeNull("the item shold have been removed from the cache");
+            new Func<object>(() => cache.Get(nameof(TestMixedExpiration)))
+                .ShouldReturn(null, TimeSpan.FromMilliseconds(1000), "the item shold have been removed from the cache");
         }
 
         [Fact]
         public void TestDisposeOnAbsoluteExpiration()
         {
-            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(5);
+            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
 
             var disposed = false;
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestDisposeOnAbsoluteExpiration), this, dispose: () => disposed = true, absoluteExpiration: TimeSpan.FromMilliseconds(20));
+            cache.Set(nameof(TestDisposeOnAbsoluteExpiration), this, dispose: () => disposed = true, absoluteExpiration: TimeSpan.FromMilliseconds(5));
             var item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
             disposed.Should().BeFalse("the item should not have expired yet");
 
-            Thread.Sleep(200);
+            new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(1000), "the item should have expired");
             item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
             item.Should().BeNull("the item shold have been removed from the cache");
-            disposed.Should().BeTrue("the item should have expired");
         }
 
         [Fact]
@@ -191,22 +181,21 @@ namespace AppBrix.Caching.Memory.Tests
             var disposed = false;
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestRollingExpiration), this, dispose: () => disposed = true, rollingExpiration: TimeSpan.FromMilliseconds(20));
-            var item = cache.Get(nameof(TestRollingExpiration));
+            cache.Set(nameof(TestDisposeOnRollingExpiration), this, dispose: () => disposed = true, rollingExpiration: TimeSpan.FromMilliseconds(25));
+            var item = cache.Get(nameof(TestDisposeOnRollingExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
-                item = cache.Get(nameof(TestRollingExpiration));
+                item = cache.Get(nameof(TestDisposeOnRollingExpiration));
                 item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
                 disposed.Should().BeFalse($"the item should not have expired after {i} retries");
                 Thread.Sleep(1);
             }
 
-            Thread.Sleep(200);
-            item = cache.Get(nameof(TestRollingExpiration));
+            new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(1000), "the item should have expired");
+            item = cache.Get(nameof(TestDisposeOnRollingExpiration));
             item.Should().BeNull("the item shold have been removed from the cache");
-            disposed.Should().BeTrue("the item should have expired");
         }
 
         [Fact]
