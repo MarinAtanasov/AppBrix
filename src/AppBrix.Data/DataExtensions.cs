@@ -2,11 +2,12 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data
+namespace AppBrix
 {
     /// <summary>
     /// Extension methods for the <see cref="DataModule"/>.

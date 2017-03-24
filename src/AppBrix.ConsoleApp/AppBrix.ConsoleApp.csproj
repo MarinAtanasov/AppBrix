@@ -26,6 +26,7 @@
     <ProjectReference Include="..\AppBrix.Caching.Json\AppBrix.Caching.Json.csproj" />
     <ProjectReference Include="..\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj" />
     <ProjectReference Include="..\AppBrix.Cloning\AppBrix.Cloning.csproj" />
+    <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj" />
     <ProjectReference Include="..\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
     <ProjectReference Include="..\AppBrix.Configuration.Json\AppBrix.Configuration.Json.csproj" />
     <ProjectReference Include="..\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj" />
@@ -37,6 +38,7 @@
     <ProjectReference Include="..\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
     <ProjectReference Include="..\AppBrix.Data.SqlServer\AppBrix.Data.SqlServer.csproj" />
     <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj" />
+    <ProjectReference Include="..\AppBrix.Events.Async\AppBrix.Events.Async.csproj" />
     <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
     <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj" />
     <ProjectReference Include="..\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj" />
