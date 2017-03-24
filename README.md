@@ -40,3 +40,5 @@ dotnet vstest (Get-ChildItem test | % { Join-Path $_.FullName -ChildPath ("bin/D
 
 ## Sample Application
 AppBrix.ConsoleApp is a simple console application which uses the framework.
+
+AppBrix.WebApp is a simple web application which uses the framework.

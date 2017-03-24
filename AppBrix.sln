@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB6662-4780-4AB5-BA67-3FB56322EBB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -99,6 +99,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.InMemory", "src\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj", "{D5388A44-FDAC-47D0-A7F9-8778C982FDFD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Migration", "src\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj", "{D516DD88-8B17-42CB-BAE5-569ECFE38196}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.WebApp", "src\AppBrix.WebApp\AppBrix.WebApp.csproj", "{33FE02D8-B501-4D52-96A0-EA6846DB9F43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +273,10 @@ Global
 		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D516DD88-8B17-42CB-BAE5-569ECFE38196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33FE02D8-B501-4D52-96A0-EA6846DB9F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33FE02D8-B501-4D52-96A0-EA6846DB9F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33FE02D8-B501-4D52-96A0-EA6846DB9F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33FE02D8-B501-4D52-96A0-EA6846DB9F43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -317,5 +323,6 @@ Global
 		{EAF71732-68EF-4242-A335-8EC175725D0A} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{D5388A44-FDAC-47D0-A7F9-8778C982FDFD} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{D516DD88-8B17-42CB-BAE5-569ECFE38196} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
+		{33FE02D8-B501-4D52-96A0-EA6846DB9F43} = {F6BC1FBE-D2EC-42E4-B760-1D919EA0A3A3}
 	EndGlobalSection
 EndGlobal
