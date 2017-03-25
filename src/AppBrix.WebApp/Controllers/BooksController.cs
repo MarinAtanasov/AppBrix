@@ -10,28 +10,36 @@ namespace AppBrix.WebApp.Controllers
     [Route("api/[controller]")]
     public class BooksController : Controller
     {
-        [HttpGet]
-        public IEnumerable<Book> Get([FromServices]IApp app)
+        #region Construction
+        public BooksController(IApp app)
         {
-            using (var context = app.GetDbContextService().Get<BookContext>())
+            this.app = app;
+        }
+        #endregion
+
+        #region Public methods
+        [HttpGet]
+        public IEnumerable<Book> Get()
+        {
+            using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
                 return context.Books.ToList();
             }
         }
 
         [HttpGet("{id}")]
-        public Book Get([FromServices]IApp app, Guid id)
+        public Book Get(Guid id)
         {
-            using (var context = app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
                 return context.Books.SingleOrDefault(x => x.Id == id);
             }
         }
 
         [HttpPost]
-        public void Post([FromServices]IApp app, [FromBody]Book book)
+        public void Post([FromBody]Book book)
         {
-            using (var context = app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
                 context.Books.Add(book);
                 context.SaveChanges();
@@ -39,9 +47,9 @@ namespace AppBrix.WebApp.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put([FromServices]IApp app, Guid id, [FromBody]Book book)
+        public void Put(Guid id, [FromBody]Book book)
         {
-            using (var context = app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
                 var original = context.Books.SingleOrDefault(x => x.Id == id);
                 original.Author = book.Author;
@@ -51,14 +59,19 @@ namespace AppBrix.WebApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete([FromServices]IApp app, Guid id)
+        public void Delete(Guid id)
         {
-            using (var context = app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
                 var book = context.Books.Single(x => x.Id == id);
                 context.Books.Remove(book);
                 context.SaveChanges();
             }
         }
+        #endregion
+
+        #region Private fields and constants
+        private readonly IApp app;
+        #endregion
     }
 }
