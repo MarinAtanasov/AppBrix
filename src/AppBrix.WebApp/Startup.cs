@@ -1,7 +1,7 @@
 ﻿using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Configuration.Files;
-using AppBrix.Configuration.Json;
+using AppBrix.Configuration.Yaml;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +24,7 @@ namespace AppBrix.WebApp
             Configuration = builder.Build();
 
             // Add AppBrix app.
-            var configManager = new ConfigManager(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
+            var configManager = new ConfigManager(new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer());
             if (configManager.Get<AppConfig>().Modules.Count == 0)
                 configManager.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
 
