@@ -35,7 +35,7 @@ namespace AppBrix.Caching.Json
                     Culture = CultureInfo.InvariantCulture,
                     DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
                     NullValueHandling = NullValueHandling.Ignore,
-                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
                 };
 
                 this.settings.Converters.Add(new StringEnumConverter());
