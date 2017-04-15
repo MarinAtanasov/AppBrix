@@ -25,7 +25,7 @@ namespace AppBrix.Time.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUtcTimeService()
         {
             this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
@@ -38,7 +38,7 @@ namespace AppBrix.Time.Tests
             time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestLocalTimeService()
         {
             this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
@@ -51,7 +51,7 @@ namespace AppBrix.Time.Tests
             time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUtcToUtcTime()
         {
             this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
@@ -62,7 +62,7 @@ namespace AppBrix.Time.Tests
             appTime.Should().Be(time, "returned time should be the same as passed in");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestLocalToUtcTime()
         {
             this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
@@ -73,7 +73,7 @@ namespace AppBrix.Time.Tests
             appTime.Should().Be(time.ToUniversalTime(), "returned time should be equal to the passed in");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUtcToLocalTime()
         {
             this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
@@ -84,7 +84,7 @@ namespace AppBrix.Time.Tests
             appTime.Should().Be(time.ToLocalTime(), "returned time should be equal to the passed in");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestLocalToLocalTime()
         {
             this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
@@ -94,8 +94,75 @@ namespace AppBrix.Time.Tests
             appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
             appTime.Should().Be(time, "returned time should be the same as passed in");
         }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceGetTime()
+        {
+            Action action = this.TestPerformanceGetTimeInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceToAppTime()
+        {
+            Action action = this.TestPerformanceToAppTimeInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceConvertTime()
+        {
+            Action action = this.TestPerformanceConvertTimeInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
         #endregion
-        
+
+        #region Private methods
+        private void TestPerformanceGetTimeInternal()
+        {
+            for (int i = 0; i < 200000; i++)
+            {
+                app.GetTime();
+            }
+        }
+
+        private void TestPerformanceToAppTimeInternal()
+        {
+            var utcTime = DateTime.UtcNow;
+            var localTime = utcTime.ToLocalTime();
+            var timeService = app.GetTimeService();
+
+            for (int i = 0; i < 50000; i++)
+            {
+                timeService.ToAppTime(utcTime);
+                timeService.ToAppTime(localTime);
+            }
+        }
+
+        private void TestPerformanceConvertTimeInternal()
+        {
+            var time = DateTime.UtcNow;
+            var timeService = app.GetTimeService();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                timeService.ToDateTime(timeService.ToString(time));
+            }
+        }
+        #endregion
+
         #region Private fields and constants
         private readonly IApp app;
         #endregion

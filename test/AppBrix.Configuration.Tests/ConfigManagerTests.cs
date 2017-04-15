@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Configuration.Tests.Mocks;
+using AppBrix.Tests;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace AppBrix.Configuration.Tests
     public sealed class ConfigManagerTests
     {
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetConfig()
         {
             var provider = new ConfigProviderMock();
@@ -34,7 +35,7 @@ namespace AppBrix.Configuration.Tests
             serializer.Deserialized.Should().ContainSingle("the manager should not have tried to re-deserialize the config");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSaveAllConfigs()
         {
             var provider = new ConfigProviderMock();
@@ -58,7 +59,7 @@ namespace AppBrix.Configuration.Tests
             provider.WrittenConfigs.Should().ContainSingle("the manager should not have tried to re-write an unmodified config");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSaveConfig()
         {
             var provider = new ConfigProviderMock();
@@ -75,6 +76,37 @@ namespace AppBrix.Configuration.Tests
 
             manager.Save(config);
             provider.WrittenConfigs.Should().ContainSingle("the manager should not have tried to re-write an unmodified config");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceConfigManager()
+        {
+            Action action = this.TestPerformanceConfigManagerInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
+        #endregion
+
+        #region Private methods
+        private void TestPerformanceConfigManagerInternal()
+        {
+            var provider = new ConfigProviderMock();
+            var serializer = new ConfigSerializerMock();
+            var manager = new ConfigManager(provider, serializer);
+
+            for (int i = 0; i < 50000; i++)
+            {
+                manager.SaveAll();
+            }
+
+            manager.Get<ConfigMock>();
+            for (int i = 0; i < 50000; i++)
+            {
+                manager.SaveAll();
+            }
         }
         #endregion
     }

@@ -26,7 +26,7 @@ namespace AppBrix.Events.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEvent()
         {
             var hub = this.GetEventHub();
@@ -41,7 +41,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventChild()
         {
             var hub = this.GetEventHub();
@@ -56,7 +56,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventInterface()
         {
             var hub = this.GetEventHub();
@@ -71,7 +71,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNoSubscription()
         {
             var hub = this.GetEventHub();
@@ -79,7 +79,7 @@ namespace AppBrix.Events.Tests
             hub.Raise(args);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestParentAndChildSubscription()
         {
             var hub = this.GetEventHub();
@@ -92,7 +92,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleSubscription()
         {
             var hub = this.GetEventHub();
@@ -105,7 +105,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(2, "event handler should be called exactly twice");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestHierarchyCallingOrder()
         {
             var hub = this.GetEventHub();
@@ -137,7 +137,7 @@ namespace AppBrix.Events.Tests
             parentCalled.Should().BeTrue("interface should be called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestCallBaseSubscribeParent()
         {
             var hub = this.GetEventHub();
@@ -148,7 +148,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(0, "event handler should not be called if the arguments are passed as base class");
         }
         
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleRaise()
         {
             var hub = this.GetEventHub();
@@ -162,7 +162,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(2, "event handler should be called exactly twice after the second raise");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUnsubscribe()
         {
             var hub = this.GetEventHub();
@@ -177,7 +177,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUninitialize()
         {
             var hub = this.GetEventHub();
@@ -189,7 +189,7 @@ namespace AppBrix.Events.Tests
             called.Should().Be(1, "event handler should be called exactly once after the first raise");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNullArgumentSubscribe()
         {
             var hub = this.GetEventHub();
@@ -197,7 +197,7 @@ namespace AppBrix.Events.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNullArgumentUnsubscribe()
         {
             var hub = this.GetEventHub();
@@ -205,7 +205,7 @@ namespace AppBrix.Events.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNullArgumentRaise()
         {
             var hub = this.GetEventHub();
@@ -213,7 +213,7 @@ namespace AppBrix.Events.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestHandlerUnsubscribingItself()
         {
             var hub = this.GetEventHub();
@@ -243,7 +243,7 @@ namespace AppBrix.Events.Tests
             afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsSubscribe()
         {
             Action action = this.TestPerformanceEventsSubscribeInternal;
@@ -255,7 +255,7 @@ namespace AppBrix.Events.Tests
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsUnsubscribe()
         {
             Action action = this.TestPerformanceEventsUnsubscribeInternal;
@@ -267,7 +267,7 @@ namespace AppBrix.Events.Tests
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsRaise()
         {
             Action action = this.TestPerformanceEventsRaiseInternal;

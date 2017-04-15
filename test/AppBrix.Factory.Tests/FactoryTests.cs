@@ -25,7 +25,7 @@ namespace AppBrix.Factory.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestFactoryDefaultConstructorCall()
         {
             var factory = this.GetFactory();
@@ -34,7 +34,7 @@ namespace AppBrix.Factory.Tests
             defConstObj.ConstructorCalled.Should().BeTrue("the default constructor should be called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestFactoryNonDefaultConstructorCall()
         {
             var factory = this.GetFactory();
@@ -42,7 +42,7 @@ namespace AppBrix.Factory.Tests
             action.ShouldThrow<MissingMethodException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestFactoryRegistered()
         {
             var factory = this.GetFactory();
@@ -52,7 +52,7 @@ namespace AppBrix.Factory.Tests
             returned.Should().BeSameAs(this, "the factory should return the same object");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceFactory()
         {
             Action action = this.TestPerformanceFactoryInternal;

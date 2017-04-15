@@ -32,7 +32,7 @@ namespace AppBrix.Logging.Tests.Config
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestErrorLevelConfig()
         {
             var message = "Test message";
@@ -77,7 +77,7 @@ namespace AppBrix.Logging.Tests.Config
             traceCalled.Should().BeFalse("the trace event should not have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestWarningLevelConfig()
         {
             var message = "Test message";
@@ -122,7 +122,7 @@ namespace AppBrix.Logging.Tests.Config
             traceCalled.Should().BeFalse("the trace event should not have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInfoLevelConfig()
         {
             var message = "Test message";
@@ -167,7 +167,7 @@ namespace AppBrix.Logging.Tests.Config
             traceCalled.Should().BeFalse("the trace event should not have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDebugLevelConfig()
         {
             var message = "Test message";
@@ -212,7 +212,7 @@ namespace AppBrix.Logging.Tests.Config
             traceCalled.Should().BeFalse("the trace event should not have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestTraceLevelConfig()
         {
             var message = "Test message";

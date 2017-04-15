@@ -28,7 +28,7 @@ namespace AppBrix.Cloning.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyInteger()
         {
             var cloner = this.GetCloner();
@@ -37,7 +37,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestShallowCopyInteger()
         {
             var cloner = this.GetCloner();
@@ -46,7 +46,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShallowCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyString()
         {
             var cloner = this.GetCloner();
@@ -55,7 +55,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestShallowCopyString()
         {
             var cloner = this.GetCloner();
@@ -64,7 +64,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShallowCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyNumericPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -73,7 +73,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestShallowCopyNumericPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -82,7 +82,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShallowCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -91,7 +91,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestShallowCopyPrimitivePropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -100,7 +100,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShallowCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyComplexPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -109,7 +109,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsDeepCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestShallowCopyComplexPropertiesMock()
         {
             var cloner = this.GetCloner();
@@ -118,7 +118,7 @@ namespace AppBrix.Cloning.Tests
             this.AssertIsShallowCopy(original, clone);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyDirectRecursingMock()
         {
             var cloner = this.GetCloner();
@@ -129,7 +129,7 @@ namespace AppBrix.Cloning.Tests
             clone.Other.Should().BeSameAs(clone, "the clone should be referencing itself after the deep copy");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDeepCopyIndirectRecursingMock()
         {
             var cloner = this.GetCloner();
@@ -142,7 +142,7 @@ namespace AppBrix.Cloning.Tests
             clone.Other.Other.Should().BeSameAs(clone, "the clone's reference should be referencing the clone");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceDeepCopy()
         {
             Action action = this.TestPerformanceDeepCopyInternal;
@@ -153,7 +153,7 @@ namespace AppBrix.Cloning.Tests
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceShallowCopy()
         {
             Action action = this.TestPerformanceShallowCopyInternal;

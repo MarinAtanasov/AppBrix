@@ -26,14 +26,14 @@ namespace AppBrix.Caching.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetCache()
         {
             var cache = this.app.GetCache();
             cache.Should().NotBeNull("cache must be registered and resolved");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestCacheItem()
         {
             var cache = this.app.GetCache();
@@ -47,7 +47,7 @@ namespace AppBrix.Caching.Tests
             cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestReplaceItem()
         {
             var cache = this.app.GetCache();
@@ -66,7 +66,7 @@ namespace AppBrix.Caching.Tests
             cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceCache()
         {
             Action action = this.TestPerformanceCacheInternal;

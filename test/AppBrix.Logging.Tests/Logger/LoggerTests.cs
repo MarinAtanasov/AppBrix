@@ -35,7 +35,7 @@ namespace AppBrix.Logging.Tests.Logger
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSyncLogger()
         {
             var writer = new LogWriterMock();
@@ -58,7 +58,7 @@ namespace AppBrix.Logging.Tests.Logger
             writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestAsyncLogger()
         {
             var writer = new LogWriterMock();

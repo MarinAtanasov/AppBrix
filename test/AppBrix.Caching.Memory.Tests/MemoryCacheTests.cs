@@ -33,14 +33,14 @@ namespace AppBrix.Caching.Memory.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetMemoryCache()
         {
             var cache = this.app.GetMemoryCache();
             cache.Should().NotBeNull("cache must be registered and resolved");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetNullKey()
         {
             var cache = this.app.GetMemoryCache();
@@ -48,7 +48,7 @@ namespace AppBrix.Caching.Memory.Tests
             action.ShouldThrow<ArgumentNullException>("key should not be null");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetUnregisteredItem()
         {
             var cache = this.app.GetMemoryCache();
@@ -56,7 +56,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().BeNull("asking for non-existing key should return null");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetUnregisteredItemGenericExtension()
         {
             var cache = this.app.GetMemoryCache();
@@ -64,7 +64,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().Be(default(TimeSpan), "asking for non-existing struct should return its default value");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSetNullKey()
         {
             var cache = this.app.GetMemoryCache();
@@ -72,7 +72,7 @@ namespace AppBrix.Caching.Memory.Tests
             action.ShouldThrow<ArgumentNullException>("key should not be null");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSetNullItem()
         {
             var cache = this.app.GetMemoryCache();
@@ -80,7 +80,7 @@ namespace AppBrix.Caching.Memory.Tests
             action.ShouldThrow<ArgumentNullException>("item should not be null");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSetNegativeAbsoluteExpiration()
         {
             var cache = this.app.GetMemoryCache();
@@ -88,7 +88,7 @@ namespace AppBrix.Caching.Memory.Tests
             action.ShouldThrow<ArgumentException>("absolute expiration should not be negative");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSetNegativeRollingExpiration()
         {
             var cache = this.app.GetMemoryCache();
@@ -96,7 +96,7 @@ namespace AppBrix.Caching.Memory.Tests
             action.ShouldThrow<ArgumentException>("rolling expiration should not be negative");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRemoveNullKey()
         {
             var cache = this.app.GetMemoryCache();
@@ -104,7 +104,7 @@ namespace AppBrix.Caching.Memory.Tests
             action.ShouldThrow<ArgumentNullException>("key should not be null");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetItem()
         {
             var cache = this.app.GetMemoryCache();
@@ -113,7 +113,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().Be(this, "returned item should be the same as the original");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRemoveItem()
         {
             var cache = this.app.GetMemoryCache();
@@ -123,7 +123,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().BeNull("the item shold have been removed from the cache");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestAbsoluteExpiration()
         {
             this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
@@ -138,7 +138,7 @@ namespace AppBrix.Caching.Memory.Tests
                 .ShouldReturn(null, TimeSpan.FromMilliseconds(1000), "the item shold have been removed from the cache");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestMixedExpiration()
         {
             this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(5);
@@ -153,7 +153,7 @@ namespace AppBrix.Caching.Memory.Tests
                 .ShouldReturn(null, TimeSpan.FromMilliseconds(1000), "the item shold have been removed from the cache");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDisposeOnAbsoluteExpiration()
         {
             this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
@@ -172,7 +172,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().BeNull("the item shold have been removed from the cache");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDisposeOnRollingExpiration()
         {
             this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(5);
@@ -198,7 +198,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().BeNull("the item shold have been removed from the cache");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceMemoryCache()
         {
             Action action = this.TestPerformanceMemoryCacheInternal;

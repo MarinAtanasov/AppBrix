@@ -28,7 +28,7 @@ namespace AppBrix.Events.Async.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEvent()
         {
             var hub = this.GetAsyncEventHub();
@@ -44,7 +44,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventChild()
         {
             var hub = this.GetAsyncEventHub();
@@ -60,7 +60,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventInterface()
         {
             var hub = this.GetAsyncEventHub();
@@ -76,7 +76,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNoSubscription()
         {
             var hub = this.GetAsyncEventHub();
@@ -85,7 +85,7 @@ namespace AppBrix.Events.Async.Tests
             this.app.Stop();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestParentAndChildSubscription()
         {
             var hub = this.GetAsyncEventHub();
@@ -99,7 +99,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleSubscription()
         {
             var hub = this.GetAsyncEventHub();
@@ -113,7 +113,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(2, "event handler should be called exactly twice");
         }
         
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestCallBaseSubscribeParent()
         {
             var hub = this.GetAsyncEventHub();
@@ -124,7 +124,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(0, "event handler should not be called if the arguments are passed as base class");
         }
         
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleRaise()
         {
             var hub = this.GetAsyncEventHub();
@@ -138,7 +138,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(2, "event handler should be called exactly twice after the second raise");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUnsubscribe()
         {
             var hub = this.GetAsyncEventHub();
@@ -152,7 +152,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(0, "event handler should not be called after the unsubscription");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUninitialize()
         {
             var hub = this.GetAsyncEventHub();
@@ -165,7 +165,7 @@ namespace AppBrix.Events.Async.Tests
             called.Should().Be(1, "event handler should be called exactly once after the first raise");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNullArgumentSubscribe()
         {
             var hub = this.GetAsyncEventHub();
@@ -173,7 +173,7 @@ namespace AppBrix.Events.Async.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNullArgumentUnsubscribe()
         {
             var hub = this.GetAsyncEventHub();
@@ -181,7 +181,7 @@ namespace AppBrix.Events.Async.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestNullArgumentRaise()
         {
             var hub = this.GetAsyncEventHub();
@@ -189,7 +189,7 @@ namespace AppBrix.Events.Async.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestHandlerUnsubscribingItself()
         {
             var hub = this.GetAsyncEventHub();
@@ -216,7 +216,7 @@ namespace AppBrix.Events.Async.Tests
             afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestThreadManagement()
         {
             var initialThreads = Process.GetCurrentProcess().Threads.Count;
@@ -232,7 +232,7 @@ namespace AppBrix.Events.Async.Tests
             Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "threads should be disposed of on uninitialization");
         }
 
-        //[Fact] // Skip automatic execution. Test is flaky during multithreaded execution
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsSubscribe()
         {
             Action action = this.TestPerformanceEventsSubscribeInternal;
@@ -244,7 +244,7 @@ namespace AppBrix.Events.Async.Tests
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
-        //[Fact] // Skip automatic execution. Test is flaky during multithreaded execution
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsUnsubscribe()
         {
             Action action = this.TestPerformanceEventsUnsubscribeInternal;
@@ -256,7 +256,7 @@ namespace AppBrix.Events.Async.Tests
             action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
 
-        //[Fact] // Skip automatic execution. Test is flaky during multithreaded execution
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsRaise()
         {
             Action action = this.TestPerformanceEventsRaiseInternal;

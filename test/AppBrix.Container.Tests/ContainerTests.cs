@@ -23,7 +23,7 @@ namespace AppBrix.Container.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGetContainer()
         {
             var container = this.GetContainer();
@@ -33,7 +33,7 @@ namespace AppBrix.Container.Tests
             container2.Should().BeSameAs(container, "returned a different instance of the container");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestResolveByInterface()
         {
             var container = this.GetContainer();
@@ -42,7 +42,7 @@ namespace AppBrix.Container.Tests
             iContainer.Should().BeSameAs(container, "returned IContainer is a different instance");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestResolveByClass()
         {
             var container = this.GetContainer();
@@ -53,7 +53,7 @@ namespace AppBrix.Container.Tests
             resolved.Should().BeSameAs(registered, "returned item is a different instance than the registered");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestResolveByBaseClass()
         {
             var container = this.GetContainer();
@@ -64,7 +64,7 @@ namespace AppBrix.Container.Tests
             resolved.Should().BeSameAs(original, "returned Child is a different instance");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestResolveAllNoElements()
         {
             var container = this.GetContainer();
@@ -73,7 +73,7 @@ namespace AppBrix.Container.Tests
             resolved.Count.Should().Be(0, "resolved collection should be empty");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestResolveAllOneElement()
         {
             var container = this.GetContainer();
@@ -83,7 +83,7 @@ namespace AppBrix.Container.Tests
             resolved.Single().Should().Be(container, "resolved element should be the original container");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestResolveAllTwoElements()
         {
             var container = this.GetContainer();
@@ -98,7 +98,7 @@ namespace AppBrix.Container.Tests
             resolved.Last().Should().BeSameAs(second, "resolved element 2 should be the new item");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRegisterNull()
         {
             var container = this.GetContainer();
@@ -106,7 +106,7 @@ namespace AppBrix.Container.Tests
             action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRegisterNullObjectExcplicitType()
         {
             var container = this.GetContainer();
@@ -114,7 +114,7 @@ namespace AppBrix.Container.Tests
             action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRegisterNullTypeExcplicitType()
         {
             var container = this.GetContainer();
@@ -122,7 +122,7 @@ namespace AppBrix.Container.Tests
             action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestObjectBaseTypeNotRegistered()
         {
             var container = this.GetContainer();
@@ -131,7 +131,7 @@ namespace AppBrix.Container.Tests
             action.ShouldThrow<InvalidOperationException>("items should not be registered as type of object");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleRegistration()
         {
             var container = this.GetContainer();
@@ -145,7 +145,7 @@ namespace AppBrix.Container.Tests
             container.GetAll().OfType<ChildMock>().Count().Should().Be(3, "first object has been removed from history");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRegisterGenericObjectError()
         {
             var container = this.GetContainer();
@@ -153,7 +153,7 @@ namespace AppBrix.Container.Tests
             action.ShouldThrow<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRegisterExplicitObjectTypeError()
         {
             var container = this.GetContainer();
@@ -161,7 +161,7 @@ namespace AppBrix.Container.Tests
             action.ShouldThrow<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceContainer()
         {
             Action action = this.TestPerformanceContainerInternal;

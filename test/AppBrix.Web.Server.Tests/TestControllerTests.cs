@@ -21,7 +21,7 @@ namespace AppBrix.Web.Server.Tests
     public sealed class TestControllerTests
     {
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnection()
         {
             using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress))
@@ -34,13 +34,11 @@ namespace AppBrix.Web.Server.Tests
             }
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnectionBetweenTwoApps()
         {
-            var app1 = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
-            app1.Start();
-            var app2 = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
-            app2.Start();
+            var app1 = this.CreateWebApp();
+            var app2 = this.CreateWebApp();
             try
             {
                 using (var server1 = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app1))
@@ -65,11 +63,28 @@ namespace AppBrix.Web.Server.Tests
                 app1.Stop();
             }
         }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceWebServer()
+        {
+            Action action = this.TestPerformanceWebServerInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
         #endregion
 
         #region Private methods
         private TestServer CreateTestServer(string baseAddress, IApp app = null)
         {
+            if (app == null)
+            {
+                app = TestUtils.CreateTestApp();
+                app.Start();
+            }
+
             Action<IApplicationBuilder> application = builder =>
             {
                 builder.UseMvc();
@@ -83,6 +98,30 @@ namespace AppBrix.Web.Server.Tests
             var server = new TestServer(new WebHostBuilder().Configure(application).ConfigureServices(services));
             server.BaseAddress = new Uri(baseAddress);
             return server;
+        }
+
+        private IApp CreateWebApp()
+        {
+            var app = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
+            app.Start();
+            return app;
+        }
+
+        private void TestPerformanceWebServerInternal()
+        {
+            var app = this.CreateWebApp();
+            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
+            {
+                app.GetFactory().Register(server.CreateClient);
+                for (int i = 0; i < 50; i++)
+                {
+                    var result = app.GetFactory()
+                        .Get<IHttpRequest>()
+                        .SetUrl(TestControllerTests.TestConnectionServiceUrl)
+                        .Send<string>()
+                        .Result;
+                }
+            }
         }
         #endregion
 

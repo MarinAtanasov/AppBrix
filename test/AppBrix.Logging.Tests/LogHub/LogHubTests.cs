@@ -32,13 +32,13 @@ namespace AppBrix.Logging.Tests.LogHub
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUnsubscribedTrace()
         {
             this.app.GetLog().Trace(string.Empty);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestErrorLog()
         {
             var message = "Test message";
@@ -55,7 +55,7 @@ namespace AppBrix.Logging.Tests.LogHub
             called.Should().BeTrue("the event should have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDebugLog()
         {
             var message = "Test message";
@@ -72,7 +72,7 @@ namespace AppBrix.Logging.Tests.LogHub
             called.Should().BeTrue("the event should have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInfoLog()
         {
             var message = "Test message";
@@ -87,7 +87,7 @@ namespace AppBrix.Logging.Tests.LogHub
             called.Should().BeTrue("the event should have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestWarningLog()
         {
             var message = "Test message";
@@ -104,7 +104,7 @@ namespace AppBrix.Logging.Tests.LogHub
             called.Should().BeTrue("the event should have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestTraceLog()
         {
             var message = "Test message";
@@ -119,7 +119,7 @@ namespace AppBrix.Logging.Tests.LogHub
             called.Should().BeTrue("the event should have been called");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestCallerFile()
         {
             var message = "Test message";
@@ -127,7 +127,7 @@ namespace AppBrix.Logging.Tests.LogHub
             this.app.GetLog().Warning(message);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestCallerMemberName()
         {
             var message = "Test message";
@@ -135,7 +135,7 @@ namespace AppBrix.Logging.Tests.LogHub
             this.app.GetLog().Error(message);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestThreadId()
         {
             var message = "Test message";
@@ -143,7 +143,7 @@ namespace AppBrix.Logging.Tests.LogHub
             this.app.GetLog().Info(message);
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestTimeLogEntry()
         {
             var message = "Test message";
@@ -155,7 +155,7 @@ namespace AppBrix.Logging.Tests.LogHub
             executed.Should().BeOnOrBefore(this.app.GetTime(), "created date time should be greater than the time after creation");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceLogging()
         {
             Action action = this.TestPerformanceLoggingInternal;

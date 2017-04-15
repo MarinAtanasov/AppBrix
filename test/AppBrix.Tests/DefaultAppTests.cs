@@ -16,7 +16,7 @@ namespace AppBrix.Tests
     public sealed class DefaultAppTests
     {
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInitializeModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
@@ -29,7 +29,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInitializeDisabledModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
@@ -41,7 +41,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Disabled, "module status should not be changed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInstallModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
@@ -59,7 +59,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUpgradeModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
@@ -78,7 +78,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInitializeInstallableModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
@@ -98,7 +98,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUninstallEnabledModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
@@ -119,7 +119,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Version.Should().BeNull("module version should be cleared after uninstall");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUninstallDisabledModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
@@ -141,7 +141,7 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Version.Should().BeNull("module version should be cleared after uninstall");
         }
 
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUninstallUninstallingModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
@@ -161,6 +161,28 @@ namespace AppBrix.Tests
             app.GetConfig<AppConfig>().Modules.Single().Status.Should().Be(ModuleStatus.Disabled, "module status be set to disabled after uninstall");
             app.GetConfig<AppConfig>().Modules.Single().Version.Should().BeNull("module version should be cleared after uninstall");
         }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceReinitialize()
+        {
+            Action action = this.TestPerformanceReinitializeInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceRestart()
+        {
+            Action action = this.TestPerformanceRestartInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
         #endregion
 
         #region Private methods
@@ -172,6 +194,28 @@ namespace AppBrix.Tests
         private IEnumerable<ModuleInfo> GetModules(DefaultApp app)
         {
             return (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app);
+        }
+
+        private void TestPerformanceReinitializeInternal()
+        {
+            var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
+            app.Start();
+
+            for (int i = 0; i < 2500; i++)
+            {
+                app.Reinitialize();
+            }
+        }
+
+        private void TestPerformanceRestartInternal()
+        {
+            var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
+            app.Start();
+
+            for (int i = 0; i < 250; i++)
+            {
+                app.Restart();
+            }
         }
         #endregion
 

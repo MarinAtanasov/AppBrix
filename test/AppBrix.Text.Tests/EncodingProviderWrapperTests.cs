@@ -26,7 +26,7 @@ namespace AppBrix.Text.Tests
         #endregion
 
         #region Tests
-        [Fact]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEncodingWrapper()
         {
             var encoding = Encoding.UTF7;
@@ -44,8 +44,32 @@ namespace AppBrix.Text.Tests
             Encoding.GetEncoding(12).Should().BeSameAs(encoding, "wrapper should have called the registered provider with code page");
             provider.IsGetEncodingWithCodePageCalled.Should().BeTrue("encoding with cade page should be called");
         }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceEncodingProviderWrapper()
+        {
+            Action action = this.TestPerformanceEncodingProviderWrapperInternal;
+
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action.Invoke();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+        }
         #endregion
-        
+
+        #region Private methods
+        private void TestPerformanceEncodingProviderWrapperInternal()
+        {
+            app.GetContainer().Register(new EncodingProviderMock(Encoding.UTF7));
+
+            for (int i = 0; i < 75000; i++)
+            {
+                Encoding.GetEncoding("test");
+                Encoding.GetEncoding(12);
+            }
+        }
+        #endregion
+
         #region Private fields and constants
         private readonly IApp app;
         #endregion
