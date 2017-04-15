@@ -181,11 +181,11 @@ namespace AppBrix.Caching.Memory.Tests
             var disposed = false;
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestDisposeOnRollingExpiration), this, dispose: () => disposed = true, rollingExpiration: TimeSpan.FromMilliseconds(25));
+            cache.Set(nameof(TestDisposeOnRollingExpiration), this, dispose: () => disposed = true, rollingExpiration: TimeSpan.FromMilliseconds(100));
             var item = cache.Get(nameof(TestDisposeOnRollingExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 150; i++)
             {
                 item = cache.Get(nameof(TestDisposeOnRollingExpiration));
                 item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
