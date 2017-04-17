@@ -98,7 +98,9 @@ namespace AppBrix.Data.Migration.Impl
             SnapshotData snapshot;
             using (var context = this.contextService.Get<MigrationContext>())
             {
-                snapshot = context.Snapshots.SingleOrDefault(x => x.Context == type.Name);
+                snapshot = context.Snapshots
+                    .AsNoTracking()
+                    .SingleOrDefault(x => x.Context == type.Name);
             }
 
             var assemblyVersion = type.GetTypeInfo().Assembly.GetName().Version;

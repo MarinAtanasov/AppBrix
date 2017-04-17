@@ -1,6 +1,7 @@
 ﻿using AppBrix.Application;
 using AppBrix.WebApp.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,9 @@ namespace AppBrix.WebApp.Controllers
         {
             using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
-                return context.Books.ToList();
+                return context.Books
+                    .AsNoTracking()
+                    .ToList();
             }
         }
 
@@ -32,7 +35,9 @@ namespace AppBrix.WebApp.Controllers
         {
             using (var context = this.app.GetDbContextService().Get<BookContext>())
             {
-                return context.Books.SingleOrDefault(x => x.Id == id);
+                return context.Books
+                    .AsNoTracking()
+                    .SingleOrDefault(x => x.Id == id);
             }
         }
 
