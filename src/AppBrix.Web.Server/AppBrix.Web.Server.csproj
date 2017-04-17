@@ -19,7 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix\AppBrix.csproj" />
+    <ProjectReference Include="..\AppBrix.Container\AppBrix.Container.csproj" />
+    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
+    <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>

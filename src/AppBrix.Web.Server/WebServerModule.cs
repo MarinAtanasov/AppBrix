@@ -3,6 +3,7 @@
 //
 using AppBrix.Modules;
 using AppBrix.Lifecycle;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -19,11 +20,22 @@ namespace AppBrix.Web.Server
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
+            this.App.GetContainer().Register(this);
+            var defaultLoggerProvider = this.loggerProvider.Value;
+            defaultLoggerProvider.Initialize(context);
+            this.App.GetContainer().Register(defaultLoggerProvider);
+
+            this.App.GetFactory().Register(() => new DefaultLogger(this.App));
         }
 
         protected override void UninitializeModule()
         {
+            this.loggerProvider.Value.Uninitialize();
         }
+        #endregion
+
+        #region Private fields and constants
+        private readonly Lazy<DefaultLoggerProvider> loggerProvider = new Lazy<DefaultLoggerProvider>();
         #endregion
     }
 }

@@ -19,6 +19,7 @@ namespace AppBrix.Logging.File
         {
             var config = context.App.GetConfig<FileLoggerConfig>();
             this.writer = System.IO.File.AppendText(config.Path);
+            this.writer.AutoFlush = true;
         }
 
         public void Uninitialize()
@@ -37,7 +38,7 @@ namespace AppBrix.Logging.File
         #endregion
 
         #region Private fields and constants
-        private TextWriter writer;
+        private StreamWriter writer;
         #endregion
     }
 }

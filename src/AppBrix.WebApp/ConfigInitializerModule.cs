@@ -111,7 +111,7 @@ namespace AppBrix.WebApp
         {
             typeof(InMemoryDataModule),
             typeof(SqlServerDataModule),
-            typeof(FileLoggerModule)
+            typeof(ConsoleLoggerModule)
         };
         #endregion
     }

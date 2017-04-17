@@ -52,6 +52,9 @@ namespace AppBrix.WebApp
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            // Add AppBrix logging provider.
+            loggerFactory.AddProvider(this.App);
+
             app.UseMvc();
         }
     }
