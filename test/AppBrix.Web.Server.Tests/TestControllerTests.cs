@@ -110,17 +110,24 @@ namespace AppBrix.Web.Server.Tests
         private void TestPerformanceWebServerInternal()
         {
             var app = this.CreateWebApp();
-            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
+            try
             {
-                app.GetFactory().Register(server.CreateClient);
-                for (int i = 0; i < 50; i++)
+                using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
                 {
-                    var result = app.GetFactory()
-                        .Get<IHttpRequest>()
-                        .SetUrl(TestControllerTests.TestConnectionServiceUrl)
-                        .Send<string>()
-                        .Result;
+                    app.GetFactory().Register(server.CreateClient);
+                    for (int i = 0; i < 50; i++)
+                    {
+                        var result = app.GetFactory()
+                            .Get<IHttpRequest>()
+                            .SetUrl(TestControllerTests.TestConnectionServiceUrl)
+                            .Send<string>()
+                            .Result;
+                    }
                 }
+            }
+            finally
+            {
+                app.Stop();
             }
         }
         #endregion
