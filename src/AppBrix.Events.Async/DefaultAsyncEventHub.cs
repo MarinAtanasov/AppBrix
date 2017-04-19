@@ -54,8 +54,7 @@ namespace AppBrix.Events.Async
         #region Private methods
         private void SubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
-            ITaskQueue queueObject;
-            if (this.taskQueues.TryGetValue(typeof(T), out queueObject))
+            if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
             {
                 ((ITaskQueue<T>)queueObject).Subscribe(handler);
             }
@@ -76,8 +75,7 @@ namespace AppBrix.Events.Async
 
         private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
-            ITaskQueue queueObject;
-            if (this.taskQueues.TryGetValue(typeof(T), out queueObject))
+            if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
             {
                 var queue = (ITaskQueue<T>)queueObject;
                 queue.Unsubscribe(handler);
@@ -123,8 +121,7 @@ namespace AppBrix.Events.Async
 
         private void RaiseEvent<T>(T args, Type eventType) where T : IEvent
         {
-            ITaskQueue queueObject;
-            if (this.taskQueues.TryGetValue(eventType, out queueObject))
+            if (this.taskQueues.TryGetValue(eventType, out var queueObject))
             {
                 queueObject.Enqueue(args);
             }

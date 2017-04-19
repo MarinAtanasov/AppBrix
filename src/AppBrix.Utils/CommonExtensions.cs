@@ -26,8 +26,7 @@ namespace AppBrix
             if (!typeof(T).GetTypeInfo().IsEnum)
                 throw new ArgumentException(string.Format("{0} must be an enumerated type. {0} is: {1}", nameof(T), typeof(T).FullName));
 
-            T result;
-            Enum.TryParse(value, true, out result);
+            Enum.TryParse(value, true, out T result);
             return result;
         }
 

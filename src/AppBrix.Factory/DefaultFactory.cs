@@ -34,8 +34,7 @@ namespace AppBrix.Factory
         
         public object Get(Type type)
         {
-            Func<object> factory;
-            if (this.factories.TryGetValue(type, out factory))
+            if (this.factories.TryGetValue(type, out var factory))
             {
                 return factory();
             }

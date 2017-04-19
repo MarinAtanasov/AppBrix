@@ -100,8 +100,7 @@ namespace AppBrix.Caching.Memory
         #region Private methods
         private CacheItem GetInternal(object key)
         {
-            CacheItem result;
-            this.cache.TryGetValue(key, out result);
+            this.cache.TryGetValue(key, out var result);
             return result;
         }
 

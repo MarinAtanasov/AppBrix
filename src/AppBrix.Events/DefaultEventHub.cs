@@ -63,8 +63,7 @@ namespace AppBrix.Events
 
         private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
-            IList<object> handlers;
-            if (this.subscriptions.TryGetValue(typeof(T), out handlers))
+            if (this.subscriptions.TryGetValue(typeof(T), out var handlers))
             {
                 // Optimize for unsubscribing the last element since this is the most common scenario.
                 for (int i = handlers.Count - 1; i >= 0; i--)
@@ -100,8 +99,7 @@ namespace AppBrix.Events
         
         private void RaiseEvent<T>(T args, Type eventType) where T : IEvent
         {
-            IList<object> handlers;
-            if (this.subscriptions.TryGetValue(eventType, out handlers))
+            if (this.subscriptions.TryGetValue(eventType, out var handlers))
             {
                 for (var i = 0; i < handlers.Count; i++)
                 {

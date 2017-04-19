@@ -85,8 +85,7 @@ namespace AppBrix.Configuration
             var type = config.GetType();
             var stringed = this.serializer.Serialize(config, type);
 
-            string cached;
-            if (!this.configStringed.TryGetValue(type, out cached) || cached != stringed)
+            if (!this.configStringed.TryGetValue(type, out var cached) || cached != stringed)
             {
                 this.provider.WriteConfig(stringed, type);
                 this.configStringed[type] = stringed;
