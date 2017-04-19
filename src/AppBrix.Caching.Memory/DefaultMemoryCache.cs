@@ -114,18 +114,12 @@ namespace AppBrix.Caching.Memory
 
                 var now = this.app.GetTime();
 
-                try
+                foreach (var item in this.cache.Where(x => x.Value.HasExpired(now)).ToList())
                 {
-                    foreach (var item in this.cache.Where(x => x.Value.HasExpired(now)).ToList())
-                    {
-                        this.cache.Remove(item.Key);
-                        item.Value.Dispose();
-                    }
+                    this.cache.Remove(item.Key);
+                    try { item.Value.Dispose(); } catch (Exception) { }
                 }
-                finally
-                {
-                    this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
-                }
+                this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
             }
         }
         #endregion
