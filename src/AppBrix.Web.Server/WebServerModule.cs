@@ -24,8 +24,6 @@ namespace AppBrix.Web.Server
             var defaultLoggerProvider = this.loggerProvider.Value;
             defaultLoggerProvider.Initialize(context);
             this.App.GetContainer().Register(defaultLoggerProvider);
-
-            this.App.GetFactory().Register(() => new DefaultLogger(this.App));
         }
 
         protected override void UninitializeModule()

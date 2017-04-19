@@ -28,7 +28,7 @@ namespace AppBrix.Web.Server
 
         public ILogger CreateLogger(string categoryName)
         {
-            return this.app.GetFactory().Get<ILogger>();
+            return new DefaultLogger(this.app, categoryName);
         }
         #endregion
 

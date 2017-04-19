@@ -12,9 +12,11 @@ namespace AppBrix.Web.Server
     internal class DefaultLogger : ILogger
     {
         #region Construction
-        public DefaultLogger(IApp app)
+        public DefaultLogger(IApp app, string categoryName)
         {
             this.app = app;
+            var dotIndex = categoryName.LastIndexOf('.');
+            this.categoryName = categoryName.Substring(dotIndex + 1);
         }
         #endregion
 
@@ -26,7 +28,7 @@ namespace AppBrix.Web.Server
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            this.app.GetLog().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, exception));
+            this.app.GetLog().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -59,7 +61,8 @@ namespace AppBrix.Web.Server
         #endregion
 
         #region Private fields and constants
-        private IApp app;
+        private readonly IApp app;
+        private readonly string categoryName;
         #endregion
     }
 }
