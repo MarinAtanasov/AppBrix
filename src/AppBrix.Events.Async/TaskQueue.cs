@@ -99,12 +99,18 @@ namespace AppBrix.Events.Async
 
                 for (var i = 0; i < this.handlers.Count; i++)
                 {
-                    var handler = this.handlers[i];
-                    handler(args);
+                    try
+                    {
+                        var handler = this.handlers[i];
+                        handler(args);
 
-                    // Check if the handler has unsubscribed itself.
-                    if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
-                        i--;
+                        // Check if the handler has unsubscribed itself.
+                        if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
+                            i--;
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
         }
