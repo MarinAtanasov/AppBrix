@@ -49,7 +49,7 @@ namespace AppBrix.Caching.Memory
                 cacheItem = this.GetInternal(key);
                 if (cacheItem != null)
                 {
-                    cacheItem.LastAccessed = this.app.GetTime();
+                    cacheItem.UpdateLastAccessed(this.app.GetTime());
                 }
             }
             return cacheItem?.Item;

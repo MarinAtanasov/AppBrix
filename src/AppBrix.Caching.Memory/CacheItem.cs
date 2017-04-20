@@ -13,34 +13,14 @@ namespace AppBrix.Caching.Memory
         {
             this.Item = item;
             this.dispose = dispose;
-            this.AbsoluteExpiration = now.Add(absoluteExpiration);
+            this.absoluteExpiration = now.Add(absoluteExpiration);
             this.rollingExpirationSpan = rollingExpirationSpan;
-            this.Created = now;
-            this.LastAccessed = now;
+            this.UpdateLastAccessed(now);
         }
         #endregion
 
         #region Properties
         public object Item { get; }
-
-        public DateTime Created { get; }
-
-        public DateTime LastAccessed
-        {
-            get
-            {
-                return this.lastAccessed;
-            }
-            set
-            {
-                this.lastAccessed = value;
-                this.RollingExpiration = this.LastAccessed.Add(this.rollingExpirationSpan);
-            }
-        }
-
-        public DateTime AbsoluteExpiration { get; }
-
-        public DateTime RollingExpiration { get; private set; }
         #endregion
 
         #region Public and overriden methods
@@ -49,16 +29,22 @@ namespace AppBrix.Caching.Memory
             this.dispose?.Invoke();
         }
 
+        public void UpdateLastAccessed(DateTime now)
+        {
+            this.rollingExpiration = now.Add(this.rollingExpirationSpan);
+        }
+
         public bool HasExpired(DateTime now)
         {
-            return this.AbsoluteExpiration < now || this.RollingExpiration < now;
+            return this.absoluteExpiration < now || this.rollingExpiration < now;
         }
         #endregion
 
         #region Private fields and constants
         private readonly Action dispose;
+        private readonly DateTime absoluteExpiration;
         private readonly TimeSpan rollingExpirationSpan;
-        private DateTime lastAccessed;
+        private DateTime rollingExpiration;
         #endregion
     }
 }
