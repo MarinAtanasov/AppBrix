@@ -107,7 +107,7 @@ namespace AppBrix.ConsoleApp
             typeof(WebServerModule)
         };
 
-        private static readonly HashSet<Type> DisabledModules = new HashSet<Type>()
+        private static readonly ISet<Type> DisabledModules = new HashSet<Type>()
         {
             typeof(InMemoryDataModule),
             typeof(SqlServerDataModule),

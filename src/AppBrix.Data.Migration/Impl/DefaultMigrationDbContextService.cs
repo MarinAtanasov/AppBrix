@@ -168,7 +168,7 @@ namespace AppBrix.Data.Migration.Impl
             return assemblies.Select(x => MetadataReference.CreateFromFile(x));
         }
 
-        private void GetReferences(Assembly assembly, HashSet<string> locations, HashSet<string> names = null)
+        private void GetReferences(Assembly assembly, ISet<string> locations, ISet<string> names = null)
         {
             if (names == null)
                 names = new HashSet<string>();
@@ -282,7 +282,7 @@ namespace AppBrix.Data.Migration.Impl
 
         #region Private fields and constants
         private const string EmptyVersion = "0.0.0.0";
-        private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
+        private readonly ISet<Type> initializedContexts = new HashSet<Type>();
         private IApp app;
         private IDbContextService contextService;
         private bool dbSupportsMigrations;
