@@ -163,40 +163,36 @@ namespace AppBrix.Data.Migration.Impl
 
         private IEnumerable<MetadataReference> GetReferences()
         {
-            var assemblies = new HashSet<string>();
-            this.GetReferences(Assembly.GetEntryAssembly(), assemblies);
-            return assemblies.Select(x => MetadataReference.CreateFromFile(x));
+            return this.GetAllAssemblies()
+                .Select(x => MetadataReference.CreateFromFile(x.Location));
         }
 
-        private void GetReferences(Assembly assembly, ISet<string> locations, ISet<string> names = null)
+        public IEnumerable<Assembly> GetAllAssemblies()
         {
-            if (names == null)
-                names = new HashSet<string>();
+            var assembly = Assembly.GetEntryAssembly();
+            var names = new HashSet<string> { assembly.GetName().FullName };
+            var locations = new HashSet<string> { assembly.Location };
+            var assemblyQueue = new Queue<Assembly>();
+            assemblyQueue.Enqueue(assembly);
 
-            if (!names.Contains(assembly.FullName))
+            while (assemblyQueue.Count > 0)
             {
-                names.Add(assembly.FullName);
-                locations.Add(assembly.Location);
-            }
+                assembly = assemblyQueue.Dequeue();
+                yield return assembly;
 
-            var newAssemblies = new List<AssemblyName>();
-            foreach (var referencedAssemblyName in assembly.GetReferencedAssemblies())
-            {
-                if (!names.Contains(referencedAssemblyName.FullName))
+                foreach (var reference in assembly.GetReferencedAssemblies())
                 {
-                    names.Add(referencedAssemblyName.FullName);
-                    newAssemblies.Add(referencedAssemblyName);
+                    if (names.Contains(reference.FullName))
+                        continue;
+
+                    names.Add(reference.FullName);
+                    var referencedAssembly = Assembly.Load(reference);
+                    if (locations.Contains(referencedAssembly.Location))
+                        continue;
+
+                    locations.Add(referencedAssembly.Location);
+                    assemblyQueue.Enqueue(referencedAssembly);
                 }
-            }
-
-            foreach (var referencedAssemblyName in newAssemblies)
-            {
-                var referencedAssembly = Assembly.Load(referencedAssemblyName);
-                if (locations.Contains(referencedAssembly.Location))
-                    continue;
-
-                locations.Add(referencedAssembly.Location);
-                GetReferences(referencedAssembly, locations, names);
             }
         }
 
