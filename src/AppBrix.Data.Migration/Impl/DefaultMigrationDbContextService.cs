@@ -196,7 +196,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private MigrationData ApplyMigration(Type type, Version version, ScaffoldedMigration scaffoldedMigration)
         {
-            var migration = new MigrationData()
+            var migration = new MigrationData
             {
                 Context = type.Name,
                 Version = version.ToString(),
@@ -222,7 +222,7 @@ namespace AppBrix.Data.Migration.Impl
                 SnapshotData newSnapshot;
                 if (createNew)
                 {
-                    newSnapshot = new SnapshotData() { Context = contextName };
+                    newSnapshot = new SnapshotData { Context = contextName };
                     context.Snapshots.Add(newSnapshot);
                 }
                 else

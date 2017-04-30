@@ -83,7 +83,7 @@ namespace AppBrix.ConsoleApp
         #endregion
 
         #region Private fields and constants
-        private static readonly IEnumerable<Type> Modules = new List<Type>()
+        private static readonly IEnumerable<Type> Modules = new List<Type>
         {
             typeof(AsyncEventsModule),
             typeof(CachingModule),
@@ -107,7 +107,7 @@ namespace AppBrix.ConsoleApp
             typeof(WebServerModule)
         };
 
-        private static readonly ISet<Type> DisabledModules = new HashSet<Type>()
+        private static readonly ISet<Type> DisabledModules = new HashSet<Type>
         {
             typeof(InMemoryDataModule),
             typeof(SqlServerDataModule),

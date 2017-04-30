@@ -75,7 +75,7 @@ namespace AppBrix.WebApp
         #endregion
 
         #region Private fields and constants
-        private static readonly IEnumerable<Type> Modules = new List<Type>()
+        private static readonly IEnumerable<Type> Modules = new List<Type>
         {
             typeof(MigrationDataModule),
             typeof(SqliteDataModule),

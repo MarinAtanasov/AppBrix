@@ -30,7 +30,7 @@ namespace AppBrix.Caching.Json
         {
             if (this.settings == null)
             {
-                this.settings = new JsonSerializerSettings()
+                this.settings = new JsonSerializerSettings
                 {
                     Culture = CultureInfo.InvariantCulture,
                     DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,

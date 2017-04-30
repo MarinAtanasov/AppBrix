@@ -36,9 +36,9 @@ namespace AppBrix.Configuration
             if (!typeof(IModule).GetTypeInfo().IsAssignableFrom(type))
                 throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");
 
-            return new ModuleConfigElement()
+            return new ModuleConfigElement
             {
-                Type = type.GetAssemblyQualifiedName(),
+                Type = type.GetAssemblyQualifiedName()
             };
         }
         #endregion
