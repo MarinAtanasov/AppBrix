@@ -18,7 +18,7 @@ namespace AppBrix.WebApp
     /// Initializes application configuration.
     /// This module should be first on the list in order to configure the application's configuration.
     /// </summary>
-    public sealed class ConfigInitializerModule : IModule, IInstallable
+    public sealed class ConfigInitializerModule : ModuleBase, IInstallable
     {
         #region Public and overriden methods
         public void Install(IInstallContext context)
@@ -37,11 +37,11 @@ namespace AppBrix.WebApp
             throw new NotSupportedException($@"Module {nameof(ConfigInitializerModule)} does not support uninstallation.");
         }
 
-        public void Initialize(IInitializeContext context)
+        protected override void InitializeModule(IInitializeContext context)
         {
         }
 
-        public void Uninitialize()
+        protected override void UninitializeModule()
         {
         }
         #endregion
@@ -58,13 +58,14 @@ namespace AppBrix.WebApp
                 .Distinct()
                 .SelectMany(assembly => assembly.ExportedTypes)
                 .Where(type => type.GetTypeInfo().IsClass && !type.GetTypeInfo().IsAbstract)
-                .Where(type => typeof(IModule).IsAssignableFrom(type))
+                .Where(typeof(IModule).IsAssignableFrom)
                 .Concat(ConfigInitializerModule.Modules)
                 .Distinct()
                 .OrderBy(type => type.Namespace)
                 .ThenBy(type => type.Name)
+                .Select(ModuleConfigElement.Create)
                 .ToList()
-                .ForEach(type => config.Modules.Add(ModuleConfigElement.Create(type)));
+                .ForEach(config.Modules.Add);
         }
 
         private void InitializeLoggingConfig(IConfigManager manager)

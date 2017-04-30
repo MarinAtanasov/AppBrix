@@ -32,7 +32,7 @@ namespace AppBrix.ConsoleApp
     /// Initializes application configuration.
     /// This module should be first on the list in order to configure the application's configuration.
     /// </summary>
-    public sealed class ConfigInitializerModule : IModule, IInstallable
+    public sealed class ConfigInitializerModule : ModuleBase, IInstallable
     {
         #region Public and overriden methods
         public void Install(IInstallContext context)
@@ -51,11 +51,11 @@ namespace AppBrix.ConsoleApp
             throw new NotSupportedException($@"Module {nameof(ConfigInitializerModule)} does not support uninstallation.");
         }
 
-        public void Initialize(IInitializeContext context)
+        protected override void InitializeModule(IInitializeContext context)
         {
         }
 
-        public void Uninitialize()
+        protected override void UninitializeModule()
         {
         }
         #endregion
