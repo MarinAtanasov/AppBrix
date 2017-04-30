@@ -47,7 +47,7 @@ namespace AppBrix.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -56,6 +56,9 @@ namespace AppBrix.WebApp
             loggerFactory.AddProvider(this.App);
 
             app.UseMvc();
+
+            // Dispose of AppBrix app during a graceful shutdown.
+            lifetime.ApplicationStopped.Register(this.App.Stop);
         }
     }
 }
