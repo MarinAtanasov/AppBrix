@@ -16,6 +16,38 @@ namespace AppBrix
     {
         #region Types and enums extensions
         /// <summary>
+        /// Get all of the referenced assemblies recursively.
+        /// </summary>
+        /// <param name="current">The current assembly.</param>
+        /// <returns>All referenced assemblies.</returns>
+        public static IEnumerable<Assembly> GetAllReferencedAssemblies(this Assembly current)
+        {
+            var names = new HashSet<string> { current.GetName().FullName };
+            var locations = new HashSet<string> { current.Location };
+            var assemblyQueue = new Queue<Assembly>();
+            assemblyQueue.Enqueue(current);
+
+            while (assemblyQueue.Count > 0)
+            {
+                var assembly = assemblyQueue.Dequeue();
+                foreach (var reference in assembly.GetReferencedAssemblies())
+                {
+                    if (names.Contains(reference.FullName))
+                        continue;
+
+                    names.Add(reference.FullName);
+                    var referencedAssembly = Assembly.Load(reference);
+                    if (locations.Contains(referencedAssembly.Location))
+                        continue;
+
+                    locations.Add(referencedAssembly.Location);
+                    assemblyQueue.Enqueue(referencedAssembly);
+                    yield return referencedAssembly;
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the string and converts it to an enumeration.
         /// </summary>
         /// <typeparam name="T">The type of the enumeration.</typeparam>

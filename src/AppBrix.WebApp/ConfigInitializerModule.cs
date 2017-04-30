@@ -1,30 +1,16 @@
-﻿using AppBrix.Caching;
-using AppBrix.Caching.Json;
-using AppBrix.Caching.Memory;
-using AppBrix.Cloning;
-using AppBrix.Configuration;
-using AppBrix.Container;
-using AppBrix.Data;
-using AppBrix.Data.InMemory;
+﻿using AppBrix.Configuration;
 using AppBrix.Data.Migration;
 using AppBrix.Data.Sqlite;
-using AppBrix.Data.SqlServer;
-using AppBrix.Events;
-using AppBrix.Events.Async;
-using AppBrix.Factory;
 using AppBrix.Lifecycle;
-using AppBrix.Logging;
 using AppBrix.Logging.Configuration;
-using AppBrix.Logging.Console;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
 using AppBrix.Text;
-using AppBrix.Time;
-using AppBrix.Web.Client;
 using AppBrix.Web.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.WebApp
 {
@@ -67,13 +53,18 @@ namespace AppBrix.WebApp
             if (config.Modules.Count > 1)
                 throw new InvalidOperationException($@"Module {nameof(ConfigInitializerModule)} found other modules registered besides itself.");
 
-            foreach (var module in ConfigInitializerModule.Modules)
-            {
-                var element = ModuleConfigElement.Create(module);
-                if (ConfigInitializerModule.DisabledModules.Contains(module))
-                    element.Status = ModuleStatus.Disabled;
-                config.Modules.Add(element);
-            }
+            ConfigInitializerModule.Modules
+                .SelectMany(module => module.GetTypeInfo().Assembly.GetAllReferencedAssemblies())
+                .Distinct()
+                .SelectMany(assembly => assembly.ExportedTypes)
+                .Where(type => type.GetTypeInfo().IsClass && !type.GetTypeInfo().IsAbstract)
+                .Where(type => typeof(IModule).IsAssignableFrom(type))
+                .Concat(ConfigInitializerModule.Modules)
+                .Distinct()
+                .OrderBy(type => type.Namespace)
+                .ThenBy(type => type.Name)
+                .ToList()
+                .ForEach(type => config.Modules.Add(ModuleConfigElement.Create(type)));
         }
 
         private void InitializeLoggingConfig(IConfigManager manager)
@@ -85,33 +76,11 @@ namespace AppBrix.WebApp
         #region Private fields and constants
         private static readonly IEnumerable<Type> Modules = new List<Type>()
         {
-            typeof(AsyncEventsModule),
-            typeof(CachingModule),
-            typeof(JsonCachingModule),
-            typeof(MemoryCachingModule),
-            typeof(CloningModule),
-            typeof(ContainerModule),
-            typeof(DataModule),
-            typeof(InMemoryDataModule),
             typeof(MigrationDataModule),
             typeof(SqliteDataModule),
-            typeof(SqlServerDataModule),
-            typeof(EventsModule),
-            typeof(FactoryModule),
-            typeof(LoggingModule),
-            typeof(ConsoleLoggerModule),
             typeof(FileLoggerModule),
             typeof(TextModule),
-            typeof(TimeModule),
-            typeof(WebClientModule),
             typeof(WebServerModule)
-        };
-
-        private static readonly ISet<Type> DisabledModules = new HashSet<Type>()
-        {
-            typeof(InMemoryDataModule),
-            typeof(SqlServerDataModule),
-            typeof(ConsoleLoggerModule)
         };
         #endregion
     }

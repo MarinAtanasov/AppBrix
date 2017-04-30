@@ -163,36 +163,16 @@ namespace AppBrix.Data.Migration.Impl
 
         private IEnumerable<MetadataReference> GetReferences()
         {
-            return this.GetAllAssemblies()
-                .Select(x => MetadataReference.CreateFromFile(x.Location));
+            return this.GetAllAssemblies().Select(x => MetadataReference.CreateFromFile(x.Location));
         }
 
-        public IEnumerable<Assembly> GetAllAssemblies()
+        private IEnumerable<Assembly> GetAllAssemblies()
         {
-            var assembly = Assembly.GetEntryAssembly();
-            var names = new HashSet<string> { assembly.GetName().FullName };
-            var locations = new HashSet<string> { assembly.Location };
-            var assemblyQueue = new Queue<Assembly>();
-            assemblyQueue.Enqueue(assembly);
-
-            while (assemblyQueue.Count > 0)
+            var entryAssembly = Assembly.GetEntryAssembly();
+            yield return entryAssembly;
+            foreach (var referencedAssembly in entryAssembly.GetAllReferencedAssemblies())
             {
-                assembly = assemblyQueue.Dequeue();
-                yield return assembly;
-
-                foreach (var reference in assembly.GetReferencedAssemblies())
-                {
-                    if (names.Contains(reference.FullName))
-                        continue;
-
-                    names.Add(reference.FullName);
-                    var referencedAssembly = Assembly.Load(reference);
-                    if (locations.Contains(referencedAssembly.Location))
-                        continue;
-
-                    locations.Add(referencedAssembly.Location);
-                    assemblyQueue.Enqueue(referencedAssembly);
-                }
+                yield return referencedAssembly;
             }
         }
 
