@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <ProjectReference Include="..\..\Core\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
+    <ProjectReference Include="..\..\Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

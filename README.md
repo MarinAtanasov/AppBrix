@@ -29,11 +29,11 @@ The tests are using xUnit.
 # Build solution
 dotnet build AppBrix.sln
 # Run functional tests in parallel
-dotnet vstest (Get-ChildItem test | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") }) --TestCaseFilter:Category=Functional --Parallel
+dotnet vstest (Get-ChildItem Tests | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") }) --TestCaseFilter:Category=Functional --Parallel
 # Run performance tests
-dotnet vstest (Get-ChildItem test | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") }) --TestCaseFilter:Category=Performance
+dotnet vstest (Get-ChildItem Tests | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") }) --TestCaseFilter:Category=Performance
 # Run all tests
-dotnet vstest (Get-ChildItem test | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") })
+dotnet vstest (Get-ChildItem Tests | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp1.1/$($_.Name).dll") })
 ```
 
 ## Sample Applications
