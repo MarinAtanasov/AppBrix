@@ -26,14 +26,13 @@ The tests are using xUnit.
 * In Project Rider, they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
 * In PowerShell, while in the project's root folder:
 ```Powershell
-# Build solution
-dotnet build AppBrix.sln
+# You can add -Build to build the solution or -Restore to restore and build.
 # Run functional tests in parallel (default)
-./Test -Tests=Functional
+./Test -Tests Functional
 # Run performance tests
-./Test -Tests=Performance
+./Test -Tests Performance
 # Run all tests
-./Test -Tests=All
+./Test -Tests All
 ```
 
 ## Sample Applications
