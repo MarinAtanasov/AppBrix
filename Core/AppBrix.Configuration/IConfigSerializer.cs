@@ -15,9 +15,8 @@ namespace AppBrix.Configuration
         /// Serializes a config to a string.
         /// </summary>
         /// <param name="config">The configuration.</param>
-        /// <param name="type">The type of the configuration.</param>
         /// <returns>The string representation of the configuration.</returns>
-        string Serialize(IConfig config, Type type);
+        string Serialize(IConfig config);
 
         /// <summary>
         /// Deserializes a string to a configuration.

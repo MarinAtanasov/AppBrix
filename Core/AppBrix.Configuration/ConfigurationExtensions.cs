@@ -40,19 +40,7 @@ namespace AppBrix
         {
             provider.WriteConfig(config, typeof(T));
         }
-        
-        /// <summary>
-        /// Serializes a config to a string.
-        /// </summary>
-        /// <typeparam name="T">The type of the configuration.</typeparam>
-        /// <param name="serializer">The configuration serializer</param>
-        /// <param name="config">The configuration.</param>
-        /// <returns>The string representation of the configuration.</returns>
-        public static string Serialize<T>(this IConfigSerializer serializer, T config) where T : class, IConfig
-        {
-            return serializer.Serialize(config, typeof(T));
-        }
-        
+
         /// <summary>
         /// Deserializes a string to a configuration.
         /// </summary>

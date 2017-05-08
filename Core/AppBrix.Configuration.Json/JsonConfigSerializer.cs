@@ -16,7 +16,7 @@ namespace AppBrix.Configuration.Json
     public sealed class JsonConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
-        public string Serialize(IConfig config, Type type)
+        public string Serialize(IConfig config)
         {
             return JsonConvert.SerializeObject(config, Formatting.Indented, this.GetSettings());
         }

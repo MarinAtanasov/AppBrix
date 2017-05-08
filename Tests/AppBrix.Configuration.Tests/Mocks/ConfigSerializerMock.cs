@@ -16,8 +16,9 @@ namespace AppBrix.Configuration.Tests.Mocks
         #endregion
 
         #region Public and overriden methods
-        public string Serialize(IConfig config, Type type)
+        public string Serialize(IConfig config)
         {
+            var type = config.GetType();
             this.Serialized.Add(new KeyValuePair<Type, IConfig>(type, config));
             return type.FullName + " Serialized";
         }

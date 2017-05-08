@@ -16,7 +16,7 @@ namespace AppBrix.Configuration.Yaml
     public sealed class YamlConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
-        public string Serialize(IConfig config, Type type)
+        public string Serialize(IConfig config)
         {
             using (var writer = new StringWriter())
             {

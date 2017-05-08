@@ -83,7 +83,7 @@ namespace AppBrix.Configuration
         private void SaveInternal(IConfig config)
         {
             var type = config.GetType();
-            var stringed = this.serializer.Serialize(config, type);
+            var stringed = this.serializer.Serialize(config);
 
             if (!this.configStringed.TryGetValue(type, out var cached) || cached != stringed)
             {
