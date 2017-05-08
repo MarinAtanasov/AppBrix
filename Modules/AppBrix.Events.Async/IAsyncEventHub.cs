@@ -7,7 +7,7 @@ using System.Linq;
 namespace AppBrix.Events.Async
 {
     /// <summary>
-    /// Used for subscribing to events, unsubscribing from events and raising asynchronous events.
+    /// Used for working with application level asynchronous events.
     /// </summary>
     public interface IAsyncEventHub
     {

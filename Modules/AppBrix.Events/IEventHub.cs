@@ -7,7 +7,7 @@ using System.Linq;
 namespace AppBrix.Events
 {
     /// <summary>
-    /// Used for subscribing to events, unsubscribing from events and raising events.
+    /// Used for working with application level events.
     /// </summary>
     public interface IEventHub
     {

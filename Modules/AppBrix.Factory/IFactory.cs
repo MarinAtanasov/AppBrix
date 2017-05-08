@@ -8,7 +8,6 @@ namespace AppBrix.Factory
 {
     /// <summary>
     /// Registers and executes creation of objects.
-    /// These factories should be used only for creation of simple objects which cannot be made immutable.
     /// </summary>
     public interface IFactory
     {

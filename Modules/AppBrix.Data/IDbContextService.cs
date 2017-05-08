@@ -13,7 +13,7 @@ namespace AppBrix.Data
     public interface IDbContextService
     {
         /// <summary>
-        /// Gets an instance of a <see cref="DbContext"/> of type <see cref="T"/>.
+        /// Gets an instance of a <see cref="DbContext"/>.
         /// </summary>
         /// <param name="type">The type of the context.</param>
         /// <returns>A databse context of the provided type.</returns>
