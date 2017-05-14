@@ -16,11 +16,11 @@ namespace AppBrix.ConsoleApp
         internal static void Main(string[] args)
         {
             var stopwatch = Stopwatch.StartNew();
-            var configManager = new ConfigManager(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
-            if (configManager.Get<AppConfig>().Modules.Count == 0)
-                configManager.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
+            var configService = new ConfigService(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
+            if (configService.Get<AppConfig>().Modules.Count == 0)
+                configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
 
-            var app = App.Create(configManager);
+            var app = App.Create(configService);
             app.Start();
             try
             {

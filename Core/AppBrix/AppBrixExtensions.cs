@@ -31,14 +31,14 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Shorthand for getting the config from the currently defined <see cref="IConfigManager"/>.
+        /// Shorthand for getting the config from the currently defined <see cref="IConfigService"/>.
         /// </summary>
         /// <typeparam name="T">The type of the config.</typeparam>
         /// <param name="app">The current application.</param>
         /// <returns>The config.</returns>
         public static T GetConfig<T>(this IApp app) where T : class, IConfig
         {
-            return app.ConfigManager.Get<T>();
+            return app.ConfigService.Get<T>();
         }
     }
 }

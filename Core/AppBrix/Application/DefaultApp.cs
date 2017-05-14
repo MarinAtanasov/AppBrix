@@ -18,12 +18,12 @@ namespace AppBrix.Application
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of the default app with the specified configuration manager.
+        /// Creates a new instance of the default app with the specified configuration service.
         /// </summary>
-        /// <param name="configManager">The configuration manager.</param>
-        public DefaultApp(IConfigManager configManager)
+        /// <param name="configService">The configuration service.</param>
+        public DefaultApp(IConfigService configService)
         {
-            this.ConfigManager = configManager;
+            this.ConfigService = configService;
             this.Id = Guid.NewGuid();
         }
         #endregion
@@ -35,9 +35,9 @@ namespace AppBrix.Application
         public Guid Id { get; }
 
         /// <summary>
-        /// Gets the application's configuration manager.
+        /// Gets the application's configuration service.
         /// </summary>
-        public IConfigManager ConfigManager { get; }
+        public IConfigService ConfigService { get; }
         
         /// <summary>
         /// Indicates whether the application has been started.
@@ -60,7 +60,7 @@ namespace AppBrix.Application
 
                 this.RegisterModules();
                 this.Initialize();
-                this.ConfigManager.SaveAll();
+                this.ConfigService.SaveAll();
             }
         }
 
@@ -73,7 +73,7 @@ namespace AppBrix.Application
 
                 this.Uninitialize();
                 this.UnregisterModules();
-                this.ConfigManager.SaveAll();
+                this.ConfigService.SaveAll();
             }
         }
 
@@ -132,12 +132,12 @@ namespace AppBrix.Application
                     case RequestedAction.None:
                         break;
                     case RequestedAction.Reinitialize:
-                        this.ConfigManager.SaveAll();
+                        this.ConfigService.SaveAll();
                         this.UninitializeInternal(i - 1);
                         this.Initialize();
                         return;
                     case RequestedAction.Restart:
-                        this.ConfigManager.SaveAll();
+                        this.ConfigService.SaveAll();
                         this.UninitializeInternal(i - 1);
                         this.UnregisterModules();
                         this.Start();
@@ -170,7 +170,7 @@ namespace AppBrix.Application
             if (requestedAction.HasValue)
             {
                 moduleInfo.Config.Version = version;
-                this.ConfigManager.Save<AppConfig>();
+                this.ConfigService.Save<AppConfig>();
             }
 
             return requestedAction ?? RequestedAction.None;
@@ -189,7 +189,7 @@ namespace AppBrix.Application
                     moduleInfo.Module.Uninstall(new DefaultUninstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
-                    this.ConfigManager.Save<AppConfig>();
+                    this.ConfigService.Save<AppConfig>();
                 }
             }
 
@@ -226,7 +226,7 @@ namespace AppBrix.Application
 
         private IEnumerable<ModuleInfo> GetModuleInfos()
         {
-            return this.ConfigManager.Get<AppConfig>().Modules
+            return this.ConfigService.Get<AppConfig>().Modules
                 .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
                 .Select(m => new ModuleInfo(this.CreateModule(m), m));
         }

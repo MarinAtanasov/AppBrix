@@ -11,7 +11,7 @@ using System.Linq;
 namespace AppBrix.Logging
 {
     /// <summary>
-    /// Modules used for registering a logs manager.
+    /// Module used for registering a logs hub.
     /// </summary>
     public sealed class LoggingModule : ModuleBase
     {

@@ -19,7 +19,7 @@ namespace AppBrix.Container
         public void Initialize(IInitializeContext context)
         {
             this.Register(context.App, context.App.GetType());
-            this.Register(context.App.ConfigManager, context.App.ConfigManager.GetType());
+            this.Register(context.App.ConfigService, context.App.ConfigService.GetType());
             this.Register(this);
         }
 

@@ -8,19 +8,19 @@ using System.Linq;
 namespace AppBrix.Configuration
 {
     /// <summary>
-    /// Default implementation of the <see cref="IConfigManager"/>.
+    /// Default implementation of the <see cref="IConfigService"/>.
     /// Uses <see cref="IConfigSerializer"/> to load and store the configuration and
     /// <see cref="IConfigSerializer"/> to serialize and deserialize the configurations.
     /// </summary>
-    public sealed class ConfigManager : IConfigManager
+    public sealed class ConfigService : IConfigService
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of <see cref="ConfigManager"/>
+        /// Creates a new instance of <see cref="ConfigService"/>
         /// </summary>
         /// <param name="provider">The provider which will be used to load and store the configurations.</param>
         /// <param name="serializer">The serializer which will be used to serialize and deserialize the configurations.</param>
-        public ConfigManager(IConfigProvider provider, IConfigSerializer serializer)
+        public ConfigService(IConfigProvider provider, IConfigSerializer serializer)
         {
             if (provider == null)
                 throw new ArgumentNullException(nameof(provider));

@@ -15,13 +15,13 @@ namespace AppBrix
     {
         #region Public methods
         /// <summary>
-        /// Creates a default application with a specified configuration manager.
+        /// Creates a default application with a specified configuration service.
         /// </summary>
-        /// <param name="configManager">The configuration manager.</param>
+        /// <param name="configService">The configuration service.</param>
         /// <returns>The created app.</returns>
-        public static IApp Create(IConfigManager configManager)
+        public static IApp Create(IConfigService configService)
         {
-            return new DefaultApp(configManager);
+            return new DefaultApp(configService);
         }
         #endregion
     }

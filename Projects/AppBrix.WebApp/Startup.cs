@@ -24,11 +24,11 @@ namespace AppBrix.WebApp
             Configuration = builder.Build();
 
             // Add AppBrix app.
-            var configManager = new ConfigManager(new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer());
-            if (configManager.Get<AppConfig>().Modules.Count == 0)
-                configManager.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
+            var configService = new ConfigService(new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer());
+            if (configService.Get<AppConfig>().Modules.Count == 0)
+                configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
 
-            this.App = AppBrix.App.Create(configManager);
+            this.App = AppBrix.App.Create(configService);
             this.App.Start();
         }
 

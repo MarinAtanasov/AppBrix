@@ -13,10 +13,10 @@ namespace AppBrix
         /// Saves one cached configuration.
         /// </summary>
         /// <typeparam name="T">The type of the configuraton.</typeparam>
-        /// <param name="manager">The configuration manager.</param>
-        public static void Save<T>(this IConfigManager manager) where T : class, IConfig
+        /// <param name="service">The configuration service.</param>
+        public static void Save<T>(this IConfigService service) where T : class, IConfig
         {
-            manager.Save(manager.Get<T>());
+            service.Save(service.Get<T>());
         }
         
         /// <summary>

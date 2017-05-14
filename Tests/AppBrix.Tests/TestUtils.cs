@@ -22,13 +22,13 @@ namespace AppBrix.Tests
         /// <returns>The created application.</returns>
         public static IApp CreateTestApp(params Type[] modules)
         {
-            var manager = new MemoryConfigManager();
-            var config = manager.Get<AppConfig>();
+            var service = new MemoryConfigService();
+            var config = service.Get<AppConfig>();
             foreach (var module in modules)
             {
                 config.Modules.Add(ModuleConfigElement.Create(module));
             }
-            return App.Create(manager);
+            return App.Create(service);
         }
         #endregion
     }

@@ -7,9 +7,9 @@ using System.Linq;
 namespace AppBrix.Configuration
 {
     /// <summary>
-    /// A configuration manager used for getting and storing configurations.
+    /// A configuration service used for getting and storing configurations.
     /// </summary>
-    public interface IConfigManager
+    public interface IConfigService
     {
         /// <summary>
         /// Gets the currently loaded instance of the specified config.

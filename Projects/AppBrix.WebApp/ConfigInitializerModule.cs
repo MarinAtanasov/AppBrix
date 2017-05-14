@@ -23,8 +23,8 @@ namespace AppBrix.WebApp
         #region Public and overriden methods
         public void Install(IInstallContext context)
         {
-            this.InitializeAppConfig(context.App.ConfigManager);
-            this.InitializeLoggingConfig(context.App.ConfigManager);
+            this.InitializeAppConfig(context.App.ConfigService);
+            this.InitializeLoggingConfig(context.App.ConfigService);
             context.RequestedAction = RequestedAction.Restart;
         }
 
@@ -47,9 +47,9 @@ namespace AppBrix.WebApp
         #endregion
 
         #region Private methods
-        private void InitializeAppConfig(IConfigManager manager)
+        private void InitializeAppConfig(IConfigService service)
         {
-            var config = manager.Get<AppConfig>();
+            var config = service.Get<AppConfig>();
             if (config.Modules.Count > 1)
                 throw new InvalidOperationException($@"Module {nameof(ConfigInitializerModule)} found other modules registered besides itself.");
 
@@ -68,9 +68,9 @@ namespace AppBrix.WebApp
                 .ForEach(config.Modules.Add);
         }
 
-        private void InitializeLoggingConfig(IConfigManager manager)
+        private void InitializeLoggingConfig(IConfigService service)
         {
-            manager.Get<LoggingConfig>().Async = false;
+            service.Get<LoggingConfig>().Async = false;
         }
         #endregion
 

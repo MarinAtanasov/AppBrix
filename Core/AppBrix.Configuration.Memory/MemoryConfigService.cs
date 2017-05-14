@@ -8,9 +8,9 @@ using System.Linq;
 namespace AppBrix.Configuration.Memory
 {
     /// <summary>
-    /// In-memory implementation of the <see cref="IConfigManager"/>.
+    /// In-memory implementation of the <see cref="IConfigService"/>.
     /// </summary>
-    public sealed class MemoryConfigManager : IConfigManager
+    public sealed class MemoryConfigService : IConfigService
     {
         #region Public and overriden methods
         public T Get<T>() where T : class, IConfig
