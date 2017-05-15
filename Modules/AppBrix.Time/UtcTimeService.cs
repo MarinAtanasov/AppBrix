@@ -26,7 +26,7 @@ namespace AppBrix.Time
 
         public override DateTime ToAppTime(DateTime time)
         {
-            return time.Kind == DateTimeKind.Utc ? time : time.ToUniversalTime();
+            return time.ToUniversalTime();
         }
         #endregion
     }
