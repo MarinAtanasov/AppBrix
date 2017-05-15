@@ -21,6 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Config\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
