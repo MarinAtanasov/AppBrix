@@ -53,14 +53,10 @@ namespace AppBrix.WebApp
             if (config.Modules.Count > 1)
                 throw new InvalidOperationException($@"Module {nameof(ConfigInitializerModule)} found other modules registered besides itself.");
 
-            ConfigInitializerModule.Modules
-                .SelectMany(module => module.GetTypeInfo().Assembly.GetAllReferencedAssemblies())
-                .Distinct()
+            this.GetType().GetTypeInfo().Assembly.GetAllReferencedAssemblies()
                 .SelectMany(assembly => assembly.ExportedTypes)
                 .Where(type => type.GetTypeInfo().IsClass && !type.GetTypeInfo().IsAbstract)
                 .Where(typeof(IModule).IsAssignableFrom)
-                .Concat(ConfigInitializerModule.Modules)
-                .Distinct()
                 .OrderBy(type => type.Namespace)
                 .ThenBy(type => type.Name)
                 .Select(ModuleConfigElement.Create)
@@ -75,6 +71,10 @@ namespace AppBrix.WebApp
         #endregion
 
         #region Private fields and constants
+        /// <summary>
+        /// This is required in order for the assembly to reference the project references.
+        /// When there are no code references, the project reference does not become an assembly reference.
+        /// </summary>
         private static readonly IEnumerable<Type> Modules = new List<Type>
         {
             typeof(MigrationDataModule),
