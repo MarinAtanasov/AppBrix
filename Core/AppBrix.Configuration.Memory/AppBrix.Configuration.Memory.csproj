@@ -4,13 +4,13 @@
     <Description>Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.Configuration.Memory</AssemblyTitle>
-    <VersionPrefix>0.7.0</VersionPrefix>
+    <VersionPrefix>0.8.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Configuration.Memory</AssemblyName>
     <PackageId>AppBrix.Configuration.Memory</PackageId>
     <PackageTags>AppBrix Config Memory</PackageTags>
-    <PackageReleaseNotes>Updated dependencies to use DotNetCore 1.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated dependencies to use .NetCore and .NetStandard 2.0.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
