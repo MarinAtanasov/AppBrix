@@ -47,10 +47,7 @@ namespace AppBrix.Caching.Memory
             lock (this.cache)
             {
                 cacheItem = this.GetInternal(key);
-                if (cacheItem != null)
-                {
-                    cacheItem.UpdateLastAccessed(this.app.GetTime());
-                }
+                cacheItem?.UpdateLastAccessed(this.app.GetTime());
             }
             return cacheItem?.Item;
         }
