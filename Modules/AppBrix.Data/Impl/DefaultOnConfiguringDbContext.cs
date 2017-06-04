@@ -10,15 +10,18 @@ namespace AppBrix.Data.Impl
     internal sealed class DefaultOnConfiguringDbContext : IOnConfiguringDbContext
     {
         #region Construction
-        public DefaultOnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder)
+        public DefaultOnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder, string migrationsAssembly = null)
         {
             this.Context = context;
+            this.MigrationsAssembly = migrationsAssembly;
             this.OptionsBuilder = builder;
         }
         #endregion
 
         #region Properties
         public DbContext Context { get; }
+
+        public string MigrationsAssembly { get; }
 
         public DbContextOptionsBuilder OptionsBuilder { get; }
         #endregion

@@ -24,7 +24,9 @@ namespace AppBrix.Data.Sqlite
 
         public void Configure(IOnConfiguringDbContext context)
         {
-            context.OptionsBuilder.UseSqlite(this.app.GetConfig<SqliteDataConfig>().ConnectionString);
+            context.OptionsBuilder.UseSqlite(
+                this.app.GetConfig<SqliteDataConfig>().ConnectionString,
+                builder => builder.MigrationsAssembly(context.MigrationsAssembly));
         }
 
         private IApp app;

@@ -1,7 +1,4 @@
 ﻿using AppBrix.Application;
-using AppBrix.Configuration;
-using AppBrix.Configuration.Files;
-using AppBrix.Configuration.Yaml;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,51 +11,26 @@ namespace AppBrix.WebApp
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-
-            // Add AppBrix app.
-            var configService = new ConfigService(new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer());
-            if (configService.Get<AppConfig>().Modules.Count == 0)
-                configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
-
-            this.App = AppBrix.App.Create(configService);
-            this.App.Start();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
-
-        public IApp App { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddMvc();
-
-            // Add AppBrix app to the DI container.
-            services.AddApp(this.App);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime, IApp appBrixApp)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            // Add AppBrix logging provider.
-            loggerFactory.AddProvider(this.App);
-
             app.UseMvc();
 
             // Dispose of AppBrix app during a graceful shutdown.
-            lifetime.ApplicationStopped.Register(this.App.Stop);
+            lifetime.ApplicationStopped.Register(appBrixApp.Stop);
         }
     }
 }

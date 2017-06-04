@@ -28,6 +28,11 @@ namespace AppBrix.Data
         #endregion
 
         #region Public and overriden methods
+        /// <summary>
+        /// Initializes the <see cref="DbContextBase"/> using the provided <see cref="IInitializeDbContext"/>.
+        /// This should be called right after creating the context inside <see cref="IDbContextService"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="IInitializeDbContext"/>.</param>
         public void Initialize(IInitializeDbContext context)
         {
             this.App = context.App;
@@ -43,12 +48,8 @@ namespace AppBrix.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            this.App.GetDbContextConfigurer().Configure(new DefaultOnConfiguringDbContext(this, optionsBuilder));
-            var relationalOptionsExtension = optionsBuilder.Options.Extensions.OfType<RelationalOptionsExtension>().SingleOrDefault();
-            if (relationalOptionsExtension != null)
-            {
-                relationalOptionsExtension.MigrationsAssembly = this.MigrationsAssembly;
-            }
+            this.App.GetDbContextConfigurer().Configure(
+                new DefaultOnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly));
         }
         #endregion
 

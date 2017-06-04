@@ -24,7 +24,9 @@ namespace AppBrix.Data.SqlServer
 
         public void Configure(IOnConfiguringDbContext context)
         {
-            context.OptionsBuilder.UseSqlServer(this.app.GetConfig<SqlServerDataConfig>().ConnectionString);
+            context.OptionsBuilder.UseSqlServer(
+                this.app.GetConfig<SqlServerDataConfig>().ConnectionString,
+                builder => builder.MigrationsAssembly(context.MigrationsAssembly));
         }
 
         private IApp app;

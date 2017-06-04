@@ -32,8 +32,7 @@ namespace AppBrix.Data.Impl
                 throw new ArgumentException($"Cannot create instance of abstract type {type}.");
             
             var context = (DbContext)this.app.GetFactory().Get(type);
-            if (context is DbContextBase)
-                ((DbContextBase)context).Initialize(new DefaultInitializeDbContext(this.app, null));
+            (context as DbContextBase)?.Initialize(new DefaultInitializeDbContext(this.app));
             return context;
         }
         #endregion

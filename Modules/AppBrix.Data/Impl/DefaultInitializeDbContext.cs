@@ -10,7 +10,7 @@ namespace AppBrix.Data.Impl
     internal sealed class DefaultInitializeDbContext : IInitializeDbContext
     {
         #region Construction
-        public DefaultInitializeDbContext(IApp app, string migrationsAssembly)
+        public DefaultInitializeDbContext(IApp app, string migrationsAssembly = null)
         {
             this.App = app;
             this.MigrationsAssembly = migrationsAssembly;

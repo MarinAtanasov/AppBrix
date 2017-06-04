@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AppBrix.Application;
+using AppBrix.Configuration;
+using AppBrix.Configuration.Files;
+using AppBrix.Configuration.Yaml;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace AppBrix.WebApp
@@ -10,15 +13,23 @@ namespace AppBrix.WebApp
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
+            BuildWebHost(args).Run();
+        }
 
-            host.Run();
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            var configService = new ConfigService(new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer());
+            if (configService.Get<AppConfig>().Modules.Count == 0)
+                configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConfigInitializerModule>());
+
+            var app = AppBrix.App.Create(configService);
+            app.Start();
+
+            return WebHost.CreateDefaultBuilder(args)
+                .ConfigureServices(services => services.AddApp(app))
+                .ConfigureLogging(logging => logging.AddProvider(app))
+                .UseStartup<Startup>()
+                .Build();
         }
     }
 }

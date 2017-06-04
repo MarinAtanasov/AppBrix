@@ -3,12 +3,13 @@
 //
 using AppBrix.Application;
 using AppBrix.Lifecycle;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -188,7 +189,8 @@ namespace AppBrix.Data.Migration.Impl
                     new CSharpMigrationsGenerator(
                         codeHelper,
                         new CSharpMigrationOperationGenerator(codeHelper),
-                        new CSharpSnapshotGenerator(codeHelper)));
+                        new CSharpSnapshotGenerator(codeHelper)),
+                    NullLogger<MigrationsScaffolder>.Instance);
 
                 return scaffolder.ScaffoldMigration(migrationName, context.GetType().Namespace);
             }

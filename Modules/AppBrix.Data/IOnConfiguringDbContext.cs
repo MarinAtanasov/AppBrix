@@ -14,6 +14,8 @@ namespace AppBrix.Data
     {
         DbContext Context { get; }
 
+        string MigrationsAssembly { get; }
+
         DbContextOptionsBuilder OptionsBuilder { get; }
     }
 }
