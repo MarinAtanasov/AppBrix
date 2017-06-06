@@ -13,7 +13,7 @@ using Xunit;
 
 namespace AppBrix.Text.Tests
 {
-    public sealed class EncodingProviderWrapper
+    public sealed class EncodingProviderWrapper : IDisposable
     {
         #region Setup and cleanup
         public EncodingProviderWrapper()
@@ -22,6 +22,11 @@ namespace AppBrix.Text.Tests
                 typeof(ContainerModule),
                 typeof(TextModule));
             this.app.Start();
+        }
+
+        public void Dispose()
+        {
+            this.app.Stop();
         }
         #endregion
 

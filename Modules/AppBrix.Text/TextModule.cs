@@ -25,7 +25,6 @@ namespace AppBrix.Text
 
         protected override void UninitializeModule()
         {
-            Encoding.RegisterProvider(this.App.Get<EncodingProvider>());
             this.wrapper.Value.Uninitialize();
         }
         #endregion
