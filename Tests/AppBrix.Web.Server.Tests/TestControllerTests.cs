@@ -67,12 +67,26 @@ namespace AppBrix.Web.Server.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceWebServer()
         {
-            Action action = this.TestPerformanceWebServerInternal;
+            // The setup is taking a long time on MacOS. This tests the performance of the requests only.
+            var app = this.CreateWebApp();
+            try
+            {
+                using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
+                {
+                    app.GetFactory().Register(server.CreateClient);
+                    
+                    Action action = () => this.TestPerformanceWebServerInternal(app);
 
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
+                    // Invoke the action once to make sure that the assemblies are loaded.
+                    action.Invoke();
 
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+                    action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+                }
+            }
+            finally
+            {
+                app.Stop();
+            }
         }
         #endregion
 
@@ -107,27 +121,15 @@ namespace AppBrix.Web.Server.Tests
             return app;
         }
 
-        private void TestPerformanceWebServerInternal()
+        private void TestPerformanceWebServerInternal(IApp app)
         {
-            var app = this.CreateWebApp();
-            try
+            for (int i = 0; i < 100; i++)
             {
-                using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
-                {
-                    app.GetFactory().Register(server.CreateClient);
-                    for (int i = 0; i < 50; i++)
-                    {
-                        var result = app.GetFactory()
-                            .Get<IHttpRequest>()
-                            .SetUrl(TestControllerTests.TestConnectionServiceUrl)
-                            .Send<string>()
-                            .Result;
-                    }
-                }
-            }
-            finally
-            {
-                app.Stop();
+                var result = app.GetFactory()
+                    .Get<IHttpRequest>()
+                    .SetUrl(TestControllerTests.TestConnectionServiceUrl)
+                    .Send<string>()
+                    .Result;
             }
         }
         #endregion
