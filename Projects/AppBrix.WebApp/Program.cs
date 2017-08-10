@@ -1,5 +1,4 @@
-﻿using AppBrix.Application;
-using AppBrix.Configuration;
+﻿using AppBrix.Configuration;
 using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Yaml;
 using Microsoft.AspNetCore;

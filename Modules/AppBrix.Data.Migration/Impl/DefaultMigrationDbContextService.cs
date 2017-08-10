@@ -6,10 +6,14 @@ using AppBrix.Lifecycle;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -182,18 +186,43 @@ namespace AppBrix.Data.Migration.Impl
             using (var context = (DbContextBase)this.contextService.Get(type))
             {
                 context.Initialize(new DefaultInitializeDbContext(this.app, oldMigrationsAssembly));
-
-                var codeHelper = new CSharpHelper();
-                var scaffolder = ActivatorUtilities.CreateInstance<MigrationsScaffolder>(
-                    ((IInfrastructure<IServiceProvider>)context).Instance,
-                    new CSharpMigrationsGenerator(
-                        codeHelper,
-                        new CSharpMigrationOperationGenerator(codeHelper),
-                        new CSharpSnapshotGenerator(codeHelper)),
-                    NullLogger<MigrationsScaffolder>.Instance);
-
+                var scaffolder = this.CreateMigrationsScaffolder(context);
                 return scaffolder.ScaffoldMigration(migrationName, context.GetType().Namespace);
             }
+        }
+
+        private MigrationsScaffolder CreateMigrationsScaffolder(DbContext context)
+        {
+            var logger = this.app.GetLog();
+
+            var reporter = new OperationReporter(new OperationReportHandler(
+                m => logger.Error(m),
+                m => logger.Warning(m),
+                m => logger.Info(m),
+                m => logger.Trace(m)));
+
+            var designTimeServices = new ServiceCollection()
+                .AddSingleton(context.GetService<IHistoryRepository>())
+                .AddSingleton(context.GetService<IMigrationsIdGenerator>())
+                .AddSingleton(context.GetService<IMigrationsModelDiffer>())
+                .AddSingleton(context.GetService<IMigrationsAssembly>())
+                .AddSingleton(context.Model)
+                .AddSingleton(context.GetService<ICurrentDbContext>())
+                .AddSingleton(context.GetService<IDatabaseProvider>())
+                .AddSingleton<MigrationsCodeGeneratorDependencies>()
+                .AddSingleton<ICSharpHelper, CSharpHelper>()
+                .AddSingleton<CSharpMigrationOperationGeneratorDependencies>()
+                .AddSingleton<ICSharpMigrationOperationGenerator, CSharpMigrationOperationGenerator>()
+                .AddSingleton<CSharpSnapshotGeneratorDependencies>()
+                .AddSingleton<ICSharpSnapshotGenerator, CSharpSnapshotGenerator>()
+                .AddSingleton<CSharpMigrationsGeneratorDependencies>()
+                .AddSingleton<IMigrationsCodeGenerator, CSharpMigrationsGenerator>()
+                .AddSingleton<IOperationReporter>(reporter)
+                .AddSingleton<MigrationsScaffolderDependencies>()
+                .AddSingleton<MigrationsScaffolder>()
+                .BuildServiceProvider();
+
+            return designTimeServices.GetRequiredService<MigrationsScaffolder>();
         }
 
         private MigrationData ApplyMigration(Type type, Version version, ScaffoldedMigration scaffoldedMigration)

@@ -1,6 +1,6 @@
-param([String]$Tests="Functional", [switch]$Restore, [switch]$Build);
+param([String]$Tests="Functional", [switch]$Build);
 
-$paths = Get-ChildItem Tests | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp2.0/$($_.Name).dll") };
+$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp2.0/$($_.Name).dll") };
 $filter = "";
 $parallel = "";
 
@@ -12,11 +12,6 @@ if ($Tests -eq "functional" -or $Tests -eq "f")
 elseif ($Tests -eq "performance" -or $Tests -eq "p")
 {
     $filter = "--TestCaseFilter:Category=Performance";
-}
-
-if ($Restore)
-{
-    dotnet restore;
 }
 
 if ($Restore -or $Build)
