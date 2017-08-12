@@ -14,9 +14,7 @@ AppBrix has been created with the following priorities:
 git clone git@github.com:MarinAtanasov/AppBrix.NetCore.git
 # Go to project root directory.
 cd AppBrix.NetCore
-# Restore nuget dependencies.
-dotnet restore
-# Build solution.
+# Restore nuget dependencies and build the solution.
 dotnet build AppBrix.sln
 ```
 
@@ -26,13 +24,13 @@ The tests are using xUnit.
 * In Project Rider, they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
 * In PowerShell, while in the project's root folder:
 ```Powershell
-# You can add -Build to build the solution or -Restore to restore and build.
+# You can add -Build to restore dependencies and build the solution.
 # Run functional tests in parallel (default)
-./Test -Tests Functional
+./Test -Tests Functional # ./Test f
 # Run performance tests
-./Test -Tests Performance
+./Test -Tests Performance # ./Test p
 # Run all tests
-./Test -Tests All
+./Test -Tests All # ./Test a
 ```
 
 ## Sample Applications
