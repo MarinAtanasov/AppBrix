@@ -16,18 +16,19 @@ namespace AppBrix.Tests
     {
         #region Public methods
         /// <summary>
-        /// Creates an app with an in-memory configuration using the list of provided modules.
+        /// Creates an app with an in-memory configuration using the provided module and its dependencies.
         /// </summary>
-        /// <param name="modules">The modules to load inside the application.</param>
+        /// <param name="module">The module to load inside the application.</param>
         /// <returns>The created application.</returns>
-        public static IApp CreateTestApp(params Type[] modules)
+        public static IApp CreateTestApp(Type module)
         {
             var service = new MemoryConfigService();
             var config = service.Get<AppConfig>();
-            foreach (var module in modules)
-            {
-                config.Modules.Add(ModuleConfigElement.Create(module));
-            }
+            module.GetReferencedModules()
+                .Concat(new[] { module })
+                .Select(ModuleConfigElement.Create)
+                .ToList()
+                .ForEach(config.Modules.Add);
             return App.Create(service);
         }
         #endregion

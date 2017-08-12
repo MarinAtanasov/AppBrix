@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Container;
 using AppBrix.Factory.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -17,9 +16,7 @@ namespace AppBrix.Factory.Tests
         #region Setup and cleanup
         public FactoryTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(ContainerModule),
-                typeof(FactoryModule));
+            this.app = TestUtils.CreateTestApp(typeof(FactoryModule));
             this.app.Start();
         }
         #endregion
@@ -39,7 +36,7 @@ namespace AppBrix.Factory.Tests
         {
             var factory = this.GetFactory();
             Action action = () => factory.Get<NonDefaultConstructorClass>();
-            action.ShouldThrow<MissingMethodException>();
+            action.ShouldThrow<InvalidOperationException>();
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

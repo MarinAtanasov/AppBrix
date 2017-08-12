@@ -2,12 +2,8 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Container;
-using AppBrix.Events;
-using AppBrix.Factory;
-using AppBrix.Logging;
+using AppBrix.Configuration;
 using AppBrix.Tests;
-using AppBrix.Time;
 using AppBrix.Web.Client;
 using FluentAssertions;
 using Microsoft.AspNetCore;
@@ -86,7 +82,8 @@ namespace AppBrix.Web.Server.Tests
 
         private IApp CreateWebApp()
         {
-            var app = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(TimeModule), typeof(FactoryModule), typeof(EventsModule), typeof(LoggingModule), typeof(WebClientModule), typeof(WebServerModule));
+            var app = TestUtils.CreateTestApp(typeof(WebServerModule));
+            app.GetConfig<AppConfig>().Modules.Add(ModuleConfigElement.Create(typeof(WebClientModule)));
             app.Start();
             app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
             app.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());

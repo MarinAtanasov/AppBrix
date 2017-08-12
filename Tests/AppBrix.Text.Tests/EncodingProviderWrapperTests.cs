@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Container;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -18,9 +17,7 @@ namespace AppBrix.Text.Tests
         #region Setup and cleanup
         public EncodingProviderWrapper()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(ContainerModule),
-                typeof(TextModule));
+            this.app = TestUtils.CreateTestApp(typeof(TextModule));
             this.app.Start();
         }
 

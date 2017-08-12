@@ -34,13 +34,17 @@ namespace AppBrix.Factory
         
         public object Get(Type type)
         {
-            if (this.factories.TryGetValue(type, out var factory))
+            try
             {
-                return factory();
+                return this.factories.TryGetValue(type, out var factory) ? factory() : type.CreateObject();
             }
-            else
+            catch (Exception ex)
             {
-                return type.CreateObject();
+                throw new InvalidOperationException(
+                    string.Concat(
+                        $"Unable to create instance of type {type.GetAssemblyQualifiedName()}. ",
+                        "Make sure that you have registered a factory method first."
+                    ), ex);
             }
         }
         #endregion

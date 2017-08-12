@@ -70,12 +70,8 @@ namespace AppBrix.WebApp
             if (config.Modules.Count > 1)
                 throw new InvalidOperationException($@"Module {nameof(WebAppInitializerModule)} found other modules registered besides itself.");
 
-            this.GetType().GetTypeInfo().Assembly.GetAllReferencedAssemblies()
-                .SelectMany(assembly => assembly.ExportedTypes)
-                .Where(type => type.GetTypeInfo().IsClass && !type.GetTypeInfo().IsAbstract)
-                .Where(typeof(IModule).IsAssignableFrom)
-                .OrderBy(type => type.Namespace)
-                .ThenBy(type => type.Name)
+            this.GetType()
+                .GetReferencedModules()
                 .Select(ModuleConfigElement.Create)
                 .ToList()
                 .ForEach(config.Modules.Add);

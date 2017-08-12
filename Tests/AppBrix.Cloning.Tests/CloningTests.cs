@@ -3,7 +3,6 @@
 //
 using AppBrix.Application;
 using AppBrix.Cloning.Tests.Mocks;
-using AppBrix.Container;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -20,9 +19,7 @@ namespace AppBrix.Cloning.Tests
         #region Setup and cleanup
         public CloningTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(CloningModule),
-                typeof(ContainerModule));
+            this.app = TestUtils.CreateTestApp(typeof(CloningModule));
             this.app.Start();
         }
         #endregion

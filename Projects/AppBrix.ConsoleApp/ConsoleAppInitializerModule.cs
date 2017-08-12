@@ -80,13 +80,11 @@ namespace AppBrix.ConsoleApp
             if (config.Modules.Count > 1)
                 throw new InvalidOperationException($@"Module {nameof(ConsoleAppInitializerModule)} found other modules registered besides itself.");
 
-            foreach (var module in ConsoleAppInitializerModule.Modules)
-            {
-                var element = ModuleConfigElement.Create(module);
-                if (ConsoleAppInitializerModule.DisabledModules.Contains(module))
-                    element.Status = ModuleStatus.Disabled;
-                config.Modules.Add(element);
-            }
+            this.GetType()
+                .GetReferencedModules()
+                .Select(ModuleConfigElement.Create)
+                .ToList()
+                .ForEach(config.Modules.Add);
         }
 
         private void InitializeLoggingConfig(IConfigService service)
@@ -105,27 +103,19 @@ namespace AppBrix.ConsoleApp
             typeof(CloningModule),
             typeof(ContainerModule),
             typeof(DataModule),
-            typeof(InMemoryDataModule),
+            //typeof(InMemoryDataModule),
             typeof(MigrationDataModule),
             typeof(SqliteDataModule),
-            typeof(SqlServerDataModule),
+            //typeof(SqlServerDataModule),
             typeof(EventsModule),
             typeof(FactoryModule),
             typeof(LoggingModule),
             typeof(ConsoleLoggerModule),
-            typeof(FileLoggerModule),
+            //typeof(FileLoggerModule),
             typeof(TextModule),
             typeof(TimeModule),
             typeof(WebClientModule),
-            typeof(WebServerModule)
-        };
-
-        private static readonly ISet<Type> DisabledModules = new HashSet<Type>
-        {
-            typeof(InMemoryDataModule),
-            typeof(SqlServerDataModule),
-            typeof(FileLoggerModule),
-            typeof(WebServerModule)
+            //typeof(WebServerModule)
         };
         #endregion
     }

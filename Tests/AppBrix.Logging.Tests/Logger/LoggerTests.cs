@@ -2,15 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Container;
-using AppBrix.Events;
-using AppBrix.Events.Async;
-using AppBrix.Factory;
 using AppBrix.Logging.Impl;
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Tests;
 using AppBrix.Tests.Mocks;
-using AppBrix.Time;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -23,13 +18,7 @@ namespace AppBrix.Logging.Tests.Logger
         #region Setup and cleanup
         public LoggerTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(ContainerModule),
-                typeof(EventsModule),
-                typeof(AsyncEventsModule),
-                typeof(FactoryModule),
-                typeof(LoggingModule),
-                typeof(TimeModule));
+            this.app = TestUtils.CreateTestApp(typeof(LoggingModule));
             this.app.Start();
         }
         #endregion

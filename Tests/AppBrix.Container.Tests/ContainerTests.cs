@@ -16,8 +16,7 @@ namespace AppBrix.Container.Tests
         #region Setup and cleanup
         public ContainerTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(ContainerModule));
+            this.app = TestUtils.CreateTestApp(typeof(ContainerModule));
             this.app.Start();
         }
         #endregion

@@ -3,7 +3,6 @@
 //
 using AppBrix.Application;
 using AppBrix.Caching.Json;
-using AppBrix.Container;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -17,10 +16,7 @@ namespace AppBrix.Caching.Tests
         #region Setup and cleanup
         public CacheTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(CachingModule),
-                typeof(JsonCachingModule),
-                typeof(ContainerModule));
+            this.app = TestUtils.CreateTestApp(typeof(JsonCachingModule));
             this.app.Start();
         }
         #endregion

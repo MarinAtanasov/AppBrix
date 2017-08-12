@@ -3,9 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Caching.Memory.Config;
-using AppBrix.Container;
 using AppBrix.Tests;
-using AppBrix.Time;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -19,10 +17,7 @@ namespace AppBrix.Caching.Memory.Tests
         #region Setup and cleanup
         public MemoryCacheTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(MemoryCachingModule),
-                typeof(TimeModule),
-                typeof(ContainerModule));
+            this.app = TestUtils.CreateTestApp(typeof(MemoryCachingModule));
             this.app.Start();
         }
 

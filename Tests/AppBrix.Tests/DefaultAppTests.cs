@@ -165,7 +165,10 @@ namespace AppBrix.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceReinitialize()
         {
-            Action action = this.TestPerformanceReinitializeInternal;
+            var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
+            app.Start();
+
+            Action action = () => this.TestPerformanceReinitializeInternal(app);
 
             // Invoke the action once to make sure that the assemblies are loaded.
             action.Invoke();
@@ -176,7 +179,10 @@ namespace AppBrix.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceRestart()
         {
-            Action action = this.TestPerformanceRestartInternal;
+            var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
+            app.Start();
+
+            Action action = () => this.TestPerformanceRestartInternal(app);
 
             // Invoke the action once to make sure that the assemblies are loaded.
             action.Invoke();
@@ -186,9 +192,9 @@ namespace AppBrix.Tests
         #endregion
 
         #region Private methods
-        private DefaultApp CreateDefaultApp(params Type[] modules)
+        private DefaultApp CreateDefaultApp(Type module)
         {
-            return (DefaultApp)TestUtils.CreateTestApp(modules);
+            return (DefaultApp)TestUtils.CreateTestApp(module);
         }
 
         private IEnumerable<ModuleInfo> GetModules(DefaultApp app)
@@ -196,22 +202,16 @@ namespace AppBrix.Tests
             return (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app);
         }
 
-        private void TestPerformanceReinitializeInternal()
+        private void TestPerformanceReinitializeInternal(IApp app)
         {
-            var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
-            app.Start();
-
             for (int i = 0; i < 2500; i++)
             {
                 app.Reinitialize();
             }
         }
 
-        private void TestPerformanceRestartInternal()
+        private void TestPerformanceRestartInternal(IApp app)
         {
-            var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
-            app.Start();
-
             for (int i = 0; i < 250; i++)
             {
                 app.Restart();

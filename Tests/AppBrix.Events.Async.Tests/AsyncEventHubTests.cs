@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Container;
 using AppBrix.Events.Async.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -19,10 +18,7 @@ namespace AppBrix.Events.Async.Tests
         #region Setup and cleanup
         public AsyncEventHubTests()
         {
-            this.app = TestUtils.CreateTestApp(
-                typeof(AsyncEventsModule),
-                typeof(ContainerModule),
-                typeof(EventsModule));
+            this.app = TestUtils.CreateTestApp(typeof(AsyncEventsModule));
             this.app.Start();
         }
         #endregion
