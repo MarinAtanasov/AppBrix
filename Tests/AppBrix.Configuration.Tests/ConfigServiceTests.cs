@@ -81,12 +81,7 @@ namespace AppBrix.Configuration.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceConfigService()
         {
-            Action action = this.TestPerformanceConfigServiceInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceConfigServiceInternal);
         }
         #endregion
 

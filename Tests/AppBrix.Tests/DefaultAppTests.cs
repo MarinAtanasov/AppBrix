@@ -168,12 +168,7 @@ namespace AppBrix.Tests
             var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
             app.Start();
 
-            Action action = () => this.TestPerformanceReinitializeInternal(app);
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(() => this.TestPerformanceReinitializeInternal(app));
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -181,13 +176,8 @@ namespace AppBrix.Tests
         {
             var app = this.CreateDefaultApp(typeof(SimpleModuleMock));
             app.Start();
-
-            Action action = () => this.TestPerformanceRestartInternal(app);
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            
+            TestUtils.TestPerformance(() => this.TestPerformanceRestartInternal(app));
         }
         #endregion
 

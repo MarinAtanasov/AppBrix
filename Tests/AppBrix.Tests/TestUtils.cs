@@ -4,6 +4,7 @@
 using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Configuration.Memory;
+using FluentAssertions;
 using System;
 using System.Linq;
 
@@ -30,6 +31,14 @@ namespace AppBrix.Tests
                 .ToList()
                 .ForEach(config.Modules.Add);
             return App.Create(service);
+        }
+
+        public static void TestPerformance(Action action)
+        {
+            // Invoke the action once to make sure that the assemblies are loaded.
+            action();
+
+            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
     }

@@ -95,34 +95,19 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceGetTime()
         {
-            Action action = this.TestPerformanceGetTimeInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceGetTimeInternal);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceToAppTime()
         {
-            Action action = this.TestPerformanceToAppTimeInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceToAppTimeInternal);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceConvertTime()
         {
-            Action action = this.TestPerformanceConvertTimeInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceConvertTimeInternal);
         }
         #endregion
 

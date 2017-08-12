@@ -142,23 +142,13 @@ namespace AppBrix.Cloning.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceDeepCopy()
         {
-            Action action = this.TestPerformanceDeepCopyInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceDeepCopyInternal);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceShallowCopy()
         {
-            Action action = this.TestPerformanceShallowCopyInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceShallowCopyInternal);
         }
         #endregion
 

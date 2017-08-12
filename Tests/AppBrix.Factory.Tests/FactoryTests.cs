@@ -52,13 +52,7 @@ namespace AppBrix.Factory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceFactory()
         {
-            Action action = this.TestPerformanceFactoryInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceFactoryInternal);
         }
         #endregion
 
@@ -79,6 +73,7 @@ namespace AppBrix.Factory.Tests
             {
                 factory.Get<FactoryTests>();
             }
+            this.app.Reinitialize();
         }
         #endregion
 

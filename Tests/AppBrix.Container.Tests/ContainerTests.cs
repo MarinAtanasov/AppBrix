@@ -163,13 +163,7 @@ namespace AppBrix.Container.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceContainer()
         {
-            Action action = this.TestPerformanceContainerInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceContainerInternal);
         }
         #endregion
 
@@ -193,6 +187,7 @@ namespace AppBrix.Container.Tests
                 container.Get(typeof(IContainer));
                 container.GetAll();
             }
+            this.app.Reinitialize();
         }
         #endregion
 

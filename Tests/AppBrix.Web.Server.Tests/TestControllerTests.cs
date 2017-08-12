@@ -63,13 +63,7 @@ namespace AppBrix.Web.Server.Tests
             using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
             {
                 app.GetFactory().Register(server.CreateClient);
-                    
-                Action action = () => this.TestPerformanceWebServerInternal(app);
-
-                // Invoke the action once to make sure that the assemblies are loaded.
-                action.Invoke();
-
-                action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+                TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
             }
         }
         #endregion

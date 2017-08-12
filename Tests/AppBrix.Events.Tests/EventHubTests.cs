@@ -243,37 +243,19 @@ namespace AppBrix.Events.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsSubscribe()
         {
-            Action action = this.TestPerformanceEventsSubscribeInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsUnsubscribe()
         {
-            Action action = this.TestPerformanceEventsUnsubscribeInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceEventsUnsubscribeInternal);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceEventsRaise()
         {
-            Action action = this.TestPerformanceEventsRaiseInternal;
-
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceEventsRaiseInternal);
         }
         #endregion
 
@@ -297,6 +279,7 @@ namespace AppBrix.Events.Tests
             {
                 hub.Subscribe(handler);
             }
+            this.app.Reinitialize();
         }
 
         private void TestPerformanceEventsUnsubscribeInternal()
@@ -317,6 +300,7 @@ namespace AppBrix.Events.Tests
             {
                 hub.Unsubscribe(handlers[i]);
             }
+            this.app.Reinitialize();
         }
 
         private void TestPerformanceEventsRaiseInternal()
@@ -337,6 +321,7 @@ namespace AppBrix.Events.Tests
             parentCalled.Should().Be(calledCount, "The parent should be called exactly {0} times", calledCount);
             childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
+            this.app.Reinitialize();
         }
         #endregion
 

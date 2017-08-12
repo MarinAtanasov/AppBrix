@@ -149,13 +149,9 @@ namespace AppBrix.Logging.Tests.LogHub
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceLogging()
         {
-            Action action = this.TestPerformanceLoggingInternal;
+            this.app.GetEventHub().Subscribe<ILogEntry>(x => { });
 
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.Invoke();
-            this.app.Reinitialize();
-
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            TestUtils.TestPerformance(this.TestPerformanceLoggingInternal);
         }
         #endregion
 
@@ -179,6 +175,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 logHub.Warning(message, error);
             }
             called.Should().Be(repeat * 6, "the event should have been called");
+            this.app.Reinitialize();
         }
         #endregion
 
