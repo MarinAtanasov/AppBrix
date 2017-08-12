@@ -4,6 +4,7 @@
 using AppBrix.Application;
 using AppBrix.Logging.Entries;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -62,20 +63,20 @@ namespace AppBrix.Logging.Impl
             result.Append(DefaultLogEntry.Separator);
             result.Append(this.ThreadId);
             result.Append(DefaultLogEntry.Separator);
-            result.Append(this.CallerFile.Substring(this.CallerFile.LastIndexOf(Path.DirectorySeparatorChar) + 1));
+            result.Append(this.CallerFile.Split(DefaultLogEntry.DirectorySeparatorChars, StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
             result.Append(DefaultLogEntry.LineNumberSeparator);
             result.Append(this.CallerLineNumber);
             result.Append(DefaultLogEntry.Separator);
             result.Append(this.CallerMember);
             result.Append(DefaultLogEntry.Separator);
             result.Append(this.Message);
-            
+
             if (this.Exception != null)
             {
                 result.Append(Environment.NewLine);
                 result.Append(this.Exception);
             }
-            
+
             return result.ToString();
         }
         #endregion
@@ -83,6 +84,7 @@ namespace AppBrix.Logging.Impl
         #region Private fields and constants
         private const string Separator = " | ";
         private const string LineNumberSeparator = ":";
+        private static readonly char[] DirectorySeparatorChars = new HashSet<char> { '/', '\\', Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.ToArray();
         private readonly IApp app;
         #endregion
     }
