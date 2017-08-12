@@ -3,9 +3,13 @@
 //
 using AppBrix.Modules;
 using AppBrix.Lifecycle;
+using AppBrix.Web.Server.Impl;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.Web.Server
 {
@@ -24,6 +28,17 @@ namespace AppBrix.Web.Server
             var defaultLoggerProvider = this.loggerProvider.Value;
             defaultLoggerProvider.Initialize(context);
             this.App.GetContainer().Register(defaultLoggerProvider);
+
+            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder
+                .ConfigureServices(services => services.AddSingleton(this.App))
+                .ConfigureLogging(logging => logging.AddProvider(this.App.Get<ILoggerProvider>()))
+                .Configure(appBuilder =>
+                {
+                    appBuilder.ApplicationServices.GetRequiredService<IApplicationLifetime>().ApplicationStopped.Register(this.App.Stop);
+                    this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
+                })
+                .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly().GetName().Name)
+            );
         }
 
         protected override void UninitializeModule()

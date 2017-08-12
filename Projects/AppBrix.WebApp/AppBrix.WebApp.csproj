@@ -8,7 +8,6 @@
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>AppBrix.WebApp</AssemblyName>
-    <OutputType>Exe</OutputType>
     <PackageId>AppBrix.WebApp</PackageId>
     <PackageTags>AppBrix Web Application</PackageTags>
     <PackageReleaseNotes>Updated dependencies to use .NetCore and .NetStandard 2.0.</PackageReleaseNotes>
@@ -21,7 +20,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Config\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

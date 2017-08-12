@@ -1,8 +1,11 @@
-﻿using AppBrix.Caching;
+﻿using AppBrix.Application;
+using AppBrix.Caching;
 using AppBrix.Caching.Json;
 using AppBrix.Caching.Memory;
 using AppBrix.Cloning;
 using AppBrix.Configuration;
+using AppBrix.Configuration.Files;
+using AppBrix.Configuration.Json;
 using AppBrix.Container;
 using AppBrix.Data;
 using AppBrix.Data.InMemory;
@@ -30,11 +33,21 @@ namespace AppBrix.ConsoleApp
 {
     /// <summary>
     /// Initializes application configuration.
-    /// This module should be first on the list in order to configure the application's configuration.
     /// </summary>
-    public sealed class ConfigInitializerModule : ModuleBase, IInstallable
+    public sealed class ConsoleAppInitializerModule : ModuleBase, IInstallable
     {
         #region Public and overriden methods
+        public static IApp CreateApp()
+        {
+            var configService = new ConfigService(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
+            if (configService.Get<AppConfig>().Modules.Count == 0)
+                configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<ConsoleAppInitializerModule>());
+
+            var app = AppBrix.App.Create(configService);
+            app.Start();
+            return app;
+        }
+
         public void Install(IInstallContext context)
         {
             this.InitializeAppConfig(context.App.ConfigService);
@@ -48,7 +61,7 @@ namespace AppBrix.ConsoleApp
 
         public void Uninstall(IUninstallContext context)
         {
-            throw new NotSupportedException($@"Module {nameof(ConfigInitializerModule)} does not support uninstallation.");
+            throw new NotSupportedException($@"Module {nameof(ConsoleAppInitializerModule)} does not support uninstallation.");
         }
 
         protected override void InitializeModule(IInitializeContext context)
@@ -65,12 +78,12 @@ namespace AppBrix.ConsoleApp
         {
             var config = service.Get<AppConfig>();
             if (config.Modules.Count > 1)
-                throw new InvalidOperationException($@"Module {nameof(ConfigInitializerModule)} found other modules registered besides itself.");
+                throw new InvalidOperationException($@"Module {nameof(ConsoleAppInitializerModule)} found other modules registered besides itself.");
 
-            foreach (var module in ConfigInitializerModule.Modules)
+            foreach (var module in ConsoleAppInitializerModule.Modules)
             {
                 var element = ModuleConfigElement.Create(module);
-                if (ConfigInitializerModule.DisabledModules.Contains(module))
+                if (ConsoleAppInitializerModule.DisabledModules.Contains(module))
                     element.Status = ModuleStatus.Disabled;
                 config.Modules.Add(element);
             }

@@ -2,8 +2,8 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using AppBrix.Web.Server.Impl;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Linq;
 
@@ -16,26 +16,16 @@ namespace AppBrix
     {
         #region Public methods
         /// <summary>
-        /// Adds the current application to be resolved in MVC and Web Api controllers.
-        /// This method must be called from <see cref="M:ConfigureServices"/> method.
+        /// Raises <see cref="IConfigureWebHost"/> event which can be used to attach to
+        /// the web host which will use the current <see cref="IApp"/>.
         /// </summary>
-        /// <param name="services">The service collection.</param>
-        /// <param name="app"></param>
-        /// <returns>The service collection.</returns>
-        public static IServiceCollection AddApp(this IServiceCollection services, IApp app)
+        /// <param name="builder">The web host builder.</param>
+        /// <param name="app">The current application.</param>
+        /// <returns>The web host builder.</returns>
+        public static IWebHostBuilder UseApp(this IWebHostBuilder builder, IApp app)
         {
-            return services.AddSingleton(app);
-        }
-
-        /// <summary>
-        /// Adds the currently registered <see cref="ILoggerProvider"/> to the logging system.
-        /// This method must be called from <see cref="M:Configure"/> method.
-        /// </summary>
-        /// <param name="loggingBuilder">The logger builder where to add the provider.</param>
-        /// <param name="app">The app where the provider has been registerd.</param>
-        public static void AddProvider(this ILoggingBuilder loggingBuilder, IApp app)
-        {
-            loggingBuilder.AddProvider(app.Get<ILoggerProvider>());
+            app.GetEventHub().Raise(new DefaultConfigureWebHost(builder));
+            return builder;
         }
         #endregion
     }

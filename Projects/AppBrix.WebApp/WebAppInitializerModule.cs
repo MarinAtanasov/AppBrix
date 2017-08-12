@@ -1,4 +1,7 @@
-﻿using AppBrix.Configuration;
+﻿using AppBrix.Application;
+using AppBrix.Configuration;
+using AppBrix.Configuration.Files;
+using AppBrix.Configuration.Yaml;
 using AppBrix.Data.Migration;
 using AppBrix.Data.Sqlite;
 using AppBrix.Lifecycle;
@@ -7,6 +10,8 @@ using AppBrix.Logging.File;
 using AppBrix.Modules;
 using AppBrix.Text;
 using AppBrix.Web.Server;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +20,22 @@ using System.Reflection;
 namespace AppBrix.WebApp
 {
     /// <summary>
-    /// Initializes application configuration.
-    /// This module should be first on the list in order to configure the application's configuration.
+    /// Initializes web application configuration.
     /// </summary>
-    public sealed class ConfigInitializerModule : ModuleBase, IInstallable
+    public sealed class WebAppInitializerModule : ModuleBase, IInstallable
     {
         #region Public and overriden methods
+        public static IApp CreateApp()
+        {
+            var configService = new ConfigService(new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer());
+            if (configService.Get<AppConfig>().Modules.Count == 0)
+                configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<WebAppInitializerModule>());
+
+            var app = AppBrix.App.Create(configService);
+            app.Start();
+            return app;
+        }
+
         public void Install(IInstallContext context)
         {
             this.InitializeAppConfig(context.App.ConfigService);
@@ -34,11 +49,13 @@ namespace AppBrix.WebApp
 
         public void Uninstall(IUninstallContext context)
         {
-            throw new NotSupportedException($@"Module {nameof(ConfigInitializerModule)} does not support uninstallation.");
+            throw new NotSupportedException($@"Module {nameof(WebAppInitializerModule)} does not support uninstallation.");
         }
 
         protected override void InitializeModule(IInitializeContext context)
         {
+            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
+            this.App.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());
         }
 
         protected override void UninitializeModule()
@@ -51,7 +68,7 @@ namespace AppBrix.WebApp
         {
             var config = service.Get<AppConfig>();
             if (config.Modules.Count > 1)
-                throw new InvalidOperationException($@"Module {nameof(ConfigInitializerModule)} found other modules registered besides itself.");
+                throw new InvalidOperationException($@"Module {nameof(WebAppInitializerModule)} found other modules registered besides itself.");
 
             this.GetType().GetTypeInfo().Assembly.GetAllReferencedAssemblies()
                 .SelectMany(assembly => assembly.ExportedTypes)

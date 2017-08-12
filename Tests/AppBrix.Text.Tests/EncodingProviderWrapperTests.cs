@@ -65,12 +65,12 @@ namespace AppBrix.Text.Tests
         #region Private methods
         private void TestPerformanceEncodingProviderWrapperInternal()
         {
-            app.GetContainer().Register(new EncodingProviderMock(Encoding.UTF7));
+            app.GetContainer().Register(new EncodingProviderMock(Encoding.UTF8));
 
             for (int i = 0; i < 75000; i++)
             {
-                Encoding.GetEncoding("test");
-                Encoding.GetEncoding(12);
+                Encoding.GetEncoding("str");
+                Encoding.GetEncoding(32167);
             }
         }
         #endregion

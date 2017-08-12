@@ -3,12 +3,15 @@
 //
 using AppBrix.Application;
 using AppBrix.Container;
+using AppBrix.Events;
 using AppBrix.Factory;
+using AppBrix.Logging;
 using AppBrix.Tests;
+using AppBrix.Time;
 using AppBrix.Web.Client;
 using FluentAssertions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -24,7 +27,7 @@ namespace AppBrix.Web.Server.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnection()
         {
-            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress))
+            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, this.CreateWebApp()))
             using (var client = server.CreateClient())
             {
                 var response = await client.GetAsync(TestControllerTests.TestConnectionServiceUrl);
@@ -39,28 +42,20 @@ namespace AppBrix.Web.Server.Tests
         {
             var app1 = this.CreateWebApp();
             var app2 = this.CreateWebApp();
-            try
+            using (var server1 = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app1))
+            using (var server2 = this.CreateTestServer(TestControllerTests.Server2BaseAddress, app2))
             {
-                using (var server1 = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app1))
-                using (var server2 = this.CreateTestServer(TestControllerTests.Server2BaseAddress, app2))
-                {
-                    app1.GetFactory().Register(server2.CreateClient);
-                    var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
-                    response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
-                    var result1 = Guid.Parse(response1.Content);
-                    result1.Should().Be(app2.Id, "the first app should receive the second app's id");
+                app1.GetFactory().Register(server2.CreateClient);
+                var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
+                response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
+                var result1 = Guid.Parse(response1.Content);
+                result1.Should().Be(app2.Id, "the first app should receive the second app's id");
 
-                    app2.GetFactory().Register(server1.CreateClient);
-                    var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
-                    response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
-                    var result2 = Guid.Parse(response2.Content);
-                    result2.Should().Be(app1.Id, "the second app should receive the first app's id");
-                }
-            }
-            finally
-            {
-                app2.Stop();
-                app1.Stop();
+                app2.GetFactory().Register(server1.CreateClient);
+                var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
+                response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
+                var result2 = Guid.Parse(response2.Content);
+                result2.Should().Be(app1.Id, "the second app should receive the first app's id");
             }
         }
 
@@ -69,55 +64,32 @@ namespace AppBrix.Web.Server.Tests
         {
             // The setup is taking a long time on MacOS. This tests the performance of the requests only.
             var app = this.CreateWebApp();
-            try
+            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
             {
-                using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
-                {
-                    app.GetFactory().Register(server.CreateClient);
+                app.GetFactory().Register(server.CreateClient);
                     
-                    Action action = () => this.TestPerformanceWebServerInternal(app);
+                Action action = () => this.TestPerformanceWebServerInternal(app);
 
-                    // Invoke the action once to make sure that the assemblies are loaded.
-                    action.Invoke();
+                // Invoke the action once to make sure that the assemblies are loaded.
+                action.Invoke();
 
-                    action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
-                }
-            }
-            finally
-            {
-                app.Stop();
+                action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
             }
         }
         #endregion
 
         #region Private methods
-        private TestServer CreateTestServer(string baseAddress, IApp app = null)
+        private TestServer CreateTestServer(string baseAddress, IApp app)
         {
-            if (app == null)
-            {
-                app = TestUtils.CreateTestApp();
-                app.Start();
-            }
-
-            Action<IApplicationBuilder> application = builder =>
-            {
-                builder.UseMvc();
-            };
-            Action<IServiceCollection> services = collection =>
-            {
-                collection.AddApp(app ?? TestUtils.CreateTestApp());
-                collection.AddMvc();
-            };
-            
-            var server = new TestServer(new WebHostBuilder().Configure(application).ConfigureServices(services));
-            server.BaseAddress = new Uri(baseAddress);
-            return server;
+            return new TestServer(WebHost.CreateDefaultBuilder().UseApp(app));
         }
 
         private IApp CreateWebApp()
         {
-            var app = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(FactoryModule), typeof(WebClientModule), typeof(WebServerModule));
+            var app = TestUtils.CreateTestApp(typeof(ContainerModule), typeof(TimeModule), typeof(FactoryModule), typeof(EventsModule), typeof(LoggingModule), typeof(WebClientModule), typeof(WebServerModule));
             app.Start();
+            app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
+            app.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());
             return app;
         }
 
