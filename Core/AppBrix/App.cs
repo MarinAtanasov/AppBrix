@@ -13,7 +13,7 @@ namespace AppBrix
     /// </summary>
     public static class App
     {
-        #region Public methods
+        #region Public and overriden methods
         /// <summary>
         /// Creates a default application with a specified configuration service.
         /// </summary>

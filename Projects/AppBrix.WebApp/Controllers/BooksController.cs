@@ -18,7 +18,7 @@ namespace AppBrix.WebApp.Controllers
         }
         #endregion
 
-        #region Public methods
+        #region Public and overriden methods
         [HttpGet]
         public IEnumerable<Book> Get()
         {

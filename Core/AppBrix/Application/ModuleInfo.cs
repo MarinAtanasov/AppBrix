@@ -41,7 +41,7 @@ namespace AppBrix.Application
         public ModuleStatus Status { get; }
         #endregion
 
-        #region Public methods
+        #region Public and overriden methods
         /// <summary>
         /// Sorts the modules by assembly load priority based on assembly references.
         /// </summary>

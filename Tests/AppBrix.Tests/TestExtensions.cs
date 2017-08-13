@@ -14,7 +14,7 @@ namespace AppBrix.Tests
     /// </summary>
     public static class TestExtensions
     {
-        #region Public methods
+        #region Public and overriden methods
         /// <summary>
         /// Asserts that a function will return a predefined value by a certain timeout.
         /// </summary>

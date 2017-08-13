@@ -43,7 +43,7 @@ namespace AppBrix.Events.Schedule.Impl
         {
             for (int i = this.queue.Count - 1; i >= 0; i--)
             {
-                if (object.ReferenceEquals(this.queue[i].Event, args))
+                if (object.ReferenceEquals(this.queue[i].ScheduledEvent, args))
                 {
                     this.RemoveAt(i);
                     return;

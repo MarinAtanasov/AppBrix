@@ -21,7 +21,7 @@ namespace AppBrix.Modules
         protected IApp App { get; private set; }
         #endregion
 
-        #region Public methods
+        #region Public and overriden methods
         /// <summary>
         /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
         /// </summary>

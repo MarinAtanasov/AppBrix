@@ -24,7 +24,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         }
         #endregion
         
-        #region Public methods
+        #region Public and overriden methods
         /// <summary>
         /// Returns true to indicate that the service has been reached as expected.
         /// Returns false if the current application is null.

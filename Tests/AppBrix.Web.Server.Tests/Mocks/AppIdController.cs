@@ -25,7 +25,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         }
         #endregion
         
-        #region Public methods
+        #region Public and overriden methods
         [HttpGet]
         public string AppId()
         {

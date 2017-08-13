@@ -27,7 +27,7 @@ namespace AppBrix.Cloning
         public int[] Position { get; private set; }
         #endregion
 
-        #region Public methods
+        #region Public and overriden methods
         public bool Step()
         {
             for (int i = 0; i < this.Position.Length; i++)

@@ -21,7 +21,7 @@ namespace AppBrix.Events.Schedule.Cron
         public T Event { get; }
         #endregion
 
-        #region Public methods
+        #region Public and overriden methods
         public DateTime GetNextOccurrence(DateTime now)
         {
             return this.schedule.GetNextOccurrence(now);

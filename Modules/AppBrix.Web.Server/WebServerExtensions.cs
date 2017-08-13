@@ -14,7 +14,7 @@ namespace AppBrix
     /// </summary>
     public static class WebServerExtensions
     {
-        #region Public methods
+        #region Public and overriden methods
         /// <summary>
         /// Raises <see cref="IConfigureWebHost"/> event which can be used to attach to
         /// the web host which will use the current <see cref="IApp"/>.
