@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Base module used for registering scheduled events.</Description>
+    <Copyright>Copyright 2015</Copyright>
+    <AssemblyTitle>AppBrix.Events.Schedule</AssemblyTitle>
+    <VersionPrefix>0.8.0</VersionPrefix>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>AppBrix.Events.Schedule</AssemblyName>
+    <PackageId>AppBrix.Events.Schedule</PackageId>
+    <PackageTags>AppBrix Module Events Scheduled</PackageTags>
+    <PackageReleaseNotes>Updated dependencies to use .NetCore and .NetStandard 2.0.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj" />
+    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
+  </ItemGroup>
+
+</Project>

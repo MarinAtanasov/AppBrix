@@ -101,8 +101,9 @@ namespace AppBrix.Caching.Memory
             return result;
         }
 
-        private void RemoveExpiredEntries(object unused)
+        private void RemoveExpiredEntries(object unused = null)
         {
+            List<KeyValuePair<object, CacheItem>> toRemove;
             lock (this.cache)
             {
                 if (this.expirationTimer == null)
@@ -110,13 +111,17 @@ namespace AppBrix.Caching.Memory
 
                 var now = this.app.GetTime();
 
-                foreach (var item in this.cache.Where(x => x.Value.HasExpired(now)).ToList())
-                {
-                    this.cache.Remove(item.Key);
-                    try { item.Value.Dispose(); } catch (Exception) { }
-                }
+                toRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
+                toRemove.ForEach(x => this.cache.Remove(x.Key));
                 this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
             }
+            toRemove.ForEach(x => this.RunSafe(x.Value.Dispose));
+        }
+
+        private void RunSafe(Action action)
+        {
+            try { action(); }
+            catch (Exception) { }
         }
         #endregion
 

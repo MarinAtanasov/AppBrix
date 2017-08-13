@@ -47,7 +47,7 @@ namespace AppBrix.Events.Async
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            this.RaiseInternal(args);
+            this.app.GetEventHub().Raise(args);
         }
         #endregion
 
@@ -72,7 +72,6 @@ namespace AppBrix.Events.Async
             this.taskQueueUnsubscribers[typeof(T)] = () => this.app.GetEventHub().Unsubscribe<T>(this.RaiseEvent);
             return queue;
         }
-
         private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
             if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
@@ -94,34 +93,9 @@ namespace AppBrix.Events.Async
             this.taskQueues.Remove(type);
         }
 
-        private void RaiseInternal<T>(T args) where T : IEvent
-        {
-            var iEventTypeInfo = typeof(IEvent).GetTypeInfo();
-
-            var baseType = typeof(T);
-            while (baseType != null && iEventTypeInfo.IsAssignableFrom(baseType))
-            {
-                this.RaiseEvent(args, baseType);
-                baseType = baseType.GetTypeInfo().BaseType;
-            }
-
-            foreach (var @interface in typeof(T).GetTypeInfo().GetInterfaces())
-            {
-                if (iEventTypeInfo.IsAssignableFrom(@interface))
-                {
-                    this.RaiseEvent(args, @interface);
-                }
-            }
-        }
-
         private void RaiseEvent<T>(T args) where T : IEvent
         {
-            this.RaiseEvent(args, typeof(T));
-        }
-
-        private void RaiseEvent<T>(T args, Type eventType) where T : IEvent
-        {
-            if (this.taskQueues.TryGetValue(eventType, out var queueObject))
+            if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
             {
                 queueObject.Enqueue(args);
             }

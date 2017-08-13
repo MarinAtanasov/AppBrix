@@ -4,6 +4,7 @@ using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Yaml;
 using AppBrix.Data.Migration;
 using AppBrix.Data.Sqlite;
+using AppBrix.Events.Schedule.Cron;
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
 using AppBrix.Logging.File;
@@ -93,6 +94,7 @@ namespace AppBrix.WebApp
             typeof(MigrationDataModule),
             typeof(SqliteDataModule),
             typeof(FileLoggerModule),
+            typeof(CronScheduledEventsModule),
             typeof(TextModule),
             typeof(WebServerModule)
         };

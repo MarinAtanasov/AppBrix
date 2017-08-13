@@ -38,6 +38,8 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Data.SqlServer\AppBrix.Data.SqlServer.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Events\AppBrix.Events.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Async\AppBrix.Events.Async.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule\AppBrix.Events.Schedule.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Factory\AppBrix.Factory.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging\AppBrix.Logging.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj" />

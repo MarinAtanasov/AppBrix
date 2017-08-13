@@ -57,7 +57,6 @@ namespace AppBrix.Events
                 handlers = new List<object>();
                 this.subscriptions[typeof(T)] = handlers;
             }
-
             handlers.Add(handler);
         }
 
@@ -79,10 +78,8 @@ namespace AppBrix.Events
 
         private void RaiseInternal<T>(T args) where T : IEvent
         {
-            var iEventTypeInfo = typeof(IEvent).GetTypeInfo();
-
             var baseType = typeof(T);
-            while (baseType != null && iEventTypeInfo.IsAssignableFrom(baseType))
+            while (baseType != null && DefaultEventHub.IEventTypeInfo.IsAssignableFrom(baseType))
             {
                 this.RaiseEvent(args, baseType);
                 baseType = baseType.GetTypeInfo().BaseType;
@@ -90,7 +87,7 @@ namespace AppBrix.Events
 
             foreach (var @interface in typeof(T).GetTypeInfo().GetInterfaces())
             {
-                if (iEventTypeInfo.IsAssignableFrom(@interface))
+                if (DefaultEventHub.IEventTypeInfo.IsAssignableFrom(@interface))
                 {
                     this.RaiseEvent(args, @interface);
                 }
@@ -115,6 +112,7 @@ namespace AppBrix.Events
         #endregion
 
         #region Private fields and constants
+        private static readonly TypeInfo IEventTypeInfo = typeof(IEvent).GetTypeInfo();
         private readonly IDictionary<Type, IList<object>> subscriptions = new Dictionary<Type, IList<object>>();
         #endregion
     }

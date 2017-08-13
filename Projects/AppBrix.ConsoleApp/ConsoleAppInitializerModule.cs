@@ -1,30 +1,10 @@
 ﻿using AppBrix.Application;
-using AppBrix.Caching;
-using AppBrix.Caching.Json;
-using AppBrix.Caching.Memory;
-using AppBrix.Cloning;
 using AppBrix.Configuration;
 using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Json;
-using AppBrix.Container;
-using AppBrix.Data;
-using AppBrix.Data.InMemory;
-using AppBrix.Data.Migration;
-using AppBrix.Data.Sqlite;
-using AppBrix.Data.SqlServer;
-using AppBrix.Events;
-using AppBrix.Events.Async;
-using AppBrix.Factory;
 using AppBrix.Lifecycle;
-using AppBrix.Logging;
 using AppBrix.Logging.Configuration;
-using AppBrix.Logging.Console;
-using AppBrix.Logging.File;
 using AppBrix.Modules;
-using AppBrix.Text;
-using AppBrix.Time;
-using AppBrix.Web.Client;
-using AppBrix.Web.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,26 +76,28 @@ namespace AppBrix.ConsoleApp
         #region Private fields and constants
         private static readonly IEnumerable<Type> Modules = new List<Type>
         {
-            typeof(AsyncEventsModule),
-            typeof(CachingModule),
-            typeof(JsonCachingModule),
-            typeof(MemoryCachingModule),
-            typeof(CloningModule),
-            typeof(ContainerModule),
-            typeof(DataModule),
-            //typeof(InMemoryDataModule),
-            typeof(MigrationDataModule),
-            typeof(SqliteDataModule),
-            //typeof(SqlServerDataModule),
-            typeof(EventsModule),
-            typeof(FactoryModule),
-            typeof(LoggingModule),
-            typeof(ConsoleLoggerModule),
-            //typeof(FileLoggerModule),
-            typeof(TextModule),
-            typeof(TimeModule),
-            typeof(WebClientModule),
-            //typeof(WebServerModule)
+            typeof(Caching.CachingModule),
+            typeof(Caching.Json.JsonCachingModule),
+            typeof(Caching.Memory.MemoryCachingModule),
+            typeof(Cloning.CloningModule),
+            typeof(Container.ContainerModule),
+            typeof(Data.DataModule),
+            //typeof(Data.InMemory.InMemoryDataModule),
+            typeof(Data.Migration.MigrationDataModule),
+            typeof(Data.Sqlite.SqliteDataModule),
+            //typeof(Data.SqlServer.SqlServerDataModule),
+            typeof(Events.EventsModule),
+            typeof(Events.Async.AsyncEventsModule),
+            typeof(Events.Schedule.ScheduledEventsModule),
+            typeof(Events.Schedule.Cron.CronScheduledEventsModule),
+            typeof(Factory.FactoryModule),
+            typeof(Logging.LoggingModule),
+            typeof(Logging.Console.ConsoleLoggerModule),
+            //typeof(Logging.File.FileLoggerModule),
+            typeof(Text.TextModule),
+            typeof(Time.TimeModule),
+            typeof(Web.Client.WebClientModule),
+            //typeof(Web.Server.WebServerModule)
         };
         #endregion
     }

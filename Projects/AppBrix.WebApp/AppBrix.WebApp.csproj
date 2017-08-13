@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
