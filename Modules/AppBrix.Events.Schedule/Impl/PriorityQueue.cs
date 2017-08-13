@@ -41,7 +41,7 @@ namespace AppBrix.Events.Schedule.Impl
 
         public void Remove<T>(IScheduledEvent<T> args) where T : IEvent
         {
-            for (int i = 0; i < this.queue.Count; i++)
+            for (int i = this.queue.Count - 1; i >= 0; i--)
             {
                 if (object.ReferenceEquals(this.queue[i].Event, args))
                 {
