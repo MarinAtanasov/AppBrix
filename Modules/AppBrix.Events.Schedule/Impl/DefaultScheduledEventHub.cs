@@ -42,11 +42,15 @@ namespace AppBrix.Events.Schedule.Impl
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            lock (this.queue)
+            var now = this.app.GetTime();
+            var item = new PriorityQueueItem<T>(args, () => this.ExecuteEvent(args.Event));
+            item.MoveToNextOccurrence(now);
+            if (now <= item.Occurrence)
             {
-                var item = new PriorityQueueItem<T>(args, () => this.ExecuteEvent(args.Event));
-                item.MoveToNextOccurrence(this.app.GetTime());
-                this.queue.Push(item);
+                lock (this.queue)
+                {
+                    this.queue.Push(item);
+                }
             }
         }
 
