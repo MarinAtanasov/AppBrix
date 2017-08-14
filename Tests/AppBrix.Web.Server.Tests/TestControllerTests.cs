@@ -8,6 +8,7 @@ using AppBrix.Web.Client;
 using FluentAssertions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -71,7 +72,7 @@ namespace AppBrix.Web.Server.Tests
         #region Private methods
         private TestServer CreateTestServer(string baseAddress, IApp app)
         {
-            return new TestServer(WebHost.CreateDefaultBuilder().UseApp(app));
+            return new TestServer(new WebHostBuilder().UseApp(app));
         }
 
         private IApp CreateWebApp()
