@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Web.Server.Impl
 {
-    internal class DefaultConfigureWebHost : IConfigureWebHost
+    internal sealed class DefaultConfigureWebHost : IConfigureWebHost
     {
         #region Construction
         public DefaultConfigureWebHost(IWebHostBuilder builder)

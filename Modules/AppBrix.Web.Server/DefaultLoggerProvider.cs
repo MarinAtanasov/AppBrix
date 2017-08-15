@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace AppBrix.Web.Server
 {
-    internal class DefaultLoggerProvider : ILoggerProvider, IApplicationLifecycle
+    internal sealed class DefaultLoggerProvider : ILoggerProvider, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace AppBrix.Events.Schedule.Impl
 {
-    internal class PriorityQueue : IApplicationLifecycle
+    internal sealed class PriorityQueue : IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)

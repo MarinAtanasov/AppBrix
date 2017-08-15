@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Events.Schedule.Cron
 {
-    internal class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEvent
+    internal sealed class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEvent
     {
         #region Construction
         public CronScheduledEvent(T args, CrontabSchedule schedule)

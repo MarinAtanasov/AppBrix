@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AppBrix.Events.Schedule.Cron
 {
-    internal class CronScheduledEventHub : ICronScheduledEventHub, IApplicationLifecycle
+    internal sealed class CronScheduledEventHub : ICronScheduledEventHub, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)

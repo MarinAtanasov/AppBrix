@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace AppBrix.Events.Schedule.Impl
 {
-    internal class DefaultScheduledEventHub : IScheduledEventHub, IApplicationLifecycle
+    internal sealed class DefaultScheduledEventHub : IScheduledEventHub, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)

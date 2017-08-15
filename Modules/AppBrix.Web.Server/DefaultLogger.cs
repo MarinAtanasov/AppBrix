@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace AppBrix.Web.Server
 {
-    internal class DefaultLogger : ILogger
+    internal sealed class DefaultLogger : ILogger
     {
         #region Construction
         public DefaultLogger(IApp app, string categoryName)

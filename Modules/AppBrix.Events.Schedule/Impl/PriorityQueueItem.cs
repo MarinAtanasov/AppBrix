@@ -29,7 +29,7 @@ namespace AppBrix.Events.Schedule.Impl
         #endregion
     }
 
-    internal class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
+    internal sealed class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
     {
         #region Construction
         public PriorityQueueItem(IScheduledEvent<T> scheduledEvent, Action execute)

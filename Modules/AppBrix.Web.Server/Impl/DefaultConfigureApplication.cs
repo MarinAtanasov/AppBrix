@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Web.Server.Impl
 {
-    internal class DefaultConfigureApplication : IConfigureApplication
+    internal sealed class DefaultConfigureApplication : IConfigureApplication
     {
         #region Construction
         public DefaultConfigureApplication(IApplicationBuilder builder)
