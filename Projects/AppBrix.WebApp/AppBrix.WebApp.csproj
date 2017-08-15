@@ -16,7 +16,6 @@
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
-    <UserSecretsId>aspnet-AppBrix.WebApp-6EF02F52-C5B6-4CC7-967F-C24A28134F5A</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
