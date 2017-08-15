@@ -37,21 +37,23 @@ namespace AppBrix
                         continue;
 
                     names.Add(reference.FullName);
+
                     Assembly referencedAssembly;
                     try
                     {
                         referencedAssembly = Assembly.Load(reference);
-                        if (locations.Contains(referencedAssembly.Location))
-                            continue;
-
-                        locations.Add(referencedAssembly.Location);
-                        assemblyQueue.Enqueue(referencedAssembly);
                     }
                     catch (FileLoadException)
                     {
                         // Ignore assemblies which cannot be found or loaded.
                         continue;
                     }
+
+                    if (locations.Contains(referencedAssembly.Location))
+                        continue;
+
+                    locations.Add(referencedAssembly.Location);
+                    assemblyQueue.Enqueue(referencedAssembly);
                     yield return referencedAssembly;
                 }
             }
