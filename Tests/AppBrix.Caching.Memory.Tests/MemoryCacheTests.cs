@@ -84,11 +84,11 @@ namespace AppBrix.Caching.Memory.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestSetNegativeRollingExpiration()
+        public void TestSetNegativeSlidingExpiration()
         {
             var cache = this.app.GetMemoryCache();
-            Action action = () => cache.Set(nameof(TestSetNegativeRollingExpiration), this, rollingExpiration: TimeSpan.FromSeconds(-1));
-            action.ShouldThrow<ArgumentException>("rolling expiration should not be negative");
+            Action action = () => cache.Set(nameof(TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
+            action.ShouldThrow<ArgumentException>("sliding expiration should not be negative");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -140,7 +140,7 @@ namespace AppBrix.Caching.Memory.Tests
             this.app.Reinitialize();
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestMixedExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50), rollingExpiration: TimeSpan.FromMilliseconds(25));
+            cache.Set(nameof(TestMixedExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50), slidingExpiration: TimeSpan.FromMilliseconds(25));
             var item = cache.Get(nameof(TestMixedExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
@@ -168,7 +168,7 @@ namespace AppBrix.Caching.Memory.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestDisposeOnRollingExpiration()
+        public void TestDisposeOnSlidingExpiration()
         {
             this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(5);
             this.app.Reinitialize();
@@ -176,20 +176,20 @@ namespace AppBrix.Caching.Memory.Tests
             var disposed = false;
 
             var cache = this.app.GetMemoryCache();
-            cache.Set(nameof(TestDisposeOnRollingExpiration), this, dispose: () => disposed = true, rollingExpiration: TimeSpan.FromMilliseconds(100));
-            var item = cache.Get(nameof(TestDisposeOnRollingExpiration));
+            cache.Set(nameof(TestDisposeOnSlidingExpiration), this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(100));
+            var item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
             for (int i = 0; i < 150; i++)
             {
-                item = cache.Get(nameof(TestDisposeOnRollingExpiration));
+                item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
                 item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
                 disposed.Should().BeFalse($"the item should not have expired after {i} retries");
                 Thread.Sleep(1);
             }
 
             new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(1000), "the item should have expired");
-            item = cache.Get(nameof(TestDisposeOnRollingExpiration));
+            item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
             item.Should().BeNull("the item shold have been removed from the cache");
         }
 

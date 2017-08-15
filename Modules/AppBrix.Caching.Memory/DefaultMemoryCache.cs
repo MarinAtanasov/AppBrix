@@ -52,7 +52,7 @@ namespace AppBrix.Caching.Memory
             return cacheItem?.Item;
         }
 
-        public void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan rollingExpiration = default(TimeSpan))
+        public void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan))
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -60,8 +60,8 @@ namespace AppBrix.Caching.Memory
                 throw new ArgumentNullException(nameof(item));
             if (absoluteExpiration < TimeSpan.Zero)
                 throw new ArgumentException($"Negative absolute expiration: {absoluteExpiration}.");
-            if (rollingExpiration < TimeSpan.Zero)
-                throw new ArgumentException($"Negative rolling expiration: {rollingExpiration}.");
+            if (slidingExpiration < TimeSpan.Zero)
+                throw new ArgumentException($"Negative sliding expiration: {slidingExpiration}.");
 
             var config = this.app.GetConfig<MemoryCachingConfig>();
             lock (this.cache)
@@ -69,7 +69,7 @@ namespace AppBrix.Caching.Memory
                 this.GetInternal(key)?.Dispose();
                 this.cache[key] = new CacheItem(item, dispose,
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
-                    rollingExpiration > TimeSpan.Zero ? rollingExpiration : config.DefaultRollingExpiration,
+                    slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
                     this.app.GetTime());
             }
         }

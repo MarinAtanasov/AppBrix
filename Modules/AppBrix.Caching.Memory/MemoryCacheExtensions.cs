@@ -13,7 +13,7 @@ namespace AppBrix
         /// <summary>
         /// Gets the currently registered local in-memory cache.
         /// This can be used for objects which are long running and should
-        /// be disposed after absolute or rolling expiration time.
+        /// be disposed after absolute or sliding expiration time.
         /// </summary>
         /// <param name="app">The currently running application.</param>
         /// <returns>The local in-memory cache.</returns>

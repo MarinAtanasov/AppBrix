@@ -11,7 +11,7 @@ namespace AppBrix.Caching.Memory
     /// <summary>
     /// Module used for caching objects locally in-memory.
     /// This can be used for objects which are long running and should
-    /// be disposed after absolute or rolling expiration time.
+    /// be disposed after absolute or sliding expiration time.
     /// </summary>
     public sealed class MemoryCachingModule : ModuleBase
     {

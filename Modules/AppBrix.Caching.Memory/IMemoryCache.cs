@@ -9,7 +9,7 @@ namespace AppBrix.Caching.Memory
     /// <summary>
     /// Defines an in-memory local cache.
     /// This can be used for objects which are long running and should
-    /// be disposed after absolute or rolling expiration time.
+    /// be disposed after absolute or sliding expiration time.
     /// </summary>
     public interface IMemoryCache
     {
@@ -25,10 +25,10 @@ namespace AppBrix.Caching.Memory
         /// </summary>
         /// <param name="key">The key which will be used to store the item.</param>
         /// <param name="item">The item to be stored.</param>
-        /// <param name="dispose">Optional action to be executed when the absolute or rolling expirations are reached.</param>
+        /// <param name="dispose">Optional action to be executed when the absolute or sliding expirations are reached.</param>
         /// <param name="absoluteExpiration">Absolute expiration time.</param>
-        /// <param name="rollingExpiration">Rolling expiration time.</param>
-        void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan rollingExpiration = default(TimeSpan));
+        /// <param name="slidingExpiration">Sliding expiration time.</param>
+        void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan));
 
         /// <summary>
         /// Removes a cached item by its key.
