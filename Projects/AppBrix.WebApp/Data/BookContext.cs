@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AppBrix.WebApp.Data
 {
-    public class BookContext : DbContextBase
+    public class BooksContext : DbContextBase
     {
         public DbSet<Book> Books { get; set; }
     }

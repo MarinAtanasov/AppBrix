@@ -22,7 +22,7 @@ namespace AppBrix.WebApp.Controllers
         [HttpGet]
         public IEnumerable<Book> Get()
         {
-            using (var context = this.app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
                 return context.Books
                     .AsNoTracking()
@@ -33,7 +33,7 @@ namespace AppBrix.WebApp.Controllers
         [HttpGet("{id}")]
         public Book Get(Guid id)
         {
-            using (var context = this.app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
                 return context.Books
                     .AsNoTracking()
@@ -44,7 +44,7 @@ namespace AppBrix.WebApp.Controllers
         [HttpPost]
         public void Post([FromBody]Book book)
         {
-            using (var context = this.app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
                 context.Books.Add(book);
                 context.SaveChanges();
@@ -54,7 +54,7 @@ namespace AppBrix.WebApp.Controllers
         [HttpPut("{id}")]
         public void Put(Guid id, [FromBody]Book book)
         {
-            using (var context = this.app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
                 var original = context.Books.SingleOrDefault(x => x.Id == id);
                 original.Author = book.Author;
@@ -66,7 +66,7 @@ namespace AppBrix.WebApp.Controllers
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {
-            using (var context = this.app.GetDbContextService().Get<BookContext>())
+            using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
                 var book = context.Books.Single(x => x.Id == id);
                 context.Books.Remove(book);
