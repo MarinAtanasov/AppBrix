@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AppBrix\AppBrix.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Caching\AppBrix.Caching.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Caching.Json\AppBrix.Caching.Json.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Cloning\AppBrix.Cloning.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration\AppBrix.Configuration.csproj" />

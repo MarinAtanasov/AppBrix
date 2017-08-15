@@ -2,9 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Caching.Json;
+using AppBrix.Caching.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Linq;
 using Xunit;
@@ -16,8 +17,10 @@ namespace AppBrix.Caching.Tests
         #region Setup and cleanup
         public CacheTests()
         {
-            this.app = TestUtils.CreateTestApp(typeof(JsonCachingModule));
+            this.app = TestUtils.CreateTestApp(typeof(CachingModule));
             this.app.Start();
+            this.app.GetContainer().Register(new JsonCacheSerializer());
+            this.app.GetContainer().Register(new MemoryDistributedCache(new CustomMemoryDistributedCacheOptions()));
         }
         #endregion
 

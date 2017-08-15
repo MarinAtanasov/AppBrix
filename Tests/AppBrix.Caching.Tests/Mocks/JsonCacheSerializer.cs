@@ -6,10 +6,9 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
 using System.Text;
 
-namespace AppBrix.Caching.Json
+namespace AppBrix.Caching.Tests.Mocks
 {
     internal sealed class JsonCacheSerializer : ICacheSerializer
     {

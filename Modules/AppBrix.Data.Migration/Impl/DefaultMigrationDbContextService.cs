@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -217,6 +218,7 @@ namespace AppBrix.Data.Migration.Impl
                 .AddSingleton<ICSharpSnapshotGenerator, CSharpSnapshotGenerator>()
                 .AddSingleton<CSharpMigrationsGeneratorDependencies>()
                 .AddSingleton<IMigrationsCodeGenerator, CSharpMigrationsGenerator>()
+                .AddSingleton<ISnapshotModelProcessor, SnapshotModelProcessor>()
                 .AddSingleton<IOperationReporter>(reporter)
                 .AddSingleton<MigrationsScaffolderDependencies>()
                 .AddSingleton<MigrationsScaffolder>()

@@ -3,6 +3,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -36,12 +37,21 @@ namespace AppBrix
                         continue;
 
                     names.Add(reference.FullName);
-                    var referencedAssembly = Assembly.Load(reference);
-                    if (locations.Contains(referencedAssembly.Location))
-                        continue;
+                    Assembly referencedAssembly;
+                    try
+                    {
+                        referencedAssembly = Assembly.Load(reference);
+                        if (locations.Contains(referencedAssembly.Location))
+                            continue;
 
-                    locations.Add(referencedAssembly.Location);
-                    assemblyQueue.Enqueue(referencedAssembly);
+                        locations.Add(referencedAssembly.Location);
+                        assemblyQueue.Enqueue(referencedAssembly);
+                    }
+                    catch (FileLoadException)
+                    {
+                        // Ignore assemblies which cannot be found or loaded.
+                        continue;
+                    }
                     yield return referencedAssembly;
                 }
             }
