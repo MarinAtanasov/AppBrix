@@ -20,7 +20,7 @@ namespace AppBrix.Caching.Memory
             var timeout = this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck;
             lock (this.cache)
             {
-                this.expirationTimer = new Timer(this.RemoveExpiredEntries, null, timeout, TimeSpan.FromMilliseconds(-1));
+                this.expirationTimer = new Timer(this.RemoveExpiredEntries, null, timeout, Timeout.InfiniteTimeSpan);
             }
         }
 
@@ -113,7 +113,7 @@ namespace AppBrix.Caching.Memory
 
                 toRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
                 toRemove.ForEach(x => this.cache.Remove(x.Key));
-                this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, TimeSpan.FromMilliseconds(-1));
+                this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, Timeout.InfiniteTimeSpan);
             }
             toRemove.ForEach(x => this.RunSafe(x.Value.Dispose));
         }

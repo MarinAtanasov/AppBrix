@@ -21,7 +21,7 @@ namespace AppBrix.Events.Schedule.Impl
             var timeout = this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck;
             lock (this.queue)
             {
-                this.expirationTimer = new Timer(this.ExecuteReadyEvents, null, timeout, TimeSpan.FromMilliseconds(-1));
+                this.executionTimer = new Timer(this.ExecuteReadyEvents, null, timeout, Timeout.InfiniteTimeSpan);
             }
         }
 
@@ -29,8 +29,8 @@ namespace AppBrix.Events.Schedule.Impl
         {
             lock (this.queue)
             {
-                this.expirationTimer?.Dispose();
-                this.expirationTimer = null;
+                this.executionTimer?.Dispose();
+                this.executionTimer = null;
             }
 
             this.queue.Uninitialize();
@@ -72,7 +72,7 @@ namespace AppBrix.Events.Schedule.Impl
             List<PriorityQueueItem> toExecute = null;
             lock (this.queue)
             {
-                if (this.expirationTimer == null)
+                if (this.executionTimer == null)
                     return; // Unintialized
 
                 var now = this.app.GetTime();
@@ -91,7 +91,7 @@ namespace AppBrix.Events.Schedule.Impl
                     this.queue.Push(args);
                 }
 
-                this.expirationTimer.Change(this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck, TimeSpan.FromMilliseconds(-1));
+                this.executionTimer.Change(this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck, Timeout.InfiniteTimeSpan);
             }
             toExecute?.ForEach(x => x.Execute());
         }
@@ -105,7 +105,7 @@ namespace AppBrix.Events.Schedule.Impl
         #region Private fields and constants
         private readonly PriorityQueue queue = new PriorityQueue();
         private IApp app;
-        private Timer expirationTimer;
+        private Timer executionTimer;
         #endregion
     }
 }
