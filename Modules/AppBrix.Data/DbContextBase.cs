@@ -52,6 +52,5 @@ namespace AppBrix.Data
                 new DefaultOnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly));
         }
         #endregion
-
     }
 }
