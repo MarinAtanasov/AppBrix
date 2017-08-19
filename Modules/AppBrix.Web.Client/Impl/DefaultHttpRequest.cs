@@ -42,10 +42,10 @@ namespace AppBrix.Web.Client.Impl
             using (var client = app.GetFactory().Get<HttpClient>())
             {
                 var response = await this.GetResponse(client);
-                var content = response.Content;
-                var contentValue = await this.GetResponseContent<T>(content);
+                var responseContent = response.Content;
+                var contentValue = await this.GetResponseContent<T>(responseContent);
                 return new DefaultHttpResponse<T>(
-                    new DefaultHttpHeaders(response.Headers.Concat(content.Headers)),
+                    new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
                     contentValue,
                     (int)response.StatusCode,
                     response.ReasonPhrase,
