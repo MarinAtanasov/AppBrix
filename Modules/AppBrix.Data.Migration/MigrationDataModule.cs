@@ -20,7 +20,6 @@ namespace AppBrix.Data.Migration
             this.App.GetContainer().Register(this);
             this.contextService.Value.Initialize(context);
             this.App.GetContainer().Register(this.contextService.Value);
-            this.App.GetFactory().Register(() => new MigrationContext(this.App));
         }
 
         protected override void UninitializeModule()

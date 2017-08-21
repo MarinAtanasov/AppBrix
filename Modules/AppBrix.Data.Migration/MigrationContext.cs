@@ -12,24 +12,11 @@ namespace AppBrix.Data.Migration
     /// <summary>
     /// Database context used for database migrations.
     /// </summary>
-    public sealed class MigrationContext : DbContext
+    public sealed class MigrationContext : DbContextBase
     {
-        public MigrationContext(IApp app)
-        {
-            if (app == null)
-                throw new ArgumentNullException(nameof(app));
-
-            this.app = app;
-        }
-
         public DbSet<MigrationData> Migrations { get; set; }
 
         public DbSet<SnapshotData> Snapshots { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            this.app.Get<IDbContextConfigurer>().Configure(new DefaultOnConfiguringDbContext(this, optionsBuilder));
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,9 +44,5 @@ namespace AppBrix.Data.Migration
                 entity.HasKey(x => x.Context);
             });
         }
-
-        #region Private fields and constants
-        private readonly IApp app;
-        #endregion
     }
 }

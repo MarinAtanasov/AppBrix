@@ -6,6 +6,7 @@ using AppBrix.Lifecycle;
 using AppBrix.Web.Client.Impl;
 using System;
 using System.Linq;
+using System.Net.Http;
 
 namespace AppBrix.Web.Client
 {
@@ -17,6 +18,9 @@ namespace AppBrix.Web.Client
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
+            this.App.GetContainer().Register(this);
+            this.App.GetFactory().Register(() => new HttpClientHandler());
+            this.App.GetFactory().Register(() => new HttpClient(this.App.GetFactory().Get<HttpMessageHandler>(), true));
             this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
         }
 
