@@ -22,6 +22,7 @@ namespace AppBrix.Web.Client
             this.App.GetFactory().Register(() => new HttpClientHandler());
             this.App.GetFactory().Register(() => new HttpClient(this.App.GetFactory().Get<HttpMessageHandler>(), true));
             this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
+            this.App.GetContainer().Register(this.App.GetFactory().Get<HttpClient>());
         }
 
         protected override void UninitializeModule()

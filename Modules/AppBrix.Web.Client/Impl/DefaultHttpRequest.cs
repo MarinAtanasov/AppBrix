@@ -25,32 +25,28 @@ namespace AppBrix.Web.Client.Impl
         #region Public and overriden methods
         public async Task<IHttpResponse> Send()
         {
-            using (var client = app.GetFactory().Get<HttpClient>())
-            {
-                var response = await this.GetResponse(client);
-                return new DefaultHttpResponse<string>(
-                    new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
-                    null,
-                    (int)response.StatusCode,
-                    response.ReasonPhrase,
-                    response.Version);
-            }
+            var client = (HttpClient)app.Get(typeof(HttpClient));
+            var response = await this.GetResponse(client);
+            return new DefaultHttpResponse<string>(
+                new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
+                null,
+                (int)response.StatusCode,
+                response.ReasonPhrase,
+                response.Version);
         }
 
         public async Task<IHttpResponse<T>> Send<T>()
         {
-            using (var client = app.GetFactory().Get<HttpClient>())
-            {
-                var response = await this.GetResponse(client);
-                var responseContent = response.Content;
-                var contentValue = await this.GetResponseContent<T>(responseContent);
-                return new DefaultHttpResponse<T>(
-                    new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
-                    contentValue,
-                    (int)response.StatusCode,
-                    response.ReasonPhrase,
-                    response.Version);
-            }
+            var client = (HttpClient)app.Get(typeof(HttpClient));
+            var response = await this.GetResponse(client);
+            var responseContent = response.Content;
+            var contentValue = await this.GetResponseContent<T>(responseContent);
+            return new DefaultHttpResponse<T>(
+                new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
+                contentValue,
+                (int)response.StatusCode,
+                response.ReasonPhrase,
+                response.Version);
         }
 
         public IHttpRequest SetHeader(string header, params string[] values)
@@ -158,18 +154,18 @@ namespace AppBrix.Web.Client.Impl
 
         private HttpContent CreateContent()
         {
-            var typeInfo = this.content.GetType();
+            var type = this.content.GetType();
 
             HttpContent result;
-            if (typeof(Stream).GetTypeInfo().IsAssignableFrom(typeInfo))
+            if (typeof(Stream).GetTypeInfo().IsAssignableFrom(type))
             {
                 result = new StreamContent((Stream)this.content);
             }
-            else if (typeof(IEnumerable<KeyValuePair<string, string>>).GetTypeInfo().IsAssignableFrom(typeInfo))
+            else if (typeof(IEnumerable<KeyValuePair<string, string>>).GetTypeInfo().IsAssignableFrom(type))
             {
                 result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
             }
-            else if (typeof(byte[]).GetTypeInfo().IsAssignableFrom(typeInfo))
+            else if (typeof(byte[]).GetTypeInfo().IsAssignableFrom(type))
             {
                 result = new ByteArrayContent((byte[])this.content);
             }

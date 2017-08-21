@@ -40,15 +40,17 @@ namespace AppBrix.Web.Server.Tests
             var app1 = this.CreateWebApp();
             var app2 = this.CreateWebApp();
             using (var server1 = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app1))
+            using (var app1Client = server1.CreateClient())
             using (var server2 = this.CreateTestServer(TestControllerTests.Server2BaseAddress, app2))
+            using (var app2Client = server2.CreateClient())
             {
-                app1.GetFactory().Register(server2.CreateClient);
+                app1.GetContainer().Register(app2Client);
                 var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
                 response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
                 var result1 = Guid.Parse(response1.Content);
                 result1.Should().Be(app2.Id, "the first app should receive the second app's id");
 
-                app2.GetFactory().Register(server1.CreateClient);
+                app2.GetContainer().Register(app1Client);
                 var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
                 response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
                 var result2 = Guid.Parse(response2.Content);
@@ -62,8 +64,9 @@ namespace AppBrix.Web.Server.Tests
             // The setup is taking a long time on MacOS. This tests the performance of the requests only.
             var app = this.CreateWebApp();
             using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
+            using (var client = server.CreateClient())
             {
-                app.GetFactory().Register(server.CreateClient);
+                app.GetContainer().Register(client);
                 TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
             }
         }
@@ -87,7 +90,7 @@ namespace AppBrix.Web.Server.Tests
 
         private void TestPerformanceWebServerInternal(IApp app)
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 150; i++)
             {
                 var result = app.GetFactory()
                     .Get<IHttpRequest>()
