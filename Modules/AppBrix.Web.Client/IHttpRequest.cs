@@ -54,13 +54,6 @@ namespace AppBrix.Web.Client
         /// <param name="method">The HTTP method.</param>
         /// <returns></returns>
         IHttpRequest SetMethod(string method);
-
-        /// <summary>
-        /// Sets the timeout for the request.
-        /// </summary>
-        /// <param name="timeout">The timeout.</param>
-        /// <returns></returns>
-        IHttpRequest SetTimeout(TimeSpan timeout);
         
         /// <summary>
         /// Return the HTTP version to be used.

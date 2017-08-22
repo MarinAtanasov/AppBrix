@@ -5,7 +5,7 @@ using AppBrix.Configuration;
 using System;
 using System.Linq;
 
-namespace AppBrix.Events.Schedule.Config
+namespace AppBrix.Events.Schedule.Configuration
 {
     /// <summary>
     /// Configuration which sets how the scheduled events should behave.

@@ -3,6 +3,7 @@
 //
 using AppBrix.Modules;
 using AppBrix.Lifecycle;
+using AppBrix.Web.Client.Configuration;
 using AppBrix.Web.Client.Impl;
 using System;
 using System.Linq;
@@ -20,14 +21,24 @@ namespace AppBrix.Web.Client
         {
             this.App.GetContainer().Register(this);
             this.App.GetFactory().Register(() => new HttpClientHandler());
-            this.App.GetFactory().Register(() => new HttpClient(this.App.GetFactory().Get<HttpMessageHandler>(), true));
+            this.App.GetFactory().Register(() => new HttpClient(this.App.GetFactory().Get<HttpMessageHandler>(), true)
+            {
+                Timeout = this.App.GetConfig<WebClientConfig>().RequestTimeout
+            });
             this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
-            this.App.GetContainer().Register(this.App.GetFactory().Get<HttpClient>());
+            this.client = this.App.GetFactory().Get<HttpClient>();
+            this.App.GetContainer().Register(this.client);
         }
 
         protected override void UninitializeModule()
         {
+            this.client?.Dispose();
+            this.client = null;
         }
+        #endregion
+
+        #region Private fields and constants
+        private HttpClient client;
         #endregion
     }
 }

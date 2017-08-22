@@ -84,12 +84,6 @@ namespace AppBrix.Web.Client.Impl
             return this;
         }
 
-        public IHttpRequest SetTimeout(TimeSpan timeout)
-        {
-            this.timeout = timeout;
-            return this;
-        }
-
         public IHttpRequest SetUrl(string url)
         {
             if (string.IsNullOrEmpty(url))
@@ -109,9 +103,6 @@ namespace AppBrix.Web.Client.Impl
         #region Private methods
         private async Task<HttpResponseMessage> GetResponse(HttpClient client)
         {
-            if (this.timeout.TotalMilliseconds > 0)
-                client.Timeout = this.timeout;
-
             var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
 
             this.SetHeaders(message.Headers, this.headers.Where(x => !this.IsContentHeader(x.Key)));
@@ -200,7 +191,6 @@ namespace AppBrix.Web.Client.Impl
         private readonly IApp app;
         private string callMethod = "GET";
         private object content;
-        private TimeSpan timeout;
         private string requestUrl;
         private Version httpMessageVersion;
         #endregion

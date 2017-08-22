@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
-using AppBrix.Caching.Memory.Config;
+using AppBrix.Caching.Memory.Configuration;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
