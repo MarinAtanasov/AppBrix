@@ -16,11 +16,17 @@ namespace AppBrix.Web.Client.Configuration
         /// </summary>
         public WebClientConfig()
         {
+            this.MaxConnectionsPerServer = 128;
             this.RequestTimeout = Timeout.InfiniteTimeSpan;
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets or sets the timeout used when making HTTP requests.
+        /// </summary>
+        public int MaxConnectionsPerServer { get; set; }
+
         /// <summary>
         /// Gets or sets the timeout used when making HTTP requests.
         /// </summary>
