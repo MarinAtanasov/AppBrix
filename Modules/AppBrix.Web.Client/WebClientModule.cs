@@ -20,10 +20,14 @@ namespace AppBrix.Web.Client
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetContainer().Register(this);
-            this.App.GetFactory().Register(() => new HttpClientHandler());
+            var config = this.App.GetConfig<WebClientConfig>();
+            this.App.GetFactory().Register(() => new HttpClientHandler
+            {
+                MaxConnectionsPerServer = config.MaxConnectionsPerServer
+            });
             this.App.GetFactory().Register(() => new HttpClient(this.App.GetFactory().Get<HttpMessageHandler>(), true)
             {
-                Timeout = this.App.GetConfig<WebClientConfig>().RequestTimeout
+                Timeout = config.RequestTimeout
             });
             this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
             this.client = this.App.GetFactory().Get<HttpClient>();
