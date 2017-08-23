@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppBrix.Web.Client.Impl
@@ -116,7 +117,7 @@ namespace AppBrix.Web.Client.Impl
             if (this.httpMessageVersion != null)
                 message.Version = this.httpMessageVersion;
 
-            return await client.SendAsync(message);
+            return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
         }
 
         private void SetHeaders(HttpHeaders headers, IEnumerable<KeyValuePair<string, ICollection<string>>> toAdd)
