@@ -37,7 +37,7 @@ namespace AppBrix.Caching.Memory
         }
         #endregion
 
-        #region ILocalCache implementation
+        #region IMemoryCache implementation
         public object Get(object key)
         {
             if (key == null)
@@ -64,14 +64,16 @@ namespace AppBrix.Caching.Memory
                 throw new ArgumentException($"Negative sliding expiration: {slidingExpiration}.");
 
             var config = this.app.GetConfig<MemoryCachingConfig>();
+            CacheItem oldItem;
             lock (this.cache)
             {
-                this.GetInternal(key)?.Dispose();
+                oldItem = this.GetInternal(key);
                 this.cache[key] = new CacheItem(item, dispose,
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
                     slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
                     this.app.GetTime());
             }
+            oldItem?.Dispose();
         }
 
         public void Remove(object key)
