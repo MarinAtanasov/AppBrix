@@ -14,7 +14,7 @@ elseif ($Tests -eq "performance" -or $Tests -eq "p")
     $filter = "--TestCaseFilter:Category=Performance";
 }
 
-if ($Restore -or $Build)
+if ($Build)
 {
     dotnet build AppBrix.sln;
 }

@@ -10,13 +10,24 @@ namespace AppBrix
     public static class ConfigurationExtensions
     {
         /// <summary>
+        /// Gets the currently loaded instance of the specified config.
+        /// If the config is not loaded, tries to load from source.
+        /// </summary>
+        /// <typeparam name="T">Type of the configuration.</typeparam>
+        /// <returns>The configuration</returns>
+        public static T Get<T>(this IConfigService service) where T : class, IConfig
+        {
+            return (T)service.Get(typeof(T));
+        }
+
+        /// <summary>
         /// Saves one cached configuration.
         /// </summary>
         /// <typeparam name="T">The type of the configuraton.</typeparam>
         /// <param name="service">The configuration service.</param>
         public static void Save<T>(this IConfigService service) where T : class, IConfig
         {
-            service.Save(service.Get<T>());
+            service.Save(typeof(T));
         }
         
         /// <summary>

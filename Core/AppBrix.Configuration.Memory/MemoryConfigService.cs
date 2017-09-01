@@ -13,21 +13,23 @@ namespace AppBrix.Configuration.Memory
     public sealed class MemoryConfigService : IConfigService
     {
         #region Public and overriden methods
-        public T Get<T>() where T : class, IConfig
+        public IConfig Get(Type type)
         {
-            var type = typeof(T);
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+            if (!typeof(IConfig).IsAssignableFrom(type))
+                throw new ArgumentException($"{type} does not implement {nameof(IConfig)}");
 
-            IConfig config;
-            if (!configs.TryGetValue(type, out config))
+            if (!configs.TryGetValue(type, out var config))
             {
-                config = type.CreateObject<T>();
+                config = (IConfig)type.CreateObject();
                 configs[type] = config;
             }
 
-            return (T)config;
+            return config;
         }
 
-        public void Save(IConfig config)
+        public void Save(Type type)
         {
         }
 
@@ -35,7 +37,7 @@ namespace AppBrix.Configuration.Memory
         {
         }
         #endregion
-        
+
         #region Private fields and constants
         private readonly IDictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
         #endregion

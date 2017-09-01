@@ -33,26 +33,30 @@ namespace AppBrix.Configuration
         #endregion
 
         #region Public and overriden methods
-        public T Get<T>() where T : class, IConfig
+        public IConfig Get(Type type)
         {
-            var type = typeof(T);
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+            if (!typeof(IConfig).IsAssignableFrom(type))
+                throw new ArgumentException($"{type} does not implement {nameof(IConfig)}");
 
-            IConfig config;
-            if (!configs.TryGetValue(type, out config))
+            if (!configs.TryGetValue(type, out var config))
             {
-                config = this.ReadFromProvider<T>() ?? type.CreateObject<T>();
+                config = this.ReadFromProvider(type) ?? (IConfig)type.CreateObject();
                 configs[type] = config;
             }
 
-            return (T)config;
+            return config;
         }
 
-        public void Save(IConfig config)
+        public void Save(Type type)
         {
-            if (config == null)
-                throw new ArgumentNullException(nameof(config));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+            if (!typeof(IConfig).IsAssignableFrom(type))
+                throw new ArgumentException($"{type} does not implement {nameof(IConfig)}");
 
-            this.SaveInternal(config);
+            this.SaveInternal(this.Get(type));
         }
 
         public void SaveAll()
@@ -65,9 +69,8 @@ namespace AppBrix.Configuration
         #endregion
 
         #region Private methods
-        private T ReadFromProvider<T>() where T : class, IConfig
+        private IConfig ReadFromProvider(Type type)
         {
-            var type = typeof(T);
             var stringed = this.provider.ReadConfig(type);
             if (string.IsNullOrEmpty(stringed))
             {
@@ -76,7 +79,7 @@ namespace AppBrix.Configuration
             else
             {
                 this.configStringed[type] = stringed;
-                return (T)this.serializer.Deserialize(stringed, type);
+                return this.serializer.Deserialize(stringed, type);
             }
         }
 

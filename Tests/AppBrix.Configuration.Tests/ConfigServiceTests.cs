@@ -64,17 +64,17 @@ namespace AppBrix.Configuration.Tests
         {
             var provider = new ConfigProviderMock();
             var serializer = new ConfigSerializerMock();
-            var config = new ConfigMock();
             var service = new ConfigService(provider, serializer);
+            var config = service.Get<ConfigMock>();
 
-            service.Save(config);
+            service.Save<ConfigMock>();
             provider.WrittenConfigs.Should().ContainSingle("the service should have tried to write the config");
             provider.WrittenConfigs[0].Key.Should().Be(config.GetType(), "the written config should be the same as the provided one one");
             serializer.Serialized.Should().ContainSingle("the service should have tried to serialize the config");
             serializer.Serialized[0].Key.Should().Be(config.GetType(), "the serialized config type should be the same as the original");
             serializer.Serialized[0].Value.Should().BeSameAs(config, "the serialized config should be the same as the provided one");
 
-            service.Save(config);
+            service.Save<ConfigMock>();
             provider.WrittenConfigs.Should().ContainSingle("the service should not have tried to re-write an unmodified config");
         }
 
@@ -92,13 +92,12 @@ namespace AppBrix.Configuration.Tests
             var serializer = new ConfigSerializerMock();
             var service = new ConfigService(provider, serializer);
 
-            for (int i = 0; i < 50000; i++)
+            for (int i = 0; i < 500000; i++)
             {
-                service.SaveAll();
+                service.Get<ConfigMock>();
             }
 
-            service.Get<ConfigMock>();
-            for (int i = 0; i < 50000; i++)
+            for (int i = 0; i < 500; i++)
             {
                 service.SaveAll();
             }
