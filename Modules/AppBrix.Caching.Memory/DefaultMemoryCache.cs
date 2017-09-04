@@ -17,7 +17,7 @@ namespace AppBrix.Caching.Memory
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            var timeout = this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck;
+            var timeout = this.GetConfig().ExpirationCheck;
             lock (this.cache)
             {
                 this.expirationTimer = new Timer(this.RemoveExpiredEntries, null, timeout, Timeout.InfiniteTimeSpan);
@@ -63,7 +63,7 @@ namespace AppBrix.Caching.Memory
             if (slidingExpiration < TimeSpan.Zero)
                 throw new ArgumentException($"Negative sliding expiration: {slidingExpiration}.");
 
-            var config = this.app.GetConfig<MemoryCachingConfig>();
+            var config = this.GetConfig();
             CacheItem oldItem;
             lock (this.cache)
             {
@@ -115,7 +115,7 @@ namespace AppBrix.Caching.Memory
 
                 toRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
                 toRemove.ForEach(x => this.cache.Remove(x.Key));
-                this.expirationTimer.Change(this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck, Timeout.InfiniteTimeSpan);
+                this.expirationTimer.Change(this.GetConfig().ExpirationCheck, Timeout.InfiniteTimeSpan);
             }
             toRemove.ForEach(x => this.RunSafe(x.Value.Dispose));
         }
@@ -125,9 +125,15 @@ namespace AppBrix.Caching.Memory
             try { action(); }
             catch (Exception) { }
         }
+
+        private MemoryCachingConfig GetConfig()
+        {
+            return (MemoryCachingConfig)this.app.ConfigService.Get(DefaultMemoryCache.ConfigType);
+        }
         #endregion
 
         #region Private fields and constants
+        private static readonly Type ConfigType = typeof(MemoryCachingConfig);
         private readonly IDictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private IApp app;
         private Timer expirationTimer;

@@ -44,6 +44,23 @@ namespace AppBrix
             return app.ConfigService.Get<T>();
         }
 
+        /// <summary>
+        /// Shorthand for getting the config from the currently defined <see cref="IConfigService"/>.
+        /// </summary>
+        /// <param name="app">The current application.</param>
+        /// <param name="type">The type of the config.</param>
+        /// <returns>The config.</returns>
+        public static IConfig GetConfig(this IApp app, Type type)
+        {
+            return app.ConfigService.Get(type);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of the classes which implement <see cref="IModule"/>
+        /// inside the assemblies referenced by the module type's assembly.
+        /// </summary>
+        /// <param name="type">The type of the module.</param>
+        /// <returns>All modules inside the referenced assemblies.</returns>
         public static IEnumerable<Type> GetReferencedModules(this Type type)
         {
             if (type == null)

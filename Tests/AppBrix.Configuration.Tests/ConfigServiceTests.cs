@@ -91,10 +91,11 @@ namespace AppBrix.Configuration.Tests
             var provider = new ConfigProviderMock();
             var serializer = new ConfigSerializerMock();
             var service = new ConfigService(provider, serializer);
+            var type = typeof(ConfigMock);
 
             for (int i = 0; i < 500000; i++)
             {
-                service.Get<ConfigMock>();
+                service.Get(type);
             }
 
             for (int i = 0; i < 500; i++)

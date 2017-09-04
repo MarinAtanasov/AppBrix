@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
 using AppBrix.Data.InMemory.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +13,19 @@ namespace AppBrix.Data.InMemory
     {
         public void Initialize(IInitializeContext context)
         {
-            this.app = context.App;
+            this.connectionString = context.App.GetConfig<InMemoryDataConfig>().ConnectionString;
         }
 
         public void Uninitialize()
         {
-            this.app = null;
+            this.connectionString = null;
         }
 
         public void Configure(IOnConfiguringDbContext context)
         {
-            context.OptionsBuilder.UseInMemoryDatabase(this.app.GetConfig<InMemoryDataConfig>().ConnectionString);
+            context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
         }
 
-        private IApp app;
+        private string connectionString;
     }
 }

@@ -18,7 +18,7 @@ namespace AppBrix.Events.Schedule.Impl
         {
             this.app = context.App;
             this.queue.Initialize(context);
-            var timeout = this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck;
+            var timeout = this.GetConfig().ExecutionCheck;
             lock (this.queue)
             {
                 this.executionTimer = new Timer(this.ExecuteReadyEvents, null, timeout, Timeout.InfiniteTimeSpan);
@@ -91,7 +91,7 @@ namespace AppBrix.Events.Schedule.Impl
                     this.queue.Push(args);
                 }
 
-                this.executionTimer.Change(this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck, Timeout.InfiniteTimeSpan);
+                this.executionTimer.Change(this.GetConfig().ExecutionCheck, Timeout.InfiniteTimeSpan);
             }
             toExecute?.ForEach(x => x.Execute());
         }
@@ -100,9 +100,15 @@ namespace AppBrix.Events.Schedule.Impl
         {
             this.app.GetEventHub().Raise(args);
         }
+
+        private ScheduledEventsConfig GetConfig()
+        {
+            return (ScheduledEventsConfig)this.app.GetConfig(DefaultScheduledEventHub.ConfigType);
+        }
         #endregion
 
         #region Private fields and constants
+        private static readonly Type ConfigType = typeof(ScheduledEventsConfig);
         private readonly PriorityQueue queue = new PriorityQueue();
         private IApp app;
         private Timer executionTimer;

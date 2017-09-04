@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
 using AppBrix.Data.Sqlite.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
@@ -14,21 +13,21 @@ namespace AppBrix.Data.Sqlite
     {
         public void Initialize(IInitializeContext context)
         {
-            this.app = context.App;
+            this.connectionString = context.App.GetConfig<SqliteDataConfig>().ConnectionString;
         }
 
         public void Uninitialize()
         {
-            this.app = null;
+            this.connectionString = null;
         }
 
         public void Configure(IOnConfiguringDbContext context)
         {
             context.OptionsBuilder.UseSqlite(
-                this.app.GetConfig<SqliteDataConfig>().ConnectionString,
+                this.connectionString,
                 builder => builder.MigrationsAssembly(context.MigrationsAssembly));
         }
 
-        private IApp app;
+        private string connectionString;
     }
 }
