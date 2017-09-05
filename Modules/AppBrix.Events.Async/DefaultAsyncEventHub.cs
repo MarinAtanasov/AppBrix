@@ -6,7 +6,6 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix.Events.Async
 {
@@ -72,6 +71,7 @@ namespace AppBrix.Events.Async
             this.taskQueueUnsubscribers[typeof(T)] = () => this.app.GetEventHub().Unsubscribe<T>(this.RaiseEvent);
             return queue;
         }
+
         private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
         {
             if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))

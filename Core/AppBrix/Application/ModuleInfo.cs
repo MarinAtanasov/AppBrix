@@ -49,7 +49,7 @@ namespace AppBrix.Application
         /// <returns>The sorted modules.</returns>
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
-            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().GetTypeInfo().Assembly)).ToList();
+            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().Assembly)).ToList();
             var assemblyReferences = ModuleInfo.GetAssemblyReferences(moduleToAssembly.Select(x => x.Item2).ToList());
             var sortedModuleInfos = new List<ModuleInfo>();
             var loaded = new HashSet<string>();

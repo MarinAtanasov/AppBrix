@@ -5,7 +5,6 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix.Factory
 {
@@ -56,10 +55,10 @@ namespace AppBrix.Factory
             while (baseType != null && baseType != typeof(object))
             {
                 this.factories[baseType] = factory;
-                baseType = baseType.GetTypeInfo().BaseType;
+                baseType = baseType.BaseType;
             }
 
-            foreach (var @interface in type.GetTypeInfo().GetInterfaces())
+            foreach (var @interface in type.GetInterfaces())
             {
                 this.factories[@interface] = factory;
             }

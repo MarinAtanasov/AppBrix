@@ -63,31 +63,29 @@ namespace AppBrix.Cloning
             var baseType = type;
             while (baseType != null && baseType != typeof(object))
             {
-                var baseTypeInfo = baseType.GetTypeInfo();
-                var fields = baseTypeInfo.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
+                var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
                 foreach (var field in fields)
                 {
                     field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
                 }
-                baseType = baseTypeInfo.BaseType;
+                baseType = baseType.BaseType;
             }
         }
 
         private bool IsPrimitiveType(Type type)
         {
-            var typeInfo = type.GetTypeInfo();
-            return (typeInfo.IsValueType && typeInfo.IsPrimitive) ||
-                   typeInfo.IsEnum || type == typeof(string) || type == typeof(DateTime);
+            return (type.IsValueType && type.IsPrimitive) ||
+                   type.IsEnum || type == typeof(string) || type == typeof(DateTime);
         }
 
         private bool IsValueType(Type type)
         {
-            return type == typeof(string) || type.GetTypeInfo().IsValueType;
+            return type == typeof(string) || type.IsValueType;
         }
 
         private bool IsDelegate(Type type)
         {
-            return DefaultCloner.DelegateTypeInfo.IsAssignableFrom(type);
+            return typeof(Delegate).IsAssignableFrom(type);
         }
 
         /// <summary>
@@ -110,8 +108,7 @@ namespace AppBrix.Cloning
         #endregion
 
         #region Private fields and constants
-        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetTypeInfo().GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly TypeInfo DelegateTypeInfo = typeof(Delegate).GetTypeInfo();
+        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
         #endregion
     }
 }

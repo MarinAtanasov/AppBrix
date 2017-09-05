@@ -7,7 +7,6 @@ using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix.Application
 {
@@ -153,7 +152,7 @@ namespace AppBrix.Application
         private RequestedAction InstallOrUpgradeModule(ModuleInfo moduleInfo)
         {
             RequestedAction? requestedAction = null;
-            var version = moduleInfo.Module.GetType().GetTypeInfo().Assembly.GetName().Version;
+            var version = moduleInfo.Module.GetType().Assembly.GetName().Version;
             if (moduleInfo.Config.Version == null)
             {
                 var context = new DefaultInstallContext(this);

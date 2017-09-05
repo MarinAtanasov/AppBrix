@@ -45,10 +45,10 @@ namespace AppBrix.Data.Migration.Impl
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(DbContext).GetTypeInfo().IsAssignableFrom(type))
-                throw new ArgumentException($"Provided type must inherit from {typeof(DbContext)}.");
-            if (type.GetTypeInfo().IsAbstract)
-                throw new ArgumentException($"Cannot create instance of abstract type {type}.");
+            if (!typeof(DbContext).IsAssignableFrom(type))
+                throw new ArgumentException($"Provided type must inherit from {typeof(DbContext).GetAssemblyQualifiedName()}.");
+            if (type.IsAbstract)
+                throw new ArgumentException($"Cannot create instance of abstract type {type.GetAssemblyQualifiedName()}.");
 
             this.MigrateContextIfNeeded(type);
 
@@ -59,7 +59,7 @@ namespace AppBrix.Data.Migration.Impl
         #region Private methods
         private void MigrateContextIfNeeded(Type type)
         {
-            if ((typeof(DbContextBase).GetTypeInfo().IsAssignableFrom(type) || type == typeof(MigrationContext)) &&
+            if ((typeof(DbContextBase).IsAssignableFrom(type) || type == typeof(MigrationContext)) &&
                 !this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
             {
                 lock (this.initializedContexts)
@@ -109,7 +109,7 @@ namespace AppBrix.Data.Migration.Impl
                     .SingleOrDefault(x => x.Context == type.Name);
             }
 
-            var assemblyVersion = type.GetTypeInfo().Assembly.GetName().Version;
+            var assemblyVersion = type.Assembly.GetName().Version;
             if (snapshot == null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
                 var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
@@ -117,7 +117,7 @@ namespace AppBrix.Data.Migration.Impl
                 var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
                 this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
 
-                var newVersion = type.GetTypeInfo().Assembly.GetName().Version;
+                var newVersion = type.Assembly.GetName().Version;
                 var newMigrationName = this.GenerateMigrationName(type, newVersion);
                 var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
 
@@ -277,7 +277,7 @@ namespace AppBrix.Data.Migration.Impl
         private string GenerateMigrationAssemblyName(Type type, Version version = null)
         {
             if (version == null)
-                version = type.GetTypeInfo().Assembly.GetName().Version;
+                version = type.Assembly.GetName().Version;
 
             return string.Format("Generated.Migrations.{0}.{1}.dll",
                 this.GenerateMigrationName(type, version), Guid.NewGuid());

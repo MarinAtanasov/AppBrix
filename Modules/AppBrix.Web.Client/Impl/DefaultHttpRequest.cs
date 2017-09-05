@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -149,15 +148,15 @@ namespace AppBrix.Web.Client.Impl
             var type = this.content.GetType();
 
             HttpContent result;
-            if (typeof(Stream).GetTypeInfo().IsAssignableFrom(type))
+            if (typeof(Stream).IsAssignableFrom(type))
             {
                 result = new StreamContent((Stream)this.content);
             }
-            else if (typeof(IEnumerable<KeyValuePair<string, string>>).GetTypeInfo().IsAssignableFrom(type))
+            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(type))
             {
                 result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
             }
-            else if (typeof(byte[]).GetTypeInfo().IsAssignableFrom(type))
+            else if (typeof(byte[]).IsAssignableFrom(type))
             {
                 result = new ByteArrayContent((byte[])this.content);
             }

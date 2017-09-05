@@ -82,7 +82,7 @@ namespace AppBrix.Tests
         public void TestInitializeInstallableModule()
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
-            app.GetConfig<AppConfig>().Modules.Single().Version = typeof(SimpleInstallableModuleMock).GetTypeInfo().Assembly.GetName().Version;
+            app.GetConfig<AppConfig>().Modules.Single().Version = typeof(SimpleInstallableModuleMock).Assembly.GetName().Version;
             app.Start();
             var module = this.GetModules(app).Select(x => x.Module).Cast<SimpleInstallableModuleMock>().Single();
             module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
@@ -146,7 +146,7 @@ namespace AppBrix.Tests
         {
             var app = this.CreateDefaultApp(typeof(SimpleInstallableModuleMock));
             app.GetConfig<AppConfig>().Modules.Single().Status = ModuleStatus.Uninstalling;
-            app.GetConfig<AppConfig>().Modules.Single().Version = typeof(SimpleInstallableModuleMock).GetTypeInfo().Assembly.GetName().Version;
+            app.GetConfig<AppConfig>().Modules.Single().Version = typeof(SimpleInstallableModuleMock).Assembly.GetName().Version;
             app.Start();
             var module = this.GetModules(app).Select(x => x.Module).Cast<SimpleInstallableModuleMock>().Single();
             module.IsInitialized.Should().BeFalse("Initialize should not be called after starting the application");
@@ -210,7 +210,7 @@ namespace AppBrix.Tests
         #endregion
 
         #region Private fields and constants
-        private readonly FieldInfo modulesField = typeof(DefaultApp).GetTypeInfo().GetField("modules", BindingFlags.NonPublic | BindingFlags.Instance);
+        private readonly FieldInfo modulesField = typeof(DefaultApp).GetField("modules", BindingFlags.NonPublic | BindingFlags.Instance);
         #endregion
     }
 }

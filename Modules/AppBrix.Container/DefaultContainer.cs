@@ -5,7 +5,6 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix.Container
 {
@@ -41,11 +40,9 @@ namespace AppBrix.Container
                 throw new ArgumentException($"Cannot register object as type {typeof(object).FullName}.");
             if (type == typeof(string))
                 throw new ArgumentException($"Cannot register object as type {typeof(string).FullName}.");
-
-            var typeInfo = type.GetTypeInfo();
-            if (typeInfo.IsValueType)
+            if (type.IsValueType)
                 throw new ArgumentException("Container does not support value types.");
-            if (!typeInfo.IsInstanceOfType(obj))
+            if (!type.IsInstanceOfType(obj))
                 throw new ArgumentException(string.Format(
                     "Target object is of type {0} which cannot be cast to target type {1}.",
                     obj.GetType().FullName, type.FullName));
@@ -80,10 +77,10 @@ namespace AppBrix.Container
             while (baseType != null && baseType != typeof(object))
             {
                 this.objects[baseType] = obj;
-                baseType = baseType.GetTypeInfo().BaseType;
+                baseType = baseType.BaseType;
             }
 
-            foreach (var @interface in type.GetTypeInfo().GetInterfaces())
+            foreach (var @interface in type.GetInterfaces())
             {
                 this.objects[@interface] = obj;
             }

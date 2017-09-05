@@ -31,7 +31,7 @@ namespace AppBrix.Logging.Impl
             [CallerMemberName] string callerMember = null,
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            var config = (LoggingConfig)this.app.GetConfig(DefaultLogHub.ConfigType);
+            var config = (LoggingConfig)this.app.GetConfig(typeof(LoggingConfig));
             if (config.LogLevel <= level)
             {
                 this.app.GetEventHub()
@@ -42,7 +42,6 @@ namespace AppBrix.Logging.Impl
         #endregion
         
         #region Private fields and constants
-        private static readonly Type ConfigType = typeof(LoggingConfig);
         private IApp app;
         #endregion
     }

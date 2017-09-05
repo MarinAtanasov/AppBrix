@@ -5,7 +5,6 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix.Events
 {
@@ -78,16 +77,17 @@ namespace AppBrix.Events
 
         private void RaiseInternal<T>(T args) where T : IEvent
         {
-            var baseType = typeof(T);
-            while (baseType != null && DefaultEventHub.IEventTypeInfo.IsAssignableFrom(baseType))
+            var type = typeof(T);
+            var baseType = type;
+            while (baseType != null && typeof(IEvent).IsAssignableFrom(baseType))
             {
                 this.RaiseEvent(args, baseType);
-                baseType = baseType.GetTypeInfo().BaseType;
+                baseType = baseType.BaseType;
             }
 
-            foreach (var @interface in typeof(T).GetTypeInfo().GetInterfaces())
+            foreach (var @interface in type.GetInterfaces())
             {
-                if (DefaultEventHub.IEventTypeInfo.IsAssignableFrom(@interface))
+                if (typeof(IEvent).IsAssignableFrom(@interface))
                 {
                     this.RaiseEvent(args, @interface);
                 }
@@ -112,7 +112,6 @@ namespace AppBrix.Events
         #endregion
 
         #region Private fields and constants
-        private static readonly TypeInfo IEventTypeInfo = typeof(IEvent).GetTypeInfo();
         private readonly IDictionary<Type, IList<object>> subscriptions = new Dictionary<Type, IList<object>>();
         #endregion
     }

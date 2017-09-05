@@ -103,12 +103,11 @@ namespace AppBrix.Events.Schedule.Impl
 
         private ScheduledEventsConfig GetConfig()
         {
-            return (ScheduledEventsConfig)this.app.GetConfig(DefaultScheduledEventHub.ConfigType);
+            return (ScheduledEventsConfig)this.app.GetConfig(typeof(ScheduledEventsConfig));
         }
         #endregion
 
         #region Private fields and constants
-        private static readonly Type ConfigType = typeof(ScheduledEventsConfig);
         private readonly PriorityQueue queue = new PriorityQueue();
         private IApp app;
         private Timer executionTimer;

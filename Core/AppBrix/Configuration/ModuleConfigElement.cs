@@ -4,7 +4,6 @@
 using AppBrix.Modules;
 using System;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix.Configuration
 {
@@ -33,7 +32,7 @@ namespace AppBrix.Configuration
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(IModule).GetTypeInfo().IsAssignableFrom(type))
+            if (!typeof(IModule).IsAssignableFrom(type))
                 throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");
 
             return new ModuleConfigElement

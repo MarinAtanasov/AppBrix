@@ -128,12 +128,11 @@ namespace AppBrix.Caching.Memory
 
         private MemoryCachingConfig GetConfig()
         {
-            return (MemoryCachingConfig)this.app.ConfigService.Get(DefaultMemoryCache.ConfigType);
+            return (MemoryCachingConfig)this.app.ConfigService.Get(typeof(MemoryCachingConfig));
         }
         #endregion
 
         #region Private fields and constants
-        private static readonly Type ConfigType = typeof(MemoryCachingConfig);
         private readonly IDictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private IApp app;
         private Timer expirationTimer;

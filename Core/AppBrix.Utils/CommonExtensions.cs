@@ -67,8 +67,8 @@ namespace AppBrix
         /// <returns>The enumeration value matching the string.</returns>
         public static T ToEnum<T>(this string value) where T : struct
         {
-            if (!typeof(T).GetTypeInfo().IsEnum)
-                throw new ArgumentException(string.Format("{0} must be an enumerated type. {0} is: {1}", nameof(T), typeof(T).FullName));
+            if (!typeof(T).IsEnum)
+                throw new ArgumentException($"{nameof(T)} must be an enumerated type. {nameof(T)} is: {typeof(T).GetAssemblyQualifiedName()}");
 
             Enum.TryParse(value, true, out T result);
             return result;
@@ -102,7 +102,7 @@ namespace AppBrix
         /// <returns>The assembly qualified name.</returns>
         public static string GetAssemblyQualifiedName(this Type type)
         {
-            return string.Concat(type.FullName, ", ", type.GetTypeInfo().Assembly.GetName().Name);
+            return string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
         }
         #endregion
 

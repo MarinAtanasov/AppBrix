@@ -7,7 +7,6 @@ using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace AppBrix
 {
@@ -65,12 +64,12 @@ namespace AppBrix
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(IModule).GetTypeInfo().IsAssignableFrom(type))
+            if (!typeof(IModule).IsAssignableFrom(type))
                 throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");
 
-            return type.GetTypeInfo().Assembly.GetAllReferencedAssemblies()
+            return type.Assembly.GetAllReferencedAssemblies()
                 .SelectMany(assembly => assembly.ExportedTypes)
-                .Where(t => t.GetTypeInfo().IsClass && !t.GetTypeInfo().IsAbstract)
+                .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(typeof(IModule).IsAssignableFrom)
                 .OrderBy(t => t.Namespace)
                 .ThenBy(t => t.Name);

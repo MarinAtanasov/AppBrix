@@ -171,14 +171,13 @@ namespace AppBrix.Cloning.Tests
             var type = original.GetType();
             copy.GetType().Should().Be(type, $"{property}'s type of the copy should be the same as the original");
 
-            var typeInfo = type.GetTypeInfo();
-            if ((typeInfo.IsValueType && typeInfo.IsPrimitive) || typeInfo.IsEnum || type == typeof(string))
+            if ((type.IsValueType && type.IsPrimitive) || type.IsEnum || type == typeof(string))
             {
                 copy.Should().Be(original, $"{property}'s value of the copy should be the same as the original");
-                if (typeInfo.IsPrimitive || type == typeof(string))
+                if (type.IsPrimitive || type == typeof(string))
                     return;
             }
-            else if (!typeInfo.IsValueType)
+            else if (!type.IsValueType)
             {
                 copy.Should().NotBeSameAs(original, $"{property}'s copied object should not be the same instance as the original");
             }
@@ -224,11 +223,10 @@ namespace AppBrix.Cloning.Tests
             var type = original.GetType();
             copy.GetType().Should().Be(type, "the type of the copy should be the same as the original");
 
-            var typeInfo = type.GetTypeInfo();
-            if (typeInfo.IsValueType || type == typeof(string))
+            if (type.IsValueType || type == typeof(string))
             {
                 copy.Should().Be(original, "the value of the copy should be the same as the original");
-                if (typeInfo.IsPrimitive || type == typeof(string))
+                if (type.IsPrimitive || type == typeof(string))
                     return;
             }
             else if (!isInitialObject)
@@ -249,12 +247,12 @@ namespace AppBrix.Cloning.Tests
             var baseType = type;
             while (baseType != null && baseType != typeof(object))
             {
-                var fields = baseType.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
+                var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
                 foreach (var field in fields)
                 {
                     yield return field;
                 }
-                baseType = baseType.GetTypeInfo().BaseType;
+                baseType = baseType.BaseType;
             }
         }
 
