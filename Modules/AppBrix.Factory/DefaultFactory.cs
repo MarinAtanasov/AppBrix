@@ -26,9 +26,24 @@ namespace AppBrix.Factory
         #endregion
 
         #region IFactory implementation
-        public void Register<T>(Func<T> factory)
+        public void Register(Func<object> factoryMethod, Type type)
         {
-            this.RegisterInternal((Func<object>)(object)factory, typeof(T));
+            if (factoryMethod == null)
+                throw new ArgumentNullException(nameof(factoryMethod));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            var baseType = type;
+            while (baseType != null && baseType != typeof(object))
+            {
+                this.factories[baseType] = factoryMethod;
+                baseType = baseType.BaseType;
+            }
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                this.factories[@interface] = factoryMethod;
+            }
         }
         
         public object Get(Type type)
@@ -44,23 +59,6 @@ namespace AppBrix.Factory
                         $"Unable to create instance of type {type.GetAssemblyQualifiedName()}. ",
                         "Make sure that you have registered a factory method first."
                     ), ex);
-            }
-        }
-        #endregion
-
-        #region Private methods
-        private void RegisterInternal(Func<object> factory, Type type)
-        {
-            var baseType = type;
-            while (baseType != null && baseType != typeof(object))
-            {
-                this.factories[baseType] = factory;
-                baseType = baseType.BaseType;
-            }
-
-            foreach (var @interface in type.GetInterfaces())
-            {
-                this.factories[@interface] = factory;
             }
         }
         #endregion

@@ -21,6 +21,17 @@ namespace AppBrix
         }
 
         /// <summary>
+        /// Registers a factory method for the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to be returned by the factory.</typeparam>
+        /// <param name="factory">The factory.</param>
+        /// <param name="factoryMethod">The factory method.</param>
+        public static void Register<T>(this IFactory factory, Func<T> factoryMethod)
+        {
+            factory.Register((Func<object>)(object)factoryMethod, typeof(T));
+        }
+
+        /// <summary>
         /// Returns an object of the specified type.
         /// </summary>
         /// <typeparam name="T">The type of the object to be returned.</typeparam>

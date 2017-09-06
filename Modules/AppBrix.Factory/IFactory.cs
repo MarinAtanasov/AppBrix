@@ -14,9 +14,9 @@ namespace AppBrix.Factory
         /// <summary>
         /// Registers a factory method for the specified type.
         /// </summary>
-        /// <typeparam name="T">The type to be returned by the factory.</typeparam>
-        /// <param name="factory">The factory method.</param>
-        void Register<T>(Func<T> factory);
+        /// <param name="factoryMethod">The factory method.</param>
+        /// <param name="type">The type to be returned by the factory.</param>
+        void Register(Func<object> factoryMethod, Type type);
         
         /// <summary>
         /// Returns an object of the specified type.
