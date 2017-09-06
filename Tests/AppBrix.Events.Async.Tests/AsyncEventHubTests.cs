@@ -295,19 +295,16 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMockChild(10);
-            var parentCalled = 0;
             var childCalled = 0;
             var interfaceCalled = 0;
-            hub.Subscribe<EventMock>(e => parentCalled++);
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 15000;
+            var calledCount = 25000;
             for (int i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
             }
             this.app.Stop();
-            parentCalled.Should().Be(calledCount, "The parent should be called exactly {0} times", calledCount);
             childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
             this.app.Start();

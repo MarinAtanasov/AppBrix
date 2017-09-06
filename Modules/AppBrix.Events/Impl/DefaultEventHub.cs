@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Events
+namespace AppBrix.Events.Impl
 {
     internal sealed class DefaultEventHub : IEventHub, IApplicationLifecycle
     {
@@ -27,9 +27,9 @@ namespace AppBrix.Events
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            this.SubscribeInternal(handler);
+            this.SubscribeInternal(new EventWrapper(handler, args => handler((T)args)), typeof(T));
         }
-
+        
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
         {
             if (handler == null)
@@ -43,18 +43,18 @@ namespace AppBrix.Events
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            this.RaiseInternal(args);
+            this.RaiseInternal(args, typeof(T));
         }
         #endregion
 
         #region Private methods
-        private void SubscribeInternal<T>(Action<T> handler) where T : IEvent
+        private void SubscribeInternal(EventWrapper handler, Type type)
         {
-            IList<object> handlers;
-            if (!this.subscriptions.TryGetValue(typeof(T), out handlers))
+            IList<EventWrapper> handlers;
+            if (!this.subscriptions.TryGetValue(type, out handlers))
             {
-                handlers = new List<object>();
-                this.subscriptions[typeof(T)] = handlers;
+                handlers = new List<EventWrapper>();
+                this.subscriptions[type] = handlers;
             }
             handlers.Add(handler);
         }
@@ -66,7 +66,7 @@ namespace AppBrix.Events
                 // Optimize for unsubscribing the last element since this is the most common scenario.
                 for (int i = handlers.Count - 1; i >= 0; i--)
                 {
-                    if (handlers[i].Equals(handler))
+                    if (handlers[i].Handler.Equals(handler))
                     {
                         handlers.RemoveAt(i);
                         break;
@@ -75,9 +75,8 @@ namespace AppBrix.Events
             }
         }
 
-        private void RaiseInternal<T>(T args) where T : IEvent
+        private void RaiseInternal(object args, Type type)
         {
-            var type = typeof(T);
             var baseType = type;
             while (baseType != null && typeof(IEvent).IsAssignableFrom(baseType))
             {
@@ -93,15 +92,15 @@ namespace AppBrix.Events
                 }
             }
         }
-        
-        private void RaiseEvent<T>(T args, Type eventType) where T : IEvent
+
+        private void RaiseEvent(object args, Type eventType)
         {
             if (this.subscriptions.TryGetValue(eventType, out var handlers))
             {
                 for (var i = 0; i < handlers.Count; i++)
                 {
-                    var handler = (Action<T>)handlers[i];
-                    handler(args);
+                    var handler = handlers[i];
+                    handler.Execute(args);
 
                     // Check if the handler has unsubscribed itself.
                     if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
@@ -112,7 +111,7 @@ namespace AppBrix.Events
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<Type, IList<object>> subscriptions = new Dictionary<Type, IList<object>>();
+        private readonly IDictionary<Type, IList<EventWrapper>> subscriptions = new Dictionary<Type, IList<EventWrapper>>();
         #endregion
     }
 }

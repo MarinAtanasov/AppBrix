@@ -268,7 +268,7 @@ namespace AppBrix.Events.Tests
         private void TestPerformanceEventsSubscribeInternal()
         {
             var hub = this.GetEventHub();
-            var calledCount = 130000;
+            var calledCount = 40000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {
@@ -285,7 +285,7 @@ namespace AppBrix.Events.Tests
         private void TestPerformanceEventsUnsubscribeInternal()
         {
             var hub = this.GetEventHub();
-            var calledCount = 60000;
+            var calledCount = 40000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {
@@ -307,18 +307,15 @@ namespace AppBrix.Events.Tests
         {
             var hub = this.GetEventHub();
             var args = new EventMockChild(10);
-            var parentCalled = 0;
             var childCalled = 0;
             var interfaceCalled = 0;
-            hub.Subscribe<EventMock>(e => parentCalled++);
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 50000;
+            var calledCount = 100000;
             for (int i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
             }
-            parentCalled.Should().Be(calledCount, "The parent should be called exactly {0} times", calledCount);
             childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
             this.app.Reinitialize();
