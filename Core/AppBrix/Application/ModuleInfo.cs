@@ -77,7 +77,7 @@ namespace AppBrix.Application
         #endregion
 
         #region Private methods
-        private static IDictionary<string, HashSet<string>> GetAssemblyReferences(ICollection<Assembly> assemblies)
+        private static Dictionary<string, HashSet<string>> GetAssemblyReferences(List<Assembly> assemblies)
         {
             var assemblyNames = new HashSet<string>(assemblies.Select(x => x.GetName().Name));
             return assemblies

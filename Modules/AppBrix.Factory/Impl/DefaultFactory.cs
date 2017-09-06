@@ -64,7 +64,7 @@ namespace AppBrix.Factory.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<Type, Func<object>> factories = new Dictionary<Type, Func<object>>();
+        private readonly Dictionary<Type, Func<object>> factories = new Dictionary<Type, Func<object>>();
         #endregion
     }
 }

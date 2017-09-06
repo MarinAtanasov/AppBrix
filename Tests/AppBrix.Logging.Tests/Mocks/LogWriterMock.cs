@@ -43,7 +43,7 @@ namespace AppBrix.Logging.Tests.Mocks
         #endregion
 
         #region Private fields and constants
-        private readonly ICollection<ILogEntry> loggedEntries = new List<ILogEntry>();
+        private readonly List<ILogEntry> loggedEntries = new List<ILogEntry>();
         #endregion
     }
 }

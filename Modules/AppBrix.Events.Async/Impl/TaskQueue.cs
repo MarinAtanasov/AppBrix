@@ -118,7 +118,7 @@ namespace AppBrix.Events.Async.Impl
 
         #region Private fields and constants
         private readonly CancellationTokenSource cancelTokenSource;
-        private readonly IList<Action<T>> handlers = new List<Action<T>>();
+        private readonly List<Action<T>> handlers = new List<Action<T>>();
         private readonly Task runner;
         private readonly BlockingCollection<T> tasks;
         private bool isDisposed;

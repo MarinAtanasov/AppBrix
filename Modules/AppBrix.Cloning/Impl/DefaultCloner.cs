@@ -29,7 +29,7 @@ namespace AppBrix.Cloning.Impl
         #endregion
 
         #region Private methods
-        private object DeepCopy(object original, IDictionary<object, object> visited)
+        private object DeepCopy(object original, Dictionary<object, object> visited)
         {
             if (original == null)
                 return null;
@@ -50,7 +50,7 @@ namespace AppBrix.Cloning.Impl
             return visited[original];
         }
 
-        private void CloneReferenceType(object original, Type type, IDictionary<object, object> visited)
+        private void CloneReferenceType(object original, Type type, Dictionary<object, object> visited)
         {
             var cloned = this.ShallowCopy(original);
             visited[original] = cloned;

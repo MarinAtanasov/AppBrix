@@ -19,6 +19,6 @@ namespace AppBrix.Cloning.Tests.Mocks
             }
         }
 
-        private readonly IDictionary<int, NumericPropertiesMock> items = new Dictionary<int, NumericPropertiesMock>();
+        private readonly Dictionary<int, NumericPropertiesMock> items = new Dictionary<int, NumericPropertiesMock>();
     }
 }

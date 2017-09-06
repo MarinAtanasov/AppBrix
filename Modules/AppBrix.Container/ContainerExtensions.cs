@@ -101,7 +101,7 @@ namespace AppBrix
         #endregion
 
         #region Private fields and constants
-        private static readonly IDictionary<IApp, IContainer> Containers = new Dictionary<IApp, IContainer>();
+        private static readonly Dictionary<IApp, IContainer> Containers = new Dictionary<IApp, IContainer>();
         #endregion
     }
 }

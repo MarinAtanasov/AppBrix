@@ -237,7 +237,7 @@ namespace AppBrix.Application
         #endregion
 
         #region Private fields and constants
-        private readonly IList<ModuleInfo> modules = new List<ModuleInfo>();
+        private readonly List<ModuleInfo> modules = new List<ModuleInfo>();
         #endregion
     }
 }

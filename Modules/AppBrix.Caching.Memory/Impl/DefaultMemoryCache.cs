@@ -133,7 +133,7 @@ namespace AppBrix.Caching.Memory.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
+        private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private IApp app;
         private Timer expirationTimer;
         #endregion

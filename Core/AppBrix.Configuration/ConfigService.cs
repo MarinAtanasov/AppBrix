@@ -97,8 +97,8 @@ namespace AppBrix.Configuration
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
-        private readonly IDictionary<Type, string> configStringed = new Dictionary<Type, string>();
+        private readonly Dictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
+        private readonly Dictionary<Type, string> configStringed = new Dictionary<Type, string>();
         private readonly IConfigProvider provider;
         private readonly IConfigSerializer serializer;
         #endregion

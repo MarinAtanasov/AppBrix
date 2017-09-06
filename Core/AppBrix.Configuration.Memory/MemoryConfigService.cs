@@ -39,7 +39,7 @@ namespace AppBrix.Configuration.Memory
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
+        private readonly Dictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
         #endregion
     }
 }

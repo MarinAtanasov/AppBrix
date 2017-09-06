@@ -88,8 +88,8 @@ namespace AppBrix.Container.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<Type, object> objects = new Dictionary<Type, object>();
-        private readonly ICollection<object> registered = new List<object>();
+        private readonly Dictionary<Type, object> objects = new Dictionary<Type, object>();
+        private readonly List<object> registered = new List<object>();
         #endregion
     }
 }

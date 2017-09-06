@@ -107,7 +107,7 @@ namespace AppBrix.Events.Schedule.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly IList<PriorityQueueItem> queue = new List<PriorityQueueItem>();
+        private readonly List<PriorityQueueItem> queue = new List<PriorityQueueItem>();
         private IApp app;
         #endregion
     }

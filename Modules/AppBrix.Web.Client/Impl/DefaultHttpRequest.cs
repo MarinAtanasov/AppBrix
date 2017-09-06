@@ -119,7 +119,7 @@ namespace AppBrix.Web.Client.Impl
             return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
         }
 
-        private void SetHeaders(HttpHeaders headers, IEnumerable<KeyValuePair<string, ICollection<string>>> toAdd)
+        private void SetHeaders(HttpHeaders headers, IEnumerable<KeyValuePair<string, List<string>>> toAdd)
         {
             foreach (var header in toAdd)
             {
@@ -187,7 +187,7 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<string, ICollection<string>> headers = new Dictionary<string, ICollection<string>>();
+        private readonly Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>();
         private readonly IApp app;
         private string callMethod = "GET";
         private object content;

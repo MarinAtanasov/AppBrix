@@ -292,7 +292,7 @@ namespace AppBrix.Data.Migration.Impl
 
         #region Private fields and constants
         private const string EmptyVersion = "0.0.0.0";
-        private readonly ISet<Type> initializedContexts = new HashSet<Type>();
+        private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
         private IApp app;
         private IDbContextService contextService;
         private bool dbSupportsMigrations;

@@ -50,7 +50,7 @@ namespace AppBrix.Events.Impl
         #region Private methods
         private void SubscribeInternal(EventWrapper handler, Type type)
         {
-            IList<EventWrapper> handlers;
+            List<EventWrapper> handlers;
             if (!this.subscriptions.TryGetValue(type, out handlers))
             {
                 handlers = new List<EventWrapper>();
@@ -111,7 +111,7 @@ namespace AppBrix.Events.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly IDictionary<Type, IList<EventWrapper>> subscriptions = new Dictionary<Type, IList<EventWrapper>>();
+        private readonly Dictionary<Type, List<EventWrapper>> subscriptions = new Dictionary<Type, List<EventWrapper>>();
         #endregion
     }
 }
