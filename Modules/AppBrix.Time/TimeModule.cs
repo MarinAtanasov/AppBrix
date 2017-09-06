@@ -4,6 +4,7 @@
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using AppBrix.Time.Configuration;
+using AppBrix.Time.Impl;
 using System;
 using System.Linq;
 

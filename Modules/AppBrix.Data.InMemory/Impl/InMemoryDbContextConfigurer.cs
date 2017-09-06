@@ -1,19 +1,19 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Sqlite.Configuration;
+using AppBrix.Data.InMemory.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Sqlite
+namespace AppBrix.Data.InMemory.Impl
 {
-    internal sealed class SqliteDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
+    internal sealed class InMemoryDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
     {
         public void Initialize(IInitializeContext context)
         {
-            this.connectionString = context.App.GetConfig<SqliteDataConfig>().ConnectionString;
+            this.connectionString = context.App.GetConfig<InMemoryDataConfig>().ConnectionString;
         }
 
         public void Uninitialize()
@@ -23,9 +23,7 @@ namespace AppBrix.Data.Sqlite
 
         public void Configure(IOnConfiguringDbContext context)
         {
-            context.OptionsBuilder.UseSqlite(
-                this.connectionString,
-                builder => builder.MigrationsAssembly(context.MigrationsAssembly));
+            context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
         }
 
         private string connectionString;

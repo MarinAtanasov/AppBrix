@@ -3,13 +3,16 @@
 //
 using AppBrix.Application;
 using AppBrix.Lifecycle;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Text;
 
-namespace AppBrix.Web.Server
+namespace AppBrix.Text.Impl
 {
-    internal sealed class DefaultLoggerProvider : ILoggerProvider, IApplicationLifecycle
+    /// <summary>
+    /// Used as a bridge between the statically registered encoding provider and the application encoding provider.
+    /// </summary>
+    internal sealed class EncodingProviderWrapper : EncodingProvider, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)
@@ -22,13 +25,14 @@ namespace AppBrix.Web.Server
             this.app = null;
         }
 
-        public void Dispose()
+        public override Encoding GetEncoding(string name)
         {
+            return this.app?.Get<EncodingProvider>().GetEncoding(name);
         }
 
-        public ILogger CreateLogger(string categoryName)
+        public override Encoding GetEncoding(int codepage)
         {
-            return new DefaultLogger(this.app, categoryName);
+            return this.app?.Get<EncodingProvider>().GetEncoding(codepage);
         }
         #endregion
 

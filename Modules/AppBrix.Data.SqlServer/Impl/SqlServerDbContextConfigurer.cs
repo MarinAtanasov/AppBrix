@@ -1,19 +1,19 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.InMemory.Configuration;
+using AppBrix.Data.SqlServer.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.InMemory
+namespace AppBrix.Data.SqlServer.Impl
 {
-    internal sealed class InMemoryDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
+    internal sealed class SqlServerDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
     {
         public void Initialize(IInitializeContext context)
         {
-            this.connectionString = context.App.GetConfig<InMemoryDataConfig>().ConnectionString;
+            this.connectionString = context.App.GetConfig<SqlServerDataConfig>().ConnectionString;
         }
 
         public void Uninitialize()
@@ -23,7 +23,9 @@ namespace AppBrix.Data.InMemory
 
         public void Configure(IOnConfiguringDbContext context)
         {
-            context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
+            context.OptionsBuilder.UseSqlServer(
+                this.connectionString,
+                builder => builder.MigrationsAssembly(context.MigrationsAssembly));
         }
 
         private string connectionString;

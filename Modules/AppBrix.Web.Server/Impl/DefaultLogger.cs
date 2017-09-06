@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
-namespace AppBrix.Web.Server
+namespace AppBrix.Web.Server.Impl
 {
     internal sealed class DefaultLogger : ILogger
     {

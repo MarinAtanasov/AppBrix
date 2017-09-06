@@ -4,16 +4,16 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Time
+namespace AppBrix.Time.Impl
 {
-    internal sealed class LocalTimeService : TimeServiceBase
+    internal sealed class UtcTimeService : TimeServiceBase
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of <see cref="LocalTimeService"/>.
+        /// Creates a new instance of <see cref="UtcTimeService"/>.
         /// </summary>
         /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
-        public LocalTimeService(string format) : base(format)
+        public UtcTimeService(string format) : base(format)
         {
         }
         #endregion
@@ -21,12 +21,12 @@ namespace AppBrix.Time
         #region ITimeService implementation
         public override DateTime GetTime()
         {
-            return DateTime.Now;
+            return DateTime.UtcNow;
         }
 
         public override DateTime ToAppTime(DateTime time)
         {
-            return time.ToLocalTime();
+            return time.ToUniversalTime();
         }
         #endregion
     }

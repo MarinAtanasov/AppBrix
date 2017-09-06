@@ -4,17 +4,17 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Migration
+namespace AppBrix.Data.Migration.Data
 {
     /// <summary>
-    /// Database snapshot created after a database migration.
+    /// Data about a single database migration.
     /// </summary>
-    public sealed class SnapshotData
+    public sealed class MigrationData
     {
         public string Context { get; set; }
-
         public string Version { get; set; }
 
-        public string Snapshot { get; set; }
+        public string Migration { get; set; }
+        public string Metadata { get; set; }
     }
 }

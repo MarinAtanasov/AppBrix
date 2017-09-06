@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Cloning
+namespace AppBrix.Cloning.Impl
 {
     internal sealed class ReferenceEqualityComparer : EqualityComparer<object>
     {

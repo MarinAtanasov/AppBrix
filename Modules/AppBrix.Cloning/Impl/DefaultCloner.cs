@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace AppBrix.Cloning
+namespace AppBrix.Cloning.Impl
 {
     /// <summary>
     /// Default cloner used for shallow or deep copying.

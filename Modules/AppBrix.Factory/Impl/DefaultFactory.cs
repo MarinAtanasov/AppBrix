@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Factory
+namespace AppBrix.Factory.Impl
 {
     /// <summary>
     /// Default factory which will execute the default constructor

@@ -18,7 +18,7 @@ namespace AppBrix.Data.Migration.Generated
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
                 //.HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AppBrix.Data.Migrations.MigrationData", b =>
+            modelBuilder.Entity("AppBrix.Data.Migrations.Data.MigrationData", b =>
                 {
                     b.Property<string>("Context")
                         .IsUnicode(true);
@@ -41,7 +41,7 @@ namespace AppBrix.Data.Migration.Generated
                     b.ToTable("Migrations");
                 });
 
-            modelBuilder.Entity("AppBrix.Data.Migrations.SnapshotData", b =>
+            modelBuilder.Entity("AppBrix.Data.Migrations.Data.SnapshotData", b =>
                 {
                     b.Property<string>("Context")
                         .IsUnicode(true);

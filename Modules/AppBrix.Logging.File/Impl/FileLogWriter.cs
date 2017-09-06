@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace AppBrix.Logging.File
+namespace AppBrix.Logging.File.Impl
 {
     /// <summary>
     /// A log writer which writes entries to the console.

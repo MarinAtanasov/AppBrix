@@ -5,7 +5,7 @@ using AppBrix.Lifecycle;
 using System;
 using System.Linq;
 
-namespace AppBrix.Logging.Console
+namespace AppBrix.Logging.Console.Impl
 {
     /// <summary>
     /// A log writer which writes entries to the console.

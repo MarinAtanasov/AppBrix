@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Container
+namespace AppBrix.Container.Impl
 {
     /// <summary>
     /// Default container which will be used when no other container has been registered.

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace AppBrix.Caching.Memory
+namespace AppBrix.Caching.Memory.Impl
 {
     internal sealed class DefaultMemoryCache : IMemoryCache, IApplicationLifecycle
     {

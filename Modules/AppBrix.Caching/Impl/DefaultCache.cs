@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AppBrix.Caching
+namespace AppBrix.Caching.Impl
 {
     internal sealed class DefaultCache : ICache, IApplicationLifecycle
     {
