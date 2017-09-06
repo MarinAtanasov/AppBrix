@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AppBrix.Events.Async
+namespace AppBrix.Events.Async.Impl
 {
     /// <summary>
     /// An asynchronous task runner.

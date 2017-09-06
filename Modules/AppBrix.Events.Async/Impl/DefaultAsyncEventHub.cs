@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AppBrix.Events.Async
+namespace AppBrix.Events.Async.Impl
 {
     internal sealed class DefaultAsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     {

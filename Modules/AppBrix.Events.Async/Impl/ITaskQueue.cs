@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Events.Async
+namespace AppBrix.Events.Async.Impl
 {
     /// <summary>
     /// Defines a task queue which runs subscribed tasks asynchronously.
