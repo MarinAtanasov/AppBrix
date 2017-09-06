@@ -5,7 +5,7 @@ using NCrontab;
 using System;
 using System.Linq;
 
-namespace AppBrix.Events.Schedule.Cron
+namespace AppBrix.Events.Schedule.Cron.Impl
 {
     internal sealed class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEvent
     {
