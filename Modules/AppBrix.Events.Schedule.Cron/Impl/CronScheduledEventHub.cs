@@ -10,7 +10,7 @@ namespace AppBrix.Events.Schedule.Cron.Impl
 {
     internal sealed class CronScheduledEventHub : ICronScheduledEventHub, IApplicationLifecycle
     {
-        #region Public and overriden methods
+        #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
@@ -20,7 +20,9 @@ namespace AppBrix.Events.Schedule.Cron.Impl
         {
             this.app = null;
         }
+        #endregion
 
+        #region ICronScheduledEventHub implementation
         public IScheduledEvent<T> Schedule<T>(T args, string expresssion) where T : IEvent
         {
             if (args == null)

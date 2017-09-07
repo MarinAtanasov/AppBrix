@@ -13,7 +13,7 @@ namespace AppBrix.Events.Schedule.Impl
 {
     internal sealed class DefaultScheduledEventHub : IScheduledEventHub, IApplicationLifecycle
     {
-        #region Public and overriden methods
+        #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
@@ -36,7 +36,9 @@ namespace AppBrix.Events.Schedule.Impl
             this.queue.Uninitialize();
             this.app = null;
         }
+        #endregion
 
+        #region IScheduledEventHub implementation
         public void Schedule<T>(IScheduledEvent<T> args) where T : IEvent
         {
             if (args == null)
