@@ -22,6 +22,9 @@ namespace AppBrix.Application
         /// <param name="configService">The configuration service.</param>
         public DefaultApp(IConfigService configService)
         {
+            if (configService == null)
+                throw new ArgumentNullException(nameof(configService));
+
             this.ConfigService = configService;
             this.Id = Guid.NewGuid();
         }

@@ -37,8 +37,6 @@ namespace AppBrix.Configuration
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(IConfig).IsAssignableFrom(type))
-                throw new ArgumentException($"{type} does not implement {nameof(IConfig)}");
 
             if (!configs.TryGetValue(type, out var config))
             {
@@ -53,8 +51,6 @@ namespace AppBrix.Configuration
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(IConfig).IsAssignableFrom(type))
-                throw new ArgumentException($"{type} does not implement {nameof(IConfig)}");
 
             this.SaveInternal(this.Get(type));
         }

@@ -18,6 +18,9 @@ namespace AppBrix.Configuration.Yaml
         #region Public and overriden methods
         public string Serialize(IConfig config)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             using (var writer = new StringWriter())
             {
                 var serializer = new SerializerBuilder()
@@ -32,6 +35,11 @@ namespace AppBrix.Configuration.Yaml
 
         public IConfig Deserialize(string config, Type type)
         {
+            if (string.IsNullOrEmpty(config))
+                throw new ArgumentNullException(nameof(config));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             using (var reader = new StringReader(config))
             {
                 var deserializer = new DeserializerBuilder()

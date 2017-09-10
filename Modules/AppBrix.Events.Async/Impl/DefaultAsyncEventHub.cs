@@ -97,7 +97,7 @@ namespace AppBrix.Events.Async.Impl
         {
             if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
             {
-                queueObject.Enqueue(args);
+                ((ITaskQueue<T>)queueObject).Enqueue(args);
             }
         }
         #endregion

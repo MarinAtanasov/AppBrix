@@ -46,10 +46,6 @@ namespace AppBrix.Data.Migration.Impl
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(DbContext).IsAssignableFrom(type))
-                throw new ArgumentException($"Provided type must inherit from {typeof(DbContext).GetAssemblyQualifiedName()}.");
-            if (type.IsAbstract)
-                throw new ArgumentException($"Cannot create instance of abstract type {type.GetAssemblyQualifiedName()}.");
 
             this.MigrateContextIfNeeded(type);
 
@@ -60,9 +56,14 @@ namespace AppBrix.Data.Migration.Impl
         #region Private methods
         private void MigrateContextIfNeeded(Type type)
         {
-            if ((typeof(DbContextBase).IsAssignableFrom(type) || type == typeof(MigrationContext)) &&
-                !this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
+            if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
             {
+                if (!typeof(DbContextBase).IsAssignableFrom(type))
+                {
+                    this.initializedContexts.Add(type);
+                    return;
+                }
+
                 lock (this.initializedContexts)
                 {
                     if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)

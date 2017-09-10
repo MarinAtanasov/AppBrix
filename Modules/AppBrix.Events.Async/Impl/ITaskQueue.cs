@@ -11,11 +11,6 @@ namespace AppBrix.Events.Async.Impl
     /// </summary>
     internal interface ITaskQueue : IDisposable
     {
-        /// <summary>
-        /// Adds a task to the runner queue.
-        /// </summary>
-        /// <param name="task">The task to be added to the queue.</param>
-        void Enqueue(IEvent task);
     }
 
     /// <summary>

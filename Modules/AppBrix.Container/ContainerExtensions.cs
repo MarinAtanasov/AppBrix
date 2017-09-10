@@ -19,14 +19,7 @@ namespace AppBrix
         /// <returns>The registered container.</returns>
         public static IContainer GetContainer(this IApp app)
         {
-            try
-            {
-                return ContainerExtensions.Containers[app];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new InvalidOperationException($"A container has not been registered for app with id={app.Id}.");
-            }
+            return ContainerExtensions.Containers[app];
         }
 
         /// <summary>

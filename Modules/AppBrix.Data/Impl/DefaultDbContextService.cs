@@ -25,10 +25,6 @@ namespace AppBrix.Data.Impl
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            if (!typeof(DbContext).IsAssignableFrom(type))
-                throw new ArgumentException($"Provided type must inherit from {typeof(DbContext).GetAssemblyQualifiedName()}.");
-            if (type.IsAbstract)
-                throw new ArgumentException($"Cannot create instance of abstract type {type.GetAssemblyQualifiedName()}.");
             
             var context = (DbContext)this.app.GetFactory().Get(type);
             (context as DbContextBase)?.Initialize(new DefaultInitializeDbContext(this.app));

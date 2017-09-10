@@ -36,7 +36,7 @@ namespace AppBrix.Factory.Tests
         {
             var factory = this.GetFactory();
             Action action = () => factory.Get<NonDefaultConstructorClass>();
-            action.ShouldThrow<InvalidOperationException>();
+            action.ShouldThrow<MissingMethodException>();
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -73,7 +73,7 @@ namespace AppBrix.Factory.Tests
                 factory.Register(method, type);
             }
 
-            for (int i = 0; i < 500000; i++)
+            for (int i = 0; i < 1000000; i++)
             {
                 factory.Get(type);
             }

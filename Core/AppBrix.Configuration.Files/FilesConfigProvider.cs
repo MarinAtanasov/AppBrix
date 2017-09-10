@@ -36,12 +36,20 @@ namespace AppBrix.Configuration.Files
         #region Public and overriden methods
         public string ReadConfig(Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             var path = this.BuildFilePath(type);
             return File.Exists(path) ? File.ReadAllText(path) : null;
         }
 
         public void WriteConfig(string config, Type type)
         {
+            if (string.IsNullOrEmpty(config))
+                throw new ArgumentNullException(nameof(config));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             File.WriteAllText(this.BuildFilePath(type), config);
         }
         #endregion

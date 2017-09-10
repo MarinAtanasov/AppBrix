@@ -34,13 +34,13 @@ namespace AppBrix.Cloning.Impl
             if (original == null)
                 return null;
 
+            if (original is Delegate)
+                return null;
+
             var type = original.GetType();
 
             if (this.IsPrimitiveType(type))
                 return original;
-
-            if (this.IsDelegate(type))
-                return null;
 
             if (!visited.ContainsKey(original))
             {
@@ -82,12 +82,7 @@ namespace AppBrix.Cloning.Impl
         {
             return type == typeof(string) || type.IsValueType;
         }
-
-        private bool IsDelegate(Type type)
-        {
-            return typeof(Delegate).IsAssignableFrom(type);
-        }
-
+        
         /// <summary>
         /// Traverses a multidimentional array and executes an action for every item.
         /// </summary>

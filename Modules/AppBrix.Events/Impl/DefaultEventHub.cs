@@ -35,7 +35,7 @@ namespace AppBrix.Events.Impl
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            this.UnsubscribeInternal(handler);
+            this.UnsubscribeInternal(handler, typeof(T));
         }
 
         public void Raise<T>(T args) where T : IEvent
@@ -59,9 +59,9 @@ namespace AppBrix.Events.Impl
             handlers.Add(handler);
         }
 
-        private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
+        private void UnsubscribeInternal(object handler, Type type)
         {
-            if (this.subscriptions.TryGetValue(typeof(T), out var handlers))
+            if (this.subscriptions.TryGetValue(type, out var handlers))
             {
                 // Optimize for unsubscribing the last element since this is the most common scenario.
                 for (int i = handlers.Count - 1; i >= 0; i--)
@@ -78,7 +78,7 @@ namespace AppBrix.Events.Impl
         private void RaiseInternal(object args, Type type)
         {
             var baseType = type;
-            while (baseType != null && typeof(IEvent).IsAssignableFrom(baseType))
+            while (baseType != typeof(object) && baseType != null)
             {
                 this.RaiseEvent(args, baseType);
                 baseType = baseType.BaseType;
@@ -86,10 +86,7 @@ namespace AppBrix.Events.Impl
 
             foreach (var @interface in type.GetInterfaces())
             {
-                if (typeof(IEvent).IsAssignableFrom(@interface))
-                {
-                    this.RaiseEvent(args, @interface);
-                }
+                this.RaiseEvent(args, @interface);
             }
         }
 

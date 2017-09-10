@@ -59,7 +59,7 @@ namespace AppBrix.Text.Tests
         {
             app.GetContainer().Register(new EncodingProviderMock(Encoding.UTF8));
 
-            for (int i = 0; i < 75000; i++)
+            for (int i = 0; i < 200000; i++)
             {
                 Encoding.GetEncoding("str");
                 Encoding.GetEncoding(32167);

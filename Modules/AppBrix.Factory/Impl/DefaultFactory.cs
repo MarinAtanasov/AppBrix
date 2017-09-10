@@ -48,18 +48,7 @@ namespace AppBrix.Factory.Impl
         
         public object Get(Type type)
         {
-            try
-            {
-                return this.factories.TryGetValue(type, out var factory) ? factory() : type.CreateObject();
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(
-                    string.Concat(
-                        $"Unable to create instance of type {type.GetAssemblyQualifiedName()}. ",
-                        "Make sure that you have registered a factory method first."
-                    ), ex);
-            }
+            return this.factories.TryGetValue(type, out var factory) ? factory() : type.CreateObject();
         }
         #endregion
 

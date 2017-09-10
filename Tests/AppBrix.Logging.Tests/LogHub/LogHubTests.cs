@@ -161,7 +161,7 @@ namespace AppBrix.Logging.Tests.LogHub
             var message = "Test message";
             var error = new ArgumentException("Test error");
             var called = 0;
-            var repeat = 8000;
+            var repeat = 12000;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
             var logHub = this.app.GetLog();

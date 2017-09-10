@@ -12,6 +12,9 @@ namespace AppBrix.Lifecycle
         #region Construction
         public DefaultInstallContext(IApp app)
         {
+            if (app == null)
+                throw new ArgumentNullException(nameof(app));
+
             this.App = app;
         }
         #endregion

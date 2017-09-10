@@ -12,6 +12,11 @@ namespace AppBrix.Data.Impl
         #region Construction
         public DefaultOnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder, string migrationsAssembly = null)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
             this.Context = context;
             this.MigrationsAssembly = migrationsAssembly;
             this.OptionsBuilder = builder;

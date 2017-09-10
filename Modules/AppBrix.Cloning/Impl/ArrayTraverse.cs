@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace AppBrix.Cloning
+namespace AppBrix.Cloning.Impl
 {
     /// <summary>
     /// Class used for traversing a multidimentional array during deep cloning.

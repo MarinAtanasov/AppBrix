@@ -12,6 +12,9 @@ namespace AppBrix.Lifecycle
         #region Construction
         public DefaultUpgradeContext(IApp app, Version upgradeFrom) : base(app)
         {
+            if (upgradeFrom == null)
+                throw new ArgumentNullException(nameof(upgradeFrom));
+
             this.UpgradeFrom = upgradeFrom;
         }
         #endregion

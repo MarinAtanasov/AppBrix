@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 
-namespace AppBrix.Time
+namespace AppBrix.Time.Impl
 {
     internal abstract class TimeServiceBase : ITimeService
     {

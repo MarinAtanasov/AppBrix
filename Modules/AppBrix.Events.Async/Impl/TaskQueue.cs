@@ -69,11 +69,6 @@ namespace AppBrix.Events.Async.Impl
                 }
             }
         }
-
-        void ITaskQueue.Enqueue(IEvent task)
-        {
-            this.Enqueue((T)task);
-        }
         
         public void Enqueue(T task)
         {

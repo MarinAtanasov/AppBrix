@@ -17,11 +17,19 @@ namespace AppBrix.Configuration.Json
         #region Public and overriden methods
         public string Serialize(IConfig config)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             return JsonConvert.SerializeObject(config, Formatting.Indented, this.GetSettings());
         }
 
         public IConfig Deserialize(string config, Type type)
         {
+            if (string.IsNullOrEmpty(config))
+                throw new ArgumentNullException(nameof(config));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             return (IConfig)JsonConvert.DeserializeObject(config, type, this.GetSettings());
         }
         #endregion

@@ -12,6 +12,9 @@ namespace AppBrix.Data.Impl
         #region Construction
         public DefaultInitializeDbContext(IApp app, string migrationsAssembly = null)
         {
+            if (app == null)
+                throw new ArgumentNullException(nameof(app));
+
             this.App = app;
             this.MigrationsAssembly = migrationsAssembly;
         }

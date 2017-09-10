@@ -53,15 +53,7 @@ namespace AppBrix.Container.Impl
         
         public object Get(Type type)
         {
-            try
-            {
-                return this.objects[type];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new InvalidOperationException(
-                    $"Object of type '{type.GetAssemblyQualifiedName()}' has not been registered.");
-            }
+            return this.objects[type];
         }
 
         public IEnumerable<object> GetAll()
