@@ -17,7 +17,7 @@ namespace AppBrix
         /// <returns>The factory.</returns>
         public static IFactory GetFactory(this IApp app)
         {
-            return (IFactory)app.GetContainer().Get(typeof(IFactory));
+            return (IFactory)app.Get(typeof(IFactory));
         }
 
         /// <summary>

@@ -20,8 +20,8 @@ namespace AppBrix.Factory
         {
             var defaultFactory = this.factory.Value;
             defaultFactory.Initialize(context);
-            this.App.GetContainer().Register(this);
-            this.App.GetContainer().Register(defaultFactory);
+            this.App.Container.Register(this);
+            this.App.Container.Register(defaultFactory);
         }
 
         protected override void UninitializeModule()

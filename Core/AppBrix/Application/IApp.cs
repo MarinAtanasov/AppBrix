@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Configuration;
+using AppBrix.Container;
 using System;
 using System.Linq;
 
@@ -16,6 +17,11 @@ namespace AppBrix.Application
         /// Gets the id of the application.
         /// </summary>
         Guid Id { get; }
+
+        /// <summary>
+        /// Gets or sets the application's service container.
+        /// </summary>
+        IContainer Container { get; set; }
 
         /// <summary>
         /// Gets the application's configuration.

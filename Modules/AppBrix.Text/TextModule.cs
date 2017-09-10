@@ -18,8 +18,8 @@ namespace AppBrix.Text
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
-            this.App.GetContainer().Register(CodePagesEncodingProvider.Instance);
+            this.App.Container.Register(this);
+            this.App.Container.Register(CodePagesEncodingProvider.Instance);
             this.wrapper.Value.Initialize(context);
             Encoding.RegisterProvider(this.wrapper.Value);
         }

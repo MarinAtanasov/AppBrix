@@ -20,13 +20,13 @@ namespace AppBrix.Container
             var defaultContainer = this.container.Value;
             defaultContainer.Initialize(context);
             defaultContainer.Register(this);
-            this.App.SetContainer(defaultContainer);
+            this.App.Container = defaultContainer;
         }
 
         protected override void UninitializeModule()
         {
             this.container.Value.Uninitialize();
-            this.App.SetContainer(null);
+            this.App.Container = null;
         }
         #endregion
 

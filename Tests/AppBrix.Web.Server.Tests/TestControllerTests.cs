@@ -44,13 +44,13 @@ namespace AppBrix.Web.Server.Tests
             using (var server2 = this.CreateTestServer(TestControllerTests.Server2BaseAddress, app2))
             using (var app2Client = server2.CreateClient())
             {
-                app1.GetContainer().Register(app2Client);
+                app1.Container.Register(app2Client);
                 var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
                 response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
                 var result1 = Guid.Parse(response1.Content);
                 result1.Should().Be(app2.Id, "the first app should receive the second app's id");
 
-                app2.GetContainer().Register(app1Client);
+                app2.Container.Register(app1Client);
                 var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
                 response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
                 var result2 = Guid.Parse(response2.Content);
@@ -66,7 +66,7 @@ namespace AppBrix.Web.Server.Tests
             using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
             using (var client = server.CreateClient())
             {
-                app.GetContainer().Register(client);
+                app.Container.Register(client);
                 TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
             }
         }

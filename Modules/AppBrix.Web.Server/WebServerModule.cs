@@ -24,10 +24,10 @@ namespace AppBrix.Web.Server
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
+            this.App.Container.Register(this);
             var defaultLoggerProvider = this.loggerProvider.Value;
             defaultLoggerProvider.Initialize(context);
-            this.App.GetContainer().Register(defaultLoggerProvider);
+            this.App.Container.Register(defaultLoggerProvider);
 
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder
                 .ConfigureServices(services => services.AddSingleton(this.App))

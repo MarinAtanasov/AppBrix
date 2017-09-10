@@ -17,9 +17,9 @@ namespace AppBrix.Caching
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
+            this.App.Container.Register(this);
             this.cache.Value.Initialize(context);
-            this.App.GetContainer().Register(this.cache.Value);
+            this.App.Container.Register(this.cache.Value);
         }
 
         protected override void UninitializeModule()

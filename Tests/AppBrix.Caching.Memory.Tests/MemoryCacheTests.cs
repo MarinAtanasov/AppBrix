@@ -204,7 +204,7 @@ namespace AppBrix.Caching.Memory.Tests
         private void TestPerformanceMemoryCacheInternal()
         {
             var cache = this.app.GetMemoryCache();
-            var items = 800;
+            var items = 1000;
             for (int i = 0; i < items; i++)
             {
                 cache.Set(i.ToString(), i);

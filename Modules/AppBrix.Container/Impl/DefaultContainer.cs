@@ -66,7 +66,7 @@ namespace AppBrix.Container.Impl
         private void RegisterInternal(object obj, Type type)
         {
             var baseType = type;
-            while (baseType != null && baseType != typeof(object))
+            while (baseType != typeof(object) && baseType != null)
             {
                 this.objects[baseType] = obj;
                 baseType = baseType.BaseType;

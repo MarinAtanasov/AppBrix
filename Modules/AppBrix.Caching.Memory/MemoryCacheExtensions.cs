@@ -19,7 +19,7 @@ namespace AppBrix
         /// <returns>The local in-memory cache.</returns>
         public static IMemoryCache GetMemoryCache(this IApp app)
         {
-            return (IMemoryCache)app.GetContainer().Get(typeof(IMemoryCache));
+            return (IMemoryCache)app.Get(typeof(IMemoryCache));
         }
 
         /// <summary>

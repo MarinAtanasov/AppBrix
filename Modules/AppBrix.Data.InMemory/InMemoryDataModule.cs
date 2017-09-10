@@ -17,9 +17,9 @@ namespace AppBrix.Data.InMemory
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
+            this.App.Container.Register(this);
             this.configurer.Value.Initialize(context);
-            this.App.GetContainer().Register(this.configurer.Value);
+            this.App.Container.Register(this.configurer.Value);
         }
 
         protected override void UninitializeModule()

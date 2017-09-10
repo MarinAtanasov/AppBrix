@@ -61,7 +61,7 @@ namespace AppBrix.Cloning.Impl
             }
 
             var baseType = type;
-            while (baseType != null && baseType != typeof(object))
+            while (baseType != typeof(object) && baseType != null)
             {
                 var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
                 foreach (var field in fields)

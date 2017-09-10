@@ -171,7 +171,7 @@ namespace AppBrix.Container.Tests
         #region Private methods
         private IContainer GetContainer()
         {
-            return this.app.GetContainer();
+            return this.app.Container;
         }
 
         private void TestPerformanceContainerInternal()
@@ -179,14 +179,14 @@ namespace AppBrix.Container.Tests
             var container = this.GetContainer();
             for (var i = 0; i < 1000; i++)
             {
-                container.Register(new ChildMock());
+                this.app.Container.Register(new ChildMock());
             }
             for (var i = 0; i < 300000; i++)
             {
-                container.Get(typeof(ChildMock));
-                container.Get(typeof(ParentMock));
-                container.Get(typeof(IContainer));
-                container.GetAll();
+                this.app.Get(typeof(ChildMock));
+                this.app.Get(typeof(ParentMock));
+                this.app.Get(typeof(IContainer));
+                this.app.Container.GetAll();
             }
             this.app.Reinitialize();
         }

@@ -35,7 +35,7 @@ namespace AppBrix.Text.Tests
             var provider = new EncodingProviderMock(encoding);
             provider.Encoding.Should().BeSameAs(encoding, "provided encoding should be saved");
 
-            app.GetContainer().Register(provider);
+            app.Container.Register(provider);
 
             provider.IsGetEncodingWithNameCalled.Should().BeFalse("encoding with name should not be called yet");
             provider.IsGetEncodingWithCodePageCalled.Should().BeFalse("encoding with code page should not be called yet");
@@ -57,9 +57,9 @@ namespace AppBrix.Text.Tests
         #region Private methods
         private void TestPerformanceEncodingProviderWrapperInternal()
         {
-            app.GetContainer().Register(new EncodingProviderMock(Encoding.UTF8));
+            app.Container.Register(new EncodingProviderMock(Encoding.UTF8));
 
-            for (int i = 0; i < 200000; i++)
+            for (int i = 0; i < 250000; i++)
             {
                 Encoding.GetEncoding("str");
                 Encoding.GetEncoding(32167);

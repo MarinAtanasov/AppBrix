@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Configuration;
+using AppBrix.Container;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using System;
@@ -10,16 +11,9 @@ using System.Linq;
 
 namespace AppBrix.Application
 {
-    /// <summary>
-    /// The default implementation of an application.
-    /// </summary>
     internal sealed class DefaultApp : IApp
     {
         #region Construction
-        /// <summary>
-        /// Creates a new instance of the default app with the specified configuration service.
-        /// </summary>
-        /// <param name="configService">The configuration service.</param>
         public DefaultApp(IConfigService configService)
         {
             if (configService == null)
@@ -31,24 +25,14 @@ namespace AppBrix.Application
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets the id of the application.
-        /// </summary>
         public Guid Id { get; }
 
-        /// <summary>
-        /// Gets the application's configuration service.
-        /// </summary>
+        public IContainer Container { get; set; }
+        
         public IConfigService ConfigService { get; }
         
-        /// <summary>
-        /// Indicates whether the application has been started.
-        /// </summary>
         public bool IsStarted { get; private set; }
-
-        /// <summary>
-        /// Indicates whether the application is in an initialized state.
-        /// </summary>
+        
         public bool IsInitialized { get; private set; }
         #endregion
 

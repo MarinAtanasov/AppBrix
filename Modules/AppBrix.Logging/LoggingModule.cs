@@ -18,10 +18,10 @@ namespace AppBrix.Logging
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
+            this.App.Container.Register(this);
             var defaultLogHub = this.logHub.Value;
             defaultLogHub.Initialize(context);
-            this.App.GetContainer().Register(defaultLogHub);
+            this.App.Container.Register(defaultLogHub);
             this.App.GetFactory().Register(() =>
                 this.App.GetConfig<LoggingConfig>().Async ? (ILogger)
                 new AsyncLogger(this.App.GetFactory().Get<ILogWriter>()) :

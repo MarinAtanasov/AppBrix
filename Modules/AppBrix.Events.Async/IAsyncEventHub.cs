@@ -16,7 +16,6 @@ namespace AppBrix.Events.Async
         /// </summary>
         /// <typeparam name="T">The event type.</typeparam>
         /// <param name="handler">The event handler. Required.</param>
-        /// <exception cref="ArgumentNullException">handler</exception>
         void Subscribe<T>(Action<T> handler) where T : IEvent;
 
         /// <summary>
@@ -24,8 +23,6 @@ namespace AppBrix.Events.Async
         /// </summary>
         /// <typeparam name="T">The event type.</typeparam>
         /// <param name="handler">The event handler.</param>
-        /// <exception cref="ArgumentNullException">handler</exception>
-        /// <exception cref="ArgumentException">Handler is not registered.</exception>
         void Unsubscribe<T>(Action<T> handler) where T : IEvent;
 
         /// <summary>
@@ -33,7 +30,6 @@ namespace AppBrix.Events.Async
         /// </summary>
         /// <typeparam name="T">The type of the event to be raised.</typeparam>
         /// <param name="args">The event arguments.</param>
-        /// <exception cref="ArgumentNullException">args</exception>
         void Raise<T>(T args) where T : IEvent;
     }
 }

@@ -19,7 +19,7 @@ namespace AppBrix.Web.Client
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
+            this.App.Container.Register(this);
             var config = this.App.GetConfig<WebClientConfig>();
             this.App.GetFactory().Register(() => new HttpClientHandler
             {
@@ -31,7 +31,7 @@ namespace AppBrix.Web.Client
             });
             this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
             this.client = this.App.GetFactory().Get<HttpClient>();
-            this.App.GetContainer().Register(this.client);
+            this.App.Container.Register(this.client);
         }
 
         protected override void UninitializeModule()

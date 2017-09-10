@@ -19,8 +19,8 @@ namespace AppBrix.Caching.Tests
         {
             this.app = TestUtils.CreateTestApp(typeof(CachingModule));
             this.app.Start();
-            this.app.GetContainer().Register(new JsonCacheSerializer());
-            this.app.GetContainer().Register(new MemoryDistributedCache(new CustomMemoryDistributedCacheOptions()));
+            this.app.Container.Register(new JsonCacheSerializer());
+            this.app.Container.Register(new MemoryDistributedCache(new CustomMemoryDistributedCacheOptions()));
         }
         #endregion
 

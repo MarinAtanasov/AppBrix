@@ -17,9 +17,9 @@ namespace AppBrix.Data.Migration
         #region Public and overriden methods
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetContainer().Register(this);
+            this.App.Container.Register(this);
             this.contextService.Value.Initialize(context);
-            this.App.GetContainer().Register(this.contextService.Value);
+            this.App.Container.Register(this.contextService.Value);
         }
 
         protected override void UninitializeModule()

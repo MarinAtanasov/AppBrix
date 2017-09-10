@@ -18,15 +18,12 @@ namespace AppBrix.Container
         /// </summary>
         /// <param name="obj">The object to be registered. Required.</param>
         /// <param name="type">The type to be used as base upon registration. Required. Cannot be <see cref="object"/>.</param>
-        /// <exception cref="ArgumentNullException">obj, type</exception>
-        /// <exception cref="ArgumentException">T is of type object, obj is not of type T, obj already registered.</exception>
         void Register(object obj, Type type);
 
         /// <summary>
         /// Returns the last registered object of a given type.
         /// </summary>
         /// <param name="type">The type of the registered object.</param>
-        /// <exception cref="ArgumentException">No object of the specified type has been registered.</exception>
         /// <returns>The last registered object.</returns>
         object Get(Type type);
 
