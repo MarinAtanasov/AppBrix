@@ -78,19 +78,18 @@ namespace AppBrix.Events.Schedule.Impl
                     return; // Unintialized
 
                 var now = this.app.GetTime();
-
                 while ((this.queue.Peek()?.Occurrence ?? now) < now)
                 {
-                    var args = this.queue.Pop();
                     if (toExecute == null)
                         toExecute = new List<PriorityQueueItem>();
+
+                    var args = this.queue.Pop();
                     toExecute.Add(args);
-
                     args.MoveToNextOccurrence(now);
-                    if (args.Occurrence < now)
-                        continue; // Time in the past. Stop rescheduling.
-
-                    this.queue.Push(args);
+                    if (now <= args.Occurrence)
+                    {
+                        this.queue.Push(args);
+                    }
                 }
 
                 this.executionTimer.Change(this.GetConfig().ExecutionCheck, Timeout.InfiniteTimeSpan);
