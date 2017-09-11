@@ -21,14 +21,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AppBrix\AppBrix.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Caching\AppBrix.Caching.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Cloning\AppBrix.Cloning.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration\AppBrix.Configuration.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Json\AppBrix.Configuration.Json.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
+    <ProjectReference Include="..\..\Core\AppBrix.Utils\AppBrix.Utils.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Caching\AppBrix.Caching.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Cloning\AppBrix.Cloning.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Container\AppBrix.Container.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data\AppBrix.Data.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj" />
@@ -39,13 +40,13 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Async\AppBrix.Events.Async.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule\AppBrix.Events.Schedule.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Factory\AppBrix.Factory.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging\AppBrix.Logging.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Time\AppBrix.Time.csproj" />
-    <ProjectReference Include="..\..\Core\AppBrix.Utils\AppBrix.Utils.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
   </ItemGroup>
