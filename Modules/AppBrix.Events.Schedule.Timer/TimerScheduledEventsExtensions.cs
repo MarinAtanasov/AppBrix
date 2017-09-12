@@ -34,5 +34,17 @@ namespace AppBrix
         {
             return eventHub.Schedule(args, dueTime, Timeout.InfiniteTimeSpan);
         }
+
+        /// <summary>
+        /// Schedule an <see cref="IScheduledEvent"/> to be executed once.
+        /// </summary>
+        /// <param name="args">The event to be executed.</param>
+        /// <param name="dueTime">The point in time after which the event should be raised.</param>
+        /// <returns>The scheduled event, containing the original event.</returns>
+        public static IScheduledEvent<T> Schedule<T>(this ITimerScheduledEventHub eventHub, T args, DateTime dueTime)
+            where T : IEvent
+        {
+            return eventHub.Schedule(args, dueTime, Timeout.InfiniteTimeSpan);
+        }
     }
 }

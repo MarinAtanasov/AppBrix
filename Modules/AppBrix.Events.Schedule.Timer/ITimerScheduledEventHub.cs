@@ -21,12 +21,13 @@ namespace AppBrix.Events.Schedule.Timer
         IScheduledEvent<T> Schedule<T>(T args, TimeSpan dueTime, TimeSpan period) where T : IEvent;
 
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed once.
+        /// Schedule an <see cref="IScheduledEvent"/> to be executed.
         /// </summary>
         /// <param name="args">The event to be executed.</param>
-        /// <param name="time">The point in time after which the event should be raised.</param>
+        /// <param name="dueTime">The point in time after which the event should be raised.</param>
+        /// <param name="period">The time interval between invocations of the event.</param>
         /// <returns>The scheduled event, containing the original event.</returns>
-        IScheduledEvent<T> Schedule<T>(T args, DateTime time) where T : IEvent;
+        IScheduledEvent<T> Schedule<T>(T args, DateTime dueTime, TimeSpan period) where T : IEvent;
 
         /// <summary>
         /// Unschedules an <see cref="IScheduledEvent"/> to stop it from executing.

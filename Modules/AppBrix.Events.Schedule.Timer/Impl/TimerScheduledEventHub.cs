@@ -5,7 +5,6 @@ using AppBrix.Application;
 using AppBrix.Lifecycle;
 using System;
 using System.Linq;
-using System.Threading;
 
 namespace AppBrix.Events.Schedule.Timer.Impl
 {
@@ -31,19 +30,15 @@ namespace AppBrix.Events.Schedule.Timer.Impl
             if (dueTime < TimeSpan.Zero)
                 throw new ArgumentException($"Negative {nameof(dueTime)}: {dueTime}");
 
-            var scheduled = new TimerScheduledEvent<T>(args, this.app.GetTime().Add(dueTime), period);
-            this.app.GetScheduledEventHub().Schedule(scheduled);
-            return scheduled;
+            return this.Schedule(args, this.app.GetTime().Add(dueTime), period);
         }
 
-        public IScheduledEvent<T> Schedule<T>(T args, DateTime time) where T : IEvent
+        public IScheduledEvent<T> Schedule<T>(T args, DateTime dueTime, TimeSpan period) where T : IEvent
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
-            if (time < this.app.GetTime())
-                throw new ArgumentException($"{nameof(time)} is in the past: {time}");
 
-            var scheduled = new TimerScheduledEvent<T>(args, time, Timeout.InfiniteTimeSpan);
+            var scheduled = new TimerScheduledEvent<T>(args, dueTime, period);
             this.app.GetScheduledEventHub().Schedule(scheduled);
             return scheduled;
         }
