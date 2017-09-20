@@ -25,7 +25,7 @@ The tests are using xUnit.
 * In PowerShell, while in the project's root folder:
 ```Powershell
 # You can add -Build to restore dependencies and build the solution.
-# Run functional tests in parallel (default)
+# Run functional tests (default). Add -Parallel for parallel execution.
 ./Test -Tests Functional # ./Test f
 # Run performance tests
 ./Test -Tests Performance # ./Test p
