@@ -45,7 +45,11 @@ namespace AppBrix.Events.Schedule.Impl
                 throw new ArgumentNullException(nameof(args));
 
             var now = this.app.GetTime();
-            var item = new PriorityQueueItem<T>(args, () => this.ExecuteEvent(args.Event));
+            var item = new PriorityQueueItem<T>(args, () =>
+            {
+                try { this.app.GetEventHub().Raise(args.Event); }
+                catch (Exception) { }
+            });
             item.MoveToNextOccurrence(now);
             if (now <= item.Occurrence)
             {
@@ -96,12 +100,7 @@ namespace AppBrix.Events.Schedule.Impl
             }
             toExecute?.ForEach(x => x.Execute());
         }
-
-        private void ExecuteEvent<T>(T args) where T : IEvent
-        {
-            this.app.GetEventHub().Raise(args);
-        }
-
+        
         private ScheduledEventsConfig GetConfig()
         {
             return (ScheduledEventsConfig)this.app.GetConfig(typeof(ScheduledEventsConfig));

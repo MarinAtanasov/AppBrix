@@ -57,10 +57,17 @@ namespace AppBrix.Events.Schedule.Impl
         {
             var item = this.queue[index];
             var lastIndex = this.queue.Count - 1;
-            this.queue[index] = this.queue[lastIndex];
-            this.queue.RemoveAt(lastIndex);
-            this.BubbleUp(index);
-            this.BubbleDown(index);
+            if (index < lastIndex)
+            {
+                this.queue[index] = this.queue[lastIndex];
+                this.queue.RemoveAt(lastIndex);
+                this.BubbleUp(index);
+                this.BubbleDown(index);
+            }
+            else
+            {
+                this.queue.RemoveAt(index);
+            }
             return item;
         }
 
