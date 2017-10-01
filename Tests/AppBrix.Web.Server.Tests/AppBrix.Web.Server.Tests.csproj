@@ -4,14 +4,14 @@
     <Description>Contains tests for the AppBrix.Web.Server module</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.Web.Server.Tests</AssemblyTitle>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <VersionPrefix>0.9.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>AppBrix.Web.Server.Tests</AssemblyName>
     <PackageId>AppBrix.Web.Server.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PackageTags>AppBrix Web Server Tests</PackageTags>
-    <PackageReleaseNotes>Updated dependencies to use .NetCore and .NetStandard 2.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
@@ -28,7 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170923-02" />
   </ItemGroup>
 
 </Project>

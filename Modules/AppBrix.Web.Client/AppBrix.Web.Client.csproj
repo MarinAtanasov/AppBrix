@@ -4,13 +4,13 @@
     <Description>Module used for making HTTP REST requests. You can override the factory for HttpClient to change the behavior.</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.Web.Client</AssemblyTitle>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <VersionPrefix>0.9.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Web.Client</AssemblyName>
     <PackageId>AppBrix.Web.Client</PackageId>
     <PackageTags>AppBrix Module Web Client</PackageTags>
-    <PackageReleaseNotes>Updated dependencies to use .NetCore and .NetStandard 2.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
