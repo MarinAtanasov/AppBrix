@@ -3,11 +3,11 @@
 //
 using AppBrix.Application;
 using AppBrix.Caching.Memory.Configuration;
+using AppBrix.Events;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace AppBrix.Caching.Memory.Impl
 {
@@ -17,19 +17,17 @@ namespace AppBrix.Caching.Memory.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            var timeout = this.GetConfig().ExpirationCheck;
-            lock (this.cache)
-            {
-                this.expirationTimer = new Timer(this.RemoveExpiredEntries, null, timeout, Timeout.InfiniteTimeSpan);
-            }
+            this.eventArgs = new MemoryCacheCleanup();
+            this.app.GetEventHub().Subscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
+            this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
         }
 
         public void Uninitialize()
         {
             lock (this.cache)
             {
-                this.expirationTimer?.Dispose();
-                this.expirationTimer = null;
+                this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
+                this.eventArgs = null;
                 this.cache.Keys.ToList().ForEach(this.Remove);
             }
 
@@ -103,19 +101,19 @@ namespace AppBrix.Caching.Memory.Impl
             return result;
         }
 
-        private void RemoveExpiredEntries(object unused = null)
+        private void RemoveExpiredEntries(MemoryCacheCleanup unused)
         {
             List<KeyValuePair<object, CacheItem>> toRemove;
             lock (this.cache)
             {
-                if (this.expirationTimer == null)
+                if (this.eventArgs == null)
                     return; // Unintialized
 
                 var now = this.app.GetTime();
 
                 toRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
                 toRemove.ForEach(x => this.cache.Remove(x.Key));
-                this.expirationTimer.Change(this.GetConfig().ExpirationCheck, Timeout.InfiniteTimeSpan);
+                this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
             }
             toRemove.ForEach(x => this.RunSafe(x.Value.Dispose));
         }
@@ -135,7 +133,13 @@ namespace AppBrix.Caching.Memory.Impl
         #region Private fields and constants
         private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private IApp app;
-        private Timer expirationTimer;
+        private MemoryCacheCleanup eventArgs;
+        #endregion
+
+        #region Private classes
+        private sealed class MemoryCacheCleanup : IEvent
+        {
+        }
         #endregion
     }
 }

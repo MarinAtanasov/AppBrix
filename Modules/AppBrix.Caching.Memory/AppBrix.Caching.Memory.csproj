@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Container\AppBrix.Container.csproj" />
+    <ProjectReference Include="..\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
     <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
   </ItemGroup>
 
