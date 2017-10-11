@@ -17,7 +17,6 @@ namespace AppBrix.Events.Schedule.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.queue.Initialize(context);
             var timeout = this.GetConfig().ExecutionCheck;
             lock (this.queue)
             {
@@ -33,7 +32,7 @@ namespace AppBrix.Events.Schedule.Impl
                 this.executionTimer = null;
             }
 
-            this.queue.Uninitialize();
+            this.queue.Clear();
             this.app = null;
         }
         #endregion

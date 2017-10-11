@@ -1,28 +1,15 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
-using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Events.Schedule.Impl
 {
-    internal sealed class PriorityQueue : IApplicationLifecycle
+    internal sealed class PriorityQueue
     {
         #region Public and overriden methods
-        public void Initialize(IInitializeContext context)
-        {
-            this.app = context.App;
-        }
-
-        public void Uninitialize()
-        {
-            this.queue.Clear();
-            this.app = null;
-        }
-        
         public void Push(PriorityQueueItem item)
         {
             this.queue.Add(item);
@@ -49,6 +36,11 @@ namespace AppBrix.Events.Schedule.Impl
                     return;
                 }
             }
+        }
+
+        public void Clear()
+        {
+            this.queue.Clear();
         }
         #endregion
 
@@ -115,7 +107,6 @@ namespace AppBrix.Events.Schedule.Impl
 
         #region Private fields and constants
         private readonly List<PriorityQueueItem> queue = new List<PriorityQueueItem>();
-        private IApp app;
         #endregion
     }
 }
