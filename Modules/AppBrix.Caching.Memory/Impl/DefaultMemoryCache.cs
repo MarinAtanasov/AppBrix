@@ -17,7 +17,6 @@ namespace AppBrix.Caching.Memory.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.eventArgs = new MemoryCacheCleanup();
             this.app.GetEventHub().Subscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
             this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
         }
@@ -27,11 +26,9 @@ namespace AppBrix.Caching.Memory.Impl
             lock (this.cache)
             {
                 this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
-                this.eventArgs = null;
                 this.cache.Keys.ToList().ForEach(this.Remove);
+                this.app = null;
             }
-
-            this.app = null;
         }
         #endregion
 
@@ -106,7 +103,7 @@ namespace AppBrix.Caching.Memory.Impl
             List<KeyValuePair<object, CacheItem>> toRemove;
             lock (this.cache)
             {
-                if (this.eventArgs == null)
+                if (this.app == null)
                     return; // Unintialized
 
                 var now = this.app.GetTime();
@@ -132,8 +129,8 @@ namespace AppBrix.Caching.Memory.Impl
 
         #region Private fields and constants
         private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
+        private readonly MemoryCacheCleanup eventArgs = new MemoryCacheCleanup();
         private IApp app;
-        private MemoryCacheCleanup eventArgs;
         #endregion
 
         #region Private classes
