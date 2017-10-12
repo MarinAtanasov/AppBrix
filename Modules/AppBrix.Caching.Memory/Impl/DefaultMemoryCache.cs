@@ -4,6 +4,7 @@
 using AppBrix.Application;
 using AppBrix.Caching.Memory.Configuration;
 using AppBrix.Events;
+using AppBrix.Events.Schedule;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace AppBrix.Caching.Memory.Impl
         {
             this.app = context.App;
             this.app.GetEventHub().Subscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
-            this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
+            this.scheduledArgs = this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
         }
 
         public void Uninitialize()
@@ -26,6 +27,8 @@ namespace AppBrix.Caching.Memory.Impl
             lock (this.cache)
             {
                 this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
+                this.app.GetTimerScheduledEventHub().Unschedule(this.scheduledArgs);
+                this.scheduledArgs = null;
                 this.cache.Keys.ToList().ForEach(this.Remove);
                 this.app = null;
             }
@@ -110,7 +113,7 @@ namespace AppBrix.Caching.Memory.Impl
 
                 toRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
                 toRemove.ForEach(x => this.cache.Remove(x.Key));
-                this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
+                this.scheduledArgs = this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
             }
             toRemove.ForEach(x => this.RunSafe(x.Value.Dispose));
         }
@@ -130,6 +133,7 @@ namespace AppBrix.Caching.Memory.Impl
         #region Private fields and constants
         private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private readonly MemoryCacheCleanup eventArgs = new MemoryCacheCleanup();
+        private IScheduledEvent<MemoryCacheCleanup> scheduledArgs;
         private IApp app;
         #endregion
 
