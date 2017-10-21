@@ -20,13 +20,10 @@ namespace AppBrix.Application
                 throw new ArgumentNullException(nameof(configService));
 
             this.ConfigService = configService;
-            this.Id = Guid.NewGuid();
         }
         #endregion
 
         #region Properties
-        public Guid Id { get; }
-
         public IContainer Container { get; set; }
         
         public IConfigService ConfigService { get; }
@@ -87,16 +84,6 @@ namespace AppBrix.Application
 
                 this.UninitializeInternal(this.modules.Count - 1);
             }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return this.Id.GetHashCode();
         }
         #endregion
 

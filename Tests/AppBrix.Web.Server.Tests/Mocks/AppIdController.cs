@@ -29,7 +29,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         [HttpGet]
         public string AppId()
         {
-            return this.app.Id.ToString();
+            return this.app.GetConfig<AppIdConfig>().Id.ToString();
         }
         #endregion
 

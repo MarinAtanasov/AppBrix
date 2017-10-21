@@ -14,11 +14,6 @@ namespace AppBrix.Application
     public interface IApp
     {
         /// <summary>
-        /// Gets the id of the application.
-        /// </summary>
-        Guid Id { get; }
-
-        /// <summary>
         /// Gets or sets the application's service container.
         /// </summary>
         IContainer Container { get; set; }

@@ -5,6 +5,7 @@ using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Tests;
 using AppBrix.Web.Client;
+using AppBrix.Web.Server.Tests.Mocks;
 using FluentAssertions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -48,13 +49,13 @@ namespace AppBrix.Web.Server.Tests
                 var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
                 response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
                 var result1 = Guid.Parse(response1.Content);
-                result1.Should().Be(app2.Id, "the first app should receive the second app's id");
+                result1.Should().Be(app2.GetConfig<AppIdConfig>().Id, "the first app should receive the second app's id");
 
                 app2.Container.Register(app1Client);
                 var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
                 response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
                 var result2 = Guid.Parse(response2.Content);
-                result2.Should().Be(app1.Id, "the second app should receive the first app's id");
+                result2.Should().Be(app1.GetConfig<AppIdConfig>().Id, "the second app should receive the first app's id");
             }
         }
 
@@ -82,6 +83,7 @@ namespace AppBrix.Web.Server.Tests
         {
             var app = TestUtils.CreateTestApp(typeof(WebServerModule));
             app.GetConfig<AppConfig>().Modules.Add(ModuleConfigElement.Create(typeof(WebClientModule)));
+            app.GetConfig<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
             app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
             app.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());
