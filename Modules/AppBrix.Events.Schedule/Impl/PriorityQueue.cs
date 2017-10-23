@@ -26,6 +26,11 @@ namespace AppBrix.Events.Schedule.Impl
             return this.RemoveAt(0);
         }
 
+        public void ReprioritizeHead()
+        {
+            this.BubbleDown(0);
+        }
+
         public void Remove<T>(IScheduledEvent<T> args) where T : IEvent
         {
             for (int i = this.queue.Count - 1; i >= 0; i--)

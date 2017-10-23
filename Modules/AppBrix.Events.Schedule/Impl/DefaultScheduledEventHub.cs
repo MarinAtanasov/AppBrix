@@ -30,9 +30,9 @@ namespace AppBrix.Events.Schedule.Impl
             {
                 this.executionTimer?.Dispose();
                 this.executionTimer = null;
+                this.queue.Clear();
             }
 
-            this.queue.Clear();
             this.app = null;
         }
         #endregion
@@ -81,17 +81,20 @@ namespace AppBrix.Events.Schedule.Impl
                     return; // Unintialized
 
                 var now = this.app.GetTime();
-                while ((this.queue.Peek()?.Occurrence ?? now) < now)
+                for (var args = this.queue.Peek(); args != null && args.Occurrence < now; args = this.queue.Peek())
                 {
                     if (toExecute == null)
                         toExecute = new List<PriorityQueueItem>();
 
-                    var args = this.queue.Pop();
                     toExecute.Add(args);
                     args.MoveToNextOccurrence(now);
                     if (now <= args.Occurrence)
                     {
-                        this.queue.Push(args);
+                        this.queue.ReprioritizeHead();
+                    }
+                    else
+                    {
+                        this.queue.Pop();
                     }
                 }
 
