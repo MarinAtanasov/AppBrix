@@ -26,6 +26,7 @@ namespace AppBrix
         /// <summary>
         /// Schedule an <see cref="IScheduledEvent"/> to be executed once.
         /// </summary>
+        /// <param name="eventHub">The event hub.</param>
         /// <param name="args">The event to be executed.</param>
         /// <param name="dueTime">The amount of time to delay before the event should be raised.</param>
         /// <returns>The scheduled event, containing the original event.</returns>
@@ -38,6 +39,7 @@ namespace AppBrix
         /// <summary>
         /// Schedule an <see cref="IScheduledEvent"/> to be executed once.
         /// </summary>
+        /// <param name="eventHub">The event hub.</param>
         /// <param name="args">The event to be executed.</param>
         /// <param name="dueTime">The point in time after which the event should be raised.</param>
         /// <returns>The scheduled event, containing the original event.</returns>
