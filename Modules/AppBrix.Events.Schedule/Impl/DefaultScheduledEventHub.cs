@@ -50,7 +50,7 @@ namespace AppBrix.Events.Schedule.Impl
                 catch (Exception) { }
             });
             item.MoveToNextOccurrence(now);
-            if (now <= item.Occurrence)
+            if (now < item.Occurrence)
             {
                 lock (this.queue)
                 {
@@ -81,14 +81,14 @@ namespace AppBrix.Events.Schedule.Impl
                     return; // Unintialized
 
                 var now = this.app.GetTime();
-                for (var args = this.queue.Peek(); args != null && args.Occurrence < now; args = this.queue.Peek())
+                for (var args = this.queue.Peek(); args != null && args.Occurrence <= now; args = this.queue.Peek())
                 {
                     if (toExecute == null)
                         toExecute = new List<PriorityQueueItem>();
 
                     toExecute.Add(args);
                     args.MoveToNextOccurrence(now);
-                    if (now <= args.Occurrence)
+                    if (now < args.Occurrence)
                     {
                         this.queue.ReprioritizeHead();
                     }

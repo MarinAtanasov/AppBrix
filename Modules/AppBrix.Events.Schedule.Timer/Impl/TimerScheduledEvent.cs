@@ -26,7 +26,7 @@ namespace AppBrix.Events.Schedule.Timer.Impl
         {
             if (this.period > TimeSpan.Zero)
             {
-                while (this.time < now)
+                while (this.time <= now)
                 {
                     this.time = this.time.Add(this.period);
                 }
