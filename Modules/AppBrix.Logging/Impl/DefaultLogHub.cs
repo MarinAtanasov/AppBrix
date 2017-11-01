@@ -35,7 +35,7 @@ namespace AppBrix.Logging.Impl
             if (config.LogLevel <= level)
             {
                 this.app.GetEventHub()
-                    .Raise<ILogEntry>(new DefaultLogEntry(this.app, level, this.app.GetTime(), message, error,
+                    .Raise(new DefaultLogEntry(this.app, level, this.app.GetTime(), message, error,
                         callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
             }
         }

@@ -41,7 +41,7 @@ namespace AppBrix.Events.Async.Impl
             this.UnsubscribeInternal(handler);
         }
 
-        public void Raise<T>(T args) where T : IEvent
+        public void Raise(IEvent args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));

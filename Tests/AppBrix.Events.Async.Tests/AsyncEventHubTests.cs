@@ -116,7 +116,7 @@ namespace AppBrix.Events.Async.Tests
             var args = new EventMockChild(10);
             int called = 0;
             hub.Subscribe<EventMockChild>(e => called++);
-            hub.Raise<EventMock>(args);
+            hub.Raise(args);
             called.Should().Be(0, "event handler should not be called if the arguments are passed as base class");
         }
         
@@ -181,7 +181,7 @@ namespace AppBrix.Events.Async.Tests
         public void TestNullArgumentRaise()
         {
             var hub = this.GetAsyncEventHub();
-            Action action = () => hub.Raise<IEvent>(null);
+            Action action = () => hub.Raise(null);
             action.ShouldThrow<ArgumentNullException>();
         }
 

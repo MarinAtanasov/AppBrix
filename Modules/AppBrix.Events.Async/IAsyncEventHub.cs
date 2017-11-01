@@ -28,8 +28,7 @@ namespace AppBrix.Events.Async
         /// <summary>
         /// Raises the event and all of its base class and interface events.
         /// </summary>
-        /// <typeparam name="T">The type of the event to be raised.</typeparam>
         /// <param name="args">The event arguments.</param>
-        void Raise<T>(T args) where T : IEvent;
+        void Raise(IEvent args);
     }
 }

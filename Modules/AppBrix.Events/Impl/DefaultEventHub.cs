@@ -38,12 +38,12 @@ namespace AppBrix.Events.Impl
             this.UnsubscribeInternal(handler, typeof(T));
         }
 
-        public void Raise<T>(T args) where T : IEvent
+        public void Raise(IEvent args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            this.RaiseInternal(args, typeof(T));
+            this.RaiseInternal(args, args.GetType());
         }
         #endregion
 
