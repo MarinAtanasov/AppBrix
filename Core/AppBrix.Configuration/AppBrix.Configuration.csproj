@@ -4,7 +4,7 @@
     <Description>Base classes and interfaces for managing configurations.</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.Configuration</AssemblyTitle>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionPrefix>0.10.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Configuration</AssemblyName>

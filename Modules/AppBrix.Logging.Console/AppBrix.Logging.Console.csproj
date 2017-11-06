@@ -4,7 +4,7 @@
     <Description>Module which attaches to logging events and writes the information to the console.</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.Logging.Console</AssemblyTitle>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionPrefix>0.10.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Logging.Console</AssemblyName>

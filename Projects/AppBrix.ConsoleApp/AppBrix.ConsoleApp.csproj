@@ -4,7 +4,7 @@
     <Description>Sample console application using an AppBrix app.</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.ConsoleApp</AssemblyTitle>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionPrefix>0.10.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>AppBrix.ConsoleApp</AssemblyName>

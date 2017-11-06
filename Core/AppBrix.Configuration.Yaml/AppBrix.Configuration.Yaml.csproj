@@ -4,7 +4,7 @@
     <Description>Contains serializer/deserializer for YAML based configurations.</Description>
     <Copyright>Copyright 2015</Copyright>
     <AssemblyTitle>AppBrix.Configuration.Yaml</AssemblyTitle>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionPrefix>0.10.0</VersionPrefix>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Configuration.Yaml</AssemblyName>
