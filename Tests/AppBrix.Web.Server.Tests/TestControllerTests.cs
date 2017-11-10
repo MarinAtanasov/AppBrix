@@ -81,8 +81,7 @@ namespace AppBrix.Web.Server.Tests
 
         private IApp CreateWebApp()
         {
-            var app = TestUtils.CreateTestApp(typeof(WebServerModule));
-            app.GetConfig<AppConfig>().Modules.Add(ModuleConfigElement.Create(typeof(WebClientModule)));
+            var app = TestUtils.CreateTestApp(typeof(WebServerModule), typeof(WebClientModule));
             app.GetConfig<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
             app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));

@@ -56,11 +56,11 @@ namespace AppBrix.Logging.Tests.Config
                         throw new NotSupportedException(x.Level.ToString());
                 }
             });
-            this.app.GetLog().Error(message);
-            this.app.GetLog().Warning(message);
-            this.app.GetLog().Info(message);
-            this.app.GetLog().Debug(message);
-            this.app.GetLog().Trace(message);
+            this.app.GetLogHub().Error(message);
+            this.app.GetLogHub().Warning(message);
+            this.app.GetLogHub().Info(message);
+            this.app.GetLogHub().Debug(message);
+            this.app.GetLogHub().Trace(message);
             errorCalled.Should().BeTrue("the error event should have been called");
             warningCalled.Should().BeFalse("the warning event should not have been called");
             infoCalled.Should().BeFalse("the info event should not have been called");
@@ -101,11 +101,11 @@ namespace AppBrix.Logging.Tests.Config
                         throw new NotSupportedException(x.Level.ToString());
                 }
             });
-            this.app.GetLog().Error(message);
-            this.app.GetLog().Warning(message);
-            this.app.GetLog().Info(message);
-            this.app.GetLog().Debug(message);
-            this.app.GetLog().Trace(message);
+            this.app.GetLogHub().Error(message);
+            this.app.GetLogHub().Warning(message);
+            this.app.GetLogHub().Info(message);
+            this.app.GetLogHub().Debug(message);
+            this.app.GetLogHub().Trace(message);
             errorCalled.Should().BeTrue("the error event should have been called");
             warningCalled.Should().BeTrue("the warning event should have been called");
             infoCalled.Should().BeFalse("the info event should not have been called");
@@ -146,11 +146,11 @@ namespace AppBrix.Logging.Tests.Config
                         throw new NotSupportedException(x.Level.ToString());
                 }
             });
-            this.app.GetLog().Error(message);
-            this.app.GetLog().Warning(message);
-            this.app.GetLog().Info(message);
-            this.app.GetLog().Debug(message);
-            this.app.GetLog().Trace(message);
+            this.app.GetLogHub().Error(message);
+            this.app.GetLogHub().Warning(message);
+            this.app.GetLogHub().Info(message);
+            this.app.GetLogHub().Debug(message);
+            this.app.GetLogHub().Trace(message);
             errorCalled.Should().BeTrue("the error event should have been called");
             warningCalled.Should().BeTrue("the warning event should have been called");
             infoCalled.Should().BeTrue("the info event should have been called");
@@ -191,11 +191,11 @@ namespace AppBrix.Logging.Tests.Config
                         throw new NotSupportedException(x.Level.ToString());
                 }
             });
-            this.app.GetLog().Error(message);
-            this.app.GetLog().Warning(message);
-            this.app.GetLog().Info(message);
-            this.app.GetLog().Debug(message);
-            this.app.GetLog().Trace(message);
+            this.app.GetLogHub().Error(message);
+            this.app.GetLogHub().Warning(message);
+            this.app.GetLogHub().Info(message);
+            this.app.GetLogHub().Debug(message);
+            this.app.GetLogHub().Trace(message);
             errorCalled.Should().BeTrue("the error event should have been called");
             warningCalled.Should().BeTrue("the warning event should have been called");
             infoCalled.Should().BeTrue("the info event should have been called");
@@ -236,11 +236,11 @@ namespace AppBrix.Logging.Tests.Config
                         throw new NotSupportedException(x.Level.ToString());
                 }
             });
-            this.app.GetLog().Error(message);
-            this.app.GetLog().Warning(message);
-            this.app.GetLog().Info(message);
-            this.app.GetLog().Debug(message);
-            this.app.GetLog().Trace(message);
+            this.app.GetLogHub().Error(message);
+            this.app.GetLogHub().Warning(message);
+            this.app.GetLogHub().Info(message);
+            this.app.GetLogHub().Debug(message);
+            this.app.GetLogHub().Trace(message);
             errorCalled.Should().BeTrue("the error event should have been called");
             warningCalled.Should().BeTrue("the warning event should have been called");
             infoCalled.Should().BeTrue("the info event should have been called");

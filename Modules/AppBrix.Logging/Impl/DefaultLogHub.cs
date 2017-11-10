@@ -26,6 +26,24 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region ILogHub implementation
+        public void Subscribe(Action<ILogEntry> logger)
+        {
+            if (this.app.GetConfig<LoggingConfig>().Async)
+            {
+                this.app.GetAsyncEventHub().Subscribe(logger);
+            }
+            else
+            {
+                this.app.GetEventHub().Subscribe(logger);
+            }
+        }
+
+        public void Unsubscribe(Action<ILogEntry> logger)
+        {
+            this.app.GetEventHub().Unsubscribe(logger);
+            this.app.GetAsyncEventHub().Unsubscribe(logger);
+        }
+
         public void Log(LogLevel level, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
@@ -40,7 +58,7 @@ namespace AppBrix.Logging.Impl
             }
         }
         #endregion
-        
+
         #region Private fields and constants
         private IApp app;
         #endregion

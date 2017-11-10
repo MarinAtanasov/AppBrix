@@ -26,7 +26,7 @@ namespace AppBrix.Logging.Tests.LogHub
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUnsubscribedTrace()
         {
-            this.app.GetLog().Trace(string.Empty);
+            this.app.GetLogHub().Trace(string.Empty);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -42,7 +42,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Error, "log level should be Error");
             });
-            this.app.GetLog().Error(message, error);
+            this.app.GetLogHub().Error(message, error);
             called.Should().BeTrue("the event should have been called");
         }
 
@@ -59,7 +59,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Debug, "log level should be Debug");
             });
-            this.app.GetLog().Debug(message, error);
+            this.app.GetLogHub().Debug(message, error);
             called.Should().BeTrue("the event should have been called");
         }
 
@@ -74,7 +74,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Message.Should().Be(message, "the info message is different than the passed in message");
                 x.Level.Should().Be(LogLevel.Info, "log level should be Info");
             });
-            this.app.GetLog().Info(message);
+            this.app.GetLogHub().Info(message);
             called.Should().BeTrue("the event should have been called");
         }
 
@@ -91,7 +91,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Warning, "log level should be Warning");
             });
-            this.app.GetLog().Warning(message, error);
+            this.app.GetLogHub().Warning(message, error);
             called.Should().BeTrue("the event should have been called");
         }
 
@@ -106,7 +106,7 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Message.Should().Be(message, "the trace message is different than the passed in message");
                 x.Level.Should().Be(LogLevel.Trace, "log level should be Trace");
             });
-            this.app.GetLog().Trace(message);
+            this.app.GetLogHub().Trace(message);
             called.Should().BeTrue("the event should have been called");
         }
 
@@ -115,7 +115,7 @@ namespace AppBrix.Logging.Tests.LogHub
         {
             var message = "Test message";
             this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(typeof(LogHubTests).Name + ".cs", "caller file should be set to current file"));
-            this.app.GetLog().Warning(message);
+            this.app.GetLogHub().Warning(message);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -123,7 +123,7 @@ namespace AppBrix.Logging.Tests.LogHub
         {
             var message = "Test message";
             this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerMember.Should().Be("TestCallerMemberName", "member name should be the current function"));
-            this.app.GetLog().Error(message);
+            this.app.GetLogHub().Error(message);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -131,7 +131,7 @@ namespace AppBrix.Logging.Tests.LogHub
         {
             var message = "Test message";
             this.app.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Thread.CurrentThread.ManagedThreadId, "thread id should be current thread id"));
-            this.app.GetLog().Info(message);
+            this.app.GetLogHub().Info(message);
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -141,7 +141,7 @@ namespace AppBrix.Logging.Tests.LogHub
             var before = this.app.GetTime();
             DateTime executed = DateTime.MinValue;
             this.app.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
-            this.app.GetLog().Debug(message);
+            this.app.GetLogHub().Debug(message);
             executed.Should().BeOnOrAfter(before, "created date time should be greater than the time before creation");
             executed.Should().BeOnOrBefore(this.app.GetTime(), "created date time should be greater than the time after creation");
         }
@@ -164,7 +164,7 @@ namespace AppBrix.Logging.Tests.LogHub
             var repeat = 12000;
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
-            var logHub = this.app.GetLog();
+            var logHub = this.app.GetLogHub();
             for (int i = 0; i < repeat; i++)
             {
                 logHub.Critical(message, error);

@@ -20,7 +20,7 @@ namespace AppBrix.ConsoleApp
             }
             catch (Exception ex)
             {
-                app.GetLog().Error("The application has stopped because of an error!", ex);
+                app.GetLogHub().Error("The application has stopped because of an error!", ex);
             }
             finally
             {
@@ -40,7 +40,7 @@ namespace AppBrix.ConsoleApp
             for (var i = 0; i < 20; i++)
             {
                 var generator = cache.Get<MessageGenerator>(generatorKey);
-                app.GetLog().Info(generator.Generate());
+                app.GetLogHub().Info(generator.Generate());
                 cache.Set(generatorKey, generator);
             }
 

@@ -1,6 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
 using AppBrix.Lifecycle;
 using AppBrix.Logging.File.Configuration;
 using System;
@@ -12,23 +13,29 @@ namespace AppBrix.Logging.File.Impl
     /// <summary>
     /// A log writer which writes entries to the console.
     /// </summary>
-    internal sealed class FileLogWriter : ILogWriter
+    internal sealed class FileLogger : IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)
         {
-            var config = context.App.GetConfig<FileLoggerConfig>();
+            this.app = context.App;
+            var config = app.GetConfig<FileLoggerConfig>();
             this.writer = System.IO.File.AppendText(config.Path);
             this.writer.AutoFlush = true;
+            this.app.GetLogHub().Subscribe(this.LogEntry);
         }
 
         public void Uninitialize()
         {
+            this.app?.GetLogHub().Unsubscribe(this.LogEntry);
+            this.app = null;
             this.writer?.Dispose();
             this.writer = null;
         }
-        
-        public void WriteEntry(ILogEntry entry)
+        #endregion
+
+        #region Private methods
+        private void LogEntry(ILogEntry entry)
         {
             lock (this.writer)
             {
@@ -38,6 +45,7 @@ namespace AppBrix.Logging.File.Impl
         #endregion
 
         #region Private fields and constants
+        private IApp app;
         private StreamWriter writer;
         #endregion
     }

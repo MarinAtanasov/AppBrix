@@ -18,21 +18,18 @@ namespace AppBrix.Logging.Console
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.App.GetFactory().Register(() => new ConsoleLogWriter());
-            this.logger = this.App.GetFactory().Get<ILogger>();
-            this.logger.Initialize(context);
-            this.App.Container.Register(this.logger, this.logger.GetType());
+            this.logger.Value.Initialize(context);
+            this.App.Container.Register(this.logger.Value);
         }
 
         protected override void UninitializeModule()
         {
-            this.logger?.Uninitialize();
-            this.logger = null;
+            this.logger.Value.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private ILogger logger;
+        private Lazy<ConsoleLogger> logger = new Lazy<ConsoleLogger>();
         #endregion
     }
 }

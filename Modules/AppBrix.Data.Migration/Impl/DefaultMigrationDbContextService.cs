@@ -196,7 +196,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private MigrationsScaffolder CreateMigrationsScaffolder(DbContext context)
         {
-            var logger = this.app.GetLog();
+            var logger = this.app.GetLogHub();
 
             var reporter = new OperationReporter(new OperationReportHandler(
                 m => logger.Error(m),

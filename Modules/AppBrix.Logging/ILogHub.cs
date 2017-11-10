@@ -14,6 +14,18 @@ namespace AppBrix.Logging
     public interface ILogHub
     {
         /// <summary>
+        /// Subscribes a logging handler to be called when raising a logging event.
+        /// </summary>
+        /// <param name="logger">The logging handler.</param>
+        void Subscribe(Action<ILogEntry> logger);
+
+        /// <summary>
+        /// Unsubscribes a logging handler so that it will no longer be called when raising a logging event.
+        /// </summary>
+        /// <param name="logger">The logging handler.</param>
+        void Unsubscribe(Action<ILogEntry> logger);
+
+        /// <summary>
         /// Creates a log entry and fires an <see cref="ILogEntry"/> event.
         /// </summary>
         /// <param name="level">The log severity level.</param>

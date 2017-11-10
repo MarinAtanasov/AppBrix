@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AppBrix
 {
-    public static class EventExtensions
+    public static class FactoryExtensions
     {
         /// <summary>
         /// Gets the currently loaded factory.

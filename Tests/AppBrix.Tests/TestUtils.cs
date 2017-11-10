@@ -21,12 +21,13 @@ namespace AppBrix.Tests
         /// </summary>
         /// <param name="module">The module to load inside the application.</param>
         /// <returns>The created application.</returns>
-        public static IApp CreateTestApp(Type module)
+        public static IApp CreateTestApp(params Type[] modules)
         {
             var service = new MemoryConfigService();
             var config = service.Get<AppConfig>();
-            module.GetReferencedModules()
-                .Concat(new[] { module })
+            modules.SelectMany(module => module.GetReferencedModules())
+                .Concat(modules)
+                .Distinct()
                 .Select(ModuleConfigElement.Create)
                 .ToList()
                 .ForEach(config.Modules.Add);

@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Impl;
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Tests;
@@ -27,46 +28,37 @@ namespace AppBrix.Logging.Tests.Logger
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSyncLogger()
         {
-            var writer = new LogWriterMock();
-            var logger = new SyncLogger(writer);
-            writer.IsInitialized.Should().BeFalse("the writer should not initialize before the logger");
-            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
-            logger.Initialize(new InitializeContextMock(this.app));
-            writer.IsInitialized.Should().BeTrue("the writer should be initialized during the logger's initialization");
-            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
+            this.app.GetConfig<LoggingConfig>().Async = false;
+            var logger = new LoggerMock();
+            logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
+            this.app.GetLogHub().Subscribe(logger.LogEntry);
+            logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
 
             string message = "Message";
             Exception ex = new ArgumentException("Test");
-            this.app.GetLog().Info("Message", ex);
-            writer.LoggedEntries.Count().Should().Be(1, "writer should have 1 entry passed in to it");
-            writer.LoggedEntries.Single().Message.Should().Be(message, "the logged message should be the same as the passed in message");
-            writer.LoggedEntries.Single().Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
+            this.app.GetLogHub().Info("Message", ex);
+            logger.LoggedEntries.Count().Should().Be(1, "writer should have 1 entry passed in to it");
+            logger.LoggedEntries.Single().Message.Should().Be(message, "the logged message should be the same as the passed in message");
+            logger.LoggedEntries.Single().Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
 
-            logger.Uninitialize();
+            this.app.GetLogHub().Unsubscribe(logger.LogEntry);
             this.app.Stop();
-            writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestAsyncLogger()
         {
-            var writer = new LogWriterMock();
-            var logger = new AsyncLogger(writer);
-            writer.IsInitialized.Should().BeFalse("the writer should not initialize before the logger");
-            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
-            logger.Initialize(new InitializeContextMock(this.app));
-            writer.IsInitialized.Should().BeTrue("the writer should be initialized during the logger's initialization");
-            writer.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
-            logger.Uninitialize();
-            writer.IsInitialized.Should().BeFalse("the writer should be uninitialized during the logger's uninitialization");
-            logger.Initialize(new InitializeContextMock(this.app));
-            writer.IsInitialized.Should().BeTrue("the writer should be initialized during the logger's reinitialization");
+            this.app.GetConfig<LoggingConfig>().Async = true;
+            var logger = new LoggerMock();
+            logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
+            this.app.GetLogHub().Subscribe(logger.LogEntry);
+            logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
 
             string message = "Message";
             Exception ex = new ArgumentException("Test");
-            this.app.GetLog().Info("Message", ex);
+            this.app.GetLogHub().Info("Message", ex);
             this.app.Stop();
-            var entries = writer.LoggedEntries.ToList();
+            var entries = logger.LoggedEntries.ToList();
             entries.Count.Should().Be(1, "writer should have 1 entry passed in to it");
             entries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
             entries[0].Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
