@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -160,9 +161,13 @@ namespace AppBrix.Web.Client.Impl
             {
                 result = new ByteArrayContent((byte[])this.content);
             }
+            else if (typeof(string).IsAssignableFrom(type))
+            {
+                result = new StringContent((string)this.content);
+            }
             else
             {
-                result = new StringContent(this.content.ToString());
+                result = new StringContent(JsonConvert.SerializeObject(this.content));
             }
             return result;
         }
