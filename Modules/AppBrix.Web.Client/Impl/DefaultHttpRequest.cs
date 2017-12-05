@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Application;
+using AppBrix.Time.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -149,26 +150,18 @@ namespace AppBrix.Web.Client.Impl
             var type = this.content.GetType();
 
             HttpContent result;
+
             if (typeof(Stream).IsAssignableFrom(type))
-            {
                 result = new StreamContent((Stream)this.content);
-            }
             else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(type))
-            {
                 result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
-            }
             else if (typeof(byte[]).IsAssignableFrom(type))
-            {
                 result = new ByteArrayContent((byte[])this.content);
-            }
             else if (typeof(string).IsAssignableFrom(type))
-            {
                 result = new StringContent((string)this.content);
-            }
             else
-            {
-                result = new StringContent(JsonConvert.SerializeObject(this.content));
-            }
+                result = new StringContent(JsonConvert.SerializeObject(this.content, this.GetJsonSettings()));
+
             return result;
         }
 
@@ -184,9 +177,17 @@ namespace AppBrix.Web.Client.Impl
             else if (type == typeof(Stream))
                 contentValue = await content.ReadAsStreamAsync();
             else
-                contentValue = await content.ReadAsJsonAsync<T>();
+                return JsonConvert.DeserializeObject<T>(await content.ReadAsStringAsync(), this.GetJsonSettings());
 
             return (T)contentValue;
+        }
+
+        private JsonSerializerSettings GetJsonSettings()
+        {
+            return new JsonSerializerSettings
+            {
+                DateFormatString = this.app.GetConfig<TimeConfig>().Format
+            };
         }
         #endregion
 

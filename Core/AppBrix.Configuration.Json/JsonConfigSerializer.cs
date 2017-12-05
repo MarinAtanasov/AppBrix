@@ -44,7 +44,8 @@ namespace AppBrix.Configuration.Json
                     Culture = CultureInfo.InvariantCulture,
                     DefaultValueHandling = DefaultValueHandling.Include,
                     NullValueHandling = NullValueHandling.Ignore,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    DateFormatString = @"yyyy-MM-ddTHH:mm:ss.fffK"
                 };
 
                 this.settings.Converters.Add(new IsoDateTimeConverter());

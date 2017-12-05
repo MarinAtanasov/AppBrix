@@ -20,7 +20,6 @@ namespace AppBrix.Web.Client
 
         /// <summary>
         /// Executes the HTTP request.
-        /// Can return <see cref="string"/>, <see cref="System.IO.Stream"/> or <see cref="T:byte[]"/>.
         /// </summary>
         /// <typeparam name="T">The type of the response object to be returned.</typeparam>
         /// <returns>The HTTP response.</returns>

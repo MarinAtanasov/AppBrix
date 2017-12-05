@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
+    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
   </ItemGroup>
 
 </Project>
