@@ -56,7 +56,7 @@ namespace AppBrix.WebApp.Controllers
         {
             using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
-                var original = context.Books.SingleOrDefault(x => x.Id == id);
+                var original = context.Books.Single(x => x.Id == id);
                 original.Author = book.Author;
                 original.Title = book.Title;
                 context.SaveChanges();
