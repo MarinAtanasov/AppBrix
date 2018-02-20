@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <Description>Module which attaches to logging events and writes the information to a file.</Description>
-    <Copyright>Copyright 2015</Copyright>
+    <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.Logging.File</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>0.11.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Logging.File</AssemblyName>
     <PackageId>AppBrix.Logging.File</PackageId>
     <PackageTags>AppBrix Module Log File</PackageTags>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>

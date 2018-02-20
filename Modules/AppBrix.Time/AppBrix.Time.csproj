@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <Description>Module which is used for getting the current time. This should be used instead of DateTime.(Utc)Now in order for the time to always be of the same kind and the code to be more easily testable.</Description>
-    <Copyright>Copyright 2015</Copyright>
+    <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.Time</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>0.11.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Time</AssemblyName>
     <PackageId>AppBrix.Time</PackageId>
     <PackageTags>AppBrix Module Date Time</PackageTags>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>

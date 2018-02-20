@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <Description>Contains tests for the AppBrix.Caching module</Description>
-    <Copyright>Copyright 2015</Copyright>
+    <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.Caching.Tests</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>0.11.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>AppBrix.Caching.Tests</AssemblyName>
     <PackageId>AppBrix.Caching.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PackageTags>AppBrix Cache Tests</PackageTags>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
@@ -26,8 +26,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
 
 </Project>

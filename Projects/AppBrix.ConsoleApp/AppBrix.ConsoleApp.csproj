@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <Description>Sample console application using an AppBrix app.</Description>
-    <Copyright>Copyright 2015</Copyright>
+    <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.ConsoleApp</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>0.11.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>AppBrix.ConsoleApp</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>AppBrix.ConsoleApp</PackageId>
     <PackageTags>AppBrix Console Application</PackageTags>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>

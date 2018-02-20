@@ -179,7 +179,7 @@ namespace AppBrix.Events.Tests
         {
             var hub = this.GetEventHub();
             Action action = () => hub.Subscribe<IEvent>(null);
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -187,7 +187,7 @@ namespace AppBrix.Events.Tests
         {
             var hub = this.GetEventHub();
             Action action = () => hub.Unsubscribe<IEvent>(null);
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -195,7 +195,7 @@ namespace AppBrix.Events.Tests
         {
             var hub = this.GetEventHub();
             Action action = () => hub.Raise(null);
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

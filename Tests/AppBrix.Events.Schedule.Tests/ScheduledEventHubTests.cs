@@ -34,7 +34,7 @@ namespace AppBrix.Events.Schedule.Tests
         {
             var hub = this.app.GetScheduledEventHub();
             Action action = () => hub.Schedule<EventMock>(null);
-            action.ShouldThrow<ArgumentNullException>("args is null");
+            action.Should().Throw<ArgumentNullException>("args is null");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -56,7 +56,7 @@ namespace AppBrix.Events.Schedule.Tests
         {
             var hub = this.app.GetScheduledEventHub();
             Action action = () => hub.Unschedule<EventMock>(null);
-            action.ShouldThrow<ArgumentNullException>("args is null");
+            action.Should().Throw<ArgumentNullException>("args is null");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

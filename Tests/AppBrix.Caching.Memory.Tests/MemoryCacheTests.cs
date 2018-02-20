@@ -41,7 +41,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Get(null);
-            action.ShouldThrow<ArgumentNullException>("key should not be null");
+            action.Should().Throw<ArgumentNullException>("key should not be null");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -65,7 +65,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Set(null, this);
-            action.ShouldThrow<ArgumentNullException>("key should not be null");
+            action.Should().Throw<ArgumentNullException>("key should not be null");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -73,7 +73,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Set(nameof(TestSetNullItem), null);
-            action.ShouldThrow<ArgumentNullException>("item should not be null");
+            action.Should().Throw<ArgumentNullException>("item should not be null");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -81,7 +81,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Set(nameof(TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
-            action.ShouldThrow<ArgumentException>("absolute expiration should not be negative");
+            action.Should().Throw<ArgumentException>("absolute expiration should not be negative");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -89,7 +89,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Set(nameof(TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
-            action.ShouldThrow<ArgumentException>("sliding expiration should not be negative");
+            action.Should().Throw<ArgumentException>("sliding expiration should not be negative");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -97,7 +97,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             Action action = () => cache.Remove(null);
-            action.ShouldThrow<ArgumentNullException>("key should not be null");
+            action.Should().Throw<ArgumentNullException>("key should not be null");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

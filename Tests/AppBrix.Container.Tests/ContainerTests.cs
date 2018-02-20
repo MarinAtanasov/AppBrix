@@ -102,7 +102,7 @@ namespace AppBrix.Container.Tests
         {
             var container = this.GetContainer();
             Action action = () => container.Register<IContainer>(null);
-            action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
+            action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -110,7 +110,7 @@ namespace AppBrix.Container.Tests
         {
             var container = this.GetContainer();
             Action action = () => container.Register(null, typeof(IContainer));
-            action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
+            action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -118,7 +118,7 @@ namespace AppBrix.Container.Tests
         {
             var container = this.GetContainer();
             Action action = () => container.Register(container, null);
-            action.ShouldThrow<ArgumentNullException>("passing a null object is not allowed");
+            action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -127,7 +127,7 @@ namespace AppBrix.Container.Tests
             var container = this.GetContainer();
             container.Register(new ChildMock());
             Action action = () => container.Get<object>();
-            action.ShouldThrow<KeyNotFoundException>("items should not be registered as type of object");
+            action.Should().Throw<KeyNotFoundException>("items should not be registered as type of object");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -149,7 +149,7 @@ namespace AppBrix.Container.Tests
         {
             var container = this.GetContainer();
             Action action = () => container.Register<object>(container);
-            action.ShouldThrow<ArgumentException>("registering an item as System.Object should not be allowed.");
+            action.Should().Throw<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -157,7 +157,7 @@ namespace AppBrix.Container.Tests
         {
             var container = this.GetContainer();
             Action action = () => container.Register(container, typeof(object));
-            action.ShouldThrow<ArgumentException>("registering an item as System.Object should not be allowed.");
+            action.Should().Throw<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

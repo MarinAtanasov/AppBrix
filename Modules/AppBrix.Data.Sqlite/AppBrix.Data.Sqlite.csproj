@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <Description>Module used for regitering a Sqlite provider.</Description>
-    <Copyright>Copyright 2015</Copyright>
+    <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.Data.Sqlite</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>0.11.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AppBrix.Data.Sqlite</AssemblyName>
     <PackageId>AppBrix.Data.Sqlite</PackageId>
     <PackageTags>AppBrix Module Data Sqlite</PackageTags>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>

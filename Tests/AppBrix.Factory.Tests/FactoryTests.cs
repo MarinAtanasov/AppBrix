@@ -35,7 +35,7 @@ namespace AppBrix.Factory.Tests
         {
             var factory = this.GetFactory();
             Action action = () => factory.Get<NonDefaultConstructorClass>();
-            action.ShouldThrow<MissingMethodException>();
+            action.Should().Throw<MissingMethodException>();
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

@@ -38,7 +38,7 @@ namespace AppBrix.Tests
             // Invoke the action once to make sure that the assemblies are loaded.
             action();
 
-            action.ExecutionTime().ShouldNotExceed(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
     }

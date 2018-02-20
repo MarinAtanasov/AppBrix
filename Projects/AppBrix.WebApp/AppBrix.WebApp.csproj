@@ -1,27 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <Description>Sample web application using an AppBrix app.</Description>
-    <Copyright>Copyright 2015</Copyright>
+    <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.WebApp</AssemblyTitle>
-    <VersionPrefix>0.10.0</VersionPrefix>
+    <Version>0.11.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>AppBrix.WebApp</AssemblyName>
     <PackageId>AppBrix.WebApp</PackageId>
     <PackageTags>AppBrix Web Application</PackageTags>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
   </PropertyGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
@@ -33,13 +30,10 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
-
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
-
 </Project>
