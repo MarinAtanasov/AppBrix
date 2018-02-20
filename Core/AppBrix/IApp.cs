@@ -6,7 +6,7 @@ using AppBrix.Container;
 using System;
 using System.Linq;
 
-namespace AppBrix.Application
+namespace AppBrix
 {
     /// <summary>
     /// The base interface used for the applications.

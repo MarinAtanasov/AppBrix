@@ -1,5 +1,4 @@
-﻿using AppBrix.Application;
-using AppBrix.WebApp.Data;
+﻿using AppBrix.WebApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

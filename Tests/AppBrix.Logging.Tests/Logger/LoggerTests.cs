@@ -1,12 +1,9 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
 using AppBrix.Logging.Configuration;
-using AppBrix.Logging.Impl;
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Tests;
-using AppBrix.Tests.Mocks;
 using FluentAssertions;
 using System;
 using System.Linq;

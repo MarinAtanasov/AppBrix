@@ -1,13 +1,10 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Application;
-using AppBrix.Configuration;
 using AppBrix.Tests;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server.Tests.Mocks;
 using FluentAssertions;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
