@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix applications.
+    /// </summary>
     public static class AppBrixExtensions
     {
         /// <summary>

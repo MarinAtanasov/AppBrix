@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix application service containers.
+    /// </summary>
     public static class ContainerExtensions
     {
         #region IContainer extensions

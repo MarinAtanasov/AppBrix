@@ -12,7 +12,7 @@ namespace AppBrix.Events.Schedule.Cron
     public interface ICronScheduledEventHub
     {
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed.
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed.
         /// </summary>
         /// <param name="args">The event to be executed.</param>
         /// <param name="expresssion">The cron expression which decides when the event should be called.</param>
@@ -20,7 +20,7 @@ namespace AppBrix.Events.Schedule.Cron
         IScheduledEvent<T> Schedule<T>(T args, string expresssion) where T : IEvent;
 
         /// <summary>
-        /// Unschedules an <see cref="IScheduledEvent"/> to stop it from executing.
+        /// Unschedules an <see cref="IScheduledEvent{T}"/> to stop it from executing.
         /// </summary>
         /// <param name="args">The scheduled event.</param>
         void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent;

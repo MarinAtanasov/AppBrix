@@ -12,14 +12,14 @@ namespace AppBrix.Events.Schedule
     public interface IScheduledEventHub
     {
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed.
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed.
         /// </summary>
         /// <typeparam name="T">The type of the event.</typeparam>
         /// <param name="args">The scheduled event.</param>
         void Schedule<T>(IScheduledEvent<T> args) where T : IEvent;
 
         /// <summary>
-        /// Unschedules an <see cref="IScheduledEvent"/> to stop it from executing.
+        /// Unschedules an <see cref="IScheduledEvent{T}"/> to stop it from executing.
         /// </summary>
         /// <typeparam name="T">The type of the event.</typeparam>
         /// <param name="args">The scheduled event.</param>

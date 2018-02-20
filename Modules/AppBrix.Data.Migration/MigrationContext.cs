@@ -13,10 +13,20 @@ namespace AppBrix.Data.Migration
     /// </summary>
     public sealed class MigrationContext : DbContextBase
     {
+        /// <summary>
+        /// Gets or sets the database migration data.
+        /// </summary>
         public DbSet<MigrationData> Migrations { get; set; }
 
+        /// <summary>
+        /// Gets or sets the database migration snapshots.
+        /// </summary>
         public DbSet<SnapshotData> Snapshots { get; set; }
 
+        /// <summary>
+        /// Configures the creation of the database migration models.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MigrationData>(entity =>

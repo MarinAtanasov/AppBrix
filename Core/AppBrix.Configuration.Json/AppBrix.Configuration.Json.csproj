@@ -4,13 +4,14 @@
     <Description>Contains serializer/deserializer for JSON based configurations.</Description>
     <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.Configuration.Json</AssemblyTitle>
-    <Version>0.11.0</Version>
+    <Version>0.11.1</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Configuration.Json</AssemblyName>
     <PackageId>AppBrix.Configuration.Json</PackageId>
     <PackageTags>AppBrix Config JSON</PackageTags>
-    <PackageReleaseNotes>Dependencies updates, bug fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add documentation to the package.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>

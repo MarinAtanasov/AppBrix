@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix memory caches.
+    /// </summary>
     public static class MemoryCacheExtensions
     {
         /// <summary>

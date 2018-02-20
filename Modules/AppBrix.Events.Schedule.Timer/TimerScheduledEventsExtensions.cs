@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix timer scheduled events.
+    /// </summary>
     public static class TimerScheduledEventsExtensions
     {
         /// <summary>
@@ -23,7 +26,7 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed once.
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed once.
         /// </summary>
         /// <param name="eventHub">The event hub.</param>
         /// <param name="args">The event to be executed.</param>
@@ -36,7 +39,7 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed once.
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed once.
         /// </summary>
         /// <param name="eventHub">The event hub.</param>
         /// <param name="args">The event to be executed.</param>

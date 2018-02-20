@@ -12,10 +12,19 @@ namespace AppBrix.Data
     /// </summary>
     public interface IOnConfiguringDbContext
     {
+        /// <summary>
+        /// Gets the context.
+        /// </summary>
         DbContext Context { get; }
 
+        /// <summary>
+        /// Gets the migration assembly.
+        /// </summary>
         string MigrationsAssembly { get; }
 
+        /// <summary>
+        /// Gets the database context options builder.
+        /// </summary>
         DbContextOptionsBuilder OptionsBuilder { get; }
     }
 }

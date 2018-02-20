@@ -15,6 +15,11 @@ namespace AppBrix.Logging
     public sealed class LoggingModule : ModuleBase
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// </summary>
+        /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
@@ -23,6 +28,10 @@ namespace AppBrix.Logging
             this.App.Container.Register(defaultLogHub);
         }
 
+        /// <summary>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// </summary>
         protected override void UninitializeModule()
         {
             this.logHub.Value.Uninitialize();

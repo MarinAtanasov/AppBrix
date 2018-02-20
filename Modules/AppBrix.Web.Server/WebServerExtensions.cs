@@ -1,6 +1,7 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Web.Server;
 using AppBrix.Web.Server.Impl;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 namespace AppBrix
 {
     /// <summary>
-    /// Adds extension methods for using MVC and Web Api controllers.
+    /// Extension methods for easier manipulation of AppBrix web servers.
     /// </summary>
     public static class WebServerExtensions
     {

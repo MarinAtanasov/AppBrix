@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix events.
+    /// </summary>
     public static class EventsExtensions
     {
         /// <summary>

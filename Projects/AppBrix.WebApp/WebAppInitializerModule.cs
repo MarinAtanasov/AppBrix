@@ -51,12 +51,21 @@ namespace AppBrix.WebApp
             throw new NotSupportedException($@"Module {nameof(WebAppInitializerModule)} does not support uninstallation.");
         }
 
+        /// <summary>
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// </summary>
+        /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
             this.App.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());
         }
 
+        /// <summary>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// </summary>
         protected override void UninitializeModule()
         {
         }

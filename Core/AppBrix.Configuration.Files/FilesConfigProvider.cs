@@ -34,6 +34,12 @@ namespace AppBrix.Configuration.Files
         #endregion
 
         #region Public and overriden methods
+        /// <summary>
+        /// Reads a configuration by a given configuration type.
+        /// Returns null if the configuration does not exist.
+        /// </summary>
+        /// <param name="type">The type of the configuration to be read.</param>
+        /// <returns>The read configuration.</returns>
         public string ReadConfig(Type type)
         {
             if (type == null)
@@ -43,6 +49,11 @@ namespace AppBrix.Configuration.Files
             return File.Exists(path) ? File.ReadAllText(path) : null;
         }
 
+        /// <summary>
+        /// Writes a configuraton.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
+        /// <param name="type">The type of the configuration.</param>
         public void WriteConfig(string config, Type type)
         {
             if (string.IsNullOrEmpty(config))

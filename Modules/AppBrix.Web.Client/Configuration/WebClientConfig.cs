@@ -8,6 +8,9 @@ using System.Threading;
 
 namespace AppBrix.Web.Client.Configuration
 {
+    /// <summary>
+    /// Configures the web client.
+    /// </summary>
     public sealed class WebClientConfig : IConfig
     {
         #region Construction

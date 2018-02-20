@@ -16,6 +16,10 @@ namespace AppBrix.ConsoleApp
     public sealed class ConsoleAppInitializerModule : ModuleBase, IInstallable
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Creates and starts a new instance of an application which will contain an instance of <see cref="ConsoleAppInitializerModule"/>.
+        /// </summary>
+        /// <returns>The newly created and started application.</returns>
         public static IApp CreateApp()
         {
             var configService = new ConfigService(new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer());
@@ -27,6 +31,10 @@ namespace AppBrix.ConsoleApp
             return app;
         }
 
+        /// <summary>
+        /// Used for permanent changes required by the object.
+        /// </summary>
+        /// <param name="context">The install context.</param>
         public void Install(IInstallContext context)
         {
             this.InitializeAppConfig(context.App.ConfigService);
@@ -34,19 +42,37 @@ namespace AppBrix.ConsoleApp
             context.RequestedAction = RequestedAction.Restart;
         }
 
+        /// <summary>
+        /// Used to upgrade any permanent changes to the latest version.
+        /// </summary>
+        /// <param name="context">The upgrade context.</param>
         public void Upgrade(IUpgradeContext context)
         {
         }
 
+        /// <summary>
+        /// This module does not support uninstall.
+        /// </summary>
+        /// <param name="context">The uninstall context.</param>
+        /// <exception cref="NotSupportedException">Does not support uninstallation.</exception>
         public void Uninstall(IUninstallContext context)
         {
             throw new NotSupportedException($@"Module {nameof(ConsoleAppInitializerModule)} does not support uninstallation.");
         }
 
+        /// <summary>
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// </summary>
+        /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
         }
 
+        /// <summary>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// </summary>
         protected override void UninitializeModule()
         {
         }

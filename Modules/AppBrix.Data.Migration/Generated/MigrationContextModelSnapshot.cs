@@ -7,9 +7,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace AppBrix.Data.Migration.Generated
 {
+    /// <summary>
+    /// Auto-generated.
+    /// </summary>
     [DbContext(typeof(MigrationContext))]
     partial class MigrationContextModelSnapshot : ModelSnapshot
     {
+        /// <summary>
+        /// Auto-generated.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder

@@ -9,7 +9,7 @@ using System.Linq;
 namespace AppBrix.Web.Server
 {
     /// <summary>
-    /// An event which is called when the <see cref="AppBrix.Application.IApp"/> is being attached to the <see cref="IWebHost"/>.
+    /// An event which is called when the <see cref="IApp"/> is being attached to the <see cref="IWebHost"/>.
     /// </summary>
     public interface IConfigureWebHost : IEvent
     {

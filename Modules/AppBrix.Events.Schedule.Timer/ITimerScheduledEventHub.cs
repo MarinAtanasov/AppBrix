@@ -12,7 +12,7 @@ namespace AppBrix.Events.Schedule.Timer
     public interface ITimerScheduledEventHub
     {
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed.
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed.
         /// </summary>
         /// <param name="args">The event to be executed.</param>
         /// <param name="dueTime">The amount of time to delay before the event should be raised.</param>
@@ -21,7 +21,7 @@ namespace AppBrix.Events.Schedule.Timer
         IScheduledEvent<T> Schedule<T>(T args, TimeSpan dueTime, TimeSpan period) where T : IEvent;
 
         /// <summary>
-        /// Schedule an <see cref="IScheduledEvent"/> to be executed.
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed.
         /// </summary>
         /// <param name="args">The event to be executed.</param>
         /// <param name="dueTime">The point in time after which the event should be raised.</param>
@@ -30,7 +30,7 @@ namespace AppBrix.Events.Schedule.Timer
         IScheduledEvent<T> Schedule<T>(T args, DateTime dueTime, TimeSpan period) where T : IEvent;
 
         /// <summary>
-        /// Unschedules an <see cref="IScheduledEvent"/> to stop it from executing.
+        /// Unschedules an <see cref="IScheduledEvent{T}"/> to stop it from executing.
         /// </summary>
         /// <param name="args">The scheduled event.</param>
         void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent;

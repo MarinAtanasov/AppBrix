@@ -16,6 +16,11 @@ namespace AppBrix.Text
     public sealed class TextModule : ModuleBase
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// </summary>
+        /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
@@ -24,6 +29,10 @@ namespace AppBrix.Text
             Encoding.RegisterProvider(this.wrapper.Value);
         }
 
+        /// <summary>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// </summary>
         protected override void UninitializeModule()
         {
             this.wrapper.Value.Uninitialize();

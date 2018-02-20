@@ -16,6 +16,11 @@ namespace AppBrix.Factory
     public sealed class FactoryModule : ModuleBase
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// </summary>
+        /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
             var defaultFactory = this.factory.Value;
@@ -24,6 +29,10 @@ namespace AppBrix.Factory
             this.App.Container.Register(defaultFactory);
         }
 
+        /// <summary>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// </summary>
         protected override void UninitializeModule()
         {
             this.factory.Value.Uninitialize();

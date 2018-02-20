@@ -11,14 +11,41 @@ namespace AppBrix.Web.Client
     /// </summary>
     public enum HttpMethod
     {
+        /// <summary>
+        /// Connect HTTP method.
+        /// </summary>
         Connect,
+        /// <summary>
+        /// Delete HTTP method.
+        /// </summary>
         Delete,
+        /// <summary>
+        /// Get HTTP method.
+        /// </summary>
         Get,
+        /// <summary>
+        /// Head HTTP method.
+        /// </summary>
         Head,
+        /// <summary>
+        /// Options HTTP method.
+        /// </summary>
         Options,
+        /// <summary>
+        /// Patch HTTP method.
+        /// </summary>
         Patch,
+        /// <summary>
+        /// Post HTTP method.
+        /// </summary>
         Post,
+        /// <summary>
+        /// Put HTTP method.
+        /// </summary>
         Put,
+        /// <summary>
+        /// Trace HTTP method.
+        /// </summary>
         Trace
     }
 }

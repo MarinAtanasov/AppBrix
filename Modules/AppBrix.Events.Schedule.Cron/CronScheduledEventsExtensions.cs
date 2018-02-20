@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix cron scheduled events.
+    /// </summary>
     public static class CronScheduledEventsExtensions
     {
         /// <summary>

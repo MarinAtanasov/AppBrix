@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix.Time.Configuration
 {
+    /// <summary>
+    /// Configures the <see cref="DateTimeKind"/> and <see cref="DateTime"/> format to be used within the application.
+    /// </summary>
     public sealed class TimeConfig : IConfig
     {
         #region Construction

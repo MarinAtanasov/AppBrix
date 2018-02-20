@@ -33,6 +33,12 @@ namespace AppBrix.Configuration
         #endregion
 
         #region Public and overriden methods
+        /// <summary>
+        /// Gets the currently loaded instance of the specified config.
+        /// If the config is not loaded, tries to load from source.
+        /// </summary>
+        /// <param name="type">The type of the configuration.</param>
+        /// <returns>The configuration</returns>
         public IConfig Get(Type type)
         {
             if (type == null)
@@ -47,6 +53,10 @@ namespace AppBrix.Configuration
             return config;
         }
 
+        /// <summary>
+        /// Saves one configuration.
+        /// </summary>
+        /// <param name="type">The type of the configuration.</param>
         public void Save(Type type)
         {
             if (type == null)
@@ -55,6 +65,9 @@ namespace AppBrix.Configuration
             this.SaveInternal(this.Get(type));
         }
 
+        /// <summary>
+        /// Saves all modified configurations.
+        /// </summary>
         public void SaveAll()
         {
             foreach (var config in this.configs)

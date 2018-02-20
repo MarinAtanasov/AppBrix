@@ -11,10 +11,24 @@ namespace AppBrix.Data.Migration.Data
     /// </summary>
     public sealed class MigrationData
     {
+        /// <summary>
+        /// Gets or sets the name of the database context.
+        /// </summary>
         public string Context { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of the database context.
+        /// </summary>
         public string Version { get; set; }
 
+        /// <summary>
+        /// Gets or sets the migration code for the current version of the database context.
+        /// </summary>
         public string Migration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the metadata for the current version of the database context.
+        /// </summary>
         public string Metadata { get; set; }
     }
 }

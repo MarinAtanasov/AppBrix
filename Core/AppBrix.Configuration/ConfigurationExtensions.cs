@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for AppBrix configurations.
+    /// </summary>
     public static class ConfigurationExtensions
     {
         /// <summary>

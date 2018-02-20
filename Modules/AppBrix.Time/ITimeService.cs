@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace AppBrix.Time
 {
+    /// <summary>
+    /// Service which operates with <see cref="DateTime"/>.
+    /// </summary>
     public interface ITimeService
     {
         /// <summary>

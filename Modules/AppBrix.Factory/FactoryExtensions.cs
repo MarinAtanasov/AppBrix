@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix factories.
+    /// </summary>
     public static class FactoryExtensions
     {
         /// <summary>

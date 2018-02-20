@@ -15,6 +15,11 @@ namespace AppBrix.Container
     public sealed class ContainerModule : ModuleBase
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// </summary>
+        /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
             var defaultContainer = this.container.Value;
@@ -23,6 +28,10 @@ namespace AppBrix.Container
             this.App.Container = defaultContainer;
         }
 
+        /// <summary>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// </summary>
         protected override void UninitializeModule()
         {
             this.container.Value.Uninitialize();

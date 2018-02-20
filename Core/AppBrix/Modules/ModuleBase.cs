@@ -66,13 +66,15 @@ namespace AppBrix.Modules
         }
 
         /// <summary>
-        /// Called after <see cref="ModuleBase"/>'s <see cref="Initialize(IInitializeContext)"/>.
+        /// Initializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">The initialization context.</param>
         protected abstract void InitializeModule(IInitializeContext context);
 
         /// <summary>
-        /// Called after <see cref="ModuleBase"/>'s <see cref="Uninitialize"/>
+        /// Uninitializes the module.
+        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
         /// </summary>
         protected abstract void UninitializeModule();
         #endregion

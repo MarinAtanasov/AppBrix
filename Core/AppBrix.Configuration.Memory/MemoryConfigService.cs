@@ -13,6 +13,12 @@ namespace AppBrix.Configuration.Memory
     public sealed class MemoryConfigService : IConfigService
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Gets the currently loaded instance of the specified config.
+        /// If the config is not loaded, creates a new instance.
+        /// </summary>
+        /// <param name="type">The type of the configuration.</param>
+        /// <returns>The configuration.</returns>
         public IConfig Get(Type type)
         {
             if (type == null)
@@ -27,10 +33,17 @@ namespace AppBrix.Configuration.Memory
             return config;
         }
 
+        /// <summary>
+        /// Does not do anything.
+        /// </summary>
+        /// <param name="type">The type of the configuration to save.</param>
         public void Save(Type type)
         {
         }
 
+        /// <summary>
+        /// Does not do anything.
+        /// </summary>
         public void SaveAll()
         {
         }

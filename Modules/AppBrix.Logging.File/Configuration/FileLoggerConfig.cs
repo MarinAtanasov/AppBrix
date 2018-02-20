@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace AppBrix.Logging.File.Configuration
 {
+    /// <summary>
+    /// Configures the file logger.
+    /// </summary>
     public sealed class FileLoggerConfig : IConfig
     {
         #region Construction

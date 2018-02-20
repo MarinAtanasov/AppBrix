@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix caches.
+    /// </summary>
     public static class CacheExtensions
     {
         /// <summary>

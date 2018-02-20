@@ -8,10 +8,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppBrix.Data.Migration.Generated
 {
+    /// <summary>
+    /// Auto-generated.
+    /// </summary>
     [DbContext(typeof(MigrationContext))]
     [Migration("MigrationContext_InitialMigration")]
     partial class MigrationContext_InitialMigration
     {
+        /// <summary>
+        /// Auto-generated.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder

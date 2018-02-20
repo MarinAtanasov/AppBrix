@@ -37,6 +37,9 @@ namespace AppBrix.Data
             this.MigrationsAssembly = context.MigrationsAssembly;
         }
 
+        /// <summary>
+        /// Disposes of the allocated resources.
+        /// </summary>
         public override void Dispose()
         {
             base.Dispose();
@@ -44,6 +47,10 @@ namespace AppBrix.Data
             this.MigrationsAssembly = null;
         }
 
+        /// <summary>
+        /// Configures the context for usage.
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             this.App.GetDbContextConfigurer().Configure(

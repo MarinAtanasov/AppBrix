@@ -7,8 +7,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppBrix.Data.Migration.Generated
 {
+    /// <summary>
+    /// Auto-generated.
+    /// </summary>
     public partial class MigrationContext_InitialMigration : Microsoft.EntityFrameworkCore.Migrations.Migration
     {
+        /// <summary>
+        /// Auto-generated.
+        /// </summary>
+        /// <param name="migrationBuilder">Migration builder.</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -39,6 +46,10 @@ namespace AppBrix.Data.Migration.Generated
                 });
         }
 
+        /// <summary>
+        /// Auto-generated.
+        /// </summary>
+        /// <param name="migrationBuilder">Migration builder.</param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(name: "Migrations");

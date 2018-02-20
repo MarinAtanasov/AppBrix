@@ -9,6 +9,9 @@ using System.Runtime.CompilerServices;
 
 namespace AppBrix
 {
+    /// <summary>
+    /// Extension methods for easier manipulation of AppBrix logging.
+    /// </summary>
     public static class LogExtensions
     {
         /// <summary>

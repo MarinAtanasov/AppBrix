@@ -15,6 +15,11 @@ namespace AppBrix.Configuration.Json
     public sealed class JsonConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Serializes a config to JSON.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
+        /// <returns>The JSON representation of the configuration.</returns>
         public string Serialize(IConfig config)
         {
             if (config == null)
@@ -23,6 +28,12 @@ namespace AppBrix.Configuration.Json
             return JsonConvert.SerializeObject(config, Formatting.Indented, this.GetSettings());
         }
 
+        /// <summary>
+        /// Deserializes a JSON string to a configuration.
+        /// </summary>
+        /// <param name="config">The JSON representation of the configuration.</param>
+        /// <param name="type">The type of the configuration.</param>
+        /// <returns>The deserialized configuration.</returns>
         public IConfig Deserialize(string config, Type type)
         {
             if (string.IsNullOrEmpty(config))

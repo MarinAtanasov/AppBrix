@@ -11,10 +11,19 @@ namespace AppBrix.Data.Migration.Data
     /// </summary>
     public sealed class SnapshotData
     {
+        /// <summary>
+        /// Gets or sets the name of the database context.
+        /// </summary>
         public string Context { get; set; }
 
+        /// <summary>
+        /// Gets or sets the version of the database context.
+        /// </summary>
         public string Version { get; set; }
 
+        /// <summary>
+        /// Gets or sets the snapshot code for the current version of the database context.
+        /// </summary>
         public string Snapshot { get; set; }
     }
 }

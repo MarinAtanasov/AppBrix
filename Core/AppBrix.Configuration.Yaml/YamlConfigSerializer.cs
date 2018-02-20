@@ -16,6 +16,11 @@ namespace AppBrix.Configuration.Yaml
     public sealed class YamlConfigSerializer : IConfigSerializer
     {
         #region Public and overriden methods
+        /// <summary>
+        /// Serializes a config to YAML.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
+        /// <returns>The YAML representation of the configuration.</returns>
         public string Serialize(IConfig config)
         {
             if (config == null)
@@ -33,6 +38,12 @@ namespace AppBrix.Configuration.Yaml
             }
         }
 
+        /// <summary>
+        /// Deserializes a YAML string to a configuration.
+        /// </summary>
+        /// <param name="config">The YAML representation of the configuration.</param>
+        /// <param name="type">The type of the configuration.</param>
+        /// <returns>The deserialized configuration.</returns>
         public IConfig Deserialize(string config, Type type)
         {
             if (string.IsNullOrEmpty(config))

@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace AppBrix.Logging.Configuration
 {
+    /// <summary>
+    /// Configures the logging for the application.
+    /// </summary>
     public sealed class LoggingConfig : IConfig
     {
         #region Construction

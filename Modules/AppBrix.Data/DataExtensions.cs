@@ -24,7 +24,7 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Gets an instance of a <see cref="DbContext"/> of type <see cref="T"/>.
+        /// Gets an instance of a <see cref="DbContext"/> of the provided <see cref="DbContext"/> type.
         /// </summary>
         /// <typeparam name="T">The type of the context.</typeparam>
         /// <returns>A databse context of the provided type.</returns>
