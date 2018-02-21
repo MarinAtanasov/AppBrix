@@ -24,7 +24,6 @@ namespace AppBrix
 
         /// <summary>
         /// Creates a deep copy of the specified object.
-        /// This method has lower performance than calling <see cref="ICloner.DeepCopy(object)"/> and casting the result.
         /// </summary>
         /// <param name="cloner">The cloner.</param>
         /// <param name="obj">The object to be copied.</param>
@@ -36,7 +35,6 @@ namespace AppBrix
 
         /// <summary>
         /// Creates a shallow copy of the specified object.
-        /// This method has lower performance than calling <see cref="ICloner.ShallowCopy(object)"/> and casting the result.
         /// </summary>
         /// <param name="cloner">The cloner.</param>
         /// <param name="obj">The object to be copied.</param>

@@ -26,7 +26,6 @@ namespace AppBrix
 
         /// <summary>
         /// Resolves an item by its type.
-        /// This method has lower performance than calling <see cref="Get(IApp, Type)"/> and casting the result.
         /// </summary>
         /// <typeparam name="T">The type of the object to be resolved.</typeparam>
         /// <param name="app">The application.</param>
@@ -50,7 +49,6 @@ namespace AppBrix
 
         /// <summary>
         /// Returns the last registered object of a given type.
-        /// This method has lower performance than calling <see cref="IContainer.Get(Type)"/> and casting the result.
         /// </summary>
         /// <typeparam name="T">The type of the registered object.</typeparam>
         /// <returns>The last registered object.</returns>
