@@ -23,8 +23,8 @@ namespace AppBrix.Events
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.eventHub.Value.Initialize(context);
-            this.App.Container.Register(this.eventHub.Value);
+            this.eventHub.Initialize(context);
+            this.App.Container.Register(this.eventHub);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Events
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.eventHub.Value.Uninitialize();
+            this.eventHub.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultEventHub> eventHub = new Lazy<DefaultEventHub>();
+        private readonly DefaultEventHub eventHub = new DefaultEventHub();
         #endregion
     }
 }

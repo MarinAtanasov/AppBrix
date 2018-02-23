@@ -30,9 +30,8 @@ namespace AppBrix.Web.Server
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            var defaultLoggerProvider = this.loggerProvider.Value;
-            defaultLoggerProvider.Initialize(context);
-            this.App.Container.Register(defaultLoggerProvider);
+            this.loggerProvider.Initialize(context);
+            this.App.Container.Register(this.loggerProvider);
 
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder
                 .ConfigureServices(services => services.AddSingleton(this.App))
@@ -52,12 +51,12 @@ namespace AppBrix.Web.Server
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.loggerProvider.Value.Uninitialize();
+            this.loggerProvider.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultLoggerProvider> loggerProvider = new Lazy<DefaultLoggerProvider>();
+        private readonly DefaultLoggerProvider loggerProvider = new DefaultLoggerProvider();
         #endregion
     }
 }

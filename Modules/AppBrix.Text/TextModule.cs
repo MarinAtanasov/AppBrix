@@ -25,8 +25,8 @@ namespace AppBrix.Text
         {
             this.App.Container.Register(this);
             this.App.Container.Register(CodePagesEncodingProvider.Instance);
-            this.wrapper.Value.Initialize(context);
-            Encoding.RegisterProvider(this.wrapper.Value);
+            this.wrapper.Initialize(context);
+            Encoding.RegisterProvider(this.wrapper);
         }
 
         /// <summary>
@@ -35,12 +35,12 @@ namespace AppBrix.Text
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.wrapper.Value.Uninitialize();
+            this.wrapper.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<EncodingProviderWrapper> wrapper = new Lazy<EncodingProviderWrapper>();
+        private readonly EncodingProviderWrapper wrapper = new EncodingProviderWrapper();
         #endregion
     }
 }

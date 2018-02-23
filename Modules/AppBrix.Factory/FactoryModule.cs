@@ -23,10 +23,9 @@ namespace AppBrix.Factory
         /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
-            var defaultFactory = this.factory.Value;
-            defaultFactory.Initialize(context);
             this.App.Container.Register(this);
-            this.App.Container.Register(defaultFactory);
+            this.factory.Initialize(context);
+            this.App.Container.Register(this.factory);
         }
 
         /// <summary>
@@ -35,12 +34,12 @@ namespace AppBrix.Factory
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.factory.Value.Uninitialize();
+            this.factory.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultFactory> factory = new Lazy<DefaultFactory>();
+        private readonly DefaultFactory factory = new DefaultFactory();
         #endregion
     }
 }

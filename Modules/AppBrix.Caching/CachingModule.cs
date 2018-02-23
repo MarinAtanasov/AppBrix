@@ -23,8 +23,8 @@ namespace AppBrix.Caching
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.cache.Value.Initialize(context);
-            this.App.Container.Register(this.cache.Value);
+            this.cache.Initialize(context);
+            this.App.Container.Register(this.cache);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Caching
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.cache.Value.Uninitialize();
+            this.cache.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultCache> cache = new Lazy<DefaultCache>();
+        private readonly DefaultCache cache = new DefaultCache();
         #endregion
     }
 }

@@ -23,9 +23,8 @@ namespace AppBrix.Logging
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            var defaultLogHub = this.logHub.Value;
-            defaultLogHub.Initialize(context);
-            this.App.Container.Register(defaultLogHub);
+            this.logHub.Initialize(context);
+            this.App.Container.Register(this.logHub);
         }
 
         /// <summary>
@@ -34,12 +33,12 @@ namespace AppBrix.Logging
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.logHub.Value.Uninitialize();
+            this.logHub.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultLogHub> logHub = new Lazy<DefaultLogHub>();
+        private readonly DefaultLogHub logHub = new DefaultLogHub();
         #endregion
     }
 }

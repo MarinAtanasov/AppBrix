@@ -23,8 +23,8 @@ namespace AppBrix.Events.Schedule.Timer
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.eventHub.Value.Initialize(context);
-            this.App.Container.Register(this.eventHub.Value);
+            this.eventHub.Initialize(context);
+            this.App.Container.Register(this.eventHub);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Events.Schedule.Timer
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.eventHub.Value.Uninitialize();
+            this.eventHub.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<TimerScheduledEventHub> eventHub = new Lazy<TimerScheduledEventHub>();
+        private readonly TimerScheduledEventHub eventHub = new TimerScheduledEventHub();
         #endregion
     }
 }

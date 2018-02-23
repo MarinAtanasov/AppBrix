@@ -23,8 +23,8 @@ namespace AppBrix.Data.Migration
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.contextService.Value.Initialize(context);
-            this.App.Container.Register(this.contextService.Value);
+            this.contextService.Initialize(context);
+            this.App.Container.Register(this.contextService);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Data.Migration
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.contextService.Value.Uninitialize();
+            this.contextService.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultMigrationDbContextService> contextService = new Lazy<DefaultMigrationDbContextService>();
+        private readonly DefaultMigrationDbContextService contextService = new DefaultMigrationDbContextService();
         #endregion
     }
 }

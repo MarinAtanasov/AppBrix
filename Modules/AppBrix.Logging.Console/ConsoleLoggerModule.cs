@@ -23,8 +23,8 @@ namespace AppBrix.Logging.Console
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.logger.Value.Initialize(context);
-            this.App.Container.Register(this.logger.Value);
+            this.logger.Initialize(context);
+            this.App.Container.Register(this.logger);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Logging.Console
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.logger.Value.Uninitialize();
+            this.logger.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private Lazy<ConsoleLogger> logger = new Lazy<ConsoleLogger>();
+        private ConsoleLogger logger = new ConsoleLogger();
         #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace AppBrix.Container
         /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
-            var defaultContainer = this.container.Value;
+            var defaultContainer = this.container;
             defaultContainer.Initialize(context);
             defaultContainer.Register(this);
             this.App.Container = defaultContainer;
@@ -34,13 +34,13 @@ namespace AppBrix.Container
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.container.Value.Uninitialize();
+            this.container.Uninitialize();
             this.App.Container = null;
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultContainer> container = new Lazy<DefaultContainer>();
+        private readonly DefaultContainer container = new DefaultContainer();
         #endregion
     }
 }

@@ -23,8 +23,8 @@ namespace AppBrix.Events.Schedule.Cron
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.eventHub.Value.Initialize(context);
-            this.App.Container.Register(this.eventHub.Value);
+            this.eventHub.Initialize(context);
+            this.App.Container.Register(this.eventHub);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Events.Schedule.Cron
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.eventHub.Value.Uninitialize();
+            this.eventHub.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<CronScheduledEventHub> eventHub = new Lazy<CronScheduledEventHub>();
+        private readonly CronScheduledEventHub eventHub = new CronScheduledEventHub();
         #endregion
     }
 }

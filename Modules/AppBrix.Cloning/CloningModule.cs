@@ -24,7 +24,7 @@ namespace AppBrix.Cloning
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.App.Container.Register(this.cloner.Value);
+            this.App.Container.Register(this.cloner);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace AppBrix.Cloning
         #endregion
 
         #region Private fields and constants
-        private readonly Lazy<DefaultCloner> cloner = new Lazy<DefaultCloner>();
+        private readonly DefaultCloner cloner = new DefaultCloner();
         #endregion
     }
 }

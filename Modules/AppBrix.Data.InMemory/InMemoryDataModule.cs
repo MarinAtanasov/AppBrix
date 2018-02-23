@@ -23,8 +23,8 @@ namespace AppBrix.Data.InMemory
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.configurer.Value.Initialize(context);
-            this.App.Container.Register(this.configurer.Value);
+            this.configurer.Initialize(context);
+            this.App.Container.Register(this.configurer);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace AppBrix.Data.InMemory
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.configurer.Value.Uninitialize();
+            this.configurer.Uninitialize();
         }
         #endregion
         
         #region Private fields and constants
-        private readonly Lazy<InMemoryDbContextConfigurer> configurer = new Lazy<InMemoryDbContextConfigurer>();
+        private readonly InMemoryDbContextConfigurer configurer = new InMemoryDbContextConfigurer();
         #endregion
     }
 }
