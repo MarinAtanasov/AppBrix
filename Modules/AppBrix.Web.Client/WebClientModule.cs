@@ -3,8 +3,10 @@
 //
 using AppBrix.Modules;
 using AppBrix.Lifecycle;
+using AppBrix.Time.Configuration;
 using AppBrix.Web.Client.Configuration;
 using AppBrix.Web.Client.Impl;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -37,6 +39,15 @@ namespace AppBrix.Web.Client
             this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
             this.client = this.App.GetFactory().Get<HttpClient>();
             this.App.Container.Register(this.client);
+
+            this.oldSettingsFactory = JsonConvert.DefaultSettings;
+            this.App.GetFactory().Register(() =>
+            {
+                var settings = this.oldSettingsFactory();
+                settings.DateFormatString = this.App.GetConfig<TimeConfig>().Format;
+                return settings;
+            });
+            JsonConvert.DefaultSettings = () => this.App.GetFactory().Get<JsonSerializerSettings>();
         }
 
         /// <summary>
@@ -45,6 +56,7 @@ namespace AppBrix.Web.Client
         /// </summary>
         protected override void UninitializeModule()
         {
+            JsonConvert.DefaultSettings = this.oldSettingsFactory;
             this.client?.Dispose();
             this.client = null;
         }
@@ -52,6 +64,7 @@ namespace AppBrix.Web.Client
 
         #region Private fields and constants
         private HttpClient client;
+        private Func<JsonSerializerSettings> oldSettingsFactory;
         #endregion
     }
 }

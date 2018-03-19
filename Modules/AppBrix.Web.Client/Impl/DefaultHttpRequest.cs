@@ -1,10 +1,10 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Time.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -150,7 +150,9 @@ namespace AppBrix.Web.Client.Impl
 
             HttpContent result;
 
-            if (typeof(Stream).IsAssignableFrom(type))
+            if (typeof(HttpContent).IsAssignableFrom(type))
+                result = (HttpContent)this.content;
+            else if (typeof(Stream).IsAssignableFrom(type))
                 result = new StreamContent((Stream)this.content);
             else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(type))
                 result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
@@ -159,34 +161,29 @@ namespace AppBrix.Web.Client.Impl
             else if (typeof(string).IsAssignableFrom(type))
                 result = new StringContent((string)this.content);
             else
-                result = new StringContent(JsonConvert.SerializeObject(this.content, this.GetJsonSettings()));
+                result = new StringContent(JsonConvert.SerializeObject(this.content));
 
             return result;
         }
 
         private async Task<T> GetResponseContent<T>(HttpContent content)
         {
+            var type = typeof(T);
+
             object contentValue;
 
-            var type = typeof(T);
-            if (type == typeof(string))
-                contentValue = await content.ReadAsStringAsync();
+            if (type == typeof(Stream))
+                contentValue = await content.ReadAsStreamAsync();
             else if (type == typeof(byte[]))
                 contentValue = await content.ReadAsByteArrayAsync();
-            else if (type == typeof(Stream))
-                contentValue = await content.ReadAsStreamAsync();
+            else if (type == typeof(string))
+                contentValue = await content.ReadAsStringAsync();
+            else if (type == typeof(NameValueCollection))
+                contentValue = await content.ReadAsFormDataAsync();
             else
-                return JsonConvert.DeserializeObject<T>(await content.ReadAsStringAsync(), this.GetJsonSettings());
+                contentValue = await content.ReadAsAsync<T>();;
 
             return (T)contentValue;
-        }
-
-        private JsonSerializerSettings GetJsonSettings()
-        {
-            return new JsonSerializerSettings
-            {
-                DateFormatString = this.app.GetConfig<TimeConfig>().Format
-            };
         }
         #endregion
 
