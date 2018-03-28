@@ -47,7 +47,8 @@ namespace AppBrix.Web.Client
                 settings.DateFormatString = this.App.GetConfig<TimeConfig>().Format;
                 return settings;
             });
-            JsonConvert.DefaultSettings = () => this.App.GetFactory().Get<JsonSerializerSettings>();
+            this.newSettingsFactory = () => this.App.GetFactory().Get<JsonSerializerSettings>();
+            JsonConvert.DefaultSettings = this.newSettingsFactory;
         }
 
         /// <summary>
@@ -56,7 +57,10 @@ namespace AppBrix.Web.Client
         /// </summary>
         protected override void UninitializeModule()
         {
-            JsonConvert.DefaultSettings = this.oldSettingsFactory;
+            if (JsonConvert.DefaultSettings == this.newSettingsFactory)
+            {
+                JsonConvert.DefaultSettings = this.oldSettingsFactory;
+            }
             this.client?.Dispose();
             this.client = null;
         }
@@ -65,6 +69,7 @@ namespace AppBrix.Web.Client
         #region Private fields and constants
         private HttpClient client;
         private Func<JsonSerializerSettings> oldSettingsFactory;
+        private Func<JsonSerializerSettings> newSettingsFactory;
         #endregion
     }
 }
