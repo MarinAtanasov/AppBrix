@@ -46,6 +46,7 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Logging\AppBrix.Logging.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Permissions\AppBrix.Permissions.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Time\AppBrix.Time.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj" />

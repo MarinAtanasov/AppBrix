@@ -10,7 +10,7 @@ namespace AppBrix
     /// <summary>
     /// Extension methods for the <see cref="TimeModule"/>.
     /// </summary>
-    public static class TimeServiceExtensions
+    public static class TimeExtensions
     {
         /// <summary>
         /// Gets the application's currently registered <see cref="ITimeService"/>

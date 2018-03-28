@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB6662-4780-4AB5-BA67-3FB56322EBB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -108,6 +108,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Timer", "Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj", "{82D79660-2F2E-4741-ACB2-439B6D8752C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Tests", "Tests\AppBrix.Events.Schedule.Tests\AppBrix.Events.Schedule.Tests.csproj", "{80954BDA-0884-4EF4-9149-DC42946AD90E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions", "Modules\AppBrix.Permissions\AppBrix.Permissions.csproj", "{07388810-D296-4932-BE4F-D95566CE8C53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -296,6 +298,10 @@ Global
 		{80954BDA-0884-4EF4-9149-DC42946AD90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80954BDA-0884-4EF4-9149-DC42946AD90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80954BDA-0884-4EF4-9149-DC42946AD90E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07388810-D296-4932-BE4F-D95566CE8C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07388810-D296-4932-BE4F-D95566CE8C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07388810-D296-4932-BE4F-D95566CE8C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07388810-D296-4932-BE4F-D95566CE8C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -346,6 +352,7 @@ Global
 		{7DB372D5-0673-4852-B9C1-8F31EF57493F} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{82D79660-2F2E-4741-ACB2-439B6D8752C3} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{80954BDA-0884-4EF4-9149-DC42946AD90E} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
+		{07388810-D296-4932-BE4F-D95566CE8C53} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}

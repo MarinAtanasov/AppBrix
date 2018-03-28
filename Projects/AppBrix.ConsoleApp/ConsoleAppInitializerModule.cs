@@ -118,6 +118,7 @@ namespace AppBrix.ConsoleApp
             typeof(Logging.LoggingModule),
             typeof(Logging.Console.ConsoleLoggerModule),
             //typeof(Logging.File.FileLoggerModule),
+            typeof(Permissions.PermissionsModule),
             typeof(Text.TextModule),
             typeof(Time.TimeModule),
             typeof(Web.Client.WebClientModule),

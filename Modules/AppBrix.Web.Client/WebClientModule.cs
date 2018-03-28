@@ -43,7 +43,7 @@ namespace AppBrix.Web.Client
             this.oldSettingsFactory = JsonConvert.DefaultSettings;
             this.App.GetFactory().Register(() =>
             {
-                var settings = this.oldSettingsFactory();
+                var settings = this.oldSettingsFactory != null ? this.oldSettingsFactory() : new JsonSerializerSettings();
                 settings.DateFormatString = this.App.GetConfig<TimeConfig>().Format;
                 return settings;
             });
