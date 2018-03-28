@@ -98,6 +98,22 @@ namespace AppBrix.Permissions.Impl
 
             return HasPermissionInternal(role, permission);
         }
+
+        public IReadOnlyCollection<string> GetAllowed(string role)
+        {
+            if (string.IsNullOrEmpty(role))
+                throw new ArgumentNullException(nameof(role));
+
+            return this.allowed.GetOrEmpty(role);
+        }
+
+        public IReadOnlyCollection<string> GetDenied(string role)
+        {
+            if (string.IsNullOrEmpty(role))
+                throw new ArgumentNullException(nameof(role));
+
+            return this.denied.GetOrEmpty(role);
+        }
         #endregion
 
         #region Private methods
