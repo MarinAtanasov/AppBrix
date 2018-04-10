@@ -190,3 +190,6 @@ FakesAssemblies/
 *.sln.iml
 .idea/
 .idea.*/
+
+# Mac / OSX / MacOS
+.DS_Store
