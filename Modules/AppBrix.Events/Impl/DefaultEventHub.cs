@@ -27,7 +27,7 @@ namespace AppBrix.Events.Impl
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            this.SubscribeInternal(new EventWrapper(handler, args => handler((T)args)), typeof(T));
+            this.SubscribeInternal(new EventWrapper<T>(handler), typeof(T));
         }
         
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
@@ -75,7 +75,7 @@ namespace AppBrix.Events.Impl
             }
         }
 
-        private void RaiseInternal(object args, Type type)
+        private void RaiseInternal(IEvent args, Type type)
         {
             var baseType = type;
             while (baseType != typeof(object) && baseType != null)
@@ -90,7 +90,7 @@ namespace AppBrix.Events.Impl
             }
         }
 
-        private void RaiseEvent(object args, Type eventType)
+        private void RaiseEvent(IEvent args, Type eventType)
         {
             if (this.subscriptions.TryGetValue(eventType, out var handlers))
             {
