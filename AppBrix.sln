@@ -111,6 +111,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions", "Modules\AppBrix.Permissions\AppBrix.Permissions.csproj", "{07388810-D296-4932-BE4F-D95566CE8C53}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions.Tests", "Tests\AppBrix.Permissions.Tests\AppBrix.Permissions.Tests.csproj", "{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -302,6 +304,10 @@ Global
 		{07388810-D296-4932-BE4F-D95566CE8C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07388810-D296-4932-BE4F-D95566CE8C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07388810-D296-4932-BE4F-D95566CE8C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -353,6 +359,7 @@ Global
 		{82D79660-2F2E-4741-ACB2-439B6D8752C3} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{80954BDA-0884-4EF4-9149-DC42946AD90E} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{07388810-D296-4932-BE4F-D95566CE8C53} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
+		{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}
