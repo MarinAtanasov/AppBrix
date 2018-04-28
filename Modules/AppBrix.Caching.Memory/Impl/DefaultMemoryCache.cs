@@ -102,7 +102,7 @@ namespace AppBrix.Caching.Memory.Impl
 
         private void RemoveExpiredEntries(MemoryCacheCleanup unused)
         {
-            List<KeyValuePair<object, CacheItem>> toRemove;
+            List<KeyValuePair<object, CacheItem>> itemsToRemove;
             lock (this.cache)
             {
                 if (this.app == null)
@@ -110,17 +110,34 @@ namespace AppBrix.Caching.Memory.Impl
 
                 var now = this.app.GetTime();
 
-                toRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
-                toRemove.ForEach(x => this.cache.Remove(x.Key));
+                itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
+                this.RemoveItems(itemsToRemove);
                 this.scheduledArgs = this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
             }
-            toRemove.ForEach(x => this.RunSafe(x.Value.Dispose));
+            this.DisposeItems(itemsToRemove);
         }
 
-        private void RunSafe(Action action)
+        private void RemoveItems(List<KeyValuePair<object, CacheItem>> items)
         {
-            try { action(); }
-            catch (Exception) { }
+            for (int i = 0; i < items.Count; i++)
+            {
+                this.cache.Remove(items[i].Key);
+            }
+        }
+
+        private void DisposeItems(List<KeyValuePair<object, CacheItem>> items)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                try
+                {
+                    items[i].Value.Dispose();
+                }
+                catch (Exception)
+                {
+                    // Ignore error and continue disposing the rest of the items.
+                }
+            }
         }
 
         private MemoryCachingConfig GetConfig()
