@@ -38,7 +38,7 @@ namespace AppBrix.Permissions
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultPermissionsService permissionsService = new DefaultPermissionsService();
+        private readonly CachedPermissionsService permissionsService = new CachedPermissionsService(new DefaultPermissionsService());
         #endregion
     }
 }

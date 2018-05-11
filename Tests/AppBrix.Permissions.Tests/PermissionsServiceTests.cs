@@ -86,7 +86,9 @@ namespace AppBrix.Events.Schedule.Tests
             var service = this.app.GetPermissionsService();
             service.AddParent("a", "b");
             service.GetParents("a").Should().Contain("b", "the parent has been added");
+            service.GetChildren("b").Should().Contain("a", "the child has been added");
             service.GetParents("b").Should().BeEmpty("the parent shouldn't have a child");
+            service.GetChildren("a").Should().BeEmpty("the child shouldn't have a parent");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -123,6 +125,7 @@ namespace AppBrix.Events.Schedule.Tests
             var service = this.app.GetPermissionsService();
             service.RemoveParent("a", "b");
             service.GetParents("a").Should().BeEmpty("no parent has been added");
+            service.GetChildren("b").Should().BeEmpty("no child has been added");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -131,8 +134,10 @@ namespace AppBrix.Events.Schedule.Tests
             var service = this.app.GetPermissionsService();
             service.AddParent("a", "b");
             service.GetParents("a").Should().Contain("b", "the parent has been added");
+            service.GetChildren("b").Should().Contain("a", "the child has been added");
             service.RemoveParent("a", "b");
             service.GetParents("a").Should().BeEmpty("the parent has been added");
+            service.GetChildren("b").Should().BeEmpty("the child has been added");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -360,13 +365,43 @@ namespace AppBrix.Events.Schedule.Tests
         private void TestPerformanceHasPermissionInternal()
         {
             var service = this.app.GetPermissionsService();
-            for (int i = 0; i < 20000; i++)
+            for (int i = 0; i < 80000; i++)
             {
                 service.HasPermission("a", "p");
                 service.HasPermission("a", "p1");
                 service.HasPermission("a", "p22");
             }
+        }
 
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceAddPermission()
+        {
+            var service = this.app.GetPermissionsService();
+            service.Allow("a", "p");
+            service.AddParent("a", "a1");
+            service.Allow("a1", "p1");
+            service.AddParent("a", "a2");
+            service.Deny("a2", "p1");
+            service.Allow("a2", "p2");
+            service.AddParent("a2", "a21");
+            service.Allow("a21", "p21");
+            service.AddParent("a2", "a22");
+            service.Allow("a22", "p22");
+
+            Action action = this.TestPerformanceAddPermissionInternal;
+            TestUtils.TestPerformance(action);
+        }
+
+        private void TestPerformanceAddPermissionInternal()
+        {
+            var service = this.app.GetPermissionsService();
+            for (int i = 0; i < 2000; i++)
+            {
+                var item = (i % 20).ToString();
+                service.Allow("a", item);
+                service.Deny("a1", item);
+                service.Allow("a22", item);
+            }
         }
         #endregion
 

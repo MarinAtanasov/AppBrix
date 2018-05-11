@@ -34,6 +34,13 @@ namespace AppBrix.Permissions
         IReadOnlyCollection<string> GetParents(string role);
 
         /// <summary>
+        /// Gets the registered children to a role.
+        /// </summary>
+        /// <param name="role">The parent role.</param>
+        /// <returns>The children of the role.</returns>
+        IReadOnlyCollection<string> GetChildren(string role);
+
+        /// <summary>
         /// Allows a role to access a permission.
         /// </summary>
         /// <param name="role">The role.</param>

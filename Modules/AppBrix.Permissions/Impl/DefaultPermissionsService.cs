@@ -18,6 +18,7 @@ namespace AppBrix.Permissions.Impl
         public void Uninitialize()
         {
             this.parents.Clear();
+            this.children.Clear();
             this.allowed.Clear();
             this.denied.Clear();
         }
@@ -36,6 +37,7 @@ namespace AppBrix.Permissions.Impl
                 throw new InvalidOperationException($"Trying to create circular dependency between {role} and {parent}.");
 
             this.parents.AddValue(role, parent);
+            this.children.AddValue(parent, role);
         }
 
         public void RemoveParent(string role, string parent)
@@ -46,6 +48,7 @@ namespace AppBrix.Permissions.Impl
                 throw new ArgumentNullException(nameof(parent));
 
             this.parents.RemoveValue(role, parent);
+            this.children.RemoveValue(parent, role);
         }
 
         public IReadOnlyCollection<string> GetParents(string role)
@@ -54,6 +57,14 @@ namespace AppBrix.Permissions.Impl
                 throw new ArgumentNullException(nameof(role));
 
             return this.parents.GetOrEmpty(role);
+        }
+
+        public IReadOnlyCollection<string> GetChildren(string role)
+        {
+            if (string.IsNullOrEmpty(role))
+                throw new ArgumentNullException(nameof(role));
+
+            return this.children.GetOrEmpty(role);
         }
 
         public void Allow(string role, string permission)
@@ -117,7 +128,7 @@ namespace AppBrix.Permissions.Impl
         #endregion
 
         #region Private methods
-        public IEnumerable<string> GetAllParents(string role)
+        private IEnumerable<string> GetAllParents(string role)
         {
             if (this.parents.TryGetValue(role, out var roleParents))
             {
@@ -129,7 +140,7 @@ namespace AppBrix.Permissions.Impl
             }
         }
 
-        public bool HasPermissionInternal(string role, string permission)
+        private bool HasPermissionInternal(string role, string permission)
         {
             if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
             {
@@ -148,6 +159,7 @@ namespace AppBrix.Permissions.Impl
 
         #region Private fields and constants
         private Dictionary<string, HashSet<string>> parents = new Dictionary<string, HashSet<string>>();
+        private Dictionary<string, HashSet<string>> children = new Dictionary<string, HashSet<string>>();
         private Dictionary<string, HashSet<string>> allowed = new Dictionary<string, HashSet<string>>();
         private Dictionary<string, HashSet<string>> denied = new Dictionary<string, HashSet<string>>();
         #endregion
