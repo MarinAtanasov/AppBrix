@@ -43,11 +43,7 @@ namespace AppBrix.Events.Schedule.Impl
                 throw new ArgumentNullException(nameof(args));
 
             var now = this.app.GetTime();
-            var item = new PriorityQueueItem<T>(args, () =>
-            {
-                try { this.app.GetEventHub().Raise(args.Event); }
-                catch (Exception) { }
-            });
+            var item = new PriorityQueueItem<T>(this.app, args);
             item.MoveToNextOccurrence(now);
             if (now < item.Occurrence)
             {

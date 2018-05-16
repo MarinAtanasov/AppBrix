@@ -9,22 +9,21 @@ namespace AppBrix.Events.Schedule.Impl
     internal abstract class PriorityQueueItem
     {
         #region Construction
-        public PriorityQueueItem(object scheduledEvent, Action execute)
+        public PriorityQueueItem(object scheduledEvent)
         {
             this.ScheduledEvent = scheduledEvent;
-            this.Execute = execute;
         }
         #endregion
 
         #region Properties
         public object ScheduledEvent { get; }
 
-        public Action Execute { get; }
-
         public DateTime Occurrence { get; protected set; }
         #endregion
 
         #region Public and overriden methods
+        public abstract void Execute();
+
         public abstract void MoveToNextOccurrence(DateTime now);
         #endregion
     }
@@ -32,17 +31,35 @@ namespace AppBrix.Events.Schedule.Impl
     internal sealed class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
     {
         #region Construction
-        public PriorityQueueItem(IScheduledEvent<T> scheduledEvent, Action execute)
-            : base(scheduledEvent, execute)
+        public PriorityQueueItem(IApp app, IScheduledEvent<T> scheduledEvent)
+            : base(scheduledEvent)
         {
+            this.app = app;
+            this.scheduledEvent = scheduledEvent;
         }
         #endregion
 
         #region Public and overriden methods
+        public override void Execute()
+        {
+            try
+            {
+                this.app.GetEventHub().Raise(this.scheduledEvent.Event);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         public override void MoveToNextOccurrence(DateTime now)
         {
             this.Occurrence = ((IScheduledEvent<T>)this.ScheduledEvent).GetNextOccurrence(now);
         }
+        #endregion
+
+        #region Private fields and constants
+        private readonly IApp app;
+        private readonly IScheduledEvent<T> scheduledEvent;
         #endregion
     }
 }
