@@ -67,12 +67,12 @@ namespace AppBrix.Factory.Tests
             Func<FactoryTests> method = () => this;
             var type = typeof(FactoryTests);
 
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 3000; i++)
             {
                 factory.Register(method, type);
             }
 
-            for (int i = 0; i < 1000000; i++)
+            for (int i = 0; i < 600000; i++)
             {
                 factory.Get(type);
             }

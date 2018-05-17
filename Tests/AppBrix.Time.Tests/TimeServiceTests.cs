@@ -113,7 +113,7 @@ namespace AppBrix.Time.Tests
         #region Private methods
         private void TestPerformanceGetTimeInternal()
         {
-            for (int i = 0; i < 500000; i++)
+            for (int i = 0; i < 250000; i++)
             {
                 app.GetTime();
             }
