@@ -8,24 +8,21 @@ namespace AppBrix.Events.Impl
 {
     internal abstract class EventWrapper
     {
-        public EventWrapper(object handler)
-        {
-            this.Handler = handler;
-        }
-
-        public object Handler { get; }
+        public abstract object Handler { get; }
 
         public abstract void Execute(IEvent args);
     }
 
     internal sealed class EventWrapper<T> : EventWrapper where T : IEvent
     {
-        public EventWrapper(Action<T> handler) : base(handler)
+        public EventWrapper(Action<T> handler)
         {
             this.handler = handler;
         }
 
-        public sealed override void Execute(IEvent args)
+        public override object Handler => this.handler;
+
+        public override void Execute(IEvent args)
         {
             this.handler((T)args);
         }
