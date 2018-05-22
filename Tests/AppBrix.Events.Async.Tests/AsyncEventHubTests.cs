@@ -109,17 +109,6 @@ namespace AppBrix.Events.Async.Tests
         }
         
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestCallBaseSubscribeParent()
-        {
-            var hub = this.GetAsyncEventHub();
-            var args = new EventMockChild(10);
-            int called = 0;
-            hub.Subscribe<EventMockChild>(e => called++);
-            hub.Raise(args);
-            called.Should().Be(0, "event handler should not be called if the arguments are passed as base class");
-        }
-        
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleRaise()
         {
             var hub = this.GetAsyncEventHub();

@@ -48,7 +48,7 @@ namespace AppBrix.Events.Schedule.Tests
             hub.Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
             called.Should().BeFalse("event should not be called immediately");
             Func<bool> func = () => called;
-            func.ShouldReturn(true, TimeSpan.FromMilliseconds(1000), "event should have been raised");
+            func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
