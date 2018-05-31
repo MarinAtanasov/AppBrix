@@ -23,8 +23,7 @@ namespace AppBrix.Events.Async.Impl
         {
             this.tasks = new BlockingCollection<T>();
             this.cancelTokenSource = new CancellationTokenSource();
-            this.runner = Task.Factory.StartNew(this.Run, this.cancelTokenSource.Token,
-                TaskCreationOptions.LongRunning | TaskCreationOptions.AttachedToParent, TaskScheduler.Default);
+            this.runner = Task.Factory.StartNew(this.Run, this.cancelTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
         #endregion
 
