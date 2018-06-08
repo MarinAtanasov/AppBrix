@@ -261,7 +261,7 @@ namespace AppBrix.Events.Async.Tests
         private void TestPerformanceEventsUnsubscribeInternal()
         {
             var hub = this.GetAsyncEventHub();
-            var calledCount = 75000;
+            var calledCount = 60000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
             {

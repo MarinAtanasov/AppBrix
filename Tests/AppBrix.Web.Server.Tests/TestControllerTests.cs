@@ -5,6 +5,7 @@ using AppBrix.Tests;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server.Tests.Mocks;
 using FluentAssertions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -73,7 +74,10 @@ namespace AppBrix.Web.Server.Tests
         #region Private methods
         private TestServer CreateTestServer(string baseAddress, IApp app)
         {
-            return new TestServer(new WebHostBuilder().UseApp(app));
+            return new TestServer(WebHost.CreateDefaultBuilder().UseUrls(baseAddress).UseApp(app))
+            {
+                BaseAddress = new Uri(baseAddress)
+            };
         }
 
         private IApp CreateWebApp()

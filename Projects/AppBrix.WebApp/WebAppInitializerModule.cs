@@ -11,6 +11,7 @@ using AppBrix.Modules;
 using AppBrix.Text;
 using AppBrix.Web.Server;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -58,8 +59,21 @@ namespace AppBrix.WebApp
         /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
-            this.App.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());
+            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)));
+            this.App.GetEventHub().Subscribe<IConfigureApplication>(application =>
+            {
+                //if (env.IsDevelopment())
+                //{
+                //    application.Builder.UseDeveloperExceptionPage();
+                //}
+                //else
+                //{
+                //    application.Builder.UseHsts();
+                //}
+
+                application.Builder.UseHttpsRedirection();
+                application.Builder.UseMvc();
+            });
         }
 
         /// <summary>

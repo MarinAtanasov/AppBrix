@@ -194,7 +194,7 @@ namespace AppBrix.Tests
 
         private void TestPerformanceReinitializeInternal(IApp app)
         {
-            for (int i = 0; i < 20000; i++)
+            for (int i = 0; i < 15000; i++)
             {
                 app.Reinitialize();
             }

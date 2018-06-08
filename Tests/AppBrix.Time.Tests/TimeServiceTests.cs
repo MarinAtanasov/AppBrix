@@ -125,7 +125,7 @@ namespace AppBrix.Time.Tests
             var localTime = utcTime.ToLocalTime();
             var timeService = app.GetTimeService();
 
-            for (int i = 0; i < 65000; i++)
+            for (int i = 0; i < 75000; i++)
             {
                 timeService.ToAppTime(utcTime);
                 timeService.ToAppTime(localTime);
@@ -137,7 +137,7 @@ namespace AppBrix.Time.Tests
             var time = DateTime.UtcNow;
             var timeService = app.GetTimeService();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 12000; i++)
             {
                 timeService.ToDateTime(timeService.ToString(time));
             }
