@@ -9,6 +9,7 @@ using AppBrix.Logging.Configuration;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
 using AppBrix.Text;
+using AppBrix.Web.Client;
 using AppBrix.Web.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -117,6 +118,7 @@ namespace AppBrix.WebApp
             typeof(FileLoggerModule),
             typeof(CronScheduledEventsModule),
             typeof(TextModule),
+            typeof(WebClientModule),
             typeof(WebServerModule)
         };
         #endregion

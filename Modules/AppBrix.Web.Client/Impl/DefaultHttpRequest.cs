@@ -26,7 +26,7 @@ namespace AppBrix.Web.Client.Impl
         #region Public and overriden methods
         public async Task<IHttpResponse> Send()
         {
-            var client = (HttpClient)app.Get(typeof(HttpClient));
+            var client = this.GetClient();
             var response = await this.GetResponse(client);
             return new DefaultHttpResponse<string>(
                 new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
@@ -38,7 +38,7 @@ namespace AppBrix.Web.Client.Impl
 
         public async Task<IHttpResponse<T>> Send<T>()
         {
-            var client = (HttpClient)app.Get(typeof(HttpClient));
+            var client = this.GetClient();
             var response = await this.GetResponse(client);
             var responseContent = response.Content;
             var contentValue = await this.GetResponseContent<T>(responseContent);
@@ -66,6 +66,13 @@ namespace AppBrix.Web.Client.Impl
             {
                 this.headers[header] = new List<string>(values);
             }
+            return this;
+        }
+
+        public IHttpRequest SetClientName(string name)
+        {
+            this.clientName = name;
+
             return this;
         }
 
@@ -102,6 +109,18 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Private methods
+        private HttpClient GetClient()
+        {
+            if (string.IsNullOrEmpty(this.clientName))
+            {
+                return (HttpClient)this.app.GetFactory().Get(typeof(HttpClient));
+            }
+            else
+            {
+                return this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
+            }
+        }
+
         private async Task<HttpResponseMessage> GetResponse(HttpClient client)
         {
             var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
@@ -191,6 +210,7 @@ namespace AppBrix.Web.Client.Impl
         private readonly Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>();
         private readonly IApp app;
         private string callMethod = "GET";
+        private string clientName;
         private object content;
         private string requestUrl;
         private Version httpMessageVersion;

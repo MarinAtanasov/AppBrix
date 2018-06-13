@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Net.Http;
 
 namespace AppBrix.Web.Server
 {
@@ -39,6 +40,12 @@ namespace AppBrix.Web.Server
                 .Configure(appBuilder =>
                 {
                     appBuilder.ApplicationServices.GetRequiredService<IApplicationLifetime>().ApplicationStopped.Register(this.App.Stop);
+                    var client = appBuilder.ApplicationServices.GetService<IHttpClientFactory>();
+                    if (client != null)
+                    {
+                        this.App.Container.Register(client);
+                        this.App.GetFactory().Register(() => this.App.Get<IHttpClientFactory>().CreateClient());
+                    }
                     this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly().GetName().Name)

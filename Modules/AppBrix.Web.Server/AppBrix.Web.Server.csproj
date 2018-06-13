@@ -20,11 +20,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
     <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.0" />
   </ItemGroup>
 

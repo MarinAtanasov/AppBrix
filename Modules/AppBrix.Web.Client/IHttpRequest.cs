@@ -3,6 +3,7 @@
 //
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace AppBrix.Web.Client
@@ -32,6 +33,14 @@ namespace AppBrix.Web.Client
         /// <param name="values">The header's values.</param>
         /// <returns></returns>
         IHttpRequest SetHeader(string header, params string[] values);
+
+        /// <summary>
+        /// Sets the name of the <see cref="HttpClient"/> to be used when sending the request.
+        /// Requires registered of <see cref="IHttpClientFactory"/>.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="HttpClient"/>.</param>
+        /// <returns></returns>
+        IHttpRequest SetClientName(string name);
 
         /// <summary>
         /// Sets the HTTP request message content.

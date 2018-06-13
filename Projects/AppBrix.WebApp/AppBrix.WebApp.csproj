@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
   </ItemGroup>
   <ItemGroup>

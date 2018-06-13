@@ -28,17 +28,14 @@ namespace AppBrix.Web.Client
         {
             this.App.Container.Register(this);
             var config = this.App.GetConfig<WebClientConfig>();
-            this.App.GetFactory().Register(() => new HttpClientHandler
-            {
-                MaxConnectionsPerServer = config.MaxConnectionsPerServer
-            });
-            this.App.GetFactory().Register(() => new HttpClient(this.App.GetFactory().Get<HttpMessageHandler>(), true)
+            this.client = new HttpClient(new HttpClientHandler { MaxConnectionsPerServer = config.MaxConnectionsPerServer }, true)
             {
                 Timeout = config.RequestTimeout
-            });
-            this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
-            this.client = this.App.GetFactory().Get<HttpClient>();
+            };
+
             this.App.Container.Register(this.client);
+            this.App.GetFactory().Register(this.App.Get<HttpClient>);
+            this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
 
             this.oldSettingsFactory = JsonConvert.DefaultSettings;
             this.App.GetFactory().Register(() =>
