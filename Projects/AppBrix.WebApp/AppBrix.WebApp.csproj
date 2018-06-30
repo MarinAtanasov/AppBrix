@@ -21,19 +21,9 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
-    <ProjectReference Include="..\..\Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
+    <ProjectReference Include="..\..\Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
   </ItemGroup>
 </Project>
