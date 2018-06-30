@@ -62,7 +62,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="type">The type of the module.</param>
         /// <returns>All modules inside the referenced assemblies.</returns>
-        public static IEnumerable<Type> GetReferencedModules(this Type type)
+        public static IEnumerable<Type> GetModuleDependencies(this Type type)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
@@ -70,6 +70,7 @@ namespace AppBrix
                 throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");
 
             return type.Assembly.GetAllReferencedAssemblies()
+                .Skip(1)
                 .SelectMany(assembly => assembly.ExportedTypes)
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(typeof(IModule).IsAssignableFrom)

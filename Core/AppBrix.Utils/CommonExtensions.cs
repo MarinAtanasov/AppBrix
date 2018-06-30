@@ -17,7 +17,8 @@ namespace AppBrix
     {
         #region Types and enums extensions
         /// <summary>
-        /// Get all of the referenced assemblies recursively.
+        /// Get all of the referenced assemblies recursively,
+        /// starting with the provided assembly.
         /// </summary>
         /// <param name="current">The current assembly.</param>
         /// <returns>All referenced assemblies.</returns>
@@ -25,19 +26,15 @@ namespace AppBrix
         {
             var names = new HashSet<string> { current.GetName().FullName };
             var locations = new HashSet<string> { current.Location };
-            var assemblyQueue = new Queue<Assembly>();
-            assemblyQueue.Enqueue(current);
+            var assemblyQueue = new List<Assembly> { current };
 
-            while (assemblyQueue.Count > 0)
+            for (int i = 0; i < assemblyQueue.Count; i++)
             {
-                var assembly = assemblyQueue.Dequeue();
-                foreach (var reference in assembly.GetReferencedAssemblies())
+                foreach (var reference in assemblyQueue[i].GetReferencedAssemblies())
                 {
-                    if (names.Contains(reference.FullName))
+                    if (!names.Add(reference.FullName))
                         continue;
-
-                    names.Add(reference.FullName);
-
+                    
                     Assembly referencedAssembly;
                     try
                     {
@@ -49,14 +46,14 @@ namespace AppBrix
                         continue;
                     }
 
-                    if (locations.Contains(referencedAssembly.Location))
+                    if (!locations.Add(referencedAssembly.Location))
                         continue;
 
-                    locations.Add(referencedAssembly.Location);
-                    assemblyQueue.Enqueue(referencedAssembly);
-                    yield return referencedAssembly;
+                    assemblyQueue.Add(referencedAssembly);
                 }
             }
+
+            return assemblyQueue;
         }
 
         /// <summary>

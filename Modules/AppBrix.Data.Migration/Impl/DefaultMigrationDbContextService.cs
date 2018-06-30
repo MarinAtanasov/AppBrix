@@ -81,10 +81,9 @@ namespace AppBrix.Data.Migration.Impl
         private void MigrateMigrationContext()
         {
             var migrationContextType = typeof(MigrationContext);
-            if (this.initializedContexts.Contains(migrationContextType))
+            if (!this.initializedContexts.Add(migrationContextType))
                 return;
 
-            this.initializedContexts.Add(migrationContextType);
             using (var context = this.contextService.Get(migrationContextType))
             {
                 try
@@ -170,17 +169,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private IEnumerable<MetadataReference> GetReferences()
         {
-            return this.GetAllAssemblies().Select(x => MetadataReference.CreateFromFile(x.Location));
-        }
-
-        private IEnumerable<Assembly> GetAllAssemblies()
-        {
-            var entryAssembly = Assembly.GetEntryAssembly();
-            yield return entryAssembly;
-            foreach (var referencedAssembly in entryAssembly.GetAllReferencedAssemblies())
-            {
-                yield return referencedAssembly;
-            }
+            return Assembly.GetEntryAssembly().GetAllReferencedAssemblies().Select(x => MetadataReference.CreateFromFile(x.Location));
         }
 
         private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)

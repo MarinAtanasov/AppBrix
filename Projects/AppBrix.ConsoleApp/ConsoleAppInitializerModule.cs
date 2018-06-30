@@ -86,7 +86,7 @@ namespace AppBrix.ConsoleApp
                 throw new InvalidOperationException($@"Module {nameof(ConsoleAppInitializerModule)} found other modules registered besides itself.");
 
             this.GetType()
-                .GetReferencedModules()
+                .GetModuleDependencies()
                 .Select(ModuleConfigElement.Create)
                 .ToList()
                 .ForEach(config.Modules.Add);

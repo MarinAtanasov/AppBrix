@@ -24,7 +24,7 @@ namespace AppBrix.Tests
         {
             var service = new MemoryConfigService();
             var config = service.Get<AppConfig>();
-            modules.SelectMany(module => module.GetReferencedModules())
+            modules.SelectMany(module => module.GetModuleDependencies())
                 .Concat(modules)
                 .Distinct()
                 .Select(ModuleConfigElement.Create)
@@ -38,7 +38,7 @@ namespace AppBrix.Tests
             // Invoke the action once to make sure that the assemblies are loaded.
             action();
 
-            action.ExecutionTime().Should().BeGreaterThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
+            action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
     }

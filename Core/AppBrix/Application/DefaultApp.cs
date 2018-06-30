@@ -125,28 +125,24 @@ namespace AppBrix.Application
 
         private RequestedAction InstallOrUpgradeModule(ModuleInfo moduleInfo)
         {
-            RequestedAction? requestedAction = null;
+            RequestedAction requestedAction = RequestedAction.None;
             var version = moduleInfo.Module.GetType().Assembly.GetName().Version;
             if (moduleInfo.Config.Version == null)
             {
                 var context = new DefaultInstallContext(this);
                 moduleInfo.Module.Install(context);
                 requestedAction = context.RequestedAction;
+                moduleInfo.Config.Version = version;
             }
             else if (moduleInfo.Config.Version < version)
             {
                 var context = new DefaultUpgradeContext(this, moduleInfo.Config.Version);
                 moduleInfo.Module.Upgrade(context);
                 requestedAction = context.RequestedAction;
-            }
-
-            if (requestedAction.HasValue)
-            {
                 moduleInfo.Config.Version = version;
-                this.ConfigService.Save<AppConfig>();
             }
 
-            return requestedAction ?? RequestedAction.None;
+            return requestedAction;
         }
 
         private void UninitializeInternal(int lastInitialized)

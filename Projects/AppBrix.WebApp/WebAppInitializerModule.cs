@@ -94,7 +94,7 @@ namespace AppBrix.WebApp
                 throw new InvalidOperationException($@"Module {nameof(WebAppInitializerModule)} found other modules registered besides itself.");
 
             this.GetType()
-                .GetReferencedModules()
+                .GetModuleDependencies()
                 .Select(ModuleConfigElement.Create)
                 .ToList()
                 .ForEach(config.Modules.Add);

@@ -59,7 +59,7 @@ namespace AppBrix.Application
             var item = remaining.First;
             while (item != null)
             {
-                if (assemblyReferences[item.Value.Item2].All(x => loaded.Contains(x)))
+                if (assemblyReferences[item.Value.Item2].All(loaded.Contains))
                 {
                     sortedModuleInfos.Add(item.Value.Item1);
                     loaded.Add(item.Value.Item2);
@@ -84,7 +84,7 @@ namespace AppBrix.Application
                 .Distinct(new AssemblyNameComparer())
                 .ToDictionary(
                     x => x.GetName().Name,
-                    x => new HashSet<string>(x.GetReferencedAssemblies().Select(a => a.Name).Where(a => assemblyNames.Contains(a))));
+                    x => new HashSet<string>(x.GetReferencedAssemblies().Select(a => a.Name).Where(assemblyNames.Contains)));
         }
         #endregion
 
