@@ -3,14 +3,14 @@
     <Description>Sample web application using an AppBrix app.</Description>
     <Copyright>Copyright 2015-2018</Copyright>
     <AssemblyTitle>AppBrix.WebApp</AssemblyTitle>
-    <Version>0.11.1</Version>
+    <Version>0.12.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <AssemblyName>AppBrix.WebApp</AssemblyName>
     <PackageId>AppBrix.WebApp</PackageId>
     <PackageTags>AppBrix Web Application</PackageTags>
-    <PackageReleaseNotes>Add documentation to the package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update .NET Core to 2.1.1.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
