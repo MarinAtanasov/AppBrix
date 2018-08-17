@@ -26,28 +26,30 @@ namespace AppBrix.Web.Client.Impl
         #region Public and overriden methods
         public async Task<IHttpResponse> Send()
         {
-            var client = this.GetClient();
-            var response = await this.GetResponse(client);
-            return new DefaultHttpResponse<string>(
-                new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
-                null,
-                (int)response.StatusCode,
-                response.ReasonPhrase,
-                response.Version);
+            using (var response = await this.GetResponse(this.GetClient()))
+            {
+                return new DefaultHttpResponse<string>(
+                    new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
+                    null,
+                    (int) response.StatusCode,
+                    response.ReasonPhrase,
+                    response.Version);
+            }
         }
 
         public async Task<IHttpResponse<T>> Send<T>()
         {
-            var client = this.GetClient();
-            var response = await this.GetResponse(client);
-            var responseContent = response.Content;
-            var contentValue = await this.GetResponseContent<T>(responseContent);
-            return new DefaultHttpResponse<T>(
-                new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
-                contentValue,
-                (int)response.StatusCode,
-                response.ReasonPhrase,
-                response.Version);
+            using (var response = await this.GetResponse(this.GetClient()))
+            {
+                var responseContent = response.Content;
+                var contentValue = await this.GetResponseContent<T>(responseContent);
+                return new DefaultHttpResponse<T>(
+                    new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
+                    contentValue,
+                    (int) response.StatusCode,
+                    response.ReasonPhrase,
+                    response.Version);
+            }
         }
 
         public IHttpRequest SetHeader(string header, params string[] values)

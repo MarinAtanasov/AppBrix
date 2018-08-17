@@ -19,7 +19,7 @@ namespace AppBrix.Web.Client.Configuration
         /// </summary>
         public WebClientConfig()
         {
-            this.MaxConnectionsPerServer = 1024;
+            this.MaxConnectionsPerServer = 128;
             this.RequestTimeout = Timeout.InfiniteTimeSpan;
         }
         #endregion
