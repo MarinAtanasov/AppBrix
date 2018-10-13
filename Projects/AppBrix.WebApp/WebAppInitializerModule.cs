@@ -60,21 +60,8 @@ namespace AppBrix.WebApp
         /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
-            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)));
-            this.App.GetEventHub().Subscribe<IConfigureApplication>(application =>
-            {
-                //if (env.IsDevelopment())
-                //{
-                //    application.Builder.UseDeveloperExceptionPage();
-                //}
-                //else
-                //{
-                //    application.Builder.UseHsts();
-                //}
-
-                application.Builder.UseHttpsRedirection();
-                application.Builder.UseMvc();
-            });
+            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
+            this.App.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
         }
 
         /// <summary>
@@ -103,6 +90,26 @@ namespace AppBrix.WebApp
         private void InitializeLoggingConfig(IConfigService service)
         {
             service.Get<LoggingConfig>().Async = false;
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+
+        private void Configure(IConfigureApplication application)
+        {
+            //if (env.IsDevelopment())
+            //{
+            //    application.Builder.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    application.Builder.UseHsts();
+            //}
+
+            application.Builder.UseHttpsRedirection();
+            application.Builder.UseMvc();
         }
         #endregion
 
