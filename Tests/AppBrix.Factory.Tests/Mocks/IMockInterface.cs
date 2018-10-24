@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AppBrix.Factory.Tests.Mocks
 {
-    internal class DefaultConstructorClass
+    internal interface ITestInterface
     {
     }
 }

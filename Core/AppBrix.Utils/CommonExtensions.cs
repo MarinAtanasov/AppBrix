@@ -72,24 +72,26 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Constructs an object with no parameters.
-        /// </summary>
-        /// <param name="type">The type of the object to be constructed.</param>
-        /// <returns>The constructed object.</returns>
-        public static object CreateObject(this Type type)
-        {
-            return Activator.CreateInstance(type);
-        }
-
-        /// <summary>
-        /// Constructs an object with no parameters.
+        /// Constructs an object.    
         /// </summary>
         /// <typeparam name="T">The type in which the result should be casted</typeparam>
         /// <param name="type">The type of the object to be constructed.</param>
+        /// <param name="args">The constructor arguments.</param>
         /// <returns>The constructed object.</returns>
-        public static T CreateObject<T>(this Type type)
+        public static T CreateObject<T>(this Type type, params object[] args)
         {
-            return (T)type.CreateObject();
+            return (T)type.CreateObject(args);
+        }
+
+        /// <summary>
+        /// Constructs an object.
+        /// </summary>
+        /// <param name="type">The type of the object to be constructed.</param>
+        /// <param name="args">The constructor arguments.</param>
+        /// <returns>The constructed object.</returns>
+        public static object CreateObject(this Type type, params object[] args)
+        {
+            return Activator.CreateInstance(type, args);
         }
 
         /// <summary>

@@ -7,22 +7,15 @@ using System.Linq;
 namespace AppBrix.Factory
 {
     /// <summary>
-    /// Registers and executes creation of objects.
+    /// Creates objects of a given type.
     /// </summary>
-    public interface IFactory
+    /// <typeparam name="T">The type of the objects to create.</typeparam>
+    public interface IFactory<out T>
     {
         /// <summary>
-        /// Registers a factory method for the specified type.
+        /// Returns an object from the factory.
         /// </summary>
-        /// <param name="factoryMethod">The factory method.</param>
-        /// <param name="type">The type to be returned by the factory.</param>
-        void Register(Func<object> factoryMethod, Type type);
-        
-        /// <summary>
-        /// Returns an object of the specified type.
-        /// </summary>
-        /// <param name="type">The type of the object to be returned.</param>
-        /// <returns>An instance of an object of the specified type.</returns>
-        object Get(Type type);
+        /// <returns>An instance of an object.</returns>
+        T Get();
     }
 }

@@ -24,8 +24,8 @@ namespace AppBrix.Factory
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.factory.Initialize(context);
-            this.App.Container.Register(this.factory);
+            this.factoryService.Initialize(context);
+            this.App.Container.Register(this.factoryService);
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace AppBrix.Factory
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.factory.Uninitialize();
+            this.factoryService.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultFactory factory = new DefaultFactory();
+        private readonly DefaultFactoryService factoryService = new DefaultFactoryService();
         #endregion
     }
 }
