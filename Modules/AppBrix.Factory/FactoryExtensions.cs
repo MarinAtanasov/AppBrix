@@ -29,12 +29,12 @@ namespace AppBrix
         /// <typeparam name="T">The type to be returned by the factory.</typeparam>
         /// <param name="factoryService">The factory service.</param>
         /// <param name="factoryMethod">The factory method.</param>
-        public static void Register<T>(this IFactoryService factoryService, Func<T> factoryMethod)
+        public static void Register<T>(this IFactoryService factoryService, Func<T> factoryMethod) where T : class
         {
             if (factoryMethod == null)
                 throw new ArgumentNullException(nameof(factoryMethod));
 
-            factoryService.Register((Func<object>)(object)factoryMethod, typeof(T));
+            factoryService.Register(factoryMethod, typeof(T));
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace AppBrix
         /// <typeparam name="T">The type to be returned by the factory.</typeparam>
         /// <param name="factoryService">The factory service.</param>
         /// <param name="factory">The factory.</param>
-        public static void Register<T>(this IFactoryService factoryService, IFactory<T> factory)
+        public static void Register<T>(this IFactoryService factoryService, IFactory<T> factory) where T : class
         {
-            factoryService.Register((IFactory<object>)factory, typeof(T));
+            factoryService.Register(factory, typeof(T));
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace AppBrix
         /// <typeparam name="T">The type of the object to be returned.</typeparam>
         /// <param name="factoryService">The factory service.</param>
         /// <returns>An instance of an object of type T.</returns>
-        public static T Get<T>(this IFactoryService factoryService)
+        public static T Get<T>(this IFactoryService factoryService) where T : class
         {
             return (T)factoryService.Get(typeof(T));
         }
@@ -97,7 +97,7 @@ namespace AppBrix
         /// </summary>
         /// <typeparam name="T">The type of the object to be returned.</typeparam>
         /// <returns>An instance of an object of the specified type.</returns>
-        public static IFactory<T> GetFactory<T>(this IFactoryService factoryService)
+        public static IFactory<T> GetFactory<T>(this IFactoryService factoryService) where T : class
         {
             return (IFactory<T>)factoryService.GetFactory(typeof(T));
         }
