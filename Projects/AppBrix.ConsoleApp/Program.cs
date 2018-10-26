@@ -31,10 +31,10 @@ namespace AppBrix.ConsoleApp
         private static void Run(IApp app)
         {
             var generatorKey = typeof(MessageGenerator).FullName;
-            app.GetFactory().Register(() => new MessageGenerator("Test"));
+            app.GetFactoryService().Register(() => new MessageGenerator("Test"));
 
             var cache = app.GetMemoryCache();
-            cache.Set(generatorKey, app.GetFactory().Get<MessageGenerator>());
+            cache.Set(generatorKey, app.GetFactoryService().Get<MessageGenerator>());
 
             for (var i = 0; i < 20; i++)
             {

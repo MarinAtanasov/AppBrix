@@ -25,7 +25,7 @@ namespace AppBrix.Data.Impl
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
             
-            var context = (DbContext)this.app.GetFactory().Get(type);
+            var context = (DbContext)this.app.GetFactoryService().Get(type);
             (context as DbContextBase)?.Initialize(new DefaultInitializeDbContext(this.app));
             return context;
         }

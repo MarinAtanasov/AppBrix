@@ -44,7 +44,7 @@ namespace AppBrix.Web.Server
                     if (client != null)
                     {
                         this.App.Container.Register(client);
-                        this.App.GetFactory().Register(() => this.App.Get<IHttpClientFactory>().CreateClient());
+                        this.App.GetFactoryService().Register(() => this.App.Get<IHttpClientFactory>().CreateClient());
                     }
                     this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
                 })

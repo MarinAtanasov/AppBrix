@@ -34,17 +34,17 @@ namespace AppBrix.Web.Client
             };
 
             this.App.Container.Register(this.client);
-            this.App.GetFactory().Register(this.App.Get<HttpClient>);
-            this.App.GetFactory().Register(() => new DefaultHttpRequest(this.App));
+            this.App.GetFactoryService().Register(this.App.Get<HttpClient>);
+            this.App.GetFactoryService().Register(() => new DefaultHttpRequest(this.App));
 
             this.oldSettingsFactory = JsonConvert.DefaultSettings;
-            this.App.GetFactory().Register(() =>
+            this.App.GetFactoryService().Register(() =>
             {
                 var settings = this.oldSettingsFactory != null ? this.oldSettingsFactory() : new JsonSerializerSettings();
                 settings.DateFormatString = this.App.GetConfig<TimeConfig>().Format;
                 return settings;
             });
-            this.newSettingsFactory = () => this.App.GetFactory().Get<JsonSerializerSettings>();
+            this.newSettingsFactory = () => this.App.GetFactoryService().Get<JsonSerializerSettings>();
             JsonConvert.DefaultSettings = this.newSettingsFactory;
         }
 

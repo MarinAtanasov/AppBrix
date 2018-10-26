@@ -52,13 +52,13 @@ namespace AppBrix.Web.Server.Tests
             using (var app2Client = server2.CreateClient())
             {
                 app1.Container.Register(app2Client);
-                var response1 = await app1.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
+                var response1 = await app1.GetFactoryService().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdService2Url).Send<string>();
                 response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
                 var result1 = Guid.Parse(response1.Content);
                 result1.Should().Be(app2.GetConfig<AppIdConfig>().Id, "the first app should receive the second app's id");
 
                 app2.Container.Register(app1Client);
-                var response2 = await app2.GetFactory().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
+                var response2 = await app2.GetFactoryService().Get<IHttpRequest>().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>();
                 response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
                 var result2 = Guid.Parse(response2.Content);
                 result2.Should().Be(app1.GetConfig<AppIdConfig>().Id, "the second app should receive the first app's id");
@@ -104,7 +104,7 @@ namespace AppBrix.Web.Server.Tests
         {
             for (int i = 0; i < 150; i++)
             {
-                var result = app.GetFactory()
+                var result = app.GetFactoryService()
                     .Get<IHttpRequest>()
                     .SetUrl(TestControllerTests.TestConnectionServiceUrl)
                     .Send<string>()

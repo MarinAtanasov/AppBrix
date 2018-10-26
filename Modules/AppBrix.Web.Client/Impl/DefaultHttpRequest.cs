@@ -115,7 +115,7 @@ namespace AppBrix.Web.Client.Impl
         {
             if (string.IsNullOrEmpty(this.clientName))
             {
-                return (HttpClient)this.app.GetFactory().Get(typeof(HttpClient));
+                return (HttpClient)this.app.GetFactoryService().Get(typeof(HttpClient));
             }
             else
             {

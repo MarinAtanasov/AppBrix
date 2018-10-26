@@ -18,7 +18,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The current application.</param>
         /// <returns>The factory.</returns>
-        public static IFactoryService GetFactory(this IApp app)
+        public static IFactoryService GetFactoryService(this IApp app)
         {
             return (IFactoryService)app.Get(typeof(IFactoryService));
         }
