@@ -69,8 +69,8 @@ namespace AppBrix.Caching.Memory.Impl
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
                     slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
                     this.app.GetTime());
+                oldItem?.Dispose();
             }
-            oldItem?.Dispose();
         }
 
         public void Remove(object key)
@@ -86,10 +86,9 @@ namespace AppBrix.Caching.Memory.Impl
                 if (item != null)
                 {
                     this.cache.Remove(key);
+                    item.Dispose();
                 }
             }
-
-            item?.Dispose();
         }
         #endregion
 
@@ -102,7 +101,6 @@ namespace AppBrix.Caching.Memory.Impl
 
         private void RemoveExpiredEntries(MemoryCacheCleanup unused)
         {
-            List<KeyValuePair<object, CacheItem>> itemsToRemove;
             lock (this.cache)
             {
                 if (this.app == null)
@@ -110,11 +108,11 @@ namespace AppBrix.Caching.Memory.Impl
 
                 var now = this.app.GetTime();
 
-                itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
+                var itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
                 this.RemoveItems(itemsToRemove);
                 this.scheduledArgs = this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
+                this.DisposeItems(itemsToRemove);
             }
-            this.DisposeItems(itemsToRemove);
         }
 
         private void RemoveItems(List<KeyValuePair<object, CacheItem>> items)
