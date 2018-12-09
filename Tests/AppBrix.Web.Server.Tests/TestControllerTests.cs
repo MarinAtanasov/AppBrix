@@ -20,30 +20,22 @@ namespace AppBrix.Web.Server.Tests
     public sealed class TestControllerTests
     {
         #region Tests
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        [Fact(Skip = "TestServer is not working"), Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnection()
         {
-            // TODO: Fix Web Server tests
-            await System.Threading.Tasks.Task.Yield();
-            return;
-
-            //using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, this.CreateWebApp()))
-            //using (var client = server.CreateClient())
-            //{
-            //    var response = await client.GetAsync(TestControllerTests.TestConnectionServiceUrl);
-            //    response.StatusCode.Should().Be(HttpStatusCode.OK, "the request should return status OK");
-            //    var result = bool.Parse(await response.Content.ReadAsStringAsync());
-            //    result.Should().BeTrue("this is the expected result when testing the connection");
-            //}
+            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, this.CreateWebApp()))
+            using (var client = server.CreateClient())
+            {
+                var response = await client.GetAsync(TestControllerTests.TestConnectionServiceUrl);
+                response.StatusCode.Should().Be(HttpStatusCode.OK, "the request should return status OK");
+                var result = bool.Parse(await response.Content.ReadAsStringAsync());
+                result.Should().BeTrue("this is the expected result when testing the connection");
+            }
         }
 
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        [Fact(Skip = "TestServer is not working"), Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnectionBetweenTwoApps()
         {
-            // TODO: Fix Web Server tests
-            await System.Threading.Tasks.Task.Yield();
-            return;
-
             var app1 = this.CreateWebApp();
             var app2 = this.CreateWebApp();
             using (var server1 = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app1))
@@ -65,12 +57,9 @@ namespace AppBrix.Web.Server.Tests
             }
         }
 
-        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        [Fact(Skip = "TestServer is not working"), Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceWebServer()
         {
-            // TODO: Fix Web Server tests
-            return;
-
             var app = this.CreateWebApp();
             using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
             using (var client = server.CreateClient())
