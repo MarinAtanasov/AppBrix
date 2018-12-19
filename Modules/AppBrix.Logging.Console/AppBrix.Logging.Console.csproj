@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <Description>Module which attaches to logging events and writes the information to the console.</Description>
-    <Copyright>Copyright 2015-2018</Copyright>
+    <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Logging.Console</AssemblyTitle>
-    <Version>0.12.0</Version>
+    <Version>0.13.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Logging.Console</AssemblyName>
     <PackageId>AppBrix.Logging.Console</PackageId>
     <PackageTags>AppBrix Module Log Console</PackageTags>
-    <PackageReleaseNotes>Update .NET Core to 2.1.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update .NET Core to 2.2.0.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>

@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <Description>Module used for making HTTP REST requests. You can override the factory for HttpClient to change the behavior.</Description>
-    <Copyright>Copyright 2015-2018</Copyright>
+    <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Web.Client</AssemblyTitle>
-    <Version>0.12.0</Version>
+    <Version>0.13.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Web.Client</AssemblyName>
     <PackageId>AppBrix.Web.Client</PackageId>
     <PackageTags>AppBrix Module Web Client</PackageTags>
-    <PackageReleaseNotes>Update .NET Core to 2.1.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update .NET Core to 2.2.0.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
@@ -20,10 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 param([String]$Tests="Functional", [switch]$Parallel, [switch]$Build);
 
-$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp2.0/$($_.Name).dll") };
+$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp2.2/$($_.Name).dll") };
 $filter = "";
 $execute = "";
 

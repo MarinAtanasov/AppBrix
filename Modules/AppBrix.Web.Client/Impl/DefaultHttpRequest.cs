@@ -113,14 +113,9 @@ namespace AppBrix.Web.Client.Impl
         #region Private methods
         private HttpClient GetClient()
         {
-            if (string.IsNullOrEmpty(this.clientName))
-            {
-                return (HttpClient)this.app.GetFactoryService().Get(typeof(HttpClient));
-            }
-            else
-            {
-                return this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
-            }
+            return string.IsNullOrEmpty(this.clientName) ?
+                (HttpClient)this.app.GetFactoryService().Get(typeof(HttpClient)) :
+                this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
         }
 
         private async Task<HttpResponseMessage> GetResponse(HttpClient client)

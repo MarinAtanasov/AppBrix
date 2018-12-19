@@ -24,10 +24,11 @@ namespace AppBrix.Data.Impl
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
-            
-            var context = (DbContext)this.app.GetFactoryService().Get(type);
+
+            var factory = this.app.GetFactoryService().GetFactory(type);
+            var context = factory != null ? factory.Get() : type.CreateObject();
             (context as DbContextBase)?.Initialize(new DefaultInitializeDbContext(this.app));
-            return context;
+            return (DbContext)context;
         }
         #endregion
 

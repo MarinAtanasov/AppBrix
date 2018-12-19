@@ -201,6 +201,7 @@ namespace AppBrix.Data.Migration.Impl
                 .AddSingleton(context.GetService<IMigrationsIdGenerator>())
                 .AddSingleton(context.GetService<IMigrationsModelDiffer>())
                 .AddSingleton(context.GetService<IMigrator>())
+                .AddSingleton(context.GetService<IRelationalTypeMappingSource>())
                 .AddSingleton<ICSharpHelper, CSharpHelper>()
                 .AddSingleton<ICSharpMigrationOperationGenerator, CSharpMigrationOperationGenerator>()
                 .AddSingleton<ICSharpSnapshotGenerator, CSharpSnapshotGenerator>()
