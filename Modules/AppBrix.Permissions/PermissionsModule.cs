@@ -3,6 +3,7 @@
 //
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
+using AppBrix.Permissions.Configuration;
 using AppBrix.Permissions.Impl;
 using System;
 using System.Linq;
@@ -23,8 +24,11 @@ namespace AppBrix.Permissions
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
+            this.permissionsService = this.App.GetConfig<PermissionsConfig>().EnableCaching ?
+                new CachedPermissionsService(new DefaultPermissionsService()) :
+                (IApplicationLifecycle)new DefaultPermissionsService();
             this.permissionsService.Initialize(context);
-            this.App.Container.Register(this.permissionsService);
+            this.App.Container.Register(this.permissionsService, this.permissionsService.GetType());
         }
 
         /// <summary>
@@ -33,12 +37,13 @@ namespace AppBrix.Permissions
         /// </summary>
         protected override void UninitializeModule()
         {
-            this.permissionsService.Uninitialize();
+            this.permissionsService?.Uninitialize();
+            this.permissionsService = null;
         }
         #endregion
 
         #region Private fields and constants
-        private readonly CachedPermissionsService permissionsService = new CachedPermissionsService(new DefaultPermissionsService());
+        private IApplicationLifecycle permissionsService;
         #endregion
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AppBrix.Permissions.Impl
 {
-    internal sealed class CachedPermissionsService : IPermissionsService
+    internal sealed class CachedPermissionsService : IPermissionsService, IApplicationLifecycle
     {
         #region Construction
         public CachedPermissionsService(DefaultPermissionsService service)

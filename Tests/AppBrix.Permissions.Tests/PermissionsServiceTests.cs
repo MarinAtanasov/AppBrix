@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Permissions;
+using AppBrix.Permissions.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -346,6 +347,8 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceHasPermission()
         {
+            this.app.GetConfig<PermissionsConfig>().EnableCaching = false;
+            this.app.Reinitialize();
             var service = this.app.GetPermissionsService();
             service.Allow("a", "p");
             service.AddParent("a", "a1");
@@ -358,14 +361,33 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            Action action = this.TestPerformanceHasPermissionInternal;
+            Action action = () => this.TestPerformanceHasPermissionInternal(15000);
             TestUtils.TestPerformance(action);
         }
 
-        private void TestPerformanceHasPermissionInternal()
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceHasPermissionCached()
         {
             var service = this.app.GetPermissionsService();
-            for (int i = 0; i < 80000; i++)
+            service.Allow("a", "p");
+            service.AddParent("a", "a1");
+            service.Allow("a1", "p1");
+            service.AddParent("a", "a2");
+            service.Deny("a2", "p1");
+            service.Allow("a2", "p2");
+            service.AddParent("a2", "a21");
+            service.Allow("a21", "p21");
+            service.AddParent("a2", "a22");
+            service.Allow("a22", "p22");
+
+            Action action = () => this.TestPerformanceHasPermissionInternal(80000);
+            TestUtils.TestPerformance(action);
+        }
+
+        private void TestPerformanceHasPermissionInternal(int repeats)
+        {
+            var service = this.app.GetPermissionsService();
+            for (int i = 0; i < repeats; i++)
             {
                 service.HasPermission("a", "p");
                 service.HasPermission("a", "p1");
@@ -376,6 +398,8 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceAddPermission()
         {
+            this.app.GetConfig<PermissionsConfig>().EnableCaching = false;
+            this.app.Reinitialize();
             var service = this.app.GetPermissionsService();
             service.Allow("a", "p");
             service.AddParent("a", "a1");
@@ -388,14 +412,33 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            Action action = this.TestPerformanceAddPermissionInternal;
+            Action action = () => this.TestPerformanceAddPermissionInternal(50000);
             TestUtils.TestPerformance(action);
         }
 
-        private void TestPerformanceAddPermissionInternal()
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceAddPermissionCached()
         {
             var service = this.app.GetPermissionsService();
-            for (int i = 0; i < 2000; i++)
+            service.Allow("a", "p");
+            service.AddParent("a", "a1");
+            service.Allow("a1", "p1");
+            service.AddParent("a", "a2");
+            service.Deny("a2", "p1");
+            service.Allow("a2", "p2");
+            service.AddParent("a2", "a21");
+            service.Allow("a21", "p21");
+            service.AddParent("a2", "a22");
+            service.Allow("a22", "p22");
+
+            Action action = () => this.TestPerformanceAddPermissionInternal(2000);
+            TestUtils.TestPerformance(action);
+        }
+
+        private void TestPerformanceAddPermissionInternal(int repeats)
+        {
+            var service = this.app.GetPermissionsService();
+            for (int i = 0; i < repeats; i++)
             {
                 var item = (i % 20).ToString();
                 service.Allow("a", item);
