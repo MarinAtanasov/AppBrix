@@ -1,9 +1,19 @@
-param([String]$Tests="Functional", [switch]$Parallel, [switch]$Build);
+param([String]$Tests="Functional", [switch]$Parallel, [switch]$Build, [switch]$Release);
 
-$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/Debug/netcoreapp2.2/$($_.Name).dll") };
+$version = "netcoreapp2.2"
+
+$configuration = "Debug";
+if ($Release)
+{
+    $configuration = "Release";
+}
+
+if ($Build)
+{
+    dotnet build AppBrix.sln --configuration $($configuration);
+}
+
 $filter = "";
-$execute = "";
-
 if ($Tests -eq "functional" -or $Tests -eq "f")
 {
     $filter = "--TestCaseFilter:Category=Functional";
@@ -13,14 +23,11 @@ elseif ($Tests -eq "performance" -or $Tests -eq "p")
     $filter = "--TestCaseFilter:Category=Performance";
 }
 
+$execute = "";
 if ($Parallel)
 {
     $execute = "--Parallel";
 }
 
-if ($Build)
-{
-    dotnet build AppBrix.sln;
-}
-
+$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/$($configuration)/$($version)/$($_.Name).dll") };
 dotnet vstest $paths $filter $execute;
