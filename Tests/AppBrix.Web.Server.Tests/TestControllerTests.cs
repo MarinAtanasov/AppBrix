@@ -20,7 +20,7 @@ namespace AppBrix.Web.Server.Tests
     public sealed class TestControllerTests
     {
         #region Tests
-        [Fact(Skip = "TestServer is not working"), Trait(TestCategories.Category, TestCategories.Functional)]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnection()
         {
             using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, this.CreateWebApp()))
@@ -33,7 +33,7 @@ namespace AppBrix.Web.Server.Tests
             }
         }
 
-        [Fact(Skip = "TestServer is not working"), Trait(TestCategories.Category, TestCategories.Functional)]
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnectionBetweenTwoApps()
         {
             var app1 = this.CreateWebApp();
@@ -57,7 +57,7 @@ namespace AppBrix.Web.Server.Tests
             }
         }
 
-        [Fact(Skip = "TestServer is not working"), Trait(TestCategories.Category, TestCategories.Performance)]
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceWebServer()
         {
             var app = this.CreateWebApp();
@@ -91,13 +91,13 @@ namespace AppBrix.Web.Server.Tests
 
         private void TestPerformanceWebServerInternal(IApp app)
         {
-            for (int i = 0; i < 150; i++)
+            for (int i = 0; i < 50; i++)
             {
-                var result = app.GetFactoryService()
+                app.GetFactoryService()
                     .Get<IHttpRequest>()
                     .SetUrl(TestControllerTests.TestConnectionServiceUrl)
                     .Send<string>()
-                    .Result;
+                    .Wait();
             }
         }
         #endregion

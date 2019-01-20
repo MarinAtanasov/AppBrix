@@ -162,24 +162,15 @@ namespace AppBrix.Web.Client.Impl
 
         private HttpContent CreateContent()
         {
-            var type = this.content.GetType();
-
-            HttpContent result;
-
-            if (typeof(HttpContent).IsAssignableFrom(type))
-                result = (HttpContent)this.content;
-            else if (typeof(Stream).IsAssignableFrom(type))
-                result = new StreamContent((Stream)this.content);
-            else if (typeof(IEnumerable<KeyValuePair<string, string>>).IsAssignableFrom(type))
-                result = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)this.content);
-            else if (typeof(byte[]).IsAssignableFrom(type))
-                result = new ByteArrayContent((byte[])this.content);
-            else if (typeof(string).IsAssignableFrom(type))
-                result = new StringContent((string)this.content);
-            else
-                result = new StringContent(JsonConvert.SerializeObject(this.content));
-
-            return result;
+            switch (this.content)
+            {
+                case string s: return new StringContent(s);
+                case byte[] b: return new ByteArrayContent(b);
+                case Stream s: return new StreamContent(s);
+                case HttpContent c: return c;
+                case IEnumerable<KeyValuePair<string, string>> m: return new FormUrlEncodedContent(m);
+                default: return new StringContent(JsonConvert.SerializeObject(this.content));
+            }
         }
 
         private async Task<T> GetResponseContent<T>(HttpContent content)
@@ -188,12 +179,12 @@ namespace AppBrix.Web.Client.Impl
 
             object contentValue;
 
-            if (type == typeof(Stream))
-                contentValue = await content.ReadAsStreamAsync();
+            if (type == typeof(string))
+                contentValue = await content.ReadAsStringAsync();
             else if (type == typeof(byte[]))
                 contentValue = await content.ReadAsByteArrayAsync();
-            else if (type == typeof(string))
-                contentValue = await content.ReadAsStringAsync();
+            else if (type == typeof(Stream))
+                contentValue = await content.ReadAsStreamAsync();
             else if (type == typeof(NameValueCollection))
                 contentValue = await content.ReadAsFormDataAsync();
             else
