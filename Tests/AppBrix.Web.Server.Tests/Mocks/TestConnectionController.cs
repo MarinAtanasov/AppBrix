@@ -29,10 +29,21 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// Returns false if the current application is null.
         /// </summary>
         /// <returns></returns>
-        [HttpDelete, HttpGet, HttpHead, HttpPatch, HttpPost, HttpPut]
+        [HttpGet]
         public bool TestConnection()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Returns true to indicate that the service has been reached as expected.
+        /// Returns false if the current application is null.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public int TestConnection([FromBody]int number)
+        {
+            return number;
         }
         #endregion
     }

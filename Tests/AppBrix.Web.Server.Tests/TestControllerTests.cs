@@ -23,13 +23,29 @@ namespace AppBrix.Web.Server.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnection()
         {
-            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, this.CreateWebApp()))
+            var app = this.CreateWebApp();
+            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
             using (var client = server.CreateClient())
             {
-                var response = await client.GetAsync(TestControllerTests.TestConnectionServiceUrl);
-                response.StatusCode.Should().Be(HttpStatusCode.OK, "the request should return status OK");
-                var result = bool.Parse(await response.Content.ReadAsStringAsync());
-                result.Should().BeTrue("this is the expected result when testing the connection");
+                app.Container.Register(client);
+
+                var response = await app.GetFactoryService().Get<IHttpRequest>()
+                    .SetUrl(TestControllerTests.TestConnectionServiceUrl)
+                    .SetHeader("x-test", "test")
+                    .SetHeader("x-test")
+                    .Send();
+                response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the GET request should return status OK");
+
+                var postResponse = await app.GetFactoryService().Get<IHttpRequest>()
+                    .SetUrl(TestControllerTests.TestConnectionServiceUrl)
+                    .SetClientName(string.Empty)
+                    .SetContent(42)
+                    .SetHeader("Content-Type", "application/json")
+                    .SetMethod(HttpMethod.Post)
+                    .SetVersion(new Version(1, 1))
+                    .Send<string>();
+                postResponse.StatusCode.Should().Be((int)HttpStatusCode.OK, "the POST request should return status OK");
+                int.Parse(postResponse.Content).Should().Be(42, "the request should return the same integer that has been passed");
             }
         }
 
