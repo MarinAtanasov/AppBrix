@@ -120,6 +120,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All", "Bundles\AppB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All.Server", "Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj", "{C3783D6A-C7AF-4325-A502-131247B74FFA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Tests", "Tests\AppBrix.Data.Tests\AppBrix.Data.Tests.csproj", "{90855AE8-A8F3-4925-902C-1A9552C5AF2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -323,6 +325,10 @@ Global
 		{C3783D6A-C7AF-4325-A502-131247B74FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3783D6A-C7AF-4325-A502-131247B74FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3783D6A-C7AF-4325-A502-131247B74FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -377,6 +383,7 @@ Global
 		{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{653EF513-D3B4-412C-8126-13BB57D24E77} = {44FD92A1-E8A6-484C-9287-7AAAC3CE0C41}
 		{C3783D6A-C7AF-4325-A502-131247B74FFA} = {44FD92A1-E8A6-484C-9287-7AAAC3CE0C41}
+		{90855AE8-A8F3-4925-902C-1A9552C5AF2A} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}
