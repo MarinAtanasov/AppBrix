@@ -3,10 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace AppBrix.Data.Tests.Mocks
+namespace Tests.Mocks
 {
-    internal sealed class DataItemContextMock : DbContextBase
+    /// <summary>
+    /// A dummy DB context used during tests.
+    /// </summary>
+    public sealed class DataItemContextMock : DbContextBase
     {
+        /// <summary>
+        /// Gets or sets the items in the context.
+        /// </summary>
         public DbSet<DataItemMock> Items { get; set; }
     }
 }

@@ -1,29 +1,44 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.InMemory;
+using AppBrix.Configuration;
 using AppBrix.Data.Migration;
-using AppBrix.Data.Tests.Mocks;
+using AppBrix.Data.Migration.Configuration;
+using AppBrix.Data.Sqlite;
+using AppBrix.Data.Sqlite.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tests.Mocks;
 using Xunit;
 
 namespace AppBrix.Data.Tests
 {
-    public sealed class DataTests : IDisposable
+    public sealed class SqliteDataTests : IDisposable
     {
         #region Setup and cleanup
-        public DataTests()
+        public SqliteDataTests()
         {
-            this.app = TestUtils.CreateTestApp(typeof(InMemoryDataModule), typeof(MigrationDataModule));
+            this.app = TestUtils.CreateTestApp(typeof(SqliteDataModule), typeof(MigrationDataModule));
+            this.app.GetConfig<SqliteDataConfig>().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
+            this.app.GetConfig<MigrationDataConfig>().EntryAssembly = this.GetType().Assembly.FullName;
+            this.app.GetConfig<AppConfig>().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
             this.app.Start();
+
+            this.globalContext = this.app.GetDbContextService().Get<MigrationContext>();
+            this.globalContext.Database.OpenConnection();
+
+            this.app.GetConfig<AppConfig>().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
+            this.app.Restart();
         }
 
         public void Dispose()
         {
+            this.globalContext.Database.CloseConnection();
+            this.globalContext.Dispose();
             this.app.Stop();
         }
         #endregion
@@ -42,7 +57,7 @@ namespace AppBrix.Data.Tests
             {
                 var item = context.Items.Single();
                 item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
-                item.Content.Should().Be(nameof(TestCrudOperations), $"{item.Content} should be saved");
+                item.Content.Should().Be(nameof(TestCrudOperations), $"{nameof(item.Content)} should be saved");
                 item.Content = nameof(DataItemContextMock);
                 context.SaveChanges();
             }
@@ -50,7 +65,7 @@ namespace AppBrix.Data.Tests
             using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
             {
                 var item = context.Items.Single();
-                item.Content.Should().Be(nameof(DataItemContextMock), $"{item.Content} should be updated");
+                item.Content.Should().Be(nameof(DataItemContextMock), $"{nameof(item.Content)} should be updated");
                 context.Items.Remove(item);
                 context.SaveChanges();
             }
@@ -77,7 +92,7 @@ namespace AppBrix.Data.Tests
                 context.SaveChanges();
             }
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 100; i++)
             {
                 using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
                 {
@@ -95,6 +110,7 @@ namespace AppBrix.Data.Tests
 
         #region Private fields and constants
         private readonly IApp app;
+        private readonly MigrationContext globalContext;
         #endregion
     }
 }

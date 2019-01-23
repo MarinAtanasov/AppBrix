@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Data.Migration.Data;
+using AppBrix.Data.Migration.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -169,14 +170,18 @@ namespace AppBrix.Data.Migration.Impl
 
         private IEnumerable<MetadataReference> GetReferences()
         {
-            return Assembly.GetEntryAssembly().GetAllReferencedAssemblies().Select(x => MetadataReference.CreateFromFile(x.Location));
+            var entryAssemblyName = this.app.GetConfig<MigrationDataConfig>().EntryAssembly;
+            var entryAssembly = string.IsNullOrEmpty(entryAssemblyName) ?
+                Assembly.GetEntryAssembly() :
+                Assembly.Load(entryAssemblyName);
+            return entryAssembly.GetAllReferencedAssemblies().Concat(new[] { entryAssembly }).Select(x => MetadataReference.CreateFromFile(x.Location));
         }
 
         private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)
         {
             using (var context = (DbContextBase)this.contextService.Get(type))
             {
-                context.Initialize(new DefaultInitializeDbContext(this.app, oldMigrationsAssembly));
+                context.Initialize(new DefaultInitializeDbContext(this.app, oldMigrationsAssembly, this.GenerateMigrationAssemblyName(type)));
                 var scaffolder = this.CreateMigrationsScaffolder(context);
                 return scaffolder.ScaffoldMigration(migrationName, context.GetType().Namespace);
             }
@@ -234,7 +239,7 @@ namespace AppBrix.Data.Migration.Impl
             this.LoadAssembly(migrationAssemblyName, scaffoldedMigration.SnapshotCode, migration);
             using (var context = (DbContextBase)this.contextService.Get(type))
             {
-                context.Initialize(new DefaultInitializeDbContext(this.app, migrationAssemblyName));
+                context.Initialize(new DefaultInitializeDbContext(this.app, migrationAssemblyName, this.GenerateMigrationsHistoryTableName(type)));
                 context.Database.Migrate();
             }
 
@@ -279,6 +284,11 @@ namespace AppBrix.Data.Migration.Impl
         private string GenerateMigrationName(Type type, Version version)
         {
             return string.Format("{0}_{1}", type.Name, version.ToString().Replace('.', '_'));
+        }
+
+        private string GenerateMigrationsHistoryTableName(Type type)
+        {
+            return $"__EFMH_{type.Name}";
         }
         #endregion
 

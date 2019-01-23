@@ -45,6 +45,12 @@ namespace AppBrix
                         // Ignore assemblies which cannot be found or loaded.
                         continue;
                     }
+                    catch (FileNotFoundException)
+                    {
+                        // Ignore assemblies which cannot be found or loaded.
+                        continue;
+                    }
+
 
                     if (!locations.Add(referencedAssembly.Location))
                         continue;

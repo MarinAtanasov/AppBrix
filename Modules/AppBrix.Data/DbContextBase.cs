@@ -1,10 +1,10 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Data.Impl;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using AppBrix.Data.Impl;
 
 namespace AppBrix.Data
 {
@@ -23,6 +23,12 @@ namespace AppBrix.Data
         /// Gets the migrations assembly to be used during migrations.
         /// </summary>
         protected string MigrationsAssembly { get; private set; }
+
+        /// <summary>
+        /// Gets the migrations history table name.
+        /// This is used when creating automated DB migrations.
+        /// </summary>
+        protected string MigrationsHistoryTable { get; private set; }
         #endregion
 
         #region Public and overriden methods
@@ -35,6 +41,7 @@ namespace AppBrix.Data
         {
             this.App = context.App;
             this.MigrationsAssembly = context.MigrationsAssembly;
+            this.MigrationsHistoryTable = context.MigrationsHistoryTable;
         }
 
         /// <summary>
@@ -54,7 +61,7 @@ namespace AppBrix.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             this.App.GetDbContextConfigurer().Configure(
-                new DefaultOnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly));
+                new DefaultOnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly, this.MigrationsHistoryTable));
         }
         #endregion
     }

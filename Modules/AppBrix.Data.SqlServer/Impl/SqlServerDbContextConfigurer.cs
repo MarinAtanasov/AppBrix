@@ -25,7 +25,10 @@ namespace AppBrix.Data.SqlServer.Impl
         {
             context.OptionsBuilder.UseSqlServer(
                 this.connectionString,
-                builder => builder.MigrationsAssembly(context.MigrationsAssembly));
+                builder => builder
+                    .MigrationsAssembly(context.MigrationsAssembly)
+                    .MigrationsHistoryTable(context.MigrationsHistoryTable)
+            );
         }
 
         private string connectionString;

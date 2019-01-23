@@ -30,6 +30,7 @@
     <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
   </ItemGroup>
 
 </Project>
