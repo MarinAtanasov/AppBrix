@@ -26,7 +26,7 @@ namespace AppBrix.Web.Client.Impl
         #region Public and overriden methods
         public async Task<IHttpResponse> Send()
         {
-            using (var response = await this.GetResponse(this.GetClient()))
+            using (var response = await this.GetResponse(this.app.Get<IHttpClientFactory>().CreateClient(this.clientName)))
             {
                 return new DefaultHttpResponse<string>(
                     new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
@@ -39,7 +39,7 @@ namespace AppBrix.Web.Client.Impl
 
         public async Task<IHttpResponse<T>> Send<T>()
         {
-            using (var response = await this.GetResponse(this.GetClient()))
+            using (var response = await this.GetResponse(this.app.Get<IHttpClientFactory>().CreateClient(this.clientName)))
             {
                 var responseContent = response.Content;
                 var contentValue = await this.GetResponseContent<T>(responseContent);
@@ -111,13 +111,6 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Private methods
-        private HttpClient GetClient()
-        {
-            return string.IsNullOrEmpty(this.clientName) ?
-                (HttpClient)this.app.GetFactoryService().Get(typeof(HttpClient)) :
-                this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
-        }
-
         private async Task<HttpResponseMessage> GetResponse(HttpClient client)
         {
             var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);

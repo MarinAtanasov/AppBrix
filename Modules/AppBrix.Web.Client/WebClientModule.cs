@@ -27,14 +27,16 @@ namespace AppBrix.Web.Client
         protected override void InitializeModule(IInitializeContext context)
         {
             this.App.Container.Register(this);
+
             var config = this.App.GetConfig<WebClientConfig>();
             this.client = new HttpClient(new HttpClientHandler { MaxConnectionsPerServer = config.MaxConnectionsPerServer }, true)
             {
                 Timeout = config.RequestTimeout
             };
-
             this.App.Container.Register(this.client);
-            this.App.GetFactoryService().Register(this.App.Get<HttpClient>);
+
+            this.httpClientFactory.Initialize(context);
+            this.App.Container.Register(this.httpClientFactory);
             this.App.GetFactoryService().Register(() => new DefaultHttpRequest(this.App));
 
             this.oldSettingsFactory = JsonConvert.DefaultSettings;
@@ -58,6 +60,8 @@ namespace AppBrix.Web.Client
             {
                 JsonConvert.DefaultSettings = this.oldSettingsFactory;
             }
+
+            this.httpClientFactory.Uninitialize();
             this.client?.Dispose();
             this.client = null;
         }
@@ -65,6 +69,7 @@ namespace AppBrix.Web.Client
 
         #region Private fields and constants
         private HttpClient client;
+        private DefaultHttpClientFactory httpClientFactory = new DefaultHttpClientFactory();
         private Func<JsonSerializerSettings> oldSettingsFactory;
         private Func<JsonSerializerSettings> newSettingsFactory;
         #endregion
