@@ -9,17 +9,17 @@ namespace AppBrix.Lifecycle
     internal sealed class DefaultUpgradeContext : DefaultInstallContext, IUpgradeContext
     {
         #region Construction
-        public DefaultUpgradeContext(IApp app, Version upgradeFrom) : base(app)
+        public DefaultUpgradeContext(IApp app, Version previousVersion) : base(app)
         {
-            if (upgradeFrom == null)
-                throw new ArgumentNullException(nameof(upgradeFrom));
+            if (previousVersion == null)
+                throw new ArgumentNullException(nameof(previousVersion));
 
-            this.UpgradeFrom = upgradeFrom;
+            this.PreviousVersion = previousVersion;
         }
         #endregion
 
         #region Properties
-        public Version UpgradeFrom { get; }
+        public Version PreviousVersion { get; }
         #endregion
     }
 }

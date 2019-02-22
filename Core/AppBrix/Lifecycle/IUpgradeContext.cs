@@ -14,6 +14,6 @@ namespace AppBrix.Lifecycle
         /// <summary>
         /// Gets the previously installed version of the module being upgraded.
         /// </summary>
-        Version UpgradeFrom { get; }
+        Version PreviousVersion { get; }
     }
 }
