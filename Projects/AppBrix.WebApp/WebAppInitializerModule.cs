@@ -11,6 +11,7 @@ using AppBrix.Modules;
 using AppBrix.Text;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
+using AppBrix.WebApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,6 +61,8 @@ namespace AppBrix.WebApp
         /// <param name="context">The initialization context.</param>
         protected override void InitializeModule(IInitializeContext context)
         {
+            this.booksService.Initialize(context);
+            this.App.Container.Register(this.booksService);
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
             this.App.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
         }
@@ -70,6 +73,7 @@ namespace AppBrix.WebApp
         /// </summary>
         protected override void UninitializeModule()
         {
+            this.booksService.Uninitialize();
         }
         #endregion
 
@@ -128,6 +132,7 @@ namespace AppBrix.WebApp
             typeof(WebClientModule),
             typeof(WebServerModule)
         };
+        private BooksService booksService = new BooksService();
         #endregion
     }
 }
