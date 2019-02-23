@@ -2,10 +2,9 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace AppBrix.Events.Async.Impl
@@ -21,9 +20,13 @@ namespace AppBrix.Events.Async.Impl
         /// </summary>
         public TaskQueue()
         {
-            this.tasks = new BlockingCollection<T>();
-            this.cancelTokenSource = new CancellationTokenSource();
-            this.runner = Task.Factory.StartNew(this.Run, this.cancelTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            this.channel = Channel.CreateUnbounded<T>(new UnboundedChannelOptions
+            {
+                AllowSynchronousContinuations = true,
+                SingleReader = true,
+                SingleWriter = false
+            });
+            this.runner = this.Run();
         }
         #endregion
 
@@ -37,16 +40,11 @@ namespace AppBrix.Events.Async.Impl
             if (!this.isDisposed)
             {
                 this.isDisposed = true;
-                this.cancelTokenSource.Cancel();
-                // We need to add another element to trigger the enumerator
-                // in order to cancel the runner and dispose of the thread.
-                object exitTask = null;
-                this.tasks.Add((T)exitTask);
+
+                this.channel.Writer.Complete();
                 try { this.runner.Wait(); }
                 catch (AggregateException) { }
 
-                this.cancelTokenSource.Dispose();
-                this.tasks.Dispose();
                 this.handlers.Clear();
             }
         }
@@ -74,23 +72,17 @@ namespace AppBrix.Events.Async.Impl
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            this.tasks.Add(task);
+            this.channel.Writer.TryWrite(task);
         }
         #endregion
 
         #region Private methods
-        /// <summary>
-        /// Iterates over the scheduled tasks and executes them in order. Should be called only from the constructor.
-        /// This method executes continuously inside a separate thread until it is cancelled during <see cref="Dispose"/>.
-        /// </summary>
-        private void Run()
+        private async Task Run()
         {
-            foreach (var args in this.tasks.GetConsumingEnumerable())
+            var reader = this.channel.Reader;
+            while (await reader.WaitToReadAsync())
+            while (reader.TryRead(out var args))
             {
-                // Throw only after flushing the queue.
-                if (args == null)
-                    this.cancelTokenSource.Token.ThrowIfCancellationRequested();
-
                 for (var i = 0; i < this.handlers.Count; i++)
                 {
                     try
@@ -111,10 +103,9 @@ namespace AppBrix.Events.Async.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly CancellationTokenSource cancelTokenSource;
+        private readonly Channel<T> channel;
         private readonly List<Action<T>> handlers = new List<Action<T>>();
         private readonly Task runner;
-        private readonly BlockingCollection<T> tasks;
         private bool isDisposed;
         #endregion
     }

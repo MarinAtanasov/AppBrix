@@ -207,11 +207,11 @@ namespace AppBrix.Events.Async.Tests
             var hub = this.GetAsyncEventHub();
             Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when getting the async event hub");
             hub.Subscribe<IEvent>(e => { });
-            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads + 1, "a thread should be created when subscribing to a new event");
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a new event");
             hub.Subscribe<IEvent>(e => { });
-            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads + 1, "no new threads should be created when subscribing to an event with subscribers");
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when subscribing to an event with subscribers");
             hub.Subscribe<EventMock>(e => { });
-            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads + 2, "a thread should be created when subscribing to a second new event");
+            Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a second new event");
             this.app.Stop();
             Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "threads should be disposed of on uninitialization");
         }
@@ -287,7 +287,7 @@ namespace AppBrix.Events.Async.Tests
             var interfaceCalled = 0;
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 25000;
+            var calledCount = 10000;
             for (int i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
