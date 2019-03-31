@@ -34,8 +34,8 @@ namespace AppBrix.Cloning.Impl
             if (original == null)
                 return null;
 
-            if (original is Delegate)
-                return null;
+            if (original is Type)
+                return original;
 
             var type = original.GetType();
 

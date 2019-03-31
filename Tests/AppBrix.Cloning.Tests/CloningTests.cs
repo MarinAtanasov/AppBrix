@@ -138,6 +138,19 @@ namespace AppBrix.Cloning.Tests
             clone.Other.Other.Should().BeSameAs(clone, "the clone's reference should be referencing the clone");
         }
 
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestDeepCopyDelegateMock()
+        {
+            var cloner = this.GetCloner();
+            var original = new DelegateWrapperMock();
+            original.Delegate = () => original;
+            var clone = cloner.DeepCopy<DelegateWrapperMock>(original);
+            original.Delegate().Should().BeSameAs(original, "the original's delegate should not be changed");
+            clone.Should().NotBeSameAs(original, "the original should be deep cloned");
+            clone.Delegate.Should().NotBeNull("the delegate should be cloned");
+            clone.Delegate().Should().BeSameAs(clone, "the delegated reference to the original object should be switched to the cloned one");
+        }
+
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceDeepCopy()
         {

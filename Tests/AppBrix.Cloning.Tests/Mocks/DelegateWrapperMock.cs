@@ -6,8 +6,8 @@ using System.Linq;
 
 namespace AppBrix.Cloning.Tests.Mocks
 {
-    internal sealed class SelfReferencingMock
+    internal sealed class DelegateWrapperMock
     {
-        public SelfReferencingMock Other { get; set; }
+        public Func<DelegateWrapperMock> Delegate { get; set; }
     }
 }
