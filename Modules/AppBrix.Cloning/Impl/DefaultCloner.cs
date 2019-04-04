@@ -103,7 +103,7 @@ namespace AppBrix.Cloning.Impl
             for (int i = 1; i < length; i++)
             {
                 position[lastIndex]++;
-                for (var index = lastIndex; index >= 0 && position[index] > upperBounds[index]; index--)
+                for (var index = lastIndex; index > 0 && position[index] > upperBounds[index]; index--)
                 {
                     position[index] = lowerBounds[index];
                     position[index - 1]++;
