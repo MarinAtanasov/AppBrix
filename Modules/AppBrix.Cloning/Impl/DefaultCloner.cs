@@ -57,7 +57,7 @@ namespace AppBrix.Cloning.Impl
             if (type.IsArray)
             {
                 var clonedArray = (Array)cloned;
-                this.ForEach((Array)original, (array, indices) => clonedArray.SetValue(this.DeepCopy(array.GetValue(indices), visited), indices));
+                this.ForEach((Array)original, (item, indices) => clonedArray.SetValue(this.DeepCopy(item, visited), indices));
             }
 
             var baseType = type;
@@ -82,23 +82,34 @@ namespace AppBrix.Cloning.Impl
         {
             return type == typeof(string) || type.IsValueType;
         }
-        
-        /// <summary>
-        /// Traverses a multidimentional array and executes an action for every item.
-        /// </summary>
-        /// <param name="array">The array to be traversed.</param>
-        /// <param name="action">The action to be executed on every element.</param>
-        private void ForEach(Array array, Action<Array, int[]> action)
+
+        private void ForEach(Array array, Action<object, int[]> action)
         {
-            if (array.Length == 0)
+            var length = array.Length;
+            if (length == 0)
                 return;
 
-            var walker = new ArrayTraverse(array);
-            do
+            var position = new int[array.Rank];
+            var lowerBounds = new int[array.Rank];
+            var upperBounds = new int[array.Rank];
+            var lastIndex = array.Rank - 1;
+            for (int i = 0; i <= lastIndex; i++)
             {
-                action(array, walker.Position);
+                position[i] = lowerBounds[i] = array.GetLowerBound(i);
+                upperBounds[i] = array.GetUpperBound(i);
             }
-            while (walker.Step());
+
+            action(array.GetValue(position), position);
+            for (int i = 1; i < length; i++)
+            {
+                position[lastIndex]++;
+                for (var index = lastIndex; index >= 0 && position[index] > upperBounds[index]; index--)
+                {
+                    position[index] = lowerBounds[index];
+                    position[index - 1]++;
+                }
+                action(array.GetValue(position), position);
+            }
         }
         #endregion
 
