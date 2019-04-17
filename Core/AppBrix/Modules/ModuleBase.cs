@@ -21,62 +21,80 @@ namespace AppBrix.Modules
         #endregion
 
         #region Public and overriden methods
-        /// <summary>
-        /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
-        /// </summary>
-        /// <param name="context">The install context.</param>
         void IInstallable.Install(IInstallContext context)
         {
-        }
-
-        /// <summary>
-        /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
-        /// </summary>
-        /// <param name="context">The upgrade context.</param>
-        void IInstallable.Upgrade(IUpgradeContext context)
-        {
-        }
-
-
-        /// <summary>
-        /// Default implementation does nothing. Reimplement <see cref="IInstallable"/> to override.
-        /// </summary>
-        /// <param name="context">The uninstall context.</param>
-        void IInstallable.Uninstall(IUninstallContext context)
-        {
-        }
-
-        /// <summary>
-        /// Initializes the common module logic and calls the implemented InitializeModule method.
-        /// </summary>
-        /// <param name="context">The current initialization context.</param>
-        public void Initialize(IInitializeContext context)
-        {
             this.App = context.App;
-            this.InitializeModule(context);
-        }
-
-        /// <summary>
-        /// Calls the implemented UninitializeModule method and uninitializes the common module logic.
-        /// </summary>
-        public void Uninitialize()
-        {
-            this.UninitializeModule();
+            this.Install(context);
             this.App = null;
         }
 
+        void IInstallable.Upgrade(IUpgradeContext context)
+        {
+            this.App = context.App;
+            this.Upgrade(context);
+            this.App = null;
+        }
+
+
+        void IInstallable.Uninstall(IUninstallContext context)
+        {
+            this.App = context.App;
+            this.Uninstall(context);
+            this.App = null;
+        }
+
+        void IApplicationLifecycle.Initialize(IInitializeContext context)
+        {
+            this.App = context.App;
+            this.Initialize(context);
+        }
+
+        void IApplicationLifecycle.Uninitialize()
+        {
+            this.Uninitialize();
+            this.App = null;
+        }
+        #endregion
+
+        #region Protected methods
+        /// <summary>
+        /// Installs the module by making any permanent changes required for it to be initialized in the future.
+        /// Automatically called by <see cref="ModuleBase.Install"/>
+        /// There is no need to call the base method when overriding.
+        /// </summary>
+        /// <param name="context">The install context.</param>
+        protected virtual void Install(IInstallContext context) { }
+
+        /// <summary>
+        /// Upgrades the module by making any permanent changes required for it to be initialized in the future.
+        /// Automatically called by <see cref="ModuleBase.Upgrade"/>
+        /// There is no need to call the base method when overriding.
+        /// </summary>
+        /// <param name="context">The upgrade context.</param>
+        protected virtual void Upgrade(IUpgradeContext context) { }
+
+        /// <summary>
+        /// Uninstalls the module by reverting any changes from <see cref="ModuleBase.Install"/> or <see cref="ModuleBase.Upgrade"/>.
+        /// Automatically called by <see cref="ModuleBase.Uninstall"/>.
+        /// There is no need to call the base method when overriding.
+        /// </summary>
+        /// <param name="context">The uninstall context.</param>
+        protected virtual void Uninstall(IUninstallContext context) { }
+
         /// <summary>
         /// Initializes the module.
-        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// Automatically called by <see cref="ModuleBase.Initialize"/>
+        /// There is no need to call the base method when overriding.
         /// </summary>
         /// <param name="context">The initialization context.</param>
-        protected abstract void InitializeModule(IInitializeContext context);
+        protected virtual void Initialize(IInitializeContext context) { }
 
         /// <summary>
         /// Uninitializes the module.
-        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+        /// There is no need to call the base method when overriding.
         /// </summary>
-        protected abstract void UninitializeModule();
+        protected virtual void Uninitialize() { }
         #endregion
     }
 }

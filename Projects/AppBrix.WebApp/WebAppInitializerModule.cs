@@ -24,7 +24,7 @@ namespace AppBrix.WebApp
     /// <summary>
     /// Initializes web application configuration.
     /// </summary>
-    public sealed class WebAppInitializerModule : ModuleBase, IInstallable
+    public sealed class WebAppInitializerModule : ModuleBase
     {
         #region Public and overriden methods
         public static IApp CreateApp()
@@ -38,28 +38,19 @@ namespace AppBrix.WebApp
             return app;
         }
 
-        public void Install(IInstallContext context)
+        protected override void Install(IInstallContext context)
         {
             this.InitializeAppConfig(context.App.ConfigService);
             this.InitializeLoggingConfig(context.App.ConfigService);
             context.RequestedAction = RequestedAction.Restart;
         }
 
-        public void Upgrade(IUpgradeContext context)
-        {
-        }
-
-        public void Uninstall(IUninstallContext context)
+        protected override void Uninstall(IUninstallContext context)
         {
             throw new NotSupportedException($@"Module {nameof(WebAppInitializerModule)} does not support uninstallation.");
         }
 
-        /// <summary>
-        /// Initializes the module.
-        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
-        /// </summary>
-        /// <param name="context">The initialization context.</param>
-        protected override void InitializeModule(IInitializeContext context)
+        protected override void Initialize(IInitializeContext context)
         {
             this.booksService.Initialize(context);
             this.App.Container.Register(this.booksService);
@@ -67,11 +58,7 @@ namespace AppBrix.WebApp
             this.App.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
         }
 
-        /// <summary>
-        /// Uninitializes the module.
-        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
-        /// </summary>
-        protected override void UninitializeModule()
+        protected override void Uninitialize()
         {
             this.booksService.Uninitialize();
         }

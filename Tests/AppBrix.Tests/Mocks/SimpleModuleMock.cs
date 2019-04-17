@@ -1,10 +1,10 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using System;
 using System.Linq;
-using AppBrix.Lifecycle;
 
 namespace AppBrix.Tests.Mocks
 {
@@ -14,13 +14,19 @@ namespace AppBrix.Tests.Mocks
 
         public bool IsUninitialized { get; private set; }
 
-        protected override void InitializeModule(IInitializeContext context)
+        protected override void Initialize(IInitializeContext context)
         {
+            if (this.App != context.App)
+                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+
             this.IsInitialized = true;
         }
 
-        protected override void UninitializeModule()
+        protected override void Uninitialize()
         {
+            if (this.App == null)
+                throw new InvalidOperationException($"this.{nameof(App)} should not be null.");
+
             this.IsUninitialized = true;
         }
     }

@@ -12,7 +12,7 @@ namespace AppBrix.Configuration
     {
         /// <summary>
         /// The module is enabled.
-        /// If it is <see cref="AppBrix.Lifecycle.IInstallable"/> and has not been installed yet, it will be installed.
+        /// If it has not been installed yet, it will be installed.
         /// If the module has been installed from a previous version of the module assembly, it will be upgraded.
         /// </summary>
         Enabled,
@@ -21,7 +21,7 @@ namespace AppBrix.Configuration
         /// </summary>
         Disabled,
         /// <summary>
-        /// Schedules an <see cref="AppBrix.Lifecycle.IInstallable"/> module for uninstallation.
+        /// Schedules a module for uninstallation.
         /// The module will be uninstalled during the next application uninitialization.
         /// </summary>
         Uninstalling

@@ -17,10 +17,10 @@ namespace AppBrix.Events
         #region Public and overriden methods
         /// <summary>
         /// Initializes the module.
-        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Initialize"/>
+        /// Automatically called by <see cref="ModuleBase.Initialize"/>
         /// </summary>
         /// <param name="context">The initialization context.</param>
-        protected override void InitializeModule(IInitializeContext context)
+        protected override void Initialize(IInitializeContext context)
         {
             this.App.Container.Register(this);
             this.eventHub.Initialize(context);
@@ -29,9 +29,9 @@ namespace AppBrix.Events
 
         /// <summary>
         /// Uninitializes the module.
-        /// Automatically called by <see cref="ModuleBase"/>.<see cref="ModuleBase.Uninitialize"/>
+        /// Automatically called by <see cref="ModuleBase.Uninitialize"/>
         /// </summary>
-        protected override void UninitializeModule()
+        protected override void Uninitialize()
         {
             this.eventHub.Uninitialize();
         }

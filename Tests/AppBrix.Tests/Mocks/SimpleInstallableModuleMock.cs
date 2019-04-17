@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Tests.Mocks
 {
-    internal sealed class SimpleInstallableModuleMock : SimpleModuleMock, IInstallable
+    internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
     {
         public bool IsInstalled { get; private set; }
 
@@ -15,18 +15,27 @@ namespace AppBrix.Tests.Mocks
 
         public bool IsUninstalled { get; private set; }
 
-        public void Install(IInstallContext context)
+        protected override void Install(IInstallContext context)
         {
+            if (this.App != context.App)
+                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+
             this.IsInstalled = true;
         }
 
-        public void Uninstall(IUninstallContext context)
+        protected override void Uninstall(IUninstallContext context)
         {
+            if (this.App != context.App)
+                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+
             this.IsUninstalled = true;
         }
 
-        public void Upgrade(IUpgradeContext context)
+        protected override void Upgrade(IUpgradeContext context)
         {
+            if (this.App != context.App)
+                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+
             this.IsUpgraded = true;
         }
     }
