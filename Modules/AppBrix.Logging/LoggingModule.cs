@@ -23,8 +23,15 @@ namespace AppBrix.Logging
         protected override void Initialize(IInitializeContext context)
         {
             this.App.Container.Register(this);
+
             this.logHub.Initialize(context);
             this.App.Container.Register(this.logHub);
+
+            this.loggerFactory.Initialize(context);
+            this.App.Container.Register(this.loggerFactory);
+
+            this.loggerProvider.Initialize(context);
+            this.loggerFactory.AddProvider(this.loggerProvider);
         }
 
         /// <summary>
@@ -33,12 +40,16 @@ namespace AppBrix.Logging
         /// </summary>
         protected override void Uninitialize()
         {
+            this.loggerFactory.Uninitialize();
+            this.loggerProvider.Uninitialize();
             this.logHub.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
         private readonly DefaultLogHub logHub = new DefaultLogHub();
+        private readonly DefaultLoggerFactory loggerFactory = new DefaultLoggerFactory();
+        private readonly DefaultLoggerProvider loggerProvider = new DefaultLoggerProvider();
         #endregion
     }
 }

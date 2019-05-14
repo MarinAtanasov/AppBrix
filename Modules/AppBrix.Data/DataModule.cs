@@ -38,6 +38,7 @@ namespace AppBrix.Data
         #endregion
 
         #region Private fields and constants
+        private static readonly Type[] ReferencedModules = new[] { typeof(Logging.LoggingModule) };
         private readonly DefaultDbContextService contextService = new DefaultDbContextService();
         #endregion
     }

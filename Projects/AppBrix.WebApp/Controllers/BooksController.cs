@@ -36,10 +36,10 @@ namespace AppBrix.WebApp.Controllers
             this.app.Get<BooksService>().Add(book);
         }
 
-        [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody]Book book)
+        [HttpPut]
+        public void Put([FromBody]Book book)
         {
-            this.app.Get<BooksService>().Update(id, book);
+            this.app.Get<BooksService>().Update(book);
         }
 
         [HttpDelete("{id}")]

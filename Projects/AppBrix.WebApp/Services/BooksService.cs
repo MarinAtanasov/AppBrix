@@ -49,13 +49,14 @@ namespace AppBrix.WebApp.Services
             }
         }
 
-        public void Update(Guid id, Book book)
+        public void Update(Book book)
         {
             using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
-                var original = context.Books.Single(x => x.Id == id);
-                original.Author = book.Author;
-                original.Title = book.Title;
+                var item = new Book() { Id = book.Id };
+                context.Books.Attach(item);
+                item.Author = book.Author;
+                item.Title = book.Title;
                 context.SaveChanges();
             }
         }
@@ -64,7 +65,8 @@ namespace AppBrix.WebApp.Services
         {
             using (var context = this.app.GetDbContextService().Get<BooksContext>())
             {
-                var book = context.Books.Single(x => x.Id == id);
+                var book = new Book() { Id = id };
+                context.Books.Attach(book);
                 context.Books.Remove(book);
                 context.SaveChanges();
             }

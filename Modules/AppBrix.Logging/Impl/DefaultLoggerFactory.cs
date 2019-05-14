@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
-namespace AppBrix.Web.Server.Impl
+namespace AppBrix.Logging.Impl
 {
-    internal sealed class DefaultLoggerProvider : ILoggerProvider, IApplicationLifecycle
+    internal sealed class DefaultLoggerFactory : ILoggerFactory, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)
@@ -25,9 +25,15 @@ namespace AppBrix.Web.Server.Impl
         {
         }
 
+        public void AddProvider(ILoggerProvider provider)
+        {
+            this.app.Container.Register(provider);
+        }
+
         public ILogger CreateLogger(string categoryName)
         {
-            return new DefaultLogger(this.app, categoryName);
+            var provider = (ILoggerProvider)this.app.Get(typeof(ILoggerProvider));
+            return provider.CreateLogger(categoryName);
         }
         #endregion
 

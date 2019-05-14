@@ -3,6 +3,7 @@
 //
 using AppBrix.Data.Impl;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -52,6 +53,7 @@ namespace AppBrix.Data
             base.Dispose();
             this.App = null;
             this.MigrationsAssembly = null;
+            this.MigrationsHistoryTable = null;
         }
 
         /// <summary>
@@ -60,8 +62,12 @@ namespace AppBrix.Data
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            this.App.GetDbContextConfigurer().Configure(
-                new DefaultOnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly, this.MigrationsHistoryTable));
+            this.App.GetDbContextConfigurer().Configure(new DefaultOnConfiguringDbContext(
+                this,
+                optionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>()),
+                this.MigrationsAssembly,
+                this.MigrationsHistoryTable
+            ));
         }
         #endregion
     }
