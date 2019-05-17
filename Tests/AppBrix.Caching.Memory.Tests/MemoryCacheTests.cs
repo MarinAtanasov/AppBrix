@@ -174,10 +174,10 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().Be(this, "returned item should be the same as the original");
             disposed.Should().BeFalse("the item should not have expired yet");
 
-            timeService.SetTime(timeService.GetTime().AddMilliseconds(52));
+            timeService.SetTime(timeService.GetTime().AddMilliseconds(60));
             new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
             item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
-            item.Should().BeNull("the item shold have been removed from the cache");
+            item.Should().BeNull("the item should have been removed from the cache");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

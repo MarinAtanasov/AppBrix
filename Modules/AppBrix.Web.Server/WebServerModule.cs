@@ -34,7 +34,7 @@ namespace AppBrix.Web.Server
 
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder
                 .ConfigureServices(services => services.AddSingleton(this.App))
-                .ConfigureLogging(logging => logging.AddProvider(this.App.Get<ILoggerProvider>()))
+                .ConfigureLogging(logging => logging.ClearProviders().AddProvider(this.App.Get<ILoggerProvider>()))
                 .Configure(appBuilder =>
                 {
                     appBuilder.ApplicationServices.GetRequiredService<IApplicationLifetime>().ApplicationStopped.Register(this.App.Stop);

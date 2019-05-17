@@ -29,11 +29,16 @@ namespace AppBrix.Logging.Impl
 
         public ILogger CreateLogger(string categoryName)
         {
-            DefaultLogger logger;
-            if (!this.loggers.TryGetValue(categoryName, out logger))
+            if (!this.loggers.TryGetValue(categoryName, out var logger))
             {
-                logger = new DefaultLogger(this.app, categoryName);
-                loggers.Add(categoryName, logger);
+                lock (loggers)
+                {
+                    if (!this.loggers.TryGetValue(categoryName, out logger))
+                    {
+                        logger = new DefaultLogger(this.app, categoryName);
+                        loggers.Add(categoryName, logger);
+                    }
+                }
             }
 
             return logger;
