@@ -107,7 +107,7 @@ namespace AppBrix.Web.Server.Tests
 
         private void TestPerformanceWebServerInternal(IApp app)
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 100; i++)
             {
                 app.GetFactoryService()
                     .Get<IHttpRequest>()

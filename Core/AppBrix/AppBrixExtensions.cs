@@ -57,25 +57,30 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Gets an enumeration of the classes which implement <see cref="IModule"/>
-        /// inside the assemblies referenced by the module type's assembly.
+        /// Gets the types of all modules which the current module depends on.
+        /// This method goes through the <see cref="IModule.Dependencies"/> recursively.
         /// </summary>
-        /// <param name="type">The type of the module.</param>
+        /// <param name="module">The module.</param>
         /// <returns>All modules inside the referenced assemblies.</returns>
-        public static IEnumerable<Type> GetModuleDependencies(this Type type)
+        public static IEnumerable<Type> GetAllDependencies(this IModule module)
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
-            if (!typeof(IModule).IsAssignableFrom(type))
-                throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");
+            if (module == null)
+                throw new ArgumentNullException(nameof(module));
 
-            return type.Assembly.GetAllReferencedAssemblies()
-                .Skip(1)
-                .SelectMany(assembly => assembly.ExportedTypes)
-                .Where(t => t.IsClass && !t.IsAbstract)
-                .Where(typeof(IModule).IsAssignableFrom)
-                .OrderBy(t => t.Namespace)
-                .ThenBy(t => t.Name);
+            var dependencies = new List<Type> { module.GetType() };
+            var unique = new HashSet<Type> { module.GetType() };
+            for (int i = 0; i < dependencies.Count; i++)
+            {
+                foreach (var dependency in dependencies[i].CreateObject<IModule>().Dependencies)
+                {
+                    if (unique.Add(dependency))
+                    {
+                        dependencies.Add(dependency);
+                    }
+                }
+            }
+
+            return dependencies;
         }
     }
 }

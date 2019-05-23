@@ -20,15 +20,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
+    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
-    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using AppBrix.Events.Schedule.Cron.Impl;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Events.Schedule.Cron
@@ -14,6 +15,14 @@ namespace AppBrix.Events.Schedule.Cron
     /// </summary>
     public sealed class CronScheduledEventsModule : ModuleBase
     {
+        #region Properties
+        /// <summary>
+        /// Gets the types of the modules which are direct dependencies for the current module.
+        /// This is used to determine the order in which the modules are loaded.
+        /// </summary>
+        public override IEnumerable<Type> Dependencies => new[] { typeof(ScheduledEventsModule) };
+        #endregion
+
         #region Public and overriden methods
         /// <summary>
         /// Initializes the module.

@@ -202,7 +202,7 @@ namespace AppBrix.Tests
 
         private void TestPerformanceRestartInternal(IApp app)
         {
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 2000; i++)
             {
                 app.Restart();
             }

@@ -1,14 +1,25 @@
-﻿using AppBrix.Configuration;
+﻿using AppBrix.Caching;
+using AppBrix.Caching.Memory;
+using AppBrix.Cloning;
+using AppBrix.Configuration;
 using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Yaml;
+using AppBrix.Container;
+using AppBrix.Data;
 using AppBrix.Data.Migration;
 using AppBrix.Data.Sqlite;
+using AppBrix.Events;
+using AppBrix.Events.Async;
+using AppBrix.Events.Schedule;
 using AppBrix.Events.Schedule.Cron;
+using AppBrix.Events.Schedule.Timer;
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
+using AppBrix.Permissions;
 using AppBrix.Text;
+using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
 using AppBrix.WebApp.Services;
@@ -26,6 +37,35 @@ namespace AppBrix.WebApp
     /// </summary>
     public sealed class WebAppInitializerModule : ModuleBase
     {
+        #region Properties
+        public override IEnumerable<Type> Dependencies => new[]
+        {
+            //typeof(CachingModule),
+            typeof(MemoryCachingModule),
+            typeof(CloningModule),
+            typeof(ContainerModule),
+            typeof(DataModule),
+            //typeof(InMemoryDataModule),
+            typeof(MigrationDataModule),
+            typeof(SqliteDataModule),
+            //typeof(SqlServerDataModule),
+            typeof(EventsModule),
+            typeof(AsyncEventsModule),
+            typeof(ScheduledEventsModule),
+            typeof(CronScheduledEventsModule),
+            typeof(TimerScheduledEventsModule),
+            typeof(Factory.FactoryModule),
+            typeof(Logging.LoggingModule),
+            //typeof(Logging.Console.ConsoleLoggerModule),
+            typeof(FileLoggerModule),
+            typeof(PermissionsModule),
+            typeof(TextModule),
+            typeof(TimeModule),
+            typeof(WebClientModule),
+            typeof(WebServerModule)
+        };
+        #endregion
+
         #region Public and overriden methods
         public static IApp CreateApp()
         {
@@ -71,8 +111,9 @@ namespace AppBrix.WebApp
             if (config.Modules.Count > 1)
                 throw new InvalidOperationException($@"Module {nameof(WebAppInitializerModule)} found other modules registered besides itself.");
 
-            this.GetType()
-                .GetModuleDependencies()
+            this.GetAllDependencies()
+                .OrderBy(x => x.Namespace)
+                .ThenBy(x => x.Name)
                 .Select(ModuleConfigElement.Create)
                 .ToList()
                 .ForEach(config.Modules.Add);
@@ -105,20 +146,6 @@ namespace AppBrix.WebApp
         #endregion
 
         #region Private fields and constants
-        /// <summary>
-        /// This is required in order for the assembly to reference the project references.
-        /// When there are no code references, the project reference does not become an assembly reference.
-        /// </summary>
-        private static readonly IEnumerable<Type> Modules = new List<Type>
-        {
-            typeof(MigrationDataModule),
-            typeof(SqliteDataModule),
-            typeof(FileLoggerModule),
-            typeof(CronScheduledEventsModule),
-            typeof(TextModule),
-            typeof(WebClientModule),
-            typeof(WebServerModule)
-        };
         private BooksService booksService = new BooksService();
         #endregion
     }

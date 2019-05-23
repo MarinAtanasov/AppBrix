@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
-    <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
   </ItemGroup>
 
 </Project>

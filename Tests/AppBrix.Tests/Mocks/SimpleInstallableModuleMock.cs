@@ -3,12 +3,15 @@
 //
 using AppBrix.Lifecycle;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Tests.Mocks
 {
     internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
     {
+        public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
+
         public bool IsInstalled { get; private set; }
 
         public bool IsUpgraded { get; private set; }

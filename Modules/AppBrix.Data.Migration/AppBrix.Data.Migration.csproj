@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.Data\AppBrix.Data.csproj" />
-    <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj" />
   </ItemGroup>
 
 </Project>

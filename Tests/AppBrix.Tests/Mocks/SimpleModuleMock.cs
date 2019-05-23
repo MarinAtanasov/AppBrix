@@ -4,12 +4,15 @@
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Tests.Mocks
 {
     internal class SimpleModuleMock : ModuleBase
     {
+        public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
+
         public bool IsInitialized { get; private set; }
 
         public bool IsUninitialized { get; private set; }

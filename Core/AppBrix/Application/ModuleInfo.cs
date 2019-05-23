@@ -49,57 +49,34 @@ namespace AppBrix.Application
         /// <returns>The sorted modules.</returns>
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
-            var moduleToAssembly = modules.Select(x => Tuple.Create(x, x.Module.GetType().Assembly)).ToList();
-            var assemblyReferences = ModuleInfo.GetAssemblyReferences(moduleToAssembly.Select(x => x.Item2).ToList());
             var sortedModuleInfos = new List<ModuleInfo>();
-            var loaded = new HashSet<string>();
-            var remaining = new LinkedList<Tuple<ModuleInfo, string>>(
-                moduleToAssembly.Select(x => Tuple.Create(x.Item1, x.Item2.GetName().Name)));
+            var loaded = new HashSet<Type>();
+            var remaining = new LinkedList<(ModuleInfo info, Type type, List<Type> dependencies)>(
+                modules.Select(x => (x, x.Module.GetType(), x.Module.Dependencies.ToList()))
+            );
 
-            var item = remaining.First;
-            while (item != null)
+            var current = remaining.First;
+            while (current != null)
             {
-                if (assemblyReferences[item.Value.Item2].All(loaded.Contains))
+                if (current.Value.dependencies.All(loaded.Contains))
                 {
-                    sortedModuleInfos.Add(item.Value.Item1);
-                    loaded.Add(item.Value.Item2);
-                    remaining.Remove(item);
-                    item = remaining.First;
+                    sortedModuleInfos.Add(current.Value.info);
+                    loaded.Add(current.Value.type);
+                    remaining.Remove(current);
+                    current = remaining.First;
                 }
                 else
                 {
-                    item = item.Next;
+                    current = current.Next;
                 }
             }
 
+            if (remaining.Count > 0)
+                throw new InvalidOperationException($@"The following modules have dependencies which have not been registered or enabled: {
+                        string.Join(", ", remaining.Select(x => x.type.FullName))
+                    }");
+
             return sortedModuleInfos;
-        }
-        #endregion
-
-        #region Private methods
-        private static Dictionary<string, HashSet<string>> GetAssemblyReferences(List<Assembly> assemblies)
-        {
-            var assemblyNames = new HashSet<string>(assemblies.Select(x => x.GetName().Name));
-            return assemblies
-                .Distinct(new AssemblyNameComparer())
-                .ToDictionary(
-                    x => x.GetName().Name,
-                    x => new HashSet<string>(x.GetReferencedAssemblies().Select(a => a.Name).Where(assemblyNames.Contains)));
-        }
-        #endregion
-
-        #region Private classes
-        private class AssemblyNameComparer : IEqualityComparer<Assembly>
-        {
-            public bool Equals(Assembly x, Assembly y)
-            {
-                return x.GetName().Name.Equals(y.GetName().Name);
-            }
-
-            public int GetHashCode(Assembly obj)
-            {
-                return obj.GetName().Name.GetHashCode();
-            }
         }
         #endregion
     }

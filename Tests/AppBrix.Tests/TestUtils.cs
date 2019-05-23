@@ -3,6 +3,7 @@
 //
 using AppBrix.Configuration;
 using AppBrix.Configuration.Memory;
+using AppBrix.Modules;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace AppBrix.Tests
         {
             var service = new MemoryConfigService();
             var config = service.Get<AppConfig>();
-            modules.SelectMany(module => module.GetModuleDependencies())
+            modules.SelectMany(module => module.CreateObject<IModule>().GetAllDependencies())
                 .Concat(modules)
                 .Distinct()
                 .Select(ModuleConfigElement.Create)

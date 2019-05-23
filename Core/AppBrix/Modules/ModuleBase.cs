@@ -3,6 +3,7 @@
 //
 using AppBrix.Lifecycle;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Modules
@@ -18,6 +19,19 @@ namespace AppBrix.Modules
         /// Gets the current module's app.
         /// </summary>
         protected IApp App { get; private set; }
+
+        /// <summary>
+        /// Gets the types of the modules which are direct dependencies for the current module.
+        /// This is used to determine the order in which the modules are loaded.
+        /// </summary>
+        public virtual IEnumerable<Type> Dependencies => this.GetType().Assembly
+            .GetAllReferencedAssemblies()
+            .Skip(1)
+            .SelectMany(assembly => assembly.ExportedTypes)
+            .Where(t => t.IsClass && !t.IsAbstract)
+            .Where(typeof(IModule).IsAssignableFrom)
+            .OrderBy(t => t.Namespace)
+            .ThenBy(t => t.Name);
         #endregion
 
         #region Public and overriden methods
