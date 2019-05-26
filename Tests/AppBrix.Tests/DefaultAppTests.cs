@@ -179,6 +179,12 @@ namespace AppBrix.Tests
             
             TestUtils.TestPerformance(() => this.TestPerformanceRestartInternal(app));
         }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+        public void TestPerformanceGetDependencies()
+        {
+            TestUtils.TestPerformance(this.TestPerformanceGetDependenciesInternal);
+        }
         #endregion
 
         #region Private methods
@@ -205,6 +211,15 @@ namespace AppBrix.Tests
             for (int i = 0; i < 2000; i++)
             {
                 app.Restart();
+            }
+        }
+
+        private void TestPerformanceGetDependenciesInternal()
+        {
+            var module = new SimpleEmptyModuleMock();
+            for (int i = 0; i < 100; i++)
+            {
+                var dependencies = module.Dependencies.ToList();
             }
         }
         #endregion

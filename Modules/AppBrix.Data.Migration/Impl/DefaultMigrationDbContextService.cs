@@ -174,7 +174,7 @@ namespace AppBrix.Data.Migration.Impl
             var entryAssembly = string.IsNullOrEmpty(entryAssemblyName) ?
                 Assembly.GetEntryAssembly() :
                 Assembly.Load(entryAssemblyName);
-            return entryAssembly.GetAllReferencedAssemblies().Select(x => MetadataReference.CreateFromFile(x.Location));
+            return entryAssembly.GetReferencedAssemblies(recursive: true).Select(x => MetadataReference.CreateFromFile(x.Location));
         }
 
         private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)

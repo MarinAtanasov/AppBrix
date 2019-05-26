@@ -25,13 +25,10 @@ namespace AppBrix.Modules
         /// This is used to determine the order in which the modules are loaded.
         /// </summary>
         public virtual IEnumerable<Type> Dependencies => this.GetType().Assembly
-            .GetAllReferencedAssemblies()
+            .GetReferencedAssemblies(recursive: false)
             .Skip(1)
             .SelectMany(assembly => assembly.ExportedTypes)
-            .Where(t => t.IsClass && !t.IsAbstract)
-            .Where(typeof(IModule).IsAssignableFrom)
-            .OrderBy(t => t.Namespace)
-            .ThenBy(t => t.Name);
+            .Where(t => t.IsClass && !t.IsAbstract && typeof(IModule).IsAssignableFrom(t));
         #endregion
 
         #region Public and overriden methods

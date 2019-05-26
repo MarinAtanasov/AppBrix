@@ -17,12 +17,12 @@ namespace AppBrix
     {
         #region Types and enums extensions
         /// <summary>
-        /// Get all of the referenced assemblies recursively,
-        /// starting with the provided assembly.
+        /// Get the referenced assemblies, starting with the provided assembly.
         /// </summary>
         /// <param name="current">The current assembly.</param>
-        /// <returns>All referenced assemblies.</returns>
-        public static IEnumerable<Assembly> GetAllReferencedAssemblies(this Assembly current)
+        /// <param name="recursive">If true, gets all references. If false, gets only the direct ones.</param>
+        /// <returns>The referenced assemblies.</returns>
+        public static IEnumerable<Assembly> GetReferencedAssemblies(this Assembly current, bool recursive)
         {
             var names = new HashSet<string> { current.GetName().FullName };
             var locations = new HashSet<string> { current.Location };
@@ -30,8 +30,10 @@ namespace AppBrix
 
             for (int i = 0; i < assemblyQueue.Count; i++)
             {
-                foreach (var reference in assemblyQueue[i].GetReferencedAssemblies())
+                var referencedAssemblies = assemblyQueue[i].GetReferencedAssemblies();
+                for (int j = 0; j < referencedAssemblies.Length; j++)
                 {
+                    var reference = referencedAssemblies[j];
                     if (!names.Add(reference.FullName))
                         continue;
                     
@@ -40,22 +42,21 @@ namespace AppBrix
                     {
                         referencedAssembly = Assembly.Load(reference);
                     }
-                    catch (FileLoadException)
-                    {
-                        // Ignore assemblies which cannot be found or loaded.
-                        continue;
-                    }
-                    catch (FileNotFoundException)
+                    catch (IOException)
                     {
                         // Ignore assemblies which cannot be found or loaded.
                         continue;
                     }
 
+                    if (locations.Add(referencedAssembly.Location))
+                    {
+                        assemblyQueue.Add(referencedAssembly);
+                    }
+                }
 
-                    if (!locations.Add(referencedAssembly.Location))
-                        continue;
-
-                    assemblyQueue.Add(referencedAssembly);
+                if (!recursive)
+                {
+                    break;
                 }
             }
 
