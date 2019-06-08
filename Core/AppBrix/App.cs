@@ -3,6 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Configuration;
+using AppBrix.Modules;
 using System;
 using System.Linq;
 
@@ -22,6 +23,35 @@ namespace AppBrix
         public static IApp Create(IConfigService configService)
         {
             return new DefaultApp(configService);
+        }
+
+
+        /// <summary>
+        /// Creates a default application with a specified configuration service.
+        /// Registers the provided module type in the <see cref="AppConfig"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
+        /// <param name="configService">The configuration service.</param>
+        /// <returns>The created app.</returns>
+        public static IApp Create<T>(IConfigService configService) where T : MainModuleBase, new()
+        {
+            configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<T>());
+            return App.Create(configService);
+        }
+
+
+        /// <summary>
+        /// Creates and starts a default application with a specified configuration service.
+        /// Registers the provided module type in the <see cref="AppConfig"/> before starting.
+        /// </summary>
+        /// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
+        /// <param name="configService">The configuration service.</param>
+        /// <returns>The created and started app.</returns>
+        public static IApp Start<T>(IConfigService configService) where T : MainModuleBase, new()
+        {
+            var app = App.Create<T>(configService);
+            app.Start();
+            return app;
         }
         #endregion
     }

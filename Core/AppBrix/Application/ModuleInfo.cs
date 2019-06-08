@@ -50,31 +50,26 @@ namespace AppBrix.Application
         public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
         {
             var sortedModuleInfos = new List<ModuleInfo>();
-            var loaded = new HashSet<Type>();
-            var remaining = new LinkedList<(ModuleInfo info, Type type, List<Type> dependencies)>(
+            var remainingList = new LinkedList<(ModuleInfo info, Type type, List<Type> dependencies)>(
                 modules.Select(x => (x, x.Module.GetType(), x.Module.Dependencies.ToList()))
             );
+            var remainingHash = new HashSet<Type>(remainingList.Select(x => x.type));
 
-            var current = remaining.First;
+            var current = remainingList.First;
             while (current != null)
             {
-                if (current.Value.dependencies.All(loaded.Contains))
-                {
-                    sortedModuleInfos.Add(current.Value.info);
-                    loaded.Add(current.Value.type);
-                    remaining.Remove(current);
-                    current = remaining.First;
-                }
-                else
+                if (current.Value.dependencies.Any(remainingHash.Contains))
                 {
                     current = current.Next;
                 }
+                else
+                {
+                    sortedModuleInfos.Add(current.Value.info);
+                    remainingHash.Remove(current.Value.type);
+                    remainingList.Remove(current);
+                    current = remainingList.First;
+                }
             }
-
-            if (remaining.Count > 0)
-                throw new InvalidOperationException($@"The following modules have dependencies which have not been registered or enabled: {
-                        string.Join(", ", remaining.Select(x => x.type.FullName))
-                    }");
 
             return sortedModuleInfos;
         }

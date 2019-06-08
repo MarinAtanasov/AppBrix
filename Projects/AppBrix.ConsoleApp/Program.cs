@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AppBrix.Configuration;
+using AppBrix.Configuration.Files;
+using AppBrix.Configuration.Json;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -12,7 +15,8 @@ namespace AppBrix.ConsoleApp
         internal static void Main(string[] args)
         {
             var stopwatch = Stopwatch.StartNew();
-            var app = ConsoleAppInitializerModule.CreateApp();
+            var app = App.Start<ConsoleAppInitializerModule>(new ConfigService(
+                new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer()));
             try
             {
                 Program.Run(app);
