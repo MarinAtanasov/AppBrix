@@ -10,7 +10,7 @@ namespace AppBrix.ConsoleApp
     /// <summary>
     /// Initializes application configuration.
     /// </summary>
-    public sealed class ConsoleAppInitializerModule : MainModuleBase
+    public sealed class ConsoleAppMainModule : MainModuleBase
     {
         #region Properties
         public override IEnumerable<Type> Dependencies => new[]

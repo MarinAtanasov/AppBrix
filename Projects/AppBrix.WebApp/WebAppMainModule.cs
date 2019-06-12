@@ -31,7 +31,7 @@ namespace AppBrix.WebApp
     /// <summary>
     /// Initializes web application configuration.
     /// </summary>
-    public sealed class WebAppInitializerModule : MainModuleBase
+    public sealed class WebAppMainModule : MainModuleBase
     {
         #region Properties
         public override IEnumerable<Type> Dependencies => new[]
@@ -107,7 +107,7 @@ namespace AppBrix.WebApp
         #endregion
 
         #region Private fields and constants
-        private BooksService booksService = new BooksService();
+        private readonly BooksService booksService = new BooksService();
         #endregion
     }
 }

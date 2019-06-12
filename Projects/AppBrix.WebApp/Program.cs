@@ -13,7 +13,7 @@ namespace AppBrix.WebApp
         public static void Main(string[] args)
         {
             WebHost.CreateDefaultBuilder(args)
-                .UseApp(App.Start<WebAppInitializerModule>(new ConfigService(
+                .UseApp(App.Start<WebAppMainModule>(new ConfigService(
                     new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer())))
                 .Build()
                 .Run();

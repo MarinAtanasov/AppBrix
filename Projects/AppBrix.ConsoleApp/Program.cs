@@ -15,7 +15,7 @@ namespace AppBrix.ConsoleApp
         internal static void Main(string[] args)
         {
             var stopwatch = Stopwatch.StartNew();
-            var app = App.Start<ConsoleAppInitializerModule>(new ConfigService(
+            var app = App.Start<ConsoleAppMainModule>(new ConfigService(
                 new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer()));
             try
             {
