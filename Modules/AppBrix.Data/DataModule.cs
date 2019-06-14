@@ -6,6 +6,7 @@ using AppBrix.Factory;
 using AppBrix.Lifecycle;
 using AppBrix.Logging;
 using AppBrix.Modules;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace AppBrix.Data
             this.App.Container.Register(this);
             this.contextService.Initialize(context);
             this.App.Container.Register(this.contextService);
+            this.App.GetEventHub().Subscribe<IOnConfiguringDbContext>(this.ConfigureDbContextOptions);
         }
 
         /// <summary>
@@ -45,6 +47,13 @@ namespace AppBrix.Data
         protected override void Uninitialize()
         {
             this.contextService.Uninitialize();
+        }
+        #endregion
+
+        #region Private methods
+        private void ConfigureDbContextOptions(IOnConfiguringDbContext args)
+        {
+            args.OptionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>());
         }
         #endregion
 

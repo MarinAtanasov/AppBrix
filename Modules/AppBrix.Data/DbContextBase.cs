@@ -62,12 +62,9 @@ namespace AppBrix.Data
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            this.App.GetDbContextConfigurer().Configure(new DefaultOnConfiguringDbContext(
-                this,
-                optionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>()),
-                this.MigrationsAssembly,
-                this.MigrationsHistoryTable
-            ));
+            var args = new DefaultOnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly, this.MigrationsHistoryTable);
+            this.App.GetDbContextConfigurer().Configure(args);
+            this.App.GetEventHub().Raise(args);
         }
         #endregion
     }
