@@ -4,14 +4,14 @@
     <Description>Module used for regitering a SqlServer provider.</Description>
     <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Data.SqlServer</AssemblyTitle>
-    <Version>0.13.0</Version>
+    <Version>0.14.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Data.SqlServer</AssemblyName>
     <PackageId>AppBrix.Data.SqlServer</PackageId>
     <PackageTags>AppBrix Module Data SqlServer</PackageTags>
-    <PackageReleaseNotes>Update .NET Core to 2.2.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixes and performance improvements.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
