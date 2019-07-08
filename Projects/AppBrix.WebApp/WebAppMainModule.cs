@@ -20,6 +20,7 @@ using AppBrix.Web.Client;
 using AppBrix.Web.Server;
 using AppBrix.WebApp.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -92,14 +93,15 @@ namespace AppBrix.WebApp
 
         private void Configure(IConfigureApplication application)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    application.Builder.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    application.Builder.UseHsts();
-            //}
+            var env = application.Builder.ApplicationServices.GetRequiredService<IHostingEnvironment>();
+            if (env.IsDevelopment())
+            {
+                application.Builder.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                application.Builder.UseHsts();
+            }
 
             application.Builder.UseHttpsRedirection();
             application.Builder.UseMvc();
