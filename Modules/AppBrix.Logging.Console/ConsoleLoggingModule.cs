@@ -13,7 +13,7 @@ namespace AppBrix.Logging.Console
     /// <summary>
     /// Class that registers a console logger.
     /// </summary>
-    public sealed class ConsoleLoggerModule : ModuleBase
+    public sealed class ConsoleLoggingModule : ModuleBase
     {
         #region Properties
         /// <summary>

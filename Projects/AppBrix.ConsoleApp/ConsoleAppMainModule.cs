@@ -31,7 +31,7 @@ namespace AppBrix.ConsoleApp
             typeof(Events.Schedule.Timer.TimerScheduledEventsModule),
             typeof(Factory.FactoryModule),
             typeof(Logging.LoggingModule),
-            typeof(Logging.Console.ConsoleLoggerModule),
+            typeof(Logging.Console.ConsoleLoggingModule),
             //typeof(Logging.File.FileLoggerModule),
             typeof(Permissions.PermissionsModule),
             typeof(Text.TextModule),

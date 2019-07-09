@@ -54,7 +54,7 @@ namespace AppBrix.WebApp
             typeof(Factory.FactoryModule),
             typeof(Logging.LoggingModule),
             //typeof(Logging.Console.ConsoleLoggerModule),
-            typeof(FileLoggerModule),
+            typeof(FileLoggingModule),
             typeof(PermissionsModule),
             typeof(TextModule),
             typeof(TimeModule),
