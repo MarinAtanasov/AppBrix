@@ -61,10 +61,9 @@ namespace AppBrix.Caching.Memory.Impl
                 throw new ArgumentException($"Negative sliding expiration: {slidingExpiration}.");
 
             var config = this.GetConfig();
-            CacheItem oldItem;
             lock (this.cache)
             {
-                oldItem = this.GetInternal(key);
+                var oldItem = this.GetInternal(key);
                 this.cache[key] = new CacheItem(item, dispose,
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
                     slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
@@ -78,11 +77,9 @@ namespace AppBrix.Caching.Memory.Impl
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            CacheItem item;
-
             lock (this.cache)
             {
-                item = this.GetInternal(key);
+                var item = this.GetInternal(key);
                 if (item != null)
                 {
                     this.cache.Remove(key);
