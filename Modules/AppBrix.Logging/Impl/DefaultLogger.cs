@@ -11,23 +11,34 @@ namespace AppBrix.Logging.Impl
     internal sealed class DefaultLogger : ILogger
     {
         #region Construction
-        public DefaultLogger(IApp app, string categoryName)
+        public DefaultLogger(IApp app, string categoryName, bool enabled)
         {
             this.app = app;
             var dotIndex = categoryName.LastIndexOf('.');
             this.categoryName = categoryName.Substring(dotIndex + 1);
+            this.Enabled = enabled;
         }
+        #endregion
+
+        #region Properties
+        public bool Enabled { get; set; }
         #endregion
 
         #region Public and overriden methods
         public bool IsEnabled(LogLevel logLevel)
         {
+            if (!this.Enabled)
+                return false;
+
             var config = (LoggingConfig)this.app.GetConfig(typeof(LoggingConfig));
             return config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
+            if (!this.Enabled)
+                return;
+
             this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
         }
 

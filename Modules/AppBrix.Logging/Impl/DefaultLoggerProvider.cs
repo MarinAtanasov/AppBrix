@@ -19,8 +19,12 @@ namespace AppBrix.Logging.Impl
 
         public void Uninitialize()
         {
-            this.app = null;
+            foreach (var logger in this.loggers.Values)
+            {
+                logger.Enabled = false;
+            }
             this.loggers.Clear();
+            this.app = null;
         }
 
         public void Dispose()
@@ -35,7 +39,7 @@ namespace AppBrix.Logging.Impl
                 {
                     if (!this.loggers.TryGetValue(categoryName, out logger))
                     {
-                        logger = new DefaultLogger(this.app, categoryName);
+                        logger = new DefaultLogger(this.app, categoryName, this.app != null);
                         loggers.Add(categoryName, logger);
                     }
                 }
