@@ -38,11 +38,11 @@ namespace AppBrix.Caching.Tests
             var key = "key";
             var value = "Test Value";
             cache.Set(key, value);
-            var cached = cache.Get<object>(key).Result;
+            var cached = cache.Get<object>(key).GetAwaiter().GetResult();
             cached.Should().NotBeNull("the item should be in the cache");
             cached.Should().Be(value, "the returned object should be equal to the original");
-            cache.Remove(key).Wait();
-            cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
+            cache.Remove(key).GetAwaiter().GetResult();
+            cache.Get<object>(key).GetAwaiter().GetResult().Should().BeNull("item should have been removed");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -52,16 +52,16 @@ namespace AppBrix.Caching.Tests
             var key = "key";
             var value = "Test Value";
             cache.Set(key, value);
-            var cached = cache.Get<object>(key).Result;
+            var cached = cache.Get<object>(key).GetAwaiter().GetResult();
             cached.Should().NotBeNull("the item should be in the cache");
             cached.Should().Be(value, "the returned object should be equal to the original");
             value = "Test Replaced Value";
-            cache.Set(key, value).Wait();
-            cached = cache.Get<object>(key).Result;
+            cache.Set(key, value).GetAwaiter().GetResult();
+            cached = cache.Get<object>(key).GetAwaiter().GetResult();
             cached.Should().NotBeNull("the item should be in the cache after being replaced");
             cached.Should().Be(value, "the returned object should be equal to the replaced");
-            cache.Remove(key).Wait();
-            cache.Get<object>(key).Result.Should().BeNull("item should have been removed");
+            cache.Remove(key).GetAwaiter().GetResult();
+            cache.Get<object>(key).GetAwaiter().GetResult().Should().BeNull("item should have been removed");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -78,17 +78,17 @@ namespace AppBrix.Caching.Tests
             var items = 1200;
             for (var i = 0; i < items; i++)
             {
-                cache.Set(i.ToString(), i).Wait();
+                cache.Set(i.ToString(), i).GetAwaiter().GetResult();
             }
             var gets = items * 10;
             for (var i = 0; i < gets; i++)
             {
                 var itemId = i % items;
-                cache.Get(itemId.ToString(), typeof(int)).Wait();
+                cache.Get(itemId.ToString(), typeof(int)).GetAwaiter().GetResult();
             }
             for (var i = 0; i < items; i++)
             {
-                cache.Remove(i.ToString()).Wait();
+                cache.Remove(i.ToString()).GetAwaiter().GetResult();
             }
         }
         #endregion

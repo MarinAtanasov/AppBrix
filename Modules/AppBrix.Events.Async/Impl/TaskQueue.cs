@@ -80,7 +80,7 @@ namespace AppBrix.Events.Async.Impl
         private async Task Run()
         {
             var reader = this.channel.Reader;
-            while (await reader.WaitToReadAsync())
+            while (await reader.WaitToReadAsync().ConfigureAwait(false))
             while (reader.TryRead(out var args))
             {
                 for (var i = 0; i < this.handlers.Count; i++)

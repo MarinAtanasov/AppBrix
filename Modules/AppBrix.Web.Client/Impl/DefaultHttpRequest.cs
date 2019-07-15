@@ -26,7 +26,8 @@ namespace AppBrix.Web.Client.Impl
         #region Public and overriden methods
         public async Task<IHttpResponse> Send()
         {
-            using (var response = await this.GetResponse(this.app.Get<IHttpClientFactory>().CreateClient(this.clientName)))
+            var client = this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
+            using (var response = await this.GetResponse(client).ConfigureAwait(false))
             {
                 return new DefaultHttpResponse<string>(
                     new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
@@ -39,10 +40,11 @@ namespace AppBrix.Web.Client.Impl
 
         public async Task<IHttpResponse<T>> Send<T>()
         {
-            using (var response = await this.GetResponse(this.app.Get<IHttpClientFactory>().CreateClient(this.clientName)))
+            var client = this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
+            using (var response = await this.GetResponse(client).ConfigureAwait(false))
             {
                 var responseContent = response.Content;
-                var contentValue = await this.GetResponseContent<T>(responseContent);
+                var contentValue = await this.GetResponseContent<T>(responseContent).ConfigureAwait(false);
                 return new DefaultHttpResponse<T>(
                     new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
                     contentValue,
@@ -126,7 +128,7 @@ namespace AppBrix.Web.Client.Impl
             if (this.httpMessageVersion != null)
                 message.Version = this.httpMessageVersion;
 
-            return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
+            return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None).ConfigureAwait(false);
         }
 
         private void SetHeaders(HttpHeaders headers, IEnumerable<KeyValuePair<string, List<string>>> toAdd)
@@ -173,15 +175,15 @@ namespace AppBrix.Web.Client.Impl
             object contentValue;
 
             if (type == typeof(string))
-                contentValue = await content.ReadAsStringAsync();
+                contentValue = await content.ReadAsStringAsync().ConfigureAwait(false);
             else if (type == typeof(byte[]))
-                contentValue = await content.ReadAsByteArrayAsync();
+                contentValue = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
             else if (type == typeof(Stream))
-                contentValue = await content.ReadAsStreamAsync();
+                contentValue = await content.ReadAsStreamAsync().ConfigureAwait(false);
             else if (type == typeof(NameValueCollection))
-                contentValue = await content.ReadAsFormDataAsync();
+                contentValue = await content.ReadAsFormDataAsync().ConfigureAwait(false);
             else
-                contentValue = await content.ReadAsAsync<T>();;
+                contentValue = await content.ReadAsAsync<T>().ConfigureAwait(false);
 
             return (T)contentValue;
         }

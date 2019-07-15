@@ -32,7 +32,7 @@ namespace AppBrix
         /// <returns></returns>
         public static async Task<T> Get<T>(this ICache cache, string key)
         {
-            return (T)(await cache.Get(key, typeof(T)) ?? default(T));
+            return (T)(await cache.Get(key, typeof(T)).ConfigureAwait(false) ?? default(T));
         }
     }
 }
