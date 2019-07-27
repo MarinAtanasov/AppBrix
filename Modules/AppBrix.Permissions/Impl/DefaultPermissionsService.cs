@@ -132,7 +132,7 @@ namespace AppBrix.Permissions.Impl
         {
             if (this.parents.TryGetValue(role, out var roleParents))
             {
-                return roleParents.Concat(roleParents.SelectMany(p => this.GetAllParents(p)));
+                return roleParents.Concat(roleParents.SelectMany(this.GetAllParents));
             }
             else
             {
@@ -158,10 +158,10 @@ namespace AppBrix.Permissions.Impl
         #endregion
 
         #region Private fields and constants
-        private Dictionary<string, HashSet<string>> parents = new Dictionary<string, HashSet<string>>();
-        private Dictionary<string, HashSet<string>> children = new Dictionary<string, HashSet<string>>();
-        private Dictionary<string, HashSet<string>> allowed = new Dictionary<string, HashSet<string>>();
-        private Dictionary<string, HashSet<string>> denied = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, HashSet<string>> parents = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, HashSet<string>> children = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, HashSet<string>> allowed = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, HashSet<string>> denied = new Dictionary<string, HashSet<string>>();
         #endregion
     }
 }

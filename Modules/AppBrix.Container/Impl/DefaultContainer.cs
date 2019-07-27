@@ -43,9 +43,7 @@ namespace AppBrix.Container.Impl
             if (type.IsValueType)
                 throw new ArgumentException("Container does not support value types.");
             if (!type.IsInstanceOfType(obj))
-                throw new ArgumentException(string.Format(
-                    "Target object is of type {0} which cannot be cast to target type {1}.",
-                    obj.GetType().FullName, type.FullName));
+                throw new ArgumentException($"Target object is of type {obj.GetType().FullName} which cannot be cast to target type {type.FullName}.");
 
             this.registered.Add(obj);
             this.RegisterInternal(obj, type);

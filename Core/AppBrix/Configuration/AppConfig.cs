@@ -24,7 +24,7 @@ namespace AppBrix.Configuration
 
         #region Properties
         /// <summary>
-        /// Contains a collection of modules to be loaded by the application.
+        /// Gets a collection of modules to be loaded by the application.
         /// </summary>
         public ICollection<ModuleConfigElement> Modules { get; private set; }
         #endregion

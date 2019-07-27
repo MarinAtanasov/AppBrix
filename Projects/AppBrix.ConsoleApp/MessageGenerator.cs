@@ -22,7 +22,7 @@ namespace AppBrix.ConsoleApp
         #region Public and overriden methods
         public string Generate()
         {
-            return string.Format("{0} message: {1}", this.Level, ++this.MessagesSent);
+            return $"{this.Level} message: {++this.MessagesSent}";
         }
         #endregion
     }

@@ -47,7 +47,7 @@ namespace AppBrix.Logging.File
         #endregion
 
         #region Private fields and constants
-        private FileLogger logger = new FileLogger();
+        private readonly FileLogger logger = new FileLogger();
         #endregion
     }
 }

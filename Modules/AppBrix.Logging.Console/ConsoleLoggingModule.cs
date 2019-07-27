@@ -47,7 +47,7 @@ namespace AppBrix.Logging.Console
         #endregion
 
         #region Private fields and constants
-        private ConsoleLogger logger = new ConsoleLogger();
+        private readonly ConsoleLogger logger = new ConsoleLogger();
         #endregion
     }
 }

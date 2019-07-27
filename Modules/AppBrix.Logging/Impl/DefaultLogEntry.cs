@@ -58,7 +58,7 @@ namespace AppBrix.Logging.Impl
             var result = new StringBuilder();
             result.Append(app.GetTimeService().ToString(this.Created));
             result.Append(DefaultLogEntry.Separator);
-            result.Append(string.Format("{0,-5}", this.Level));
+            result.Append($"{this.Level,-5}");
             result.Append(DefaultLogEntry.Separator);
             result.Append(this.ThreadId);
             result.Append(DefaultLogEntry.Separator);

@@ -224,7 +224,7 @@ namespace AppBrix.Events.Schedule.Tests
         public void TestAllowDenyUnset()
         {
             var service = this.app.GetPermissionsService();
-            service.GetAllowed("a").Should().BeEmpty("no permissions have been alllowed");
+            service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
             service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
             service.HasPermission("a", "p").Should().BeFalse("no permission has been added");
 
@@ -248,7 +248,7 @@ namespace AppBrix.Events.Schedule.Tests
         public void TestDenyAllowUnset()
         {
             var service = this.app.GetPermissionsService();
-            service.GetAllowed("a").Should().BeEmpty("no permissions have been alllowed");
+            service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
             service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
             service.HasPermission("a", "p").Should().BeFalse("no permission has been added");
 
@@ -275,7 +275,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a", "b");
 
             service.Allow("b", "p");
-            service.GetAllowed("a").Should().BeEmpty("no permissions have been alllowed");
+            service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
             service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
             service.HasPermission("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
         }
@@ -287,7 +287,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a", "b");
 
             service.Deny("b", "p");
-            service.GetAllowed("a").Should().BeEmpty("no permissions have been alllowed");
+            service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
             service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
             service.HasPermission("a", "p").Should().BeFalse("parent denied permission should have been inherited");
         }
@@ -322,7 +322,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("b", "c");
 
             service.Allow("c", "p");
-            service.GetAllowed("a").Should().BeEmpty("no permissions have been alllowed");
+            service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
             service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
             service.HasPermission("a", "p").Should().BeTrue("grandparent allowed permission should have been inherited");
         }
@@ -337,7 +337,7 @@ namespace AppBrix.Events.Schedule.Tests
 
             service.Deny("b", "p");
             service.Allow("c", "p");
-            service.GetAllowed("a").Should().BeEmpty("no permissions have been alllowed");
+            service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
             service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
             service.HasPermission("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
         }

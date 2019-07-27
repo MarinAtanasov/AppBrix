@@ -27,7 +27,7 @@ namespace AppBrix.Events.Schedule.Tests.Mocks
         /// <summary>
         /// Gets the stored value.
         /// </summary>
-        public int Value { get; private set; }
+        public int Value { get; }
         #endregion
     }
 }

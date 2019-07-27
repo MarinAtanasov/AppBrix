@@ -34,7 +34,7 @@ namespace AppBrix.Cloning.Tests.Mocks
 
         public long Long { get; private set; }
 
-        public float Float { get { return this.f; } }
+        public float Float => this.f;
 
         public double Double { get; protected set; }
 

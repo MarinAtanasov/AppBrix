@@ -12,11 +12,6 @@ namespace AppBrix.Cloning.Tests.Mocks
     internal sealed class PrimitivePropertiesMock : NumericPropertiesMock
     {
         #region Construction
-        public PrimitivePropertiesMock()
-            : base()
-        {
-        }
-
         public PrimitivePropertiesMock(bool b, char c, string s, DateTime d, TimeSpan t)
             : base(1, 2, 3, 4, 5.5f, 6.6, (decimal)7.7)
         {
