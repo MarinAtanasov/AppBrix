@@ -53,13 +53,17 @@ namespace AppBrix.Web.Server
                     if (client != null)
                     {
                         this.App.Container.Register(client);
-                        this.App.GetFactoryService().Register(() => this.App.Get<IHttpClientFactory>().CreateClient());
+                        this.App.GetFactoryService().Register(this.CreateClient);
                     }
                     this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly().GetName().Name)
             );
         }
+        #endregion
+
+        #region Private methods
+        private HttpClient CreateClient() => this.App.Get<IHttpClientFactory>().CreateClient();
         #endregion
     }
 }

@@ -48,7 +48,7 @@ namespace AppBrix.Web.Client
 
             this.httpClientFactory.Initialize(context);
             this.App.Container.Register(this.httpClientFactory);
-            this.App.GetFactoryService().Register(() => new DefaultHttpRequest(this.App));
+            this.App.GetFactoryService().Register(this.CreateRequest);
 
             this.oldSettingsFactory = JsonConvert.DefaultSettings;
             this.App.GetFactoryService().Register(() =>
@@ -57,7 +57,7 @@ namespace AppBrix.Web.Client
                 settings.DateFormatString = this.App.GetConfig<TimeConfig>().Format;
                 return settings;
             });
-            this.newSettingsFactory = () => this.App.GetFactoryService().Get<JsonSerializerSettings>();
+            this.newSettingsFactory = this.GetSerializerSettings;
             JsonConvert.DefaultSettings = this.newSettingsFactory;
         }
 
@@ -76,6 +76,12 @@ namespace AppBrix.Web.Client
             this.client?.Dispose();
             this.client = null;
         }
+        #endregion
+
+        #region Private methods
+        private DefaultHttpRequest CreateRequest() => new DefaultHttpRequest(this.App);
+
+        private JsonSerializerSettings GetSerializerSettings() => this.App.GetFactoryService().Get<JsonSerializerSettings>();
         #endregion
 
         #region Private fields and constants
