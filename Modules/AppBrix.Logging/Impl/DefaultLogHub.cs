@@ -16,10 +16,12 @@ namespace AppBrix.Logging.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
+            this.config = this.app.GetConfig<LoggingConfig>();
         }
 
         public void Uninitialize()
         {
+            this.config = null;
             this.app = null;
         }
         #endregion
@@ -27,7 +29,7 @@ namespace AppBrix.Logging.Impl
         #region ILogHub implementation
         public void Subscribe(Action<ILogEntry> logger)
         {
-            if (this.app.GetConfig<LoggingConfig>().Async)
+            if (this.config.Async)
             {
                 this.app.GetAsyncEventHub().Subscribe(logger);
             }
@@ -48,8 +50,7 @@ namespace AppBrix.Logging.Impl
             [CallerMemberName] string callerMember = null,
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            var config = (LoggingConfig)this.app.GetConfig(typeof(LoggingConfig));
-            if (config.LogLevel <= level)
+            if (this.config.LogLevel <= level)
             {
                 this.app.GetEventHub()
                     .Raise(new DefaultLogEntry(this.app, level, this.app.GetTime(), message, error,
@@ -60,6 +61,7 @@ namespace AppBrix.Logging.Impl
 
         #region Private fields and constants
         private IApp app;
+        private LoggingConfig config;
         #endregion
     }
 }

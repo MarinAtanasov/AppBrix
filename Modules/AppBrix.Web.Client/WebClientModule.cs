@@ -50,13 +50,10 @@ namespace AppBrix.Web.Client
             this.App.Container.Register(this.httpClientFactory);
             this.App.GetFactoryService().Register(this.CreateRequest);
 
+            this.timeConfig = this.App.GetConfig<TimeConfig>();
+
             this.oldSettingsFactory = JsonConvert.DefaultSettings;
-            this.App.GetFactoryService().Register(() =>
-            {
-                var settings = this.oldSettingsFactory != null ? this.oldSettingsFactory() : new JsonSerializerSettings();
-                settings.DateFormatString = this.App.GetConfig<TimeConfig>().Format;
-                return settings;
-            });
+            this.App.GetFactoryService().Register(this.CreateSerializerSettings);
             this.newSettingsFactory = this.GetSerializerSettings;
             JsonConvert.DefaultSettings = this.newSettingsFactory;
         }
@@ -73,6 +70,7 @@ namespace AppBrix.Web.Client
             }
 
             this.httpClientFactory.Uninitialize();
+            this.timeConfig = null;
             this.client?.Dispose();
             this.client = null;
         }
@@ -81,12 +79,20 @@ namespace AppBrix.Web.Client
         #region Private methods
         private DefaultHttpRequest CreateRequest() => new DefaultHttpRequest(this.App);
 
+        private JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = this.oldSettingsFactory != null ? this.oldSettingsFactory() : new JsonSerializerSettings();
+            settings.DateFormatString = this.timeConfig.Format;
+            return settings;
+        }
+
         private JsonSerializerSettings GetSerializerSettings() => this.App.GetFactoryService().Get<JsonSerializerSettings>();
         #endregion
 
         #region Private fields and constants
         private readonly DefaultHttpClientFactory httpClientFactory = new DefaultHttpClientFactory();
         private HttpClient client;
+        private TimeConfig timeConfig;
         private Func<JsonSerializerSettings> oldSettingsFactory;
         private Func<JsonSerializerSettings> newSettingsFactory;
         #endregion

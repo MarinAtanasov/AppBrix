@@ -31,6 +31,7 @@ namespace AppBrix.Data.Migration.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
+            this.config = this.app.GetConfig<MigrationDataConfig>();
             this.contextService = this.app.GetDbContextService();
             this.dbSupportsMigrations = true;
         }
@@ -38,6 +39,7 @@ namespace AppBrix.Data.Migration.Impl
         public void Uninitialize()
         {
             this.app = null;
+            this.config = null;
             this.dbSupportsMigrations = false;
             this.initializedContexts.Clear();
         }
@@ -170,7 +172,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private IEnumerable<MetadataReference> GetReferences()
         {
-            var entryAssemblyName = this.app.GetConfig<MigrationDataConfig>().EntryAssembly;
+            var entryAssemblyName = this.config.EntryAssembly;
             var entryAssembly = string.IsNullOrEmpty(entryAssemblyName) ?
                 Assembly.GetEntryAssembly() :
                 Assembly.Load(entryAssemblyName);
@@ -296,6 +298,7 @@ namespace AppBrix.Data.Migration.Impl
         private const string EmptyVersion = "0.0.0.0";
         private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
         private IApp app;
+        private MigrationDataConfig config;
         private IDbContextService contextService;
         private bool dbSupportsMigrations;
         #endregion

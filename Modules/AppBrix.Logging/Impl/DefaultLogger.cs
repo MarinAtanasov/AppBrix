@@ -16,6 +16,7 @@ namespace AppBrix.Logging.Impl
             this.app = app;
             var dotIndex = categoryName.LastIndexOf('.');
             this.categoryName = categoryName.Substring(dotIndex + 1);
+            this.config = this.app.GetConfig<LoggingConfig>();
             this.Enabled = enabled;
         }
         #endregion
@@ -30,8 +31,7 @@ namespace AppBrix.Logging.Impl
             if (!this.Enabled)
                 return false;
 
-            var config = (LoggingConfig)this.app.GetConfig(typeof(LoggingConfig));
-            return config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
+            return this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
@@ -74,6 +74,7 @@ namespace AppBrix.Logging.Impl
         #region Private fields and constants
         private readonly IApp app;
         private readonly string categoryName;
+        private readonly LoggingConfig config;
         #endregion
     }
 }
