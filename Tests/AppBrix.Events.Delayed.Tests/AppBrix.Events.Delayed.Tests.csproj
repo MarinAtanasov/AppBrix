@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Contains tests for the AppBrix.Events.Delayed module</Description>
+    <Copyright>Copyright 2015-2019</Copyright>
+    <AssemblyTitle>AppBrix.Events.Delayed.Tests</AssemblyTitle>
+    <Version>0.14.0</Version>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AssemblyName>AppBrix.Events.Delayed.Tests</AssemblyName>
+    <PackageId>AppBrix.Events.Delayed.Tests</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <PackageTags>AppBrix Events Delayed Tests</PackageTags>
+    <PackageReleaseNotes>Fixes and performance improvements.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Events.Delayed\AppBrix.Events.Delayed.csproj" />
+  </ItemGroup>
+
+</Project>

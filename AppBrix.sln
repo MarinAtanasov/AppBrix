@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB6662-4780-4AB5-BA67-3FB56322EBB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -121,6 +121,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All.Server", "Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj", "{C3783D6A-C7AF-4325-A502-131247B74FFA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Tests", "Tests\AppBrix.Data.Tests\AppBrix.Data.Tests.csproj", "{90855AE8-A8F3-4925-902C-1A9552C5AF2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed", "Modules\AppBrix.Events.Delayed\AppBrix.Events.Delayed.csproj", "{BEE6F4DF-8808-4C99-8173-28B7A70EE671}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed.Tests", "Tests\AppBrix.Events.Delayed.Tests\AppBrix.Events.Delayed.Tests.csproj", "{757AE0C9-03CF-451C-9DAD-49407D669841}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -329,6 +333,14 @@ Global
 		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90855AE8-A8F3-4925-902C-1A9552C5AF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEE6F4DF-8808-4C99-8173-28B7A70EE671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEE6F4DF-8808-4C99-8173-28B7A70EE671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEE6F4DF-8808-4C99-8173-28B7A70EE671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEE6F4DF-8808-4C99-8173-28B7A70EE671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{757AE0C9-03CF-451C-9DAD-49407D669841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{757AE0C9-03CF-451C-9DAD-49407D669841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{757AE0C9-03CF-451C-9DAD-49407D669841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{757AE0C9-03CF-451C-9DAD-49407D669841}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -384,6 +396,8 @@ Global
 		{653EF513-D3B4-412C-8126-13BB57D24E77} = {44FD92A1-E8A6-484C-9287-7AAAC3CE0C41}
 		{C3783D6A-C7AF-4325-A502-131247B74FFA} = {44FD92A1-E8A6-484C-9287-7AAAC3CE0C41}
 		{90855AE8-A8F3-4925-902C-1A9552C5AF2A} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
+		{BEE6F4DF-8808-4C99-8173-28B7A70EE671} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
+		{757AE0C9-03CF-451C-9DAD-49407D669841} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}

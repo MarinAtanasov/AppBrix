@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Module which allows raising delayed application level events.</Description>
+    <Copyright>Copyright 2015-2019</Copyright>
+    <AssemblyTitle>AppBrix.Events.Delayed</AssemblyTitle>
+    <Version>0.14.0</Version>
+    <Authors>Marin Atanasov</Authors>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>AppBrix.Events.Delayed</AssemblyName>
+    <PackageId>AppBrix.Events.Delayed</PackageId>
+    <PackageTags>AppBrix Module Events Delayed</PackageTags>
+    <PackageReleaseNotes>Fixes and performance improvements.</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Channels" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj" />
+  </ItemGroup>
+
+</Project>
