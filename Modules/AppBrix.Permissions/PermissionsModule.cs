@@ -38,7 +38,7 @@ namespace AppBrix.Permissions
                 new CachedPermissionsService(new DefaultPermissionsService()) :
                 (IApplicationLifecycle)new DefaultPermissionsService();
             this.permissionsService.Initialize(context);
-            this.App.Container.Register(this.permissionsService, this.permissionsService.GetType());
+            this.App.Container.Register(this.permissionsService);
         }
 
         /// <summary>

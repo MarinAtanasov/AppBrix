@@ -13,12 +13,10 @@ namespace AppBrix.Container
     public interface IContainer
     {
         /// <summary>
-        /// Registers an object as the passed-in type, its parent types and interfaces.
-        /// This method can be used when the type is not known during compile time.
+        /// Registers an object as its type, parent types and interfaces.
         /// </summary>
         /// <param name="obj">The object to be registered. Required.</param>
-        /// <param name="type">The type to be used as base upon registration. Required. Cannot be <see cref="object"/>.</param>
-        void Register(object obj, Type type);
+        void Register(object obj);
 
         /// <summary>
         /// Returns the last registered object of a given type.

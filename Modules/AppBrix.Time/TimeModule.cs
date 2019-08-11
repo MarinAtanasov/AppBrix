@@ -35,8 +35,7 @@ namespace AppBrix.Time
         {
             this.App.Container.Register(this);
             var config = this.App.GetConfig<TimeConfig>();
-            var timeService = this.CreateTimeService(config.Kind, config.Format);
-            this.App.Container.Register(timeService, timeService.GetType());
+            this.App.Container.Register(this.CreateTimeService(config.Kind, config.Format));
         }
 
         /// <summary>

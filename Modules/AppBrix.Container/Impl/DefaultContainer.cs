@@ -17,8 +17,8 @@ namespace AppBrix.Container.Impl
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
         {
-            this.Register(context.App, context.App.GetType());
-            this.Register(context.App.ConfigService, context.App.ConfigService.GetType());
+            this.Register(context.App);
+            this.Register(context.App.ConfigService);
             this.Register(this);
         }
 
@@ -30,20 +30,18 @@ namespace AppBrix.Container.Impl
         #endregion
 
         #region IContainer implementation
-        public void Register(object obj, Type type)
+        public void Register(object obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
+
+            var type = obj.GetType();
             if (type == typeof(object))
                 throw new ArgumentException($"Cannot register object as type {typeof(object).FullName}.");
             if (type == typeof(string))
                 throw new ArgumentException($"Cannot register object as type {typeof(string).FullName}.");
             if (type.IsValueType)
                 throw new ArgumentException("Container does not support value types.");
-            if (!type.IsInstanceOfType(obj))
-                throw new ArgumentException($"Target object is of type {obj.GetType().FullName} which cannot be cast to target type {type.FullName}.");
 
             this.registered.Add(obj);
             this.RegisterInternal(obj, type);

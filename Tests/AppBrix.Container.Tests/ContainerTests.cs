@@ -89,7 +89,7 @@ namespace AppBrix.Container.Tests
             var first = new ParentMock();
             container.Register(first);
             var second = new ChildMock();
-            container.Register(second, second.GetType());
+            container.Register(second);
             var resolved = container.GetAll().OfType<ParentMock>().ToList();
             resolved.Should().NotBeNull("resolved collection should not be null");
             resolved.Count.Should().Be(2, "resolved collection should have 2 elements");
@@ -101,23 +101,7 @@ namespace AppBrix.Container.Tests
         public void TestRegisterNull()
         {
             var container = this.GetContainer();
-            Action action = () => container.Register<IContainer>(null);
-            action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestRegisterNullObjectExcplicitType()
-        {
-            var container = this.GetContainer();
-            Action action = () => container.Register(null, typeof(IContainer));
-            action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestRegisterNullTypeExcplicitType()
-        {
-            var container = this.GetContainer();
-            Action action = () => container.Register(container, null);
+            Action action = () => container.Register(null);
             action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
         }
 
@@ -148,15 +132,7 @@ namespace AppBrix.Container.Tests
         public void TestRegisterGenericObjectError()
         {
             var container = this.GetContainer();
-            Action action = () => container.Register<object>(container);
-            action.Should().Throw<ArgumentException>("registering an item as System.Object should not be allowed.");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestRegisterExplicitObjectTypeError()
-        {
-            var container = this.GetContainer();
-            Action action = () => container.Register(container, typeof(object));
+            Action action = () => container.Register(new object());
             action.Should().Throw<ArgumentException>("registering an item as System.Object should not be allowed.");
         }
 

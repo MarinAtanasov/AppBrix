@@ -47,7 +47,7 @@ namespace AppBrix.Events.Delayed
         {
             if (this.eventHub != null)
             {
-                this.App.Container.Register(this.eventHub, this.eventHub.GetType());
+                this.App.Container.Register(this.eventHub);
                 this.eventHub = null;
             }
 

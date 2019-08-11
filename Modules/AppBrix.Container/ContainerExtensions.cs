@@ -36,18 +36,6 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Registers an object as the passed-in type, its parent types and interfaces.
-        /// This method can be used when the type is known during compile time.
-        /// </summary>
-        /// <typeparam name="T">The type to be used as base upon registration. Cannot be "object".</typeparam>
-        /// <param name="container">The container.</param>
-        /// <param name="obj">The object to be registered. Required.</param>
-        public static void Register<T>(this IContainer container, T obj) where T : class
-        {
-            container.Register(obj, typeof(T));
-        }
-
-        /// <summary>
         /// Returns the last registered object of a given type.
         /// </summary>
         /// <typeparam name="T">The type of the registered object.</typeparam>
