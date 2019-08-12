@@ -81,7 +81,7 @@ namespace AppBrix.Data.Tests
                 context.SaveChanges();
             }
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 150; i++)
             {
                 using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
                 {

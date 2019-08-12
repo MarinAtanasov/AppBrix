@@ -4,7 +4,7 @@
     <Description>Module used for regitering a SqlServer provider.</Description>
     <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Data.SqlServer</AssemblyTitle>
-    <Version>0.14.0</Version>
+    <Version>0.15.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
   </ItemGroup>
 
 </Project>
