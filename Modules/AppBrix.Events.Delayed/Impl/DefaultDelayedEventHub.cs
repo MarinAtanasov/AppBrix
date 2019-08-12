@@ -9,7 +9,7 @@ using System.Threading.Channels;
 
 namespace AppBrix.Events.Delayed.Impl
 {
-    internal sealed class DefaultDelayedEventHub : IEventHub, IDelayedEventHub, IApplicationLifecycle
+    internal sealed class DefaultDelayedEventHub : IDelayedEventHub, IApplicationLifecycle
     {
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)

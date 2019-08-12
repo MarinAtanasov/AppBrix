@@ -9,7 +9,7 @@ namespace AppBrix.Events.Delayed
     /// <summary>
     /// Used for working with application level delayed events.
     /// </summary>
-    public interface IDelayedEventHub
+    public interface IDelayedEventHub : IEventHub
     {
         /// <summary>
         /// Raise all delayed events.

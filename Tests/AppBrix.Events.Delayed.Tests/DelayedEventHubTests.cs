@@ -28,7 +28,7 @@ namespace AppBrix.Events.Delayed.Tests
         public void TestEventDefaultImmediate()
         {
             this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Immediate;
-            var hub = this.app.GetEventHub();
+            var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
             hub.Subscribe<EventMock>(e =>
@@ -44,14 +44,15 @@ namespace AppBrix.Events.Delayed.Tests
         public void TestEventImmediate()
         {
             this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Delayed;
+            var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
-            this.app.GetEventHub().Subscribe<EventMock>(e =>
+            hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
                 called++;
             });
-            this.app.GetDelayedEventHub().RaiseImmediate(args);
+            hub.RaiseImmediate(args);
             called.Should().Be(1, "event handler should be called exactly once");
         }
 
@@ -59,7 +60,7 @@ namespace AppBrix.Events.Delayed.Tests
         public void TestEventDefaultDelayed()
         {
             this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Delayed;
-            var hub = this.app.GetEventHub();
+            var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
             hub.Subscribe<EventMock>(e =>
@@ -69,9 +70,9 @@ namespace AppBrix.Events.Delayed.Tests
             });
             hub.Raise(args);
             called.Should().Be(0, "event handler should not be called before flush");
-            this.app.GetDelayedEventHub().Flush();
+            hub.Flush();
             called.Should().Be(1, "event handler should be called exactly once after flush");
-            this.app.GetDelayedEventHub().Flush();
+            hub.Flush();
             called.Should().Be(1, "event handler should be called exactly once after second flush");
         }
 
@@ -82,16 +83,16 @@ namespace AppBrix.Events.Delayed.Tests
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
-            this.app.GetEventHub().Subscribe<EventMock>(e =>
+            hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
                 called++;
             });
             hub.RaiseDelayed(args);
             called.Should().Be(0, "event handler should not be called before flush");
-            this.app.GetDelayedEventHub().Flush();
+            hub.Flush();
             called.Should().Be(1, "event handler should be called exactly once after flush");
-            this.app.GetDelayedEventHub().Flush();
+            hub.Flush();
             called.Should().Be(1, "event handler should be called exactly once after second flush");
         }
 
@@ -123,7 +124,7 @@ namespace AppBrix.Events.Delayed.Tests
         #region Private methods
         private void TestPerformanceEventsSubscribeInternal()
         {
-            var hub = this.app.GetEventHub();
+            var hub = this.app.GetDelayedEventHub();
             var calledCount = 50000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
@@ -140,7 +141,7 @@ namespace AppBrix.Events.Delayed.Tests
 
         private void TestPerformanceEventsUnsubscribeInternal()
         {
-            var hub = this.app.GetEventHub();
+            var hub = this.app.GetDelayedEventHub();
             var calledCount = 50000;
             var handlers = new List<Action<EventMockChild>>(calledCount);
             for (var i = 0; i < calledCount; i++)
@@ -161,7 +162,7 @@ namespace AppBrix.Events.Delayed.Tests
 
         private void TestPerformanceEventsRaiseImmediateInternal()
         {
-            var hub = this.app.GetEventHub();
+            var hub = this.app.GetDelayedEventHub();
             var args = new EventMockChild(10);
             var childCalled = 0;
             var interfaceCalled = 0;
@@ -180,7 +181,7 @@ namespace AppBrix.Events.Delayed.Tests
         private void TestPerformanceEventsRaiseDelayedInternal()
         {
             this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Delayed;
-            var hub = this.app.GetEventHub();
+            var hub = this.app.GetDelayedEventHub();
             var args = new EventMockChild(10);
             var childCalled = 0;
             var interfaceCalled = 0;
@@ -193,7 +194,7 @@ namespace AppBrix.Events.Delayed.Tests
             }
             childCalled.Should().Be(0, "The child should not be called before flush");
             interfaceCalled.Should().Be(0, "The interface should not be called before flush");
-            this.app.GetDelayedEventHub().Flush();
+            hub.Flush();
             childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
             this.app.Reinitialize();
