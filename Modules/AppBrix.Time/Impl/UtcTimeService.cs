@@ -19,15 +19,9 @@ namespace AppBrix.Time.Impl
         #endregion
 
         #region ITimeService implementation
-        public override DateTime GetTime()
-        {
-            return DateTime.UtcNow;
-        }
+        public override DateTime GetTime() => DateTime.UtcNow;
 
-        public override DateTime ToAppTime(DateTime time)
-        {
-            return time.ToUniversalTime();
-        }
+        public override DateTime ToAppTime(DateTime time) => time.ToUniversalTime();
         #endregion
     }
 }

@@ -51,10 +51,7 @@ namespace AppBrix.Data
         #endregion
 
         #region Private methods
-        private void ConfigureDbContextOptions(IOnConfiguringDbContext args)
-        {
-            args.OptionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>());
-        }
+        private void ConfigureDbContextOptions(IOnConfiguringDbContext args) => args.OptionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>());
         #endregion
 
         #region Private fields and constants

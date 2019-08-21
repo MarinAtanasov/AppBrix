@@ -40,10 +40,7 @@ namespace AppBrix
         /// <typeparam name="T">The type of the config.</typeparam>
         /// <param name="app">The current application.</param>
         /// <returns>The config.</returns>
-        public static T GetConfig<T>(this IApp app) where T : class, IConfig
-        {
-            return app.ConfigService.Get<T>();
-        }
+        public static T GetConfig<T>(this IApp app) where T : class, IConfig => app.ConfigService.Get<T>();
 
         /// <summary>
         /// Shorthand for getting the config from the currently defined <see cref="IConfigService"/>.
@@ -51,10 +48,7 @@ namespace AppBrix
         /// <param name="app">The current application.</param>
         /// <param name="type">The type of the config.</param>
         /// <returns>The config.</returns>
-        public static IConfig GetConfig(this IApp app, Type type)
-        {
-            return app.ConfigService.Get(type);
-        }
+        public static IConfig GetConfig(this IApp app, Type type) => app.ConfigService.Get(type);
 
         /// <summary>
         /// Gets the types of all modules which the current module depends on.

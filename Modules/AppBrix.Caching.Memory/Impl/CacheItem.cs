@@ -24,20 +24,11 @@ namespace AppBrix.Caching.Memory.Impl
         #endregion
 
         #region Public and overriden methods
-        public void Dispose()
-        {
-            this.dispose?.Invoke();
-        }
+        public void Dispose() => this.dispose?.Invoke();
 
-        public void UpdateLastAccessed(DateTime now)
-        {
-            this.slidingExpiration = now.Add(this.slidingExpirationSpan);
-        }
+        public void UpdateLastAccessed(DateTime now) => this.slidingExpiration = now.Add(this.slidingExpirationSpan);
 
-        public bool HasExpired(DateTime now)
-        {
-            return this.absoluteExpiration < now || this.slidingExpiration < now;
-        }
+        public bool HasExpired(DateTime now) => this.absoluteExpiration < now || this.slidingExpiration < now;
         #endregion
 
         #region Private fields and constants

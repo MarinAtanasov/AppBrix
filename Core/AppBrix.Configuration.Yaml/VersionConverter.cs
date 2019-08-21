@@ -11,10 +11,7 @@ namespace AppBrix.Configuration.Yaml
 {
     internal sealed class VersionConverter : IYamlTypeConverter
     {
-        public bool Accepts(Type type)
-        {
-            return type == typeof(System.Version);
-        }
+        public bool Accepts(Type type) => type == typeof(System.Version);
 
         public object ReadYaml(IParser parser, Type type)
         {
@@ -23,10 +20,7 @@ namespace AppBrix.Configuration.Yaml
             return string.IsNullOrEmpty(version) ? null : new System.Version(version);
         }
 
-        public void WriteYaml(IEmitter emitter, object value, Type type)
-        {
-            var version = (System.Version)value;
-            emitter.Emit(new Scalar(version?.ToString(4) ?? string.Empty));
-        }
+        public void WriteYaml(IEmitter emitter, object value, Type type) =>
+            emitter.Emit(new Scalar(((System.Version)value)?.ToString(4) ?? string.Empty));
     }
 }

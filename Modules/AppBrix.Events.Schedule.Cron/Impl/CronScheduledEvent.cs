@@ -22,10 +22,7 @@ namespace AppBrix.Events.Schedule.Cron.Impl
         #endregion
 
         #region Public and overriden methods
-        public DateTime GetNextOccurrence(DateTime now)
-        {
-            return this.schedule.GetNextOccurrence(now);
-        }
+        public DateTime GetNextOccurrence(DateTime now) => this.schedule.GetNextOccurrence(now);
         #endregion
 
         #region Private fields and constants

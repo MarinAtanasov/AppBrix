@@ -49,10 +49,7 @@ namespace AppBrix.Events.Async.Impl
             }
         }
         
-        public void Subscribe(Action<T> handler)
-        {
-            this.handlers.Add(handler);
-        }
+        public void Subscribe(Action<T> handler) => this.handlers.Add(handler);
         
         public void Unsubscribe(Action<T> handler)
         {

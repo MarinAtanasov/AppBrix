@@ -17,9 +17,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The current application.</param>
         /// <returns>The event hub.</returns>
-        public static ICronScheduledEventHub GetCronScheduledEventHub(this IApp app)
-        {
-            return (ICronScheduledEventHub)app.Get(typeof(ICronScheduledEventHub));
-        }
+        public static ICronScheduledEventHub GetCronScheduledEventHub(this IApp app) => (ICronScheduledEventHub)app.Get(typeof(ICronScheduledEventHub));
     }
 }

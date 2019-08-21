@@ -18,20 +18,14 @@ namespace AppBrix
         /// </summary>
         /// <typeparam name="T">Type of the configuration.</typeparam>
         /// <returns>The configuration</returns>
-        public static T Get<T>(this IConfigService service) where T : class, IConfig
-        {
-            return (T)service.Get(typeof(T));
-        }
+        public static T Get<T>(this IConfigService service) where T : class, IConfig => (T)service.Get(typeof(T));
 
         /// <summary>
         /// Saves one cached configuration.
         /// </summary>
         /// <typeparam name="T">The type of the configuraton.</typeparam>
         /// <param name="service">The configuration service.</param>
-        public static void Save<T>(this IConfigService service) where T : class, IConfig
-        {
-            service.Save(typeof(T));
-        }
+        public static void Save<T>(this IConfigService service) where T : class, IConfig => service.Save(typeof(T));
         
         /// <summary>
         /// Reads a configuration by a given configuration type.
@@ -39,10 +33,7 @@ namespace AppBrix
         /// <typeparam name="T">The type of the configuration to be read.</typeparam>
         /// <param name="provider">The configuration provider</param>
         /// <returns>The read configuration.</returns>
-        public static string ReadConfig<T>(this IConfigProvider provider) where T : class, IConfig
-        {
-            return provider.ReadConfig(typeof(T));
-        }
+        public static string ReadConfig<T>(this IConfigProvider provider) where T : class, IConfig => provider.ReadConfig(typeof(T));
         
         /// <summary>
         /// Writes a configuraton.
@@ -50,10 +41,7 @@ namespace AppBrix
         /// <typeparam name="T">The type of the configuration.</typeparam>
         /// <param name="provider">The configuration provider.</param>
         /// <param name="config">The configuration.</param>
-        public static void WriteConfig<T>(this IConfigProvider provider, string config) where T : class, IConfig
-        {
-            provider.WriteConfig(config, typeof(T));
-        }
+        public static void WriteConfig<T>(this IConfigProvider provider, string config) where T : class, IConfig => provider.WriteConfig(config, typeof(T));
 
         /// <summary>
         /// Deserializes a string to a configuration.
@@ -62,9 +50,6 @@ namespace AppBrix
         /// <param name="serializer"></param>
         /// <param name="config">The string representation of the configuration.</param>
         /// <returns>The deserialized configuration.</returns>
-        public static T Deserialize<T>(this IConfigSerializer serializer, string config) where T : class, IConfig
-        {
-            return (T)serializer.Deserialize(config, typeof(T));
-        }
+        public static T Deserialize<T>(this IConfigSerializer serializer, string config) where T : class, IConfig => (T)serializer.Deserialize(config, typeof(T));
     }
 }

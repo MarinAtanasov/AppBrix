@@ -47,10 +47,7 @@ namespace AppBrix.Events.Schedule.Impl
             }
         }
 
-        public override void MoveToNextOccurrence(DateTime now)
-        {
-            this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);
-        }
+        public override void MoveToNextOccurrence(DateTime now) => this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);
         #endregion
 
         #region Private fields and constants

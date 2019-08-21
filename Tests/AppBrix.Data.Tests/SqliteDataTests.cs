@@ -77,10 +77,7 @@ namespace AppBrix.Data.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceGetItem()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceGetItemInternal);
-        }
+        public void TestPerformanceGetItem() => TestUtils.TestPerformance(this.TestPerformanceGetItemInternal);
         #endregion
 
         #region Private methods

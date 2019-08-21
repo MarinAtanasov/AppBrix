@@ -19,10 +19,15 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns>The log hub.</returns>
-        public static ILogHub GetLogHub(this IApp app)
-        {
-            return (ILogHub)app.Get(typeof(ILogHub));
-        }
+        public static ILogHub GetLogHub(this IApp app) => (ILogHub)app.Get(typeof(ILogHub));
+
+        /// <summary>
+        /// Gets the registered logger provider.
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <returns>The logger provider.</returns>
+        internal static Microsoft.Extensions.Logging.ILoggerProvider GetLoggerProvider(this IApp app) =>
+            (Microsoft.Extensions.Logging.ILoggerProvider)app.Get(typeof(Microsoft.Extensions.Logging.ILoggerProvider));
 
         /// <summary>
         /// Creates and fires a critical level log entry.
@@ -36,10 +41,8 @@ namespace AppBrix
         public static void Critical(this ILogHub logHub, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            logHub.Log(LogLevel.Critical, message, error, callerFile, callerMember, callerLineNumber);
-        }
+            [CallerLineNumber] int callerLineNumber = 0
+        ) => logHub.Log(LogLevel.Critical, message, error, callerFile, callerMember, callerLineNumber);
 
         /// <summary>
         /// Creates and fires a debug level log entry.
@@ -53,10 +56,8 @@ namespace AppBrix
         public static void Debug(this ILogHub logHub, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            logHub.Log(LogLevel.Debug, message, error, callerFile, callerMember, callerLineNumber);
-        }
+            [CallerLineNumber] int callerLineNumber = 0
+        ) => logHub.Log(LogLevel.Debug, message, error, callerFile, callerMember, callerLineNumber);
 
         /// <summary>
         /// Creates and fires an error level log entry.
@@ -70,10 +71,8 @@ namespace AppBrix
         public static void Error(this ILogHub logHub, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            logHub.Log(LogLevel.Error, message, error, callerFile, callerMember, callerLineNumber);
-        }
+            [CallerLineNumber] int callerLineNumber = 0
+        ) => logHub.Log(LogLevel.Error, message, error, callerFile, callerMember, callerLineNumber);
 
         /// <summary>
         /// Creates and fires an info level log entry.
@@ -87,10 +86,8 @@ namespace AppBrix
         public static void Info(this ILogHub logHub, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            logHub.Log(LogLevel.Info, message, error, callerFile, callerMember, callerLineNumber);
-        }
+            [CallerLineNumber] int callerLineNumber = 0
+        ) => logHub.Log(LogLevel.Info, message, error, callerFile, callerMember, callerLineNumber);
 
         /// <summary>
         /// Creates and fires a trace level log entry.
@@ -104,10 +101,8 @@ namespace AppBrix
         public static void Trace(this ILogHub logHub, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            logHub.Log(LogLevel.Trace, message, error, callerFile, callerMember, callerLineNumber);
-        }
+            [CallerLineNumber] int callerLineNumber = 0
+        ) => logHub.Log(LogLevel.Trace, message, error, callerFile, callerMember, callerLineNumber);
 
         /// <summary>
         /// Creates and fires a warning level log entry.
@@ -121,9 +116,7 @@ namespace AppBrix
         public static void Warning(this ILogHub logHub, string message, Exception error = null,
             [CallerFilePath] string callerFile = null,
             [CallerMemberName] string callerMember = null,
-            [CallerLineNumber] int callerLineNumber = 0)
-        {
-            logHub.Log(LogLevel.Warning, message, error, callerFile, callerMember, callerLineNumber);
-        }
+            [CallerLineNumber] int callerLineNumber = 0
+        ) => logHub.Log(LogLevel.Warning, message, error, callerFile, callerMember, callerLineNumber);
     }
 }

@@ -85,10 +85,7 @@ namespace AppBrix
         /// <param name="type">The type of the object to be constructed.</param>
         /// <param name="args">The constructor arguments.</param>
         /// <returns>The constructed object.</returns>
-        public static T CreateObject<T>(this Type type, params object[] args)
-        {
-            return (T)type.CreateObject(args);
-        }
+        public static T CreateObject<T>(this Type type, params object[] args) => (T)type.CreateObject(args);
 
         /// <summary>
         /// Constructs an object.
@@ -96,33 +93,14 @@ namespace AppBrix
         /// <param name="type">The type of the object to be constructed.</param>
         /// <param name="args">The constructor arguments.</param>
         /// <returns>The constructed object.</returns>
-        public static object CreateObject(this Type type, params object[] args)
-        {
-            return Activator.CreateInstance(type, args);
-        }
+        public static object CreateObject(this Type type, params object[] args) => Activator.CreateInstance(type, args);
 
         /// <summary>
         /// Gets the assembly qualified name using only the assembly name without culture and version.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>The assembly qualified name.</returns>
-        public static string GetAssemblyQualifiedName(this Type type)
-        {
-            return string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
-        }
-        #endregion
-
-        #region Strings and encodings
-        /// <summary>
-        /// Shorthand for getting the string from a whole byte array.
-        /// </summary>
-        /// <param name="encoding">The current encoding.</param>
-        /// <param name="bytes">The byte array containing the data to be stringified.</param>
-        /// <returns>The string which corresponds to the data inside the byte array.</returns>
-        public static string GetString(this Encoding encoding, byte[] bytes)
-        {
-            return encoding.GetString(bytes, 0, bytes.Length);
-        }
+        public static string GetAssemblyQualifiedName(this Type type) => $"{type.FullName}, {type.Assembly.GetName().Name}";
         #endregion
     }
 }

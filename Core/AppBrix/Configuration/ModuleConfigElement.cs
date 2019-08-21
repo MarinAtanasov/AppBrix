@@ -18,10 +18,7 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <typeparam name="T">The type of the module.</typeparam>
         /// <returns>The module element.</returns>
-        public static ModuleConfigElement Create<T>() where T : IModule
-        {
-            return ModuleConfigElement.Create(typeof(T));
-        }
+        public static ModuleConfigElement Create<T>() where T : IModule => ModuleConfigElement.Create(typeof(T));
 
         /// <summary>
         /// Creates a new element for the selected module.

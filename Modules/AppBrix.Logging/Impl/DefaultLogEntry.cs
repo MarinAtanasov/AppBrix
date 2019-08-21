@@ -48,10 +48,7 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region Public and overriden methods
-        public override int GetHashCode()
-        {
-            return this.Message.GetHashCode();
-        }
+        public override int GetHashCode() => this.Message.GetHashCode();
 
         public override string ToString()
         {

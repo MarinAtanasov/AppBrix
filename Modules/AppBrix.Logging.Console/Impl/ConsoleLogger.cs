@@ -27,10 +27,7 @@ namespace AppBrix.Logging.Console.Impl
         #endregion
 
         #region Private methods
-        private void LogEntry(ILogEntry entry)
-        {
-            System.Console.WriteLine(entry.ToString().Replace(Environment.NewLine, "\n"));
-        }
+        private void LogEntry(ILogEntry entry) => System.Console.WriteLine(entry.ToString().Replace(Environment.NewLine, "\n"));
         #endregion
 
         #region Private fields and constants

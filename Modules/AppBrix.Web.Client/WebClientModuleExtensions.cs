@@ -18,9 +18,6 @@ namespace AppBrix
         /// <param name="request">The current REST request.</param>
         /// <param name="method">The HTTP method.</param>
         /// <returns>The current REST request.</returns>
-        public static IHttpRequest SetMethod(this IHttpRequest request, HttpMethod method)
-        {
-            return request.SetMethod(method.ToString().ToUpperInvariant());
-        }
+        public static IHttpRequest SetMethod(this IHttpRequest request, HttpMethod method) => request.SetMethod(method.ToString().ToUpperInvariant());
     }
 }

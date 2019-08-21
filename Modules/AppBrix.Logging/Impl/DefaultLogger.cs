@@ -26,13 +26,8 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region Public and overriden methods
-        public bool IsEnabled(LogLevel logLevel)
-        {
-            if (!this.Enabled)
-                return false;
-
-            return this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
-        }
+        public bool IsEnabled(LogLevel logLevel) =>
+            this.Enabled ? this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel) : false;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
@@ -42,10 +37,7 @@ namespace AppBrix.Logging.Impl
             this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
         }
 
-        public IDisposable BeginScope<TState>(TState state)
-        {
-            return null;
-        }
+        public IDisposable BeginScope<TState>(TState state) => null;
         #endregion
 
         #region Private methods

@@ -128,33 +128,14 @@ namespace AppBrix.Permissions.Impl
         #endregion
 
         #region Private methods
-        private IEnumerable<string> GetAllParents(string role)
-        {
-            if (this.parents.TryGetValue(role, out var roleParents))
-            {
-                return roleParents.Concat(roleParents.SelectMany(this.GetAllParents));
-            }
-            else
-            {
-                return Array.Empty<string>();
-            }
-        }
+        private IEnumerable<string> GetAllParents(string role) => this.parents.TryGetValue(role, out var roleParents) ?
+            roleParents.Concat(roleParents.SelectMany(this.GetAllParents)) : Array.Empty<string>();
 
-        private bool HasPermissionInternal(string role, string permission)
-        {
-            if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
-            {
-                return false;
-            }
-            else if (this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission))
-            {
-                return true;
-            }
-            else
-            {
-                return this.parents.TryGetValue(role, out var roleParents) && roleParents.Any(r => this.HasPermissionInternal(r, permission));
-            }
-        }
+        private bool HasPermissionInternal(string role, string permission) =>
+            !(this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission)) && (
+                this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission) ||
+                this.parents.TryGetValue(role, out var roleParents) && roleParents.Any(r => this.HasPermissionInternal(r, permission))
+            );
         #endregion
 
         #region Private fields and constants

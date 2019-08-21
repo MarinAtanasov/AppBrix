@@ -102,17 +102,11 @@ namespace AppBrix.Container.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceContainer()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceContainerInternal);
-        }
+        public void TestPerformanceContainer() => TestUtils.TestPerformance(this.TestPerformanceContainerInternal);
         #endregion
 
         #region Private methods
-        private IContainer GetContainer()
-        {
-            return this.app.Container;
-        }
+        private IContainer GetContainer() => this.app.Container;
 
         private void TestPerformanceContainerInternal()
         {

@@ -18,10 +18,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The current application.</param>
         /// <returns>The permissions service.</returns>
-        public static IPermissionsService GetPermissionsService(this IApp app)
-        {
-            return (IPermissionsService)app.Get(typeof(IPermissionsService));
-        }
+        public static IPermissionsService GetPermissionsService(this IApp app) => (IPermissionsService)app.Get(typeof(IPermissionsService));
 
         /// <summary>
         /// Adds a child role to the specified role.
@@ -30,10 +27,7 @@ namespace AppBrix
         /// <param name="service">The permission service.</param>
         /// <param name="role">The parent role.</param>
         /// <param name="child">The child role.</param>
-        public static void AddChild(this IPermissionsService service, string role, string child)
-        {
-            service.AddParent(child, role);
-        }
+        public static void AddChild(this IPermissionsService service, string role, string child) => service.AddParent(child, role);
 
 
         internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
@@ -58,9 +52,7 @@ namespace AppBrix
             }
         }
 
-        internal static IReadOnlyCollection<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key)
-        {
-            return dictionary.TryGetValue(key, out var values) ? (IReadOnlyCollection<string>)values : Array.Empty<string>();
-        }
+        internal static IReadOnlyCollection<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
+            dictionary.TryGetValue(key, out var values) ? (IReadOnlyCollection<string>)values : Array.Empty<string>();
     }
 }

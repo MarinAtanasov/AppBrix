@@ -18,29 +18,20 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns>The registered databse context service.</returns>
-        public static IDbContextService GetDbContextService(this IApp app)
-        {
-            return (IDbContextService)app.Get(typeof(IDbContextService));
-        }
+        public static IDbContextService GetDbContextService(this IApp app) => (IDbContextService)app.Get(typeof(IDbContextService));
 
         /// <summary>
         /// Gets an instance of a <see cref="DbContext"/> of the provided <see cref="DbContext"/> type.
         /// </summary>
         /// <typeparam name="T">The type of the context.</typeparam>
         /// <returns>A databse context of the provided type.</returns>
-        public static T Get<T>(this IDbContextService service) where T : DbContext
-        {
-            return (T)service.Get(typeof(T));
-        }
+        public static T Get<T>(this IDbContextService service) where T : DbContext => (T)service.Get(typeof(T));
 
         /// <summary>
         /// Gets the currently registered <see cref="IDbContextConfigurer"/>.
         /// </summary>
         /// <param name="app">The current <see cref="IApp"/>.</param>
         /// <returns>The registered context configurer.</returns>
-        internal static IDbContextConfigurer GetDbContextConfigurer(this IApp app)
-        {
-            return (IDbContextConfigurer)app.Get(typeof(IDbContextConfigurer));
-        }
+        internal static IDbContextConfigurer GetDbContextConfigurer(this IApp app) => (IDbContextConfigurer)app.Get(typeof(IDbContextConfigurer));
     }
 }

@@ -19,15 +19,9 @@ namespace AppBrix.Time.Impl
         #endregion
 
         #region ITimeService implementation
-        public override DateTime GetTime()
-        {
-            return DateTime.Now;
-        }
+        public override DateTime GetTime() => DateTime.Now;
 
-        public override DateTime ToAppTime(DateTime time)
-        {
-            return time.ToLocalTime();
-        }
+        public override DateTime ToAppTime(DateTime time) => time.ToLocalTime();
         #endregion
     }
 }

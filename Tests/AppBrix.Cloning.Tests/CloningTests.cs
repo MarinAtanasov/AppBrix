@@ -152,23 +152,14 @@ namespace AppBrix.Cloning.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceDeepCopy()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceDeepCopyInternal);
-        }
+        public void TestPerformanceDeepCopy() => TestUtils.TestPerformance(this.TestPerformanceDeepCopyInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceShallowCopy()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceShallowCopyInternal);
-        }
+        public void TestPerformanceShallowCopy() => TestUtils.TestPerformance(this.TestPerformanceShallowCopyInternal);
         #endregion
 
         #region Private methods
-        private ICloner GetCloner()
-        {
-            return this.app.GetCloner();
-        }
+        private ICloner GetCloner() => this.app.GetCloner();
 
         private void AssertIsDeepCopy(object original, object copy, string property = "this")
         {

@@ -217,29 +217,17 @@ namespace AppBrix.Events.Async.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsSubscribe()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
-        }
+        public void TestPerformanceEventsSubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsUnsubscribe()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsUnsubscribeInternal);
-        }
+        public void TestPerformanceEventsUnsubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsRaise()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsRaiseInternal);
-        }
+        public void TestPerformanceEventsRaise() => TestUtils.TestPerformance(this.TestPerformanceEventsRaiseInternal);
         #endregion
 
         #region Private methods
-        private IAsyncEventHub GetAsyncEventHub()
-        {
-            return this.app.GetAsyncEventHub();
-        }
+        private IAsyncEventHub GetAsyncEventHub() => this.app.GetAsyncEventHub();
 
         private void TestPerformanceEventsSubscribeInternal()
         {

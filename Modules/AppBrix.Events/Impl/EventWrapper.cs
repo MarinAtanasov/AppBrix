@@ -22,10 +22,7 @@ namespace AppBrix.Events.Impl
 
         public override object Handler => this.handler;
 
-        public override void Execute(IEvent args)
-        {
-            this.handler((T)args);
-        }
+        public override void Execute(IEvent args) => this.handler((T)args);
 
         private readonly Action<T> handler;
     }

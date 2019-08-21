@@ -14,10 +14,7 @@ namespace AppBrix.Cloning.Impl
     internal sealed class DefaultCloner : ICloner
     {
         #region ICloner implementation
-        public object DeepCopy(object obj)
-        {
-            return this.DeepCopy(obj, new Dictionary<object, object>());
-        }
+        public object DeepCopy(object obj) => this.DeepCopy(obj, new Dictionary<object, object>());
 
         public object ShallowCopy(object obj)
         {
@@ -72,16 +69,10 @@ namespace AppBrix.Cloning.Impl
             }
         }
 
-        private bool IsPrimitiveType(Type type)
-        {
-            return (type.IsValueType && type.IsPrimitive) ||
-                   type.IsEnum || type == typeof(string) || type == typeof(DateTime);
-        }
+        private bool IsPrimitiveType(Type type) =>
+            (type.IsValueType && type.IsPrimitive) || type.IsEnum || type == typeof(string) || type == typeof(DateTime);
 
-        private bool IsValueType(Type type)
-        {
-            return type == typeof(string) || type.IsValueType;
-        }
+        private bool IsValueType(Type type) => type == typeof(string) || type.IsValueType;
 
         private void ForEach(Array array, Action<object, int[]> action)
         {

@@ -283,15 +283,9 @@ namespace AppBrix.Data.Migration.Impl
                 this.GenerateMigrationName(type, version), Guid.NewGuid());
         }
 
-        private string GenerateMigrationName(Type type, Version version)
-        {
-            return string.Format("{0}_{1}", type.Name, version.ToString().Replace('.', '_'));
-        }
+        private string GenerateMigrationName(Type type, Version version) => string.Format("{0}_{1}", type.Name, version.ToString().Replace('.', '_'));
 
-        private string GenerateMigrationsHistoryTableName(Type type)
-        {
-            return $"__EFMH_{type.Name}";
-        }
+        private string GenerateMigrationsHistoryTableName(Type type) => $"__EFMH_{type.Name}";
         #endregion
 
         #region Private fields and constants

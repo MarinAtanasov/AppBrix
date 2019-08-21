@@ -18,10 +18,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The currently running application.</param>
         /// <returns>The cache.</returns>
-        public static ICache GetCache(this IApp app)
-        {
-            return (ICache)app.Get(typeof(ICache));
-        }
+        public static ICache GetCache(this IApp app) => (ICache)app.Get(typeof(ICache));
 
         /// <summary>
         /// Gets a cached object by its key.
@@ -30,9 +27,7 @@ namespace AppBrix
         /// <param name="cache">The object cache.</param>
         /// <param name="key">The key which is used to store the object in the cache.</param>
         /// <returns></returns>
-        public static async Task<T> Get<T>(this ICache cache, string key)
-        {
-            return (T)(await cache.Get(key, typeof(T)).ConfigureAwait(false) ?? default(T));
-        }
+        public static async Task<T> Get<T>(this ICache cache, string key) =>
+            (T)(await cache.Get(key, typeof(T)).ConfigureAwait(false) ?? default(T));
     }
 }

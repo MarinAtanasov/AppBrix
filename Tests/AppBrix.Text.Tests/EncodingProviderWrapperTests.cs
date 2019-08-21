@@ -47,10 +47,7 @@ namespace AppBrix.Text.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEncodingProviderWrapper()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
-        }
+        public void TestPerformanceEncodingProviderWrapper() => TestUtils.TestPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
         #endregion
 
         #region Private methods

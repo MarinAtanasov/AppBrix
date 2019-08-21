@@ -13,15 +13,9 @@ namespace AppBrix.Caching.Tests.Mocks
     internal sealed class JsonCacheSerializer : ICacheSerializer
     {
         #region Public and overriden methods
-        public byte[] Serialize(object item)
-        {
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.None, this.GetSettings()));
-        }
+        public byte[] Serialize(object item) => Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.None, this.GetSettings()));
 
-        public object Deserialize(byte[] serialized, Type type)
-        {
-            return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(serialized), type, this.GetSettings());
-        }
+        public object Deserialize(byte[] serialized, Type type) => JsonConvert.DeserializeObject(Encoding.UTF8.GetString(serialized), type, this.GetSettings());
         #endregion
 
         #region Private methods

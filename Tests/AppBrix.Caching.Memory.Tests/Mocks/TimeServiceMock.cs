@@ -17,30 +17,15 @@ namespace AppBrix.Caching.Memory.Tests.Mocks
         #endregion
 
         #region Public and overriden methods
-        public DateTime GetTime()
-        {
-            return time ?? this.timeService.GetTime();
-        }
+        public DateTime GetTime() => time ?? this.timeService.GetTime();
 
-        public void SetTime(DateTime time)
-        {
-            this.time = time;
-        }
+        public void SetTime(DateTime time) => this.time = time;
 
-        public DateTime ToAppTime(DateTime time)
-        {
-            return this.timeService.ToAppTime(time);
-        }
+        public DateTime ToAppTime(DateTime time) => this.timeService.ToAppTime(time);
 
-        public DateTime ToDateTime(string time)
-        {
-            return this.timeService.ToDateTime(time);
-        }
+        public DateTime ToDateTime(string time) => this.timeService.ToDateTime(time);
 
-        public string ToString(DateTime time)
-        {
-            return this.timeService.ToString(time);
-        }
+        public string ToString(DateTime time) => this.timeService.ToString(time);
         #endregion
 
         #region Private fields and constants

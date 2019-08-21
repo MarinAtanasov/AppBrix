@@ -25,16 +25,9 @@ namespace AppBrix.Logging.Impl
         {
         }
 
-        public void AddProvider(ILoggerProvider provider)
-        {
-            this.app.Container.Register(provider);
-        }
+        public void AddProvider(ILoggerProvider provider) => this.app.Container.Register(provider);
 
-        public ILogger CreateLogger(string categoryName)
-        {
-            var provider = (ILoggerProvider)this.app.Get(typeof(ILoggerProvider));
-            return provider.CreateLogger(categoryName);
-        }
+        public ILogger CreateLogger(string categoryName) => this.app.GetLoggerProvider().CreateLogger(categoryName);
         #endregion
 
         #region Private fields and constants

@@ -16,20 +16,11 @@ namespace AppBrix.Events.Schedule.Impl
             this.BubbleUp(this.queue.Count - 1);
         }
 
-        public PriorityQueueItem Peek()
-        {
-            return this.queue.Count > 0 ? this.queue[0] : null;
-        }
+        public PriorityQueueItem Peek() => this.queue.Count > 0 ? this.queue[0] : null;
 
-        public PriorityQueueItem Pop()
-        {
-            return this.RemoveAt(0);
-        }
+        public PriorityQueueItem Pop() => this.RemoveAt(0);
 
-        public void ReprioritizeHead()
-        {
-            this.BubbleDown(0);
-        }
+        public void ReprioritizeHead() => this.BubbleDown(0);
 
         public void Remove<T>(IScheduledEvent<T> args) where T : IEvent
         {
@@ -43,10 +34,7 @@ namespace AppBrix.Events.Schedule.Impl
             }
         }
 
-        public void Clear()
-        {
-            this.queue.Clear();
-        }
+        public void Clear() => this.queue.Clear();
         #endregion
 
         #region Private methods

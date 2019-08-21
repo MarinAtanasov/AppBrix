@@ -181,22 +181,13 @@ namespace AppBrix.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceGetDependencies()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceGetDependenciesInternal);
-        }
+        public void TestPerformanceGetDependencies() => TestUtils.TestPerformance(this.TestPerformanceGetDependenciesInternal);
         #endregion
 
         #region Private methods
-        private DefaultApp CreateDefaultApp(Type module)
-        {
-            return (DefaultApp)TestUtils.CreateTestApp(module);
-        }
+        private DefaultApp CreateDefaultApp(Type module) => (DefaultApp)TestUtils.CreateTestApp(module);
 
-        private IEnumerable<ModuleInfo> GetModules(DefaultApp app)
-        {
-            return (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app);
-        }
+        private IEnumerable<ModuleInfo> GetModules(DefaultApp app) => (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app);
 
         private void TestPerformanceReinitializeInternal(IApp app)
         {

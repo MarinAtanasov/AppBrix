@@ -20,10 +20,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="configService">The configuration service.</param>
         /// <returns>The created app.</returns>
-        public static IApp Create(IConfigService configService)
-        {
-            return new DefaultApp(configService);
-        }
+        public static IApp Create(IConfigService configService) => new DefaultApp(configService);
 
 
         /// <summary>

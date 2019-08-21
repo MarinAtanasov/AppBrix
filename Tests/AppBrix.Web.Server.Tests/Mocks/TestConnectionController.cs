@@ -30,10 +30,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public bool TestConnection()
-        {
-            return true;
-        }
+        public bool TestConnection() => true;
 
         /// <summary>
         /// Returns true to indicate that the service has been reached as expected.
@@ -41,10 +38,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public int TestConnection([FromBody]int number)
-        {
-            return number;
-        }
+        public int TestConnection([FromBody]int number) => number;
         #endregion
     }
 }

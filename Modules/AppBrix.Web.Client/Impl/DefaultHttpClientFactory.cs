@@ -23,10 +23,7 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region IHttpClientFactory implementation
-        public HttpClient CreateClient(string name)
-        {
-            return this.app.Get<HttpClient>();
-        }
+        public HttpClient CreateClient(string name) => this.app.Get<HttpClient>();
         #endregion
 
         #region Private fields and constants

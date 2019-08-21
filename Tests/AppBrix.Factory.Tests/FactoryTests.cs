@@ -103,17 +103,11 @@ namespace AppBrix.Factory.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceFactory()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceFactoryInternal);
-        }
+        public void TestPerformanceFactory() => TestUtils.TestPerformance(this.TestPerformanceFactoryInternal);
         #endregion
 
         #region Private methods
-        private IFactoryService GetFactory()
-        {
-            return this.app.GetFactoryService();
-        }
+        private IFactoryService GetFactory() => this.app.GetFactoryService();
 
         private void TestPerformanceFactoryInternal()
         {

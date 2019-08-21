@@ -92,22 +92,13 @@ namespace AppBrix.Time.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceGetTime()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceGetTimeInternal);
-        }
+        public void TestPerformanceGetTime() => TestUtils.TestPerformance(this.TestPerformanceGetTimeInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceToAppTime()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceToAppTimeInternal);
-        }
+        public void TestPerformanceToAppTime() => TestUtils.TestPerformance(this.TestPerformanceToAppTimeInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceConvertTime()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceConvertTimeInternal);
-        }
+        public void TestPerformanceConvertTime() => TestUtils.TestPerformance(this.TestPerformanceConvertTimeInternal);
         #endregion
 
         #region Private methods

@@ -211,10 +211,7 @@ namespace AppBrix.Caching.Memory.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceMemoryCache()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceMemoryCacheInternal);
-        }
+        public void TestPerformanceMemoryCache() => TestUtils.TestPerformance(this.TestPerformanceMemoryCacheInternal);
         #endregion
 
         #region Private methods

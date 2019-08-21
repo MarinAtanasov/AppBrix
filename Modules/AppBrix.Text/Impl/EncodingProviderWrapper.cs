@@ -24,15 +24,9 @@ namespace AppBrix.Text.Impl
             this.app = null;
         }
 
-        public override Encoding GetEncoding(string name)
-        {
-            return this.app?.Get<EncodingProvider>().GetEncoding(name);
-        }
+        public override Encoding GetEncoding(string name) => this.app?.Get<EncodingProvider>().GetEncoding(name);
 
-        public override Encoding GetEncoding(int codepage)
-        {
-            return this.app?.Get<EncodingProvider>().GetEncoding(codepage);
-        }
+        public override Encoding GetEncoding(int codepage) => this.app?.Get<EncodingProvider>().GetEncoding(codepage);
         #endregion
 
         #region Private fields and constants

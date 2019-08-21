@@ -18,10 +18,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The current application.</param>
         /// <returns>The factory.</returns>
-        public static IFactoryService GetFactoryService(this IApp app)
-        {
-            return (IFactoryService)app.Get(typeof(IFactoryService));
-        }
+        public static IFactoryService GetFactoryService(this IApp app) => (IFactoryService)app.Get(typeof(IFactoryService));
 
         /// <summary>
         /// Registers a factory method for the specified type.
@@ -61,10 +58,7 @@ namespace AppBrix
         /// <typeparam name="T">The type to be returned by the factory.</typeparam>
         /// <param name="factoryService">The factory service.</param>
         /// <param name="factory">The factory.</param>
-        public static void Register<T>(this IFactoryService factoryService, IFactory<T> factory) where T : class
-        {
-            factoryService.Register(factory, typeof(T));
-        }
+        public static void Register<T>(this IFactoryService factoryService, IFactory<T> factory) where T : class => factoryService.Register(factory, typeof(T));
 
         /// <summary>
         /// Returns an object of the specified type.
@@ -72,10 +66,7 @@ namespace AppBrix
         /// <typeparam name="T">The type of the object to be returned.</typeparam>
         /// <param name="factoryService">The factory service.</param>
         /// <returns>An instance of an object of type T.</returns>
-        public static T Get<T>(this IFactoryService factoryService) where T : class
-        {
-            return (T)factoryService.Get(typeof(T));
-        }
+        public static T Get<T>(this IFactoryService factoryService) where T : class => (T)factoryService.Get(typeof(T));
 
         /// <summary>
         /// Returns an object of the specified type.
@@ -97,9 +88,6 @@ namespace AppBrix
         /// </summary>
         /// <typeparam name="T">The type of the object to be returned.</typeparam>
         /// <returns>An instance of an object of the specified type.</returns>
-        public static IFactory<T> GetFactory<T>(this IFactoryService factoryService) where T : class
-        {
-            return (IFactory<T>)factoryService.GetFactory(typeof(T));
-        }
+        public static IFactory<T> GetFactory<T>(this IFactoryService factoryService) where T : class => (IFactory<T>)factoryService.GetFactory(typeof(T));
     }
 }

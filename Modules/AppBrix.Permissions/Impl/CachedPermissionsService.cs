@@ -43,15 +43,9 @@ namespace AppBrix.Permissions.Impl
             this.CacheRolePermissions(role);
         }
 
-        public IReadOnlyCollection<string> GetParents(string role)
-        {
-            return this.service.GetParents(role);
-        }
+        public IReadOnlyCollection<string> GetParents(string role) => this.service.GetParents(role);
 
-        public IReadOnlyCollection<string> GetChildren(string role)
-        {
-            return this.service.GetChildren(role);
-        }
+        public IReadOnlyCollection<string> GetChildren(string role) => this.service.GetChildren(role);
 
         public void Allow(string role, string permission)
         {
@@ -81,15 +75,9 @@ namespace AppBrix.Permissions.Impl
             return this.cachedPermissions.GetOrEmpty(role).Contains(permission);
         }
 
-        public IReadOnlyCollection<string> GetAllowed(string role)
-        {
-            return this.service.GetAllowed(role);
-        }
+        public IReadOnlyCollection<string> GetAllowed(string role) => this.service.GetAllowed(role);
 
-        public IReadOnlyCollection<string> GetDenied(string role)
-        {
-            return this.service.GetDenied(role);
-        }
+        public IReadOnlyCollection<string> GetDenied(string role) => this.service.GetDenied(role);
         #endregion
 
         #region Private methods

@@ -17,9 +17,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The current application.</param>
         /// <returns>The event hub.</returns>
-        public static IScheduledEventHub GetScheduledEventHub(this IApp app)
-        {
-            return (IScheduledEventHub)app.Get(typeof(IScheduledEventHub));
-        }
+        public static IScheduledEventHub GetScheduledEventHub(this IApp app) => (IScheduledEventHub)app.Get(typeof(IScheduledEventHub));
     }
 }

@@ -17,9 +17,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="app">The current application.</param>
         /// <returns>The event hub.</returns>
-        public static IDelayedEventHub GetDelayedEventHub(this IApp app)
-        {
-            return (IDelayedEventHub)app.Get(typeof(IDelayedEventHub));
-        }
+        public static IDelayedEventHub GetDelayedEventHub(this IApp app) => (IDelayedEventHub)app.Get(typeof(IDelayedEventHub));
     }
 }

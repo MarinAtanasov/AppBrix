@@ -26,10 +26,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         
         #region Public and overriden methods
         [HttpGet]
-        public string AppId()
-        {
-            return this.app.GetConfig<AppIdConfig>().Id.ToString();
-        }
+        public string AppId() => this.app.GetConfig<AppIdConfig>().Id.ToString();
         #endregion
 
         #region Private fields and constants

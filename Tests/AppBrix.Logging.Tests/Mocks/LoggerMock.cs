@@ -18,10 +18,7 @@ namespace AppBrix.Logging.Tests.Mocks
         #endregion
 
         #region Public and overriden methods
-        public void LogEntry(ILogEntry entry)
-        {
-            this.loggedEntries.Add(entry);
-        }
+        public void LogEntry(ILogEntry entry) => this.loggedEntries.Add(entry);
         #endregion
 
         #region Private fields and constants

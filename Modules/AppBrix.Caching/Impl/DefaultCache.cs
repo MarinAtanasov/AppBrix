@@ -30,33 +30,17 @@ namespace AppBrix.Caching.Impl
             return bytes != null ? this.GetSerializer().Deserialize(bytes, type) : null;
         }
         
-        public Task Refresh(string key)
-        {
-            return this.GetCache().RefreshAsync(key);
-        }
+        public Task Refresh(string key) => this.GetCache().RefreshAsync(key);
         
-        public Task Remove(string key)
-        {
-            return this.GetCache().RemoveAsync(key);
-        }
+        public Task Remove(string key) => this.GetCache().RemoveAsync(key);
         
-        public Task Set(string key, object item)
-        {
-            var serialized = this.GetSerializer().Serialize(item);
-            return this.GetCache().SetAsync(key, serialized);
-        }
+        public Task Set(string key, object item) => this.GetCache().SetAsync(key, this.GetSerializer().Serialize(item));
         #endregion
 
         #region Private methods
-        private IDistributedCache GetCache()
-        {
-            return (IDistributedCache)this.app.Get(typeof(IDistributedCache));
-        }
+        private IDistributedCache GetCache() => (IDistributedCache)this.app.Get(typeof(IDistributedCache));
 
-        private ICacheSerializer GetSerializer()
-        {
-            return (ICacheSerializer)this.app.Get(typeof(ICacheSerializer));
-        }
+        private ICacheSerializer GetSerializer() => (ICacheSerializer)this.app.Get(typeof(ICacheSerializer));
         #endregion
 
         #region Private fields and constants

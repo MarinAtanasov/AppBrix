@@ -25,15 +25,9 @@ namespace AppBrix.Time.Impl
 
         public abstract DateTime ToAppTime(DateTime time);
 
-        public DateTime ToDateTime(string time)
-        {
-            return DateTime.ParseExact(time, this.format, CultureInfo.InvariantCulture);
-        }
+        public DateTime ToDateTime(string time) => DateTime.ParseExact(time, this.format, CultureInfo.InvariantCulture);
 
-        public string ToString(DateTime time)
-        {
-            return time.ToString(this.format);
-        }
+        public string ToString(DateTime time) => time.ToString(this.format);
         #endregion
 
         #region Private fields and constants

@@ -89,13 +89,11 @@ namespace AppBrix.Web.Server.Tests
         #endregion
 
         #region Private methods
-        private TestServer CreateTestServer(string baseAddress, IApp app)
-        {
-            return new TestServer(WebHost.CreateDefaultBuilder().UseUrls(baseAddress).UseApp(app))
+        private TestServer CreateTestServer(string baseAddress, IApp app) =>
+            new TestServer(WebHost.CreateDefaultBuilder().UseUrls(baseAddress).UseApp(app))
             {
                 BaseAddress = new Uri(baseAddress)
             };
-        }
 
         private IApp CreateWebApp()
         {

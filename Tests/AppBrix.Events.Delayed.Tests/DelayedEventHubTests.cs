@@ -97,28 +97,16 @@ namespace AppBrix.Events.Delayed.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsSubscribe()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
-        }
+        public void TestPerformanceEventsSubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsUnsubscribe()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsUnsubscribeInternal);
-        }
+        public void TestPerformanceEventsUnsubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsRaiseImmediate()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsRaiseImmediateInternal);
-        }
+        public void TestPerformanceEventsRaiseImmediate() => TestUtils.TestPerformance(this.TestPerformanceEventsRaiseImmediateInternal);
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-        public void TestPerformanceEventsRaiseDelayed()
-        {
-            TestUtils.TestPerformance(this.TestPerformanceEventsRaiseDelayedInternal);
-        }
+        public void TestPerformanceEventsRaiseDelayed() => TestUtils.TestPerformance(this.TestPerformanceEventsRaiseDelayedInternal);
         #endregion
 
         #region Private methods

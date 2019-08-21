@@ -20,10 +20,7 @@ namespace AppBrix.ConsoleApp
         #endregion
 
         #region Public and overriden methods
-        public string Generate()
-        {
-            return $"{this.Level} message: {++this.MessagesSent}";
-        }
+        public string Generate() => $"{this.Level} message: {++this.MessagesSent}";
         #endregion
     }
 }

@@ -193,17 +193,12 @@ namespace AppBrix.Application
             this.IsStarted = false;
         }
 
-        private IEnumerable<ModuleInfo> GetModuleInfos()
-        {
-            return this.ConfigService.Get<AppConfig>().Modules
+        private IEnumerable<ModuleInfo> GetModuleInfos() => 
+            this.ConfigService.Get<AppConfig>().Modules
                 .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
                 .Select(m => new ModuleInfo(this.CreateModule(m), m));
-        }
 
-        private IModule CreateModule(ModuleConfigElement element)
-        {
-            return Type.GetType(element.Type).CreateObject<IModule>();
-        }
+        private IModule CreateModule(ModuleConfigElement element) => Type.GetType(element.Type).CreateObject<IModule>();
         #endregion
 
         #region Private fields and constants
