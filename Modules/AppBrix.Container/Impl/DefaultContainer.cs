@@ -24,7 +24,6 @@ namespace AppBrix.Container.Impl
 
         public void Uninitialize()
         {
-            this.registered.Clear();
             this.objects.Clear();
         }
         #endregion
@@ -43,19 +42,10 @@ namespace AppBrix.Container.Impl
             if (type.IsValueType)
                 throw new ArgumentException("Container does not support value types.");
 
-            this.registered.Add(obj);
             this.RegisterInternal(obj, type);
         }
         
-        public object Get(Type type)
-        {
-            return this.objects[type];
-        }
-
-        public IEnumerable<object> GetAll()
-        {
-            return this.registered;
-        }
+        public object Get(Type type) => this.objects[type];
         #endregion
 
         #region Private methods
@@ -77,7 +67,6 @@ namespace AppBrix.Container.Impl
 
         #region Private fields and constants
         private readonly Dictionary<Type, object> objects = new Dictionary<Type, object>();
-        private readonly List<object> registered = new List<object>();
         #endregion
     }
 }

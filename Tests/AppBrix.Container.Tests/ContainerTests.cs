@@ -64,40 +64,6 @@ namespace AppBrix.Container.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestResolveAllNoElements()
-        {
-            var container = this.GetContainer();
-            var resolved = container.GetAll().OfType<ContainerTests>().ToList();
-            resolved.Should().NotBeNull("resolved collection should not be null");
-            resolved.Count.Should().Be(0, "resolved collection should be empty");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestResolveAllOneElement()
-        {
-            var container = this.GetContainer();
-            var resolved = container.GetAll().OfType<IContainer>().ToList();
-            resolved.Should().NotBeNull("resolved collection should not be null");
-            resolved.Count.Should().Be(1, "resolved collection should have 1 element");
-            resolved.Single().Should().Be(container, "resolved element should be the original container");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestResolveAllTwoElements()
-        {
-            var container = this.GetContainer();
-            var first = new ParentMock();
-            container.Register(first);
-            var second = new ChildMock();
-            container.Register(second);
-            var resolved = container.GetAll().OfType<ParentMock>().ToList();
-            resolved.Should().NotBeNull("resolved collection should not be null");
-            resolved.Count.Should().Be(2, "resolved collection should have 2 elements");
-            resolved.First().Should().BeSameAs(first, "resolved element 1 should be the original item");
-            resolved.Last().Should().BeSameAs(second, "resolved element 2 should be the new item");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestRegisterNull()
         {
             var container = this.GetContainer();
@@ -125,7 +91,6 @@ namespace AppBrix.Container.Tests
             container.Get<ChildMock>().Should().BeSameAs(resolved2, "object not replaced with second");
             container.Register(resolved);
             container.Get<ChildMock>().Should().BeSameAs(resolved, "object not replaced with original");
-            container.GetAll().OfType<ChildMock>().Count().Should().Be(3, "first object has been removed from history");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -161,7 +126,6 @@ namespace AppBrix.Container.Tests
                 this.app.Get(typeof(ChildMock));
                 this.app.Get(typeof(ParentMock));
                 this.app.Get(typeof(IContainer));
-                this.app.Container.GetAll();
             }
             this.app.Reinitialize();
         }

@@ -19,10 +19,7 @@ namespace AppBrix
         /// <param name="app">The application.</param>
         /// <param name="type">The type of the object to be resolved.</param>
         /// <returns></returns>
-        public static object Get(this IApp app, Type type)
-        {
-            return app.Container.Get(type);
-        }
+        public static object Get(this IApp app, Type type) => app.Container.Get(type);
 
         /// <summary>
         /// Resolves an item by its type.
@@ -30,20 +27,14 @@ namespace AppBrix
         /// <typeparam name="T">The type of the object to be resolved.</typeparam>
         /// <param name="app">The application.</param>
         /// <returns></returns>
-        public static T Get<T>(this IApp app) where T : class
-        {
-            return app.Container.Get<T>();
-        }
+        public static T Get<T>(this IApp app) where T : class => app.Container.Get<T>();
 
         /// <summary>
         /// Returns the last registered object of a given type.
         /// </summary>
         /// <typeparam name="T">The type of the registered object.</typeparam>
         /// <returns>The last registered object.</returns>
-        public static T Get<T>(this IContainer container) where T : class
-        {
-            return (T)container.Get(typeof(T));
-        }
+        public static T Get<T>(this IContainer container) where T : class => (T)container.Get(typeof(T));
         #endregion
     }
 }

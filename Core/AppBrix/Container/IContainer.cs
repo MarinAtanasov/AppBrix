@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Container
@@ -24,11 +23,5 @@ namespace AppBrix.Container
         /// <param name="type">The type of the registered object.</param>
         /// <returns>The last registered object.</returns>
         object Get(Type type);
-
-        /// <summary>
-        /// Resolves all registered objects in the order in which they were registered.
-        /// </summary>
-        /// <returns>All registered objects.</returns>
-        IEnumerable<object> GetAll();
     }
 }

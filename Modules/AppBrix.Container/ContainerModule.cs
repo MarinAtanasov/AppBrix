@@ -31,10 +31,9 @@ namespace AppBrix.Container
         /// <param name="context">The initialization context.</param>
         protected override void Initialize(IInitializeContext context)
         {
-            var defaultContainer = this.container;
-            defaultContainer.Initialize(context);
-            defaultContainer.Register(this);
-            this.App.Container = defaultContainer;
+            this.container.Initialize(context);
+            this.container.Register(this);
+            this.App.Container = this.container;
         }
 
         /// <summary>
