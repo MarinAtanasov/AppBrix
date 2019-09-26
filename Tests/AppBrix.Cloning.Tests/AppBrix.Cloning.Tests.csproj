@@ -4,15 +4,15 @@
     <Description>Contains tests for the AppBrix.Cloning module</Description>
     <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Cloning.Tests</AssemblyTitle>
-    <Version>0.15.0</Version>
+    <Version>0.16.0</Version>
     <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Cloning.Tests</AssemblyName>
     <PackageId>AppBrix.Cloning.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PackageTags>AppBrix Copy Clone Tests</PackageTags>
-    <PackageReleaseNotes>Fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.0.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
   </ItemGroup>
 
   <ItemGroup>

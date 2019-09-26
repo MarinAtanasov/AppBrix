@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Net;
@@ -90,24 +91,51 @@ namespace AppBrix.Web.Server.Tests
 
         #region Private methods
         private TestServer CreateTestServer(string baseAddress, IApp app) =>
-            new TestServer(WebHost.CreateDefaultBuilder().UseUrls(baseAddress).UseApp(app))
-            {
-                BaseAddress = new Uri(baseAddress)
-            };
+            new TestServer(WebHost.CreateDefaultBuilder()
+                .UseUrls(baseAddress)
+                .UseApp(app)
+                .UseSetting(WebHostDefaults.ApplicationKey, this.GetType().Assembly.GetName().Name)
+            ) { BaseAddress = new Uri(baseAddress) };
 
         private IApp CreateWebApp()
         {
             var app = TestUtils.CreateTestApp(typeof(WebServerModule), typeof(WebClientModule));
             app.GetConfig<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
-            app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(services => services.AddMvc()));
-            app.GetEventHub().Subscribe<IConfigureApplication>(application => application.Builder.UseMvc());
+            app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
+            app.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
             return app;
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers();
+        }
+
+        private void Configure(IConfigureApplication application)
+        {
+            var app = application.Builder;
+            var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            //app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private void TestPerformanceWebServerInternal(IApp app)
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 120; i++)
             {
                 app.GetFactoryService()
                     .Get<IHttpRequest>()

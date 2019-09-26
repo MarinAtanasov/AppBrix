@@ -80,7 +80,7 @@ namespace AppBrix.Events.Schedule.Tests
             this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromHours(1);
             this.app.Reinitialize();
             var time = this.app.GetTime().AddHours(1);
-            var scheduledEvents = Enumerable.Range(0, 80000)
+            var scheduledEvents = Enumerable.Range(0, 70000)
                 .Select(x => new ScheduledEventMock<EventMock>(new EventMock(0), time))
                 .ToList();
             TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));

@@ -4,14 +4,14 @@
     <Description>Module which enables database functionality.</Description>
     <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Data</AssemblyTitle>
-    <Version>0.15.0</Version>
+    <Version>0.16.0</Version>
     <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Data</AssemblyName>
     <PackageId>AppBrix.Data</PackageId>
     <PackageTags>AppBrix Module Data</PackageTags>
-    <PackageReleaseNotes>Fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.0.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
@@ -25,10 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.8.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

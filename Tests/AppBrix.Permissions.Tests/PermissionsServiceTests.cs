@@ -361,7 +361,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            Action action = () => this.TestPerformanceHasPermissionInternal(15000);
+            Action action = () => this.TestPerformanceHasPermissionInternal(13000);
             TestUtils.TestPerformance(action);
         }
 
@@ -380,7 +380,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            Action action = () => this.TestPerformanceHasPermissionInternal(80000);
+            Action action = () => this.TestPerformanceHasPermissionInternal(50000);
             TestUtils.TestPerformance(action);
         }
 
@@ -431,7 +431,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            Action action = () => this.TestPerformanceAddPermissionInternal(2000);
+            Action action = () => this.TestPerformanceAddPermissionInternal(1500);
             TestUtils.TestPerformance(action);
         }
 

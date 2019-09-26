@@ -4,14 +4,14 @@
     <Description>Module which allows creation of simple mutable classes.</Description>
     <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Factory</AssemblyTitle>
-    <Version>0.15.0</Version>
+    <Version>0.16.0</Version>
     <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Factory</AssemblyName>
     <PackageId>AppBrix.Factory</PackageId>
     <PackageTags>AppBrix Module Factory</PackageTags>
-    <PackageReleaseNotes>Fixes and performance improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.0.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>

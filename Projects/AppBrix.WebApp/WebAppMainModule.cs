@@ -21,8 +21,8 @@ using AppBrix.Web.Server;
 using AppBrix.WebApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,23 +88,28 @@ namespace AppBrix.WebApp
         #region Private methods
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
         }
 
         private void Configure(IConfigureApplication application)
         {
-            var env = application.Builder.ApplicationServices.GetRequiredService<IHostingEnvironment>();
+            var app = application.Builder;
+            var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
             if (env.IsDevelopment())
             {
-                application.Builder.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                application.Builder.UseHsts();
+                app.UseDeveloperExceptionPage();
             }
 
-            application.Builder.UseHttpsRedirection();
-            application.Builder.UseMvc();
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
         #endregion
 

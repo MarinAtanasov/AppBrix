@@ -8,6 +8,7 @@ using AppBrix.Modules;
 using AppBrix.Web.Server.Impl;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace AppBrix.Web.Server
                 .ConfigureLogging(logging => logging.ClearProviders().AddProvider(this.App.Get<ILoggerProvider>()))
                 .Configure(appBuilder =>
                 {
-                    appBuilder.ApplicationServices.GetRequiredService<IApplicationLifetime>().ApplicationStopped.Register(this.App.Stop);
+                    appBuilder.ApplicationServices.GetRequiredService<IHostApplicationLifetime>().ApplicationStopped.Register(this.App.Stop);
                     var client = appBuilder.ApplicationServices.GetService<IHttpClientFactory>();
                     if (client != null)
                     {
