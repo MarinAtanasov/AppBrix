@@ -10,7 +10,7 @@ namespace AppBrix.Data.Impl
     internal sealed class DefaultOnConfiguringDbContext : IOnConfiguringDbContext
     {
         #region Construction
-        public DefaultOnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder, string migrationsAssembly = null, string migrationsHistoryTable = null)
+        public DefaultOnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder, string? migrationsAssembly = null, string? migrationsHistoryTable = null)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -27,9 +27,9 @@ namespace AppBrix.Data.Impl
         #region Properties
         public DbContext Context { get; }
 
-        public string MigrationsAssembly { get; }
+        public string? MigrationsAssembly { get; }
 
-        public string MigrationsHistoryTable { get; }
+        public string? MigrationsHistoryTable { get; }
 
         public DbContextOptionsBuilder OptionsBuilder { get; }
         #endregion

@@ -35,7 +35,7 @@ namespace AppBrix.Caching.Memory.Impl
         #endregion
 
         #region IMemoryCache implementation
-        public object Get(object key)
+        public object? Get(object key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -49,7 +49,7 @@ namespace AppBrix.Caching.Memory.Impl
             return cacheItem?.Item;
         }
 
-        public void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan))
+        public void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan))
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -141,8 +141,10 @@ namespace AppBrix.Caching.Memory.Impl
         #region Private fields and constants
         private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
         private readonly MemoryCacheCleanup eventArgs = new MemoryCacheCleanup();
+        #nullable disable
         private IScheduledEvent<MemoryCacheCleanup> scheduledArgs;
         private IApp app;
+        #nullable restore
         #endregion
 
         #region Private classes

@@ -24,7 +24,7 @@ namespace AppBrix.Caching.Impl
         #endregion
 
         #region ICache implementation
-        public async Task<object> Get(string key, Type type)
+        public async Task<object?> Get(string key, Type type)
         {
             var bytes = await this.GetCache().GetAsync(key).ConfigureAwait(false);
             return bytes != null ? this.GetSerializer().Deserialize(bytes, type) : null;
@@ -44,7 +44,9 @@ namespace AppBrix.Caching.Impl
         #endregion
 
         #region Private fields and constants
+        #nullable disable
         private IApp app;
+        #nullable restore
         #endregion
     }
 }

@@ -12,6 +12,17 @@ namespace AppBrix.Data.Migration.Data
     public sealed class MigrationData
     {
         /// <summary>
+        /// Creates a new instance of <see cref="MigrationData"/>.
+        /// </summary>
+        public MigrationData()
+        {
+            this.Context = string.Empty;
+            this.Version = string.Empty;
+            this.Migration = string.Empty;
+            this.Metadata = string.Empty;
+        }
+
+        /// <summary>
         /// Gets or sets the name of the database context.
         /// </summary>
         public string Context { get; set; }

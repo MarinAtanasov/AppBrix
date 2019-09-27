@@ -7,6 +7,7 @@
     <Version>0.16.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <AssemblyName>AppBrix.ConsoleApp</AssemblyName>
     <OutputType>Exe</OutputType>

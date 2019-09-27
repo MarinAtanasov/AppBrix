@@ -33,10 +33,8 @@ namespace AppBrix.Events.Delayed
         {
             this.App.Container.Register(this);
 
-            this.eventHub = this.App.GetEventHub();
-
-            this.delayedEventHub.Initialize(context);
-            this.App.Container.Register(this.delayedEventHub);
+            this.eventHub.Initialize(context);
+            this.App.Container.Register(this.eventHub);
         }
 
         /// <summary>
@@ -45,19 +43,15 @@ namespace AppBrix.Events.Delayed
         /// </summary>
         protected override void Uninitialize()
         {
-            if (this.eventHub != null)
-            {
-                this.App.Container.Register(this.eventHub);
-                this.eventHub = null;
-            }
+            if (this.eventHub.EventHub != null)
+                this.App.Container.Register(this.eventHub.EventHub);
 
-            this.delayedEventHub.Uninitialize();
+            this.eventHub.Uninitialize();
         }
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultDelayedEventHub delayedEventHub = new DefaultDelayedEventHub();
-        private IEventHub eventHub;
+        private readonly DefaultDelayedEventHub eventHub = new DefaultDelayedEventHub();
         #endregion
     }
 }

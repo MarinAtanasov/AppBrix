@@ -28,6 +28,6 @@ namespace AppBrix
         /// <param name="cache">The local in-memory cache.</param>
         /// <param name="key">The key which is used to store the object in the cache.</param>
         /// <returns>The cached object. Returns null if no object is found.</returns>
-        public static T Get<T>(this IMemoryCache cache, object key) => (T)(cache.Get(key) ?? default(T));
+        public static T Get<T>(this IMemoryCache cache, object key) => (T)(cache.Get(key) ?? default(T)!);
     }
 }

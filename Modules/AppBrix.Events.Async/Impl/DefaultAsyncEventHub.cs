@@ -104,7 +104,9 @@ namespace AppBrix.Events.Async.Impl
         #region Private fields and constants
         private readonly Dictionary<Type, ITaskQueue> taskQueues = new Dictionary<Type, ITaskQueue>();
         private readonly Dictionary<Type, Action> taskQueueUnsubscribers = new Dictionary<Type, Action>();
+        #nullable disable
         private IApp app;
+        #nullable restore
         #endregion
     }
 }

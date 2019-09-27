@@ -14,6 +14,27 @@ namespace AppBrix.Configuration.Json
     /// </summary>
     public sealed class JsonConfigSerializer : IConfigSerializer
     {
+        #region Construction
+        /// <summary>
+        /// Creates a new instance of <see cref="JsonConfigSerializer"/>.
+        /// </summary>
+        public JsonConfigSerializer()
+        {
+            this.settings = new JsonSerializerSettings
+            {
+                Culture = CultureInfo.InvariantCulture,
+                DefaultValueHandling = DefaultValueHandling.Include,
+                NullValueHandling = NullValueHandling.Ignore,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                DateFormatString = @"yyyy-MM-ddTHH:mm:ss.fffK"
+            };
+
+            this.settings.Converters.Add(new IsoDateTimeConverter());
+            this.settings.Converters.Add(new StringEnumConverter());
+            this.settings.Converters.Add(new VersionConverter());
+        }
+        #endregion
+
         #region Public and overriden methods
         /// <summary>
         /// Serializes a config to JSON.
@@ -25,7 +46,7 @@ namespace AppBrix.Configuration.Json
             if (config == null)
                 throw new ArgumentNullException(nameof(config));
 
-            return JsonConvert.SerializeObject(config, Formatting.Indented, this.GetSettings());
+            return JsonConvert.SerializeObject(config, Formatting.Indented, this.settings);
         }
 
         /// <summary>
@@ -41,29 +62,7 @@ namespace AppBrix.Configuration.Json
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            return (IConfig)JsonConvert.DeserializeObject(config, type, this.GetSettings());
-        }
-        #endregion
-
-        #region Private methods
-        private JsonSerializerSettings GetSettings()
-        {
-            if (this.settings == null)
-            {
-                this.settings = new JsonSerializerSettings
-                {
-                    Culture = CultureInfo.InvariantCulture,
-                    DefaultValueHandling = DefaultValueHandling.Include,
-                    NullValueHandling = NullValueHandling.Ignore,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-                    DateFormatString = @"yyyy-MM-ddTHH:mm:ss.fffK"
-                };
-
-                this.settings.Converters.Add(new IsoDateTimeConverter());
-                this.settings.Converters.Add(new StringEnumConverter());
-                this.settings.Converters.Add(new VersionConverter());
-            }
-            return this.settings;
+            return (IConfig)JsonConvert.DeserializeObject(config, type, this.settings);
         }
         #endregion
 

@@ -47,9 +47,7 @@ namespace AppBrix
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            var factory = (IDefaultFactory<object>)typeof(DefaultFactory<>).MakeGenericType(type).CreateObject();
-            factory.Factory = factoryMethod;
-            factoryService.Register(factory, type);
+            factoryService.Register((IDefaultFactory<object>)typeof(DefaultFactory<>).MakeGenericType(type).CreateObject(factoryMethod), type);
         }
 
         /// <summary>
@@ -88,6 +86,6 @@ namespace AppBrix
         /// </summary>
         /// <typeparam name="T">The type of the object to be returned.</typeparam>
         /// <returns>An instance of an object of the specified type.</returns>
-        public static IFactory<T> GetFactory<T>(this IFactoryService factoryService) where T : class => (IFactory<T>)factoryService.GetFactory(typeof(T));
+        public static IFactory<T>? GetFactory<T>(this IFactoryService factoryService) where T : class => (IFactory<T>)factoryService.GetFactory(typeof(T))!;
     }
 }

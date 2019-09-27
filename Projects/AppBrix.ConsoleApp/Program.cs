@@ -34,7 +34,7 @@ namespace AppBrix.ConsoleApp
 
         private static void Run(IApp app)
         {
-            var generatorKey = typeof(MessageGenerator).FullName;
+            var generatorKey = typeof(MessageGenerator).FullName!;
             app.GetFactoryService().Register(() => new MessageGenerator("Test"));
 
             var cache = app.GetMemoryCache();

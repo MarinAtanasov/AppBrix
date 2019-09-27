@@ -23,6 +23,6 @@ namespace AppBrix.Factory
         /// </summary>
         /// <param name="type">The type of the object to be returned.</param>
         /// <returns>An instance of an object of the specified type.</returns>
-        IFactory<object> GetFactory(Type type);
+        IFactory<object>? GetFactory(Type type);
     }
 }

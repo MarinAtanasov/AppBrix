@@ -15,21 +15,23 @@ namespace AppBrix.Data
     public abstract class DbContextBase : DbContext
     {
         #region Properties
+        #nullable disable
         /// <summary>
         /// Gets the current <see cref="IApp"/>.
         /// </summary>
         protected IApp App { get; private set; }
+        #nullable restore
 
         /// <summary>
         /// Gets the migrations assembly to be used during migrations.
         /// </summary>
-        protected string MigrationsAssembly { get; private set; }
+        protected string? MigrationsAssembly { get; private set; }
 
         /// <summary>
         /// Gets the migrations history table name.
         /// This is used when creating automated DB migrations.
         /// </summary>
-        protected string MigrationsHistoryTable { get; private set; }
+        protected string? MigrationsHistoryTable { get; private set; }
         #endregion
 
         #region Public and overriden methods

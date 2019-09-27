@@ -15,10 +15,12 @@ namespace AppBrix.Modules
     public abstract class ModuleBase : IModule
     {
         #region Properties
+        #nullable disable
         /// <summary>
         /// Gets the current module's app.
         /// </summary>
         protected IApp App { get; private set; }
+        #nullable restore
 
         /// <summary>
         /// Gets the types of the modules which are direct dependencies for the current module.

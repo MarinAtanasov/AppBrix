@@ -26,7 +26,7 @@ namespace AppBrix.Logging
         /// <summary>
         /// The exception being logged. Could be null.
         /// </summary>
-        Exception Exception { get; }
+        Exception? Exception { get; }
 
         /// <summary>
         /// Gets the time when the log entry was created.

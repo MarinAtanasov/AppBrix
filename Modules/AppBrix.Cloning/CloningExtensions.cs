@@ -25,7 +25,7 @@ namespace AppBrix
         /// <param name="cloner">The cloner.</param>
         /// <param name="obj">The object to be copied.</param>
         /// <returns>A deep copy of the specified object.</returns>
-        public static T DeepCopy<T>(this ICloner cloner, T obj) => (T)cloner.DeepCopy(obj);
+        public static T DeepCopy<T>(this ICloner cloner, T obj) => (T)cloner.DeepCopy(obj!);
 
         /// <summary>
         /// Creates a shallow copy of the specified object.
@@ -33,6 +33,6 @@ namespace AppBrix
         /// <param name="cloner">The cloner.</param>
         /// <param name="obj">The object to be copied.</param>
         /// <returns>A shallow copy of the specified object.</returns>
-        public static T ShallowCopy<T>(this ICloner cloner, T obj) => (T)cloner.ShallowCopy(obj);
+        public static T ShallowCopy<T>(this ICloner cloner, T obj) => (T)cloner.ShallowCopy(obj!);
     }
 }

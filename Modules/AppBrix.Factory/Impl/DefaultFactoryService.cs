@@ -46,7 +46,7 @@ namespace AppBrix.Factory.Impl
             }
         }
 
-        public IFactory<object> GetFactory(Type type) => this.factories.TryGetValue(type, out var factory) ? factory : null;
+        public IFactory<object>? GetFactory(Type type) => this.factories.TryGetValue(type, out var factory) ? factory : null;
         #endregion
 
         #region Private fields and constants

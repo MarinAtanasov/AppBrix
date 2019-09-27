@@ -91,10 +91,12 @@ namespace AppBrix.Web.Client
 
         #region Private fields and constants
         private readonly DefaultHttpClientFactory httpClientFactory = new DefaultHttpClientFactory();
-        private HttpClient client;
+        private HttpClient? client;
+        #nullable disable
         private TimeConfig timeConfig;
         private Func<JsonSerializerSettings> oldSettingsFactory;
         private Func<JsonSerializerSettings> newSettingsFactory;
+        #nullable restore
         #endregion
     }
 }

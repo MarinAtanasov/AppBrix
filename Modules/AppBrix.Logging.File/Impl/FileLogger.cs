@@ -44,8 +44,10 @@ namespace AppBrix.Logging.File.Impl
         #endregion
 
         #region Private fields and constants
+        #nullable disable
         private IApp app;
         private StreamWriter writer;
+        #nullable restore
         #endregion
     }
 }

@@ -21,13 +21,13 @@ namespace AppBrix.Data
         /// <summary>
         /// Gets the migration assembly.
         /// </summary>
-        string MigrationsAssembly { get; }
+        string? MigrationsAssembly { get; }
 
         /// <summary>
         /// Gets the migrations history table name.
         /// This is used when creating automated DB migrations.
         /// </summary>
-        string MigrationsHistoryTable { get; }
+        string? MigrationsHistoryTable { get; }
 
         /// <summary>
         /// Gets the database context options builder.

@@ -31,7 +31,7 @@ namespace AppBrix.Web.Client.Impl
             {
                 return new DefaultHttpResponse<string>(
                     new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
-                    null,
+                    null!,
                     (int) response.StatusCode,
                     response.ReasonPhrase,
                     response.Version);
@@ -172,7 +172,7 @@ namespace AppBrix.Web.Client.Impl
         {
             var type = typeof(T);
 
-            object contentValue;
+            object? contentValue;
 
             if (type == typeof(string))
                 contentValue = await content.ReadAsStringAsync().ConfigureAwait(false);
@@ -185,7 +185,7 @@ namespace AppBrix.Web.Client.Impl
             else
                 contentValue = await content.ReadAsAsync<T>().ConfigureAwait(false);
 
-            return (T)contentValue;
+            return (T)contentValue!;
         }
         #endregion
 
@@ -193,10 +193,10 @@ namespace AppBrix.Web.Client.Impl
         private readonly Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>();
         private readonly IApp app;
         private string callMethod = "GET";
-        private string clientName;
-        private object content;
-        private string requestUrl;
-        private Version httpMessageVersion;
+        private string? clientName;
+        private object? content;
+        private string? requestUrl;
+        private Version? httpMessageVersion;
         #endregion
     }
 }

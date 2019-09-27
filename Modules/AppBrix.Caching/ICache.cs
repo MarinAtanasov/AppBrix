@@ -25,7 +25,7 @@ namespace AppBrix.Caching
         /// <param name="key">The key which is used to store the object in the cache.</param>
         /// <param name="type">The type of the object to get.</param>
         /// <returns></returns>
-        Task<object> Get(string key, Type type);
+        Task<object?> Get(string key, Type type);
 
         /// <summary>
         /// Sets a cached object.

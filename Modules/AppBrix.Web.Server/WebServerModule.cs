@@ -58,7 +58,7 @@ namespace AppBrix.Web.Server
                     }
                     this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
                 })
-                .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly().GetName().Name)
+                .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly()!.GetName().Name)
             );
         }
         #endregion

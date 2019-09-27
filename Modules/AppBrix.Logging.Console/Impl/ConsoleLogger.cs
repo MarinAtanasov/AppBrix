@@ -31,7 +31,7 @@ namespace AppBrix.Logging.Console.Impl
         #endregion
 
         #region Private fields and constants
-        private IApp app;
+        private IApp? app;
         #endregion
     }
 }

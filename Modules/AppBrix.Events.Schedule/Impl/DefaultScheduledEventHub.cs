@@ -69,9 +69,9 @@ namespace AppBrix.Events.Schedule.Impl
         #endregion
 
         #region Private methods
-        private void ExecuteReadyEvents(object unused = null)
+        private void ExecuteReadyEvents(object? unused = null)
         {
-            List<PriorityQueueItem> toExecute = null;
+            List<PriorityQueueItem>? toExecute = null;
             lock (this.queue)
             {
                 if (this.executionTimer == null)
@@ -103,9 +103,11 @@ namespace AppBrix.Events.Schedule.Impl
 
         #region Private fields and constants
         private readonly PriorityQueue queue = new PriorityQueue();
+        #nullable disable
         private IApp app;
         private ScheduledEventsConfig config;
         private Timer executionTimer;
+        #nullable restore
         #endregion
     }
 }

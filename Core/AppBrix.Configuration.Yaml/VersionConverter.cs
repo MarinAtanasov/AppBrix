@@ -13,7 +13,7 @@ namespace AppBrix.Configuration.Yaml
     {
         public bool Accepts(Type type) => type == typeof(System.Version);
 
-        public object ReadYaml(IParser parser, Type type)
+        public object? ReadYaml(IParser parser, Type type)
         {
             var version = ((Scalar)parser.Current).Value;
             parser.MoveNext();

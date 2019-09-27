@@ -51,7 +51,9 @@ namespace AppBrix.Logging.Impl
 
         #region Private fields and constants
         private readonly Dictionary<string, DefaultLogger> loggers = new Dictionary<string, DefaultLogger>();
+        #nullable disable
         private IApp app;
+        #nullable restore
         #endregion
     }
 }

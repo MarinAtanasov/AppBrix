@@ -34,9 +34,9 @@ namespace AppBrix.Logging
         /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
         /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
         /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
-        void Log(LogLevel level, string message, Exception error = null,
-            [CallerFilePath] string callerFile = null,
-            [CallerMemberName] string callerMember = null,
+        void Log(LogLevel level, string message, Exception? error = null,
+            [CallerFilePath] string? callerFile = null,
+            [CallerMemberName] string? callerMember = null,
             [CallerLineNumber] int callerLineNumber = 0);
     }
 }

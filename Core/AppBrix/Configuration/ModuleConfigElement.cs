@@ -14,6 +14,14 @@ namespace AppBrix.Configuration
     {
         #region Construction
         /// <summary>
+        /// Creates a new instance of <see cref="ModuleConfigElement"/>.
+        /// </summary>
+        public ModuleConfigElement()
+        {
+            this.Type = string.Empty;
+        }
+
+        /// <summary>
         /// Creates a new element for the selected module.
         /// </summary>
         /// <typeparam name="T">The type of the module.</typeparam>
@@ -57,7 +65,7 @@ namespace AppBrix.Configuration
         /// An install can be forced by removing the value.
         /// An upgrade can be forced by lowering the value to a previous version of the assembly.
         /// </summary>
-        public Version Version { get; set; }
+        public Version? Version { get; set; }
         #endregion
     }
 }

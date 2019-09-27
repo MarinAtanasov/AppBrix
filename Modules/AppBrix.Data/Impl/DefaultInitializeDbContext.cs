@@ -9,7 +9,7 @@ namespace AppBrix.Data.Impl
     internal sealed class DefaultInitializeDbContext : IInitializeDbContext
     {
         #region Construction
-        public DefaultInitializeDbContext(IApp app, string migrationsAssembly = null, string migrationsHistoryTable = "__EFMigrationsHistory")
+        public DefaultInitializeDbContext(IApp app, string? migrationsAssembly = null, string migrationsHistoryTable = "__EFMigrationsHistory")
         {
             if (app == null)
                 throw new ArgumentNullException(nameof(app));
@@ -23,7 +23,7 @@ namespace AppBrix.Data.Impl
         #region Propreties
         public IApp App { get; }
 
-        public string MigrationsAssembly { get; }
+        public string? MigrationsAssembly { get; }
 
         public string MigrationsHistoryTable { get; }
         #endregion

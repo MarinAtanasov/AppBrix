@@ -45,9 +45,9 @@ namespace AppBrix.Logging.Impl
             this.app.GetAsyncEventHub().Unsubscribe(logger);
         }
 
-        public void Log(LogLevel level, string message, Exception error = null,
-            [CallerFilePath] string callerFile = null,
-            [CallerMemberName] string callerMember = null,
+        public void Log(LogLevel level, string message, Exception? error = null,
+            [CallerFilePath] string? callerFile = null,
+            [CallerMemberName] string? callerMember = null,
             [CallerLineNumber] int callerLineNumber = 0)
         {
             if (this.config.LogLevel <= level)
@@ -60,8 +60,10 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region Private fields and constants
+        #nullable disable
         private IApp app;
         private LoggingConfig config;
+        #nullable restore
         #endregion
     }
 }

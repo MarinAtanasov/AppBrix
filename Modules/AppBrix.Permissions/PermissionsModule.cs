@@ -53,7 +53,7 @@ namespace AppBrix.Permissions
         #endregion
 
         #region Private fields and constants
-        private IApplicationLifecycle permissionsService;
+        private IApplicationLifecycle? permissionsService;
         #endregion
     }
 }

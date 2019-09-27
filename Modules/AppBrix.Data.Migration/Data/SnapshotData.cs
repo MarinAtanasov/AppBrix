@@ -12,6 +12,16 @@ namespace AppBrix.Data.Migration.Data
     public sealed class SnapshotData
     {
         /// <summary>
+        /// Creates a new instance of <see cref="SnapshotData"/>.
+        /// </summary>
+        public SnapshotData()
+        {
+            this.Context = string.Empty;
+            this.Version = string.Empty;
+            this.Snapshot = string.Empty;
+        }
+
+        /// <summary>
         /// Gets or sets the name of the database context.
         /// </summary>
         public string Context { get; set; }

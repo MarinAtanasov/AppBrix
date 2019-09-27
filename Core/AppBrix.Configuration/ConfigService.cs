@@ -78,7 +78,7 @@ namespace AppBrix.Configuration
         #endregion
 
         #region Private methods
-        private IConfig ReadFromProvider(Type type)
+        private IConfig? ReadFromProvider(Type type)
         {
             var stringed = this.provider.ReadConfig(type);
             if (string.IsNullOrEmpty(stringed))

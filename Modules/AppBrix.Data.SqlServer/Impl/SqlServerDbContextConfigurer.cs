@@ -31,6 +31,6 @@ namespace AppBrix.Data.SqlServer.Impl
             );
         }
 
-        private string connectionString;
+        private string? connectionString;
     }
 }

@@ -43,7 +43,6 @@ namespace AppBrix.Container
         protected override void Uninitialize()
         {
             this.container.Uninitialize();
-            this.App.Container = null;
         }
         #endregion
 

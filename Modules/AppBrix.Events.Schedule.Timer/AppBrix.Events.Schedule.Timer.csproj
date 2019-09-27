@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Module used for registering timer based scheduled events.</Description>
@@ -7,6 +7,7 @@
     <Version>0.16.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Events.Schedule.Timer</AssemblyName>
     <PackageId>AppBrix.Events.Schedule.Timer</PackageId>

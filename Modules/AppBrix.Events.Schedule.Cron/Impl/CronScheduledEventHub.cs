@@ -44,7 +44,9 @@ namespace AppBrix.Events.Schedule.Cron.Impl
         #endregion
 
         #region Private fields and constants
+        #nullable disable
         private IApp app;
+        #nullable restore
         #endregion
     }
 }

@@ -13,6 +13,11 @@ namespace AppBrix.Factory.Impl
 
     internal class DefaultFactory<T> : IDefaultFactory<T>
     {
+        public DefaultFactory(Func<object> factory)
+        {
+            this.Factory = factory;
+        }
+
         public Func<object> Factory { get; set; }
 
         public T Get() => (T)this.Factory();

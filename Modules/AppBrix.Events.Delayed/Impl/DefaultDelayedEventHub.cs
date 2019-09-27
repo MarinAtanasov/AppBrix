@@ -11,6 +11,12 @@ namespace AppBrix.Events.Delayed.Impl
 {
     internal sealed class DefaultDelayedEventHub : IDelayedEventHub, IApplicationLifecycle
     {
+        #region Properties
+        #nullable disable
+        public IEventHub EventHub { get; private set; }
+        #nullable restore
+        #endregion
+
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
         {
@@ -22,7 +28,7 @@ namespace AppBrix.Events.Delayed.Impl
                 SingleWriter = false
             });
             this.config = this.app.GetConfig<DelayedEventsConfig>();
-            this.eventHub = this.app.GetEventHub();
+            this.EventHub = this.app.GetEventHub();
         }
 
         public void Uninitialize()
@@ -33,7 +39,7 @@ namespace AppBrix.Events.Delayed.Impl
                 this.Flush();
             }
 
-            this.eventHub = null;
+            this.EventHub = null;
             this.config = null;
             this.channel = null;
             this.app = null;
@@ -41,9 +47,9 @@ namespace AppBrix.Events.Delayed.Impl
         #endregion
 
         #region IEventHub implementation
-        public void Subscribe<T>(Action<T> handler) where T : IEvent => this.eventHub.Subscribe(handler);
+        public void Subscribe<T>(Action<T> handler) where T : IEvent => this.EventHub.Subscribe(handler);
 
-        public void Unsubscribe<T>(Action<T> handler) where T : IEvent => this.eventHub.Unsubscribe(handler);
+        public void Unsubscribe<T>(Action<T> handler) where T : IEvent => this.EventHub.Unsubscribe(handler);
 
         public void Raise(IEvent args)
         {
@@ -82,17 +88,18 @@ namespace AppBrix.Events.Delayed.Impl
             this.channel.Writer.TryWrite(args);
         }
 
-        public void RaiseImmediate(IEvent args) => this.eventHub.Raise(args);
+        public void RaiseImmediate(IEvent args) => this.EventHub.Raise(args);
         #endregion
 
         #region Private methods
         #endregion
 
         #region Private fields and constants
+        #nullable disable
         private IApp app;
         private Channel<IEvent> channel;
         private DelayedEventsConfig config;
-        private IEventHub eventHub;
+        #nullable restore
         #endregion
     }
 }

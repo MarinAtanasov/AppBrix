@@ -20,6 +20,7 @@ namespace AppBrix
         /// <returns>The cache.</returns>
         public static ICache GetCache(this IApp app) => (ICache)app.Get(typeof(ICache));
 
+        #nullable disable
         /// <summary>
         /// Gets a cached object by its key.
         /// </summary>
@@ -29,5 +30,6 @@ namespace AppBrix
         /// <returns></returns>
         public static async Task<T> Get<T>(this ICache cache, string key) =>
             (T)(await cache.Get(key, typeof(T)).ConfigureAwait(false) ?? default(T));
+        #nullable restore
     }
 }

@@ -16,7 +16,7 @@ namespace AppBrix.Events.Schedule.Impl
             this.BubbleUp(this.queue.Count - 1);
         }
 
-        public PriorityQueueItem Peek() => this.queue.Count > 0 ? this.queue[0] : null;
+        public PriorityQueueItem? Peek() => this.queue.Count > 0 ? this.queue[0] : null;
 
         public PriorityQueueItem Pop() => this.RemoveAt(0);
 

@@ -123,7 +123,7 @@ namespace AppBrix.Data.Migration.Impl
                 var newMigrationName = this.GenerateMigrationName(type, newVersion);
                 var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
 
-                MigrationData migration = null;
+                MigrationData? migration = null;
                 if (scaffoldedMigration.SnapshotCode != oldSnapshotCode)
                 {
                     migration = this.ApplyMigration(type, newVersion, scaffoldedMigration);
@@ -247,7 +247,7 @@ namespace AppBrix.Data.Migration.Impl
             return migration;
         }
 
-        private void AddMigration(string contextName, string version, MigrationData migration, string snapshot, bool createNew)
+        private void AddMigration(string contextName, string version, MigrationData? migration, string snapshot, bool createNew)
         {
             using (var context = this.contextService.Get<MigrationContext>())
             {
@@ -273,7 +273,7 @@ namespace AppBrix.Data.Migration.Impl
             }
         }
 
-        private string GenerateMigrationAssemblyName(Type type, Version version = null)
+        private string GenerateMigrationAssemblyName(Type type, Version? version = null)
         {
             if (version == null)
                 version = type.Assembly.GetName().Version;
@@ -290,9 +290,11 @@ namespace AppBrix.Data.Migration.Impl
         #region Private fields and constants
         private const string EmptyVersion = "0.0.0.0";
         private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
+        #nullable disable
         private IApp app;
         private MigrationDataConfig config;
         private IDbContextService contextService;
+        #nullable restore
         private bool dbSupportsMigrations;
         #endregion
     }

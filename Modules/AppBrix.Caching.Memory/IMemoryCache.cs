@@ -18,7 +18,7 @@ namespace AppBrix.Caching.Memory
         /// </summary>
         /// <param name="key">The key which is used to store the object in the cache.</param>
         /// <returns>The cached object. Returns null if no object is found.</returns>
-        object Get(object key);
+        object? Get(object key);
 
         /// <summary>
         /// Stores an object in the cache.
@@ -28,7 +28,7 @@ namespace AppBrix.Caching.Memory
         /// <param name="dispose">Optional action to be executed when the absolute or sliding expirations are reached.</param>
         /// <param name="absoluteExpiration">Absolute expiration time.</param>
         /// <param name="slidingExpiration">Sliding expiration time.</param>
-        void Set(object key, object item, Action dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan));
+        void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan));
 
         /// <summary>
         /// Removes a cached item by its key.

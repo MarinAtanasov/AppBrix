@@ -46,7 +46,7 @@ namespace AppBrix.Configuration.Files
                 throw new ArgumentNullException(nameof(type));
 
             var path = this.BuildFilePath(type);
-            return File.Exists(path) ? File.ReadAllText(path) : null;
+            return File.Exists(path) ? File.ReadAllText(path) : string.Empty;
         }
 
         /// <summary>

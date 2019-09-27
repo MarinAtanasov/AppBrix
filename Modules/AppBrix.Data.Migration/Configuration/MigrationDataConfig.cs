@@ -12,6 +12,16 @@ namespace AppBrix.Data.Migration.Configuration
     /// </summary>
     public sealed class MigrationDataConfig : IConfig
     {
+        #region Construction
+        /// <summary>
+        /// Creates a new instance of <see cref="MigrationDataConfig"/>.
+        /// </summary>
+        public MigrationDataConfig()
+        {
+            this.EntryAssembly = string.Empty;
+        }
+        #endregion
+
         #region Properties
         /// <summary>
         /// Gets or sets the entry assembly for the application. Leave blank to get from the runtime.

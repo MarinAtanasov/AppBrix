@@ -24,8 +24,10 @@ namespace AppBrix.Application
         #endregion
 
         #region Properties
+        #nullable disable
         public IContainer Container { get; set; }
-        
+        #nullable restore
+
         public IConfigService ConfigService { get; }
         
         public bool IsStarted { get; private set; }

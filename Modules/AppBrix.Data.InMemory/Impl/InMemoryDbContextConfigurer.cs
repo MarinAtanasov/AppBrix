@@ -23,6 +23,6 @@ namespace AppBrix.Data.InMemory.Impl
 
         public void Configure(IOnConfiguringDbContext context) => context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
 
-        private string connectionString;
+        private string? connectionString;
     }
 }

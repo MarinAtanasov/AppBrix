@@ -187,7 +187,7 @@ namespace AppBrix.Tests
         #region Private methods
         private DefaultApp CreateDefaultApp(Type module) => (DefaultApp)TestUtils.CreateTestApp(module);
 
-        private IEnumerable<ModuleInfo> GetModules(DefaultApp app) => (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app);
+        private IEnumerable<ModuleInfo> GetModules(DefaultApp app) => (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app)!;
 
         private void TestPerformanceReinitializeInternal(IApp app)
         {
@@ -216,7 +216,7 @@ namespace AppBrix.Tests
         #endregion
 
         #region Private fields and constants
-        private readonly FieldInfo modulesField = typeof(DefaultApp).GetField("modules", BindingFlags.NonPublic | BindingFlags.Instance);
+        private readonly FieldInfo modulesField = typeof(DefaultApp).GetField("modules", BindingFlags.NonPublic | BindingFlags.Instance)!;
         #endregion
     }
 }

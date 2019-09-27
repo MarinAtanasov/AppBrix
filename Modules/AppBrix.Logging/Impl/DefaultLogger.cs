@@ -29,7 +29,7 @@ namespace AppBrix.Logging.Impl
         public bool IsEnabled(LogLevel logLevel) =>
             this.Enabled ? this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel) : false;
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception?, string> formatter)
         {
             if (!this.Enabled)
                 return;
@@ -37,7 +37,7 @@ namespace AppBrix.Logging.Impl
             this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
         }
 
-        public IDisposable BeginScope<TState>(TState state) => null;
+        public IDisposable? BeginScope<TState>(TState state) => null;
         #endregion
 
         #region Private methods

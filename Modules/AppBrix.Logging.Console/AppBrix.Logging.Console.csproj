@@ -7,6 +7,7 @@
     <Version>0.16.0</Version>
     <Authors>Marin Atanasov</Authors>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Logging.Console</AssemblyName>
     <PackageId>AppBrix.Logging.Console</PackageId>

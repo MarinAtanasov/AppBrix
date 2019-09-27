@@ -14,11 +14,20 @@ namespace AppBrix.Cloning.Impl
     internal sealed class DefaultCloner : ICloner
     {
         #region ICloner implementation
-        public object DeepCopy(object obj) => this.DeepCopy(obj, new Dictionary<object, object>());
+        public object DeepCopy(object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
+            return this.DeepCopy(obj, new Dictionary<object, object>())!;
+        }
 
         public object ShallowCopy(object obj)
         {
-            if (obj == null || this.IsValueType(obj.GetType()))
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
+            if (this.IsValueType(obj.GetType()))
                 return obj;
 
             return DefaultCloner.ShallowCopyMethod.Invoke(obj, null);
@@ -26,7 +35,7 @@ namespace AppBrix.Cloning.Impl
         #endregion
 
         #region Private methods
-        private object DeepCopy(object original, Dictionary<object, object> visited)
+        private object? DeepCopy(object original, Dictionary<object, object> visited)
         {
             if (original == null)
                 return null;
@@ -49,7 +58,7 @@ namespace AppBrix.Cloning.Impl
 
         private void CloneReferenceType(object original, Type type, Dictionary<object, object> visited)
         {
-            var cloned = this.ShallowCopy(original);
+            var cloned = this.ShallowCopy(original)!;
             visited[original] = cloned;
             if (type.IsArray)
             {

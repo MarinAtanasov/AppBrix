@@ -9,7 +9,7 @@ namespace AppBrix.Caching.Memory.Impl
     internal sealed class CacheItem : IDisposable
     {
         #region Construction
-        public CacheItem(object item, Action dispose, TimeSpan absoluteExpiration, TimeSpan slidingExpirationSpan, DateTime now)
+        public CacheItem(object item, Action? dispose, TimeSpan absoluteExpiration, TimeSpan slidingExpirationSpan, DateTime now)
         {
             this.Item = item;
             this.dispose = dispose;
@@ -32,7 +32,7 @@ namespace AppBrix.Caching.Memory.Impl
         #endregion
 
         #region Private fields and constants
-        private readonly Action dispose;
+        private readonly Action? dispose;
         private readonly DateTime absoluteExpiration;
         private readonly TimeSpan slidingExpirationSpan;
         private DateTime slidingExpiration;

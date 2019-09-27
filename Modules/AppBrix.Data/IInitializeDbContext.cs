@@ -19,7 +19,7 @@ namespace AppBrix.Data
         /// <summary>
         /// Gets the migrations assembly.
         /// </summary>
-        string MigrationsAssembly { get; }
+        string? MigrationsAssembly { get; }
 
         /// <summary>
         /// Gets the migrations history table name.

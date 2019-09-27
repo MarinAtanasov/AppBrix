@@ -31,6 +31,6 @@ namespace AppBrix.Data.Sqlite.Impl
             );
         }
 
-        private string connectionString;
+        private string? connectionString;
     }
 }

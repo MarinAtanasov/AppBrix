@@ -31,7 +31,9 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region Private fields and constants
+        #nullable disable
         private IApp app;
+        #nullable restore
         #endregion
     }
 }
