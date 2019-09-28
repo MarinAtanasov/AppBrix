@@ -141,31 +141,22 @@ namespace AppBrix.Web.Client.Impl
             }
         }
 
-        private bool IsContentHeader(string header)
+        private bool IsContentHeader(string header) => header.ToUpperInvariant() switch
         {
-            var caps = header.ToUpperInvariant();
-            switch (caps)
-            {
-                case "EXPIRES":
-                case "LAST-MODIFIED":
-                    return true;
-                default:
-                    return caps.StartsWith("CONTENT-");
-            }
-        }
+            "EXPIRES" => true,
+            "LAST-MODIFIED" => true,
+            _ => header.StartsWith("CONTENT-", StringComparison.OrdinalIgnoreCase)
+        };
 
-        private HttpContent CreateContent(object content)
+        private HttpContent CreateContent(object content) => content switch
         {
-            switch (content)
-            {
-                case string s: return new StringContent(s);
-                case byte[] b: return new ByteArrayContent(b);
-                case Stream s: return new StreamContent(s);
-                case HttpContent c: return c;
-                case IEnumerable<KeyValuePair<string, string>> m: return new FormUrlEncodedContent(m);
-                default: return new StringContent(JsonSerializer.Serialize(content, content.GetType(), this.app.Get<JsonSerializerOptions>()));
-            }
-        }
+            string s => new StringContent(s),
+            byte[] b => new ByteArrayContent(b),
+            Stream s => new StreamContent(s),
+            HttpContent c => c,
+            IEnumerable<KeyValuePair<string, string>> m => new FormUrlEncodedContent(m),
+            _ => new StringContent(JsonSerializer.Serialize(content, content.GetType(), this.app.Get<JsonSerializerOptions>()))
+        };
 
         private async Task<T> GetResponseContent<T>(HttpContent content)
         {

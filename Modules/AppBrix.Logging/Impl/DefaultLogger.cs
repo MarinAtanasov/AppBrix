@@ -40,26 +40,16 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region Private methods
-        private Entries.LogLevel ToAppBrixLogLevel(LogLevel logLevel)
+        private Entries.LogLevel ToAppBrixLogLevel(LogLevel logLevel) => logLevel switch
         {
-            switch (logLevel)
-            {
-                case LogLevel.Trace:
-                    return Entries.LogLevel.Trace;
-                case LogLevel.Debug:
-                    return Entries.LogLevel.Debug;
-                case LogLevel.Information:
-                    return Entries.LogLevel.Info;
-                case LogLevel.Warning:
-                    return Entries.LogLevel.Warning;
-                case LogLevel.Error:
-                    return Entries.LogLevel.Error;
-                case LogLevel.Critical:
-                    return Entries.LogLevel.Critical;
-                default:
-                    return Entries.LogLevel.Trace;
-            }
-        }
+            LogLevel.Trace => Entries.LogLevel.Trace,
+            LogLevel.Debug => Entries.LogLevel.Debug,
+            LogLevel.Information => Entries.LogLevel.Info,
+            LogLevel.Warning => Entries.LogLevel.Warning,
+            LogLevel.Error => Entries.LogLevel.Error,
+            LogLevel.Critical => Entries.LogLevel.Critical,
+            _ => Entries.LogLevel.Trace
+        };
         #endregion
 
         #region Private fields and constants

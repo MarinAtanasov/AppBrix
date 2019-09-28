@@ -47,18 +47,12 @@ namespace AppBrix.Time
         #endregion
 
         #region Private methods
-        private ITimeService CreateTimeService(DateTimeKind kind, string format)
+        private ITimeService CreateTimeService(DateTimeKind kind, string format) => kind switch
         {
-            switch (kind)
-            {
-                case DateTimeKind.Local:
-                    return new LocalTimeService(format);
-                case DateTimeKind.Utc:
-                    return new UtcTimeService(format);
-                default:
-                    throw new NotSupportedException(string.Concat("The specified " + kind.GetType().Name +  " is not supported: ", kind));
-            }
-        }
+            DateTimeKind.Local => new LocalTimeService(format),
+            DateTimeKind.Utc => new UtcTimeService(format),
+            _ => throw new NotSupportedException(string.Concat("The specified " + kind.GetType().Name + " is not supported: ", kind))
+        };
         #endregion
     }
 }
