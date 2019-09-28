@@ -3,7 +3,6 @@
 //
 using AppBrix.Logging.Entries;
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AppBrix.Logging

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace AppBrix.ConsoleApp
+﻿namespace AppBrix.ConsoleApp
 {
     internal sealed class MessageGenerator
     {

@@ -3,7 +3,6 @@
 //
 using AppBrix.Time;
 using System;
-using System.Linq;
 
 namespace AppBrix.Caching.Memory.Tests.Mocks
 {

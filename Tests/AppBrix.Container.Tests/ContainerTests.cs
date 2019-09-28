@@ -6,7 +6,6 @@ using AppBrix.Tests;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Container.Tests

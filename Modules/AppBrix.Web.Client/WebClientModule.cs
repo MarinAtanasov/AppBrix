@@ -8,7 +8,6 @@ using AppBrix.Web.Client.Configuration;
 using AppBrix.Web.Client.Impl;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Net.Http;
 using AppBrix.Factory;
 using AppBrix.Time;

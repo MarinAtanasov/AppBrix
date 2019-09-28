@@ -3,7 +3,6 @@
 //
 using AppBrix.Configuration;
 using System;
-using System.Linq;
 
 namespace AppBrix.Caching.Memory.Configuration
 {

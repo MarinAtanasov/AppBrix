@@ -4,8 +4,6 @@
 using AppBrix.Data.Sqlite.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace AppBrix.Data.Sqlite.Impl
 {

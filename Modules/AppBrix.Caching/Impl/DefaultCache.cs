@@ -4,7 +4,6 @@
 using AppBrix.Lifecycle;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AppBrix.Caching.Impl

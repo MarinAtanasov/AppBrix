@@ -3,10 +3,8 @@
 //
 using AppBrix.Events;
 using Microsoft.AspNetCore.Builder;
-using System;
-using System.Linq;
 
-namespace AppBrix.Web.Server
+namespace AppBrix.Web.Server.Events
 {
     /// <summary>
     /// An event which is called during WebHost's Configure method.

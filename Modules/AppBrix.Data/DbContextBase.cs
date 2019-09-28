@@ -3,9 +3,6 @@
 //
 using AppBrix.Data.Impl;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 
 namespace AppBrix.Data
 {

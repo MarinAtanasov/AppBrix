@@ -3,8 +3,6 @@
 //
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
-using System;
-using System.Linq;
 
 namespace AppBrix.Caching.Tests.Mocks
 {

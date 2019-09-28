@@ -3,8 +3,6 @@
 //
 using AppBrix.Lifecycle;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 
 namespace AppBrix.Logging.Impl
 {

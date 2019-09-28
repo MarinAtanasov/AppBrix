@@ -4,8 +4,6 @@
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Configuration.Tests

@@ -7,7 +7,6 @@ using AppBrix.Modules;
 using AppBrix.Time;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AppBrix.Events.Schedule
 {

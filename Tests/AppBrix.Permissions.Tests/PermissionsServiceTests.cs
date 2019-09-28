@@ -6,7 +6,6 @@ using AppBrix.Permissions.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Events.Schedule.Tests

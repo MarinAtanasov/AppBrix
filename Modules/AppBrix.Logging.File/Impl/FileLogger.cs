@@ -3,9 +3,7 @@
 //
 using AppBrix.Lifecycle;
 using AppBrix.Logging.File.Configuration;
-using System;
 using System.IO;
-using System.Linq;
 
 namespace AppBrix.Logging.File.Impl
 {

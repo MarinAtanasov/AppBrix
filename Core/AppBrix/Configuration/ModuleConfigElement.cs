@@ -3,7 +3,6 @@
 //
 using AppBrix.Modules;
 using System;
-using System.Linq;
 
 namespace AppBrix.Configuration
 {

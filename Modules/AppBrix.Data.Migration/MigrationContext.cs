@@ -3,8 +3,6 @@
 //
 using AppBrix.Data.Migration.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace AppBrix.Data.Migration
 {

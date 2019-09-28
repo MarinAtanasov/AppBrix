@@ -4,7 +4,6 @@
 using AppBrix.Events;
 using AppBrix.Logging.Entries;
 using System;
-using System.Linq;
 
 namespace AppBrix.Logging
 {

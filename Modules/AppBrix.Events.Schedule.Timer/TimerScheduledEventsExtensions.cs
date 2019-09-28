@@ -5,7 +5,6 @@ using AppBrix.Events;
 using AppBrix.Events.Schedule;
 using AppBrix.Events.Schedule.Timer;
 using System;
-using System.Linq;
 using System.Threading;
 
 namespace AppBrix

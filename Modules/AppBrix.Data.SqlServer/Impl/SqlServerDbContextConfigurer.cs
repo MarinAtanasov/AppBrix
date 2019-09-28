@@ -4,8 +4,6 @@
 using AppBrix.Data.SqlServer.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace AppBrix.Data.SqlServer.Impl
 {

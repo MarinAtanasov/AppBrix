@@ -3,7 +3,6 @@
 //
 using NCrontab;
 using System;
-using System.Linq;
 
 namespace AppBrix.Events.Schedule.Cron.Impl
 {

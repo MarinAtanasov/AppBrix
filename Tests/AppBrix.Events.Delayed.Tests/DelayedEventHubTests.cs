@@ -7,8 +7,6 @@ using AppBrix.Tests;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Events.Delayed.Tests

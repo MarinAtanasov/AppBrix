@@ -6,7 +6,6 @@ using AppBrix.Logging.File.Impl;
 using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AppBrix.Logging.File
 {

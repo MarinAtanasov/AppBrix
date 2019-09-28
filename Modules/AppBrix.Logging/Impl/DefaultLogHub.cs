@@ -5,7 +5,6 @@ using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Entries;
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AppBrix.Logging.Impl

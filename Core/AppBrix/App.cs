@@ -4,8 +4,6 @@
 using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Modules;
-using System;
-using System.Linq;
 
 namespace AppBrix
 {

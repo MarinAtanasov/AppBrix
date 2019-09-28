@@ -3,6 +3,7 @@
 //
 using AppBrix.Tests;
 using AppBrix.Web.Client;
+using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Tests.Mocks;
 using FluentAssertions;
 using Microsoft.AspNetCore;
@@ -12,7 +13,6 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Linq;
 using System.Net;
 using Xunit;
 

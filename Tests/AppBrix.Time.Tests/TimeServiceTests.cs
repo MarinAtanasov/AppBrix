@@ -5,7 +5,6 @@ using AppBrix.Tests;
 using AppBrix.Time.Configuration;
 using FluentAssertions;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Time.Tests

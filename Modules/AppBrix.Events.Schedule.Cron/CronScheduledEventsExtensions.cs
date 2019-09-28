@@ -2,8 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Events.Schedule.Cron;
-using System;
-using System.Linq;
 
 namespace AppBrix
 {

@@ -7,7 +7,6 @@ using AppBrix.Modules;
 using AppBrix.Text.Impl;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace AppBrix.Text

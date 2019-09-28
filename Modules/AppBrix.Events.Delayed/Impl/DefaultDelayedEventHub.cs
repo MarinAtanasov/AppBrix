@@ -4,7 +4,6 @@
 using AppBrix.Events.Delayed.Configuration;
 using AppBrix.Lifecycle;
 using System;
-using System.Linq;
 using System.Threading.Channels;
 
 namespace AppBrix.Events.Delayed.Impl

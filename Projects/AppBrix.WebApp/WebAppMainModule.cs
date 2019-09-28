@@ -18,6 +18,7 @@ using AppBrix.Text;
 using AppBrix.Time;
 using AppBrix.Web.Client;
 using AppBrix.Web.Server;
+using AppBrix.Web.Server.Events;
 using AppBrix.WebApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AppBrix.WebApp
 {

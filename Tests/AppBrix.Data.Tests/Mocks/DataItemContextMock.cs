@@ -1,7 +1,5 @@
 ﻿using AppBrix.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace Tests.Mocks
 {

@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Globalization;
-using System.Linq;
 
 namespace AppBrix.Configuration.Json
 {

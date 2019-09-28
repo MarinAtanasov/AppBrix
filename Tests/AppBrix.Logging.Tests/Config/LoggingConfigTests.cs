@@ -6,7 +6,6 @@ using AppBrix.Logging.Entries;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Logging.Tests.Config

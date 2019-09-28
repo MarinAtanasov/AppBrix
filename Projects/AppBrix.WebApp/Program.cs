@@ -3,8 +3,6 @@ using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Yaml;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Linq;
 
 namespace AppBrix.WebApp
 {

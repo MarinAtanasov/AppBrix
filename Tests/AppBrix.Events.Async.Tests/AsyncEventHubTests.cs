@@ -7,7 +7,6 @@ using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Events.Async.Tests

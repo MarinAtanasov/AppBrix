@@ -3,7 +3,6 @@ using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Json;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace AppBrix.ConsoleApp
 {

@@ -3,8 +3,6 @@
 //
 using AppBrix.Events;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace AppBrix.Data
 {

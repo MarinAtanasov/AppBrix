@@ -4,7 +4,6 @@
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Linq;
 using System.Text;
 using AppBrix.Text.Tests.Mocks;
 using Xunit;

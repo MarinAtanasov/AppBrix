@@ -5,8 +5,6 @@ using AppBrix.Caching.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Distributed;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Caching.Tests

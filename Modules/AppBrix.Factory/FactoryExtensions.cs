@@ -4,7 +4,6 @@
 using AppBrix.Factory;
 using AppBrix.Factory.Impl;
 using System;
-using System.Linq;
 
 namespace AppBrix
 {

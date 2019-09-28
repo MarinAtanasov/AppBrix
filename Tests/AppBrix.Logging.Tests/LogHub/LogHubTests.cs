@@ -5,7 +5,6 @@ using AppBrix.Logging.Entries;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Linq;
 using System.Threading;
 using Xunit;
 

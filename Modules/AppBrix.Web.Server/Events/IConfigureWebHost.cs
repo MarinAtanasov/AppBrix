@@ -3,10 +3,8 @@
 //
 using AppBrix.Events;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Linq;
 
-namespace AppBrix.Web.Server
+namespace AppBrix.Web.Server.Events
 {
     /// <summary>
     /// An event which is called when the <see cref="IApp"/> is being attached to the <see cref="IWebHost"/>.

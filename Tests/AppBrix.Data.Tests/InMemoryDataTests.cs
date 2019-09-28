@@ -8,7 +8,6 @@ using AppBrix.Data.Migration.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Tests.Mocks;
 using Xunit;

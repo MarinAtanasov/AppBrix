@@ -10,7 +10,6 @@ using AppBrix.Tests;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Tests.Mocks;
 using Xunit;
