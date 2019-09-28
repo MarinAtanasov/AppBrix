@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using System;
+using System.Threading;
 
 namespace AppBrix.Events.Schedule.Timer
 {
@@ -10,6 +11,22 @@ namespace AppBrix.Events.Schedule.Timer
     /// </summary>
     public interface ITimerScheduledEventHub
     {
+        /// <summary>
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed once.
+        /// </summary>
+        /// <param name="args">The event to be executed.</param>
+        /// <param name="dueTime">The amount of time to delay before the event should be raised.</param>
+        /// <returns>The scheduled event, containing the original event.</returns>
+        public IScheduledEvent<T> Schedule<T>(T args, TimeSpan dueTime) where T : IEvent => this.Schedule(args, dueTime, Timeout.InfiniteTimeSpan);
+
+        /// <summary>
+        /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed once.
+        /// </summary>
+        /// <param name="args">The event to be executed.</param>
+        /// <param name="dueTime">The point in time after which the event should be raised.</param>
+        /// <returns>The scheduled event, containing the original event.</returns>
+        public IScheduledEvent<T> Schedule<T>(T args, DateTime dueTime) where T : IEvent => this.Schedule(args, dueTime, Timeout.InfiniteTimeSpan);
+
         /// <summary>
         /// Schedule an <see cref="IScheduledEvent{T}"/> to be executed.
         /// </summary>

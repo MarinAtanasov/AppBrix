@@ -3,7 +3,6 @@
 //
 using AppBrix.Configuration;
 using System;
-using System.Threading;
 
 namespace AppBrix.Web.Client.Configuration
 {

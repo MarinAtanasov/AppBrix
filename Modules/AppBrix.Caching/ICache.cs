@@ -18,6 +18,16 @@ namespace AppBrix.Caching
         /// <returns></returns>
         Task Refresh(string key);
 
+        #nullable disable
+        /// <summary>
+        /// Gets a cached object by its key.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to get.</typeparam>
+        /// <param name="key">The key which is used to store the object in the cache.</param>
+        /// <returns></returns>
+        public async Task<T> Get<T>(string key) => (T)(await this.Get(key, typeof(T)).ConfigureAwait(false) ?? default(T));
+        #nullable restore
+
         /// <summary>
         /// Gets a cached object by its key.
         /// </summary>

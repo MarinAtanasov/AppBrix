@@ -19,6 +19,13 @@ namespace AppBrix.Container
         /// <summary>
         /// Returns the last registered object of a given type.
         /// </summary>
+        /// <typeparam name="T">The type of the registered object.</typeparam>
+        /// <returns>The last registered object.</returns>
+        public T Get<T>() where T : class => (T)this.Get(typeof(T));
+
+        /// <summary>
+        /// Returns the last registered object of a given type.
+        /// </summary>
         /// <param name="type">The type of the registered object.</param>
         /// <returns>The last registered object.</returns>
         object Get(Type type);

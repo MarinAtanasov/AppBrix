@@ -14,9 +14,23 @@ namespace AppBrix.Configuration
         /// Gets the currently loaded instance of the specified config.
         /// If the config is not loaded, tries to load from source.
         /// </summary>
+        /// <typeparam name="T">Type of the configuration.</typeparam>
+        /// <returns>The configuration</returns>
+        public T Get<T>() where T : class, IConfig => (T)this.Get(typeof(T));
+
+        /// <summary>
+        /// Gets the currently loaded instance of the specified config.
+        /// If the config is not loaded, tries to load from source.
+        /// </summary>
         /// <param name="type">The type of the configuration.</param>
         /// <returns>The configuration</returns>
         IConfig Get(Type type);
+
+        /// <summary>
+        /// Saves one cached configuration.
+        /// </summary>
+        /// <typeparam name="T">The type of the configuraton.</typeparam>
+        public void Save<T>() where T : class, IConfig => this.Save(typeof(T));
 
         /// <summary>
         /// Saves one configuration.

@@ -14,26 +14,6 @@ namespace AppBrix
     public static class AppBrixExtensions
     {
         /// <summary>
-        /// Unloads and reloads the application.
-        /// </summary>
-        /// <param name="app">The application.</param>
-        public static void Restart(this IApp app)
-        {
-            app.Stop();
-            app.Start();
-        }
-
-        /// <summary>
-        /// Uninitializes and reinitializes the application.
-        /// </summary>
-        /// <param name="app">The application.</param>
-        public static void Reinitialize(this IApp app)
-        {
-            app.Uninitialize();
-            app.Initialize();
-        }
-
-        /// <summary>
         /// Shorthand for getting the config from the currently defined <see cref="IConfigService"/>.
         /// </summary>
         /// <typeparam name="T">The type of the config.</typeparam>

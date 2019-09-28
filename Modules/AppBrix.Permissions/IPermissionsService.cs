@@ -11,6 +11,14 @@ namespace AppBrix.Permissions
     public interface IPermissionsService
     {
         /// <summary>
+        /// Adds a child role to the specified role.
+        /// Must not create circular dependency.
+        /// </summary>
+        /// <param name="role">The parent role.</param>
+        /// <param name="child">The child role.</param>
+        public void AddChild(string role, string child) => this.AddParent(child, role);
+
+        /// <summary>
         /// Adds a parent role to the specified role.
         /// Must not create circular dependency.
         /// </summary>

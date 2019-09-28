@@ -16,7 +16,7 @@ namespace AppBrix.Configuration.Tests
         {
             var provider = new ConfigProviderMock();
             var serializer = new ConfigSerializerMock();
-            var service = new ConfigService(provider, serializer);
+            IConfigService service = new ConfigService(provider, serializer);
 
             service.Get<ConfigMock>();
             provider.ReadConfigs.Should().ContainSingle("the service should have tried to read the config");
@@ -38,7 +38,7 @@ namespace AppBrix.Configuration.Tests
         {
             var provider = new ConfigProviderMock();
             var serializer = new ConfigSerializerMock();
-            var service = new ConfigService(provider, serializer);
+            IConfigService service = new ConfigService(provider, serializer);
 
             service.SaveAll();
             provider.ReadConfigs.Should().BeEmpty("the service should have not tried to read any configs");
@@ -62,7 +62,7 @@ namespace AppBrix.Configuration.Tests
         {
             var provider = new ConfigProviderMock();
             var serializer = new ConfigSerializerMock();
-            var service = new ConfigService(provider, serializer);
+            IConfigService service = new ConfigService(provider, serializer);
             var config = service.Get<ConfigMock>();
 
             service.Save<ConfigMock>();

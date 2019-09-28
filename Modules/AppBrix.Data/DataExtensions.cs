@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix
 {
@@ -17,13 +16,6 @@ namespace AppBrix
         /// <param name="app">The application.</param>
         /// <returns>The registered databse context service.</returns>
         public static IDbContextService GetDbContextService(this IApp app) => (IDbContextService)app.Get(typeof(IDbContextService));
-
-        /// <summary>
-        /// Gets an instance of a <see cref="DbContext"/> of the provided <see cref="DbContext"/> type.
-        /// </summary>
-        /// <typeparam name="T">The type of the context.</typeparam>
-        /// <returns>A databse context of the provided type.</returns>
-        public static T Get<T>(this IDbContextService service) where T : DbContext => (T)service.Get(typeof(T));
 
         /// <summary>
         /// Gets the currently registered <see cref="IDbContextConfigurer"/>.

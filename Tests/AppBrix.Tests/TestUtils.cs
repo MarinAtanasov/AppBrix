@@ -23,7 +23,7 @@ namespace AppBrix.Tests
         /// <returns>The created application.</returns>
         public static IApp CreateTestApp(params Type[] modules)
         {
-            var service = new MemoryConfigService();
+            IConfigService service = new MemoryConfigService();
             var config = service.Get<AppConfig>();
             modules.SelectMany(module => module.CreateObject<IModule>().GetAllDependencies())
                 .Concat(modules)

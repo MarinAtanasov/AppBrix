@@ -19,16 +19,6 @@ namespace AppBrix
         /// <returns>The permissions service.</returns>
         public static IPermissionsService GetPermissionsService(this IApp app) => (IPermissionsService)app.Get(typeof(IPermissionsService));
 
-        /// <summary>
-        /// Adds a child role to the specified role.
-        /// Must not create circular dependency.
-        /// </summary>
-        /// <param name="service">The permission service.</param>
-        /// <param name="role">The parent role.</param>
-        /// <param name="child">The child role.</param>
-        public static void AddChild(this IPermissionsService service, string role, string child) => service.AddParent(child, role);
-
-
         internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
         {
             if (!dictionary.TryGetValue(key, out var values))

@@ -12,15 +12,17 @@ namespace AppBrix.Cloning
         /// <summary>
         /// Creates a deep copy of the specified object.
         /// </summary>
+        /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="obj">The object to be copied</param>
         /// <returns>A deep copy of the specified object.</returns>
-        object DeepCopy(object obj);
+        T DeepCopy<T>(T obj);
 
         /// <summary>
         /// Creates a shallow copy of the specified object.
         /// </summary>
+        /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="obj">The object to be copied</param>
         /// <returns>A shallow copy of the specified object.</returns>
-        object ShallowCopy(object obj);
+        T ShallowCopy<T>(T obj);
     }
 }

@@ -32,6 +32,16 @@ namespace AppBrix
         void Stop();
 
         /// <summary>
+        /// Unloads and reloads the application.
+        /// </summary>
+        public void Restart()
+        {
+            this.Stop();
+            this.Start();
+        }
+
+
+        /// <summary>
         /// Initializes the applicaiton and all of its modules.
         /// </summary>
         void Initialize();
@@ -40,5 +50,14 @@ namespace AppBrix
         /// Uninitializes the application and all of its modules.
         /// </summary>
         void Uninitialize();
+
+        /// <summary>
+        /// Uninitializes and reinitializes the application.
+        /// </summary>
+        public void Reinitialize()
+        {
+            this.Uninitialize();
+            this.Initialize();
+        }
     }
 }

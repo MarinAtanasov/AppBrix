@@ -14,6 +14,13 @@ namespace AppBrix.Data
         /// <summary>
         /// Gets an instance of a <see cref="DbContext"/>.
         /// </summary>
+        /// <typeparam name="T">The type of the context.</typeparam>
+        /// <returns>A databse context of the provided type.</returns>
+        public T Get<T>() where T : DbContext => (T)this.Get(typeof(T));
+
+        /// <summary>
+        /// Gets an instance of a <see cref="DbContext"/>.
+        /// </summary>
         /// <param name="type">The type of the context.</param>
         /// <returns>A databse context of the provided type.</returns>
         DbContext Get(Type type);

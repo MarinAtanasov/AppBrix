@@ -20,6 +20,14 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Deserializes a string to a configuration.
         /// </summary>
+        /// <typeparam name="T">The type of the configuration.</typeparam>
+        /// <param name="config">The string representation of the configuration.</param>
+        /// <returns>The deserialized configuration.</returns>
+        public T Deserialize<T>(string config) where T : class, IConfig => (T)this.Deserialize(config, typeof(T));
+
+        /// <summary>
+        /// Deserializes a string to a configuration.
+        /// </summary>
         /// <param name="config">The string representation of the configuration.</param>
         /// <param name="type">The type of the configuration.</param>
         /// <returns>The deserialized configuration.</returns>

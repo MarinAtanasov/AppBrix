@@ -1,7 +1,6 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Container;
 using System;
 
 namespace AppBrix
@@ -11,7 +10,6 @@ namespace AppBrix
     /// </summary>
     public static class ContainerExtensions
     {
-        #region IContainer extensions
         /// <summary>
         /// Resolves an item by its type.
         /// </summary>
@@ -27,13 +25,5 @@ namespace AppBrix
         /// <param name="app">The application.</param>
         /// <returns></returns>
         public static T Get<T>(this IApp app) where T : class => app.Container.Get<T>();
-
-        /// <summary>
-        /// Returns the last registered object of a given type.
-        /// </summary>
-        /// <typeparam name="T">The type of the registered object.</typeparam>
-        /// <returns>The last registered object.</returns>
-        public static T Get<T>(this IContainer container) where T : class => (T)container.Get(typeof(T));
-        #endregion
     }
 }
