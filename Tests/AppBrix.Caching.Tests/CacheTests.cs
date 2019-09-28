@@ -36,7 +36,7 @@ namespace AppBrix.Caching.Tests
             var key = "key";
             var value = "Test Value";
             cache.Set(key, value);
-            var cached = cache.Get<object>(key).GetAwaiter().GetResult();
+            var cached = cache.Get<string>(key).GetAwaiter().GetResult();
             cached.Should().NotBeNull("the item should be in the cache");
             cached.Should().Be(value, "the returned object should be equal to the original");
             cache.Remove(key).GetAwaiter().GetResult();
@@ -50,12 +50,12 @@ namespace AppBrix.Caching.Tests
             var key = "key";
             var value = "Test Value";
             cache.Set(key, value);
-            var cached = cache.Get<object>(key).GetAwaiter().GetResult();
+            var cached = cache.Get<string>(key).GetAwaiter().GetResult();
             cached.Should().NotBeNull("the item should be in the cache");
             cached.Should().Be(value, "the returned object should be equal to the original");
             value = "Test Replaced Value";
             cache.Set(key, value).GetAwaiter().GetResult();
-            cached = cache.Get<object>(key).GetAwaiter().GetResult();
+            cached = cache.Get<string>(key).GetAwaiter().GetResult();
             cached.Should().NotBeNull("the item should be in the cache after being replaced");
             cached.Should().Be(value, "the returned object should be equal to the replaced");
             cache.Remove(key).GetAwaiter().GetResult();
@@ -70,7 +70,7 @@ namespace AppBrix.Caching.Tests
         private void TestPerformanceCacheInternal()
         {
             var cache = this.app.GetCache();
-            var items = 550;
+            var items = 1500;
             for (var i = 0; i < items; i++)
             {
                 cache.Set(i.ToString(), i).GetAwaiter().GetResult();

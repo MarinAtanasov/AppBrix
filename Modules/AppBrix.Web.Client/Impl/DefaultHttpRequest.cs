@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -9,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -121,7 +121,7 @@ namespace AppBrix.Web.Client.Impl
 
             if (this.content != null)
             {
-                message.Content = this.CreateContent();
+                message.Content = this.CreateContent(this.content);
                 this.SetHeaders(message.Content.Headers, this.headers.Where(x => this.IsContentHeader(x.Key)));
             }
 
@@ -155,16 +155,16 @@ namespace AppBrix.Web.Client.Impl
             }
         }
 
-        private HttpContent CreateContent()
+        private HttpContent CreateContent(object content)
         {
-            switch (this.content)
+            switch (content)
             {
                 case string s: return new StringContent(s);
                 case byte[] b: return new ByteArrayContent(b);
                 case Stream s: return new StreamContent(s);
                 case HttpContent c: return c;
                 case IEnumerable<KeyValuePair<string, string>> m: return new FormUrlEncodedContent(m);
-                default: return new StringContent(JsonConvert.SerializeObject(this.content));
+                default: return new StringContent(JsonSerializer.Serialize(content, content.GetType(), this.app.Get<JsonSerializerOptions>()));
             }
         }
 
@@ -180,10 +180,11 @@ namespace AppBrix.Web.Client.Impl
                 contentValue = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
             else if (type == typeof(Stream))
                 contentValue = await content.ReadAsStreamAsync().ConfigureAwait(false);
-            else if (type == typeof(NameValueCollection))
-                contentValue = await content.ReadAsFormDataAsync().ConfigureAwait(false);
             else
-                contentValue = await content.ReadAsAsync<T>().ConfigureAwait(false);
+            {
+                var stringed = await content.ReadAsStreamAsync().ConfigureAwait(false);
+                contentValue = await JsonSerializer.DeserializeAsync<T>(stringed, this.app.Get<JsonSerializerOptions>()).ConfigureAwait(false);
+            }
 
             return (T)contentValue!;
         }

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
-using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AppBrix.Configuration.Json
 {
@@ -19,18 +18,11 @@ namespace AppBrix.Configuration.Json
         /// </summary>
         public JsonConfigSerializer()
         {
-            this.settings = new JsonSerializerSettings
-            {
-                Culture = CultureInfo.InvariantCulture,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                NullValueHandling = NullValueHandling.Ignore,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-                DateFormatString = @"yyyy-MM-ddTHH:mm:ss.fffK"
-            };
-
-            this.settings.Converters.Add(new IsoDateTimeConverter());
-            this.settings.Converters.Add(new StringEnumConverter());
-            this.settings.Converters.Add(new VersionConverter());
+            this.settings = new JsonSerializerOptions();
+            this.settings.Converters.Add(new JsonStringEnumConverter());
+            this.settings.Converters.Add(new JsonStringTimeSpanConverter());
+            this.settings.Converters.Add(new JsonStringVersionConverter());
+            this.settings.WriteIndented = true;
         }
         #endregion
 
@@ -45,7 +37,7 @@ namespace AppBrix.Configuration.Json
             if (config == null)
                 throw new ArgumentNullException(nameof(config));
 
-            return JsonConvert.SerializeObject(config, Formatting.Indented, this.settings);
+            return JsonSerializer.Serialize(config, config.GetType(), this.settings);
         }
 
         /// <summary>
@@ -61,12 +53,12 @@ namespace AppBrix.Configuration.Json
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            return (IConfig)JsonConvert.DeserializeObject(config, type, this.settings);
+            return (IConfig)JsonSerializer.Deserialize(config, type, this.settings);
         }
         #endregion
 
         #region Private fields and constants
-        private JsonSerializerSettings settings;
+        private JsonSerializerOptions settings;
         #endregion
     }
 }

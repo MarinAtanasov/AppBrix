@@ -8,6 +8,7 @@ using AppBrix.Modules;
 using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Impl;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 
 namespace AppBrix.Web.Server
 {
@@ -45,7 +47,7 @@ namespace AppBrix.Web.Server
             this.App.Container.Register(this);
 
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder
-                .ConfigureServices(services => services.AddSingleton(this.App))
+                .ConfigureServices(services => services.AddSingleton(this.App).AddControllers().AddJsonOptions(this.AddJsonOptions))
                 .ConfigureLogging(logging => logging.ClearProviders().AddProvider(this.App.Get<ILoggerProvider>()))
                 .Configure(appBuilder =>
                 {
@@ -69,6 +71,16 @@ namespace AppBrix.Web.Server
 
         #region Private methods
         private HttpClient CreateClient() => this.App.Get<IHttpClientFactory>().CreateClient();
+
+        private void AddJsonOptions(JsonOptions options)
+        {
+            var appConverters = this.App.Get<JsonSerializerOptions>().Converters;
+            var hostConverters = options.JsonSerializerOptions.Converters;
+            for (var i = 0; i < appConverters.Count; i++)
+            {
+                hostConverters.Add(appConverters[i]);
+            }
+        }
 
         private void ApplicationStarted() => this.App.GetEventHub().Raise(new DefaultHostApplicationStarted());
 

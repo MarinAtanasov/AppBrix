@@ -1,43 +1,30 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
-using System.Globalization;
-using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AppBrix.Caching.Tests.Mocks
 {
     internal sealed class JsonCacheSerializer : ICacheSerializer
     {
-        #region Public and overriden methods
-        public byte[] Serialize(object item) => Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(item, Formatting.None, this.GetSettings()));
-
-        public object Deserialize(byte[] serialized, Type type) => JsonConvert.DeserializeObject(Encoding.UTF8.GetString(serialized), type, this.GetSettings());
-        #endregion
-
-        #region Private methods
-        private JsonSerializerSettings GetSettings()
+        #region Construction
+        public JsonCacheSerializer()
         {
-            if (this.settings == null)
-            {
-                this.settings = new JsonSerializerSettings
-                {
-                    Culture = CultureInfo.InvariantCulture,
-                    DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
-                    NullValueHandling = NullValueHandling.Ignore,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
-                };
-
-                this.settings.Converters.Add(new StringEnumConverter());
-            }
-            return this.settings;
+            this.settings = new JsonSerializerOptions();
+            this.settings.Converters.Add(new JsonStringEnumConverter());
         }
         #endregion
 
+        #region Public and overriden methods
+        public byte[] Serialize(object item) => JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), this.settings);
+
+        public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings);
+        #endregion
+
         #region Private fields and constants
-        private JsonSerializerSettings settings;
+        private JsonSerializerOptions settings;
         #endregion
     }
 }

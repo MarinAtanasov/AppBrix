@@ -1,17 +1,17 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Modules;
+using AppBrix.Factory;
 using AppBrix.Lifecycle;
-using AppBrix.Time.Configuration;
+using AppBrix.Modules;
+using AppBrix.Time;
 using AppBrix.Web.Client.Configuration;
 using AppBrix.Web.Client.Impl;
-using Newtonsoft.Json;
 using System;
-using System.Net.Http;
-using AppBrix.Factory;
-using AppBrix.Time;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AppBrix.Web.Client
 {
@@ -49,12 +49,12 @@ namespace AppBrix.Web.Client
             this.App.Container.Register(this.httpClientFactory);
             this.App.GetFactoryService().Register(this.CreateRequest);
 
-            this.timeConfig = this.App.GetConfig<TimeConfig>();
-
-            this.oldSettingsFactory = JsonConvert.DefaultSettings;
-            this.App.GetFactoryService().Register(this.CreateSerializerSettings);
-            this.newSettingsFactory = this.GetSerializerSettings;
-            JsonConvert.DefaultSettings = this.newSettingsFactory;
+            this.jsonSerializerOptions = new JsonSerializerOptions();
+            this.jsonSerializerOptions.Converters.Add(new JsonStringDateTimeConverter(this.App.GetTimeService()));
+            this.jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            this.jsonSerializerOptions.Converters.Add(new JsonStringTimeSpanConverter());
+            this.jsonSerializerOptions.Converters.Add(new JsonStringVersionConverter());
+            this.App.Container.Register(this.jsonSerializerOptions);
         }
 
         /// <summary>
@@ -63,13 +63,7 @@ namespace AppBrix.Web.Client
         /// </summary>
         protected override void Uninitialize()
         {
-            if (JsonConvert.DefaultSettings == this.newSettingsFactory)
-            {
-                JsonConvert.DefaultSettings = this.oldSettingsFactory;
-            }
-
             this.httpClientFactory.Uninitialize();
-            this.timeConfig = null;
             this.client?.Dispose();
             this.client = null;
         }
@@ -77,25 +71,12 @@ namespace AppBrix.Web.Client
 
         #region Private methods
         private DefaultHttpRequest CreateRequest() => new DefaultHttpRequest(this.App);
-
-        private JsonSerializerSettings CreateSerializerSettings()
-        {
-            var settings = this.oldSettingsFactory != null ? this.oldSettingsFactory() : new JsonSerializerSettings();
-            settings.DateFormatString = this.timeConfig.Format;
-            return settings;
-        }
-
-        private JsonSerializerSettings GetSerializerSettings() => this.App.GetFactoryService().Get<JsonSerializerSettings>();
         #endregion
 
         #region Private fields and constants
         private readonly DefaultHttpClientFactory httpClientFactory = new DefaultHttpClientFactory();
         private HttpClient? client;
-        #nullable disable
-        private TimeConfig timeConfig;
-        private Func<JsonSerializerSettings> oldSettingsFactory;
-        private Func<JsonSerializerSettings> newSettingsFactory;
-        #nullable restore
+        private JsonSerializerOptions? jsonSerializerOptions;
         #endregion
     }
 }
