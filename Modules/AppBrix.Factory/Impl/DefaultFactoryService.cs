@@ -39,9 +39,10 @@ namespace AppBrix.Factory.Impl
                 baseType = baseType.BaseType;
             }
 
-            foreach (var @interface in type.GetInterfaces())
+            var interfaces = type.GetInterfaces();
+            for (var i = 0; i < interfaces.Length; i++)
             {
-                this.factories[@interface] = factory;
+                this.factories[interfaces[i]] = factory;
             }
         }
 

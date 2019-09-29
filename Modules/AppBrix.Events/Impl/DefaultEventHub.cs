@@ -63,7 +63,7 @@ namespace AppBrix.Events.Impl
             if (this.subscriptions.TryGetValue(type, out var handlers))
             {
                 // Optimize for unsubscribing the last element since this is the most common scenario.
-                for (int i = handlers.Count - 1; i >= 0; i--)
+                for (var i = handlers.Count - 1; i >= 0; i--)
                 {
                     if (handlers[i].Handler.Equals(handler))
                     {
@@ -83,9 +83,10 @@ namespace AppBrix.Events.Impl
                 baseType = baseType.BaseType;
             }
 
-            foreach (var @interface in type.GetInterfaces())
+            var interfaces = type.GetInterfaces();
+            for (var i = 0; i < interfaces.Length; i++)
             {
-                this.RaiseEvent(args, @interface);
+                this.RaiseEvent(args, interfaces[i]);
             }
         }
 

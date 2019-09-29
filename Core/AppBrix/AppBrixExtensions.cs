@@ -42,7 +42,7 @@ namespace AppBrix
 
             var dependencies = new List<Type> { module.GetType() };
             var unique = new HashSet<Type> { module.GetType() };
-            for (int i = 0; i < dependencies.Count; i++)
+            for (var i = 0; i < dependencies.Count; i++)
             {
                 foreach (var dependency in dependencies[i].CreateObject<IModule>().Dependencies)
                 {

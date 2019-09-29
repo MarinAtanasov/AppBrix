@@ -118,9 +118,9 @@ namespace AppBrix.Events.Delayed.Tests
                 var j = i;
                 handlers.Add(e => j++);
             }
-            foreach (var handler in handlers)
+            for (var i = 0; i < handlers.Count; i++)
             {
-                hub.Subscribe(handler);
+                hub.Subscribe(handlers[i]);
             }
             this.app.Reinitialize();
         }
@@ -135,7 +135,7 @@ namespace AppBrix.Events.Delayed.Tests
                 var j = i;
                 handlers.Add(e => j++);
             }
-            for (int i = 0; i < handlers.Count; i++)
+            for (var i = 0; i < handlers.Count; i++)
             {
                 hub.Subscribe(handlers[i]);
             }
@@ -155,7 +155,7 @@ namespace AppBrix.Events.Delayed.Tests
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
             var calledCount = 60000;
-            for (int i = 0; i < calledCount; i++)
+            for (var i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
             }
@@ -174,7 +174,7 @@ namespace AppBrix.Events.Delayed.Tests
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
             var calledCount = 50000;
-            for (int i = 0; i < calledCount; i++)
+            for (var i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
             }

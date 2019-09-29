@@ -238,9 +238,9 @@ namespace AppBrix.Events.Async.Tests
                 var j = i;
                 handlers.Add(e => j++);
             }
-            foreach (var handler in handlers)
+            for (var i = 0; i < handlers.Count; i++)
             {
-                hub.Subscribe(handler);
+                hub.Subscribe(handlers[i]);
             }
             this.app.Reinitialize();
         }
@@ -255,9 +255,10 @@ namespace AppBrix.Events.Async.Tests
                 var j = i;
                 handlers.Add(e => j++);
             }
-            foreach (var handler in handlers)
+
+            for (var i = 0; i < handlers.Count; i++)
             {
-                hub.Subscribe(handler);
+                hub.Subscribe(handlers[i]);
             }
             for (var i = handlers.Count - 1; i >= 0; i--)
             {
@@ -275,7 +276,7 @@ namespace AppBrix.Events.Async.Tests
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
             var calledCount = 15000;
-            for (int i = 0; i < calledCount; i++)
+            for (var i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
             }

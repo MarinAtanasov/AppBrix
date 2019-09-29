@@ -163,7 +163,7 @@ namespace AppBrix.Logging.Tests.LogHub
             Action<ILogEntry> handler = x => { called++; };
             this.app.GetEventHub().Subscribe(handler);
             var logHub = this.app.GetLogHub();
-            for (int i = 0; i < repeat; i++)
+            for (var i = 0; i < repeat; i++)
             {
                 logHub.Critical(message, error);
                 logHub.Error(message, error);

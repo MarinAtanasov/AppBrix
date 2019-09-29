@@ -54,7 +54,7 @@ namespace AppBrix.Text.Tests
         {
             app.Container.Register(new EncodingProviderMock(Encoding.UTF8));
 
-            for (int i = 0; i < 140000; i++)
+            for (var i = 0; i < 140000; i++)
             {
                 Encoding.GetEncoding("str");
                 Encoding.GetEncoding(32167);

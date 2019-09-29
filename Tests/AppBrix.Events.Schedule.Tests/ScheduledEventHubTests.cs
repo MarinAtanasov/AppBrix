@@ -103,7 +103,7 @@ namespace AppBrix.Events.Schedule.Tests
         private void TestPerformanceScheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
         {
             var hub = this.app.GetScheduledEventHub();
-            for (int i = 0; i < scheduledEvents.Count; i++)
+            for (var i = 0; i < scheduledEvents.Count; i++)
             {
                 hub.Schedule(scheduledEvents[i]);
             }
@@ -113,11 +113,11 @@ namespace AppBrix.Events.Schedule.Tests
         private void TestPerformanceUnscheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
         {
             var hub = this.app.GetScheduledEventHub();
-            for (int i = 0; i < scheduledEvents.Count; i++)
+            for (var i = 0; i < scheduledEvents.Count; i++)
             {
                 hub.Schedule(scheduledEvents[i]);
             }
-            for (int i = scheduledEvents.Count - 1; i >= 0; i--)
+            for (var i = scheduledEvents.Count - 1; i >= 0; i--)
             {
                 hub.Unschedule(scheduledEvents[i]);
             }

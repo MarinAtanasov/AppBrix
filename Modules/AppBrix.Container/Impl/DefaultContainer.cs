@@ -57,9 +57,10 @@ namespace AppBrix.Container.Impl
                 baseType = baseType.BaseType;
             }
 
-            foreach (var @interface in type.GetInterfaces())
+            var interfaces = type.GetInterfaces();
+            for (var i = 0; i < interfaces.Length; i++)
             {
-                this.objects[@interface] = obj;
+                this.objects[interfaces[i]] = obj;
             }
         }
         #endregion

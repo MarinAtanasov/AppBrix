@@ -26,10 +26,10 @@ namespace AppBrix
             var locations = new HashSet<string> { current.Location };
             var assemblyQueue = new List<Assembly> { current };
 
-            for (int i = 0; i < assemblyQueue.Count; i++)
+            for (var i = 0; i < assemblyQueue.Count; i++)
             {
                 var referencedAssemblies = assemblyQueue[i].GetReferencedAssemblies();
-                for (int j = 0; j < referencedAssemblies.Length; j++)
+                for (var j = 0; j < referencedAssemblies.Length; j++)
                 {
                     var reference = referencedAssemblies[j];
                     if (!names.Add(reference.FullName))

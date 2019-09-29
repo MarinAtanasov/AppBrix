@@ -159,8 +159,9 @@ namespace AppBrix.Data.Migration.Impl
 
             if (migrations != null)
             {
-                foreach (var migration in migrations)
+                for (var i = 0; i < migrations.Length; i++)
                 {
+                    var migration = migrations[i];
                     trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Migration));
                     trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Metadata));
                 }

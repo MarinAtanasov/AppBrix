@@ -53,7 +53,7 @@ namespace AppBrix.Events.Async.Impl
         public void Unsubscribe(Action<T> handler)
         {
             // Optimize for unsubscribing the last element since this is the most common scenario.
-            for (int i = this.handlers.Count - 1; i >= 0; i--)
+            for (var i = this.handlers.Count - 1; i >= 0; i--)
             {
                 if (this.handlers[i].Equals(handler))
                 {

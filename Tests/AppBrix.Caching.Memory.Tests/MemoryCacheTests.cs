@@ -195,7 +195,7 @@ namespace AppBrix.Caching.Memory.Tests
             var item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
-            for (int i = 0; i < 75; i++)
+            for (var i = 0; i < 75; i++)
             {
                 item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
                 item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
@@ -218,15 +218,15 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             var items = 700;
-            for (int i = 0; i < items; i++)
+            for (var i = 0; i < items; i++)
             {
                 cache.Set(i.ToString(), i);
             }
-            for (int i = 0; i < items * 100; i++)
+            for (var i = 0; i < items * 100; i++)
             {
                 cache.Get<int>((i % items).ToString());
             }
-            for (int i = 0; i < items; i++)
+            for (var i = 0; i < items; i++)
             {
                 cache.Remove(i.ToString());
             }

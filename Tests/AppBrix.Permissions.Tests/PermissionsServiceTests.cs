@@ -386,7 +386,7 @@ namespace AppBrix.Events.Schedule.Tests
         private void TestPerformanceHasPermissionInternal(int repeats)
         {
             var service = this.app.GetPermissionsService();
-            for (int i = 0; i < repeats; i++)
+            for (var i = 0; i < repeats; i++)
             {
                 service.HasPermission("a", "p");
                 service.HasPermission("a", "p1");
@@ -437,7 +437,7 @@ namespace AppBrix.Events.Schedule.Tests
         private void TestPerformanceAddPermissionInternal(int repeats)
         {
             var service = this.app.GetPermissionsService();
-            for (int i = 0; i < repeats; i++)
+            for (var i = 0; i < repeats; i++)
             {
                 var item = (i % 20).ToString();
                 service.Allow("a", item);

@@ -114,7 +114,7 @@ namespace AppBrix.Caching.Memory.Impl
 
         private void RemoveItems(List<KeyValuePair<object, CacheItem>> items)
         {
-            for (int i = 0; i < items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
                 this.cache.Remove(items[i].Key);
             }
@@ -122,7 +122,7 @@ namespace AppBrix.Caching.Memory.Impl
 
         private void DisposeItems(List<KeyValuePair<object, CacheItem>> items)
         {
-            for (int i = 0; i < items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
                 try
                 {

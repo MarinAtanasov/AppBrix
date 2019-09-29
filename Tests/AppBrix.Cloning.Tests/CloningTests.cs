@@ -263,7 +263,7 @@ namespace AppBrix.Cloning.Tests
         {
             var cloner = this.GetCloner();
             var original = new ComplexPropertiesMock(10);
-            for (int i = 0; i < 180; i++)
+            for (var i = 0; i < 180; i++)
             {
                 cloner.DeepCopy(original);
             }
@@ -273,7 +273,7 @@ namespace AppBrix.Cloning.Tests
         {
             var cloner = this.GetCloner();
             var original = new ComplexPropertiesMock(10);
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 cloner.ShallowCopy(original);
             }

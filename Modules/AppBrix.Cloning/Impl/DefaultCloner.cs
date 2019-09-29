@@ -69,8 +69,9 @@ namespace AppBrix.Cloning.Impl
             while (baseType != typeof(object) && baseType != null)
             {
                 var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
-                foreach (var field in fields)
+                for (var i = 0; i < fields.Length; i++)
                 {
+                    var field = fields[i];
                     field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
                 }
                 baseType = baseType.BaseType;
@@ -92,14 +93,14 @@ namespace AppBrix.Cloning.Impl
             var lowerBounds = new int[array.Rank];
             var upperBounds = new int[array.Rank];
             var lastIndex = array.Rank - 1;
-            for (int i = 0; i <= lastIndex; i++)
+            for (var i = 0; i <= lastIndex; i++)
             {
                 position[i] = lowerBounds[i] = array.GetLowerBound(i);
                 upperBounds[i] = array.GetUpperBound(i);
             }
 
             action(array.GetValue(position), position);
-            for (int i = 1; i < length; i++)
+            for (var i = 1; i < length; i++)
             {
                 position[lastIndex]++;
                 for (var index = lastIndex; index > 0 && position[index] > upperBounds[index]; index--)

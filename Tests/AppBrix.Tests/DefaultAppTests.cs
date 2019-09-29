@@ -191,7 +191,7 @@ namespace AppBrix.Tests
 
         private void TestPerformanceReinitializeInternal(IApp app)
         {
-            for (int i = 0; i < 17500; i++)
+            for (var i = 0; i < 17500; i++)
             {
                 app.Reinitialize();
             }
@@ -199,7 +199,7 @@ namespace AppBrix.Tests
 
         private void TestPerformanceRestartInternal(IApp app)
         {
-            for (int i = 0; i < 1800; i++)
+            for (var i = 0; i < 1800; i++)
             {
                 app.Restart();
             }
@@ -208,7 +208,7 @@ namespace AppBrix.Tests
         private void TestPerformanceGetDependenciesInternal()
         {
             var module = new SimpleEmptyModuleMock();
-            for (int i = 0; i < 90; i++)
+            for (var i = 0; i < 90; i++)
             {
                 var dependencies = module.Dependencies.ToList();
             }
