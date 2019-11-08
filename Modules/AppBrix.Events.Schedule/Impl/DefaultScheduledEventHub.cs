@@ -79,19 +79,13 @@ namespace AppBrix.Events.Schedule.Impl
                 var now = this.app.GetTime();
                 for (var args = this.queue.Peek(); args != null && args.Occurrence <= now; args = this.queue.Peek())
                 {
-                    if (toExecute is null)
-                        toExecute = new List<PriorityQueueItem>();
-
+                    toExecute ??= new List<PriorityQueueItem>();
                     toExecute.Add(args);
                     args.MoveToNextOccurrence(now);
                     if (now < args.Occurrence)
-                    {
                         this.queue.ReprioritizeHead();
-                    }
                     else
-                    {
                         this.queue.Pop();
-                    }
                 }
 
                 this.executionTimer.Change(this.config.ExecutionCheck, Timeout.InfiniteTimeSpan);

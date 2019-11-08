@@ -274,16 +274,10 @@ namespace AppBrix.Data.Migration.Impl
             }
         }
 
-        private string GenerateMigrationAssemblyName(Type type, Version? version = null)
-        {
-            if (version is null)
-                version = type.Assembly.GetName().Version;
+        private string GenerateMigrationAssemblyName(Type type, Version? version = null) =>
+            $"Generated.Migrations.{this.GenerateMigrationName(type, version ?? type.Assembly.GetName().Version)}.{Guid.NewGuid()}.dll";
 
-            return string.Format("Generated.Migrations.{0}.{1}.dll",
-                this.GenerateMigrationName(type, version), Guid.NewGuid());
-        }
-
-        private string GenerateMigrationName(Type type, Version version) => string.Format("{0}_{1}", type.Name, version.ToString().Replace('.', '_'));
+        private string GenerateMigrationName(Type type, Version version) => $"{type.Name}_{version.ToString().Replace('.', '_')}";
 
         private string GenerateMigrationsHistoryTableName(Type type) => $"__EFMH_{type.Name}";
         #endregion

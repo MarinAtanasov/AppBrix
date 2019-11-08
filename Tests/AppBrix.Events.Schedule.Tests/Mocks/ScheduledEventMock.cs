@@ -23,8 +23,7 @@ namespace AppBrix.Events.Schedule.Tests.Mocks
 
         public DateTime GetNextOccurrence(DateTime now)
         {
-            if (this.time is null)
-                this.time = now.Add(this.execute);
+            this.time ??= now.Add(this.execute);
             return this.time.Value;
         }
 

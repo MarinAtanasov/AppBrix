@@ -59,16 +59,10 @@ namespace AppBrix.Web.Client.Impl
                 throw new ArgumentNullException(nameof(header));
 
             if (values is null || values.Length == 0)
-            {
-                if (this.headers.ContainsKey(header))
-                {
-                    this.headers.Remove(header);
-                }
-            }
+                this.headers.Remove(header);
             else
-            {
                 this.headers[header] = new List<string>(values);
-            }
+
             return this;
         }
 
