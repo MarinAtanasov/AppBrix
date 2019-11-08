@@ -26,31 +26,27 @@ namespace AppBrix.Web.Client.Impl
         public async Task<IHttpResponse> Send()
         {
             var client = this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
-            using (var response = await this.GetResponse(client).ConfigureAwait(false))
-            {
-                return new DefaultHttpResponse<string>(
-                    new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
-                    null!,
-                    (int) response.StatusCode,
-                    response.ReasonPhrase,
-                    response.Version);
-            }
+            using var response = await this.GetResponse(client).ConfigureAwait(false);
+            return new DefaultHttpResponse<string>(
+                new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
+                null!,
+                (int) response.StatusCode,
+                response.ReasonPhrase,
+                response.Version);
         }
 
         public async Task<IHttpResponse<T>> Send<T>()
         {
             var client = this.app.Get<IHttpClientFactory>().CreateClient(this.clientName);
-            using (var response = await this.GetResponse(client).ConfigureAwait(false))
-            {
-                var responseContent = response.Content;
-                var contentValue = await this.GetResponseContent<T>(responseContent).ConfigureAwait(false);
-                return new DefaultHttpResponse<T>(
-                    new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
-                    contentValue,
-                    (int) response.StatusCode,
-                    response.ReasonPhrase,
-                    response.Version);
-            }
+            using var response = await this.GetResponse(client).ConfigureAwait(false);
+            var responseContent = response.Content;
+            var contentValue = await this.GetResponseContent<T>(responseContent).ConfigureAwait(false);
+            return new DefaultHttpResponse<T>(
+                new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
+                contentValue,
+                (int) response.StatusCode,
+                response.ReasonPhrase,
+                response.Version);
         }
 
         public IHttpRequest SetHeader(string header, params string[] values)

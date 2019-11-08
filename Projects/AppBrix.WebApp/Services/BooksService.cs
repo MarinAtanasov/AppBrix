@@ -22,54 +22,44 @@ namespace AppBrix.WebApp.Services
 
         public IEnumerable<Book> Get()
         {
-            using (var context = this.app.GetDbContextService().Get<BooksContext>())
-            {
-                return context.Books
-                    .AsNoTracking()
-                    .ToList();
-            }
+            using var context = this.app.GetDbContextService().Get<BooksContext>();
+            return context.Books
+                .AsNoTracking()
+                .ToList();
         }
 
         public Book Get(Guid id)
         {
-            using (var context = this.app.GetDbContextService().Get<BooksContext>())
-            {
-                return context.Books
-                    .AsNoTracking()
-                    .SingleOrDefault(x => x.Id == id);
-            }
+            using var context = this.app.GetDbContextService().Get<BooksContext>();
+            return context.Books
+                .AsNoTracking()
+                .SingleOrDefault(x => x.Id == id);
         }
 
         public void Add(Book book)
         {
-            using (var context = this.app.GetDbContextService().Get<BooksContext>())
-            {
-                context.Books.Add(book);
-                context.SaveChanges();
-            }
+            using var context = this.app.GetDbContextService().Get<BooksContext>();
+            context.Books.Add(book);
+            context.SaveChanges();
         }
 
         public void Update(Book book)
         {
-            using (var context = this.app.GetDbContextService().Get<BooksContext>())
-            {
-                var item = new Book() { Id = book.Id };
-                context.Books.Attach(item);
-                item.Author = book.Author;
-                item.Title = book.Title;
-                context.SaveChanges();
-            }
+            using var context = this.app.GetDbContextService().Get<BooksContext>();
+            var item = new Book() { Id = book.Id };
+            context.Books.Attach(item);
+            item.Author = book.Author;
+            item.Title = book.Title;
+            context.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            using (var context = this.app.GetDbContextService().Get<BooksContext>())
-            {
-                var book = new Book() { Id = id };
-                context.Books.Attach(book);
-                context.Books.Remove(book);
-                context.SaveChanges();
-            }
+            using var context = this.app.GetDbContextService().Get<BooksContext>();
+            var book = new Book() { Id = id };
+            context.Books.Attach(book);
+            context.Books.Remove(book);
+            context.SaveChanges();
         }
         #endregion
 

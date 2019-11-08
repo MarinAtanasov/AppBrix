@@ -24,16 +24,14 @@ namespace AppBrix.Configuration.Yaml
             if (config is null)
                 throw new ArgumentNullException(nameof(config));
 
-            using (var writer = new StringWriter())
-            {
-                var serializer = new SerializerBuilder()
-                    .EmitDefaults()
-                    .WithNamingConvention(new NullNamingConvention())
-                    .WithTypeConverter(new VersionConverter())
-                    .Build();
-                serializer.Serialize(writer, config);
-                return writer.ToString();
-            }
+            using var writer = new StringWriter();
+            var serializer = new SerializerBuilder()
+                .EmitDefaults()
+                .WithNamingConvention(new NullNamingConvention())
+                .WithTypeConverter(new VersionConverter())
+                .Build();
+            serializer.Serialize(writer, config);
+            return writer.ToString();
         }
 
         /// <summary>
@@ -49,15 +47,13 @@ namespace AppBrix.Configuration.Yaml
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            using (var reader = new StringReader(config))
-            {
-                var deserializer = new DeserializerBuilder()
-                    .WithNamingConvention(new NullNamingConvention())
-                    .IgnoreUnmatchedProperties()
-                    .WithTypeConverter(new VersionConverter())
-                    .Build();
-                return (IConfig)deserializer.Deserialize(reader, type);
-            }
+            using var reader = new StringReader(config);
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(new NullNamingConvention())
+                .IgnoreUnmatchedProperties()
+                .WithTypeConverter(new VersionConverter())
+                .Build();
+            return (IConfig)deserializer.Deserialize(reader, type);
         }
         #endregion
     }
