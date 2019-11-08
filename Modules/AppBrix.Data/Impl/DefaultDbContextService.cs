@@ -22,7 +22,7 @@ namespace AppBrix.Data.Impl
 
         public DbContext Get(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             var factory = this.app.GetFactoryService().GetFactory(type);

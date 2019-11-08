@@ -18,7 +18,7 @@ namespace AppBrix.Factory
         /// <param name="factoryMethod">The factory method.</param>
         public void Register<T>(Func<T> factoryMethod) where T : class
         {
-            if (factoryMethod == null)
+            if (factoryMethod is null)
                 throw new ArgumentNullException(nameof(factoryMethod));
 
             this.Register(factoryMethod, typeof(T));
@@ -31,9 +31,9 @@ namespace AppBrix.Factory
         /// <param name="type">The type to be returned by the factory.</param>
         public void Register(Func<object> factoryMethod, Type type)
         {
-            if (factoryMethod == null)
+            if (factoryMethod is null)
                 throw new ArgumentNullException(nameof(factoryMethod));
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             this.Register((IDefaultFactory<object>)typeof(DefaultFactory<>).MakeGenericType(type).CreateObject(factoryMethod), type);
@@ -68,7 +68,7 @@ namespace AppBrix.Factory
         public object Get(Type type)
         {
             var factory = this.GetFactory(type);
-            if (factory == null)
+            if (factory is null)
                 throw new InvalidOperationException($"No factory has been registered for {type.FullName}.");
 
             return factory.Get();

@@ -34,7 +34,7 @@ namespace AppBrix.Configuration
         /// <returns>The module element.</returns>
         public static ModuleConfigElement Create(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
             if (!typeof(IModule).IsAssignableFrom(type))
                 throw new ArgumentException($"Type {type} is not of type {nameof(IModule)}.");

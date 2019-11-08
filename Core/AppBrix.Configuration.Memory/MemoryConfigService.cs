@@ -20,7 +20,7 @@ namespace AppBrix.Configuration.Memory
         /// <returns>The configuration.</returns>
         public IConfig Get(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             if (!configs.TryGetValue(type, out var config))

@@ -81,7 +81,7 @@ namespace AppBrix.Events.Delayed.Impl
 
         public void RaiseDelayed(IEvent args)
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             this.channel.Writer.TryWrite(args);

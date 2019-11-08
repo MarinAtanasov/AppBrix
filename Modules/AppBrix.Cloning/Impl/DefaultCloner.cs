@@ -15,7 +15,7 @@ namespace AppBrix.Cloning.Impl
         #region ICloner implementation
         public T DeepCopy<T>(T obj)
         {
-            if (obj == null)
+            if (obj is null)
                 throw new ArgumentNullException(nameof(obj));
 
             return (T)this.DeepCopy(obj, new Dictionary<object, object>())!;
@@ -23,7 +23,7 @@ namespace AppBrix.Cloning.Impl
 
         public T ShallowCopy<T>(T obj)
         {
-            if (obj == null)
+            if (obj is null)
                 throw new ArgumentNullException(nameof(obj));
 
             if (this.IsValueType(obj.GetType()))
@@ -36,7 +36,7 @@ namespace AppBrix.Cloning.Impl
         #region Private methods
         private object? DeepCopy(object original, Dictionary<object, object> visited)
         {
-            if (original == null)
+            if (original is null)
                 return null;
 
             if (original is Type)

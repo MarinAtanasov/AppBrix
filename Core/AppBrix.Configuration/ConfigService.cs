@@ -21,9 +21,9 @@ namespace AppBrix.Configuration
         /// <param name="serializer">The serializer which will be used to serialize and deserialize the configurations.</param>
         public ConfigService(IConfigProvider provider, IConfigSerializer serializer)
         {
-            if (provider == null)
+            if (provider is null)
                 throw new ArgumentNullException(nameof(provider));
-            if (serializer == null)
+            if (serializer is null)
                 throw new ArgumentNullException(nameof(serializer));
 
             this.provider = provider;
@@ -40,7 +40,7 @@ namespace AppBrix.Configuration
         /// <returns>The configuration</returns>
         public IConfig Get(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             if (!configs.TryGetValue(type, out var config))
@@ -58,7 +58,7 @@ namespace AppBrix.Configuration
         /// <param name="type">The type of the configuration.</param>
         public void Save(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             this.SaveInternal(this.Get(type));

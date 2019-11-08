@@ -23,7 +23,7 @@ namespace AppBrix.Events.Impl
         #region IEventHub implementation
         public void Subscribe<T>(Action<T> handler) where T : IEvent
         {
-            if (handler == null)
+            if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
 
             this.SubscribeInternal(new EventWrapper<T>(handler), typeof(T));
@@ -31,7 +31,7 @@ namespace AppBrix.Events.Impl
         
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
         {
-            if (handler == null)
+            if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
 
             this.UnsubscribeInternal(handler, typeof(T));
@@ -39,7 +39,7 @@ namespace AppBrix.Events.Impl
 
         public void Raise(IEvent args)
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             this.RaiseInternal(args, args.GetType());

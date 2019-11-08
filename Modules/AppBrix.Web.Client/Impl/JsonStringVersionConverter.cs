@@ -20,7 +20,7 @@ namespace AppBrix.Web.Client.Impl
 
         public override void Write(Utf8JsonWriter writer, Version? value, JsonSerializerOptions options)
         {
-            if (value == null)
+            if (value is null)
                 writer.WriteNullValue();
             else
                 writer.WriteStringValue(value.ToString());

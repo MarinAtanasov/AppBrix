@@ -65,7 +65,7 @@ namespace AppBrix.Events.Async.Impl
         
         public void Enqueue(T task)
         {
-            if (task == null)
+            if (task is null)
                 throw new ArgumentNullException(nameof(task));
 
             this.channel.Writer.TryWrite(task);

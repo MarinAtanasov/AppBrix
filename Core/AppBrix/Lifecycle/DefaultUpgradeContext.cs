@@ -10,7 +10,7 @@ namespace AppBrix.Lifecycle
         #region Construction
         public DefaultUpgradeContext(IApp app, Version previousVersion) : base(app)
         {
-            if (previousVersion == null)
+            if (previousVersion is null)
                 throw new ArgumentNullException(nameof(previousVersion));
 
             this.PreviousVersion = previousVersion;

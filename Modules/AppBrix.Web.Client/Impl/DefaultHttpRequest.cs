@@ -58,7 +58,7 @@ namespace AppBrix.Web.Client.Impl
             if (string.IsNullOrEmpty(header))
                 throw new ArgumentNullException(nameof(header));
 
-            if (values == null || values.Length == 0)
+            if (values is null || values.Length == 0)
             {
                 if (this.headers.ContainsKey(header))
                 {

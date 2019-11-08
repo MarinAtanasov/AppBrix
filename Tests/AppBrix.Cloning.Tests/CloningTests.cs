@@ -163,7 +163,7 @@ namespace AppBrix.Cloning.Tests
 
         private void AssertIsDeepCopy(object original, object copy, string property = "this")
         {
-            if (original == null)
+            if (original is null)
             {
                 copy.Should().BeNull($"{property}'s copy should be null when the original is null");
                 return;
@@ -215,7 +215,7 @@ namespace AppBrix.Cloning.Tests
 
         private void AssertIsShallowCopy(object original, object copy, bool isInitialObject = true)
         {
-            if (original == null)
+            if (original is null)
             {
                 copy.Should().BeNull("the copy should be null when the original is null");
                 return;

@@ -23,7 +23,7 @@ namespace AppBrix.Events.Schedule.Timer.Impl
         #region ITimerScheduledEventHub implementation
         public IScheduledEvent<T> Schedule<T>(T args, TimeSpan dueTime, TimeSpan period) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
             if (dueTime < TimeSpan.Zero)
                 throw new ArgumentException($"Negative {nameof(dueTime)}: {dueTime}");
@@ -33,7 +33,7 @@ namespace AppBrix.Events.Schedule.Timer.Impl
 
         public IScheduledEvent<T> Schedule<T>(T args, DateTime dueTime, TimeSpan period) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             var scheduled = new TimerScheduledEvent<T>(args, dueTime, period);
@@ -43,7 +43,7 @@ namespace AppBrix.Events.Schedule.Timer.Impl
 
         public void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             this.app.GetScheduledEventHub().Unschedule(args);

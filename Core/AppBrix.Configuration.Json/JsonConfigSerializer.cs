@@ -34,7 +34,7 @@ namespace AppBrix.Configuration.Json
         /// <returns>The JSON representation of the configuration.</returns>
         public string Serialize(IConfig config)
         {
-            if (config == null)
+            if (config is null)
                 throw new ArgumentNullException(nameof(config));
 
             return JsonSerializer.Serialize(config, config.GetType(), this.settings);
@@ -50,7 +50,7 @@ namespace AppBrix.Configuration.Json
         {
             if (string.IsNullOrEmpty(config))
                 throw new ArgumentNullException(nameof(config));
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             return (IConfig)JsonSerializer.Deserialize(config, type, this.settings);

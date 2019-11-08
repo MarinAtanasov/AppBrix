@@ -23,7 +23,7 @@ namespace AppBrix.Events.Schedule.Cron.Impl
         #region ICronScheduledEventHub implementation
         public IScheduledEvent<T> Schedule<T>(T args, string expresssion) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
             if (string.IsNullOrEmpty(expresssion))
                 throw new ArgumentNullException(nameof(expresssion));
@@ -35,7 +35,7 @@ namespace AppBrix.Events.Schedule.Cron.Impl
 
         public void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             this.app.GetScheduledEventHub().Unschedule(args);

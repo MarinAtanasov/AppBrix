@@ -10,7 +10,7 @@ namespace AppBrix.Lifecycle
         #region Construction
         public DefaultUninstallContext(IApp app)
         {
-            if (app == null)
+            if (app is null)
                 throw new ArgumentNullException(nameof(app));
 
             this.App = app;

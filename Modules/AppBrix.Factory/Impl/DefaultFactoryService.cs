@@ -27,9 +27,9 @@ namespace AppBrix.Factory.Impl
         #region IFactory implementation
         public void Register(IFactory<object> factory, Type type)
         {
-            if (factory == null)
+            if (factory is null)
                 throw new ArgumentNullException(nameof(factory));
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             var baseType = type;

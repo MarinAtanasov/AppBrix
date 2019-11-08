@@ -26,7 +26,7 @@ namespace AppBrix.Events.Async.Impl
         #region IAsyncEventHub implementation
         public void Subscribe<T>(Action<T> handler) where T : IEvent
         {
-            if (handler == null)
+            if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
 
             this.SubscribeInternal(handler);
@@ -34,7 +34,7 @@ namespace AppBrix.Events.Async.Impl
 
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
         {
-            if (handler == null)
+            if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
 
             this.UnsubscribeInternal(handler);
@@ -42,7 +42,7 @@ namespace AppBrix.Events.Async.Impl
 
         public void Raise(IEvent args)
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             this.app.GetEventHub().Raise(args);

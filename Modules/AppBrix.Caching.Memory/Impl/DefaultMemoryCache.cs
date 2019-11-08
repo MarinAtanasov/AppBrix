@@ -37,7 +37,7 @@ namespace AppBrix.Caching.Memory.Impl
         #region IMemoryCache implementation
         public object? Get(object key)
         {
-            if (key == null)
+            if (key is null)
                 throw new ArgumentNullException(nameof(key));
 
             CacheItem cacheItem;
@@ -51,9 +51,9 @@ namespace AppBrix.Caching.Memory.Impl
 
         public void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan))
         {
-            if (key == null)
+            if (key is null)
                 throw new ArgumentNullException(nameof(key));
-            if (item == null)
+            if (item is null)
                 throw new ArgumentNullException(nameof(item));
             if (absoluteExpiration < TimeSpan.Zero)
                 throw new ArgumentException($"Negative absolute expiration: {absoluteExpiration}.");
@@ -74,7 +74,7 @@ namespace AppBrix.Caching.Memory.Impl
 
         public void Remove(object key)
         {
-            if (key == null)
+            if (key is null)
                 throw new ArgumentNullException(nameof(key));
 
             lock (this.cache)
@@ -100,7 +100,7 @@ namespace AppBrix.Caching.Memory.Impl
         {
             lock (this.cache)
             {
-                if (this.app == null)
+                if (this.app is null)
                     return; // Unintialized
 
                 var now = this.app.GetTime();

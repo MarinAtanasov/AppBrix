@@ -30,7 +30,7 @@ namespace AppBrix.Container.Impl
         #region IContainer implementation
         public void Register(object obj)
         {
-            if (obj == null)
+            if (obj is null)
                 throw new ArgumentNullException(nameof(obj));
 
             var type = obj.GetType();

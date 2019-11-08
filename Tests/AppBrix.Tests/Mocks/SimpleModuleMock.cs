@@ -26,7 +26,7 @@ namespace AppBrix.Tests.Mocks
 
         protected override void Uninitialize()
         {
-            if (this.App == null)
+            if (this.App is null)
                 throw new InvalidOperationException($"this.{nameof(App)} should not be null.");
 
             this.IsUninitialized = true;

@@ -37,7 +37,7 @@ namespace AppBrix
         /// <returns>All modules inside the referenced assemblies.</returns>
         public static IEnumerable<Type> GetAllDependencies(this IModule module)
         {
-            if (module == null)
+            if (module is null)
                 throw new ArgumentNullException(nameof(module));
 
             var dependencies = new List<Type> { module.GetType() };

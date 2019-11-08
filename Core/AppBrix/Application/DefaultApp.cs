@@ -16,7 +16,7 @@ namespace AppBrix.Application
         #region Construction
         public DefaultApp(IConfigService configService)
         {
-            if (configService == null)
+            if (configService is null)
                 throw new ArgumentNullException(nameof(configService));
 
             this.ConfigService = configService;
@@ -129,7 +129,7 @@ namespace AppBrix.Application
         {
             RequestedAction requestedAction = RequestedAction.None;
             var version = moduleInfo.Module.GetType().Assembly.GetName().Version;
-            if (moduleInfo.Config.Version == null)
+            if (moduleInfo.Config.Version is null)
             {
                 var context = new DefaultInstallContext(this);
                 moduleInfo.Module.Install(context);

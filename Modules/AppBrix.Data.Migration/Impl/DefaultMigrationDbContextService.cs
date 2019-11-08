@@ -45,7 +45,7 @@ namespace AppBrix.Data.Migration.Impl
 
         public DbContext Get(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             this.MigrateContextIfNeeded(type);
@@ -112,7 +112,7 @@ namespace AppBrix.Data.Migration.Impl
             }
 
             var assemblyVersion = type.Assembly.GetName().Version;
-            if (snapshot == null || Version.Parse(snapshot.Version) < assemblyVersion)
+            if (snapshot is null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
                 var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
                 var oldVersion = Version.Parse(snapshot?.Version ?? DefaultMigrationDbContextService.EmptyVersion);
@@ -129,7 +129,7 @@ namespace AppBrix.Data.Migration.Impl
                     migration = this.ApplyMigration(type, newVersion, scaffoldedMigration);
                 }
                 
-                this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot == null);
+                this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot is null);
             }
         }
 
@@ -276,7 +276,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private string GenerateMigrationAssemblyName(Type type, Version? version = null)
         {
-            if (version == null)
+            if (version is null)
                 version = type.Assembly.GetName().Version;
 
             return string.Format("Generated.Migrations.{0}.{1}.dll",

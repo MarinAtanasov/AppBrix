@@ -21,7 +21,7 @@ namespace AppBrix.Configuration.Yaml
         /// <returns>The YAML representation of the configuration.</returns>
         public string Serialize(IConfig config)
         {
-            if (config == null)
+            if (config is null)
                 throw new ArgumentNullException(nameof(config));
 
             using (var writer = new StringWriter())
@@ -46,7 +46,7 @@ namespace AppBrix.Configuration.Yaml
         {
             if (string.IsNullOrEmpty(config))
                 throw new ArgumentNullException(nameof(config));
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             using (var reader = new StringReader(config))

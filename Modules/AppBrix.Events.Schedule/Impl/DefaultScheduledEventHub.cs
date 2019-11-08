@@ -40,7 +40,7 @@ namespace AppBrix.Events.Schedule.Impl
         #region IScheduledEventHub implementation
         public void Schedule<T>(IScheduledEvent<T> args) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             var now = this.app.GetTime();
@@ -57,7 +57,7 @@ namespace AppBrix.Events.Schedule.Impl
 
         public void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             lock (this.queue)
@@ -73,13 +73,13 @@ namespace AppBrix.Events.Schedule.Impl
             List<PriorityQueueItem>? toExecute = null;
             lock (this.queue)
             {
-                if (this.executionTimer == null)
+                if (this.executionTimer is null)
                     return; // Unintialized
 
                 var now = this.app.GetTime();
                 for (var args = this.queue.Peek(); args != null && args.Occurrence <= now; args = this.queue.Peek())
                 {
-                    if (toExecute == null)
+                    if (toExecute is null)
                         toExecute = new List<PriorityQueueItem>();
 
                     toExecute.Add(args);

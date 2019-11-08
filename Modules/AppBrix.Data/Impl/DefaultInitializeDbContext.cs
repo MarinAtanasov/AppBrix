@@ -10,7 +10,7 @@ namespace AppBrix.Data.Impl
         #region Construction
         public DefaultInitializeDbContext(IApp app, string? migrationsAssembly = null, string migrationsHistoryTable = "__EFMigrationsHistory")
         {
-            if (app == null)
+            if (app is null)
                 throw new ArgumentNullException(nameof(app));
 
             this.App = app;

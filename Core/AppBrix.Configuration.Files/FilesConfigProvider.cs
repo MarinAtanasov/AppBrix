@@ -41,7 +41,7 @@ namespace AppBrix.Configuration.Files
         /// <returns>The read configuration.</returns>
         public string ReadConfig(Type type)
         {
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             var path = this.BuildFilePath(type);
@@ -57,7 +57,7 @@ namespace AppBrix.Configuration.Files
         {
             if (string.IsNullOrEmpty(config))
                 throw new ArgumentNullException(nameof(config));
-            if (type == null)
+            if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             File.WriteAllText(this.BuildFilePath(type), config);
