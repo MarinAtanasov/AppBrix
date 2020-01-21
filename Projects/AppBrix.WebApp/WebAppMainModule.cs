@@ -14,6 +14,7 @@ using AppBrix.Logging.Configuration;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
 using AppBrix.Permissions;
+using AppBrix.Random;
 using AppBrix.Text;
 using AppBrix.Time;
 using AppBrix.Web.Client;
@@ -56,6 +57,7 @@ namespace AppBrix.WebApp
             //typeof(Logging.Console.ConsoleLoggerModule),
             typeof(FileLoggingModule),
             typeof(PermissionsModule),
+            typeof(RandomModule),
             typeof(TextModule),
             typeof(TimeModule),
             typeof(WebClientModule),

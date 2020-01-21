@@ -126,6 +126,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed.Tests", "Tests\AppBrix.Events.Delayed.Tests\AppBrix.Events.Delayed.Tests.csproj", "{757AE0C9-03CF-451C-9DAD-49407D669841}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random", "Modules\AppBrix.Random\AppBrix.Random.csproj", "{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random.Tests", "Tests\AppBrix.Random.Tests\AppBrix.Random.Tests.csproj", "{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -341,6 +345,14 @@ Global
 		{757AE0C9-03CF-451C-9DAD-49407D669841}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{757AE0C9-03CF-451C-9DAD-49407D669841}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{757AE0C9-03CF-451C-9DAD-49407D669841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -398,6 +410,8 @@ Global
 		{90855AE8-A8F3-4925-902C-1A9552C5AF2A} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{BEE6F4DF-8808-4C99-8173-28B7A70EE671} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
 		{757AE0C9-03CF-451C-9DAD-49407D669841} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
+		{CBDA3A7E-85A5-480E-91D0-677F389B0F4C} = {FE5803DF-2805-4190-AE4C-82E778BC2106}
+		{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}
