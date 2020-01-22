@@ -20,7 +20,7 @@ namespace AppBrix.Random
         /// <param name="items">The collection which contains the items.</param>
         /// <param name="unique">If true, each element will be yielded only once.</param>
         /// <returns>The random items generator.</returns>
-        public IEnumerable<T> GenerateRandomItems<T>(IList<T> items, bool unique = true);
+        public IEnumerable<T> GenerateRandomItems<T>(IReadOnlyCollection<T> items, bool unique = true);
 
         /// <summary>
         /// Gets an instance of <see cref="System.Random"/>.

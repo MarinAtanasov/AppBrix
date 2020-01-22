@@ -28,23 +28,14 @@ namespace AppBrix.Random.Impl
         #endregion
 
         #region IRandomService implementation
-        public IEnumerable<T> GenerateRandomItems<T>(IList<T> items, bool unique = true)
+        public IEnumerable<T> GenerateRandomItems<T>(IReadOnlyCollection<T> items, bool unique = true)
         {
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
             if (items.Count == 0)
                 return Array.Empty<T>();
 
-            items = items.ToList();
-            if (unique)
-            {
-                this.Shuffle(items);
-                return items;
-            }
-            else
-            {
-                return this.InfiniteGenerator(items);
-            }
+            return unique ? this.ShuffleInternal(items.ToList()) : this.InfiniteGenerator(items.ToList());
         }
 
         public System.Random GetRandom() => this.randomGenerator.Value;
@@ -56,6 +47,22 @@ namespace AppBrix.Random.Impl
             if (items.Count == 0)
                 return;
 
+            this.ShuffleInternal(items);
+        }
+        #endregion
+
+        #region Private methods
+        private IEnumerable<T> InfiniteGenerator<T>(List<T> items)
+        {
+            var random = this.GetRandom();
+            while (true)
+            {
+                yield return items[random.Next(items.Count)];
+            }
+        }
+
+        private IList<T> ShuffleInternal<T>(IList<T> items)
+        {
             var random = this.GetRandom();
             for (var i = items.Count - 1; i > 0; i--)
             {
@@ -64,17 +71,7 @@ namespace AppBrix.Random.Impl
                 items[i] = items[n];
                 items[n] = temp;
             }
-        }
-        #endregion
-
-        #region Private methods
-        private IEnumerable<T> InfiniteGenerator<T>(IList<T> items)
-        {
-            var random = this.GetRandom();
-            while (true)
-            {
-                yield return items[random.Next(items.Count)];
-            }
+            return items;
         }
         #endregion
 
