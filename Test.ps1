@@ -1,6 +1,6 @@
 param([String]$Tests="Functional", [switch]$Parallel, [switch]$Build, [switch]$Release);
 
-$version = "netcoreapp2.2"
+$version = "netcoreapp3.1"
 
 $configuration = "Debug";
 if ($Release)

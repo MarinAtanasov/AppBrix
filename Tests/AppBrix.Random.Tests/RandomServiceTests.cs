@@ -160,8 +160,8 @@ namespace AppBrix.Random.Tests
         private void TestPerformanceShuffleInternal()
         {
             var service = this.app.GetRandomService();
-            var items = Enumerable.Range(0, 1000).ToList();
-            for (var i = 0; i < 1000; i++)
+            var items = Enumerable.Range(0, 100).ToList();
+            for (var i = 0; i < 8000; i++)
             {
                 service.Shuffle(items);
             }

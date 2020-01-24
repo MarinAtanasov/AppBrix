@@ -70,7 +70,7 @@ namespace AppBrix.Caching.Tests
         private void TestPerformanceCacheInternal()
         {
             var cache = this.app.GetCache();
-            var items = 1500;
+            var items = 1200;
             for (var i = 0; i < items; i++)
             {
                 cache.Set(i.ToString(), i).GetAwaiter().GetResult();

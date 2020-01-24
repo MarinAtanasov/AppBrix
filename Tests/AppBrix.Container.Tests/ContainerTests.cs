@@ -112,13 +112,13 @@ namespace AppBrix.Container.Tests
             var container = this.GetContainer();
             for (var i = 0; i < 1000; i++)
             {
-                this.app.Container.Register(new ChildMock());
+                container.Register(new ChildMock());
             }
             for (var i = 0; i < 150000; i++)
             {
-                this.app.Get(typeof(ChildMock));
-                this.app.Get(typeof(ParentMock));
-                this.app.Get(typeof(IContainer));
+                container.Get(typeof(ChildMock));
+                container.Get(typeof(ParentMock));
+                container.Get(typeof(IContainer));
             }
             this.app.Reinitialize();
         }

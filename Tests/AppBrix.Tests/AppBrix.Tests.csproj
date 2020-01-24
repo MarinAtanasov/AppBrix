@@ -4,15 +4,15 @@
     <Description>Contains tests for creating AppBrix applications</Description>
     <Copyright>Copyright 2015-2019</Copyright>
     <AssemblyTitle>AppBrix.Tests</AssemblyTitle>
-    <Version>0.16.0</Version>
+    <Version>0.17.0</Version>
     <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Tests</AssemblyName>
     <PackageId>AppBrix.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PackageTags>AppBrix Tests Common</PackageTags>
-    <PackageReleaseNotes>Upgrade to .NET Core 3.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
