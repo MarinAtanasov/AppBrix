@@ -39,15 +39,9 @@ namespace AppBrix.Tests
             // Invoke the action once to make sure that the assemblies are loaded.
             action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(5000), "this is a performance test");
 
-            GC.TryStartNoGCRegion(8 * 1024 * 1024);
-            try
-            {
-                action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
-            }
-            finally
-            {
-                GC.EndNoGCRegion();
-            }
+            GC.Collect();
+
+            action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
         }
         #endregion
     }
