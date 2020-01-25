@@ -10,14 +10,10 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub
 {
-    public sealed class LogHubTests
+    public sealed class LogHubTests : TestsBase
     {
         #region Setup and cleanup
-        public LogHubTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(LoggingModule));
-            this.app.Start();
-        }
+        public LogHubTests() : base(TestUtils.CreateTestApp(typeof(LoggingModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -175,10 +171,6 @@ namespace AppBrix.Logging.Tests.LogHub
             called.Should().Be(repeat * 6, "the event should have been called");
             this.app.Reinitialize();
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

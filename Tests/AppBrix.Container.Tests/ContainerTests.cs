@@ -10,14 +10,10 @@ using Xunit;
 
 namespace AppBrix.Container.Tests
 {
-    public sealed class ContainerTests
+    public sealed class ContainerTests : TestsBase
     {
         #region Setup and cleanup
-        public ContainerTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(ContainerModule));
-            this.app.Start();
-        }
+        public ContainerTests() : base(TestUtils.CreateTestApp(typeof(ContainerModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -122,10 +118,6 @@ namespace AppBrix.Container.Tests
             }
             this.app.Reinitialize();
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

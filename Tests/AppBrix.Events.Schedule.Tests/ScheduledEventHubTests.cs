@@ -13,19 +13,10 @@ using Xunit;
 
 namespace AppBrix.Events.Schedule.Tests
 {
-    public sealed class ScheduledEventHubTests : IDisposable
+    public sealed class ScheduledEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public ScheduledEventHubTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(ScheduledEventsModule));
-            this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
-        }
+        public ScheduledEventHubTests() : base(TestUtils.CreateTestApp(typeof(ScheduledEventsModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -122,10 +113,6 @@ namespace AppBrix.Events.Schedule.Tests
                 hub.Unschedule(scheduledEvents[i]);
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

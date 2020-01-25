@@ -1,24 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Reference to all AppBrix projects, including the web sever modules.</Description>
-    <Copyright>Copyright 2015-2019</Copyright>
-    <AssemblyTitle>AppBrix.All.Server</AssemblyTitle>
-    <Version>0.17.0</Version>
-    <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.All.Server</AssemblyName>
-    <PackageId>AppBrix.All.Server</PackageId>
-    <PackageTags>AppBrix All Server</PackageTags>
-    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <AssemblyTitle>AppBrix.All.Server</AssemblyTitle>
+    <Authors>Marin Atanasov</Authors>
+    <Copyright>Copyright 2015-2020</Copyright>
+    <Description>Reference to all AppBrix projects, including the web sever modules.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageId>AppBrix.All.Server</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <PackageTags>AppBrix All Server</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>0.17.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon-64x64.png" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.All\AppBrix.All.csproj" />

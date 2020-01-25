@@ -12,19 +12,10 @@ using Xunit;
 
 namespace AppBrix.Caching.Memory.Tests
 {
-    public sealed class MemoryCacheTests : IDisposable
+    public sealed class MemoryCacheTests : TestsBase
     {
         #region Setup and cleanup
-        public MemoryCacheTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(MemoryCachingModule));
-            this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
-        }
+        public MemoryCacheTests() : base(TestUtils.CreateTestApp(typeof(MemoryCachingModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -231,10 +222,6 @@ namespace AppBrix.Caching.Memory.Tests
                 cache.Remove(i.ToString());
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

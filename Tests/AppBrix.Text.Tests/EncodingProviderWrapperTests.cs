@@ -2,27 +2,17 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Tests;
-using FluentAssertions;
-using System;
-using System.Text;
 using AppBrix.Text.Tests.Mocks;
+using FluentAssertions;
+using System.Text;
 using Xunit;
 
 namespace AppBrix.Text.Tests
 {
-    public sealed class EncodingProviderWrapper : IDisposable
+    public sealed class EncodingProviderWrapper : TestsBase
     {
         #region Setup and cleanup
-        public EncodingProviderWrapper()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(TextModule));
-            this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
-        }
+        public EncodingProviderWrapper() : base(TestUtils.CreateTestApp(typeof(TextModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -60,10 +50,6 @@ namespace AppBrix.Text.Tests
                 Encoding.GetEncoding(32167);
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

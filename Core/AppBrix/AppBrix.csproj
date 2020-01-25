@@ -1,24 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>AppBrix Core containing the application and module classes and interfaces.</Description>
-    <Copyright>Copyright 2015-2019</Copyright>
-    <AssemblyTitle>AppBrix</AssemblyTitle>
-    <Version>0.17.0</Version>
-    <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix</AssemblyName>
-    <PackageId>AppBrix</PackageId>
-    <PackageTags>AppBrix</PackageTags>
-    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <AssemblyTitle>AppBrix</AssemblyTitle>
+    <Authors>Marin Atanasov</Authors>
+    <Copyright>Copyright 2015-2020</Copyright>
+    <Description>AppBrix Core containing the application and module classes and interfaces.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageId>AppBrix</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <PackageTags>AppBrix</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>0.17.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon-64x64.png" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.Configuration\AppBrix.Configuration.csproj" />

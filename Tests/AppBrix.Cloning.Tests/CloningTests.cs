@@ -13,14 +13,10 @@ using Xunit;
 
 namespace AppBrix.Cloning.Tests
 {
-    public sealed class CloningTests
+    public sealed class CloningTests : TestsBase
     {
         #region Setup and cleanup
-        public CloningTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(CloningModule));
-            this.app.Start();
-        }
+        public CloningTests() : base(TestUtils.CreateTestApp(typeof(CloningModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -278,10 +274,6 @@ namespace AppBrix.Cloning.Tests
                 cloner.ShallowCopy(original);
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

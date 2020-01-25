@@ -11,14 +11,10 @@ using Xunit;
 
 namespace AppBrix.Events.Delayed.Tests
 {
-    public sealed class DelayedEventHubTests
+    public sealed class DelayedEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public DelayedEventHubTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(DelayedEventsModule));
-            this.app.Start();
-        }
+        public DelayedEventHubTests() : base(TestUtils.CreateTestApp(typeof(DelayedEventsModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -185,10 +181,6 @@ namespace AppBrix.Events.Delayed.Tests
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
             this.app.Reinitialize();
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

@@ -9,14 +9,10 @@ using Xunit;
 
 namespace AppBrix.Time.Tests
 {
-    public sealed class TimeServiceTests
+    public sealed class TimeServiceTests : TestsBase
     {
         #region Setup and cleanup
-        public TimeServiceTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(TimeModule));
-            this.app.Start();
-        }
+        public TimeServiceTests() : base(TestUtils.CreateTestApp(typeof(TimeModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -132,10 +128,6 @@ namespace AppBrix.Time.Tests
                 timeService.ToDateTime(timeService.ToString(time));
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

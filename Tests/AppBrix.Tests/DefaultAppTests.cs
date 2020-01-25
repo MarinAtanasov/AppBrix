@@ -210,7 +210,7 @@ namespace AppBrix.Tests
             var module = new SimpleEmptyModuleMock();
             for (var i = 0; i < 90; i++)
             {
-                var dependencies = module.Dependencies.ToList();
+                var _ = module.Dependencies.ToList();
             }
         }
         #endregion

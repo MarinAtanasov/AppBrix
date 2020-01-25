@@ -9,12 +9,11 @@ using Xunit;
 
 namespace AppBrix.Caching.Tests
 {
-    public sealed class CacheTests
+    public sealed class CacheTests : TestsBase
     {
         #region Setup and cleanup
-        public CacheTests()
+        public CacheTests() : base(TestUtils.CreateTestApp(typeof(CachingModule)))
         {
-            this.app = TestUtils.CreateTestApp(typeof(CachingModule));
             this.app.Start();
             this.app.Container.Register(new JsonCacheSerializer());
             this.app.Container.Register(new MemoryDistributedCache(new CustomMemoryDistributedCacheOptions()));
@@ -86,10 +85,6 @@ namespace AppBrix.Caching.Tests
                 cache.Remove(i.ToString()).GetAwaiter().GetResult();
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

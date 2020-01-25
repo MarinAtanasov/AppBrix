@@ -1,34 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Module which enables database CodeFirst migration functionality.</Description>
-    <Copyright>Copyright 2015-2019</Copyright>
-    <AssemblyTitle>AppBrix.Data.Migration</AssemblyTitle>
-    <Version>0.17.0</Version>
-    <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>AppBrix.Data.Migration</AssemblyName>
-    <PackageId>AppBrix.Data.Migration</PackageId>
-    <PackageTags>AppBrix Module Data Migration</PackageTags>
-    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <AssemblyTitle>AppBrix.Data.Migration</AssemblyTitle>
+    <Authors>Marin Atanasov</Authors>
+    <Copyright>Copyright 2015-2020</Copyright>
+    <Description>Module which enables database CodeFirst migration functionality.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageId>AppBrix.Data.Migration</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <PackageTags>AppBrix Module Data Migration</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>0.17.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon-64x64.png" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Data\AppBrix.Data.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.1" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Data\AppBrix.Data.csproj" />
   </ItemGroup>
 
 </Project>

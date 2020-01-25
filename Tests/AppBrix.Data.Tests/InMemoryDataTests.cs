@@ -14,20 +14,14 @@ using Xunit;
 
 namespace AppBrix.Data.Tests
 {
-    public sealed class InMemoryDataTests : IDisposable
+    public sealed class InMemoryDataTests : TestsBase
     {
         #region Setup and cleanup
-        public InMemoryDataTests()
+        public InMemoryDataTests() : base(TestUtils.CreateTestApp(typeof(InMemoryDataModule), typeof(MigrationDataModule)))
         {
-            this.app = TestUtils.CreateTestApp(typeof(InMemoryDataModule), typeof(MigrationDataModule));
             this.app.GetConfig<InMemoryDataConfig>().ConnectionString = Guid.NewGuid().ToString();
             this.app.GetConfig<MigrationDataConfig>().EntryAssembly = this.GetType().Assembly.FullName;
             this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
         }
         #endregion
 
@@ -91,10 +85,6 @@ namespace AppBrix.Data.Tests
                 context.SaveChanges();
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

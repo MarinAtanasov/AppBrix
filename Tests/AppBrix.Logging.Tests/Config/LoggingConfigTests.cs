@@ -10,14 +10,10 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.Config
 {
-    public sealed class LoggingConfigTests
+    public sealed class LoggingConfigTests : TestsBase
     {
         #region Setup and cleanup
-        public LoggingConfigTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(LoggingModule));
-            this.app.Start();
-        }
+        public LoggingConfigTests() : base(TestUtils.CreateTestApp(typeof(LoggingModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -245,10 +241,6 @@ namespace AppBrix.Logging.Tests.Config
             debugCalled.Should().BeTrue("the debug event should have been called");
             traceCalled.Should().BeTrue("the trace event should have been called");
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

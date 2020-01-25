@@ -78,12 +78,10 @@ namespace AppBrix.Web.Server.Tests
         public void TestPerformanceWebServer()
         {
             var app = this.CreateWebApp();
-            using (var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app))
-            using (var client = server.CreateClient())
-            {
-                app.Container.Register(client);
-                TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
-            }
+            using var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app);
+            using var client = server.CreateClient();
+            app.Container.Register(client);
+            TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
         }
         #endregion
 

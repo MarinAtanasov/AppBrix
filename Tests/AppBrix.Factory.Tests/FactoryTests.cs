@@ -9,14 +9,10 @@ using Xunit;
 
 namespace AppBrix.Factory.Tests
 {
-    public sealed class FactoryTests
+    public sealed class FactoryTests : TestsBase
     {
         #region Setup and cleanup
-        public FactoryTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(FactoryModule));
-            this.app.Start();
-        }
+        public FactoryTests() : base(TestUtils.CreateTestApp(typeof(FactoryModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -126,10 +122,6 @@ namespace AppBrix.Factory.Tests
 
             this.app.Reinitialize();
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

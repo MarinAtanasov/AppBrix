@@ -16,12 +16,11 @@ using Xunit;
 
 namespace AppBrix.Data.Tests
 {
-    public sealed class SqliteDataTests : IDisposable
+    public sealed class SqliteDataTests : TestsBase
     {
         #region Setup and cleanup
-        public SqliteDataTests()
+        public SqliteDataTests() : base(TestUtils.CreateTestApp(typeof(SqliteDataModule), typeof(MigrationDataModule)))
         {
-            this.app = TestUtils.CreateTestApp(typeof(SqliteDataModule), typeof(MigrationDataModule));
             this.app.GetConfig<SqliteDataConfig>().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
             this.app.GetConfig<MigrationDataConfig>().EntryAssembly = this.GetType().Assembly.FullName;
             this.app.GetConfig<AppConfig>().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
@@ -34,11 +33,11 @@ namespace AppBrix.Data.Tests
             this.app.Restart();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             this.globalContext.Database.CloseConnection();
             this.globalContext.Dispose();
-            this.app.Stop();
+            base.Dispose();
         }
         #endregion
 
@@ -105,7 +104,6 @@ namespace AppBrix.Data.Tests
         #endregion
 
         #region Private fields and constants
-        private readonly IApp app;
         private readonly MigrationContext globalContext;
         #endregion
     }

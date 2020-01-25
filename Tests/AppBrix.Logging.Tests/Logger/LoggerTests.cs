@@ -11,14 +11,10 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.Logger
 {
-    public sealed class LoggerTests
+    public sealed class LoggerTests : TestsBase
     {
         #region Setup and cleanup
-        public LoggerTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(LoggingModule));
-            this.app.Start();
-        }
+        public LoggerTests() : base(TestUtils.CreateTestApp(typeof(LoggingModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -60,10 +56,6 @@ namespace AppBrix.Logging.Tests.Logger
             entries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
             entries[0].Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

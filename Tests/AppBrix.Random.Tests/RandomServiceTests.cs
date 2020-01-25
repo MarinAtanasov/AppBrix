@@ -10,14 +10,10 @@ using Xunit;
 
 namespace AppBrix.Random.Tests
 {
-    public sealed class RandomServiceTests
+    public sealed class RandomServiceTests : TestsBase
     {
         #region Setup and cleanup
-        public RandomServiceTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(RandomModule));
-            this.app.Start();
-        }
+        public RandomServiceTests() : base(TestUtils.CreateTestApp(typeof(RandomModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -166,10 +162,6 @@ namespace AppBrix.Random.Tests
                 service.Shuffle(items);
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

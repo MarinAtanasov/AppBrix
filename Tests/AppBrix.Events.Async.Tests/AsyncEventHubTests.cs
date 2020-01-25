@@ -11,14 +11,10 @@ using Xunit;
 
 namespace AppBrix.Events.Async.Tests
 {
-    public sealed class AsyncEventHubTests
+    public sealed class AsyncEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public AsyncEventHubTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(AsyncEventsModule));
-            this.app.Start();
-        }
+        public AsyncEventHubTests() : base(TestUtils.CreateTestApp(typeof(AsyncEventsModule))) => this.app.Start();
         #endregion
 
         #region Tests
@@ -285,10 +281,6 @@ namespace AppBrix.Events.Async.Tests
             interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
             this.app.Start();
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }

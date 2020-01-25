@@ -1,25 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Sample console application using an AppBrix app.</Description>
-    <Copyright>Copyright 2015-2019</Copyright>
-    <AssemblyTitle>AppBrix.ConsoleApp</AssemblyTitle>
-    <Version>0.17.0</Version>
-    <Authors>Marin Atanasov</Authors>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <AssemblyName>AppBrix.ConsoleApp</AssemblyName>
+    <AssemblyTitle>AppBrix.ConsoleApp</AssemblyTitle>
+    <Authors>Marin Atanasov</Authors>
+    <Copyright>Copyright 2015-2020</Copyright>
+    <Description>Sample console application using an AppBrix app.</Description>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
-    <PackageId>AppBrix.ConsoleApp</PackageId>
-    <PackageTags>AppBrix Console Application</PackageTags>
-    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageId>AppBrix.ConsoleApp</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/MarinAtanasov/AppBrix.NetCore/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <PackageTags>AppBrix Console Application</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>0.17.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon-64x64.png" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bundles\AppBrix.All\AppBrix.All.csproj" />

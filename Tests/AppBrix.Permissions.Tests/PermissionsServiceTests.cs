@@ -10,19 +10,10 @@ using Xunit;
 
 namespace AppBrix.Events.Schedule.Tests
 {
-    public sealed class PermissionsServiceTests : IDisposable
+    public sealed class PermissionsServiceTests : TestsBase
     {
         #region Setup and cleanup
-        public PermissionsServiceTests()
-        {
-            this.app = TestUtils.CreateTestApp(typeof(PermissionsModule));
-            this.app.Start();
-        }
-
-        public void Dispose()
-        {
-            this.app.Stop();
-        }
+        public PermissionsServiceTests() : base(TestUtils.CreateTestApp(typeof(PermissionsModule))) => this.app.Start();
         #endregion
 
         #region Tests Parents
@@ -445,10 +436,6 @@ namespace AppBrix.Events.Schedule.Tests
                 service.Allow("a22", item);
             }
         }
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
         #endregion
     }
 }
