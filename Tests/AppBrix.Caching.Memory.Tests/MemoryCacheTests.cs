@@ -1,9 +1,7 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Caching.Memory.Configuration;
 using AppBrix.Caching.Memory.Tests.Mocks;
-using AppBrix.Events.Schedule.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -112,8 +110,8 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestAbsoluteExpiration()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
             var timeService = new TimeServiceMock(this.app);
             this.app.Container.Register(timeService);
@@ -131,8 +129,8 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestMixedExpiration()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
             var timeService = new TimeServiceMock(this.app);
             this.app.Container.Register(timeService);
@@ -150,8 +148,8 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDisposeOnAbsoluteExpiration()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
             var timeService = new TimeServiceMock(this.app);
             this.app.Container.Register(timeService);
@@ -173,8 +171,8 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDisposeOnSlidingExpiration()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.GetConfig<MemoryCachingConfig>().ExpirationCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
             var timeService = new TimeServiceMock(this.app);
             this.app.Container.Register(timeService);

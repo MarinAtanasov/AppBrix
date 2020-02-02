@@ -3,6 +3,8 @@
 //
 using AppBrix.Time;
 using System;
+using AppBrix.Configuration;
+using AppBrix.Time.Configuration;
 
 namespace AppBrix
 {
@@ -17,6 +19,13 @@ namespace AppBrix
         /// <param name="app">The application.</param>
         /// <returns>The registered time service.</returns>
         public static ITimeService GetTimeService(this IApp app) => (ITimeService)app.Get(typeof(ITimeService));
+
+        /// <summary>
+        /// Gets the <see cref="TimeConfig"/> from <see cref="IConfigService"/>.
+        /// </summary>
+        /// <param name="service">The configuration service.</param>
+        /// <returns>The <see cref="TimeConfig"/>.</returns>
+        public static TimeConfig GetTimeConfig(this IConfigService service) => (TimeConfig) service.Get(typeof(TimeConfig));
         
         /// <summary>
         /// A shorthand for getting the current time

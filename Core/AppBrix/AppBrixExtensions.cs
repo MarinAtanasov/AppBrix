@@ -14,6 +14,13 @@ namespace AppBrix
     public static class AppBrixExtensions
     {
         /// <summary>
+        /// Gets the <see cref="AppConfig"/> from <see cref="IConfigService"/>.
+        /// </summary>
+        /// <param name="service">The configuration service.</param>
+        /// <returns>The <see cref="AppConfig"/>.</returns>
+        public static AppConfig GetAppConfig(this IConfigService service) => (AppConfig) service.Get(typeof(AppConfig));
+        
+        /// <summary>
         /// Shorthand for getting the config from the currently defined <see cref="IConfigService"/>.
         /// </summary>
         /// <typeparam name="T">The type of the config.</typeparam>

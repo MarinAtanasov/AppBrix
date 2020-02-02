@@ -4,6 +4,8 @@
 using AppBrix.Permissions;
 using System;
 using System.Collections.Generic;
+using AppBrix.Configuration;
+using AppBrix.Permissions.Configuration;
 
 namespace AppBrix
 {
@@ -18,6 +20,13 @@ namespace AppBrix
         /// <param name="app">The current application.</param>
         /// <returns>The permissions service.</returns>
         public static IPermissionsService GetPermissionsService(this IApp app) => (IPermissionsService)app.Get(typeof(IPermissionsService));
+
+        /// <summary>
+        /// Gets the <see cref="PermissionsConfig"/> from <see cref="IConfigService"/>.
+        /// </summary>
+        /// <param name="service">The configuration service.</param>
+        /// <returns>The <see cref="PermissionsConfig"/>.</returns>
+        public static PermissionsConfig GetPermissionsConfig(this IConfigService service) => (PermissionsConfig) service.Get(typeof(PermissionsConfig));
 
         internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
         {

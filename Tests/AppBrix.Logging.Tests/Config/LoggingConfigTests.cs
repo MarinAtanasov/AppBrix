@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Logging.Configuration;
+
 using AppBrix.Logging.Entries;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -26,7 +26,7 @@ namespace AppBrix.Logging.Tests.Config
             var infoCalled = false;
             var debugCalled = false;
             var traceCalled = false;
-            this.app.GetConfig<LoggingConfig>().LogLevel = LogLevel.Error;
+            this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Error;
             this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 switch (x.Level)
@@ -71,7 +71,7 @@ namespace AppBrix.Logging.Tests.Config
             var infoCalled = false;
             var debugCalled = false;
             var traceCalled = false;
-            this.app.GetConfig<LoggingConfig>().LogLevel = LogLevel.Warning;
+            this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Warning;
             this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 switch (x.Level)
@@ -116,7 +116,7 @@ namespace AppBrix.Logging.Tests.Config
             var infoCalled = false;
             var debugCalled = false;
             var traceCalled = false;
-            this.app.GetConfig<LoggingConfig>().LogLevel = LogLevel.Info;
+            this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Info;
             this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 switch (x.Level)
@@ -161,7 +161,7 @@ namespace AppBrix.Logging.Tests.Config
             var infoCalled = false;
             var debugCalled = false;
             var traceCalled = false;
-            this.app.GetConfig<LoggingConfig>().LogLevel = LogLevel.Debug;
+            this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Debug;
             this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 switch (x.Level)
@@ -206,7 +206,7 @@ namespace AppBrix.Logging.Tests.Config
             var infoCalled = false;
             var debugCalled = false;
             var traceCalled = false;
-            this.app.GetConfig<LoggingConfig>().LogLevel = LogLevel.Trace;
+            this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Trace;
             this.app.GetEventHub().Subscribe<ILogEntry>(x =>
             {
                 switch (x.Level)

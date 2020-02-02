@@ -10,7 +10,6 @@ using AppBrix.Events.Schedule;
 using AppBrix.Events.Schedule.Cron;
 using AppBrix.Events.Schedule.Timer;
 using AppBrix.Lifecycle;
-using AppBrix.Logging.Configuration;
 using AppBrix.Logging.File;
 using AppBrix.Modules;
 using AppBrix.Permissions;
@@ -69,7 +68,7 @@ namespace AppBrix.WebApp
         protected override void Install(IInstallContext context)
         {
             base.Install(context);
-            this.App.GetConfig<LoggingConfig>().Async = false;
+            this.App.ConfigService.GetLoggingConfig().Async = false;
             context.RequestedAction = RequestedAction.Restart;
         }
 

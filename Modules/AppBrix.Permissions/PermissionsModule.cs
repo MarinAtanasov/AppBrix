@@ -4,7 +4,6 @@
 using AppBrix.Container;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
-using AppBrix.Permissions.Configuration;
 using AppBrix.Permissions.Impl;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,7 @@ namespace AppBrix.Permissions
         protected override void Initialize(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            this.permissionsService = this.App.GetConfig<PermissionsConfig>().EnableCaching ?
+            this.permissionsService = this.App.ConfigService.GetPermissionsConfig().EnableCaching ?
                 new CachedPermissionsService(new DefaultPermissionsService()) :
                 (IApplicationLifecycle)new DefaultPermissionsService();
             this.permissionsService.Initialize(context);

@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Permissions;
-using AppBrix.Permissions.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -337,7 +336,7 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceHasPermission()
         {
-            this.app.GetConfig<PermissionsConfig>().EnableCaching = false;
+            this.app.ConfigService.GetPermissionsConfig().EnableCaching = false;
             this.app.Reinitialize();
             var service = this.app.GetPermissionsService();
             service.Allow("a", "p");
@@ -388,7 +387,7 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceAddPermission()
         {
-            this.app.GetConfig<PermissionsConfig>().EnableCaching = false;
+            this.app.ConfigService.GetPermissionsConfig().EnableCaching = false;
             this.app.Reinitialize();
             var service = this.app.GetPermissionsService();
             service.Allow("a", "p");

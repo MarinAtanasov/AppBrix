@@ -15,7 +15,7 @@ namespace AppBrix.Logging.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.config = this.app.GetConfig<LoggingConfig>();
+            this.config = this.app.ConfigService.GetLoggingConfig();
         }
 
         public void Uninitialize()

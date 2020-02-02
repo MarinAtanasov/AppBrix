@@ -5,7 +5,6 @@ using AppBrix.Factory;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using AppBrix.Time;
-using AppBrix.Web.Client.Configuration;
 using AppBrix.Web.Client.Impl;
 using System;
 using System.Collections.Generic;
@@ -38,7 +37,7 @@ namespace AppBrix.Web.Client
         {
             this.App.Container.Register(this);
 
-            var config = this.App.GetConfig<WebClientConfig>();
+            var config = this.App.ConfigService.GetWebClientConfig();
             this.client = new HttpClient(new HttpClientHandler { MaxConnectionsPerServer = config.MaxConnectionsPerServer }, true)
             {
                 Timeout = config.RequestTimeout

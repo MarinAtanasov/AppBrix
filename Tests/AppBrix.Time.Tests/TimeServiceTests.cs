@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Tests;
-using AppBrix.Time.Configuration;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -19,7 +18,7 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUtcTimeService()
         {
-            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
             this.app.Reinitialize();
             var timeBefore = DateTime.UtcNow;
             var time = this.app.GetTime();
@@ -32,7 +31,7 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestLocalTimeService()
         {
-            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
             this.app.Reinitialize();
             var timeBefore = DateTime.Now;
             var time = this.app.GetTime();
@@ -45,7 +44,7 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUtcToUtcTime()
         {
-            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
             this.app.Reinitialize();
             var time = DateTime.UtcNow;
             var appTime = app.GetTimeService().ToAppTime(time);
@@ -56,7 +55,7 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestLocalToUtcTime()
         {
-            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Utc;
+            this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
             this.app.Reinitialize();
             var time = DateTime.Now;
             var appTime = app.GetTimeService().ToAppTime(time);
@@ -67,7 +66,7 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUtcToLocalTime()
         {
-            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
             this.app.Reinitialize();
             var time = DateTime.UtcNow;
             var appTime = app.GetTimeService().ToAppTime(time);
@@ -78,7 +77,7 @@ namespace AppBrix.Time.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestLocalToLocalTime()
         {
-            this.app.GetConfig<TimeConfig>().Kind = DateTimeKind.Local;
+            this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
             this.app.Reinitialize();
             var time = DateTime.Now;
             var appTime = app.GetTimeService().ToAppTime(time);

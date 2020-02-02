@@ -15,7 +15,7 @@ namespace AppBrix.Logging.Impl
             this.app = app;
             var dotIndex = categoryName.LastIndexOf('.');
             this.categoryName = categoryName.Substring(dotIndex + 1);
-            this.config = this.app.GetConfig<LoggingConfig>();
+            this.config = this.app.ConfigService.GetLoggingConfig();
             this.Enabled = enabled;
         }
         #endregion

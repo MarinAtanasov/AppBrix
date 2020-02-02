@@ -26,7 +26,7 @@ namespace AppBrix.Events.Delayed.Impl
                 SingleReader = true,
                 SingleWriter = false
             });
-            this.config = this.app.GetConfig<DelayedEventsConfig>();
+            this.config = this.app.ConfigService.GetDelayedEventsConfig();
             this.EventHub = this.app.GetEventHub();
         }
 

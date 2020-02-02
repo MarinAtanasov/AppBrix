@@ -3,9 +3,7 @@
 //
 using AppBrix.Configuration;
 using AppBrix.Data.Migration;
-using AppBrix.Data.Migration.Configuration;
 using AppBrix.Data.Sqlite;
-using AppBrix.Data.Sqlite.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -21,15 +19,15 @@ namespace AppBrix.Data.Tests
         #region Setup and cleanup
         public SqliteDataTests() : base(TestUtils.CreateTestApp(typeof(SqliteDataModule), typeof(MigrationDataModule)))
         {
-            this.app.GetConfig<SqliteDataConfig>().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
-            this.app.GetConfig<MigrationDataConfig>().EntryAssembly = this.GetType().Assembly.FullName;
-            this.app.GetConfig<AppConfig>().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
+            this.app.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
+            this.app.ConfigService.GetMigrationDataConfig().EntryAssembly = this.GetType().Assembly.FullName;
+            this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
             this.app.Start();
 
             this.globalContext = this.app.GetDbContextService().Get<MigrationContext>();
             this.globalContext.Database.OpenConnection();
 
-            this.app.GetConfig<AppConfig>().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
+            this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
             this.app.Restart();
         }
 

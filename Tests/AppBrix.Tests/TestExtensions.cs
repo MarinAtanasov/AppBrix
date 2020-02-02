@@ -13,7 +13,6 @@ namespace AppBrix.Tests
     /// </summary>
     public static class TestExtensions
     {
-        #region Public and overriden methods
         /// <summary>
         /// Asserts that a function will return a predefined value by a certain timeout.
         /// </summary>
@@ -36,6 +35,5 @@ namespace AppBrix.Tests
 
             func().Should().Be(result, because, becauseArgs);
         }
-        #endregion
     }
 }

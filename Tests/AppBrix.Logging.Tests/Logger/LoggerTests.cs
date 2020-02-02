@@ -1,7 +1,6 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Logging.Configuration;
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -21,7 +20,7 @@ namespace AppBrix.Logging.Tests.Logger
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestSyncLogger()
         {
-            this.app.GetConfig<LoggingConfig>().Async = false;
+            this.app.ConfigService.GetLoggingConfig().Async = false;
             var logger = new LoggerMock();
             logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
             this.app.GetLogHub().Subscribe(logger.LogEntry);
@@ -41,7 +40,7 @@ namespace AppBrix.Logging.Tests.Logger
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestAsyncLogger()
         {
-            this.app.GetConfig<LoggingConfig>().Async = true;
+            this.app.ConfigService.GetLoggingConfig().Async = true;
             var logger = new LoggerMock();
             logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged before initialization");
             this.app.GetLogHub().Subscribe(logger.LogEntry);

@@ -135,7 +135,7 @@ namespace AppBrix.Caching.Memory.Impl
             }
         }
 
-        private MemoryCachingConfig GetConfig() => (MemoryCachingConfig)this.app.ConfigService.Get(typeof(MemoryCachingConfig));
+        private MemoryCachingConfig GetConfig() => this.app.ConfigService.GetMemoryCachingConfig();
         #endregion
 
         #region Private fields and constants

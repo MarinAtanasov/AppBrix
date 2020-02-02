@@ -21,7 +21,7 @@ namespace AppBrix.Events.Delayed.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventDefaultImmediate()
         {
-            this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Immediate;
+            this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
@@ -37,7 +37,7 @@ namespace AppBrix.Events.Delayed.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventImmediate()
         {
-            this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Delayed;
+            this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
@@ -53,7 +53,7 @@ namespace AppBrix.Events.Delayed.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventDefaultDelayed()
         {
-            this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Delayed;
+            this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
@@ -73,7 +73,7 @@ namespace AppBrix.Events.Delayed.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEventDelayed()
         {
-            this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Immediate;
+            this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
             int called = 0;
@@ -162,7 +162,7 @@ namespace AppBrix.Events.Delayed.Tests
 
         private void TestPerformanceEventsRaiseDelayedInternal()
         {
-            this.app.GetConfig<DelayedEventsConfig>().DefaultBehavior = EventBehavior.Delayed;
+            this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMockChild(10);
             var childCalled = 0;

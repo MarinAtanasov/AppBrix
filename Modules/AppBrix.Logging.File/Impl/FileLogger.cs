@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Lifecycle;
-using AppBrix.Logging.File.Configuration;
 using System.IO;
 
 namespace AppBrix.Logging.File.Impl
@@ -16,7 +15,7 @@ namespace AppBrix.Logging.File.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            var config = app.GetConfig<FileLoggerConfig>();
+            var config = app.ConfigService.GetFileLoggerConfig();
             this.writer = System.IO.File.AppendText(config.Path);
             this.writer.AutoFlush = true;
             this.app.GetLogHub().Subscribe(this.LogEntry);

@@ -15,7 +15,7 @@ namespace AppBrix.Events.Schedule.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.config = this.app.GetConfig<ScheduledEventsConfig>();
+            this.config = this.app.ConfigService.GetScheduledEventsConfig();
             var timeout = this.config.ExecutionCheck;
             lock (this.queue)
             {

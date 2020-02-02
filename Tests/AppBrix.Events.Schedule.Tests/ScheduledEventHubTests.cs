@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Events.Schedule.Configuration;
+
 using AppBrix.Events.Schedule.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -31,7 +31,7 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestScheduleArgs()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
             var called = false;
             this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
@@ -53,7 +53,7 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUnscheduleArgs()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
             this.app.Reinitialize();
             var called = false;
             this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
@@ -68,7 +68,7 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceSchedule()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromHours(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
             this.app.Reinitialize();
             var time = this.app.GetTime().AddHours(1);
             var scheduledEvents = Enumerable.Range(0, 50000)
@@ -80,7 +80,7 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceUnschedule()
         {
-            this.app.GetConfig<ScheduledEventsConfig>().ExecutionCheck = TimeSpan.FromHours(1);
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
             this.app.Reinitialize();
             var time = this.app.GetTime().AddHours(1);
             var scheduledEvents = Enumerable.Range(0, 50000)

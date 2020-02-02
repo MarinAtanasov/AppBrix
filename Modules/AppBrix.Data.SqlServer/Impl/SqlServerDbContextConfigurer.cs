@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.SqlServer.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,7 @@ namespace AppBrix.Data.SqlServer.Impl
     {
         public void Initialize(IInitializeContext context)
         {
-            this.connectionString = context.App.GetConfig<SqlServerDataConfig>().ConnectionString;
+            this.connectionString = context.App.ConfigService.GetSqlServerDataConfig().ConnectionString;
         }
 
         public void Uninitialize()

@@ -30,7 +30,7 @@ namespace AppBrix.Data.Migration.Impl
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.config = this.app.GetConfig<MigrationDataConfig>();
+            this.config = this.app.ConfigService.GetMigrationDataConfig();
             this.contextService = this.app.GetDbContextService();
             this.dbSupportsMigrations = true;
         }

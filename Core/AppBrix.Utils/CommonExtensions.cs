@@ -13,7 +13,6 @@ namespace AppBrix
     /// </summary>
     public static class CommonExtensions
     {
-        #region Types and enums extensions
         /// <summary>
         /// Get the referenced assemblies, starting with the provided assembly.
         /// </summary>
@@ -99,6 +98,5 @@ namespace AppBrix
         /// <param name="type">The type.</param>
         /// <returns>The assembly qualified name.</returns>
         public static string GetAssemblyQualifiedName(this Type type) => $"{type.FullName}, {type.Assembly.GetName().Name}";
-        #endregion
     }
 }

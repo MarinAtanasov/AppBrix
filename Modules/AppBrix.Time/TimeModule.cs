@@ -4,7 +4,6 @@
 using AppBrix.Container;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
-using AppBrix.Time.Configuration;
 using AppBrix.Time.Impl;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,7 @@ namespace AppBrix.Time
         protected override void Initialize(IInitializeContext context)
         {
             this.App.Container.Register(this);
-            var config = this.App.GetConfig<TimeConfig>();
+            var config = this.App.ConfigService.GetTimeConfig();
             this.App.Container.Register(this.CreateTimeService(config.Kind, config.Format));
         }
 

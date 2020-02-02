@@ -2,9 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Data.InMemory;
-using AppBrix.Data.InMemory.Configuration;
 using AppBrix.Data.Migration;
-using AppBrix.Data.Migration.Configuration;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
@@ -19,8 +17,8 @@ namespace AppBrix.Data.Tests
         #region Setup and cleanup
         public InMemoryDataTests() : base(TestUtils.CreateTestApp(typeof(InMemoryDataModule), typeof(MigrationDataModule)))
         {
-            this.app.GetConfig<InMemoryDataConfig>().ConnectionString = Guid.NewGuid().ToString();
-            this.app.GetConfig<MigrationDataConfig>().EntryAssembly = this.GetType().Assembly.FullName;
+            this.app.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
+            this.app.ConfigService.GetMigrationDataConfig().EntryAssembly = this.GetType().Assembly.FullName;
             this.app.Start();
         }
         #endregion

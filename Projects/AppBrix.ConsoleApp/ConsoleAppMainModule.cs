@@ -1,5 +1,4 @@
 ﻿using AppBrix.Lifecycle;
-using AppBrix.Logging.Configuration;
 using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,7 @@ namespace AppBrix.ConsoleApp
         protected override void Install(IInstallContext context)
         {
             base.Install(context);
-            this.App.GetConfig<LoggingConfig>().Async = false;
+            this.App.ConfigService.GetLoggingConfig().Async = false;
             context.RequestedAction = RequestedAction.Restart;
         }
         #endregion
