@@ -12,7 +12,7 @@ namespace AppBrix.Caching.Tests
     public sealed class CacheTests : TestsBase
     {
         #region Setup and cleanup
-        public CacheTests() : base(TestUtils.CreateTestApp(typeof(CachingModule)))
+        public CacheTests() : base(TestUtils.CreateTestApp<CachingModule>())
         {
             this.app.Start();
             this.app.Container.Register(new JsonCacheSerializer());

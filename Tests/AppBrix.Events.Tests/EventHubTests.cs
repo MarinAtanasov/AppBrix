@@ -13,7 +13,7 @@ namespace AppBrix.Events.Tests
     public sealed class EventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public EventHubTests() : base(TestUtils.CreateTestApp(typeof(EventsModule))) => this.app.Start();
+        public EventHubTests() : base(TestUtils.CreateTestApp<EventsModule>()) => this.app.Start();
         #endregion
 
         #region Tests

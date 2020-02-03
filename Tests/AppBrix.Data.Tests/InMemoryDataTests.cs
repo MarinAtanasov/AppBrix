@@ -15,7 +15,7 @@ namespace AppBrix.Data.Tests
     public sealed class InMemoryDataTests : TestsBase
     {
         #region Setup and cleanup
-        public InMemoryDataTests() : base(TestUtils.CreateTestApp(typeof(InMemoryDataModule), typeof(MigrationDataModule)))
+        public InMemoryDataTests() : base(TestUtils.CreateTestApp<InMemoryDataModule, MigrationDataModule>())
         {
             this.app.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
             this.app.ConfigService.GetMigrationDataConfig().EntryAssembly = this.GetType().Assembly.FullName;

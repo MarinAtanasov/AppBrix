@@ -17,12 +17,13 @@ namespace AppBrix.Data.Tests
     public sealed class SqliteDataTests : TestsBase
     {
         #region Setup and cleanup
-        public SqliteDataTests() : base(TestUtils.CreateTestApp(typeof(SqliteDataModule), typeof(MigrationDataModule)))
+        public SqliteDataTests() : base(TestUtils.CreateTestApp<SqliteDataModule, MigrationDataModule>())
         {
+            this.app.Start();
             this.app.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
             this.app.ConfigService.GetMigrationDataConfig().EntryAssembly = this.GetType().Assembly.FullName;
             this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
-            this.app.Start();
+            this.app.Restart();
 
             this.globalContext = this.app.GetDbContextService().Get<MigrationContext>();
             this.globalContext.Database.OpenConnection();

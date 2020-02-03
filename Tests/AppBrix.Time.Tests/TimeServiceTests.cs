@@ -11,7 +11,7 @@ namespace AppBrix.Time.Tests
     public sealed class TimeServiceTests : TestsBase
     {
         #region Setup and cleanup
-        public TimeServiceTests() : base(TestUtils.CreateTestApp(typeof(TimeModule))) => this.app.Start();
+        public TimeServiceTests() : base(TestUtils.CreateTestApp<TimeModule>()) => this.app.Start();
         #endregion
 
         #region Tests

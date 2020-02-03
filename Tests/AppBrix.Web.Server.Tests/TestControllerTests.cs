@@ -99,7 +99,7 @@ namespace AppBrix.Web.Server.Tests
 
         private IApp CreateWebApp()
         {
-            var app = TestUtils.CreateTestApp(typeof(WebServerModule), typeof(WebClientModule));
+            var app = TestUtils.CreateTestApp<WebServerModule, WebClientModule>();
             app.GetConfig<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
             app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));

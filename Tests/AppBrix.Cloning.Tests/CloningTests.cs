@@ -16,7 +16,7 @@ namespace AppBrix.Cloning.Tests
     public sealed class CloningTests : TestsBase
     {
         #region Setup and cleanup
-        public CloningTests() : base(TestUtils.CreateTestApp(typeof(CloningModule))) => this.app.Start();
+        public CloningTests() : base(TestUtils.CreateTestApp<CloningModule>()) => this.app.Start();
         #endregion
 
         #region Tests

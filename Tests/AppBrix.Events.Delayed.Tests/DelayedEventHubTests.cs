@@ -14,7 +14,7 @@ namespace AppBrix.Events.Delayed.Tests
     public sealed class DelayedEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public DelayedEventHubTests() : base(TestUtils.CreateTestApp(typeof(DelayedEventsModule))) => this.app.Start();
+        public DelayedEventHubTests() : base(TestUtils.CreateTestApp<DelayedEventsModule>()) => this.app.Start();
         #endregion
 
         #region Tests

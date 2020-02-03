@@ -12,7 +12,7 @@ namespace AppBrix.Text.Tests
     public sealed class EncodingProviderWrapper : TestsBase
     {
         #region Setup and cleanup
-        public EncodingProviderWrapper() : base(TestUtils.CreateTestApp(typeof(TextModule))) => this.app.Start();
+        public EncodingProviderWrapper() : base(TestUtils.CreateTestApp<TextModule>()) => this.app.Start();
         #endregion
 
         #region Tests

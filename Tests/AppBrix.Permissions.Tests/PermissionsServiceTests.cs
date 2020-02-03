@@ -12,7 +12,7 @@ namespace AppBrix.Events.Schedule.Tests
     public sealed class PermissionsServiceTests : TestsBase
     {
         #region Setup and cleanup
-        public PermissionsServiceTests() : base(TestUtils.CreateTestApp(typeof(PermissionsModule))) => this.app.Start();
+        public PermissionsServiceTests() : base(TestUtils.CreateTestApp<PermissionsModule>()) => this.app.Start();
         #endregion
 
         #region Tests Parents

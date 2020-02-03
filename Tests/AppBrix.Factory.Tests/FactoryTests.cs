@@ -12,7 +12,7 @@ namespace AppBrix.Factory.Tests
     public sealed class FactoryTests : TestsBase
     {
         #region Setup and cleanup
-        public FactoryTests() : base(TestUtils.CreateTestApp(typeof(FactoryModule))) => this.app.Start();
+        public FactoryTests() : base(TestUtils.CreateTestApp<FactoryModule>()) => this.app.Start();
         #endregion
 
         #region Tests

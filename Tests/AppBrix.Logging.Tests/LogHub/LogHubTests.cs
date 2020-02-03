@@ -13,7 +13,7 @@ namespace AppBrix.Logging.Tests.LogHub
     public sealed class LogHubTests : TestsBase
     {
         #region Setup and cleanup
-        public LogHubTests() : base(TestUtils.CreateTestApp(typeof(LoggingModule))) => this.app.Start();
+        public LogHubTests() : base(TestUtils.CreateTestApp<LoggingModule>()) => this.app.Start();
         #endregion
 
         #region Tests

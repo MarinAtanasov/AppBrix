@@ -14,7 +14,7 @@ namespace AppBrix.Events.Async.Tests
     public sealed class AsyncEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public AsyncEventHubTests() : base(TestUtils.CreateTestApp(typeof(AsyncEventsModule))) => this.app.Start();
+        public AsyncEventHubTests() : base(TestUtils.CreateTestApp<AsyncEventsModule>()) => this.app.Start();
         #endregion
 
         #region Tests

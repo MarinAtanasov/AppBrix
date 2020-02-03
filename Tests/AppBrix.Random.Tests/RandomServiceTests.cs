@@ -13,7 +13,7 @@ namespace AppBrix.Random.Tests
     public sealed class RandomServiceTests : TestsBase
     {
         #region Setup and cleanup
-        public RandomServiceTests() : base(TestUtils.CreateTestApp(typeof(RandomModule))) => this.app.Start();
+        public RandomServiceTests() : base(TestUtils.CreateTestApp<RandomModule>()) => this.app.Start();
         #endregion
 
         #region Tests

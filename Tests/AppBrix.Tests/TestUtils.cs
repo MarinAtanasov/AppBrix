@@ -7,6 +7,7 @@ using AppBrix.Modules;
 using FluentAssertions;
 using System;
 using System.Linq;
+using AppBrix.Tests.Mocks;
 
 namespace AppBrix.Tests
 {
@@ -16,23 +17,20 @@ namespace AppBrix.Tests
     public static class TestUtils
     {
         #region Public and overriden methods
+
         /// <summary>
         /// Creates an app with an in-memory configuration using the provided module and its dependencies.
         /// </summary>
-        /// <param name="module">The module to load inside the application.</param>
+        /// <typeparam name="T">The module to load inside the application.</typeparam>
         /// <returns>The created application.</returns>
-        public static IApp CreateTestApp(params Type[] modules)
-        {
-            IConfigService service = new MemoryConfigService();
-            var config = service.Get<AppConfig>();
-            modules.SelectMany(module => module.CreateObject<IModule>().GetAllDependencies())
-                .Concat(modules)
-                .Distinct()
-                .Select(ModuleConfigElement.Create)
-                .ToList()
-                .ForEach(config.Modules.Add);
-            return App.Create(service);
-        }
+        public static IApp CreateTestApp<T>() where T : IModule => App.Create<MainModuleMock<T>>(new MemoryConfigService());
+
+        /// <summary>
+        /// Creates an app with an in-memory configuration using the provided module and its dependencies.
+        /// </summary>
+        /// <typeparam name="T">The module to load inside the application.</typeparam>
+        /// <returns>The created application.</returns>
+        public static IApp CreateTestApp<T1, T2>() where T1 : IModule where T2 : IModule => App.Create<MainModuleMock<T1, T2>>(new MemoryConfigService());
 
         public static void TestPerformance(Action action)
         {

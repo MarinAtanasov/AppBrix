@@ -16,7 +16,7 @@ namespace AppBrix.Events.Schedule.Tests
     public sealed class ScheduledEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public ScheduledEventHubTests() : base(TestUtils.CreateTestApp(typeof(ScheduledEventsModule))) => this.app.Start();
+        public ScheduledEventHubTests() : base(TestUtils.CreateTestApp<ScheduledEventsModule>()) => this.app.Start();
         #endregion
 
         #region Tests

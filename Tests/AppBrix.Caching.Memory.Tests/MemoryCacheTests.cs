@@ -13,7 +13,7 @@ namespace AppBrix.Caching.Memory.Tests
     public sealed class MemoryCacheTests : TestsBase
     {
         #region Setup and cleanup
-        public MemoryCacheTests() : base(TestUtils.CreateTestApp(typeof(MemoryCachingModule))) => this.app.Start();
+        public MemoryCacheTests() : base(TestUtils.CreateTestApp<MemoryCachingModule>()) => this.app.Start();
         #endregion
 
         #region Tests

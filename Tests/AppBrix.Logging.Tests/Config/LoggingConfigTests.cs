@@ -13,7 +13,7 @@ namespace AppBrix.Logging.Tests.Config
     public sealed class LoggingConfigTests : TestsBase
     {
         #region Setup and cleanup
-        public LoggingConfigTests() : base(TestUtils.CreateTestApp(typeof(LoggingModule))) => this.app.Start();
+        public LoggingConfigTests() : base(TestUtils.CreateTestApp<LoggingModule>()) => this.app.Start();
         #endregion
 
         #region Tests

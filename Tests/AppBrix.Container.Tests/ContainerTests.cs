@@ -13,7 +13,7 @@ namespace AppBrix.Container.Tests
     public sealed class ContainerTests : TestsBase
     {
         #region Setup and cleanup
-        public ContainerTests() : base(TestUtils.CreateTestApp(typeof(ContainerModule))) => this.app.Start();
+        public ContainerTests() : base(TestUtils.CreateTestApp<ContainerModule>()) => this.app.Start();
         #endregion
 
         #region Tests
