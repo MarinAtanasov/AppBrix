@@ -61,21 +61,6 @@ namespace AppBrix
         }
 
         /// <summary>
-        /// Parses the string and converts it to an enumeration.
-        /// </summary>
-        /// <typeparam name="T">The type of the enumeration.</typeparam>
-        /// <param name="value">The string.</param>
-        /// <returns>The enumeration value matching the string.</returns>
-        public static T ToEnum<T>(this string value) where T : struct
-        {
-            if (!typeof(T).IsEnum)
-                throw new ArgumentException($"{nameof(T)} must be an enumerated type. {nameof(T)} is: {typeof(T).GetAssemblyQualifiedName()}");
-
-            Enum.TryParse(value, true, out T result);
-            return result;
-        }
-
-        /// <summary>
         /// Constructs an object.    
         /// </summary>
         /// <typeparam name="T">The type in which the result should be casted</typeparam>

@@ -70,17 +70,30 @@ namespace AppBrix.Web.Server
         #endregion
 
         #region Private methods
-        private HttpClient CreateClient() => this.App.Get<IHttpClientFactory>().CreateClient();
-
         private void AddJsonOptions(JsonOptions options)
         {
-            var appConverters = this.App.Get<JsonSerializerOptions>().Converters;
+            var appOptions = this.App.Get<JsonSerializerOptions>();
+            var appConverters = appOptions.Converters;
             var hostConverters = options.JsonSerializerOptions.Converters;
             for (var i = 0; i < appConverters.Count; i++)
             {
                 hostConverters.Add(appConverters[i]);
             }
+
+            options.JsonSerializerOptions.AllowTrailingCommas = appOptions.AllowTrailingCommas;
+            options.JsonSerializerOptions.DefaultBufferSize = appOptions.DefaultBufferSize;
+            options.JsonSerializerOptions.DictionaryKeyPolicy = appOptions.DictionaryKeyPolicy;
+            options.JsonSerializerOptions.Encoder = appOptions.Encoder;
+            options.JsonSerializerOptions.IgnoreNullValues = appOptions.IgnoreNullValues;
+            options.JsonSerializerOptions.IgnoreReadOnlyProperties = appOptions.IgnoreReadOnlyProperties;
+            options.JsonSerializerOptions.MaxDepth = appOptions.MaxDepth;
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = appOptions.PropertyNameCaseInsensitive;
+            options.JsonSerializerOptions.PropertyNamingPolicy = appOptions.PropertyNamingPolicy;
+            options.JsonSerializerOptions.ReadCommentHandling = appOptions.ReadCommentHandling;
+            options.JsonSerializerOptions.WriteIndented = appOptions.WriteIndented;
         }
+
+        private HttpClient CreateClient() => this.App.Get<IHttpClientFactory>().CreateClient();
 
         private void ApplicationStarted() => this.App.GetEventHub().Raise(new DefaultHostApplicationStarted());
 

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppBrix.Web.Server.Tests.Mocks
@@ -24,7 +26,12 @@ namespace AppBrix.Web.Server.Tests.Mocks
         
         #region Public and overriden methods
         [HttpGet]
-        public string AppId() => ((AppIdConfig)this.app.GetConfig(typeof(AppIdConfig))).Id.ToString();
+        public AppIdMessage AppId() => new AppIdMessage
+        {
+            Duration = TimeSpan.FromMilliseconds(5),
+            Id = ((AppIdConfig)this.app.GetConfig(typeof(AppIdConfig))).Id,
+            Time = new DateTime(2020, 2, 2, 2, 2, 2, DateTimeKind.Utc)
+        };
         #endregion
 
         #region Private fields and constants

@@ -44,10 +44,10 @@ namespace AppBrix.Web.Server.Tests
                 .SetHeader("Content-Type", "application/json")
                 .SetMethod(HttpMethod.Post)
                 .SetVersion(new Version(1, 1))
-                .Send<string>()
+                .Send<int>()
                 .ConfigureAwait(false);
             postResponse.StatusCode.Should().Be((int)HttpStatusCode.OK, "the POST request should return status OK");
-            int.Parse(postResponse.Content).Should().Be(42, "the request should return the same integer that has been passed");
+            postResponse.Content.Should().Be(42, "the request should return the same integer that has been passed");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -62,16 +62,20 @@ namespace AppBrix.Web.Server.Tests
             using var app2Client = server2.CreateClient();
 
             app1.Container.Register(app2Client);
-            var response1 = await app1.GetFactoryService().GetHttpRequest().SetUrl(TestControllerTests.AppIdService2Url).Send<string>().ConfigureAwait(false);
+            var response1 = await app1.GetFactoryService().GetHttpRequest()
+                .SetUrl(TestControllerTests.AppIdService2Url)
+                .Send<AppIdMessage>()
+                .ConfigureAwait(false);
             response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
-            var result1 = Guid.Parse(response1.Content);
-            result1.Should().Be(app2.GetConfig<AppIdConfig>().Id, "the first app should receive the second app's id");
+            response1.Content.Id.Should().Be(app2.GetConfig<AppIdConfig>().Id, "the first app should receive the second app's id");
 
             app2.Container.Register(app1Client);
-            var response2 = await app2.GetFactoryService().GetHttpRequest().SetUrl(TestControllerTests.AppIdServiceUrl).Send<string>().ConfigureAwait(false);
+            var response2 = await app2.GetFactoryService().GetHttpRequest()
+                .SetUrl(TestControllerTests.AppIdServiceUrl)
+                .Send<AppIdMessage>()
+                .ConfigureAwait(false);
             response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
-            var result2 = Guid.Parse(response2.Content);
-            result2.Should().Be(app1.GetConfig<AppIdConfig>().Id, "the second app should receive the first app's id");
+            response2.Content.Id.Should().Be(app1.GetConfig<AppIdConfig>().Id, "the second app should receive the first app's id");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -103,10 +107,7 @@ namespace AppBrix.Web.Server.Tests
             return app;
         }
 
-        private void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-        }
+        private void ConfigureServices(IServiceCollection services) => services.AddControllers();
 
         private void Configure(IConfigureApplication application)
         {
