@@ -12,5 +12,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         public Guid Id { get; set; }
         
         public DateTime Time { get; set; }
+
+        public Version Version { get; set; }
     }
 }

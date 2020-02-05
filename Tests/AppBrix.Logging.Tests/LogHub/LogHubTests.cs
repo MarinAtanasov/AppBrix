@@ -35,6 +35,10 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Message.Should().Be(message, "the error message same as the passed in error");
                 x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Error, "log level should be Error");
+                var stringed = x.ToString();
+                stringed.Should().Contain(x.Exception.Message, "ToString should include the exception");
+                stringed.Should().Contain(x.Message, "ToString should include the message");
+                stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
             });
             this.app.GetLogHub().Error(message, error);
             called.Should().BeTrue("the event should have been called");
@@ -52,6 +56,11 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Message.Should().Be(message, "the debug message is different than the passed in message");
                 x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Debug, "log level should be Debug");
+                x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+                var stringed = x.ToString();
+                stringed.Should().Contain(x.Exception.Message, "ToString should include the exception");
+                stringed.Should().Contain(x.Message, "ToString should include the message");
+                stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
             });
             this.app.GetLogHub().Debug(message, error);
             called.Should().BeTrue("the event should have been called");
@@ -67,6 +76,10 @@ namespace AppBrix.Logging.Tests.LogHub
                 called = true;
                 x.Message.Should().Be(message, "the info message is different than the passed in message");
                 x.Level.Should().Be(LogLevel.Info, "log level should be Info");
+                x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+                var stringed = x.ToString();
+                stringed.Should().Contain(x.Message, "ToString should include the message");
+                stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
             });
             this.app.GetLogHub().Info(message);
             called.Should().BeTrue("the event should have been called");
@@ -84,6 +97,11 @@ namespace AppBrix.Logging.Tests.LogHub
                 x.Message.Should().Be(message, "the warning message is different than the passed in message");
                 x.Exception.Should().Be(error, "the error message same as the passed in error");
                 x.Level.Should().Be(LogLevel.Warning, "log level should be Warning");
+                x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+                var stringed = x.ToString();
+                stringed.Should().Contain(x.Exception.Message, "ToString should include the exception");
+                stringed.Should().Contain(x.Message, "ToString should include the message");
+                stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
             });
             this.app.GetLogHub().Warning(message, error);
             called.Should().BeTrue("the event should have been called");
@@ -99,6 +117,10 @@ namespace AppBrix.Logging.Tests.LogHub
                 called = true;
                 x.Message.Should().Be(message, "the trace message is different than the passed in message");
                 x.Level.Should().Be(LogLevel.Trace, "log level should be Trace");
+                x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+                var stringed = x.ToString();
+                stringed.Should().Contain(x.Message, "ToString should include the message");
+                stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
             });
             this.app.GetLogHub().Trace(message);
             called.Should().BeTrue("the event should have been called");

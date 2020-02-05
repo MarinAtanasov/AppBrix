@@ -1,7 +1,6 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-
 using AppBrix.Events.Schedule.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -16,7 +15,12 @@ namespace AppBrix.Events.Schedule.Tests
     public sealed class ScheduledEventHubTests : TestsBase
     {
         #region Setup and cleanup
-        public ScheduledEventHubTests() : base(TestUtils.CreateTestApp<ScheduledEventsModule>()) => this.app.Start();
+        public ScheduledEventHubTests() : base(TestUtils.CreateTestApp<ScheduledEventsModule>())
+        {
+            this.app.Start();
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.Reinitialize();
+        }
         #endregion
 
         #region Tests
@@ -31,8 +35,6 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestScheduleArgs()
         {
-            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.Reinitialize();
             var called = false;
             this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
             var hub = this.app.GetScheduledEventHub();
@@ -53,8 +55,6 @@ namespace AppBrix.Events.Schedule.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestUnscheduleArgs()
         {
-            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.Reinitialize();
             var called = false;
             this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
             var hub = this.app.GetScheduledEventHub();
@@ -62,7 +62,7 @@ namespace AppBrix.Events.Schedule.Tests
             hub.Schedule(scheduledEvent);
             hub.Unschedule(scheduledEvent);
             Thread.Sleep(5);
-            called.Should().BeFalse("event should be unsubscribed");
+            called.Should().BeFalse("event should be unscheduled");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

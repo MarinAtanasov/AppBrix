@@ -30,7 +30,8 @@ namespace AppBrix.Web.Server.Tests.Mocks
         {
             Duration = TimeSpan.FromMilliseconds(5),
             Id = ((AppIdConfig)this.app.GetConfig(typeof(AppIdConfig))).Id,
-            Time = new DateTime(2020, 2, 2, 2, 2, 2, DateTimeKind.Utc)
+            Time = new DateTime(2020, 2, 2, 2, 2, 2, DateTimeKind.Utc),
+            Version = this.GetType().Assembly.GetName().Version
         };
         #endregion
 

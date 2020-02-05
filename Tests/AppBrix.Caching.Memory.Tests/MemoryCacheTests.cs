@@ -13,7 +13,15 @@ namespace AppBrix.Caching.Memory.Tests
     public sealed class MemoryCacheTests : TestsBase
     {
         #region Setup and cleanup
-        public MemoryCacheTests() : base(TestUtils.CreateTestApp<MemoryCachingModule>()) => this.app.Start();
+        public MemoryCacheTests() : base(TestUtils.CreateTestApp<MemoryCachingModule>())
+        {
+            this.app.Start();
+            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
+            this.app.Reinitialize();
+            this.timeService = new TimeServiceMock(this.app);
+            this.app.Container.Register(this.timeService);
+        }
         #endregion
 
         #region Tests
@@ -110,18 +118,12 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestAbsoluteExpiration()
         {
-            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
-            this.app.Reinitialize();
-            var timeService = new TimeServiceMock(this.app);
-            this.app.Container.Register(timeService);
-
             var cache = this.app.GetMemoryCache();
             cache.Set(nameof(TestAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50));
             var item = cache.Get(nameof(TestAbsoluteExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
             
-            timeService.SetTime(timeService.GetTime().AddMilliseconds(52));
+            this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
             new Func<object>(() => cache.Get(nameof(TestAbsoluteExpiration)))
                 .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");
         }
@@ -129,18 +131,12 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestMixedExpiration()
         {
-            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
-            this.app.Reinitialize();
-            var timeService = new TimeServiceMock(this.app);
-            this.app.Container.Register(timeService);
-
             var cache = this.app.GetMemoryCache();
             cache.Set(nameof(TestMixedExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50), slidingExpiration: TimeSpan.FromMilliseconds(25));
             var item = cache.Get(nameof(TestMixedExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
 
-            timeService.SetTime(timeService.GetTime().AddMilliseconds(52));
+            this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
             new Func<object>(() => cache.Get(nameof(TestMixedExpiration)))
                 .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");
         }
@@ -148,12 +144,6 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDisposeOnAbsoluteExpiration()
         {
-            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
-            this.app.Reinitialize();
-            var timeService = new TimeServiceMock(this.app);
-            this.app.Container.Register(timeService);
-
             var disposed = false;
 
             var cache = this.app.GetMemoryCache();
@@ -162,7 +152,7 @@ namespace AppBrix.Caching.Memory.Tests
             item.Should().Be(this, "returned item should be the same as the original");
             disposed.Should().BeFalse("the item should not have expired yet");
 
-            timeService.SetTime(timeService.GetTime().AddMilliseconds(60));
+            this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(60));
             new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
             item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
             item.Should().BeNull("the item should have been removed from the cache");
@@ -171,12 +161,6 @@ namespace AppBrix.Caching.Memory.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDisposeOnSlidingExpiration()
         {
-            this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-            this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
-            this.app.Reinitialize();
-            var timeService = new TimeServiceMock(this.app);
-            this.app.Container.Register(timeService);
-
             var disposed = false;
 
             var cache = this.app.GetMemoryCache();
@@ -192,7 +176,7 @@ namespace AppBrix.Caching.Memory.Tests
                 Thread.Sleep(1);
             }
 
-            timeService.SetTime(timeService.GetTime().AddMilliseconds(52));
+            this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
             new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
             item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
             item.Should().BeNull("the item shold have been removed from the cache");
@@ -220,6 +204,10 @@ namespace AppBrix.Caching.Memory.Tests
                 cache.Remove(i.ToString());
             }
         }
+        #endregion
+
+        #region Private fields and constants
+        private readonly TimeServiceMock timeService;
         #endregion
     }
 }

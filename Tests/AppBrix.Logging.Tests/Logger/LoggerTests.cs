@@ -26,9 +26,9 @@ namespace AppBrix.Logging.Tests.Logger
             this.app.GetLogHub().Subscribe(logger.LogEntry);
             logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
 
-            string message = "Message";
+            var message = "Message";
             Exception ex = new ArgumentException("Test");
-            this.app.GetLogHub().Info("Message", ex);
+            this.app.GetLogHub().Info(message, ex);
             logger.LoggedEntries.Count().Should().Be(1, "writer should have 1 entry passed in to it");
             logger.LoggedEntries.Single().Message.Should().Be(message, "the logged message should be the same as the passed in message");
             logger.LoggedEntries.Single().Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
@@ -46,9 +46,9 @@ namespace AppBrix.Logging.Tests.Logger
             this.app.GetLogHub().Subscribe(logger.LogEntry);
             logger.LoggedEntries.Any().Should().BeFalse("no entries should be logged just after initialization");
 
-            string message = "Message";
+            var message = "Message";
             Exception ex = new ArgumentException("Test");
-            this.app.GetLogHub().Info("Message", ex);
+            this.app.GetLogHub().Info(message, ex);
             this.app.Stop();
             var entries = logger.LoggedEntries.ToList();
             entries.Count.Should().Be(1, "writer should have 1 entry passed in to it");

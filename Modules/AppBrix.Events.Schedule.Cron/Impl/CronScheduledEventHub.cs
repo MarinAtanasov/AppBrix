@@ -21,14 +21,14 @@ namespace AppBrix.Events.Schedule.Cron.Impl
         #endregion
 
         #region ICronScheduledEventHub implementation
-        public IScheduledEvent<T> Schedule<T>(T args, string expresssion) where T : IEvent
+        public IScheduledEvent<T> Schedule<T>(T args, string expression) where T : IEvent
         {
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
-            if (string.IsNullOrEmpty(expresssion))
-                throw new ArgumentNullException(nameof(expresssion));
+            if (string.IsNullOrEmpty(expression))
+                throw new ArgumentNullException(nameof(expression));
 
-            var scheduled = new CronScheduledEvent<T>(args, NCrontab.CrontabSchedule.Parse(expresssion));
+            var scheduled = new CronScheduledEvent<T>(args, NCrontab.CrontabSchedule.Parse(expression));
             this.app.GetScheduledEventHub().Schedule(scheduled);
             return scheduled;
         }

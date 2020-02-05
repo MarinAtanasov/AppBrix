@@ -4,7 +4,7 @@
 using AppBrix.Time;
 using System;
 
-namespace AppBrix.Caching.Memory.Tests.Mocks
+namespace AppBrix.Events.Schedule.Timer.Tests.Mocks
 {
     internal sealed class TimeServiceMock : ITimeService
     {

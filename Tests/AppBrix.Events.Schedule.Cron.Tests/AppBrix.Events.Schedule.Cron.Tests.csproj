@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>AppBrix.Permissions.Tests</AssemblyName>
-    <AssemblyTitle>AppBrix.Permissions.Tests</AssemblyTitle>
+    <AssemblyName>AppBrix.Events.Schedule.Cron.Tests</AssemblyName>
+    <AssemblyTitle>AppBrix.Events.Schedule.Cron.Tests</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
     <Copyright>Copyright 2015-2020</Copyright>
-    <Description>Contains tests for the AppBrix.Permissions module</Description>
+    <Description>Contains tests for the AppBrix.Events.Schedule.Cron module</Description>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
-    <PackageId>AppBrix.Permissions.Tests</PackageId>
+    <PackageId>AppBrix.Events.Schedule.Cron.Tests</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
-    <PackageTags>AppBrix Permissions Tests</PackageTags>
+    <PackageTags>AppBrix Events Schedule Cron Tests</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Permissions\AppBrix.Permissions.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj" />
   </ItemGroup>
 
   <ItemGroup>
