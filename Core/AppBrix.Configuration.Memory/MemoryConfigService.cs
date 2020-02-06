@@ -33,15 +33,15 @@ namespace AppBrix.Configuration.Memory
         }
 
         /// <summary>
-        /// Does not do anything.
+        /// Saves one configuration. Does not do anything.
         /// </summary>
-        /// <param name="type">The type of the configuration to save.</param>
-        public void Save(Type type)
+        /// <param name="config">The configuration to save.</param>
+        public void Save(IConfig config)
         {
         }
 
         /// <summary>
-        /// Does not do anything.
+        /// Saves all modified configurations. Does not do anything.
         /// </summary>
         public void SaveAll()
         {

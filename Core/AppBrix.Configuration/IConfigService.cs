@@ -29,14 +29,20 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Saves one cached configuration.
         /// </summary>
-        /// <typeparam name="T">The type of the configuraton.</typeparam>
+        /// <typeparam name="T">The type of the configuration.</typeparam>
         public void Save<T>() where T : class, IConfig => this.Save(typeof(T));
 
         /// <summary>
         /// Saves one configuration.
         /// </summary>
         /// <param name="type">The type of the configuration.</param>
-        void Save(Type type);
+        public void Save(Type type) => this.Save(this.Get(type));
+
+        /// <summary>
+        /// Saves one configuration.
+        /// </summary>
+        /// <param name="config">The configuration to save.</param>
+        void Save(IConfig config);
 
         /// <summary>
         /// Saves all modified configurations.

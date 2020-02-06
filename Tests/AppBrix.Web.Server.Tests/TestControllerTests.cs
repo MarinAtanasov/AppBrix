@@ -67,7 +67,7 @@ namespace AppBrix.Web.Server.Tests
                 .Send<AppIdMessage>()
                 .ConfigureAwait(false);
             response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
-            response1.Content.Id.Should().Be(app2.GetConfig<AppIdConfig>().Id, "the first app should receive the second app's id");
+            response1.Content.Id.Should().Be(app2.ConfigService.Get<AppIdConfig>().Id, "the first app should receive the second app's id");
 
             app2.Container.Register(app1Client);
             var response2 = await app2.GetFactoryService().GetHttpRequest()
@@ -75,7 +75,7 @@ namespace AppBrix.Web.Server.Tests
                 .Send<AppIdMessage>()
                 .ConfigureAwait(false);
             response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
-            response2.Content.Id.Should().Be(app1.GetConfig<AppIdConfig>().Id, "the second app should receive the first app's id");
+            response2.Content.Id.Should().Be(app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -100,7 +100,7 @@ namespace AppBrix.Web.Server.Tests
         private IApp CreateWebApp()
         {
             var app = TestUtils.CreateTestApp<WebServerModule, WebClientModule>();
-            app.GetConfig<AppIdConfig>().Id = Guid.NewGuid();
+            app.ConfigService.Get<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
             app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
             app.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);

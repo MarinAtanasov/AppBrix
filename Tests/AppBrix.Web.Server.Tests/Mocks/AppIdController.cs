@@ -29,7 +29,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         public AppIdMessage AppId() => new AppIdMessage
         {
             Duration = TimeSpan.FromMilliseconds(5),
-            Id = ((AppIdConfig)this.app.GetConfig(typeof(AppIdConfig))).Id,
+            Id = ((AppIdConfig)this.app.ConfigService.Get(typeof(AppIdConfig))).Id,
             Time = new DateTime(2020, 2, 2, 2, 2, 2, DateTimeKind.Utc),
             Version = this.GetType().Assembly.GetName().Version
         };

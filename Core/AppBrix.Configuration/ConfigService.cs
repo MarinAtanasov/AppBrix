@@ -55,13 +55,13 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Saves one configuration.
         /// </summary>
-        /// <param name="type">The type of the configuration.</param>
-        public void Save(Type type)
+        /// <param name="config">The configuration to save.</param>
+        public void Save(IConfig config)
         {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
+            if (config is null)
+                throw new ArgumentNullException(nameof(config));
 
-            this.SaveInternal(this.Get(type));
+            this.SaveInternal(config);
         }
 
         /// <summary>
