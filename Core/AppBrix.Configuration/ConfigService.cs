@@ -53,6 +53,17 @@ namespace AppBrix.Configuration
         }
 
         /// <summary>
+        /// Saves all modified configurations.
+        /// </summary>
+        public void Save()
+        {
+            foreach (var config in this.configs)
+            {
+                this.SaveInternal(config.Value);
+            }
+        }
+
+        /// <summary>
         /// Saves one configuration.
         /// </summary>
         /// <param name="config">The configuration to save.</param>
@@ -62,17 +73,6 @@ namespace AppBrix.Configuration
                 throw new ArgumentNullException(nameof(config));
 
             this.SaveInternal(config);
-        }
-
-        /// <summary>
-        /// Saves all modified configurations.
-        /// </summary>
-        public void SaveAll()
-        {
-            foreach (var config in this.configs)
-            {
-                this.SaveInternal(config.Value);
-            }
         }
         #endregion
 

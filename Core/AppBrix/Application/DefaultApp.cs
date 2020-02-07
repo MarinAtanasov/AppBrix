@@ -45,7 +45,7 @@ namespace AppBrix.Application
 
                 this.RegisterModules();
                 this.Initialize();
-                this.ConfigService.SaveAll();
+                this.ConfigService.Save();
             }
         }
 
@@ -58,7 +58,7 @@ namespace AppBrix.Application
 
                 this.Uninitialize();
                 this.UnregisterModules();
-                this.ConfigService.SaveAll();
+                this.ConfigService.Save();
             }
         }
 
@@ -107,12 +107,12 @@ namespace AppBrix.Application
                     case RequestedAction.None:
                         break;
                     case RequestedAction.Reinitialize:
-                        this.ConfigService.SaveAll();
+                        this.ConfigService.Save();
                         this.UninitializeInternal(i - 1);
                         this.Initialize();
                         return;
                     case RequestedAction.Restart:
-                        this.ConfigService.SaveAll();
+                        this.ConfigService.Save();
                         this.UninitializeInternal(i - 1);
                         this.UnregisterModules();
                         this.Start();

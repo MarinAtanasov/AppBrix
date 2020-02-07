@@ -43,7 +43,7 @@ namespace AppBrix.Configuration.Memory
         /// <summary>
         /// Saves all modified configurations. Does not do anything.
         /// </summary>
-        public void SaveAll()
+        public void Save()
         {
         }
         #endregion

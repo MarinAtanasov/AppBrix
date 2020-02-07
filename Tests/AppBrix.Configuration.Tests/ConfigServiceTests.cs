@@ -40,20 +40,20 @@ namespace AppBrix.Configuration.Tests
             var serializer = new ConfigSerializerMock();
             IConfigService service = new ConfigService(provider, serializer);
 
-            service.SaveAll();
+            service.Save();
             provider.ReadConfigs.Should().BeEmpty("the service should have not tried to read any configs");
             provider.WrittenConfigs.Should().BeEmpty("the service should not have tried to write any configs");
             serializer.Serialized.Should().BeEmpty("the service should not have tried to serialize any configs");
             serializer.Deserialized.Should().BeEmpty("the service should have tried to deserialize any configs");
 
             service.Get<ConfigMock>();
-            service.SaveAll();
+            service.Save();
             provider.WrittenConfigs.Should().ContainSingle("the service should have tried to write the config");
             provider.WrittenConfigs[0].Key.Should().Be(typeof(ConfigMock), "the written config should be the same as the requested one");
             serializer.Serialized.Should().ContainSingle("the service should have tried to serialize the config");
             serializer.Serialized[0].Key.Should().Be(typeof(ConfigMock), "the serialized config should be the same as the requested one");
             
-            service.SaveAll();
+            service.Save();
             provider.WrittenConfigs.Should().ContainSingle("the service should not have tried to re-write an unmodified config");
         }
 
@@ -95,7 +95,7 @@ namespace AppBrix.Configuration.Tests
 
             for (var i = 0; i < 400; i++)
             {
-                service.SaveAll();
+                service.Save();
             }
         }
         #endregion

@@ -27,6 +27,11 @@ namespace AppBrix.Configuration
         IConfig Get(Type type);
 
         /// <summary>
+        /// Saves all modified configurations.
+        /// </summary>
+        void Save();
+
+        /// <summary>
         /// Saves one cached configuration.
         /// </summary>
         /// <typeparam name="T">The type of the configuration.</typeparam>
@@ -43,10 +48,5 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <param name="config">The configuration to save.</param>
         void Save(IConfig config);
-
-        /// <summary>
-        /// Saves all modified configurations.
-        /// </summary>
-        void SaveAll();
     }
 }
