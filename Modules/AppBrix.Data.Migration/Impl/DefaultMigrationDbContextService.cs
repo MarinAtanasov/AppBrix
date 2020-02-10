@@ -102,7 +102,7 @@ namespace AppBrix.Data.Migration.Impl
         private void MigrateContext(Type type)
         {
             SnapshotData snapshot;
-            using (var context = this.contextService.Get<MigrationContext>())
+            using (var context = this.contextService.GetMigrationContext())
             {
                 snapshot = context.Snapshots
                     .AsNoTracking()
@@ -242,7 +242,7 @@ namespace AppBrix.Data.Migration.Impl
 
         private void AddMigration(string contextName, string version, MigrationData? migration, string snapshot, bool createNew)
         {
-            using var context = this.contextService.Get<MigrationContext>();
+            using var context = this.contextService.GetMigrationContext();
             SnapshotData newSnapshot;
             if (createNew)
             {
