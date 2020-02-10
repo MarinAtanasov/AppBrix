@@ -14,13 +14,13 @@
     <PackageId>AppBrix.WebApp</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade to .NET Core 3.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageTags>AppBrix Web Application</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.17.0</Version>
+    <Version>0.18.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
