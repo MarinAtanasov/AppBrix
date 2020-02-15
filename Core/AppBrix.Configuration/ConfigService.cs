@@ -43,10 +43,10 @@ namespace AppBrix.Configuration
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            if (!configs.TryGetValue(type, out var config))
+            if (!this.configs.TryGetValue(type, out var config))
             {
                 config = this.ReadFromProvider(type) ?? (IConfig)type.CreateObject();
-                configs[type] = config;
+                this.configs[type] = config;
             }
 
             return config;
@@ -66,12 +66,19 @@ namespace AppBrix.Configuration
         /// <summary>
         /// Saves one configuration.
         /// </summary>
+        /// <param name="type">The type of the configuration.</param>
+        public void Save(Type type) => this.SaveInternal(this.Get(type));
+
+        /// <summary>
+        /// Saves one configuration.
+        /// </summary>
         /// <param name="config">The configuration to save.</param>
         public void Save(IConfig config)
         {
             if (config is null)
                 throw new ArgumentNullException(nameof(config));
 
+            this.configs[config.GetType()] = config;
             this.SaveInternal(config);
         }
         #endregion

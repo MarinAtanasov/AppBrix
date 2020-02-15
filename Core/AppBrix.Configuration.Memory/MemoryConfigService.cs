@@ -38,6 +38,10 @@ namespace AppBrix.Configuration.Memory
         /// <param name="config">The configuration to save.</param>
         public void Save(IConfig config)
         {
+            if (config is null)
+                throw new ArgumentNullException(nameof(config));
+
+            this.configs[config.GetType()] = config;
         }
 
         /// <summary>
