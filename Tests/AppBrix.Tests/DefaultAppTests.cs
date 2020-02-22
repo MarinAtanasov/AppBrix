@@ -18,6 +18,21 @@ namespace AppBrix.Tests
     {
         #region Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestSaveConfig()
+        {
+            var app = this.CreateDefaultApp<SimpleModuleMock>();
+            var configService = app.ConfigService;
+            var oldConfig = configService.GetAppConfig();
+            oldConfig.Modules.Clear();
+            var newConfig = new AppConfig();
+            newConfig.Modules.Add(ModuleConfigElement.Create<SimpleModuleMock>());
+            configService.Save(newConfig);
+            var config = configService.GetAppConfig();
+            config.Should().Be(newConfig, "Should return new config after saving it");
+            oldConfig.Modules.Should().BeEmpty("Original config should not be modified.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestInitializeModule()
         {
             var app = this.CreateDefaultApp<SimpleModuleMock>();
