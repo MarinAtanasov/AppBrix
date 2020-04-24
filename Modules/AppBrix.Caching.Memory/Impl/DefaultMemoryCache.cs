@@ -28,7 +28,11 @@ namespace AppBrix.Caching.Memory.Impl
                 this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
                 this.app.GetTimerScheduledEventHub().Unschedule(this.scheduledArgs);
                 this.scheduledArgs = null;
-                this.cache.Keys.ToList().ForEach(this.Remove);
+
+                foreach (var key in this.cache.Keys.ToList())
+                {
+                    this.Remove(key);
+                }
                 this.app = null;
             }
         }
@@ -43,8 +47,8 @@ namespace AppBrix.Caching.Memory.Impl
             CacheItem cacheItem;
             lock (this.cache)
             {
-                cacheItem = this.GetInternal(key);
-                cacheItem?.UpdateLastAccessed(this.app.GetTime());
+                if (this.cache.TryGetValue(key, out cacheItem))
+                    cacheItem.UpdateLastAccessed(this.app.GetTime());
             }
             return cacheItem?.Item;
         }
@@ -63,39 +67,39 @@ namespace AppBrix.Caching.Memory.Impl
             var config = this.GetConfig();
             lock (this.cache)
             {
-                var oldItem = this.GetInternal(key);
-                this.cache[key] = new CacheItem(item, dispose,
+                var found = this.cache.Remove(key, out var oldItem);
+
+                this.cache.Add(key, new CacheItem(item, dispose,
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
                     slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
-                    this.app.GetTime());
-                oldItem?.Dispose();
+                    this.app.GetTime()));
+
+                if (found)
+                    oldItem.Dispose();
             }
         }
 
-        public void Remove(object key)
+        public bool Remove(object key)
         {
             if (key is null)
                 throw new ArgumentNullException(nameof(key));
 
             lock (this.cache)
             {
-                var item = this.GetInternal(key);
-                if (item != null)
+                if (this.cache.Remove(key, out var item))
                 {
-                    this.cache.Remove(key);
                     item.Dispose();
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
         #endregion
 
         #region Private methods
-        private CacheItem GetInternal(object key)
-        {
-            this.cache.TryGetValue(key, out var result);
-            return result;
-        }
-
         private void RemoveExpiredEntries(MemoryCacheCleanup unused)
         {
             lock (this.cache)

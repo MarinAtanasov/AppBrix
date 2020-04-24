@@ -41,6 +41,7 @@ namespace AppBrix.Caching.Memory
         /// Removes a cached item by its key.
         /// </summary>
         /// <param name="key">The key of the stored item.</param>
-        void Remove(object key);
+        /// <returns>Returns if the object was found in the cache.</returns>
+        bool Remove(object key);
     }
 }
