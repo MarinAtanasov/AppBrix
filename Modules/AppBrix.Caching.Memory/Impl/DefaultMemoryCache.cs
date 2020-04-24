@@ -49,7 +49,7 @@ namespace AppBrix.Caching.Memory.Impl
             return cacheItem?.Item;
         }
 
-        public void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan))
+        public void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default, TimeSpan slidingExpiration = default)
         {
             if (key is null)
                 throw new ArgumentNullException(nameof(key));

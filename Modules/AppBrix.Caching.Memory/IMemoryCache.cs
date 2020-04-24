@@ -35,7 +35,7 @@ namespace AppBrix.Caching.Memory
         /// <param name="dispose">Optional action to be executed when the absolute or sliding expirations are reached.</param>
         /// <param name="absoluteExpiration">Absolute expiration time.</param>
         /// <param name="slidingExpiration">Sliding expiration time.</param>
-        void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default(TimeSpan), TimeSpan slidingExpiration = default(TimeSpan));
+        void Set(object key, object item, Action? dispose = null, TimeSpan absoluteExpiration = default, TimeSpan slidingExpiration = default);
 
         /// <summary>
         /// Removes a cached item by its key.
