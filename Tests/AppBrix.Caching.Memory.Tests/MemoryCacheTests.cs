@@ -122,7 +122,7 @@ namespace AppBrix.Caching.Memory.Tests
             cache.Set(nameof(TestAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50));
             var item = cache.Get(nameof(TestAbsoluteExpiration));
             item.Should().Be(this, "returned item should be the same as the original");
-            
+
             this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
             new Func<object>(() => cache.Get(nameof(TestAbsoluteExpiration)))
                 .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");

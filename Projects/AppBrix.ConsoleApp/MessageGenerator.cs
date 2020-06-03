@@ -3,7 +3,7 @@
     internal sealed class MessageGenerator
     {
         #region Construction
-        public MessageGenerator(string level, int messagesSent = 0 )
+        public MessageGenerator(string level, int messagesSent = 0)
         {
             this.Level = level;
             this.MessagesSent = messagesSent;

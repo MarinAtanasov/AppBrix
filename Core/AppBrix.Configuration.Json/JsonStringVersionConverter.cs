@@ -14,7 +14,7 @@ namespace AppBrix.Configuration.Json
             var stringed = reader.GetString();
             if (string.IsNullOrEmpty(stringed))
                 return null;
-            else 
+            else
                 return Version.Parse(stringed);
         }
 

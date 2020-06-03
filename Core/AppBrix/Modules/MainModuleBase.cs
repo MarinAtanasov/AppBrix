@@ -47,7 +47,7 @@ namespace AppBrix.Modules
         /// Throws <see cref="NotSupportedException"/> unless overriden in a child class.
         /// </summary>
         /// <param name="context">The uninstall context.</param>
-        protected override void Uninstall(IUninstallContext context) => 
+        protected override void Uninstall(IUninstallContext context) =>
             throw new NotSupportedException($"Module {this.GetType().GetAssemblyQualifiedName()} does not support uninstallation");
         #endregion
     }

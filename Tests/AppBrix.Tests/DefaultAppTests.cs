@@ -223,7 +223,7 @@ namespace AppBrix.Tests
         {
             var app = this.CreateDefaultApp<SimpleModuleMock>();
             app.Start();
-            
+
             TestUtils.TestPerformance(() => this.TestPerformanceRestartInternal(app));
         }
 

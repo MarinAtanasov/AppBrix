@@ -97,7 +97,7 @@ namespace AppBrix.Events.Schedule.Cron.Tests
             Thread.Sleep(5);
             called.Should().BeFalse("event should be unscheduled");
         }
-        
+
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceSchedule()
         {
@@ -105,7 +105,7 @@ namespace AppBrix.Events.Schedule.Cron.Tests
             this.app.Reinitialize();
             TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
         }
-        
+
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceUnschedule()
         {
@@ -125,7 +125,7 @@ namespace AppBrix.Events.Schedule.Cron.Tests
             }
             this.app.Reinitialize();
         }
-        
+
         private void TestPerformanceUnscheduleInternal(EventMock eventMock, int repeats)
         {
             var hub = this.app.GetCronScheduledEventHub();

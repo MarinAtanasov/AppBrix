@@ -20,7 +20,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         {
         }
         #endregion
-        
+
         #region Public and overriden methods
         /// <summary>
         /// Returns true to indicate that the service has been reached as expected.
@@ -36,7 +36,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public int TestConnection([FromBody]int number) => number;
+        public int TestConnection([FromBody] int number) => number;
         #endregion
     }
 }

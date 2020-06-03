@@ -18,8 +18,8 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="AppConfig"/>.</returns>
-        public static AppConfig GetAppConfig(this IConfigService service) => (AppConfig) service.Get(typeof(AppConfig));
-        
+        public static AppConfig GetAppConfig(this IConfigService service) => (AppConfig)service.Get(typeof(AppConfig));
+
         /// <summary>
         /// Gets the types of all modules which the current module depends on.
         /// This method goes through the <see cref="IModule.Dependencies"/> recursively.

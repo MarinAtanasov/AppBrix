@@ -33,7 +33,7 @@ namespace AppBrix.Events.Schedule.Impl
         #region Properties
         public override object ScheduledEvent => this.scheduledEvent;
         #endregion
-        
+
         #region Public and overriden methods
         public override void Execute()
         {

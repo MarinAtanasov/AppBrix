@@ -28,11 +28,11 @@ namespace AppBrix.Caching.Impl
             var bytes = await this.GetCache().GetAsync(key).ConfigureAwait(false);
             return bytes != null ? this.GetSerializer().Deserialize(bytes, type) : null;
         }
-        
+
         public Task Refresh(string key) => this.GetCache().RefreshAsync(key);
-        
+
         public Task Remove(string key) => this.GetCache().RemoveAsync(key);
-        
+
         public Task Set(string key, object item) => this.GetCache().SetAsync(key, this.GetSerializer().Serialize(item));
         #endregion
 

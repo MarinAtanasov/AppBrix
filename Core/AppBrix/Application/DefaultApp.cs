@@ -29,9 +29,9 @@ namespace AppBrix.Application
         #nullable restore
 
         public IConfigService ConfigService { get; }
-        
+
         public bool IsStarted { get; private set; }
-        
+
         public bool IsInitialized { get; private set; }
         #endregion
 
@@ -195,7 +195,7 @@ namespace AppBrix.Application
             this.IsStarted = false;
         }
 
-        private IEnumerable<ModuleInfo> GetModuleInfos() => 
+        private IEnumerable<ModuleInfo> GetModuleInfos() =>
             this.ConfigService.Get<AppConfig>().Modules
                 .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
                 .Select(m => new ModuleInfo(this.CreateModule(m), m));

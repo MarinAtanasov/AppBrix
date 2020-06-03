@@ -47,9 +47,9 @@ namespace AppBrix.Events.Async.Impl
                 this.handlers.Clear();
             }
         }
-        
+
         public void Subscribe(Action<T> handler) => this.handlers.Add(handler);
-        
+
         public void Unsubscribe(Action<T> handler)
         {
             // Optimize for unsubscribing the last element since this is the most common scenario.
@@ -62,7 +62,7 @@ namespace AppBrix.Events.Async.Impl
                 }
             }
         }
-        
+
         public void Enqueue(T task)
         {
             if (task is null)

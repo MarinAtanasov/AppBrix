@@ -43,7 +43,7 @@ namespace AppBrix.Container.Impl
 
             this.RegisterInternal(obj, type);
         }
-        
+
         public object Get(Type type) => this.objects[type];
         #endregion
 

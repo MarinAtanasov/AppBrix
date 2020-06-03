@@ -44,7 +44,7 @@ namespace AppBrix.Data.InMemory
             this.configurer.Uninitialize();
         }
         #endregion
-        
+
         #region Private fields and constants
         private readonly InMemoryDbContextConfigurer configurer = new InMemoryDbContextConfigurer();
         #endregion

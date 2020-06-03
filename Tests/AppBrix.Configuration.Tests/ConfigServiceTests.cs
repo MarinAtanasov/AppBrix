@@ -52,7 +52,7 @@ namespace AppBrix.Configuration.Tests
             provider.WrittenConfigs[0].Key.Should().Be(typeof(ConfigMock), "the written config should be the same as the requested one");
             serializer.Serialized.Should().ContainSingle("the service should have tried to serialize the config");
             serializer.Serialized[0].Key.Should().Be(typeof(ConfigMock), "the serialized config should be the same as the requested one");
-            
+
             service.Save();
             provider.WrittenConfigs.Should().ContainSingle("the service should not have tried to re-write an unmodified config");
         }

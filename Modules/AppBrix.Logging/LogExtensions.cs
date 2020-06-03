@@ -18,13 +18,13 @@ namespace AppBrix
         /// <param name="app">The application.</param>
         /// <returns>The log hub.</returns>
         public static ILogHub GetLogHub(this IApp app) => (ILogHub)app.Get(typeof(ILogHub));
-        
+
         /// <summary>
         /// Gets the <see cref="LoggingConfig"/> from <see cref="IConfigService"/>.
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="LoggingConfig"/>.</returns>
-        public static LoggingConfig GetLoggingConfig(this IConfigService service) => (LoggingConfig) service.Get(typeof(LoggingConfig));
+        public static LoggingConfig GetLoggingConfig(this IConfigService service) => (LoggingConfig)service.Get(typeof(LoggingConfig));
 
         /// <summary>
         /// Gets the registered logger provider.

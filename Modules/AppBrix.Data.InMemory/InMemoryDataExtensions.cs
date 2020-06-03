@@ -17,6 +17,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="InMemoryDataConfig"/>.</returns>
-        public static InMemoryDataConfig GetInMemoryDataConfig(this IConfigService service) => (InMemoryDataConfig) service.Get(typeof(InMemoryDataConfig));
+        public static InMemoryDataConfig GetInMemoryDataConfig(this IConfigService service) => (InMemoryDataConfig)service.Get(typeof(InMemoryDataConfig));
     }
 }

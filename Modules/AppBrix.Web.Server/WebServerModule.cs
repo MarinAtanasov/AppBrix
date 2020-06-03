@@ -58,10 +58,7 @@ namespace AppBrix.Web.Server
                     applicationLifetime.ApplicationStopped.Register(this.ApplicationStopped);
                     var client = appBuilder.ApplicationServices.GetService<IHttpClientFactory>();
                     if (client != null)
-                    {
                         this.App.Container.Register(client);
-                        this.App.GetFactoryService().Register(this.CreateClient);
-                    }
                     this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly()!.GetName().Name)
@@ -92,8 +89,6 @@ namespace AppBrix.Web.Server
             options.JsonSerializerOptions.ReadCommentHandling = appOptions.ReadCommentHandling;
             options.JsonSerializerOptions.WriteIndented = appOptions.WriteIndented;
         }
-
-        private HttpClient CreateClient() => this.App.Get<IHttpClientFactory>().CreateClient();
 
         private void ApplicationStarted() => this.App.GetEventHub().Raise(new DefaultHostApplicationStarted());
 

@@ -126,7 +126,7 @@ namespace AppBrix.Data.Migration.Impl
                 {
                     migration = this.ApplyMigration(type, newVersion, scaffoldedMigration);
                 }
-                
+
                 this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot is null);
             }
         }
@@ -143,7 +143,7 @@ namespace AppBrix.Data.Migration.Impl
             ms.Seek(0, SeekOrigin.Begin);
             AssemblyLoadContext.Default.LoadFromStream(ms);
         }
-        
+
         private IEnumerable<SyntaxTree> GetSyntaxTrees(string snapshot, params MigrationData[] migrations)
         {
             var trees = new List<SyntaxTree>();

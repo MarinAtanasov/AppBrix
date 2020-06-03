@@ -31,7 +31,7 @@ namespace AppBrix.Logging
         /// Gets the time when the log entry was created.
         /// </summary>
         DateTime Created { get; }
-        
+
         /// <summary>
         /// Gets the full path to the file of the caller.
         /// </summary>

@@ -23,7 +23,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
             this.app = app;
         }
         #endregion
-        
+
         #region Public and overriden methods
         [HttpGet]
         public AppIdMessage AppId() => new AppIdMessage

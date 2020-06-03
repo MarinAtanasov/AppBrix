@@ -64,7 +64,7 @@ namespace AppBrix.Factory.Tests
             var factory = this.GetFactory();
             var original = new NonDefaultConstructorClass(true);
             factory.Register(() => original);
-            
+
             var returnedChild = factory.Get<NonDefaultConstructorClass>();
             returnedChild.Should().NotBeNull("the factory should return child object");
             returnedChild.Should().BeSameAs(original, "child object should be the same as the original object");
@@ -72,7 +72,7 @@ namespace AppBrix.Factory.Tests
             var returnedParent = factory.Get<DefaultConstructorClass>();
             returnedParent.Should().NotBeNull("the factory should return parent object");
             returnedParent.Should().BeSameAs(original, "parent object should be the same as the original object");
-            
+
             var returnedInterface = factory.Get<ITestInterface>();
             returnedInterface.Should().NotBeNull("the factory should return object from interface");
             returnedInterface.Should().BeSameAs(original, "interface object should be the same as the original object");
@@ -90,7 +90,7 @@ namespace AppBrix.Factory.Tests
                 obj.Modified = true;
                 return obj;
             });
-            
+
             var returned = factory.Get<NonDefaultConstructorClass>();
             returned.Should().NotBeNull("the factory should return child object");
             returned.Value.Should().BeTrue($"object value should be {true}");

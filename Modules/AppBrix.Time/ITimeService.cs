@@ -16,7 +16,7 @@ namespace AppBrix.Time
         /// </summary>
         /// <returns></returns>
         DateTime GetTime();
-        
+
         /// <summary>
         /// Converts the specified time to the configured application time kind.
         /// </summary>

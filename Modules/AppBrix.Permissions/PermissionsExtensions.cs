@@ -26,7 +26,7 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="PermissionsConfig"/>.</returns>
-        public static PermissionsConfig GetPermissionsConfig(this IConfigService service) => (PermissionsConfig) service.Get(typeof(PermissionsConfig));
+        public static PermissionsConfig GetPermissionsConfig(this IConfigService service) => (PermissionsConfig)service.Get(typeof(PermissionsConfig));
 
         internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
         {

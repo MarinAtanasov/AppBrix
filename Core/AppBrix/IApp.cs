@@ -20,7 +20,7 @@ namespace AppBrix
         /// Gets the application's configuration.
         /// </summary>
         IConfigService ConfigService { get; }
-        
+
         /// <summary>
         /// Loads and initializes the application and initializes.
         /// </summary>

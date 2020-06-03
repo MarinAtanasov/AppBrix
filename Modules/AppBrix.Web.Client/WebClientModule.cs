@@ -46,6 +46,7 @@ namespace AppBrix.Web.Client
 
             this.httpClientFactory.Initialize(context);
             this.App.Container.Register(this.httpClientFactory);
+            this.App.GetFactoryService().Register(this.CreateClient);
             this.App.GetFactoryService().Register(this.CreateRequest);
 
             this.jsonSerializerOptions = new JsonSerializerOptions();
@@ -69,6 +70,8 @@ namespace AppBrix.Web.Client
         #endregion
 
         #region Private methods
+        private HttpClient CreateClient() => this.App.GetHttpClientFactory().CreateClient();
+
         private DefaultHttpRequest CreateRequest() => new DefaultHttpRequest(this.App);
         #endregion
 

@@ -17,6 +17,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="SqlServerDataConfig"/>.</returns>
-        public static SqlServerDataConfig GetSqlServerDataConfig(this IConfigService service) => (SqlServerDataConfig) service.Get(typeof(SqlServerDataConfig));
+        public static SqlServerDataConfig GetSqlServerDataConfig(this IConfigService service) => (SqlServerDataConfig)service.Get(typeof(SqlServerDataConfig));
     }
 }

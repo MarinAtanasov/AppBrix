@@ -91,7 +91,7 @@ namespace AppBrix.Data.Tests
                 using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
                 {
                     context.Items.Single();
-                } 
+                }
             }
 
             using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())

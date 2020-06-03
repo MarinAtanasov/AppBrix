@@ -18,12 +18,12 @@ namespace AppBrix
         /// <param name="app">The current application.</param>
         /// <returns>The event hub.</returns>
         public static IDelayedEventHub GetDelayedEventHub(this IApp app) => (IDelayedEventHub)app.Get(typeof(IDelayedEventHub));
-        
+
         /// <summary>
         /// Gets the <see cref="DelayedEventsConfig"/> from <see cref="IConfigService"/>.
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="DelayedEventsConfig"/>.</returns>
-        public static DelayedEventsConfig GetDelayedEventsConfig(this IConfigService service) => (DelayedEventsConfig) service.Get(typeof(DelayedEventsConfig));
+        public static DelayedEventsConfig GetDelayedEventsConfig(this IConfigService service) => (DelayedEventsConfig)service.Get(typeof(DelayedEventsConfig));
     }
 }

@@ -33,7 +33,7 @@ namespace AppBrix
                     var reference = referencedAssemblies[j];
                     if (!names.Add(reference.FullName))
                         continue;
-                    
+
                     Assembly referencedAssembly;
                     try
                     {

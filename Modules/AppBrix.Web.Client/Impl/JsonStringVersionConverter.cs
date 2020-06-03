@@ -14,7 +14,7 @@ namespace AppBrix.Web.Client.Impl
             var stringed = reader.GetString();
             if (string.IsNullOrEmpty(stringed))
                 return null;
-            else 
+            else
                 return Version.Parse(stringed);
         }
 

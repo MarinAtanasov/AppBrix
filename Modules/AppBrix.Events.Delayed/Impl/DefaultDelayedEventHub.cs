@@ -61,7 +61,7 @@ namespace AppBrix.Events.Delayed.Impl
                     this.RaiseDelayed(args);
                     break;
                 default:
-                        throw new InvalidOperationException($@"{nameof(this.config.DefaultBehavior)}: {this.config.DefaultBehavior}");
+                    throw new InvalidOperationException($@"{nameof(this.config.DefaultBehavior)}: {this.config.DefaultBehavior}");
             }
         }
         #endregion

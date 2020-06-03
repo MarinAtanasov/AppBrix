@@ -35,7 +35,7 @@ namespace AppBrix.Web.Client
 
         /// <summary>
         /// Sets the name of the <see cref="HttpClient"/> to be used when sending the request.
-        /// Requires registered of <see cref="IHttpClientFactory"/>.
+        /// Requires a registered <see cref="IHttpClientFactory"/>.
         /// </summary>
         /// <param name="name">The name of the <see cref="HttpClient"/>.</param>
         /// <returns></returns>
@@ -68,7 +68,7 @@ namespace AppBrix.Web.Client
         /// <param name="method">The HTTP method.</param>
         /// <returns></returns>
         IHttpRequest SetMethod(string method);
-        
+
         /// <summary>
         /// Return the HTTP version to be used.
         /// </summary>

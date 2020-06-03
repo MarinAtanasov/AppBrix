@@ -16,6 +16,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="FileLoggerConfig"/>.</returns>
-        public static FileLoggerConfig GetFileLoggerConfig(this IConfigService service) => (FileLoggerConfig) service.Get(typeof(FileLoggerConfig));
+        public static FileLoggerConfig GetFileLoggerConfig(this IConfigService service) => (FileLoggerConfig)service.Get(typeof(FileLoggerConfig));
     }
 }

@@ -102,7 +102,7 @@ namespace AppBrix.Events.Async.Tests
             this.app.Stop();
             called.Should().Be(2, "event handler should be called exactly twice");
         }
-        
+
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestDoubleRaise()
         {

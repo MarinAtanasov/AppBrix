@@ -17,6 +17,6 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="SqliteDataConfig"/>.</returns>
-        public static SqliteDataConfig GetSqliteDataConfig(this IConfigService service) => (SqliteDataConfig) service.Get(typeof(SqliteDataConfig));
+        public static SqliteDataConfig GetSqliteDataConfig(this IConfigService service) => (SqliteDataConfig)service.Get(typeof(SqliteDataConfig));
     }
 }

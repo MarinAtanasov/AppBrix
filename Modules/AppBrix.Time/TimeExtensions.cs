@@ -25,8 +25,8 @@ namespace AppBrix
         /// </summary>
         /// <param name="service">The configuration service.</param>
         /// <returns>The <see cref="TimeConfig"/>.</returns>
-        public static TimeConfig GetTimeConfig(this IConfigService service) => (TimeConfig) service.Get(typeof(TimeConfig));
-        
+        public static TimeConfig GetTimeConfig(this IConfigService service) => (TimeConfig)service.Get(typeof(TimeConfig));
+
         /// <summary>
         /// A shorthand for getting the current time
         /// from the registered <see cref="ITimeService"/>.
