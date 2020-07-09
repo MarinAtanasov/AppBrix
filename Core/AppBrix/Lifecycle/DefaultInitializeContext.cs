@@ -19,6 +19,8 @@ namespace AppBrix.Lifecycle
 
         #region Properties
         public IApp App { get; }
+
+        public RequestedAction RequestedAction { get; set; }
         #endregion
     }
 }

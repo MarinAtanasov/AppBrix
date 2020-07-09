@@ -94,7 +94,6 @@ namespace AppBrix.Application
         {
             this.IsInitialized = true;
 
-            var initializeContext = new DefaultInitializeContext(this);
             for (var i = 0; i < this.modules.Count; i++)
             {
                 var moduleInfo = this.modules[i];
@@ -102,6 +101,12 @@ namespace AppBrix.Application
                     continue;
 
                 var requestedAction = this.InstallOrUpgradeModule(moduleInfo);
+                if (requestedAction == RequestedAction.None)
+                {
+                    var initializeContext = new DefaultInitializeContext(this);
+                    moduleInfo.Module.Initialize(initializeContext);
+                    requestedAction = initializeContext.RequestedAction;
+                }
                 switch (requestedAction)
                 {
                     case RequestedAction.None:
@@ -120,8 +125,6 @@ namespace AppBrix.Application
                     default:
                         throw new ArgumentOutOfRangeException($@"{nameof(RequestedAction)}: {requestedAction}");
                 }
-
-                moduleInfo.Module.Initialize(initializeContext);
             }
         }
 

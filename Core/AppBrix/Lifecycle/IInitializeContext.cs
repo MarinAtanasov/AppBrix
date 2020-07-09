@@ -13,5 +13,10 @@ namespace AppBrix.Lifecycle
         /// Gets the current application.
         /// </summary>
         IApp App { get; }
+
+        /// <summary>
+        /// Gets or sets the requested by the <see cref="IInstallable"/> object application action.
+        /// </summary>
+        RequestedAction RequestedAction { get; set; }
     }
 }
