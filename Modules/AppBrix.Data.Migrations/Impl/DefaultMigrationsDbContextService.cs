@@ -113,7 +113,7 @@ namespace AppBrix.Data.Migrations.Impl
                     var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
                     var migration = scaffoldedMigration.SnapshotCode != oldSnapshotCode ?
                         this.ApplyMigration(type, newVersion, scaffoldedMigration) : null;
-                    this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot is null);
+                    this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot);
                 }
                 catch (InvalidOperationException)
                 {
@@ -233,24 +233,23 @@ namespace AppBrix.Data.Migrations.Impl
             return migration;
         }
 
-        private void AddMigration(string contextName, string version, MigrationData? migration, string snapshot, bool createNew)
+        private void AddMigration(string contextName, string version, MigrationData? migration, string snapshotCode, SnapshotData? snapshot)
         {
             using var context = this.contextService.GetMigrationsContext();
-            SnapshotData newSnapshot;
-            if (createNew)
+            if (snapshot is null)
             {
-                newSnapshot = new SnapshotData { Context = contextName };
-                context.Snapshots.Add(newSnapshot);
+                snapshot = new SnapshotData { Context = contextName };
+                context.Snapshots.Add(snapshot);
             }
             else
             {
-                newSnapshot = context.Snapshots.Single(x => x.Context == contextName);
+                context.Snapshots.Attach(snapshot);
             }
 
-            newSnapshot.Version = version;
+            snapshot.Version = version;
             if (migration != null)
             {
-                newSnapshot.Snapshot = snapshot;
+                snapshot.Snapshot = snapshotCode;
                 context.Migrations.Add(migration);
             }
 
