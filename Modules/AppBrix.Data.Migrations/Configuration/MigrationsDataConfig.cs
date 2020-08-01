@@ -3,18 +3,18 @@
 //
 using AppBrix.Configuration;
 
-namespace AppBrix.Data.Migration.Configuration
+namespace AppBrix.Data.Migrations.Configuration
 {
     /// <summary>
-    /// Configures the Migration data module.
+    /// Configures the Migrations data module.
     /// </summary>
-    public sealed class MigrationDataConfig : IConfig
+    public sealed class MigrationsDataConfig : IConfig
     {
         #region Construction
         /// <summary>
-        /// Creates a new instance of <see cref="MigrationDataConfig"/>.
+        /// Creates a new instance of <see cref="MigrationsDataConfig"/>.
         /// </summary>
-        public MigrationDataConfig()
+        public MigrationsDataConfig()
         {
             this.EntryAssembly = string.Empty;
         }

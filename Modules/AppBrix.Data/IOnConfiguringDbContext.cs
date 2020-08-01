@@ -17,7 +17,7 @@ namespace AppBrix.Data
         DbContext Context { get; }
 
         /// <summary>
-        /// Gets the migration assembly.
+        /// Gets the migrations assembly.
         /// </summary>
         string? MigrationsAssembly { get; }
 

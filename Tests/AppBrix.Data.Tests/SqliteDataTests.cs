@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Configuration;
-using AppBrix.Data.Migration;
+using AppBrix.Data.Migrations;
 using AppBrix.Data.Sqlite;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -17,18 +17,18 @@ namespace AppBrix.Data.Tests
     public sealed class SqliteDataTests : TestsBase
     {
         #region Setup and cleanup
-        public SqliteDataTests() : base(TestUtils.CreateTestApp<SqliteDataModule, MigrationDataModule>())
+        public SqliteDataTests() : base(TestUtils.CreateTestApp<SqliteDataModule, MigrationsDataModule>())
         {
             this.app.Start();
             this.app.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
-            this.app.ConfigService.GetMigrationDataConfig().EntryAssembly = this.GetType().Assembly.FullName;
-            this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
+            this.app.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName;
+            this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
             this.app.Restart();
 
-            this.globalContext = this.app.GetDbContextService().Get<MigrationContext>();
+            this.globalContext = this.app.GetDbContextService().Get<MigrationsContext>();
             this.globalContext.Database.OpenConnection();
 
-            this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
+            this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
             this.app.Restart();
         }
 
@@ -103,7 +103,7 @@ namespace AppBrix.Data.Tests
         #endregion
 
         #region Private fields and constants
-        private readonly MigrationContext globalContext;
+        private readonly MigrationsContext globalContext;
         #endregion
     }
 }

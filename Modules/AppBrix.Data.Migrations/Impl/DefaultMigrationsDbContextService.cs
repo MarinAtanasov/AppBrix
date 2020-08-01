@@ -1,8 +1,8 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Migration.Data;
-using AppBrix.Data.Migration.Configuration;
+using AppBrix.Data.Migrations.Data;
+using AppBrix.Data.Migrations.Configuration;
 using AppBrix.Lifecycle;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -22,15 +22,15 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace AppBrix.Data.Migration.Impl
+namespace AppBrix.Data.Migrations.Impl
 {
-    internal sealed class DefaultMigrationDbContextService : IDbContextService, IApplicationLifecycle
+    internal sealed class DefaultMigrationsDbContextService : IDbContextService, IApplicationLifecycle
     {
         #region Public and overriden methods
         public void Initialize(IInitializeContext context)
         {
             this.app = context.App;
-            this.config = this.app.ConfigService.GetMigrationDataConfig();
+            this.config = this.app.ConfigService.GetMigrationsDataConfig();
             this.contextService = this.app.GetDbContextService();
             this.dbSupportsMigrations = true;
         }
@@ -82,52 +82,46 @@ namespace AppBrix.Data.Migration.Impl
 
         private void MigrateMigrationContext()
         {
-            var migrationContextType = typeof(MigrationContext);
-            if (!this.initializedContexts.Add(migrationContextType))
-                return;
-
-            using var context = this.contextService.Get(migrationContextType);
-            try
-            {
-                context.Database.Migrate();
-            }
-            catch (InvalidOperationException)
-            {
-                // Context does not support migrations.
-                this.dbSupportsMigrations = false;
-                context.Database.EnsureCreated();
-            }
+            var migrationContextType = typeof(MigrationsContext);
+            if (this.initializedContexts.Add(migrationContextType))
+                this.MigrateContext(migrationContextType);
         }
 
         private void MigrateContext(Type type)
         {
-            SnapshotData snapshot;
-            using (var context = this.contextService.GetMigrationContext())
+            SnapshotData? snapshot = null;
+            try
             {
-                snapshot = context.Snapshots
-                    .AsNoTracking()
-                    .SingleOrDefault(x => x.Context == type.Name);
+                using var context = this.contextService.GetMigrationsContext();
+                snapshot = context.Snapshots.AsNoTracking().SingleOrDefault(x => x.Context == type.Name);
             }
+            catch (Exception) { }
 
             var assemblyVersion = type.Assembly.GetName().Version;
             if (snapshot is null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
                 var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
-                var oldVersion = Version.Parse(snapshot?.Version ?? DefaultMigrationDbContextService.EmptyVersion);
+                var oldVersion = Version.Parse(snapshot?.Version ?? DefaultMigrationsDbContextService.EmptyVersion);
                 var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
                 this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
 
                 var newVersion = type.Assembly.GetName().Version;
                 var newMigrationName = this.GenerateMigrationName(type, newVersion);
-                var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
 
-                MigrationData? migration = null;
-                if (scaffoldedMigration.SnapshotCode != oldSnapshotCode)
+                try
                 {
-                    migration = this.ApplyMigration(type, newVersion, scaffoldedMigration);
+                    var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
+                    var migration = scaffoldedMigration.SnapshotCode != oldSnapshotCode ?
+                        this.ApplyMigration(type, newVersion, scaffoldedMigration) : null;
+                    this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot is null);
                 }
-
-                this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot is null);
+                catch (InvalidOperationException)
+                {
+                    // Context does not support migrations.
+                    this.dbSupportsMigrations = false;
+                    using var context = this.contextService.Get(type);
+                    context.Database.EnsureCreated();
+                }
             }
         }
 
@@ -236,13 +230,12 @@ namespace AppBrix.Data.Migration.Impl
             using var context = (DbContextBase)this.contextService.Get(type);
             context.Initialize(new DefaultInitializeDbContext(this.app, migrationAssemblyName, this.GenerateMigrationsHistoryTableName(type)));
             context.Database.Migrate();
-
             return migration;
         }
 
         private void AddMigration(string contextName, string version, MigrationData? migration, string snapshot, bool createNew)
         {
-            using var context = this.contextService.GetMigrationContext();
+            using var context = this.contextService.GetMigrationsContext();
             SnapshotData newSnapshot;
             if (createNew)
             {
@@ -277,7 +270,7 @@ namespace AppBrix.Data.Migration.Impl
         private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
         #nullable disable
         private IApp app;
-        private MigrationDataConfig config;
+        private MigrationsDataConfig config;
         private IDbContextService contextService;
         #nullable restore
         private bool dbSupportsMigrations;

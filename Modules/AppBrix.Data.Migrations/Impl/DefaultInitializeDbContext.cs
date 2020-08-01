@@ -3,7 +3,7 @@
 //
 using System;
 
-namespace AppBrix.Data.Migration.Impl
+namespace AppBrix.Data.Migrations.Impl
 {
     internal sealed class DefaultInitializeDbContext : IInitializeDbContext
     {

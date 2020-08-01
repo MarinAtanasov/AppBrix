@@ -38,7 +38,7 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Cloning\AppBrix.Cloning.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Container\AppBrix.Container.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj" />
-    <ProjectReference Include="..\..\Modules\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj" />
+    <ProjectReference Include="..\..\Modules\AppBrix.Data.Migrations\AppBrix.Data.Migrations.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.SqlServer\AppBrix.Data.SqlServer.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data\AppBrix.Data.csproj" />

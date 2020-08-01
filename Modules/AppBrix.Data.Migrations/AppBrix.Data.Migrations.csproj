@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>AppBrix.Data.Migration</AssemblyName>
-    <AssemblyTitle>AppBrix.Data.Migration</AssemblyTitle>
+    <AssemblyName>AppBrix.Data.Migrations</AssemblyName>
+    <AssemblyTitle>AppBrix.Data.Migrations</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
     <Copyright>Copyright 2015-2020</Copyright>
-    <Description>Module which enables database CodeFirst migration functionality.</Description>
+    <Description>Module which enables database CodeFirst migrations functionality.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
-    <PackageId>AppBrix.Data.Migration</PackageId>
+    <PackageId>AppBrix.Data.Migrations</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
-    <PackageTags>AppBrix Module Data Migration</PackageTags>
+    <PackageTags>AppBrix Module Data Migrations</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
     <TargetFramework>netstandard2.1</TargetFramework>

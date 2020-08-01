@@ -46,7 +46,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data", "Modules\App
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.InMemory", "Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj", "{D5388A44-FDAC-47D0-A7F9-8778C982FDFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Migration", "Modules\AppBrix.Data.Migration\AppBrix.Data.Migration.csproj", "{D516DD88-8B17-42CB-BAE5-569ECFE38196}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Migrations", "Modules\AppBrix.Data.Migrations\AppBrix.Data.Migrations.csproj", "{D516DD88-8B17-42CB-BAE5-569ECFE38196}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Sqlite", "Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj", "{EAF71732-68EF-4242-A335-8EC175725D0A}"
 EndProject
@@ -130,9 +130,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random", "Modules\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random.Tests", "Tests\AppBrix.Random.Tests\AppBrix.Random.Tests.csproj", "{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Events.Schedule.Cron.Tests", "Tests\AppBrix.Events.Schedule.Cron.Tests\AppBrix.Events.Schedule.Cron.Tests.csproj", "{A47CAD7C-A279-447F-93A1-C2BEDB308574}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Cron.Tests", "Tests\AppBrix.Events.Schedule.Cron.Tests\AppBrix.Events.Schedule.Cron.Tests.csproj", "{A47CAD7C-A279-447F-93A1-C2BEDB308574}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Events.Schedule.Timer.Tests", "Tests\AppBrix.Events.Schedule.Timer.Tests\AppBrix.Events.Schedule.Timer.Tests.csproj", "{E3BD1870-571A-4638-BC19-429A86343CF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Timer.Tests", "Tests\AppBrix.Events.Schedule.Timer.Tests\AppBrix.Events.Schedule.Timer.Tests.csproj", "{E3BD1870-571A-4638-BC19-429A86343CF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

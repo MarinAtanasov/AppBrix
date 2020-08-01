@@ -19,7 +19,7 @@ namespace AppBrix.ConsoleApp
             typeof(Container.ContainerModule),
             typeof(Data.DataModule),
             //typeof(Data.InMemory.InMemoryDataModule),
-            typeof(Data.Migration.MigrationDataModule),
+            typeof(Data.Migrations.MigrationsDataModule),
             typeof(Data.Sqlite.SqliteDataModule),
             //typeof(Data.SqlServer.SqlServerDataModule),
             typeof(Events.EventsModule),

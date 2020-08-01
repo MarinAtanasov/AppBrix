@@ -1,18 +1,18 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Migration.Impl;
+using AppBrix.Data.Migrations.Impl;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 
-namespace AppBrix.Data.Migration
+namespace AppBrix.Data.Migrations
 {
     /// <summary>
     /// Module used for enabling database CodeFirst migration functionality.
     /// </summary>
-    public sealed class MigrationDataModule : ModuleBase
+    public sealed class MigrationsDataModule : ModuleBase
     {
         #region Properties
         /// <summary>
@@ -46,7 +46,7 @@ namespace AppBrix.Data.Migration
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultMigrationDbContextService contextService = new DefaultMigrationDbContextService();
+        private readonly DefaultMigrationsDbContextService contextService = new DefaultMigrationsDbContextService();
         #endregion
     }
 }

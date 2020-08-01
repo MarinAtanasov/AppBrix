@@ -2,7 +2,7 @@
 using AppBrix.Cloning;
 using AppBrix.Container;
 using AppBrix.Data;
-using AppBrix.Data.Migration;
+using AppBrix.Data.Migrations;
 using AppBrix.Data.Sqlite;
 using AppBrix.Events;
 using AppBrix.Events.Async;
@@ -43,7 +43,7 @@ namespace AppBrix.WebApp
             typeof(ContainerModule),
             typeof(DataModule),
             //typeof(InMemoryDataModule),
-            typeof(MigrationDataModule),
+            typeof(MigrationsDataModule),
             typeof(SqliteDataModule),
             //typeof(SqlServerDataModule),
             typeof(EventsModule),
