@@ -28,7 +28,7 @@ namespace AppBrix.WebApp.Services
                 .ToList();
         }
 
-        public Book Get(Guid id)
+        public Book? Get(Guid id)
         {
             using var context = this.app.GetDbContextService().GetBooksContext();
             return context.Books

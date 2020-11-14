@@ -53,12 +53,12 @@ namespace AppBrix.Configuration.Json
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            return (IConfig)JsonSerializer.Deserialize(config, type, this.settings);
+            return (IConfig)JsonSerializer.Deserialize(config, type, this.settings)!;
         }
         #endregion
 
         #region Private fields and constants
-        private JsonSerializerOptions settings;
+        private readonly JsonSerializerOptions settings;
         #endregion
     }
 }

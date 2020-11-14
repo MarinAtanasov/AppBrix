@@ -21,7 +21,7 @@ namespace AppBrix.WebApp.Controllers
         public IEnumerable<Book> Get() => this.app.Get<BooksService>().Get();
 
         [HttpGet("{id}")]
-        public Book Get(Guid id) => this.app.Get<BooksService>().Get(id);
+        public Book? Get(Guid id) => this.app.Get<BooksService>().Get(id);
 
         [HttpPost]
         public void Post([FromBody] Book book) => this.app.Get<BooksService>().Add(book);

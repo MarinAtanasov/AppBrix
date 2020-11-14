@@ -19,7 +19,7 @@ namespace AppBrix.Text.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestEncodingWrapper()
         {
-            var encoding = Encoding.UTF7;
+            var encoding = Encoding.UTF8;
             var provider = new EncodingProviderMock(encoding);
             provider.Encoding.Should().BeSameAs(encoding, "provided encoding should be saved");
 

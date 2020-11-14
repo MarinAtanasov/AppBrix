@@ -24,7 +24,7 @@ namespace AppBrix.Caching.Tests.Mocks
         #endregion
 
         #region Private fields and constants
-        private JsonSerializerOptions settings;
+        private readonly JsonSerializerOptions settings;
         #endregion
     }
 }

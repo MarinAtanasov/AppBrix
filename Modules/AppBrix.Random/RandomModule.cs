@@ -50,7 +50,7 @@ namespace AppBrix.Random
         #endregion
 
         #region Private fields and constants
-        private RandomService randomService = new RandomService();
+        private readonly RandomService randomService = new RandomService();
         #endregion
     }
 }

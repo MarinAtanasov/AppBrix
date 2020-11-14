@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
@@ -187,10 +188,10 @@ namespace AppBrix.Data.Migrations.Impl
                 m => logger.Warning(m),
                 m => logger.Info(m),
                 m => logger.Trace(m)));
-            #pragma warning restore EF1001 // Internal EF Core API usage.
 
             var designTimeServices = new ServiceCollection()
                 .AddSingleton(context.Model)
+                .AddSingleton(context.GetService<IConventionSetBuilder>())
                 .AddSingleton(context.GetService<ICurrentDbContext>())
                 .AddSingleton(context.GetService<IDatabaseProvider>())
                 .AddSingleton(context.GetService<IHistoryRepository>())
@@ -199,6 +200,7 @@ namespace AppBrix.Data.Migrations.Impl
                 .AddSingleton(context.GetService<IMigrationsModelDiffer>())
                 .AddSingleton(context.GetService<IMigrator>())
                 .AddSingleton(context.GetService<IRelationalTypeMappingSource>())
+                .AddSingleton<IAnnotationCodeGenerator, AnnotationCodeGenerator>()
                 .AddSingleton<ICSharpHelper, CSharpHelper>()
                 .AddSingleton<ICSharpMigrationOperationGenerator, CSharpMigrationOperationGenerator>()
                 .AddSingleton<ICSharpSnapshotGenerator, CSharpSnapshotGenerator>()
@@ -206,6 +208,7 @@ namespace AppBrix.Data.Migrations.Impl
                 .AddSingleton<IMigrationsCodeGeneratorSelector, MigrationsCodeGeneratorSelector>()
                 .AddSingleton<IOperationReporter>(reporter)
                 .AddSingleton<ISnapshotModelProcessor, SnapshotModelProcessor>()
+                .AddSingleton<AnnotationCodeGeneratorDependencies>()
                 .AddSingleton<CSharpMigrationOperationGeneratorDependencies>()
                 .AddSingleton<CSharpMigrationsGeneratorDependencies>()
                 .AddSingleton<CSharpSnapshotGeneratorDependencies>()
@@ -213,6 +216,7 @@ namespace AppBrix.Data.Migrations.Impl
                 .AddSingleton<MigrationsScaffolderDependencies>()
                 .AddSingleton<MigrationsScaffolder>()
                 .BuildServiceProvider();
+            #pragma warning restore EF1001 // Internal EF Core API usage.
 
             return designTimeServices.GetRequiredService<MigrationsScaffolder>();
         }

@@ -15,10 +15,10 @@ namespace AppBrix.Web.Client.Impl
             this.timeService = timeService;
         }
 
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => this.timeService.ToDateTime(reader.GetString());
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => this.timeService.ToDateTime(reader.GetString()!);
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options) => writer.WriteStringValue(this.timeService.ToString(value));
 
-        private ITimeService timeService;
+        private readonly ITimeService timeService;
     }
 }
