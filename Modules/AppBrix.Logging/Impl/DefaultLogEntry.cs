@@ -21,10 +21,8 @@ namespace AppBrix.Logging.Impl
             this.Level = level;
             this.Exception = exception;
             this.Message = message;
-            #nullable disable
-            this.CallerFile = callerFile;
-            this.CallerMember = callerMember;
-            #nullable restore
+            this.CallerFile = callerFile ?? string.Empty;
+            this.CallerMember = callerMember ?? string.Empty;
             this.CallerLineNumber = callerLineNumber;
             this.ThreadId = Thread.CurrentThread.ManagedThreadId;
             this.Created = created;

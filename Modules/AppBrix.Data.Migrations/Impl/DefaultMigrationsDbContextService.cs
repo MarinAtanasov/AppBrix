@@ -181,11 +181,13 @@ namespace AppBrix.Data.Migrations.Impl
         {
             var logger = this.app.GetLogHub();
 
+            #pragma warning disable EF1001 // Internal EF Core API usage.
             var reporter = new OperationReporter(new OperationReportHandler(
                 m => logger.Error(m),
                 m => logger.Warning(m),
                 m => logger.Info(m),
                 m => logger.Trace(m)));
+            #pragma warning restore EF1001 // Internal EF Core API usage.
 
             var designTimeServices = new ServiceCollection()
                 .AddSingleton(context.Model)
