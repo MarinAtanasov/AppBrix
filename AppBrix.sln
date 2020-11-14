@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB6662-4780-4AB5-BA67-3FB56322EBB9}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Clean.ps1 = Clean.ps1
 		NuGet.Config = NuGet.Config
 		Publish.ps1 = Publish.ps1
 		README.md = README.md
