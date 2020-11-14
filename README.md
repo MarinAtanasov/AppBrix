@@ -1,10 +1,10 @@
 # AppBrix
 AppBrix is a way of thinking about and building scalable modular applications.
 
-This framework is using the latest version of [.NET Core](https://www.microsoft.com/net/core).
+This framework is using the latest version of [.NET](https://dotnet.microsoft.com/download).
 
 AppBrix has been created with the following priorities:
-* Everything should be testable and covered with tests.
+* Everything should be testable.
 * Interfaces should be easy to understand and use.
 * Every part of the framework should be easily replaceable without changing the original source code.
 
