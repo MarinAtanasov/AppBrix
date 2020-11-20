@@ -24,7 +24,7 @@ namespace AppBrix.Web.Client.Configuration
 
         #region Properties
         /// <summary>
-        /// Gets or sets the timeout used when making HTTP requests.
+        /// Gets or sets the maximum connections per server.
         /// </summary>
         public int MaxConnectionsPerServer { get; set; }
 
