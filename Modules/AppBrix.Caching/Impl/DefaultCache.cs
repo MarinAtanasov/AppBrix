@@ -4,6 +4,7 @@
 using AppBrix.Lifecycle;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppBrix.Caching.Impl
@@ -23,17 +24,17 @@ namespace AppBrix.Caching.Impl
         #endregion
 
         #region ICache implementation
-        public async Task<object?> Get(string key, Type type)
+        public async Task<object?> Get(string key, Type type, CancellationToken token = default)
         {
-            var bytes = await this.GetCache().GetAsync(key).ConfigureAwait(false);
+            var bytes = await this.GetCache().GetAsync(key, token).ConfigureAwait(false);
             return bytes != null ? this.GetSerializer().Deserialize(bytes, type) : null;
         }
 
-        public Task Refresh(string key) => this.GetCache().RefreshAsync(key);
+        public Task Refresh(string key, CancellationToken token = default) => this.GetCache().RefreshAsync(key, token);
 
-        public Task Remove(string key) => this.GetCache().RemoveAsync(key);
+        public Task Remove(string key, CancellationToken token = default) => this.GetCache().RemoveAsync(key, token);
 
-        public Task Set(string key, object item) => this.GetCache().SetAsync(key, this.GetSerializer().Serialize(item));
+        public Task Set(string key, object item, CancellationToken token = default) => this.GetCache().SetAsync(key, this.GetSerializer().Serialize(item), token);
         #endregion
 
         #region Private methods

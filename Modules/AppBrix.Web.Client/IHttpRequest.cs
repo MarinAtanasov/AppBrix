@@ -3,6 +3,7 @@
 //
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppBrix.Web.Client
@@ -15,15 +16,17 @@ namespace AppBrix.Web.Client
         /// <summary>
         /// Executes the HTTP request without returning the response content.
         /// </summary>
+        /// <param name="token">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The HTTP response.</returns>
-        Task<IHttpResponse> Send();
+        Task<IHttpResponse> Send(CancellationToken token = default);
 
         /// <summary>
         /// Executes the HTTP request.
         /// </summary>
         /// <typeparam name="T">The type of the response object to be returned.</typeparam>
+        /// <param name="token">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The HTTP response.</returns>
-        Task<IHttpResponse<T>> Send<T>();
+        Task<IHttpResponse<T>> Send<T>(CancellationToken token = default);
 
         /// <summary>
         /// Sets an HTTP message header.

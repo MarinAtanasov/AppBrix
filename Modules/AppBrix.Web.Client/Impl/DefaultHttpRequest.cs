@@ -23,10 +23,10 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Public and overriden methods
-        public async Task<IHttpResponse> Send()
+        public async Task<IHttpResponse> Send(CancellationToken token = default)
         {
             var client = this.app.GetHttpClientFactory().CreateClient(this.clientName);
-            using var response = await this.GetResponse(client).ConfigureAwait(false);
+            using var response = await this.GetResponse(client, token).ConfigureAwait(false);
             return new DefaultHttpResponse<string>(
                 new DefaultHttpHeaders(response.Headers.Concat(response.Content.Headers)),
                 string.Empty,
@@ -35,12 +35,12 @@ namespace AppBrix.Web.Client.Impl
                 response.Version);
         }
 
-        public async Task<IHttpResponse<T>> Send<T>()
+        public async Task<IHttpResponse<T>> Send<T>(CancellationToken token = default)
         {
             var client = this.app.GetHttpClientFactory().CreateClient(this.clientName);
-            using var response = await this.GetResponse(client).ConfigureAwait(false);
+            using var response = await this.GetResponse(client, token).ConfigureAwait(false);
             var responseContent = response.Content;
-            var contentValue = await this.GetResponseContent<T>(responseContent).ConfigureAwait(false);
+            var contentValue = await this.GetResponseContent<T>(responseContent, token).ConfigureAwait(false);
             return new DefaultHttpResponse<T>(
                 new DefaultHttpHeaders(response.Headers.Concat(responseContent.Headers)),
                 contentValue,
@@ -102,7 +102,7 @@ namespace AppBrix.Web.Client.Impl
         #endregion
 
         #region Private methods
-        private async Task<HttpResponseMessage> GetResponse(HttpClient client)
+        private Task<HttpResponseMessage> GetResponse(HttpClient client, CancellationToken token = default)
         {
             var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
 
@@ -117,7 +117,7 @@ namespace AppBrix.Web.Client.Impl
             if (this.httpMessageVersion != null)
                 message.Version = this.httpMessageVersion;
 
-            return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None).ConfigureAwait(false);
+            return client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token);
         }
 
         private void SetHeaders(HttpHeaders headers, IEnumerable<KeyValuePair<string, List<string>>> toAdd)
@@ -148,7 +148,7 @@ namespace AppBrix.Web.Client.Impl
             _ => new StringContent(JsonSerializer.Serialize(content, content.GetType(), this.app.Get<JsonSerializerOptions>()))
         };
 
-        private async Task<T> GetResponseContent<T>(HttpContent content)
+        private async Task<T> GetResponseContent<T>(HttpContent content, CancellationToken token = default)
         {
             var type = typeof(T);
 
@@ -163,7 +163,7 @@ namespace AppBrix.Web.Client.Impl
             else
             {
                 var stringed = await content.ReadAsStreamAsync().ConfigureAwait(false);
-                contentValue = await JsonSerializer.DeserializeAsync<T>(stringed, this.app.Get<JsonSerializerOptions>()).ConfigureAwait(false);
+                contentValue = await JsonSerializer.DeserializeAsync<T>(stringed, this.app.Get<JsonSerializerOptions>(), token).ConfigureAwait(false);
             }
 
             return (T)contentValue!;
