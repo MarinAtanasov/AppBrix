@@ -1,13 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>AppBrix.Events.Delayed.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Events.Delayed.Tests</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
     <Copyright>Copyright 2015-2020</Copyright>
     <Description>Contains tests for the AppBrix.Events.Delayed module</Description>
+    <Deterministic>true</Deterministic>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Features>strict</Features>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <IncludeSymbols>true</IncludeSymbols>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <PackageIcon>icon-64x64.png</PackageIcon>
@@ -15,12 +20,14 @@
     <PackageId>AppBrix.Events.Delayed.Tests</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade to .NET 5.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add SourceLink to package.</PackageReleaseNotes>
     <PackageTags>AppBrix Events Delayed Tests</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.20.0</Version>
+    <Version>0.21.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

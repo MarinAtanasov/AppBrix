@@ -1,12 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>AppBrix.ConsoleApp</AssemblyName>
     <AssemblyTitle>AppBrix.ConsoleApp</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
     <Copyright>Copyright 2015-2020</Copyright>
     <Description>Sample console application using an AppBrix app.</Description>
+    <Deterministic>true</Deterministic>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Features>strict</Features>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <PackageIcon>icon-64x64.png</PackageIcon>
@@ -14,12 +19,14 @@
     <PackageId>AppBrix.ConsoleApp</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade to .NET 5.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add SourceLink to package.</PackageReleaseNotes>
     <PackageTags>AppBrix Console Application</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.20.0</Version>
+    <Version>0.21.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +35,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bundles\AppBrix.All\AppBrix.All.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

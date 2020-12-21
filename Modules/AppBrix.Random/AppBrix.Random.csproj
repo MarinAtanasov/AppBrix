@@ -1,24 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>AppBrix.Random</AssemblyName>
     <AssemblyTitle>AppBrix.Random</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
     <Copyright>Copyright 2015-2020</Copyright>
     <Description>Module which is used for generating random objects and values.</Description>
+    <Deterministic>true</Deterministic>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Features>strict</Features>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
     <Nullable>enable</Nullable>
     <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
     <PackageId>AppBrix.Random</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade to .NET 5.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add SourceLink to package.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Random</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.20.0</Version>
+    <Version>0.21.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +34,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppBrix.Factory\AppBrix.Factory.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
