@@ -6,5 +6,6 @@ ForEach ($category in "Core", "Modules", "Bundles")
     {
         dotnet pack $folder.FullName -c Release;
         nuget push "$($folder.FullName)\bin\Release\$($folder.Name).$($Version).nupkg";
+        nuget push "$($folder.FullName)\bin\Release\$($folder.Name).$($Version).snupkg";
     }
 }
