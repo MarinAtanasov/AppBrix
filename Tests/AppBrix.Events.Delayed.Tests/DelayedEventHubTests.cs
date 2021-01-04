@@ -24,7 +24,7 @@ namespace AppBrix.Events.Delayed.Tests
             this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
@@ -40,7 +40,7 @@ namespace AppBrix.Events.Delayed.Tests
             this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
@@ -56,7 +56,7 @@ namespace AppBrix.Events.Delayed.Tests
             this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
@@ -76,7 +76,7 @@ namespace AppBrix.Events.Delayed.Tests
             this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
             var hub = this.app.GetDelayedEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");

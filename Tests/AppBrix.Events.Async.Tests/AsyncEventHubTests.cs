@@ -23,7 +23,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
@@ -39,7 +39,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMockChild(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<EventMock>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
@@ -55,7 +55,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             hub.Subscribe<IEvent>(e =>
             {
                 e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
@@ -80,7 +80,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             Action<EventMock> handler = (e => called++);
             hub.Subscribe(handler);
             hub.Subscribe<EventMockChild>(handler);
@@ -94,7 +94,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             Action<IEvent> handler = (e => called++);
             hub.Subscribe(handler);
             hub.Subscribe(handler);
@@ -108,7 +108,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             Action<IEvent> handler = (e => called++);
             hub.Subscribe(handler);
             hub.Raise(args);
@@ -122,7 +122,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             Action<EventMock> handler = (e => called++);
             hub.Subscribe(handler);
             hub.Unsubscribe(handler);
@@ -136,7 +136,7 @@ namespace AppBrix.Events.Async.Tests
         {
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
-            int called = 0;
+            var called = 0;
             Action<EventMock> handler = (e => called++);
             hub.Subscribe(handler);
             hub.Raise(args);
@@ -174,16 +174,16 @@ namespace AppBrix.Events.Async.Tests
             var hub = this.GetAsyncEventHub();
             var args = new EventMock(10);
 
-            int beforeHandlerCalled = 0;
+            var beforeHandlerCalled = 0;
             Action<IEvent> beforeHandler = (e => beforeHandlerCalled++);
             hub.Subscribe(beforeHandler);
 
-            int unsubscribingHandlerCalled = 0;
+            var unsubscribingHandlerCalled = 0;
             Action<IEvent> unsubscribingHandler = null;
             unsubscribingHandler = (e => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); });
             hub.Subscribe(unsubscribingHandler);
 
-            int afterHandlerCalled = 0;
+            var afterHandlerCalled = 0;
             Action<IEvent> afterHandler = (e => afterHandlerCalled++);
             hub.Subscribe(afterHandler);
 
