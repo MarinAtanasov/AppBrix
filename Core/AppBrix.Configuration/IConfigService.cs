@@ -16,7 +16,7 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <typeparam name="T">Type of the configuration.</typeparam>
         /// <returns>The configuration</returns>
-        public T Get<T>() where T : class, IConfig => (T)this.Get(typeof(T));
+        public T Get<T>() where T : class, IConfig, new() => (T)this.Get(typeof(T));
 
         /// <summary>
         /// Gets the currently loaded instance of the specified config.
@@ -35,7 +35,7 @@ namespace AppBrix.Configuration
         /// Saves one cached configuration.
         /// </summary>
         /// <typeparam name="T">The type of the configuration.</typeparam>
-        public void Save<T>() where T : class, IConfig => this.Save(typeof(T));
+        public void Save<T>() where T : class, IConfig, new() => this.Save(typeof(T));
 
         /// <summary>
         /// Saves one configuration.

@@ -30,7 +30,15 @@ namespace AppBrix
         /// <returns>The created app.</returns>
         public static IApp Create<T>(IConfigService configService) where T : MainModuleBase, new()
         {
-            configService.Get<AppConfig>().Modules.Add(ModuleConfigElement.Create<T>());
+            var modules = configService.GetAppConfig().Modules;
+            var mainModuleConfigElement = ModuleConfigElement.Create<T>();
+            var type = mainModuleConfigElement.Type;
+            for (var i = 0; i < modules.Count; i++)
+            {
+                if (modules[i].Type == type)
+                    return App.Create(configService);
+            }
+            modules.Add(mainModuleConfigElement);
             return App.Create(configService);
         }
 
