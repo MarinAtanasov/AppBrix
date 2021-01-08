@@ -3,6 +3,7 @@
 //
 using AppBrix.Application;
 using AppBrix.Configuration;
+using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
 using AppBrix.Tests.Mocks;
 using FluentAssertions;
@@ -57,6 +58,25 @@ namespace AppBrix.Tests
             module.Should().BeNull("disabled modules should not be loaded in memory");
             app.Uninitialize();
             app.ConfigService.GetAppConfig().Modules.Single().Status.Should().Be(ModuleStatus.Disabled, "module status should not be changed");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestInstallMainModule()
+        {
+            var configService = new MemoryConfigService();
+            var app = App.Create<MainModuleMock<SimpleModuleMock>>(configService);
+            configService.GetAppConfig().Modules.Should().HaveCount(1, $"{nameof(App)}.{nameof(App.Create)} should add the main module");
+            app.Start();
+            configService.GetAppConfig().Modules.Should().HaveCount(2, $"Main module should add its dependencies");
+            app.Stop();
+            configService.GetAppConfig().Modules.Should().HaveCount(2, $"Stopping the application shouldn't change the config");
+
+            app = App.Create<MainModuleMock<SimpleModuleMock>>(configService);
+            configService.GetAppConfig().Modules.Should().HaveCount(2, $"Creating a new app shouldn't change the valid config");
+            app.Start();
+            configService.GetAppConfig().Modules.Should().HaveCount(2, $"Starting the new app shouldn't change the valid config");
+            app.Stop();
+            configService.GetAppConfig().Modules.Should().HaveCount(2, $"Stopping the new app shouldn't change the config");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
