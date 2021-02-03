@@ -26,8 +26,6 @@ namespace AppBrix.Modules
             var installed = new HashSet<string>(config.Modules.Select(x => x.Type));
             var modules = this.GetAllDependencies()
                 .Where(x => !installed.Contains(x.GetAssemblyQualifiedName()))
-                .OrderBy(x => x.Namespace)
-                .ThenBy(x => x.Name)
                 .Select(ModuleConfigElement.Create);
 
             foreach (var module in modules)
