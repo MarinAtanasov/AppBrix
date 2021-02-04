@@ -1,9 +1,11 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Migrations.Data;
 using AppBrix.Data.Migrations.Configuration;
+using AppBrix.Data.Migrations.Data;
 using AppBrix.Lifecycle;
+using AppBrix.Logging.Configuration;
+using AppBrix.Logging.Entries;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,7 @@ namespace AppBrix.Data.Migrations.Impl
             this.app = context.App;
             this.config = this.app.ConfigService.GetMigrationsDataConfig();
             this.contextService = this.app.GetDbContextService();
+            this.loggingConfig = this.app.ConfigService.GetLoggingConfig();
             this.dbSupportsMigrations = true;
         }
 
@@ -40,6 +43,7 @@ namespace AppBrix.Data.Migrations.Impl
         {
             this.app = null;
             this.config = null;
+            this.loggingConfig = null;
             this.dbSupportsMigrations = false;
             this.initializedContexts.Clear();
         }
@@ -56,6 +60,31 @@ namespace AppBrix.Data.Migrations.Impl
         #endregion
 
         #region Private methods
+        private SnapshotData? GetSnapshot(Type type)
+        {
+            SnapshotData? snapshot = null;
+            LogLevel logLevel = LogLevel.None;
+
+            try
+            {
+                using var context = this.contextService.GetMigrationsContext();
+                if (type == typeof(MigrationsContext))
+                {
+                    logLevel = this.loggingConfig.LogLevel;
+                    this.loggingConfig.LogLevel = LogLevel.None;
+                }
+                snapshot = context.Snapshots.AsNoTracking().SingleOrDefault(x => x.Context == type.Name);
+            }
+            catch (Exception) { }
+            finally
+            {
+                if (type == typeof(MigrationsContext))
+                    this.loggingConfig.LogLevel = logLevel;
+            }
+
+            return snapshot;
+        }
+
         private void MigrateContextIfNeeded(Type type)
         {
             if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
@@ -90,14 +119,7 @@ namespace AppBrix.Data.Migrations.Impl
 
         private void MigrateContext(Type type)
         {
-            SnapshotData? snapshot = null;
-            try
-            {
-                using var context = this.contextService.GetMigrationsContext();
-                snapshot = context.Snapshots.AsNoTracking().SingleOrDefault(x => x.Context == type.Name);
-            }
-            catch (Exception) { }
-
+            var snapshot = this.GetSnapshot(type);
             var assemblyVersion = type.Assembly.GetName().Version;
             if (snapshot is null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
@@ -277,6 +299,7 @@ namespace AppBrix.Data.Migrations.Impl
         private IApp app;
         private MigrationsDataConfig config;
         private IDbContextService contextService;
+        private LoggingConfig loggingConfig;
         #nullable restore
         private bool dbSupportsMigrations;
         #endregion

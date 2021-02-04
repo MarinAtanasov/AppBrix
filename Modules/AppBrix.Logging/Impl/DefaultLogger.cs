@@ -48,6 +48,7 @@ namespace AppBrix.Logging.Impl
             LogLevel.Warning => Entries.LogLevel.Warning,
             LogLevel.Error => Entries.LogLevel.Error,
             LogLevel.Critical => Entries.LogLevel.Critical,
+            LogLevel.None => Entries.LogLevel.None,
             _ => Entries.LogLevel.Trace
         };
         #endregion

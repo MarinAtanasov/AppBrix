@@ -127,6 +127,22 @@ namespace AppBrix.Logging.Tests.LogHub
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestDisabledLogging()
+        {
+            var message = "Test message";
+            var called = false;
+            this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.None;
+            this.app.GetEventHub().Subscribe<ILogEntry>(x => { called = true; });
+            this.app.GetLogHub().Trace(message);
+            this.app.GetLogHub().Debug(message);
+            this.app.GetLogHub().Info(message);
+            this.app.GetLogHub().Warning(message);
+            this.app.GetLogHub().Error(message);
+            this.app.GetLogHub().Critical(message);
+            called.Should().BeFalse("the event should not have been called");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestCallerFile()
         {
             var message = "Test message";
