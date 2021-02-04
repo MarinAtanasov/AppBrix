@@ -71,7 +71,7 @@ namespace AppBrix.Data.Migrations.Impl
                 if (type == typeof(MigrationsContext))
                 {
                     logLevel = this.loggingConfig.LogLevel;
-                    this.loggingConfig.LogLevel = LogLevel.None;
+                    this.loggingConfig.LogLevel = LogLevel.Critical;
                 }
                 snapshot = context.Snapshots.AsNoTracking().SingleOrDefault(x => x.Context == type.Name);
             }

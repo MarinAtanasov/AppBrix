@@ -22,16 +22,28 @@ namespace AppBrix.Modules
         /// <param name="context">The install context.</param>
         protected override void Install(IInstallContext context)
         {
-            var config = this.App.ConfigService.GetAppConfig();
-            var installed = new HashSet<string>(config.Modules.Select(x => x.Type));
-            var modules = this.GetAllDependencies()
-                .Where(x => !installed.Contains(x.GetAssemblyQualifiedName()))
-                .Select(ModuleConfigElement.Create);
+            var configModules = this.App.ConfigService.GetAppConfig().Modules;
+            var modules = this.GetAllDependencies().Select(ModuleConfigElement.Create).Reverse();
 
+            var previousIndex = configModules.Count;
             foreach (var module in modules)
             {
-                config.Modules.Add(module);
-                context.RequestedAction = RequestedAction.Restart;
+                var index = configModules.Count;
+                for (var i = 0; i < index; i++)
+                {
+                    if (configModules[i].Type == module.Type)
+                        index = i;
+                }
+                
+                if (index == configModules.Count)
+                {
+                    configModules.Insert(previousIndex, module);
+                    context.RequestedAction = RequestedAction.Restart;
+                }
+                else
+                {
+                    previousIndex = index;
+                }
             }
         }
 

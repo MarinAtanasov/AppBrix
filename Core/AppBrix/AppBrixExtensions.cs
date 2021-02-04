@@ -31,20 +31,22 @@ namespace AppBrix
             if (module is null)
                 throw new ArgumentNullException(nameof(module));
 
-            var dependencies = new List<Type> { module.GetType() };
-            var unique = new HashSet<Type> { module.GetType() };
-            for (var i = 0; i < dependencies.Count; i++)
+            var dependencies = new List<Type>();
+            AppBrixExtensions.GetAllDependencies(module.GetType(), dependencies, new HashSet<Type>());
+            return dependencies;
+        }
+
+        private static void GetAllDependencies(Type type, List<Type> dependencies, HashSet<Type> unique)
+        {
+            if (!unique.Add(type))
+                return;
+
+            foreach (var dependency in type.CreateObject<IModule>().Dependencies)
             {
-                foreach (var dependency in dependencies[i].CreateObject<IModule>().Dependencies)
-                {
-                    if (unique.Add(dependency))
-                    {
-                        dependencies.Add(dependency);
-                    }
-                }
+                AppBrixExtensions.GetAllDependencies(dependency, dependencies, unique);
             }
 
-            return dependencies;
+            dependencies.Add(type);
         }
     }
 }
