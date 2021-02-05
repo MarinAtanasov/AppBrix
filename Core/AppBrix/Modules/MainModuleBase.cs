@@ -4,7 +4,6 @@
 using AppBrix.Configuration;
 using AppBrix.Lifecycle;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AppBrix.Modules
@@ -28,16 +27,26 @@ namespace AppBrix.Modules
             var previousIndex = configModules.Count;
             foreach (var module in modules)
             {
-                var index = configModules.Count;
-                for (var i = 0; i < index; i++)
+                var index = -1;
+                for (var i = 0; i < configModules.Count; i++)
                 {
                     if (configModules[i].Type == module.Type)
+                    {
                         index = i;
+                        break;
+                    }
                 }
-                
-                if (index == configModules.Count)
+
+                if (index < 0)
                 {
                     configModules.Insert(previousIndex, module);
+                    context.RequestedAction = RequestedAction.Restart;
+                }
+                else if (index > previousIndex)
+                {
+                    var oldModule = configModules[index];
+                    configModules.RemoveAt(index);
+                    configModules.Insert(previousIndex, oldModule);
                     context.RequestedAction = RequestedAction.Restart;
                 }
                 else
