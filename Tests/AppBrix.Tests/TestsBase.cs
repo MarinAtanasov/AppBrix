@@ -13,6 +13,7 @@ namespace AppBrix.Tests
         public virtual void Dispose()
         {
             try { this.app.Stop(); } catch (InvalidOperationException) { }
+            GC.SuppressFinalize(this);
         }
         #endregion
 

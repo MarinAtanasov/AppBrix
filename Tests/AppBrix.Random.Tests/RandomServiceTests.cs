@@ -102,7 +102,7 @@ namespace AppBrix.Random.Tests
             for (var i = 0; i < lists.Count; i++)
             {
                 var list = lists[i];
-                var last = list[list.Count - 1];
+                var last = list[^1];
                 var ok = false;
                 for (var j = 1; j <= 10; j++)
                 {

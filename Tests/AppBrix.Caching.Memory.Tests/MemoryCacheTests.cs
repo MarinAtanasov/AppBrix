@@ -53,7 +53,7 @@ namespace AppBrix.Caching.Memory.Tests
         {
             var cache = this.app.GetMemoryCache();
             var item = cache.Get<TimeSpan>(nameof(TestGetUnregisteredItem));
-            item.Should().Be(default(TimeSpan), "asking for non-existing struct should return its default value");
+            item.Should().Be(default, "asking for non-existing struct should return its default value");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

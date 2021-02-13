@@ -107,7 +107,7 @@ namespace AppBrix.Factory.Tests
         private void TestPerformanceFactoryInternal()
         {
             var factory = this.GetFactory();
-            Func<FactoryTests> method = () => this;
+            FactoryTests method() => this;
             var type = typeof(FactoryTests);
 
             for (var i = 0; i < 1000; i++)

@@ -235,8 +235,6 @@ namespace AppBrix.Cloning.Tests
 
             foreach (var field in this.GetFields(type))
             {
-                var originalField = field.GetValue(original);
-                var copiedField = field.GetValue(copy);
                 this.AssertIsShallowCopy(field.GetValue(original), field.GetValue(copy), false);
             }
         }

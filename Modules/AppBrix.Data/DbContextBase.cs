@@ -3,6 +3,7 @@
 //
 using AppBrix.Data.Impl;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AppBrix.Data
 {
@@ -53,6 +54,7 @@ namespace AppBrix.Data
             this.App = null;
             this.MigrationsAssembly = null;
             this.MigrationsHistoryTable = null;
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

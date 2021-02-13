@@ -18,6 +18,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// <param name="app">The current app.</param>
         public TestConnectionController(IApp app)
         {
+            this.app = app;
         }
         #endregion
 
@@ -28,7 +29,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public bool TestConnection() => true;
+        public bool TestConnection() => this.app != null;
 
         /// <summary>
         /// Returns true to indicate that the service has been reached as expected.
@@ -37,6 +38,10 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// <returns></returns>
         [HttpPost]
         public int TestConnection([FromBody] int number) => number;
+        #endregion
+
+        #region Private fields and constants
+        private readonly IApp app;
         #endregion
     }
 }
