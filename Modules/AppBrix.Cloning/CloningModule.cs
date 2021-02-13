@@ -46,7 +46,7 @@ namespace AppBrix.Cloning
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultCloner cloner = new DefaultCloner();
+        private readonly Cloner cloner = new Cloner();
         #endregion
     }
 }

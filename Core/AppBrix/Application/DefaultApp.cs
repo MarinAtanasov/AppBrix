@@ -103,7 +103,7 @@ namespace AppBrix.Application
                 var requestedAction = this.InstallOrUpgradeModule(moduleInfo);
                 if (requestedAction == RequestedAction.None)
                 {
-                    var initializeContext = new DefaultInitializeContext(this);
+                    var initializeContext = new InitializeContext(this);
                     moduleInfo.Module.Initialize(initializeContext);
                     requestedAction = initializeContext.RequestedAction;
                 }
@@ -134,14 +134,14 @@ namespace AppBrix.Application
             var version = moduleInfo.Module.GetType().Assembly.GetName().Version;
             if (moduleInfo.Config.Version is null)
             {
-                var context = new DefaultInstallContext(this);
+                var context = new InstallContext(this);
                 moduleInfo.Module.Install(context);
                 requestedAction = context.RequestedAction;
                 moduleInfo.Config.Version = version;
             }
             else if (moduleInfo.Config.Version < version)
             {
-                var context = new DefaultUpgradeContext(this, moduleInfo.Config.Version);
+                var context = new UpgradeContext(this, moduleInfo.Config.Version);
                 moduleInfo.Module.Upgrade(context);
                 requestedAction = context.RequestedAction;
                 moduleInfo.Config.Version = version;
@@ -160,7 +160,7 @@ namespace AppBrix.Application
 
                 if (moduleInfo.Config.Status == ModuleStatus.Uninstalling)
                 {
-                    moduleInfo.Module.Uninstall(new DefaultUninstallContext(this));
+                    moduleInfo.Module.Uninstall(new UninstallContext(this));
                     moduleInfo.Config.Status = ModuleStatus.Disabled;
                     moduleInfo.Config.Version = null;
                     this.ConfigService.Save<AppConfig>();

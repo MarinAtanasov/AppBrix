@@ -11,7 +11,7 @@ namespace AppBrix.Permissions.Impl
     internal sealed class CachedPermissionsService : IPermissionsService, IApplicationLifecycle
     {
         #region Construction
-        public CachedPermissionsService(DefaultPermissionsService service)
+        public CachedPermissionsService(PermissionsService service)
         {
             this.service = service;
         }
@@ -108,7 +108,7 @@ namespace AppBrix.Permissions.Impl
 
         #region Private fields and constants
         private readonly Dictionary<string, HashSet<string>> cachedPermissions = new Dictionary<string, HashSet<string>>();
-        private readonly DefaultPermissionsService service;
+        private readonly PermissionsService service;
         #endregion
     }
 }

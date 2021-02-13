@@ -46,7 +46,7 @@ namespace AppBrix.Container
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultContainer container = new DefaultContainer();
+        private readonly Impl.Container container = new Impl.Container();
         #endregion
     }
 }

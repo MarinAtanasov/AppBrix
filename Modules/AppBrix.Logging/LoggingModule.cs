@@ -57,9 +57,9 @@ namespace AppBrix.Logging
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultLogHub logHub = new DefaultLogHub();
-        private readonly DefaultLoggerFactory loggerFactory = new DefaultLoggerFactory();
-        private readonly DefaultLoggerProvider loggerProvider = new DefaultLoggerProvider();
+        private readonly LogHub logHub = new LogHub();
+        private readonly LoggerFactory loggerFactory = new LoggerFactory();
+        private readonly LoggerProvider loggerProvider = new LoggerProvider();
         #endregion
     }
 }

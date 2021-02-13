@@ -48,7 +48,7 @@ namespace AppBrix.Factory
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultFactoryService factoryService = new DefaultFactoryService();
+        private readonly FactoryService factoryService = new FactoryService();
         #endregion
     }
 }

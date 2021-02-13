@@ -50,7 +50,7 @@ namespace AppBrix.Events.Delayed
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultDelayedEventHub eventHub = new DefaultDelayedEventHub();
+        private readonly DelayedEventHub eventHub = new DelayedEventHub();
         #endregion
     }
 }

@@ -46,7 +46,7 @@ namespace AppBrix.Events.Async
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultAsyncEventHub eventHub = new DefaultAsyncEventHub();
+        private readonly AsyncEventHub eventHub = new AsyncEventHub();
         #endregion
     }
 }

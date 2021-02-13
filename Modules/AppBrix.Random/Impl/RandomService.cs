@@ -29,7 +29,7 @@ namespace AppBrix.Random.Impl
         #region IRandomService implementation
         public IEnumerable<T> GenerateRandomItems<T>(IReadOnlyCollection<T> items, bool unique = true)
         {
-            if (items == null)
+            if (items is null)
                 throw new ArgumentNullException(nameof(items));
             if (items.Count == 0)
                 return Array.Empty<T>();
@@ -41,7 +41,7 @@ namespace AppBrix.Random.Impl
 
         public void Shuffle<T>(IList<T> items)
         {
-            if (items == null)
+            if (items is null)
                 throw new ArgumentNullException(nameof(items));
             if (items.Count == 0)
                 return;

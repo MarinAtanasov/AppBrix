@@ -59,7 +59,7 @@ namespace AppBrix.Web.Server
                     var client = appBuilder.ApplicationServices.GetService<IHttpClientFactory>();
                     if (client != null)
                         this.App.Container.Register(client);
-                    this.App.GetEventHub().Raise(new DefaultConfigureApplication(appBuilder));
+                    this.App.GetEventHub().Raise(new ConfigureApplication(appBuilder));
                 })
                 .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly()!.GetName().Name)
             );
@@ -90,11 +90,11 @@ namespace AppBrix.Web.Server
             options.JsonSerializerOptions.WriteIndented = appOptions.WriteIndented;
         }
 
-        private void ApplicationStarted() => this.App.GetEventHub().Raise(new DefaultHostApplicationStarted());
+        private void ApplicationStarted() => this.App.GetEventHub().Raise(new HostApplicationStarted());
 
-        private void ApplicationStopping() => this.App.GetEventHub().Raise(new DefaultHostApplicationStopping());
+        private void ApplicationStopping() => this.App.GetEventHub().Raise(new HostApplicationStopping());
 
-        private void ApplicationStopped() => this.App.GetEventHub().Raise(new DefaultHostApplicationStopped());
+        private void ApplicationStopped() => this.App.GetEventHub().Raise(new HostApplicationStopped());
 
         private void OnApplicationStopped(IHostApplicationStopped _) => this.App.Stop();
         #endregion

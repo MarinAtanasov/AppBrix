@@ -47,7 +47,7 @@ namespace AppBrix.Caching
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultCache cache = new DefaultCache();
+        private readonly Cache cache = new Cache();
         #endregion
     }
 }

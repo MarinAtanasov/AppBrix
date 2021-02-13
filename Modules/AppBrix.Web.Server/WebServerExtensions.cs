@@ -21,7 +21,7 @@ namespace AppBrix
         /// <returns>The web host builder.</returns>
         public static IWebHostBuilder UseApp(this IWebHostBuilder builder, IApp app)
         {
-            app.GetEventHub().Raise(new DefaultConfigureWebHost(builder));
+            app.GetEventHub().Raise(new ConfigureWebHost(builder));
             return builder;
         }
     }

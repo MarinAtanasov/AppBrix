@@ -36,7 +36,7 @@ namespace AppBrix.Factory
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            this.Register((IDefaultFactory<object>)typeof(DefaultFactory<>).MakeGenericType(type).CreateObject(factoryMethod), type);
+            this.Register((IFactory<object>)typeof(Factory<>).MakeGenericType(type).CreateObject(factoryMethod), type);
         }
 
         /// <summary>

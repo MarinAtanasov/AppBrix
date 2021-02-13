@@ -47,7 +47,7 @@ namespace AppBrix.Events.Schedule
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultScheduledEventHub eventHub = new DefaultScheduledEventHub();
+        private readonly ScheduledEventHub eventHub = new ScheduledEventHub();
         #endregion
     }
 }

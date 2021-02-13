@@ -46,7 +46,7 @@ namespace AppBrix.Data.Migrations
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultMigrationsDbContextService contextService = new DefaultMigrationsDbContextService();
+        private readonly MigrationsDbContextService contextService = new MigrationsDbContextService();
         #endregion
     }
 }

@@ -54,7 +54,7 @@ namespace AppBrix.Data
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultDbContextService contextService = new DefaultDbContextService();
+        private readonly DbContextService contextService = new DbContextService();
         #endregion
     }
 }

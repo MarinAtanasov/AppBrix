@@ -47,7 +47,7 @@ namespace AppBrix.Events
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultEventHub eventHub = new DefaultEventHub();
+        private readonly EventHub eventHub = new EventHub();
         #endregion
     }
 }

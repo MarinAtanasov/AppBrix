@@ -72,11 +72,11 @@ namespace AppBrix.Web.Client
         #region Private methods
         private HttpClient CreateClient() => this.App.GetHttpClientFactory().CreateClient();
 
-        private DefaultHttpRequest CreateRequest() => new DefaultHttpRequest(this.App);
+        private HttpRequest CreateRequest() => new HttpRequest(this.App);
         #endregion
 
         #region Private fields and constants
-        private readonly DefaultHttpClientFactory httpClientFactory = new DefaultHttpClientFactory();
+        private readonly HttpClientFactory httpClientFactory = new HttpClientFactory();
         private HttpClient? client;
         private JsonSerializerOptions? jsonSerializerOptions;
         #endregion
