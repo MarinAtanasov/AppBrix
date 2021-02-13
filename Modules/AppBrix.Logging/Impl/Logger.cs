@@ -14,7 +14,7 @@ namespace AppBrix.Logging.Impl
         {
             this.app = app;
             var dotIndex = categoryName.LastIndexOf('.');
-            this.categoryName = categoryName.Substring(dotIndex + 1);
+            this.categoryName = categoryName[(dotIndex + 1)..];
             this.config = this.app.ConfigService.GetLoggingConfig();
             this.Enabled = enabled;
         }
@@ -25,8 +25,7 @@ namespace AppBrix.Logging.Impl
         #endregion
 
         #region Public and overriden methods
-        public bool IsEnabled(LogLevel logLevel) =>
-            this.Enabled ? this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel) : false;
+        public bool IsEnabled(LogLevel logLevel) => this.Enabled && this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception?, string> formatter)
         {

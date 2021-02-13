@@ -49,8 +49,7 @@ namespace AppBrix.Events.Impl
         #region Private methods
         private void SubscribeInternal(EventWrapper handler, Type type)
         {
-            List<EventWrapper> handlers;
-            if (!this.subscriptions.TryGetValue(type, out handlers))
+            if (!this.subscriptions.TryGetValue(type, out var handlers))
             {
                 handlers = new List<EventWrapper>();
                 this.subscriptions[type] = handlers;

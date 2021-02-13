@@ -14,13 +14,11 @@ namespace AppBrix.Random.Impl
         #region IApplicationLifecycle implementation
         public void Initialize(IInitializeContext context)
         {
-            this.app = context.App;
             this.randomGenerator = new ThreadLocal<System.Random>(() => new System.Random());
         }
 
         public void Uninitialize()
         {
-            this.app = null;
             this.randomGenerator.Dispose();
             this.randomGenerator = null;
         }
@@ -76,7 +74,6 @@ namespace AppBrix.Random.Impl
 
         #region Private fields and constants
         #nullable disable
-        private IApp app;
         private ThreadLocal<System.Random> randomGenerator;
         #nullable restore
         #endregion

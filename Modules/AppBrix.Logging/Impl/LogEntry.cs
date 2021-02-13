@@ -79,7 +79,7 @@ namespace AppBrix.Logging.Impl
 
         #region Private fields and constants
         private const string Separator = " | ";
-        private const string LineNumberSeparator = ":";
+        private const char LineNumberSeparator = ':';
         private static readonly char[] DirectorySeparatorChars = new HashSet<char> { '/', '\\', Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.ToArray();
         private readonly IApp app;
         #endregion
