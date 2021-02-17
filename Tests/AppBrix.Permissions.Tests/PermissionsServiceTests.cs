@@ -1,13 +1,12 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Permissions;
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
 using Xunit;
 
-namespace AppBrix.Events.Schedule.Tests
+namespace AppBrix.Permissions.Tests
 {
     public sealed class PermissionsServiceTests : TestsBase
     {
@@ -350,7 +349,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            void action() => this.TestPerformanceHasPermissionInternal(13000);
+            void action() => this.TestPerformanceHasPermissionInternal(15000);
             TestUtils.TestPerformance(action);
         }
 
@@ -369,7 +368,7 @@ namespace AppBrix.Events.Schedule.Tests
             service.AddParent("a2", "a22");
             service.Allow("a22", "p22");
 
-            void action() => this.TestPerformanceHasPermissionInternal(50000);
+            void action() => this.TestPerformanceHasPermissionInternal(75000);
             TestUtils.TestPerformance(action);
         }
 

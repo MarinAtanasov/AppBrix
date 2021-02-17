@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Permissions;
-using System;
 using System.Collections.Generic;
 using AppBrix.Configuration;
 using AppBrix.Permissions.Configuration;
@@ -50,7 +49,9 @@ namespace AppBrix
             }
         }
 
-        internal static IReadOnlyCollection<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
-            dictionary.TryGetValue(key, out var values) ? (IReadOnlyCollection<string>)values : Array.Empty<string>();
+        internal static HashSet<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
+            dictionary.TryGetValue(key, out var values) ? values : PermissionsExtensions.EmptyHashSet;
+
+        private static readonly HashSet<string> EmptyHashSet = new HashSet<string>();
     }
 }

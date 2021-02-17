@@ -59,7 +59,7 @@ namespace AppBrix.Logging.Impl
             result.Append(LogEntry.Separator);
             result.Append(this.ThreadId);
             result.Append(LogEntry.Separator);
-            result.Append(this.CallerFile.Split(LogEntry.DirectorySeparatorChars, StringSplitOptions.RemoveEmptyEntries).LastOrDefault());
+            result.Append(this.CallerFile.Split(LogEntry.DirectorySeparatorChars, StringSplitOptions.RemoveEmptyEntries)[^1]);
             result.Append(LogEntry.LineNumberSeparator);
             result.Append(this.CallerLineNumber);
             result.Append(LogEntry.Separator);
