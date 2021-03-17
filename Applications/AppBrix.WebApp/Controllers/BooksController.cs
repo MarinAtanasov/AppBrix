@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace AppBrix.WebApp.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class BooksController : Controller
     {

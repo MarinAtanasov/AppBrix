@@ -102,6 +102,7 @@ namespace AppBrix.Web.Server.Tests
             var app = TestUtils.CreateTestApp<WebServerModule, WebClientModule>();
             app.ConfigService.Get<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
+            app.GetEventHub().Subscribe<IConfigureHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
             app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
             app.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
             return app;

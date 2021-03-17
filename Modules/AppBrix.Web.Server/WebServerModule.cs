@@ -7,6 +7,7 @@ using AppBrix.Logging;
 using AppBrix.Modules;
 using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Impl;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,21 +47,15 @@ namespace AppBrix.Web.Server
         {
             this.App.Container.Register(this);
 
+            this.App.GetEventHub().Subscribe<IConfigureHost>(host => host.Builder
+                .ConfigureServices(this.ConfigureServices)
+                .ConfigureLogging(this.ConfigureLogging)
+            );
+
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder
-                .ConfigureServices(services => services.AddSingleton(this.App).AddControllers().AddJsonOptions(this.AddJsonOptions))
-                .ConfigureLogging(logging => logging.ClearProviders().AddProvider(this.App.Get<ILoggerProvider>()))
-                .Configure(appBuilder =>
-                {
-                    this.App.GetEventHub().Subscribe<IHostApplicationStopped>(this.OnApplicationStopped);
-                    var applicationLifetime = appBuilder.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
-                    applicationLifetime.ApplicationStarted.Register(this.ApplicationStarted);
-                    applicationLifetime.ApplicationStopping.Register(this.ApplicationStopping);
-                    applicationLifetime.ApplicationStopped.Register(this.ApplicationStopped);
-                    var client = appBuilder.ApplicationServices.GetService<IHttpClientFactory>();
-                    if (client != null)
-                        this.App.Container.Register(client);
-                    this.App.GetEventHub().Raise(new ConfigureApplication(appBuilder));
-                })
+                .ConfigureServices(this.ConfigureServices)
+                .ConfigureLogging(this.ConfigureLogging)
+                .Configure(this.Configure)
                 .UseSetting(WebHostDefaults.ApplicationKey, Assembly.GetEntryAssembly()!.GetName().Name)
             );
         }
@@ -95,6 +90,23 @@ namespace AppBrix.Web.Server
         private void ApplicationStopping() => this.App.GetEventHub().Raise(new HostApplicationStopping());
 
         private void ApplicationStopped() => this.App.GetEventHub().Raise(new HostApplicationStopped());
+
+        private void Configure(IApplicationBuilder appBuilder)
+        {
+            this.App.GetEventHub().Subscribe<IHostApplicationStopped>(this.OnApplicationStopped);
+            var applicationLifetime = appBuilder.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
+            applicationLifetime.ApplicationStarted.Register(this.ApplicationStarted);
+            applicationLifetime.ApplicationStopping.Register(this.ApplicationStopping);
+            applicationLifetime.ApplicationStopped.Register(this.ApplicationStopped);
+            var client = appBuilder.ApplicationServices.GetService<IHttpClientFactory>();
+            if (client != null)
+                this.App.Container.Register(client);
+            this.App.GetEventHub().Raise(new ConfigureApplication(appBuilder));
+        }
+
+        private void ConfigureLogging(ILoggingBuilder logging) => logging.ClearProviders().AddProvider(this.App.Get<ILoggerProvider>());
+
+        private void ConfigureServices(IServiceCollection services) => services.AddSingleton(this.App).AddControllers().AddJsonOptions(this.AddJsonOptions);
 
         private void OnApplicationStopped(IHostApplicationStopped _) => this.App.Stop();
         #endregion

@@ -53,7 +53,7 @@ namespace AppBrix.WebApp
             typeof(TimerScheduledEventsModule),
             typeof(Factory.FactoryModule),
             typeof(Logging.LoggingModule),
-            //typeof(Logging.Console.ConsoleLoggerModule),
+            //typeof(Logging.Console.ConsoleLoggingModule),
             typeof(FileLoggingModule),
             typeof(PermissionsModule),
             typeof(RandomModule),
@@ -76,6 +76,7 @@ namespace AppBrix.WebApp
         {
             this.booksService.Initialize(context);
             this.App.Container.Register(this.booksService);
+            this.App.GetEventHub().Subscribe<IConfigureHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
             this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
             this.App.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
         }

@@ -1,8 +1,8 @@
 ﻿using AppBrix.Configuration;
 using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Yaml;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace AppBrix.WebApp
 {
@@ -10,8 +10,8 @@ namespace AppBrix.WebApp
     {
         public static void Main(string[] args)
         {
-            WebHost.CreateDefaultBuilder(args)
-                .UseApp(App.Start<WebAppMainModule>(new ConfigService(
+            Host.CreateDefaultBuilder(args)
+                .UseWebApp(App.Start<WebAppMainModule>(new ConfigService(
                     new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer())))
                 .Build()
                 .Run();
