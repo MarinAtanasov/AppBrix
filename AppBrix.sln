@@ -13,13 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB
 		Test.ps1 = Test.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{F6BC1FBE-D2EC-42E4-B760-1D919EA0A3A3}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9C8A720D-7382-4C91-9B62-86EB554B2C29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FE5803DF-2805-4190-AE4C-82E778BC2106}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{F6BC1FBE-D2EC-42E4-B760-1D919EA0A3A3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{32FF1B46-A25D-406E-9F71-1FD25A3F52E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.ConsoleApp", "Applications\AppBrix.ConsoleApp\AppBrix.ConsoleApp.csproj", "{80E1FF2A-A37B-460F-A3B4-98112217C883}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.WebApp", "Applications\AppBrix.WebApp\AppBrix.WebApp.csproj", "{33FE02D8-B501-4D52-96A0-EA6846DB9F43}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix", "Core\AppBrix\AppBrix.csproj", "{FA682555-B7AE-4027-A794-A2B865EB4FD2}"
 EndProject
@@ -76,10 +80,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Web.Client", "Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj", "{5DDE07B5-38AC-413E-8D36-0DEB7FB2DBF2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Web.Server", "Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj", "{2E08B1F8-B0B8-4FB3-A165-9D774361F7C3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.ConsoleApp", "Projects\AppBrix.ConsoleApp\AppBrix.ConsoleApp.csproj", "{80E1FF2A-A37B-460F-A3B4-98112217C883}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.WebApp", "Projects\AppBrix.WebApp\AppBrix.WebApp.csproj", "{33FE02D8-B501-4D52-96A0-EA6846DB9F43}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Caching.Memory.Tests", "Tests\AppBrix.Caching.Memory.Tests\AppBrix.Caching.Memory.Tests.csproj", "{E1152B20-8C64-4F57-A50D-1BC2742B89B4}"
 EndProject
