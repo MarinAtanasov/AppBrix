@@ -19,7 +19,7 @@
     <PackageId>AppBrix.WebApp</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Add SourceLink to package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 5.0.4.</PackageReleaseNotes>
     <PackageTags>AppBrix Web Application</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -27,7 +27,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.21.0</Version>
+    <Version>0.22.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

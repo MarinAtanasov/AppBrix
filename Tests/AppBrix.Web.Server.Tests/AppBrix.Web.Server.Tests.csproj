@@ -20,14 +20,14 @@
     <PackageId>AppBrix.Web.Server.Tests</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Add SourceLink to package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 5.0.4.</PackageReleaseNotes>
     <PackageTags>AppBrix Web Server Tests</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.21.0</Version>
+    <Version>0.22.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
