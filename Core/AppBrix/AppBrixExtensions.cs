@@ -1,10 +1,12 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AppBrix
 {
@@ -34,6 +36,38 @@ namespace AppBrix
             var dependencies = new List<Type>();
             AppBrixExtensions.GetAllDependencies(module.GetType(), dependencies, new HashSet<Type>());
             return dependencies;
+        }
+
+        /// <summary>
+        /// Sorts the modules by assembly load priority based on assembly references.
+        /// </summary>
+        /// <param name="modules">The modules to be sorted.</param>
+        /// <returns>The sorted modules.</returns>
+        internal static IEnumerable<ModuleInfo> SortByPriority(this IEnumerable<ModuleInfo> modules)
+        {
+            var sortedModuleInfos = new List<ModuleInfo>();
+            var remainingList = new LinkedList<(ModuleInfo info, Type type, List<Type> dependencies)>(
+                modules.Select(x => (x, x.Module.GetType(), x.Module.Dependencies.ToList()))
+            );
+            var remainingHash = new HashSet<Type>(remainingList.Select(x => x.type));
+
+            var current = remainingList.First;
+            while (current != null)
+            {
+                if (current.Value.dependencies.Any(remainingHash.Contains))
+                {
+                    current = current.Next;
+                }
+                else
+                {
+                    sortedModuleInfos.Add(current.Value.info);
+                    remainingHash.Remove(current.Value.type);
+                    remainingList.Remove(current);
+                    current = remainingList.First;
+                }
+            }
+
+            return sortedModuleInfos;
         }
 
         private static void GetAllDependencies(Type type, List<Type> dependencies, HashSet<Type> unique)

@@ -11,11 +11,19 @@ namespace AppBrix.Tests.Mocks
     {
         public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
 
+        public bool IsConfigured { get; private set; }
+
         public bool IsInstalled { get; private set; }
 
-        public bool IsUpgraded { get; private set; }
-
         public bool IsUninstalled { get; private set; }
+
+        protected override void Configure(IConfigureContext context)
+        {
+            if (this.App != context.App)
+                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+
+            this.IsConfigured = true;
+        }
 
         protected override void Install(IInstallContext context)
         {
@@ -31,14 +39,6 @@ namespace AppBrix.Tests.Mocks
                 throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
             this.IsUninstalled = true;
-        }
-
-        protected override void Upgrade(IUpgradeContext context)
-        {
-            if (this.App != context.App)
-                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
-
-            this.IsUpgraded = true;
         }
     }
 }

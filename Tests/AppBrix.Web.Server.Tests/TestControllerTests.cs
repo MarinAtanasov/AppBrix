@@ -133,7 +133,7 @@ namespace AppBrix.Web.Server.Tests
 
         private void TestPerformanceWebServerInternal(IApp app)
         {
-            for (var i = 0; i < 120; i++)
+            for (var i = 0; i < 100; i++)
             {
                 app.GetFactoryService()
                     .GetHttpRequest()

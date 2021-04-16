@@ -6,9 +6,9 @@ using System;
 namespace AppBrix.Lifecycle
 {
     /// <summary>
-    /// Context passed down during application installation to install an <see cref="IInstallable"/> object.
+    /// Context passed down during application installation to configure an <see cref="IInstallable"/> object.
     /// </summary>
-    public interface IInstallContext
+    public interface IConfigureContext
     {
         /// <summary>
         /// Gets the current application.

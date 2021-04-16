@@ -1,5 +1,4 @@
-﻿using AppBrix.Lifecycle;
-using AppBrix.Modules;
+﻿using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 
@@ -38,15 +37,6 @@ namespace AppBrix.ConsoleApp
             typeof(Web.Client.WebClientModule),
             //typeof(Web.Server.WebServerModule)
         };
-        #endregion
-
-        #region Public and overriden methods
-        protected override void Install(IInstallContext context)
-        {
-            base.Install(context);
-            this.App.ConfigService.GetLoggingConfig().Async = false;
-            context.RequestedAction = RequestedAction.Restart;
-        }
         #endregion
     }
 }

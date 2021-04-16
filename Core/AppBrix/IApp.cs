@@ -40,7 +40,6 @@ namespace AppBrix
             this.Start();
         }
 
-
         /// <summary>
         /// Initializes the applicaiton and all of its modules.
         /// </summary>

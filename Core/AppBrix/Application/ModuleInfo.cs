@@ -3,9 +3,6 @@
 //
 using AppBrix.Configuration;
 using AppBrix.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AppBrix.Application
 {
@@ -38,40 +35,6 @@ namespace AppBrix.Application
         /// Gets the initial status of the module when this instance of <see cref="ModuleInfo"/> was created.
         /// </summary>
         public ModuleStatus Status { get; }
-        #endregion
-
-        #region Public and overriden methods
-        /// <summary>
-        /// Sorts the modules by assembly load priority based on assembly references.
-        /// </summary>
-        /// <param name="modules">The modules to be sorted.</param>
-        /// <returns>The sorted modules.</returns>
-        public static IEnumerable<ModuleInfo> SortByPriority(IEnumerable<ModuleInfo> modules)
-        {
-            var sortedModuleInfos = new List<ModuleInfo>();
-            var remainingList = new LinkedList<(ModuleInfo info, Type type, List<Type> dependencies)>(
-                modules.Select(x => (x, x.Module.GetType(), x.Module.Dependencies.ToList()))
-            );
-            var remainingHash = new HashSet<Type>(remainingList.Select(x => x.type));
-
-            var current = remainingList.First;
-            while (current != null)
-            {
-                if (current.Value.dependencies.Any(remainingHash.Contains))
-                {
-                    current = current.Next;
-                }
-                else
-                {
-                    sortedModuleInfos.Add(current.Value.info);
-                    remainingHash.Remove(current.Value.type);
-                    remainingList.Remove(current);
-                    current = remainingList.First;
-                }
-            }
-
-            return sortedModuleInfos;
-        }
         #endregion
     }
 }

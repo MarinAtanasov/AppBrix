@@ -88,11 +88,11 @@ namespace AppBrix.Tests
             module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
             module.IsInstalled.Should().BeTrue("Install should be called after starting the application");
-            module.IsUpgraded.Should().BeFalse("Upgrade should not be called after starting the application");
+            module.IsConfigured.Should().BeFalse("Configure should not be called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             app.Uninitialize();
             module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-            module.IsUpgraded.Should().BeFalse("Upgrade should not be called after uninitializing the application");
+            module.IsConfigured.Should().BeFalse("Configure should not be called after uninitializing the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
             app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName())
@@ -111,12 +111,11 @@ namespace AppBrix.Tests
             var module = this.GetModules(app).Select(x => x.Module).OfType<SimpleInstallableModuleMock>().Single();
             module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-            module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-            module.IsUpgraded.Should().BeTrue("Upgrade should be called after starting the application");
+            module.IsInstalled.Should().BeTrue("Install should not be called after starting the application");
+            module.IsConfigured.Should().BeTrue("Configure should be called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             app.Uninitialize();
             module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-            module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
             moduleConfig = app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName());
@@ -133,12 +132,12 @@ namespace AppBrix.Tests
             module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
             module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-            module.IsUpgraded.Should().BeFalse("Upgrade should be not called after starting the application");
+            module.IsConfigured.Should().BeFalse("Configure should be not called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             app.Uninitialize();
             module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
             module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
-            module.IsUpgraded.Should().BeFalse("Upgrade should not be called after uninitializing the application");
+            module.IsConfigured.Should().BeFalse("Configure should not be called after uninitializing the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
             app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName())
@@ -157,15 +156,14 @@ namespace AppBrix.Tests
             var module = this.GetModules(app).Select(x => x.Module).OfType<SimpleInstallableModuleMock>().Single();
             module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-            module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-            module.IsUpgraded.Should().BeTrue("Upgrade should be called after starting the application");
+            module.IsInstalled.Should().BeTrue("Install should be called after starting the application");
+            module.IsConfigured.Should().BeTrue("Configure should be called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             moduleConfig = app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName());
             moduleConfig.Status = ModuleStatus.Uninstalling;
             app.Uninitialize();
             module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-            module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
             module.IsUninstalled.Should().BeTrue("Uninstall should be called after uninitializing the application");
             moduleConfig = app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName());
@@ -186,7 +184,7 @@ namespace AppBrix.Tests
             var module = this.GetModules(app).Select(x => x.Module).OfType<SimpleInstallableModuleMock>().Single();
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
             module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-            module.IsUpgraded.Should().BeFalse("Upgrade should not be called after starting the application");
+            module.IsConfigured.Should().BeFalse("Configure should not be called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             moduleConfig = app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName());
@@ -217,7 +215,7 @@ namespace AppBrix.Tests
             module.IsInitialized.Should().BeFalse("Initialize should not be called after starting the application");
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
             module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-            module.IsUpgraded.Should().BeFalse("Upgrade should not be called after starting the application");
+            module.IsConfigured.Should().BeFalse("Configure should not be called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             app.Uninitialize();
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called after uninitializing the application");
@@ -258,7 +256,7 @@ namespace AppBrix.Tests
 
         private void TestPerformanceReinitializeInternal(IApp app)
         {
-            for (var i = 0; i < 5000; i++)
+            for (var i = 0; i < 4000; i++)
             {
                 app.Reinitialize();
             }
@@ -275,7 +273,7 @@ namespace AppBrix.Tests
         private void TestPerformanceGetDependenciesInternal()
         {
             var module = new SimpleEmptyModuleMock();
-            for (var i = 0; i < 90; i++)
+            for (var i = 0; i < 80; i++)
             {
                 var _ = module.Dependencies.ToList();
             }

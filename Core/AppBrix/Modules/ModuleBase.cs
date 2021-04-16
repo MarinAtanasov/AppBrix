@@ -34,20 +34,19 @@ namespace AppBrix.Modules
         #endregion
 
         #region Public and overriden methods
+        void IInstallable.Configure(IConfigureContext context)
+        {
+            this.App = context.App;
+            this.Configure(context);
+            this.App = null;
+        }
+
         void IInstallable.Install(IInstallContext context)
         {
             this.App = context.App;
             this.Install(context);
             this.App = null;
         }
-
-        void IInstallable.Upgrade(IUpgradeContext context)
-        {
-            this.App = context.App;
-            this.Upgrade(context);
-            this.App = null;
-        }
-
 
         void IInstallable.Uninstall(IUninstallContext context)
         {
@@ -71,6 +70,14 @@ namespace AppBrix.Modules
 
         #region Protected methods
         /// <summary>
+        /// Configures the module by making any changes to the configuration required for it to be installed and initialized in the future.
+        /// Automatically called by <see cref="ModuleBase.Install"/>
+        /// There is no need to call the base method when overriding.
+        /// </summary>
+        /// <param name="context">The configure context.</param>
+        protected virtual void Configure(IConfigureContext context) { }
+
+        /// <summary>
         /// Installs the module by making any permanent changes required for it to be initialized in the future.
         /// Automatically called by <see cref="ModuleBase.Install"/>
         /// There is no need to call the base method when overriding.
@@ -79,15 +86,7 @@ namespace AppBrix.Modules
         protected virtual void Install(IInstallContext context) { }
 
         /// <summary>
-        /// Upgrades the module by making any permanent changes required for it to be initialized in the future.
-        /// Automatically called by <see cref="ModuleBase.Upgrade"/>
-        /// There is no need to call the base method when overriding.
-        /// </summary>
-        /// <param name="context">The upgrade context.</param>
-        protected virtual void Upgrade(IUpgradeContext context) { }
-
-        /// <summary>
-        /// Uninstalls the module by reverting any changes from <see cref="ModuleBase.Install"/> or <see cref="ModuleBase.Upgrade"/>.
+        /// Uninstalls the module by reverting any changes from <see cref="ModuleBase.Install"/>.
         /// Automatically called by <see cref="ModuleBase.Uninstall"/>.
         /// There is no need to call the base method when overriding.
         /// </summary>

@@ -10,16 +10,16 @@ namespace AppBrix.Modules
 {
     /// <summary>
     /// Base class for main application modules. Can be inherited by modules inside console or web apps.
-    /// This class will add all dependent modules to the application config during installation.
+    /// This class will add all dependent modules to the application config during configuration.
     /// </summary>
     public abstract class MainModuleBase : ModuleBase
     {
         #region Protected methods
         /// <summary>
-        /// Installs all module dependencies of the current module recursively to the <see cref="AppConfig"/>.
+        /// Adds and sorts all module dependencies of the current module recursively in the <see cref="AppConfig"/>.
         /// </summary>
-        /// <param name="context">The install context.</param>
-        protected override void Install(IInstallContext context)
+        /// <param name="context">The configure context.</param>
+        protected override void Configure(IConfigureContext context)
         {
             var configModules = this.App.ConfigService.GetAppConfig().Modules;
             var modules = this.GetAllDependencies().Select(ModuleConfigElement.Create).Reverse();
@@ -55,19 +55,6 @@ namespace AppBrix.Modules
                 }
             }
         }
-
-        /// <summary>
-        /// Adds all new module dependencies of the current module recursively to the <see cref="AppConfig"/>.
-        /// </summary>
-        /// <param name="context">The upgrade context.</param>
-        protected override void Upgrade(IUpgradeContext context) => this.Install(context);
-
-        /// <summary>
-        /// Throws <see cref="NotSupportedException"/> unless overriden in a child class.
-        /// </summary>
-        /// <param name="context">The uninstall context.</param>
-        protected override void Uninstall(IUninstallContext context) =>
-            throw new NotSupportedException($"Module {this.GetType().GetAssemblyQualifiedName()} does not support uninstallation");
         #endregion
     }
 }

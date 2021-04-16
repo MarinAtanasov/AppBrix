@@ -11,16 +11,16 @@ namespace AppBrix.Lifecycle
     public interface IInstallable
     {
         /// <summary>
+        /// Used for updating the configurations before installing the object.
+        /// </summary>
+        /// <param name="context">The configure context.</param>
+        void Configure(IConfigureContext context);
+
+        /// <summary>
         /// Used for permanent changes required by the object.
         /// </summary>
         /// <param name="context">The install context.</param>
         void Install(IInstallContext context);
-
-        /// <summary>
-        /// Used to upgrade any permanent changes to the latest version.
-        /// </summary>
-        /// <param name="context">The upgrade context.</param>
-        void Upgrade(IUpgradeContext context);
 
         /// <summary>
         /// Cleans up any permanent changes made by the install method.

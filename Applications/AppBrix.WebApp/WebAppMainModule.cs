@@ -65,13 +65,6 @@ namespace AppBrix.WebApp
         #endregion
 
         #region Public and overriden methods
-        protected override void Install(IInstallContext context)
-        {
-            base.Install(context);
-            this.App.ConfigService.GetLoggingConfig().Async = false;
-            context.RequestedAction = RequestedAction.Restart;
-        }
-
         protected override void Initialize(IInitializeContext context)
         {
             this.booksService.Initialize(context);

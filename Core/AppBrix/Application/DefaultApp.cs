@@ -35,7 +35,7 @@ namespace AppBrix.Application
         public bool IsInitialized { get; private set; }
         #endregion
 
-        #region IPublic and overriden methods
+        #region Public and overriden methods
         public void Start()
         {
             lock (this.modules)
@@ -45,7 +45,6 @@ namespace AppBrix.Application
 
                 this.RegisterModules();
                 this.Initialize();
-                this.ConfigService.Save();
             }
         }
 
@@ -58,7 +57,6 @@ namespace AppBrix.Application
 
                 this.Uninitialize();
                 this.UnregisterModules();
-                this.ConfigService.Save();
             }
         }
 
@@ -71,7 +69,14 @@ namespace AppBrix.Application
                 if (this.IsInitialized)
                     return; // The application is already initialized.
 
-                this.InitializeInternal();
+                try
+                {
+                    this.InitializeInternal();
+                }
+                finally
+                {
+                    this.ConfigService.Save();
+                }
             }
         }
 
@@ -84,40 +89,124 @@ namespace AppBrix.Application
                 if (!this.IsInitialized)
                     return; // The application is not initialized.
 
-                this.UninitializeInternal(this.modules.Count - 1);
+                try
+                {
+                    this.UninitializeInternal(this.modules.Count - 1);
+                }
+                finally
+                {
+                    this.ConfigService.Save();
+                }
             }
         }
         #endregion
 
-        #region Private methods
+        #region Application lifecycle
+        private void RegisterModules()
+        {
+            this.IsStarted = true;
+
+            var moduleInfos = this.ConfigService.GetAppConfig().Modules
+                .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
+                .Select(m => new ModuleInfo((IModule)Type.GetType(m.Type).CreateObject(), m))
+                .SortByPriority();
+            this.modules.AddRange(moduleInfos);
+        }
+
+        private void UnregisterModules()
+        {
+            this.modules.Clear();
+
+            this.IsStarted = false;
+        }
+
         private void InitializeInternal()
         {
             this.IsInitialized = true;
 
+            this.ConfigureModules();
+            this.InstallAndInitializeModules();
+        }
+
+        private void UninitializeInternal(int lastInitialized)
+        {
+            for (var i = lastInitialized; i >= 0; i--)
+            {
+                var moduleInfo = this.modules[i];
+                this.UninitializeModule(moduleInfo);
+                this.UninstallModule(moduleInfo);
+            }
+
+            for (var i = 0; i < this.modules.Count; i++)
+            {
+                var moduleInfo = this.modules[i];
+                if (moduleInfo.Status != moduleInfo.Config.Status)
+                    this.modules[i] = new ModuleInfo(moduleInfo.Module, moduleInfo.Config);
+            }
+
+            this.IsInitialized = false;
+        }
+        #endregion
+
+        #region Modules lifecycle
+        private void ConfigureModules()
+        {
             for (var i = 0; i < this.modules.Count; i++)
             {
                 var moduleInfo = this.modules[i];
                 if (moduleInfo.Status != ModuleStatus.Enabled)
                     continue;
 
-                var requestedAction = this.InstallOrUpgradeModule(moduleInfo);
-                if (requestedAction == RequestedAction.None)
-                {
-                    var initializeContext = new InitializeContext(this);
-                    moduleInfo.Module.Initialize(initializeContext);
-                    requestedAction = initializeContext.RequestedAction;
-                }
+                var requestedAction = this.ConfigureModule(moduleInfo);
                 switch (requestedAction)
                 {
                     case RequestedAction.None:
                         break;
                     case RequestedAction.Reinitialize:
-                        this.ConfigService.Save();
+                        i = -1;
+                        break;
+                    case RequestedAction.Restart:
+                        this.UnregisterModules();
+                        this.Start();
+                        return;
+                    default:
+                        throw new ArgumentOutOfRangeException($@"{nameof(RequestedAction)}: {requestedAction}");
+                }
+            }
+        }
+
+        private RequestedAction ConfigureModule(ModuleInfo moduleInfo)
+        {
+            var version = moduleInfo.Module.GetType().Assembly.GetName().Version;
+            if (moduleInfo.Config.Version is null || moduleInfo.Config.Version < version)
+            {
+                var context = new ConfigureContext(this, moduleInfo.Config.Version ?? DefaultApp.EmptyVersion);
+                moduleInfo.Module.Configure(context);
+                return context.RequestedAction;
+            }
+            return RequestedAction.None;
+        }
+
+        private void InstallAndInitializeModules()
+        {
+            for (var i = 0; i < this.modules.Count; i++)
+            {
+                var moduleInfo = this.modules[i];
+                if (moduleInfo.Status != ModuleStatus.Enabled)
+                    continue;
+
+                var requestedAction = this.InstallModule(moduleInfo);
+                if (requestedAction == RequestedAction.None)
+                    requestedAction = this.InitializeModule(moduleInfo);
+                switch (requestedAction)
+                {
+                    case RequestedAction.None:
+                        break;
+                    case RequestedAction.Reinitialize:
                         this.UninitializeInternal(i - 1);
-                        this.Initialize();
+                        this.InitializeInternal();
                         return;
                     case RequestedAction.Restart:
-                        this.ConfigService.Save();
                         this.UninitializeInternal(i - 1);
                         this.UnregisterModules();
                         this.Start();
@@ -128,85 +217,45 @@ namespace AppBrix.Application
             }
         }
 
-        private RequestedAction InstallOrUpgradeModule(ModuleInfo moduleInfo)
+        private RequestedAction InstallModule(ModuleInfo moduleInfo)
         {
-            RequestedAction requestedAction = RequestedAction.None;
             var version = moduleInfo.Module.GetType().Assembly.GetName().Version;
-            if (moduleInfo.Config.Version is null)
+            if (moduleInfo.Config.Version is null || moduleInfo.Config.Version < version)
             {
-                var context = new InstallContext(this);
+                var context = new InstallContext(this, moduleInfo.Config.Version ?? DefaultApp.EmptyVersion);
                 moduleInfo.Module.Install(context);
-                requestedAction = context.RequestedAction;
                 moduleInfo.Config.Version = version;
+                return context.RequestedAction;
             }
-            else if (moduleInfo.Config.Version < version)
-            {
-                var context = new UpgradeContext(this, moduleInfo.Config.Version);
-                moduleInfo.Module.Upgrade(context);
-                requestedAction = context.RequestedAction;
-                moduleInfo.Config.Version = version;
-            }
-
-            return requestedAction;
+            return RequestedAction.None;
         }
 
-        private void UninitializeInternal(int lastInitialized)
+        private RequestedAction InitializeModule(ModuleInfo moduleInfo)
         {
-            for (var i = lastInitialized; i >= 0; i--)
-            {
-                var moduleInfo = this.modules[i];
-                if (moduleInfo.Status == ModuleStatus.Enabled)
-                    moduleInfo.Module.Uninitialize();
-
-                if (moduleInfo.Config.Status == ModuleStatus.Uninstalling)
-                {
-                    moduleInfo.Module.Uninstall(new UninstallContext(this));
-                    moduleInfo.Config.Status = ModuleStatus.Disabled;
-                    moduleInfo.Config.Version = null;
-                    this.ConfigService.Save<AppConfig>();
-                }
-            }
-
-            for (var i = 0; i < this.modules.Count; i++)
-            {
-                var moduleInfo = this.modules[i];
-                if (moduleInfo.Status != moduleInfo.Config.Status)
-                {
-                    this.modules[i] = new ModuleInfo(moduleInfo.Module, moduleInfo.Config);
-                }
-            }
-
-            this.IsInitialized = false;
+            var initializeContext = new InitializeContext(this);
+            moduleInfo.Module.Initialize(initializeContext);
+            return initializeContext.RequestedAction;
         }
 
-        private void RegisterModules()
+        private void UninitializeModule(ModuleInfo moduleInfo)
         {
-            this.IsStarted = true;
+            if (moduleInfo.Status == ModuleStatus.Enabled)
+                moduleInfo.Module.Uninitialize();
+        }
 
-            var moduleInfos = this.GetModuleInfos();
-            moduleInfos = ModuleInfo.SortByPriority(moduleInfos);
-            foreach (var module in moduleInfos)
+        private void UninstallModule(ModuleInfo moduleInfo)
+        {
+            if (moduleInfo.Config.Status == ModuleStatus.Uninstalling)
             {
-                this.modules.Add(module);
+                moduleInfo.Module.Uninstall(new UninstallContext(this));
+                moduleInfo.Config.Status = ModuleStatus.Disabled;
+                moduleInfo.Config.Version = null;
             }
         }
-
-        private void UnregisterModules()
-        {
-            this.modules.Clear();
-
-            this.IsStarted = false;
-        }
-
-        private IEnumerable<ModuleInfo> GetModuleInfos() =>
-            this.ConfigService.GetAppConfig().Modules
-                .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
-                .Select(m => new ModuleInfo(this.CreateModule(m), m));
-
-        private IModule CreateModule(ModuleConfigElement element) => (IModule)Type.GetType(element.Type).CreateObject();
         #endregion
 
         #region Private fields and constants
+        private static readonly Version EmptyVersion = new Version();
         private readonly List<ModuleInfo> modules = new List<ModuleInfo>();
         #endregion
     }
