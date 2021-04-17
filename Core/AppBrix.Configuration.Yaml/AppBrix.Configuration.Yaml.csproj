@@ -18,14 +18,14 @@
     <PackageId>AppBrix.Configuration.Yaml</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 5.0.4.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 5.0.5.</PackageReleaseNotes>
     <PackageTags>AppBrix Config YAML</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.22.0</Version>
+    <Version>0.23.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
