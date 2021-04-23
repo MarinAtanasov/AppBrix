@@ -11,9 +11,9 @@ AppBrix has been created with the following priorities:
 ## Setup
 ```Bash
 # Clone project locally.
-git clone git@github.com:MarinAtanasov/AppBrix.NetCore.git
+git clone git@github.com:MarinAtanasov/AppBrix.git
 # Go to project root directory.
-cd AppBrix.NetCore
+cd AppBrix
 # Restore nuget dependencies and build the solution.
 dotnet build AppBrix.sln
 ```

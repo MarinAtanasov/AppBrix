@@ -14,15 +14,15 @@
     <IncludeSymbols>true</IncludeSymbols>
     <Nullable>enable</Nullable>
     <PackageIcon>icon-64x64.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix.NetCore/master/icon-64x64.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix/master/icon-64x64.png</PackageIconUrl>
     <PackageId>AppBrix.Container</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
     <PackageReleaseNotes>Upgrade .NET to 5.0.5.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Container</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.NetCore</RepositoryUrl>
+    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Version>0.23.0</Version>
