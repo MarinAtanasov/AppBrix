@@ -34,7 +34,7 @@ namespace AppBrix
         /// <summary>
         /// Unloads and reloads the application.
         /// </summary>
-        public void Restart()
+        void Restart()
         {
             this.Stop();
             this.Start();
@@ -53,7 +53,7 @@ namespace AppBrix
         /// <summary>
         /// Uninitializes and reinitializes the application.
         /// </summary>
-        public void Reinitialize()
+        void Reinitialize()
         {
             this.Uninitialize();
             this.Initialize();

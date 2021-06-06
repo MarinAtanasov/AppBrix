@@ -16,7 +16,7 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <typeparam name="T">The type of the configuration to be read.</typeparam>
         /// <returns>The read configuration.</returns>
-        public string ReadConfig<T>() where T : class, IConfig => this.ReadConfig(typeof(T));
+        string ReadConfig<T>() where T : class, IConfig => this.ReadConfig(typeof(T));
 
         /// <summary>
         /// Reads a configuration by a given configuration type.
@@ -31,7 +31,7 @@ namespace AppBrix.Configuration
         /// </summary>
         /// <typeparam name="T">The type of the configuration.</typeparam>
         /// <param name="config">The configuration.</param>
-        public void WriteConfig<T>(string config) where T : class, IConfig => this.WriteConfig(config, typeof(T));
+        void WriteConfig<T>(string config) where T : class, IConfig => this.WriteConfig(config, typeof(T));
 
         /// <summary>
         /// Writes a configuraton.

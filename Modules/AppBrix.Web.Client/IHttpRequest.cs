@@ -63,7 +63,7 @@ namespace AppBrix.Web.Client
         /// </summary>
         /// <param name="method">The HTTP method.</param>
         /// <returns>The current REST request.</returns>
-        public IHttpRequest SetMethod(HttpMethod method) => this.SetMethod(method.ToString().ToUpperInvariant());
+        IHttpRequest SetMethod(HttpMethod method) => this.SetMethod(method.ToString().ToUpperInvariant());
 
         /// <summary>
         /// Sets the HTTP method which will be used when making the request.

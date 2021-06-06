@@ -16,7 +16,7 @@ namespace AppBrix.Permissions
         /// </summary>
         /// <param name="role">The parent role.</param>
         /// <param name="child">The child role.</param>
-        public void AddChild(string role, string child) => this.AddParent(child, role);
+        void AddChild(string role, string child) => this.AddParent(child, role);
 
         /// <summary>
         /// Adds a parent role to the specified role.

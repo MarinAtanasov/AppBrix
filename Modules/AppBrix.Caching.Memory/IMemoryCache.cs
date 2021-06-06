@@ -18,7 +18,7 @@ namespace AppBrix.Caching.Memory
         /// <typeparam name="T">The type of the item to return.</typeparam>
         /// <param name="key">The key which is used to store the object in the cache.</param>
         /// <returns>The cached object. Returns null if no object is found.</returns>
-        public T Get<T>(object key) => (T)(this.Get(key) ?? default(T)!);
+        T Get<T>(object key) => (T)(this.Get(key) ?? default(T)!);
 
         /// <summary>
         /// Gets a cached object by its key.

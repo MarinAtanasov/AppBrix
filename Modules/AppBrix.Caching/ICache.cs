@@ -28,7 +28,7 @@ namespace AppBrix.Caching
         /// <param name="key">The key which is used to store the object in the cache.</param>
         /// <param name="token">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns></returns>
-        public async Task<T> Get<T>(string key, CancellationToken token = default) => (T)(await this.Get(key, typeof(T), token).ConfigureAwait(false) ?? default(T));
+        async Task<T> Get<T>(string key, CancellationToken token = default) => (T)(await this.Get(key, typeof(T), token).ConfigureAwait(false) ?? default(T));
         #nullable restore
 
         /// <summary>
