@@ -12,13 +12,13 @@ namespace AppBrix.Time
     {
         /// <summary>
         /// Gets the current time.
-        /// This should be used instead of DateTime.Now or DateTime.UtcNow.
+        /// This should be used instead of <see cref="DateTime.Now"/> or <see cref="DateTime.UtcNow"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The current date and time.</returns>
         DateTime GetTime();
 
         /// <summary>
-        /// Converts the specified time to the configured application time kind.
+        /// Converts the specified time to the configured application <see cref="DateTimeKind"/>.
         /// </summary>
         /// <param name="time">The specified time.</param>
         /// <returns>The converted time.</returns>
@@ -32,10 +32,10 @@ namespace AppBrix.Time
         string ToString(DateTime time);
 
         /// <summary>
-        /// Converts a given <see cref="string"/> to a <see cref="DateTime"/> in a system time kind.
+        /// Converts a given <see cref="string"/> to a <see cref="DateTime"/> in the configured <see cref="DateTimeKind"/>.
         /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
+        /// <param name="time">The date and time in string representation.</param>
+        /// <returns>The date and time.</returns>
         DateTime ToDateTime(string time);
     }
 }
