@@ -21,7 +21,7 @@ namespace AppBrix.Random.Tests
         public void TestGenerateRandomItemsNullItems()
         {
             var service = this.app.GetRandomService();
-            Action action = () => service.GenerateRandomItems<object>(null);
+            Action action = () => service.GetRandomItems<object>(null);
             action.Should().Throw<ArgumentNullException>("items should not be null.");
         }
 
@@ -29,28 +29,9 @@ namespace AppBrix.Random.Tests
         public void TestGenerateRandomItemsEmptyItems()
         {
             var service = this.app.GetRandomService();
-            var generated = service.GenerateRandomItems(Array.Empty<object>());
-            generated.Should().NotBeNull($"{nameof(service.GenerateRandomItems)} should never return null.");
-            generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GenerateRandomItems)} should return an empty array.");
-        }
-
-        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestGenerateRandomItemsUnique()
-        {
-            var service = this.app.GetRandomService();
-            var original = Enumerable.Range(0, 1000).ToList();
-            var items = original.ToList();
-            var generated = service.GenerateRandomItems(items).ToList();
-
-            items.Count.Should().Be(original.Count, "The collection size should not be modified.");
-            Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
-
-            generated.Count.Should().Be(original.Count, "Maximum unique generated items should be the same as original count.");
-            Enumerable.Range(0, original.Count).Any(x => generated[x] != original[x]).Should().BeTrue("Some items should have been shuffled.");
-
-            generated.Sort();
-            items.Sort();
-            Enumerable.Range(0, original.Count).All(x => generated[x] == items[x]).Should().BeTrue("Generated collection should contain the original items.");
+            var generated = service.GetRandomItems(Array.Empty<object>());
+            generated.Should().NotBeNull($"{nameof(service.GetRandomItems)} should never return null.");
+            generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GetRandomItems)} should return an empty array.");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -59,7 +40,7 @@ namespace AppBrix.Random.Tests
             var service = this.app.GetRandomService();
             var original = Enumerable.Range(0, 1000).ToList();
             var items = original.ToList();
-            var generated = service.GenerateRandomItems(items, unique: false);
+            var generated = service.GetRandomItems(items);
 
             items.Count.Should().Be(original.Count, "The collection size should not be modified.");
             Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
@@ -81,6 +62,42 @@ namespace AppBrix.Random.Tests
             moved.Should().BeTrue("Some items should have been shuffled.");
             repeated.Should().BeTrue("Some items should be seen more than once.");
             total.Should().BeGreaterThan(original.Count, "Item generation should continue after exhausting the collection.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateUniqueItemsNullItems()
+        {
+            var service = this.app.GetRandomService();
+            Action action = () => service.GetUniqueItems<object>(null);
+            action.Should().Throw<ArgumentNullException>("items should not be null.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateUniqueItemsEmptyItems()
+        {
+            var service = this.app.GetRandomService();
+            var generated = service.GetUniqueItems(Array.Empty<object>());
+            generated.Should().NotBeNull($"{nameof(service.GetUniqueItems)} should never return null.");
+            generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GetUniqueItems)} should return an empty array.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateUniqueItemsUnique()
+        {
+            var service = this.app.GetRandomService();
+            var original = Enumerable.Range(0, 1000).ToList();
+            var items = original.ToList();
+            var generated = service.GetUniqueItems(items).ToList();
+
+            items.Count.Should().Be(original.Count, "The collection size should not be modified.");
+            Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
+
+            generated.Count.Should().Be(original.Count, "Maximum unique generated items should be the same as original count.");
+            Enumerable.Range(0, original.Count).Any(x => generated[x] != original[x]).Should().BeTrue("Some items should have been shuffled.");
+
+            generated.Sort();
+            items.Sort();
+            Enumerable.Range(0, original.Count).All(x => generated[x] == items[x]).Should().BeTrue("Generated collection should contain the original items.");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

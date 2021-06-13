@@ -25,42 +25,48 @@ namespace AppBrix.Random.Impl
         #endregion
 
         #region IRandomService implementation
-        public IEnumerable<T> GenerateRandomItems<T>(IReadOnlyCollection<T> items, bool unique = true)
+        public System.Random GetRandom(int? seed = null) => seed.HasValue ? new System.Random(seed.Value) : this.randomGenerator.Value;
+
+        public IEnumerable<T> GetRandomItems<T>(IReadOnlyCollection<T> items, int? seed = null)
         {
             if (items is null)
                 throw new ArgumentNullException(nameof(items));
             if (items.Count == 0)
                 return Array.Empty<T>();
 
-            return unique ? this.ShuffleInternal(items.ToList()) : this.InfiniteGenerator(items.ToList());
+            return this.InfiniteGenerator(items.ToList(), this.GetRandom(seed));
         }
 
-        public System.Random GetRandom() => this.randomGenerator.Value;
+        public IEnumerable<T> GetUniqueItems<T>(IReadOnlyCollection<T> items, int? seed = null)
+        {
+            if (items is null)
+                throw new ArgumentNullException(nameof(items));
+            if (items.Count == 0)
+                return Array.Empty<T>();
 
-        public void Shuffle<T>(IList<T> items)
+            return this.ShuffleInternal(items.ToArray(), this.GetRandom(seed));
+        }
+
+        public void Shuffle<T>(IList<T> items, int? seed = null)
         {
             if (items is null)
                 throw new ArgumentNullException(nameof(items));
             if (items.Count == 0)
                 return;
 
-            this.ShuffleInternal(items);
+            this.ShuffleInternal(items, this.GetRandom(seed));
         }
         #endregion
 
         #region Private methods
-        private IEnumerable<T> InfiniteGenerator<T>(List<T> items)
+        private IEnumerable<T> InfiniteGenerator<T>(List<T> items, System.Random random)
         {
-            var random = this.GetRandom();
             while (true)
-            {
                 yield return items[random.Next(items.Count)];
-            }
         }
 
-        private IList<T> ShuffleInternal<T>(IList<T> items)
+        private IList<T> ShuffleInternal<T>(IList<T> items, System.Random random)
         {
-            var random = this.GetRandom();
             for (var i = items.Count - 1; i > 0; i--)
             {
                 var n = random.Next(i + 1);
