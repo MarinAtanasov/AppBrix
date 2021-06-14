@@ -65,6 +65,26 @@ namespace AppBrix.Random.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateRandomItemsDifferentSeeds()
+        {
+            var service = this.app.GetRandomService();
+            var original = Enumerable.Range(0, 1000).ToList();
+            var items1 = service.GetRandomItems(original, 23).Take(original.Count).ToList();
+            var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
+            Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Generated items should be different.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateRandomItemsEqualSeeds()
+        {
+            var service = this.app.GetRandomService();
+            var original = Enumerable.Range(0, 1000).ToList();
+            var items1 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
+            var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
+            Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Generated items should be the same.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public void TestGenerateUniqueItemsNullItems()
         {
             var service = this.app.GetRandomService();
@@ -82,7 +102,7 @@ namespace AppBrix.Random.Tests
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-        public void TestGenerateUniqueItemsUnique()
+        public void TestGenerateUniqueItems()
         {
             var service = this.app.GetRandomService();
             var original = Enumerable.Range(0, 1000).ToList();
@@ -98,6 +118,26 @@ namespace AppBrix.Random.Tests
             generated.Sort();
             items.Sort();
             Enumerable.Range(0, original.Count).All(x => generated[x] == items[x]).Should().BeTrue("Generated collection should contain the original items.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateUniqueItemsDifferentSeeds()
+        {
+            var service = this.app.GetRandomService();
+            var original = Enumerable.Range(0, 1000).ToList();
+            var items1 = service.GetUniqueItems(original, 23).ToList();
+            var items2 = service.GetUniqueItems(original, 42).ToList();
+            Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Generated items should be different.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestGenerateUniqueItemsEqualSeeds()
+        {
+            var service = this.app.GetRandomService();
+            var original = Enumerable.Range(0, 1000).ToList();
+            var items1 = service.GetUniqueItems(original, 42).ToList();
+            var items2 = service.GetUniqueItems(original, 42).ToList();
+            Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Generated items should be the same.");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -151,6 +191,28 @@ namespace AppBrix.Random.Tests
             var items = Enumerable.Range(0, 1000).ToList();
             service.Shuffle(items);
             Enumerable.Range(0, items.Count).Any(x => items[x] != x).Should().BeTrue("Some items should have been shuffled.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestShuffleDifferentSeeds()
+        {
+            var service = this.app.GetRandomService();
+            var items1 = Enumerable.Range(0, 1000).ToList();
+            var items2 = Enumerable.Range(0, 1000).ToList();
+            service.Shuffle(items1, 23);
+            service.Shuffle(items2, 42);
+            Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Shuffles should be different.");
+        }
+
+        [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+        public void TestShuffleEqualSeeds()
+        {
+            var service = this.app.GetRandomService();
+            var items1 = Enumerable.Range(0, 1000).ToList();
+            var items2 = Enumerable.Range(0, 1000).ToList();
+            service.Shuffle(items1, 42);
+            service.Shuffle(items2, 42);
+            Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Both shuffles should be the same.");
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
