@@ -34,7 +34,7 @@ namespace AppBrix.Random.Impl
             if (items.Count == 0)
                 return Array.Empty<T>();
 
-            return this.InfiniteGenerator(items.ToList(), this.GetRandom(seed));
+            return this.InfiniteGenerator(items.ToArray(), this.GetRandom(seed));
         }
 
         public IEnumerable<T> GetUniqueItems<T>(IReadOnlyCollection<T> items, int? seed = null)
@@ -59,10 +59,10 @@ namespace AppBrix.Random.Impl
         #endregion
 
         #region Private methods
-        private IEnumerable<T> InfiniteGenerator<T>(List<T> items, System.Random random)
+        private IEnumerable<T> InfiniteGenerator<T>(T[] items, System.Random random)
         {
             while (true)
-                yield return items[random.Next(items.Count)];
+                yield return items[random.Next(items.Length)];
         }
 
         private IList<T> ShuffleInternal<T>(IList<T> items, System.Random random)
