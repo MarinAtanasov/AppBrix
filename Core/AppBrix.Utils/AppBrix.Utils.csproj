@@ -18,14 +18,14 @@
     <PackageId>AppBrix.Utils</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 5.0.5.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 5.0.7.</PackageReleaseNotes>
     <PackageTags>AppBrix Utils</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.23.0</Version>
+    <Version>0.24.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
