@@ -67,6 +67,8 @@ namespace AppBrix.Tests
             var app = App.Create<MainModuleMock<SimpleModuleMock>>(configService);
             configService.GetAppConfig().Modules.Should().HaveCount(1, $"{nameof(App)}.{nameof(App.Create)} should add the main module");
             app.Start();
+            var dependency = app.ConfigService.GetAppConfig().Modules[0];
+            dependency.Type.Should().Be(typeof(SimpleModuleMock).GetAssemblyQualifiedName(), "The dependency should be placed before the main module");
             configService.GetAppConfig().Modules.Should().HaveCount(2, $"Main module should add its dependencies");
             app.Stop();
             configService.GetAppConfig().Modules.Should().HaveCount(2, $"Stopping the application shouldn't change the config");
@@ -85,14 +87,13 @@ namespace AppBrix.Tests
             var app = this.CreateDefaultApp<SimpleInstallableModuleMock>();
             app.Start();
             var module = this.GetModules(app).Select(x => x.Module).OfType<SimpleInstallableModuleMock>().Single();
+            module.IsConfigured.Should().BeTrue("Configure should be called after starting the application");
+            module.IsInstalled.Should().BeTrue("Install should be called after starting the application");
             module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
             module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-            module.IsInstalled.Should().BeTrue("Install should be called after starting the application");
-            module.IsConfigured.Should().BeFalse("Configure should not be called after starting the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
             app.Uninitialize();
             module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-            module.IsConfigured.Should().BeFalse("Configure should not be called after uninitializing the application");
             module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
             app.ConfigService.GetAppConfig().Modules
                 .Single(x => x.Type == typeof(SimpleInstallableModuleMock).GetAssemblyQualifiedName())

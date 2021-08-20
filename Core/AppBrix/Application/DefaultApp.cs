@@ -167,8 +167,8 @@ namespace AppBrix.Application
                         break;
                     case RequestedAction.Restart:
                         this.UnregisterModules();
-                        this.Start();
-                        return;
+                        this.RegisterModules();
+                        goto case RequestedAction.Reinitialize;
                     default:
                         throw new ArgumentOutOfRangeException($@"{nameof(RequestedAction)}: {requestedAction}");
                 }
