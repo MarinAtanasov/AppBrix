@@ -34,6 +34,8 @@ namespace AppBrix.Logging.Impl
 
         public string CallerFile { get; }
 
+        public string CallerFileName => this.CallerFile.Split(LogEntry.DirectorySeparatorChars, StringSplitOptions.RemoveEmptyEntries)[^1];
+
         public string CallerMember { get; }
 
         public int CallerLineNumber { get; }
@@ -59,7 +61,7 @@ namespace AppBrix.Logging.Impl
             result.Append(LogEntry.Separator);
             result.Append(this.ThreadId);
             result.Append(LogEntry.Separator);
-            result.Append(this.CallerFile.Split(LogEntry.DirectorySeparatorChars, StringSplitOptions.RemoveEmptyEntries)[^1]);
+            result.Append(this.CallerFileName);
             result.Append(LogEntry.LineNumberSeparator);
             result.Append(this.CallerLineNumber);
             result.Append(LogEntry.Separator);

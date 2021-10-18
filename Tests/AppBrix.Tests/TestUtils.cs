@@ -3,9 +3,9 @@
 //
 using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
+using AppBrix.Tests.Mocks;
 using FluentAssertions;
 using System;
-using AppBrix.Tests.Mocks;
 
 namespace AppBrix.Tests
 {
