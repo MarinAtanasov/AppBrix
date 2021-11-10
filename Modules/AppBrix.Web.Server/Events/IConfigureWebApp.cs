@@ -2,18 +2,18 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Events;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
 
 namespace AppBrix.Web.Server.Events
 {
     /// <summary>
-    /// An event which is called when the <see cref="IApp"/> is being attached to the <see cref="IHost"/>.
+    /// An event which is called when the <see cref="WebApplication"/> has been built but not yet ran.
     /// </summary>
-    public interface IConfigureHost : IEvent
+    public interface IConfigureWebApp : IEvent
     {
         /// <summary>
-        /// Gets the builder for <see cref="IHost"/>.
+        /// Gets the <see cref="WebApplication"/>.
         /// </summary>
-        IHostBuilder Builder { get; }
+        WebApplication App { get; }
     }
 }

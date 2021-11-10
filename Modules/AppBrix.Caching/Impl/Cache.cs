@@ -27,7 +27,7 @@ namespace AppBrix.Caching.Impl
         public async Task<object?> Get(string key, Type type, CancellationToken token = default)
         {
             var bytes = await this.GetCache().GetAsync(key, token).ConfigureAwait(false);
-            return bytes != null ? this.GetSerializer().Deserialize(bytes, type) : null;
+            return bytes is null ? null : this.GetSerializer().Deserialize(bytes, type);
         }
 
         public Task Refresh(string key, CancellationToken token = default) => this.GetCache().RefreshAsync(key, token);

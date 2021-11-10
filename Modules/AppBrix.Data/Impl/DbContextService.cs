@@ -26,7 +26,7 @@ namespace AppBrix.Data.Impl
                 throw new ArgumentNullException(nameof(type));
 
             var factory = this.app.GetFactoryService().GetFactory(type);
-            var context = factory != null ? factory.Get() : type.CreateObject();
+            var context = factory?.Get() ?? type.CreateObject();
             (context as DbContextBase)?.Initialize(new InitializeDbContext(this.app));
             return (DbContext)context;
         }

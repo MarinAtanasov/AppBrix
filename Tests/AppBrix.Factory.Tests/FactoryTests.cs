@@ -115,7 +115,7 @@ namespace AppBrix.Factory.Tests
                 factory.Register(method, type);
             }
 
-            for (var i = 0; i < 300000; i++)
+            for (var i = 0; i < 400000; i++)
             {
                 factory.Get(type);
             }

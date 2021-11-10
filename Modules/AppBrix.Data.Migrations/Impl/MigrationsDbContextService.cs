@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
@@ -43,6 +44,7 @@ namespace AppBrix.Data.Migrations.Impl
         {
             this.app = null;
             this.config = null;
+            this.contextService = null;
             this.loggingConfig = null;
             this.dbSupportsMigrations = false;
             this.initializedContexts.Clear();
@@ -121,6 +123,9 @@ namespace AppBrix.Data.Migrations.Impl
         {
             var snapshot = this.GetSnapshot(type);
             var assemblyVersion = type.Assembly.GetName().Version;
+            if (assemblyVersion is null)
+                return;
+
             if (snapshot is null || Version.Parse(snapshot.Version) < assemblyVersion)
             {
                 var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
@@ -128,15 +133,14 @@ namespace AppBrix.Data.Migrations.Impl
                 var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
                 this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
 
-                var newVersion = type.Assembly.GetName().Version;
-                var newMigrationName = this.GenerateMigrationName(type, newVersion);
+                var newMigrationName = this.GenerateMigrationName(type, assemblyVersion);
 
                 try
                 {
                     var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
                     var migration = scaffoldedMigration.SnapshotCode != oldSnapshotCode ?
-                        this.ApplyMigration(type, newVersion, scaffoldedMigration) : null;
-                    this.AddMigration(type.Name, newVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot);
+                        this.ApplyMigration(type, assemblyVersion, scaffoldedMigration) : null;
+                    this.AddMigration(type.Name, assemblyVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot);
                 }
                 catch (InvalidOperationException)
                 {
@@ -165,12 +169,12 @@ namespace AppBrix.Data.Migrations.Impl
         {
             var trees = new List<SyntaxTree>();
 
-            if (snapshot != null)
+            if (snapshot is not null)
             {
                 trees.Add(SyntaxFactory.ParseSyntaxTree(snapshot));
             }
 
-            if (migrations != null)
+            if (migrations is not null)
             {
                 for (var i = 0; i < migrations.Length; i++)
                 {
@@ -186,9 +190,7 @@ namespace AppBrix.Data.Migrations.Impl
         private IEnumerable<MetadataReference> GetReferences()
         {
             var entryAssemblyName = this.config.EntryAssembly;
-            var entryAssembly = string.IsNullOrEmpty(entryAssemblyName) ?
-                Assembly.GetEntryAssembly() :
-                Assembly.Load(entryAssemblyName);
+            var entryAssembly = string.IsNullOrEmpty(entryAssemblyName) ? Assembly.GetEntryAssembly()! : Assembly.Load(entryAssemblyName);
             return entryAssembly.GetReferencedAssemblies(recursive: true).Select(x => MetadataReference.CreateFromFile(x.Location));
         }
 
@@ -216,12 +218,15 @@ namespace AppBrix.Data.Migrations.Impl
                 .AddSingleton(context.GetService<IConventionSetBuilder>())
                 .AddSingleton(context.GetService<ICurrentDbContext>())
                 .AddSingleton(context.GetService<IDatabaseProvider>())
+                .AddSingleton(context.GetService<IDesignTimeModel>().Model)
                 .AddSingleton(context.GetService<IHistoryRepository>())
                 .AddSingleton(context.GetService<IMigrationsAssembly>())
                 .AddSingleton(context.GetService<IMigrationsIdGenerator>())
                 .AddSingleton(context.GetService<IMigrationsModelDiffer>())
                 .AddSingleton(context.GetService<IMigrator>())
+                .AddSingleton(context.GetService<IModelRuntimeInitializer>())
                 .AddSingleton(context.GetService<IRelationalTypeMappingSource>())
+                .AddSingleton(context.GetService<ITypeMappingSource>())
                 .AddSingleton<IAnnotationCodeGenerator, AnnotationCodeGenerator>()
                 .AddSingleton<ICSharpHelper, CSharpHelper>()
                 .AddSingleton<ICSharpMigrationOperationGenerator, CSharpMigrationOperationGenerator>()
@@ -275,7 +280,7 @@ namespace AppBrix.Data.Migrations.Impl
             }
 
             snapshot.Version = version;
-            if (migration != null)
+            if (migration is not null)
             {
                 snapshot.Snapshot = snapshotCode;
                 context.Migrations.Add(migration);
@@ -285,7 +290,7 @@ namespace AppBrix.Data.Migrations.Impl
         }
 
         private string GenerateMigrationAssemblyName(Type type, Version? version = null) =>
-            $"Generated.Migrations.{this.GenerateMigrationName(type, version ?? type.Assembly.GetName().Version)}.{Guid.NewGuid()}.dll";
+            $"Generated.Migrations.{this.GenerateMigrationName(type, version ?? type.Assembly.GetName().Version!)}.{Guid.NewGuid()}.dll";
 
         private string GenerateMigrationName(Type type, Version version) => $"{type.Name}_{version.ToString().Replace('.', '_')}";
 

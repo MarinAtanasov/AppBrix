@@ -27,7 +27,7 @@ namespace AppBrix.Logging.Impl
         #region Public and overriden methods
         public bool IsEnabled(LogLevel logLevel) => this.Enabled && this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception?, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             if (!this.Enabled)
                 return;
@@ -35,7 +35,7 @@ namespace AppBrix.Logging.Impl
             this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
         }
 
-        public IDisposable? BeginScope<TState>(TState state) => null;
+        public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
         #endregion
 
         #region Private methods
@@ -56,6 +56,14 @@ namespace AppBrix.Logging.Impl
         private readonly IApp app;
         private readonly string categoryName;
         private readonly LoggingConfig config;
+        #endregion
+
+        #region Private classes
+        private sealed class NullScope : IDisposable
+        {
+            public static NullScope Instance { get; } = new NullScope();
+            public void Dispose() { }
+        }
         #endregion
     }
 }

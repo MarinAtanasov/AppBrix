@@ -29,12 +29,12 @@ namespace AppBrix.Cloning.Impl
             if (this.IsValueType(obj.GetType()))
                 return obj;
 
-            return (T)Cloner.ShallowCopyMethod.Invoke(obj, null);
+            return (T)Cloner.ShallowCopyMethod.Invoke(obj, null)!;
         }
         #endregion
 
         #region Private methods
-        private object? DeepCopy(object original, Dictionary<object, object> visited)
+        private object? DeepCopy(object? original, Dictionary<object, object> visited)
         {
             if (original is null)
                 return null;
@@ -66,7 +66,7 @@ namespace AppBrix.Cloning.Impl
             }
 
             var baseType = type;
-            while (baseType != typeof(object) && baseType != null)
+            while (baseType != typeof(object) && baseType is not null)
             {
                 var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
                 for (var i = 0; i < fields.Length; i++)
@@ -83,7 +83,7 @@ namespace AppBrix.Cloning.Impl
 
         private bool IsValueType(Type type) => type == typeof(string) || type.IsValueType;
 
-        private void ForEach(Array array, Action<object, int[]> action)
+        private void ForEach(Array array, Action<object?, int[]> action)
         {
             var length = array.Length;
             if (length == 0)
@@ -114,7 +114,7 @@ namespace AppBrix.Cloning.Impl
         #endregion
 
         #region Private fields and constants
-        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!;
         #endregion
     }
 }

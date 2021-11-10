@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Builder;
 
 namespace AppBrix.Web.Server.Impl
 {
-    internal sealed class ConfigureApplication : IConfigureApplication
+    internal sealed class ConfigureWebApp : IConfigureWebApp
     {
         #region Construction
-        public ConfigureApplication(IApplicationBuilder builder)
+        public ConfigureWebApp(WebApplication app)
         {
-            this.Builder = builder;
+            this.App = app;
         }
         #endregion
 
         #region Properties
-        public IApplicationBuilder Builder { get; }
+        public WebApplication App { get; }
         #endregion
     }
 }

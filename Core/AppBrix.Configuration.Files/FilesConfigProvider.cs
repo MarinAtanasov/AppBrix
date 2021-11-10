@@ -69,7 +69,7 @@ namespace AppBrix.Configuration.Files
         {
             var typeName = type.Name;
             var fileName = typeName.EndsWith(FilesConfigProvider.ToRemove, StringComparison.OrdinalIgnoreCase) && typeName.Length > ToRemove.Length ?
-                typeName.Substring(0, typeName.Length - ToRemove.Length) : typeName;
+                typeName[..^FilesConfigProvider.ToRemove.Length] : typeName;
             return Path.Combine(this.directory, string.Concat(fileName, FilesConfigProvider.ExtensionDot, this.extension));
         }
         #endregion

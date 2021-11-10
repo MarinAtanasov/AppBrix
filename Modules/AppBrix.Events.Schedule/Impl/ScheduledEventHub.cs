@@ -77,7 +77,7 @@ namespace AppBrix.Events.Schedule.Impl
                     return; // Unintialized
 
                 var now = this.app.GetTime();
-                for (var args = this.queue.Peek(); args != null && args.Occurrence <= now; args = this.queue.Peek())
+                for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
                 {
                     toExecute ??= new List<PriorityQueueItem>();
                     toExecute.Add(args);

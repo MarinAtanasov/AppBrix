@@ -63,6 +63,7 @@ namespace AppBrix.Web.Client
         /// </summary>
         protected override void Uninitialize()
         {
+            this.jsonSerializerOptions = null;
             this.httpClientFactory.Uninitialize();
             this.client?.Dispose();
             this.client = null;

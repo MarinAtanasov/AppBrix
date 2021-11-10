@@ -15,11 +15,11 @@ namespace AppBrix.Data.InMemory.Impl
 
         public void Uninitialize()
         {
-            this.connectionString = null;
+            this.connectionString = string.Empty;
         }
 
         public void Configure(IOnConfiguringDbContext context) => context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
 
-        private string? connectionString;
+        private string connectionString = string.Empty;
     }
 }

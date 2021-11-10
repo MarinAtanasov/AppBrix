@@ -107,8 +107,14 @@ namespace AppBrix.Application
             this.IsStarted = true;
 
             var moduleInfos = this.ConfigService.GetAppConfig().Modules
-                .Where(m => m.Status != ModuleStatus.Disabled || m.Version != null)
-                .Select(m => new ModuleInfo((IModule)Type.GetType(m.Type).CreateObject(), m))
+                .Where(m => m.Status != ModuleStatus.Disabled || m.Version is not null)
+                .Select(m =>
+                {
+                    var type = Type.GetType(m.Type);
+                    if (type is null)
+                        throw new NullReferenceException($"Unable to load module of type {m.Type}.");
+                    return new ModuleInfo((IModule)type.CreateObject(), m);
+                })
                 .SortByPriority();
             this.modules.AddRange(moduleInfos);
         }

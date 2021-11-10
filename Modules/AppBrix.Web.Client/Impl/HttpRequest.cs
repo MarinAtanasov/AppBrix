@@ -30,7 +30,7 @@ namespace AppBrix.Web.Client.Impl
                 new HttpHeaders(response.Headers.Concat(response.Content.Headers)),
                 string.Empty,
                 (int)response.StatusCode,
-                response.ReasonPhrase,
+                response.ReasonPhrase ?? string.Empty,
                 response.Version);
         }
 
@@ -44,7 +44,7 @@ namespace AppBrix.Web.Client.Impl
                 new HttpHeaders(response.Headers.Concat(responseContent.Headers)),
                 contentValue,
                 (int)response.StatusCode,
-                response.ReasonPhrase,
+                response.ReasonPhrase ?? string.Empty,
                 response.Version);
         }
 
@@ -107,13 +107,13 @@ namespace AppBrix.Web.Client.Impl
 
             this.SetHeaders(message.Headers, this.headers.Where(x => !this.IsContentHeader(x.Key)));
 
-            if (this.content != null)
+            if (this.content is not null)
             {
                 message.Content = this.CreateContent(this.content);
                 this.SetHeaders(message.Content.Headers, this.headers.Where(x => this.IsContentHeader(x.Key)));
             }
 
-            if (this.httpMessageVersion != null)
+            if (this.httpMessageVersion is not null)
                 message.Version = this.httpMessageVersion;
 
             return client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token);
@@ -154,14 +154,14 @@ namespace AppBrix.Web.Client.Impl
             object? contentValue;
 
             if (type == typeof(string))
-                contentValue = await content.ReadAsStringAsync().ConfigureAwait(false);
+                contentValue = await content.ReadAsStringAsync(token).ConfigureAwait(false);
             else if (type == typeof(byte[]))
-                contentValue = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                contentValue = await content.ReadAsByteArrayAsync(token).ConfigureAwait(false);
             else if (type == typeof(Stream))
-                contentValue = await content.ReadAsStreamAsync().ConfigureAwait(false);
+                contentValue = await content.ReadAsStreamAsync(token).ConfigureAwait(false);
             else
             {
-                var stringed = await content.ReadAsStreamAsync().ConfigureAwait(false);
+                var stringed = await content.ReadAsStreamAsync(token).ConfigureAwait(false);
                 contentValue = await JsonSerializer.DeserializeAsync<T>(stringed, this.app.Get<JsonSerializerOptions>(), token).ConfigureAwait(false);
             }
 
@@ -173,7 +173,7 @@ namespace AppBrix.Web.Client.Impl
         private readonly Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>();
         private readonly IApp app;
         private string callMethod = "GET";
-        private string? clientName;
+        private string clientName = string.Empty;
         private object? content;
         private string? requestUrl;
         private Version? httpMessageVersion;

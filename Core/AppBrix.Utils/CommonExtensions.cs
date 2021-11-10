@@ -75,7 +75,7 @@ namespace AppBrix
         /// <param name="type">The type of the object to be constructed.</param>
         /// <param name="args">The constructor arguments.</param>
         /// <returns>The constructed object.</returns>
-        public static object CreateObject(this Type type, params object[] args) => Activator.CreateInstance(type, args);
+        public static object CreateObject(this Type type, params object[] args) => Activator.CreateInstance(type, args)!;
 
         /// <summary>
         /// Gets the assembly qualified name using only the assembly name without culture and version.

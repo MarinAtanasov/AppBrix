@@ -25,7 +25,7 @@ namespace AppBrix.Random.Impl
         #endregion
 
         #region IRandomService implementation
-        public System.Random GetRandom(int? seed = null) => seed.HasValue ? new System.Random(seed.Value) : this.randomGenerator.Value;
+        public System.Random GetRandom(int? seed = null) => seed.HasValue ? new System.Random(seed.Value) : this.randomGenerator.Value!;
 
         public IEnumerable<T> GetRandomItems<T>(IReadOnlyCollection<T> items, int? seed = null)
         {

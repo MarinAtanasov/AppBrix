@@ -6,7 +6,6 @@ using AppBrix.Web.Client;
 using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Tests.Mocks;
 using FluentAssertions;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -24,9 +23,9 @@ namespace AppBrix.Web.Server.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnection()
         {
-            var app = this.CreateWebApp();
-            using var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app);
-            using var client = server.CreateClient();
+            var app = this.CreateApp();
+            using var webApp = this.CreateTestWebApp(app);
+            using var client = webApp.GetTestClient();
             app.Container.Register(client);
 
             var response = await app.GetFactoryService().GetHttpRequest()
@@ -53,13 +52,13 @@ namespace AppBrix.Web.Server.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
         public async void TestConnectionBetweenTwoApps()
         {
-            var app1 = this.CreateWebApp();
-            var app2 = this.CreateWebApp();
+            var app1 = this.CreateApp();
+            var app2 = this.CreateApp();
 
-            using var server1 = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app1);
-            using var app1Client = server1.CreateClient();
-            using var server2 = this.CreateTestServer(TestControllerTests.Server2BaseAddress, app2);
-            using var app2Client = server2.CreateClient();
+            using var webApp1 = this.CreateTestWebApp(app1);
+            using var app1Client = webApp1.GetTestClient();
+            using var webApp2 = this.CreateTestWebApp(app2);
+            using var app2Client = webApp2.GetTestClient();
 
             app1.Container.Register(app2Client);
             var response1 = await app1.GetFactoryService().GetHttpRequest()
@@ -81,54 +80,55 @@ namespace AppBrix.Web.Server.Tests
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
         public void TestPerformanceWebServer()
         {
-            var app = this.CreateWebApp();
-            using var server = this.CreateTestServer(TestControllerTests.ServerBaseAddress, app);
-            using var client = server.CreateClient();
+            var app = this.CreateApp();
+            using var webApp = this.CreateTestWebApp(app);
+            using var client = webApp.GetTestClient();
             app.Container.Register(client);
             TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
         }
         #endregion
 
         #region Private methods
-        private TestServer CreateTestServer(string baseAddress, IApp app) =>
-            new TestServer(WebHost.CreateDefaultBuilder()
-                .UseUrls(baseAddress)
-                .UseApp(app)
-                .UseSetting(WebHostDefaults.ApplicationKey, this.GetType().Assembly.GetName().Name)
-            ) { BaseAddress = new Uri(baseAddress) };
+        private WebApplication CreateTestWebApp(IApp app)
+        {
+            var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+            {
+                ApplicationName = this.GetType().Assembly.GetName().Name
+            });
+            builder.WebHost.UseTestServer();
+            var webApp = builder.Build(app);
+            webApp.Start();
+            return webApp;
+        }
 
-        private IApp CreateWebApp()
+        private IApp CreateApp()
         {
             var app = TestUtils.CreateTestApp<WebServerModule, WebClientModule>();
             app.ConfigService.Get<AppIdConfig>().Id = Guid.NewGuid();
             app.Start();
-            app.GetEventHub().Subscribe<IConfigureHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
-            app.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
-            app.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
+            app.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
+            app.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
             return app;
         }
 
-        private void ConfigureServices(IServiceCollection services) => services.AddControllers();
-
-        private void Configure(IConfigureApplication application)
+        private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
         {
-            var app = application.Builder;
-            var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
-            if (env.IsDevelopment())
+            args.Builder.Services.AddControllers();
+        }
+
+        private void ConfigureWebApp(IConfigureWebApp args)
+        {
+            var app = args.App;
+            if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             //app.UseHttpsRedirection();
 
-            app.UseRouting();
-
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.MapControllers();
         }
 
         private void TestPerformanceWebServerInternal(IApp app)

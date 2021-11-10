@@ -33,7 +33,7 @@ namespace AppBrix.Factory.Impl
                 throw new ArgumentNullException(nameof(type));
 
             var baseType = type;
-            while (baseType != typeof(object) && baseType != null)
+            while (baseType != typeof(object) && baseType is not null)
             {
                 this.factories[baseType] = factory;
                 baseType = baseType.BaseType;

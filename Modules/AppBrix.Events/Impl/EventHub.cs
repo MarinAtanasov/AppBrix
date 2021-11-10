@@ -76,7 +76,7 @@ namespace AppBrix.Events.Impl
         private void RaiseInternal(IEvent args, Type type)
         {
             var baseType = type;
-            while (baseType != typeof(object) && baseType != null)
+            while (baseType != typeof(object) && baseType is not null)
             {
                 this.RaiseEvent(args, baseType);
                 baseType = baseType.BaseType;

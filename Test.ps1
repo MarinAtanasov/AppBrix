@@ -1,6 +1,6 @@
 param([String]$Tests="Functional", [switch]$Parallel, [switch]$Build, [switch]$Release);
 
-$version = "net5.0"
+$version = "net6.0"
 
 $configuration = "Debug";
 if ($Release)

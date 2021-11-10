@@ -29,7 +29,7 @@ namespace AppBrix.Web.Server.Tests.Mocks
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public bool TestConnection() => this.app != null;
+        public bool TestConnection() => this.app is not null;
 
         /// <summary>
         /// Returns true to indicate that the service has been reached as expected.

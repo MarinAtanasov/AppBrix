@@ -69,7 +69,7 @@ namespace AppBrix.Logging.Impl
             result.Append(LogEntry.Separator);
             result.Append(this.Message);
 
-            if (this.Exception != null)
+            if (this.Exception is not null)
             {
                 result.Append(Environment.NewLine);
                 result.Append(this.Exception);

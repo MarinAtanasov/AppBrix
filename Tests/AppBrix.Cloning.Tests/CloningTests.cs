@@ -242,7 +242,7 @@ namespace AppBrix.Cloning.Tests
         private IEnumerable<FieldInfo> GetFields(Type type)
         {
             var baseType = type;
-            while (baseType != typeof(object) && baseType != null)
+            while (baseType != typeof(object) && baseType is not null)
             {
                 var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
                 foreach (var field in fields)
@@ -257,7 +257,7 @@ namespace AppBrix.Cloning.Tests
         {
             var cloner = this.GetCloner();
             var original = new ComplexPropertiesMock(10);
-            for (var i = 0; i < 180; i++)
+            for (var i = 0; i < 200; i++)
             {
                 cloner.DeepCopy(original);
             }

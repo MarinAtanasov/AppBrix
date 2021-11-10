@@ -150,7 +150,7 @@ namespace AppBrix.Events.Delayed.Tests
             var interfaceCalled = 0;
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 50000;
+            var calledCount = 80000;
             for (var i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);
@@ -169,7 +169,7 @@ namespace AppBrix.Events.Delayed.Tests
             var interfaceCalled = 0;
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 50000;
+            var calledCount = 75000;
             for (var i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);

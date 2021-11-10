@@ -42,7 +42,7 @@ namespace AppBrix.Events.Delayed
         /// </summary>
         protected override void Uninitialize()
         {
-            if (this.eventHub.EventHub != null)
+            if (this.eventHub.EventHub is not null)
                 this.App.Container.Register(this.eventHub.EventHub);
 
             this.eventHub.Uninitialize();

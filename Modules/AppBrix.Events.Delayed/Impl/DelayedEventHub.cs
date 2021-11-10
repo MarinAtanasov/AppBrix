@@ -32,7 +32,7 @@ namespace AppBrix.Events.Delayed.Impl
 
         public void Uninitialize()
         {
-            if (this.channel != null)
+            if (this.channel is not null)
             {
                 this.channel.Writer.Complete();
                 this.Flush();

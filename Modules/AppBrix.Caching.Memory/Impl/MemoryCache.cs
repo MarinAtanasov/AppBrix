@@ -44,7 +44,7 @@ namespace AppBrix.Caching.Memory.Impl
             if (key is null)
                 throw new ArgumentNullException(nameof(key));
 
-            CacheItem cacheItem;
+            CacheItem? cacheItem;
             lock (this.cache)
             {
                 if (this.cache.TryGetValue(key, out cacheItem))
@@ -67,15 +67,14 @@ namespace AppBrix.Caching.Memory.Impl
             var config = this.GetConfig();
             lock (this.cache)
             {
-                var found = this.cache.Remove(key, out var oldItem);
+                this.cache.Remove(key, out var oldItem);
 
                 this.cache.Add(key, new CacheItem(item, dispose,
                     absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
                     slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
                     this.app.GetTime()));
 
-                if (found)
-                    oldItem.Dispose();
+                oldItem?.Dispose();
             }
         }
 

@@ -37,7 +37,7 @@ namespace AppBrix.Logging.Impl
                 {
                     if (!this.loggers.TryGetValue(categoryName, out logger))
                     {
-                        logger = new Logger(this.app, categoryName, this.app != null);
+                        logger = new Logger(this.app, categoryName, this.app is not null);
                         loggers.Add(categoryName, logger);
                     }
                 }

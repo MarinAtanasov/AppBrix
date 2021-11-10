@@ -110,7 +110,7 @@ namespace AppBrix.Container.Tests
             {
                 container.Register(new ChildMock());
             }
-            for (var i = 0; i < 150000; i++)
+            for (var i = 0; i < 200000; i++)
             {
                 container.Get(typeof(ChildMock));
                 container.Get(typeof(ParentMock));

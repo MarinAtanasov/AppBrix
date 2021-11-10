@@ -282,7 +282,7 @@ namespace AppBrix.Events.Tests
             var interfaceCalled = 0;
             hub.Subscribe<EventMockChild>(e => childCalled++);
             hub.Subscribe<IEvent>(e => interfaceCalled++);
-            var calledCount = 60000;
+            var calledCount = 100000;
             for (var i = 0; i < calledCount; i++)
             {
                 hub.Raise(args);

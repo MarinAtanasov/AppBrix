@@ -98,7 +98,7 @@ namespace AppBrix.Time.Tests
         #region Private methods
         private void TestPerformanceGetTimeInternal()
         {
-            for (var i = 0; i < 80000; i++)
+            for (var i = 0; i < 200000; i++)
             {
                 app.GetTime();
             }
@@ -110,7 +110,7 @@ namespace AppBrix.Time.Tests
             var localTime = utcTime.ToLocalTime();
             var timeService = app.GetTimeService();
 
-            for (var i = 0; i < 30000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 timeService.ToAppTime(utcTime);
                 timeService.ToAppTime(localTime);
@@ -122,7 +122,7 @@ namespace AppBrix.Time.Tests
             var time = DateTime.UtcNow;
             var timeService = app.GetTimeService();
 
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 15000; i++)
             {
                 timeService.ToDateTime(timeService.ToString(time));
             }

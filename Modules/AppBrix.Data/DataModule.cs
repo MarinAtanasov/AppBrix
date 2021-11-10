@@ -36,6 +36,7 @@ namespace AppBrix.Data
             this.App.Container.Register(this);
             this.contextService.Initialize(context);
             this.App.Container.Register(this.contextService);
+
             this.App.GetEventHub().Subscribe<IOnConfiguringDbContext>(this.ConfigureDbContextOptions);
         }
 
@@ -45,6 +46,8 @@ namespace AppBrix.Data
         /// </summary>
         protected override void Uninitialize()
         {
+            this.App.GetEventHub().Unsubscribe<IOnConfiguringDbContext>(this.ConfigureDbContextOptions);
+
             this.contextService.Uninitialize();
         }
         #endregion

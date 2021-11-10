@@ -2,21 +2,21 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Web.Server.Events;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
 
 namespace AppBrix.Web.Server.Impl
 {
-    internal sealed class ConfigureHost : IConfigureHost
+    internal sealed class ConfigureWebAppBuilder : IConfigureWebAppBuilder
     {
         #region Construction
-        public ConfigureHost(IHostBuilder builder)
+        public ConfigureWebAppBuilder(WebApplicationBuilder builder)
         {
             this.Builder = builder;
         }
         #endregion
 
         #region Properties
-        public IHostBuilder Builder { get; }
+        public WebApplicationBuilder Builder { get; }
         #endregion
     }
 }

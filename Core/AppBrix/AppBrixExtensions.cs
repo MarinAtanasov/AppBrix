@@ -52,7 +52,7 @@ namespace AppBrix
             var remainingHash = new HashSet<Type>(remainingList.Select(x => x.type));
 
             var current = remainingList.First;
-            while (current != null)
+            while (current is not null)
             {
                 if (current.Value.dependencies.Any(remainingHash.Contains))
                 {

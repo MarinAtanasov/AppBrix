@@ -1,10 +1,8 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Impl;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
 
 namespace AppBrix
 {
@@ -14,39 +12,17 @@ namespace AppBrix
     public static class WebServerExtensions
     {
         /// <summary>
-        /// Raises <see cref="IConfigureWebHost"/> event which can be used to attach to
-        /// the web host which will use the current <see cref="IApp"/>.
+        /// Builds the web application using the current <see cref="IApp"/>.
         /// </summary>
-        /// <param name="builder">The web host builder.</param>
+        /// <param name="builder">The web application builder.</param>
         /// <param name="app">The current application.</param>
-        /// <returns>The web host builder.</returns>
-        public static IWebHostBuilder UseApp(this IWebHostBuilder builder, IApp app)
+        /// <returns>The web application.</returns>
+        public static WebApplication Build(this WebApplicationBuilder builder, IApp app)
         {
-            app.GetEventHub().Raise(new ConfigureWebHost(builder));
-            return builder;
+            app.GetEventHub().Raise(new ConfigureWebAppBuilder(builder));
+            var webApp = builder.Build();
+            app.GetEventHub().Raise(new ConfigureWebApp(webApp));
+            return webApp;
         }
-
-        /// <summary>
-        /// Raises <see cref="IConfigureHost"/> event which can be used to attach to
-        /// the host which will use the current <see cref="IApp"/>.
-        /// </summary>
-        /// <param name="builder">The host builder.</param>
-        /// <param name="app">The current application.</param>
-        /// <returns>The host builder.</returns>
-        public static IHostBuilder UseApp(this IHostBuilder builder, IApp app)
-        {
-            app.GetEventHub().Raise(new ConfigureHost(builder));
-            return builder;
-        }
-
-        /// <summary>
-        /// Raises <see cref="IConfigureWebHost"/> event which can be used to attach to
-        /// the web host which will use the current <see cref="IApp"/>.
-        /// </summary>
-        /// <param name="builder">The host builder.</param>
-        /// <param name="app">The current application.</param>
-        /// <returns>The host builder.</returns>
-        public static IHostBuilder UseWebApp(this IHostBuilder builder, IApp app) =>
-            builder.ConfigureWebHostDefaults(x => app.GetEventHub().Raise(new ConfigureWebHost(x)));
     }
 }

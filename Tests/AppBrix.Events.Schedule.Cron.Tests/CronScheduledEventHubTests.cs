@@ -103,7 +103,7 @@ namespace AppBrix.Events.Schedule.Cron.Tests
         {
             this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
             this.app.Reinitialize();
-            TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
+            TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 3000));
         }
 
         [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

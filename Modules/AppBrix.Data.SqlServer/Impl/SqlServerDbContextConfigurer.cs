@@ -3,6 +3,7 @@
 //
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AppBrix.Data.SqlServer.Impl
 {
@@ -15,19 +16,23 @@ namespace AppBrix.Data.SqlServer.Impl
 
         public void Uninitialize()
         {
-            this.connectionString = null;
+            this.connectionString = string.Empty;
         }
 
         public void Configure(IOnConfiguringDbContext context)
         {
             context.OptionsBuilder.UseSqlServer(
                 this.connectionString,
-                builder => builder
-                    .MigrationsAssembly(context.MigrationsAssembly)
-                    .MigrationsHistoryTable(context.MigrationsHistoryTable)
+                builder =>
+                {
+                    if (!string.IsNullOrEmpty(context.MigrationsAssembly))
+                        builder = builder.MigrationsAssembly(context.MigrationsAssembly);
+                    if (!string.IsNullOrEmpty(context.MigrationsHistoryTable))
+                        builder = builder.MigrationsHistoryTable(context.MigrationsHistoryTable);
+                }
             );
         }
 
-        private string? connectionString;
+        private string connectionString = string.Empty;
     }
 }

@@ -226,7 +226,7 @@ namespace AppBrix.Random.Tests
         private void TestPerformanceGetRandomInternal()
         {
             var service = this.app.GetRandomService();
-            for (var i = 0; i < 800000; i++)
+            for (var i = 0; i < 1000000; i++)
             {
                 service.GetRandom();
             }

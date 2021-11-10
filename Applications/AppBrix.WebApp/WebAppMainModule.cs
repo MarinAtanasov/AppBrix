@@ -69,42 +69,39 @@ namespace AppBrix.WebApp
         {
             this.booksService.Initialize(context);
             this.App.Container.Register(this.booksService);
-            this.App.GetEventHub().Subscribe<IConfigureHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
-            this.App.GetEventHub().Subscribe<IConfigureWebHost>(webHost => webHost.Builder.ConfigureServices(this.ConfigureServices));
-            this.App.GetEventHub().Subscribe<IConfigureApplication>(this.Configure);
+
+            this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
+            this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
         }
 
         protected override void Uninitialize()
         {
+            this.App.GetEventHub().Unsubscribe<IConfigureWebApp>(this.ConfigureWebApp);
+            this.App.GetEventHub().Unsubscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
+
             this.booksService.Uninitialize();
         }
         #endregion
 
         #region Private methods
-        private void ConfigureServices(IServiceCollection services)
+        private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
         {
-            services.AddControllers();
+            args.Builder.Services.AddControllers();
         }
 
-        private void Configure(IConfigureApplication application)
+        private void ConfigureWebApp(IConfigureWebApp args)
         {
-            var app = application.Builder;
-            var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
-            if (env.IsDevelopment())
+            var app = args.App;
+            if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.MapControllers();
         }
         #endregion
 
