@@ -33,7 +33,9 @@ namespace AppBrix.Text
         protected override void Initialize(IInitializeContext context)
         {
             this.App.Container.Register(this);
+            this.App.Container.Register(this.stringDistanceService);
             this.App.Container.Register(CodePagesEncodingProvider.Instance);
+
             this.wrapper.Initialize(context);
             Encoding.RegisterProvider(this.wrapper);
         }
@@ -49,6 +51,7 @@ namespace AppBrix.Text
         #endregion
 
         #region Private fields and constants
+        private readonly StringDistanceService stringDistanceService = new StringDistanceService();
         private readonly EncodingProviderWrapper wrapper = new EncodingProviderWrapper();
         #endregion
     }
