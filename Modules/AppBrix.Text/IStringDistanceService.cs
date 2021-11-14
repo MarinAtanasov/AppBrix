@@ -33,7 +33,7 @@ namespace AppBrix.Text
         /// </summary>
         /// <param name="left">The first string.</param>
         /// <param name="right">The second string.</param>
-        /// <returns>The Damerau-Levenshtein distance between the strings.</returns>
+        /// <returns>The Optimal String Alignment distance between the strings.</returns>
         int GetOptimalStringAlignmentDistance(string left, string right);
     }
 }
