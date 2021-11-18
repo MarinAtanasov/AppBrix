@@ -3,24 +3,23 @@
 //
 using System;
 
-namespace AppBrix.Time.Impl
+namespace AppBrix.Time.Impl;
+
+internal sealed class LocalTimeService : TimeServiceBase
 {
-    internal sealed class LocalTimeService : TimeServiceBase
+    #region Construction
+    /// <summary>
+    /// Creates a new instance of <see cref="LocalTimeService"/>.
+    /// </summary>
+    /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
+    public LocalTimeService(string format) : base(format)
     {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="LocalTimeService"/>.
-        /// </summary>
-        /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
-        public LocalTimeService(string format) : base(format)
-        {
-        }
-        #endregion
-
-        #region ITimeService implementation
-        public override DateTime GetTime() => DateTime.Now;
-
-        public override DateTime ToAppTime(DateTime time) => time.ToLocalTime();
-        #endregion
     }
+    #endregion
+
+    #region ITimeService implementation
+    public override DateTime GetTime() => DateTime.Now;
+
+    public override DateTime ToAppTime(DateTime time) => time.ToLocalTime();
+    #endregion
 }

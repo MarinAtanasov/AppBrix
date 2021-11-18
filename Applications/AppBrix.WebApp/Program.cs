@@ -3,16 +3,15 @@ using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Yaml;
 using Microsoft.AspNetCore.Builder;
 
-namespace AppBrix.WebApp
+namespace AppBrix.WebApp;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            WebApplication.CreateBuilder(args)
-                .Build(App.Start<WebAppMainModule>(new ConfigService(
-                    new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer())))
-                .Run();
-        }
+        WebApplication.CreateBuilder(args)
+            .Build(App.Start<WebAppMainModule>(new ConfigService(
+                new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer())))
+            .Run();
     }
 }

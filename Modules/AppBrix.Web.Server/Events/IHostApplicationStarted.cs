@@ -3,12 +3,11 @@
 //
 using AppBrix.Events;
 
-namespace AppBrix.Web.Server.Events
+namespace AppBrix.Web.Server.Events;
+
+/// <summary>
+/// An event which is called after the host application has started.
+/// </summary>
+public interface IHostApplicationStarted : IEvent
 {
-    /// <summary>
-    /// An event which is called after the host application has started.
-    /// </summary>
-    public interface IHostApplicationStarted : IEvent
-    {
-    }
 }

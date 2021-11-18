@@ -5,26 +5,25 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AppBrix.Caching.Tests.Mocks
+namespace AppBrix.Caching.Tests.Mocks;
+
+internal sealed class JsonCacheSerializer : ICacheSerializer
 {
-    internal sealed class JsonCacheSerializer : ICacheSerializer
+    #region Construction
+    public JsonCacheSerializer()
     {
-        #region Construction
-        public JsonCacheSerializer()
-        {
-            this.settings = new JsonSerializerOptions();
-            this.settings.Converters.Add(new JsonStringEnumConverter());
-        }
-        #endregion
-
-        #region Public and overriden methods
-        public byte[] Serialize(object item) => JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), this.settings);
-
-        public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings);
-        #endregion
-
-        #region Private fields and constants
-        private readonly JsonSerializerOptions settings;
-        #endregion
+        this.settings = new JsonSerializerOptions();
+        this.settings.Converters.Add(new JsonStringEnumConverter());
     }
+    #endregion
+
+    #region Public and overriden methods
+    public byte[] Serialize(object item) => JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), this.settings);
+
+    public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings);
+    #endregion
+
+    #region Private fields and constants
+    private readonly JsonSerializerOptions settings;
+    #endregion
 }

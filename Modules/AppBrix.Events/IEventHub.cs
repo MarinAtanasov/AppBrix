@@ -3,31 +3,30 @@
 //
 using System;
 
-namespace AppBrix.Events
+namespace AppBrix.Events;
+
+/// <summary>
+/// Used for working with application level events.
+/// </summary>
+public interface IEventHub
 {
     /// <summary>
-    /// Used for working with application level events.
+    /// Subscribes the event handler to the event.
     /// </summary>
-    public interface IEventHub
-    {
-        /// <summary>
-        /// Subscribes the event handler to the event.
-        /// </summary>
-        /// <typeparam name="T">The event type.</typeparam>
-        /// <param name="handler">The event handler. Required.</param>
-        void Subscribe<T>(Action<T> handler) where T : IEvent;
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="handler">The event handler. Required.</param>
+    void Subscribe<T>(Action<T> handler) where T : IEvent;
 
-        /// <summary>
-        /// Unsubscribes the event handler from the event.
-        /// </summary>
-        /// <typeparam name="T">The event type.</typeparam>
-        /// <param name="handler">The event handler.</param>
-        void Unsubscribe<T>(Action<T> handler) where T : IEvent;
+    /// <summary>
+    /// Unsubscribes the event handler from the event.
+    /// </summary>
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="handler">The event handler.</param>
+    void Unsubscribe<T>(Action<T> handler) where T : IEvent;
 
-        /// <summary>
-        /// Raises the event and all of its base class and interface events.
-        /// </summary>
-        /// <param name="args">The event arguments.</param>
-        void Raise(IEvent args);
-    }
+    /// <summary>
+    /// Raises the event and all of its base class and interface events.
+    /// </summary>
+    /// <param name="args">The event arguments.</param>
+    void Raise(IEvent args);
 }

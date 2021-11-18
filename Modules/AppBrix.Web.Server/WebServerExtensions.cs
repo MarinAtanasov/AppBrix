@@ -4,25 +4,24 @@
 using AppBrix.Web.Server.Impl;
 using Microsoft.AspNetCore.Builder;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Extension methods for easier manipulation of AppBrix web servers.
+/// </summary>
+public static class WebServerExtensions
 {
     /// <summary>
-    /// Extension methods for easier manipulation of AppBrix web servers.
+    /// Builds the web application using the current <see cref="IApp"/>.
     /// </summary>
-    public static class WebServerExtensions
+    /// <param name="builder">The web application builder.</param>
+    /// <param name="app">The current application.</param>
+    /// <returns>The web application.</returns>
+    public static WebApplication Build(this WebApplicationBuilder builder, IApp app)
     {
-        /// <summary>
-        /// Builds the web application using the current <see cref="IApp"/>.
-        /// </summary>
-        /// <param name="builder">The web application builder.</param>
-        /// <param name="app">The current application.</param>
-        /// <returns>The web application.</returns>
-        public static WebApplication Build(this WebApplicationBuilder builder, IApp app)
-        {
-            app.GetEventHub().Raise(new ConfigureWebAppBuilder(builder));
-            var webApp = builder.Build();
-            app.GetEventHub().Raise(new ConfigureWebApp(webApp));
-            return webApp;
-        }
+        app.GetEventHub().Raise(new ConfigureWebAppBuilder(builder));
+        var webApp = builder.Build();
+        app.GetEventHub().Raise(new ConfigureWebApp(webApp));
+        return webApp;
     }
 }

@@ -2,16 +2,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace AppBrix.ConsoleApp
+namespace AppBrix.ConsoleApp;
+
+/// <summary>
+/// Initializes application configuration.
+/// </summary>
+public sealed class ConsoleAppMainModule : MainModuleBase
 {
-    /// <summary>
-    /// Initializes application configuration.
-    /// </summary>
-    public sealed class ConsoleAppMainModule : MainModuleBase
+    #region Properties
+    public override IEnumerable<Type> Dependencies => new[]
     {
-        #region Properties
-        public override IEnumerable<Type> Dependencies => new[]
-        {
             //typeof(Caching.CachingModule),
             typeof(Caching.Memory.MemoryCachingModule),
             typeof(Cloning.CloningModule),
@@ -37,6 +37,5 @@ namespace AppBrix.ConsoleApp
             typeof(Web.Client.WebClientModule),
             //typeof(Web.Server.WebServerModule)
         };
-        #endregion
-    }
+    #endregion
 }

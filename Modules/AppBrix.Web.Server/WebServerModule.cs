@@ -16,110 +16,109 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 
-namespace AppBrix.Web.Server
+namespace AppBrix.Web.Server;
+
+/// <summary>
+/// Modules used for working with Mvc or Web Api controllers.
+/// For dependency injection of the current app inside the controllers' constructors,
+/// use the <see cref="T:IServiceCollection.AddApp"/> extension method inside the
+/// <see cref="M:ConfigureServices"/> method.
+/// </summary>
+public sealed class WebServerModule : ModuleBase
 {
+    #region Properties
     /// <summary>
-    /// Modules used for working with Mvc or Web Api controllers.
-    /// For dependency injection of the current app inside the controllers' constructors,
-    /// use the <see cref="T:IServiceCollection.AddApp"/> extension method inside the
-    /// <see cref="M:ConfigureServices"/> method.
+    /// Gets the types of the modules which are direct dependencies for the current module.
+    /// This is used to determine the order in which the modules are loaded.
     /// </summary>
-    public sealed class WebServerModule : ModuleBase
+    public override IEnumerable<Type> Dependencies => new[] { typeof(FactoryModule), typeof(LoggingModule) };
+    #endregion
+
+    #region Public and overriden methods
+    /// <summary>
+    /// Initializes the module.
+    /// Automatically called by <see cref="ModuleBase.Initialize"/>
+    /// </summary>
+    /// <param name="context">The initialization context.</param>
+    protected override void Initialize(IInitializeContext context)
     {
-        #region Properties
-        /// <summary>
-        /// Gets the types of the modules which are direct dependencies for the current module.
-        /// This is used to determine the order in which the modules are loaded.
-        /// </summary>
-        public override IEnumerable<Type> Dependencies => new[] { typeof(FactoryModule), typeof(LoggingModule) };
-        #endregion
+        this.App.Container.Register(this);
 
-        #region Public and overriden methods
-        /// <summary>
-        /// Initializes the module.
-        /// Automatically called by <see cref="ModuleBase.Initialize"/>
-        /// </summary>
-        /// <param name="context">The initialization context.</param>
-        protected override void Initialize(IInitializeContext context)
-        {
-            this.App.Container.Register(this);
-
-            this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
-            this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
-            this.App.GetEventHub().Subscribe<IHostApplicationStopped>(this.OnApplicationStopped);
-        }
-
-        /// <summary>
-        /// Uninitializes the module.
-        /// Automatically called by <see cref="ModuleBase.Uninitialize"/>
-        /// </summary>
-        protected override void Uninitialize()
-        {
-            this.App.GetEventHub().Unsubscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
-            this.App.GetEventHub().Unsubscribe<IConfigureWebApp>(this.ConfigureWebApp);
-            this.App.GetEventHub().Unsubscribe<IHostApplicationStopped>(this.OnApplicationStopped);
-        }
-        #endregion
-
-        #region Private methods
-        private void AddJsonOptions(JsonOptions options)
-        {
-            var appOptions = this.App.Get<JsonSerializerOptions>();
-            var appConverters = appOptions.Converters;
-            var hostConverters = options.JsonSerializerOptions.Converters;
-            for (var i = 0; i < appConverters.Count; i++)
-            {
-                hostConverters.Add(appConverters[i]);
-            }
-
-            options.JsonSerializerOptions.AllowTrailingCommas = appOptions.AllowTrailingCommas;
-            options.JsonSerializerOptions.DefaultBufferSize = appOptions.DefaultBufferSize;
-            options.JsonSerializerOptions.DefaultIgnoreCondition = appOptions.DefaultIgnoreCondition;
-            options.JsonSerializerOptions.DictionaryKeyPolicy = appOptions.DictionaryKeyPolicy;
-            options.JsonSerializerOptions.Encoder = appOptions.Encoder;
-            options.JsonSerializerOptions.IgnoreReadOnlyFields = appOptions.IgnoreReadOnlyFields;
-            options.JsonSerializerOptions.IgnoreReadOnlyProperties = appOptions.IgnoreReadOnlyProperties;
-            options.JsonSerializerOptions.IncludeFields = appOptions.IncludeFields;
-            options.JsonSerializerOptions.MaxDepth = appOptions.MaxDepth;
-            options.JsonSerializerOptions.NumberHandling = appOptions.NumberHandling;
-            options.JsonSerializerOptions.PropertyNameCaseInsensitive = appOptions.PropertyNameCaseInsensitive;
-            options.JsonSerializerOptions.PropertyNamingPolicy = appOptions.PropertyNamingPolicy;
-            options.JsonSerializerOptions.ReadCommentHandling = appOptions.ReadCommentHandling;
-            options.JsonSerializerOptions.ReferenceHandler= appOptions.ReferenceHandler;
-            options.JsonSerializerOptions.UnknownTypeHandling = appOptions.UnknownTypeHandling;
-            options.JsonSerializerOptions.WriteIndented = appOptions.WriteIndented;
-        }
-
-        private void ApplicationStarted() => this.App.GetEventHub().Raise(new HostApplicationStarted());
-
-        private void ApplicationStopping() => this.App.GetEventHub().Raise(new HostApplicationStopping());
-
-        private void ApplicationStopped() => this.App.GetEventHub().Raise(new HostApplicationStopped());
-
-        private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
-        {
-            args.Builder.Logging
-                .ClearProviders()
-                .AddProvider(this.App.Get<ILoggerProvider>());
-
-            args.Builder.Services
-                .AddSingleton(this.App)
-                .AddControllers()
-                .AddJsonOptions(this.AddJsonOptions);
-        }
-
-        private void ConfigureWebApp(IConfigureWebApp args)
-        {
-            var applicationLifetime = args.App.Services.GetRequiredService<IHostApplicationLifetime>();
-            applicationLifetime.ApplicationStarted.Register(this.ApplicationStarted);
-            applicationLifetime.ApplicationStopping.Register(this.ApplicationStopping);
-            applicationLifetime.ApplicationStopped.Register(this.ApplicationStopped);
-            var httpClientFactory = args.App.Services.GetService<IHttpClientFactory>();
-            if (httpClientFactory is not null)
-                this.App.Container.Register(httpClientFactory);
-        }
-
-        private void OnApplicationStopped(IHostApplicationStopped _) => this.App.Stop();
-        #endregion
+        this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
+        this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
+        this.App.GetEventHub().Subscribe<IHostApplicationStopped>(this.OnApplicationStopped);
     }
+
+    /// <summary>
+    /// Uninitializes the module.
+    /// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+    /// </summary>
+    protected override void Uninitialize()
+    {
+        this.App.GetEventHub().Unsubscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
+        this.App.GetEventHub().Unsubscribe<IConfigureWebApp>(this.ConfigureWebApp);
+        this.App.GetEventHub().Unsubscribe<IHostApplicationStopped>(this.OnApplicationStopped);
+    }
+    #endregion
+
+    #region Private methods
+    private void AddJsonOptions(JsonOptions options)
+    {
+        var appOptions = this.App.Get<JsonSerializerOptions>();
+        var appConverters = appOptions.Converters;
+        var hostConverters = options.JsonSerializerOptions.Converters;
+        for (var i = 0; i < appConverters.Count; i++)
+        {
+            hostConverters.Add(appConverters[i]);
+        }
+
+        options.JsonSerializerOptions.AllowTrailingCommas = appOptions.AllowTrailingCommas;
+        options.JsonSerializerOptions.DefaultBufferSize = appOptions.DefaultBufferSize;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = appOptions.DefaultIgnoreCondition;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = appOptions.DictionaryKeyPolicy;
+        options.JsonSerializerOptions.Encoder = appOptions.Encoder;
+        options.JsonSerializerOptions.IgnoreReadOnlyFields = appOptions.IgnoreReadOnlyFields;
+        options.JsonSerializerOptions.IgnoreReadOnlyProperties = appOptions.IgnoreReadOnlyProperties;
+        options.JsonSerializerOptions.IncludeFields = appOptions.IncludeFields;
+        options.JsonSerializerOptions.MaxDepth = appOptions.MaxDepth;
+        options.JsonSerializerOptions.NumberHandling = appOptions.NumberHandling;
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = appOptions.PropertyNameCaseInsensitive;
+        options.JsonSerializerOptions.PropertyNamingPolicy = appOptions.PropertyNamingPolicy;
+        options.JsonSerializerOptions.ReadCommentHandling = appOptions.ReadCommentHandling;
+        options.JsonSerializerOptions.ReferenceHandler = appOptions.ReferenceHandler;
+        options.JsonSerializerOptions.UnknownTypeHandling = appOptions.UnknownTypeHandling;
+        options.JsonSerializerOptions.WriteIndented = appOptions.WriteIndented;
+    }
+
+    private void ApplicationStarted() => this.App.GetEventHub().Raise(new HostApplicationStarted());
+
+    private void ApplicationStopping() => this.App.GetEventHub().Raise(new HostApplicationStopping());
+
+    private void ApplicationStopped() => this.App.GetEventHub().Raise(new HostApplicationStopped());
+
+    private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
+    {
+        args.Builder.Logging
+            .ClearProviders()
+            .AddProvider(this.App.Get<ILoggerProvider>());
+
+        args.Builder.Services
+            .AddSingleton(this.App)
+            .AddControllers()
+            .AddJsonOptions(this.AddJsonOptions);
+    }
+
+    private void ConfigureWebApp(IConfigureWebApp args)
+    {
+        var applicationLifetime = args.App.Services.GetRequiredService<IHostApplicationLifetime>();
+        applicationLifetime.ApplicationStarted.Register(this.ApplicationStarted);
+        applicationLifetime.ApplicationStopping.Register(this.ApplicationStopping);
+        applicationLifetime.ApplicationStopped.Register(this.ApplicationStopped);
+        var httpClientFactory = args.App.Services.GetService<IHttpClientFactory>();
+        if (httpClientFactory is not null)
+            this.App.Container.Register(httpClientFactory);
+    }
+
+    private void OnApplicationStopped(IHostApplicationStopped _) => this.App.Stop();
+    #endregion
 }

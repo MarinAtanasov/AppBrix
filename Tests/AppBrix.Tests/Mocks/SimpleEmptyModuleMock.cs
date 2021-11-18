@@ -3,9 +3,8 @@
 //
 using AppBrix.Modules;
 
-namespace AppBrix.Tests.Mocks
+namespace AppBrix.Tests.Mocks;
+
+internal sealed class SimpleEmptyModuleMock : ModuleBase
 {
-    internal sealed class SimpleEmptyModuleMock : ModuleBase
-    {
-    }
 }

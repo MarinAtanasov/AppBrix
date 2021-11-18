@@ -6,77 +6,77 @@ using System.Collections.Generic;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace AppBrix.Events.Async.Impl
+namespace AppBrix.Events.Async.Impl;
+
+/// <summary>
+/// An asynchronous task runner.
+/// </summary>
+internal sealed class TaskQueue<T> : ITaskQueue<T>
 {
+    #region Construciton
     /// <summary>
-    /// An asynchronous task runner.
+    /// Creates an asynchronous runner queue.
     /// </summary>
-    internal sealed class TaskQueue<T> : ITaskQueue<T>
+    public TaskQueue()
     {
-        #region Construciton
-        /// <summary>
-        /// Creates an asynchronous runner queue.
-        /// </summary>
-        public TaskQueue()
+        this.channel = Channel.CreateUnbounded<T>(new UnboundedChannelOptions
         {
-            this.channel = Channel.CreateUnbounded<T>(new UnboundedChannelOptions
-            {
-                AllowSynchronousContinuations = true,
-                SingleReader = true,
-                SingleWriter = false
-            });
-            this.runner = this.Run();
+            AllowSynchronousContinuations = true,
+            SingleReader = true,
+            SingleWriter = false
+        });
+        this.runner = this.Run();
+    }
+    #endregion
+
+    #region Properties
+    public int Count => this.handlers.Count;
+    #endregion
+
+    #region Public and overriden methods
+    public void Dispose()
+    {
+        if (!this.isDisposed)
+        {
+            this.isDisposed = true;
+
+            this.channel.Writer.Complete();
+            try { this.runner.Wait(); }
+            catch (AggregateException) { }
+
+            this.handlers.Clear();
         }
-        #endregion
+    }
 
-        #region Properties
-        public int Count => this.handlers.Count;
-        #endregion
+    public void Subscribe(Action<T> handler) => this.handlers.Add(handler);
 
-        #region Public and overriden methods
-        public void Dispose()
+    public void Unsubscribe(Action<T> handler)
+    {
+        // Optimize for unsubscribing the last element since this is the most common scenario.
+        for (var i = this.handlers.Count - 1; i >= 0; i--)
         {
-            if (!this.isDisposed)
+            if (this.handlers[i].Equals(handler))
             {
-                this.isDisposed = true;
-
-                this.channel.Writer.Complete();
-                try { this.runner.Wait(); }
-                catch (AggregateException) { }
-
-                this.handlers.Clear();
+                this.handlers.RemoveAt(i);
+                break;
             }
         }
+    }
 
-        public void Subscribe(Action<T> handler) => this.handlers.Add(handler);
+    public void Enqueue(T task)
+    {
+        if (task is null)
+            throw new ArgumentNullException(nameof(task));
 
-        public void Unsubscribe(Action<T> handler)
-        {
-            // Optimize for unsubscribing the last element since this is the most common scenario.
-            for (var i = this.handlers.Count - 1; i >= 0; i--)
-            {
-                if (this.handlers[i].Equals(handler))
-                {
-                    this.handlers.RemoveAt(i);
-                    break;
-                }
-            }
-        }
+        this.channel.Writer.TryWrite(task);
+    }
+    #endregion
 
-        public void Enqueue(T task)
-        {
-            if (task is null)
-                throw new ArgumentNullException(nameof(task));
-
-            this.channel.Writer.TryWrite(task);
-        }
-        #endregion
-
-        #region Private methods
-        private async Task Run()
-        {
-            var reader = this.channel.Reader;
-            while (await reader.WaitToReadAsync().ConfigureAwait(false))
+    #region Private methods
+    private async Task Run()
+    {
+        var reader = this.channel.Reader;
+        while (await reader.WaitToReadAsync().ConfigureAwait(false))
             while (reader.TryRead(out var args))
             {
                 for (var i = 0; i < this.handlers.Count; i++)
@@ -95,14 +95,13 @@ namespace AppBrix.Events.Async.Impl
                     }
                 }
             }
-        }
-        #endregion
-
-        #region Private fields and constants
-        private readonly Channel<T> channel;
-        private readonly List<Action<T>> handlers = new List<Action<T>>();
-        private readonly Task runner;
-        private bool isDisposed;
-        #endregion
     }
+    #endregion
+
+    #region Private fields and constants
+    private readonly Channel<T> channel;
+    private readonly List<Action<T>> handlers = new List<Action<T>>();
+    private readonly Task runner;
+    private bool isDisposed;
+    #endregion
 }

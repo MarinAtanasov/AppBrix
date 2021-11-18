@@ -3,24 +3,23 @@
 //
 using System;
 
-namespace AppBrix.Time.Impl
+namespace AppBrix.Time.Impl;
+
+internal sealed class UtcTimeService : TimeServiceBase
 {
-    internal sealed class UtcTimeService : TimeServiceBase
+    #region Construction
+    /// <summary>
+    /// Creates a new instance of <see cref="UtcTimeService"/>.
+    /// </summary>
+    /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
+    public UtcTimeService(string format) : base(format)
     {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="UtcTimeService"/>.
-        /// </summary>
-        /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
-        public UtcTimeService(string format) : base(format)
-        {
-        }
-        #endregion
-
-        #region ITimeService implementation
-        public override DateTime GetTime() => DateTime.UtcNow;
-
-        public override DateTime ToAppTime(DateTime time) => time.ToUniversalTime();
-        #endregion
     }
+    #endregion
+
+    #region ITimeService implementation
+    public override DateTime GetTime() => DateTime.UtcNow;
+
+    public override DateTime ToAppTime(DateTime time) => time.ToUniversalTime();
+    #endregion
 }

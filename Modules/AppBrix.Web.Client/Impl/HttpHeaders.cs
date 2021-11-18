@@ -3,16 +3,15 @@
 //
 using System.Collections.Generic;
 
-namespace AppBrix.Web.Client.Impl
+namespace AppBrix.Web.Client.Impl;
+
+internal sealed class HttpHeaders : Dictionary<string, IEnumerable<string>>, IHttpHeaders
 {
-    internal sealed class HttpHeaders : Dictionary<string, IEnumerable<string>>, IHttpHeaders
+    public HttpHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
     {
-        public HttpHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+        foreach (var header in headers)
         {
-            foreach (var header in headers)
-            {
-                this[header.Key] = header.Value;
-            }
+            this[header.Key] = header.Value;
         }
     }
 }

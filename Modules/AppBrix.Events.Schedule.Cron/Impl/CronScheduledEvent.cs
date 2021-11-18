@@ -4,28 +4,27 @@
 using NCrontab;
 using System;
 
-namespace AppBrix.Events.Schedule.Cron.Impl
+namespace AppBrix.Events.Schedule.Cron.Impl;
+
+internal sealed class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEvent
 {
-    internal sealed class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEvent
+    #region Construction
+    public CronScheduledEvent(T args, CrontabSchedule schedule)
     {
-        #region Construction
-        public CronScheduledEvent(T args, CrontabSchedule schedule)
-        {
-            this.Event = args;
-            this.schedule = schedule;
-        }
-        #endregion
-
-        #region Properties
-        public T Event { get; }
-        #endregion
-
-        #region Public and overriden methods
-        public DateTime GetNextOccurrence(DateTime now) => this.schedule.GetNextOccurrence(now);
-        #endregion
-
-        #region Private fields and constants
-        private readonly CrontabSchedule schedule;
-        #endregion
+        this.Event = args;
+        this.schedule = schedule;
     }
+    #endregion
+
+    #region Properties
+    public T Event { get; }
+    #endregion
+
+    #region Public and overriden methods
+    public DateTime GetNextOccurrence(DateTime now) => this.schedule.GetNextOccurrence(now);
+    #endregion
+
+    #region Private fields and constants
+    private readonly CrontabSchedule schedule;
+    #endregion
 }

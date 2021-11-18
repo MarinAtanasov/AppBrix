@@ -3,43 +3,42 @@
 //
 using System;
 
-namespace AppBrix.Web.Client
+namespace AppBrix.Web.Client;
+
+/// <summary>
+/// HTTP response object which is returned by <see cref="IHttpRequest"/>.
+/// </summary>
+public interface IHttpResponse
 {
     /// <summary>
-    /// HTTP response object which is returned by <see cref="IHttpRequest"/>.
+    /// Gets the HTTP response headers.
     /// </summary>
-    public interface IHttpResponse
-    {
-        /// <summary>
-        /// Gets the HTTP response headers.
-        /// </summary>
-        IHttpHeaders Headers { get; }
-
-        /// <summary>
-        /// Gets the HTTP response status code.
-        /// </summary>
-        int StatusCode { get; }
-
-        /// <summary>
-        /// Gets the HTTP response reason phrase.
-        /// </summary>
-        string ReasonPhrase { get; }
-
-        /// <summary>
-        /// Gets the HTTP version.
-        /// </summary>
-        Version Version { get; }
-    }
+    IHttpHeaders Headers { get; }
 
     /// <summary>
-    /// HTTP response object which is returned by <see cref="IHttpRequest"/>.
+    /// Gets the HTTP response status code.
     /// </summary>
-    /// <typeparam name="T">The type of the response content.</typeparam>
-    public interface IHttpResponse<out T> : IHttpResponse
-    {
-        /// <summary>
-        /// Gets the HTTP response content body.
-        /// </summary>
-        T Content { get; }
-    }
+    int StatusCode { get; }
+
+    /// <summary>
+    /// Gets the HTTP response reason phrase.
+    /// </summary>
+    string ReasonPhrase { get; }
+
+    /// <summary>
+    /// Gets the HTTP version.
+    /// </summary>
+    Version Version { get; }
+}
+
+/// <summary>
+/// HTTP response object which is returned by <see cref="IHttpRequest"/>.
+/// </summary>
+/// <typeparam name="T">The type of the response content.</typeparam>
+public interface IHttpResponse<out T> : IHttpResponse
+{
+    /// <summary>
+    /// Gets the HTTP response content body.
+    /// </summary>
+    T Content { get; }
 }

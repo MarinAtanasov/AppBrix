@@ -5,18 +5,17 @@ using AppBrix.Configuration;
 using AppBrix.Data.InMemory;
 using AppBrix.Data.InMemory.Configuration;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Extension methods for the <see cref="InMemoryDataModule"/>.
+/// </summary>
+public static class InMemoryDataExtensions
 {
     /// <summary>
-    /// Extension methods for the <see cref="InMemoryDataModule"/>.
+    /// Gets the <see cref="InMemoryDataConfig"/> from <see cref="IConfigService"/>.
     /// </summary>
-    public static class InMemoryDataExtensions
-    {
-        /// <summary>
-        /// Gets the <see cref="InMemoryDataConfig"/> from <see cref="IConfigService"/>.
-        /// </summary>
-        /// <param name="service">The configuration service.</param>
-        /// <returns>The <see cref="InMemoryDataConfig"/>.</returns>
-        public static InMemoryDataConfig GetInMemoryDataConfig(this IConfigService service) => (InMemoryDataConfig)service.Get(typeof(InMemoryDataConfig));
-    }
+    /// <param name="service">The configuration service.</param>
+    /// <returns>The <see cref="InMemoryDataConfig"/>.</returns>
+    public static InMemoryDataConfig GetInMemoryDataConfig(this IConfigService service) => (InMemoryDataConfig)service.Get(typeof(InMemoryDataConfig));
 }

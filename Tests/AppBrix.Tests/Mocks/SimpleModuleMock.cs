@@ -6,30 +6,29 @@ using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 
-namespace AppBrix.Tests.Mocks
+namespace AppBrix.Tests.Mocks;
+
+internal class SimpleModuleMock : ModuleBase
 {
-    internal class SimpleModuleMock : ModuleBase
+    public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
+
+    public bool IsInitialized { get; private set; }
+
+    public bool IsUninitialized { get; private set; }
+
+    protected override void Initialize(IInitializeContext context)
     {
-        public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
+        if (this.App != context.App)
+            throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
-        public bool IsInitialized { get; private set; }
+        this.IsInitialized = true;
+    }
 
-        public bool IsUninitialized { get; private set; }
+    protected override void Uninitialize()
+    {
+        if (this.App is null)
+            throw new InvalidOperationException($"this.{nameof(App)} should not be null.");
 
-        protected override void Initialize(IInitializeContext context)
-        {
-            if (this.App != context.App)
-                throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
-
-            this.IsInitialized = true;
-        }
-
-        protected override void Uninitialize()
-        {
-            if (this.App is null)
-                throw new InvalidOperationException($"this.{nameof(App)} should not be null.");
-
-            this.IsUninitialized = true;
-        }
+        this.IsUninitialized = true;
     }
 }

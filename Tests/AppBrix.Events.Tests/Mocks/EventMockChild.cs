@@ -2,22 +2,21 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 
-namespace AppBrix.Events.Tests.Mocks
+namespace AppBrix.Events.Tests.Mocks;
+
+/// <summary>
+/// A child event type used for testing of hierarchical behavior.
+/// </summary>
+internal sealed class EventMockChild : EventMock
 {
+    #region Construction
     /// <summary>
-    /// A child event type used for testing of hierarchical behavior.
+    /// Creates a new instance of <see cref="EventMockChild"/>.
     /// </summary>
-    internal sealed class EventMockChild : EventMock
+    /// <param name="value">The value to store.</param>
+    public EventMockChild(int value)
+        : base(value)
     {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="EventMockChild"/>.
-        /// </summary>
-        /// <param name="value">The value to store.</param>
-        public EventMockChild(int value)
-            : base(value)
-        {
-        }
-        #endregion
     }
+    #endregion
 }

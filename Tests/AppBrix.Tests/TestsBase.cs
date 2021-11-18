@@ -3,22 +3,21 @@
 //
 using System;
 
-namespace AppBrix.Tests
+namespace AppBrix.Tests;
+
+public abstract class TestsBase : IDisposable
 {
-    public abstract class TestsBase : IDisposable
+    #region Setup and cleanup
+    public TestsBase(IApp app) => this.app = app;
+
+    public virtual void Dispose()
     {
-        #region Setup and cleanup
-        public TestsBase(IApp app) => this.app = app;
-
-        public virtual void Dispose()
-        {
-            try { this.app.Stop(); } catch (InvalidOperationException) { }
-            GC.SuppressFinalize(this);
-        }
-        #endregion
-
-        #region Private fields and constants
-        protected readonly IApp app;
-        #endregion
+        try { this.app.Stop(); } catch (InvalidOperationException) { }
+        GC.SuppressFinalize(this);
     }
+    #endregion
+
+    #region Private fields and constants
+    protected readonly IApp app;
+    #endregion
 }

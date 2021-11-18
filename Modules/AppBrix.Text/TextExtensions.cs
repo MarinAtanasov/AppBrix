@@ -3,18 +3,17 @@
 //
 using AppBrix.Text;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Extension methods for the <see cref="TextModule"/>.
+/// </summary>
+public static class TextExtensions
 {
     /// <summary>
-    /// Extension methods for the <see cref="TextModule"/>.
+    /// Gets the application's currently registered <see cref="IStringDistanceService"/>
     /// </summary>
-    public static class TextExtensions
-    {
-        /// <summary>
-        /// Gets the application's currently registered <see cref="IStringDistanceService"/>
-        /// </summary>
-        /// <param name="app">The application.</param>
-        /// <returns>The registered string distance service.</returns>
-        public static IStringDistanceService GetStringDistanceService(this IApp app) => (IStringDistanceService)app.Get(typeof(IStringDistanceService));
-    }
+    /// <param name="app">The application.</param>
+    /// <returns>The registered string distance service.</returns>
+    public static IStringDistanceService GetStringDistanceService(this IApp app) => (IStringDistanceService)app.Get(typeof(IStringDistanceService));
 }

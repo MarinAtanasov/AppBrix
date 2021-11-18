@@ -3,22 +3,21 @@
 //
 using System;
 
-namespace AppBrix.Lifecycle
+namespace AppBrix.Lifecycle;
+
+internal sealed class UninstallContext : IUninstallContext
 {
-    internal sealed class UninstallContext : IUninstallContext
+    #region Construction
+    public UninstallContext(IApp app)
     {
-        #region Construction
-        public UninstallContext(IApp app)
-        {
-            if (app is null)
-                throw new ArgumentNullException(nameof(app));
+        if (app is null)
+            throw new ArgumentNullException(nameof(app));
 
-            this.App = app;
-        }
-        #endregion
-
-        #region Properties
-        public IApp App { get; }
-        #endregion
+        this.App = app;
     }
+    #endregion
+
+    #region Properties
+    public IApp App { get; }
+    #endregion
 }

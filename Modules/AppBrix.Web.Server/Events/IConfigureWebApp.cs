@@ -4,16 +4,15 @@
 using AppBrix.Events;
 using Microsoft.AspNetCore.Builder;
 
-namespace AppBrix.Web.Server.Events
+namespace AppBrix.Web.Server.Events;
+
+/// <summary>
+/// An event which is called when the <see cref="WebApplication"/> has been built but not yet ran.
+/// </summary>
+public interface IConfigureWebApp : IEvent
 {
     /// <summary>
-    /// An event which is called when the <see cref="WebApplication"/> has been built but not yet ran.
+    /// Gets the <see cref="WebApplication"/>.
     /// </summary>
-    public interface IConfigureWebApp : IEvent
-    {
-        /// <summary>
-        /// Gets the <see cref="WebApplication"/>.
-        /// </summary>
-        WebApplication App { get; }
-    }
+    WebApplication App { get; }
 }

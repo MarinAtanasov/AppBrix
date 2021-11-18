@@ -3,23 +3,22 @@
 //
 using System;
 
-namespace AppBrix.Events.Schedule
+namespace AppBrix.Events.Schedule;
+
+/// <summary>
+/// Scheduled event which decides when it needs to be called.
+/// </summary>
+public interface IScheduledEvent<T> where T : IEvent
 {
     /// <summary>
-    /// Scheduled event which decides when it needs to be called.
+    /// Gets the event to be called at the next scheduled occurrence.
     /// </summary>
-    public interface IScheduledEvent<T> where T : IEvent
-    {
-        /// <summary>
-        /// Gets the event to be called at the next scheduled occurrence.
-        /// </summary>
-        T Event { get; }
+    T Event { get; }
 
-        /// <summary>
-        /// Calculates when the event needs to be called next.
-        /// </summary>
-        /// <param name="now">The base time to be used.</param>
-        /// <returns>When the event needs to be called next.</returns>
-        DateTime GetNextOccurrence(DateTime now);
-    }
+    /// <summary>
+    /// Calculates when the event needs to be called next.
+    /// </summary>
+    /// <param name="now">The base time to be used.</param>
+    /// <returns>When the event needs to be called next.</returns>
+    DateTime GetNextOccurrence(DateTime now);
 }

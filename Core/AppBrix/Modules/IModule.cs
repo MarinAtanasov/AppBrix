@@ -5,17 +5,16 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 
-namespace AppBrix.Modules
+namespace AppBrix.Modules;
+
+/// <summary>
+/// Interface for an application module.
+/// </summary>
+public interface IModule : IApplicationLifecycle, IInstallable
 {
     /// <summary>
-    /// Interface for an application module.
+    /// Gets the types of the modules which are direct dependencies for the current module.
+    /// This is used to determine the order in which the modules are loaded.
     /// </summary>
-    public interface IModule : IApplicationLifecycle, IInstallable
-    {
-        /// <summary>
-        /// Gets the types of the modules which are direct dependencies for the current module.
-        /// This is used to determine the order in which the modules are loaded.
-        /// </summary>
-        IEnumerable<Type> Dependencies { get; }
-    }
+    IEnumerable<Type> Dependencies { get; }
 }

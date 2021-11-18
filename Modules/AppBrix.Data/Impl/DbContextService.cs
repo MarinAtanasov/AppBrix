@@ -5,37 +5,36 @@ using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace AppBrix.Data.Impl
+namespace AppBrix.Data.Impl;
+
+internal sealed class DbContextService : IDbContextService, IApplicationLifecycle
 {
-    internal sealed class DbContextService : IDbContextService, IApplicationLifecycle
+    #region Public and overriden methods
+    public void Initialize(IInitializeContext context)
     {
-        #region Public and overriden methods
-        public void Initialize(IInitializeContext context)
-        {
-            this.app = context.App;
-        }
-
-        public void Uninitialize()
-        {
-            this.app = null;
-        }
-
-        public DbContext Get(Type type)
-        {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
-
-            var factory = this.app.GetFactoryService().GetFactory(type);
-            var context = factory?.Get() ?? type.CreateObject();
-            (context as DbContextBase)?.Initialize(new InitializeDbContext(this.app));
-            return (DbContext)context;
-        }
-        #endregion
-
-        #region Private fields and constants
-        #nullable disable
-        private IApp app;
-        #nullable restore
-        #endregion
+        this.app = context.App;
     }
+
+    public void Uninitialize()
+    {
+        this.app = null;
+    }
+
+    public DbContext Get(Type type)
+    {
+        if (type is null)
+            throw new ArgumentNullException(nameof(type));
+
+        var factory = this.app.GetFactoryService().GetFactory(type);
+        var context = factory?.Get() ?? type.CreateObject();
+        (context as DbContextBase)?.Initialize(new InitializeDbContext(this.app));
+        return (DbContext)context;
+    }
+    #endregion
+
+    #region Private fields and constants
+    #nullable disable
+    private IApp app;
+    #nullable restore
+    #endregion
 }

@@ -3,55 +3,54 @@
 //
 using System;
 
-namespace AppBrix.Events.Schedule.Impl
+namespace AppBrix.Events.Schedule.Impl;
+
+internal abstract class PriorityQueueItem
 {
-    internal abstract class PriorityQueueItem
+    #region Properties
+    public abstract object ScheduledEvent { get; }
+
+    public DateTime Occurrence { get; protected set; }
+    #endregion
+
+    #region Public and overriden methods
+    public abstract void Execute();
+
+    public abstract void MoveToNextOccurrence(DateTime now);
+    #endregion
+}
+
+internal sealed class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
+{
+    #region Construction
+    public PriorityQueueItem(IApp app, IScheduledEvent<T> scheduledEvent)
     {
-        #region Properties
-        public abstract object ScheduledEvent { get; }
+        this.app = app;
+        this.scheduledEvent = scheduledEvent;
+    }
+    #endregion
 
-        public DateTime Occurrence { get; protected set; }
-        #endregion
+    #region Properties
+    public override object ScheduledEvent => this.scheduledEvent;
+    #endregion
 
-        #region Public and overriden methods
-        public abstract void Execute();
-
-        public abstract void MoveToNextOccurrence(DateTime now);
-        #endregion
+    #region Public and overriden methods
+    public override void Execute()
+    {
+        try
+        {
+            this.app.GetEventHub().Raise(this.scheduledEvent.Event);
+        }
+        catch (Exception)
+        {
+        }
     }
 
-    internal sealed class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
-    {
-        #region Construction
-        public PriorityQueueItem(IApp app, IScheduledEvent<T> scheduledEvent)
-        {
-            this.app = app;
-            this.scheduledEvent = scheduledEvent;
-        }
-        #endregion
+    public override void MoveToNextOccurrence(DateTime now) => this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);
+    #endregion
 
-        #region Properties
-        public override object ScheduledEvent => this.scheduledEvent;
-        #endregion
-
-        #region Public and overriden methods
-        public override void Execute()
-        {
-            try
-            {
-                this.app.GetEventHub().Raise(this.scheduledEvent.Event);
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        public override void MoveToNextOccurrence(DateTime now) => this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);
-        #endregion
-
-        #region Private fields and constants
-        private readonly IApp app;
-        private readonly IScheduledEvent<T> scheduledEvent;
-        #endregion
-    }
+    #region Private fields and constants
+    private readonly IApp app;
+    private readonly IScheduledEvent<T> scheduledEvent;
+    #endregion
 }

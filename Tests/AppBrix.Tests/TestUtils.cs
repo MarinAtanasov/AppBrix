@@ -7,39 +7,38 @@ using AppBrix.Tests.Mocks;
 using FluentAssertions;
 using System;
 
-namespace AppBrix.Tests
+namespace AppBrix.Tests;
+
+/// <summary>
+/// Contains commonly used testing utilities.
+/// </summary>
+public static class TestUtils
 {
+    #region Public and overriden methods
+
     /// <summary>
-    /// Contains commonly used testing utilities.
+    /// Creates an app with an in-memory configuration using the provided module and its dependencies.
     /// </summary>
-    public static class TestUtils
+    /// <typeparam name="T">The module to load inside the application.</typeparam>
+    /// <returns>The created application.</returns>
+    public static IApp CreateTestApp<T>() where T : IModule => App.Create<MainModuleMock<T>>(new MemoryConfigService());
+
+    /// <summary>
+    /// Creates an app with an in-memory configuration using the provided module and its dependencies.
+    /// </summary>
+    /// <typeparam name="T1">The first module to load inside the application.</typeparam>
+    /// <typeparam name="T2">The second module to load inside the application.</typeparam>
+    /// <returns>The created application.</returns>
+    public static IApp CreateTestApp<T1, T2>() where T1 : IModule where T2 : IModule => App.Create<MainModuleMock<T1, T2>>(new MemoryConfigService());
+
+    public static void TestPerformance(Action action)
     {
-        #region Public and overriden methods
+        // Invoke the action once to make sure that the assemblies are loaded.
+        action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(5000), "this is a performance test");
 
-        /// <summary>
-        /// Creates an app with an in-memory configuration using the provided module and its dependencies.
-        /// </summary>
-        /// <typeparam name="T">The module to load inside the application.</typeparam>
-        /// <returns>The created application.</returns>
-        public static IApp CreateTestApp<T>() where T : IModule => App.Create<MainModuleMock<T>>(new MemoryConfigService());
+        GC.Collect();
 
-        /// <summary>
-        /// Creates an app with an in-memory configuration using the provided module and its dependencies.
-        /// </summary>
-        /// <typeparam name="T1">The first module to load inside the application.</typeparam>
-        /// <typeparam name="T2">The second module to load inside the application.</typeparam>
-        /// <returns>The created application.</returns>
-        public static IApp CreateTestApp<T1, T2>() where T1 : IModule where T2 : IModule => App.Create<MainModuleMock<T1, T2>>(new MemoryConfigService());
-
-        public static void TestPerformance(Action action)
-        {
-            // Invoke the action once to make sure that the assemblies are loaded.
-            action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(5000), "this is a performance test");
-
-            GC.Collect();
-
-            action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
-        }
-        #endregion
+        action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
     }
+    #endregion
 }

@@ -3,12 +3,11 @@
 //
 using AppBrix.Events;
 
-namespace AppBrix.Web.Server.Events
+namespace AppBrix.Web.Server.Events;
+
+/// <summary>
+/// An event which is called while the host application is stopping.
+/// </summary>
+public interface IHostApplicationStopping : IEvent
 {
-    /// <summary>
-    /// An event which is called while the host application is stopping.
-    /// </summary>
-    public interface IHostApplicationStopping : IEvent
-    {
-    }
 }

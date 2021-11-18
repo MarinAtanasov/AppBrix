@@ -27,16 +27,16 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 
-namespace AppBrix.WebApp
+namespace AppBrix.WebApp;
+
+/// <summary>
+/// Initializes web application configuration.
+/// </summary>
+public sealed class WebAppMainModule : MainModuleBase
 {
-    /// <summary>
-    /// Initializes web application configuration.
-    /// </summary>
-    public sealed class WebAppMainModule : MainModuleBase
+    #region Properties
+    public override IEnumerable<Type> Dependencies => new[]
     {
-        #region Properties
-        public override IEnumerable<Type> Dependencies => new[]
-        {
             //typeof(CachingModule),
             typeof(MemoryCachingModule),
             typeof(CloningModule),
@@ -62,51 +62,50 @@ namespace AppBrix.WebApp
             typeof(WebClientModule),
             typeof(WebServerModule)
         };
-        #endregion
+    #endregion
 
-        #region Public and overriden methods
-        protected override void Initialize(IInitializeContext context)
-        {
-            this.booksService.Initialize(context);
-            this.App.Container.Register(this.booksService);
+    #region Public and overriden methods
+    protected override void Initialize(IInitializeContext context)
+    {
+        this.booksService.Initialize(context);
+        this.App.Container.Register(this.booksService);
 
-            this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
-            this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
-        }
-
-        protected override void Uninitialize()
-        {
-            this.App.GetEventHub().Unsubscribe<IConfigureWebApp>(this.ConfigureWebApp);
-            this.App.GetEventHub().Unsubscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
-
-            this.booksService.Uninitialize();
-        }
-        #endregion
-
-        #region Private methods
-        private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
-        {
-            args.Builder.Services.AddControllers();
-        }
-
-        private void ConfigureWebApp(IConfigureWebApp args)
-        {
-            var app = args.App;
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-        }
-        #endregion
-
-        #region Private fields and constants
-        private readonly BooksService booksService = new BooksService();
-        #endregion
+        this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
+        this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
     }
+
+    protected override void Uninitialize()
+    {
+        this.App.GetEventHub().Unsubscribe<IConfigureWebApp>(this.ConfigureWebApp);
+        this.App.GetEventHub().Unsubscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
+
+        this.booksService.Uninitialize();
+    }
+    #endregion
+
+    #region Private methods
+    private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
+    {
+        args.Builder.Services.AddControllers();
+    }
+
+    private void ConfigureWebApp(IConfigureWebApp args)
+    {
+        var app = args.App;
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+    }
+    #endregion
+
+    #region Private fields and constants
+    private readonly BooksService booksService = new BooksService();
+    #endregion
 }

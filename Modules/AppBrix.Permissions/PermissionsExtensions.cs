@@ -6,52 +6,51 @@ using System.Collections.Generic;
 using AppBrix.Configuration;
 using AppBrix.Permissions.Configuration;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Extension methods for easier manipulation of AppBrix permissions.
+/// </summary>
+public static class PermissionsExtensions
 {
     /// <summary>
-    /// Extension methods for easier manipulation of AppBrix permissions.
+    /// Gets the currently loaded permissions service.
     /// </summary>
-    public static class PermissionsExtensions
+    /// <param name="app">The current application.</param>
+    /// <returns>The permissions service.</returns>
+    public static IPermissionsService GetPermissionsService(this IApp app) => (IPermissionsService)app.Get(typeof(IPermissionsService));
+
+    /// <summary>
+    /// Gets the <see cref="PermissionsConfig"/> from <see cref="IConfigService"/>.
+    /// </summary>
+    /// <param name="service">The configuration service.</param>
+    /// <returns>The <see cref="PermissionsConfig"/>.</returns>
+    public static PermissionsConfig GetPermissionsConfig(this IConfigService service) => (PermissionsConfig)service.Get(typeof(PermissionsConfig));
+
+    internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
     {
-        /// <summary>
-        /// Gets the currently loaded permissions service.
-        /// </summary>
-        /// <param name="app">The current application.</param>
-        /// <returns>The permissions service.</returns>
-        public static IPermissionsService GetPermissionsService(this IApp app) => (IPermissionsService)app.Get(typeof(IPermissionsService));
-
-        /// <summary>
-        /// Gets the <see cref="PermissionsConfig"/> from <see cref="IConfigService"/>.
-        /// </summary>
-        /// <param name="service">The configuration service.</param>
-        /// <returns>The <see cref="PermissionsConfig"/>.</returns>
-        public static PermissionsConfig GetPermissionsConfig(this IConfigService service) => (PermissionsConfig)service.Get(typeof(PermissionsConfig));
-
-        internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
+        if (!dictionary.TryGetValue(key, out var values))
         {
-            if (!dictionary.TryGetValue(key, out var values))
-            {
-                values = new HashSet<string>();
-                dictionary.Add(key, values);
-            }
-
-            values.Add(value);
+            values = new HashSet<string>();
+            dictionary.Add(key, values);
         }
 
-        internal static void RemoveValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
-        {
-            if (dictionary.TryGetValue(key, out var values))
-            {
-                if (values.Remove(value) && values.Count == 0)
-                {
-                    dictionary.Remove(key);
-                }
-            }
-        }
-
-        internal static HashSet<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
-            dictionary.TryGetValue(key, out var values) ? values : PermissionsExtensions.EmptyHashSet;
-
-        private static readonly HashSet<string> EmptyHashSet = new HashSet<string>();
+        values.Add(value);
     }
+
+    internal static void RemoveValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
+    {
+        if (dictionary.TryGetValue(key, out var values))
+        {
+            if (values.Remove(value) && values.Count == 0)
+            {
+                dictionary.Remove(key);
+            }
+        }
+    }
+
+    internal static HashSet<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
+        dictionary.TryGetValue(key, out var values) ? values : PermissionsExtensions.EmptyHashSet;
+
+    private static readonly HashSet<string> EmptyHashSet = new HashSet<string>();
 }

@@ -3,36 +3,34 @@
 //
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
-using System;
 
-namespace AppBrix.Data.SqlServer.Impl
+namespace AppBrix.Data.SqlServer.Impl;
+
+internal sealed class SqlServerDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
 {
-    internal sealed class SqlServerDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
+    public void Initialize(IInitializeContext context)
     {
-        public void Initialize(IInitializeContext context)
-        {
-            this.connectionString = context.App.ConfigService.GetSqlServerDataConfig().ConnectionString;
-        }
-
-        public void Uninitialize()
-        {
-            this.connectionString = string.Empty;
-        }
-
-        public void Configure(IOnConfiguringDbContext context)
-        {
-            context.OptionsBuilder.UseSqlServer(
-                this.connectionString,
-                builder =>
-                {
-                    if (!string.IsNullOrEmpty(context.MigrationsAssembly))
-                        builder = builder.MigrationsAssembly(context.MigrationsAssembly);
-                    if (!string.IsNullOrEmpty(context.MigrationsHistoryTable))
-                        builder = builder.MigrationsHistoryTable(context.MigrationsHistoryTable);
-                }
-            );
-        }
-
-        private string connectionString = string.Empty;
+        this.connectionString = context.App.ConfigService.GetSqlServerDataConfig().ConnectionString;
     }
+
+    public void Uninitialize()
+    {
+        this.connectionString = string.Empty;
+    }
+
+    public void Configure(IOnConfiguringDbContext context)
+    {
+        context.OptionsBuilder.UseSqlServer(
+            this.connectionString,
+            builder =>
+            {
+                if (!string.IsNullOrEmpty(context.MigrationsAssembly))
+                    builder = builder.MigrationsAssembly(context.MigrationsAssembly);
+                if (!string.IsNullOrEmpty(context.MigrationsHistoryTable))
+                    builder = builder.MigrationsHistoryTable(context.MigrationsHistoryTable);
+            }
+        );
+    }
+
+    private string connectionString = string.Empty;
 }

@@ -4,47 +4,46 @@
 using AppBrix.Lifecycle;
 using System.IO;
 
-namespace AppBrix.Logging.File.Impl
+namespace AppBrix.Logging.File.Impl;
+
+/// <summary>
+/// A log writer which writes entries to the console.
+/// </summary>
+internal sealed class FileLogger : IApplicationLifecycle
 {
-    /// <summary>
-    /// A log writer which writes entries to the console.
-    /// </summary>
-    internal sealed class FileLogger : IApplicationLifecycle
+    #region Public and overriden methods
+    public void Initialize(IInitializeContext context)
     {
-        #region Public and overriden methods
-        public void Initialize(IInitializeContext context)
-        {
-            this.app = context.App;
-            var config = app.ConfigService.GetFileLoggerConfig();
-            this.writer = System.IO.File.AppendText(config.Path);
-            this.writer.AutoFlush = true;
-            this.app.GetLogHub().Subscribe(this.LogEntry);
-        }
-
-        public void Uninitialize()
-        {
-            this.app?.GetLogHub().Unsubscribe(this.LogEntry);
-            this.app = null;
-            this.writer?.Dispose();
-            this.writer = null;
-        }
-        #endregion
-
-        #region Private methods
-        private void LogEntry(ILogEntry entry)
-        {
-            lock (this.writer)
-            {
-                this.writer.WriteLine(entry.ToString());
-            }
-        }
-        #endregion
-
-        #region Private fields and constants
-        #nullable disable
-        private IApp app;
-        private StreamWriter writer;
-        #nullable restore
-        #endregion
+        this.app = context.App;
+        var config = app.ConfigService.GetFileLoggerConfig();
+        this.writer = System.IO.File.AppendText(config.Path);
+        this.writer.AutoFlush = true;
+        this.app.GetLogHub().Subscribe(this.LogEntry);
     }
+
+    public void Uninitialize()
+    {
+        this.app?.GetLogHub().Unsubscribe(this.LogEntry);
+        this.app = null;
+        this.writer?.Dispose();
+        this.writer = null;
+    }
+    #endregion
+
+    #region Private methods
+    private void LogEntry(ILogEntry entry)
+    {
+        lock (this.writer)
+        {
+            this.writer.WriteLine(entry.ToString());
+        }
+    }
+    #endregion
+
+    #region Private fields and constants
+    #nullable disable
+    private IApp app;
+    private StreamWriter writer;
+    #nullable restore
+    #endregion
 }

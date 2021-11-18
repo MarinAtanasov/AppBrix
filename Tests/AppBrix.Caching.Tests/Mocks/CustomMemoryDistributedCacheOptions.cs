@@ -4,10 +4,9 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
-namespace AppBrix.Caching.Tests.Mocks
+namespace AppBrix.Caching.Tests.Mocks;
+
+internal sealed class CustomMemoryDistributedCacheOptions : MemoryDistributedCacheOptions, IOptions<MemoryDistributedCacheOptions>
 {
-    internal sealed class CustomMemoryDistributedCacheOptions : MemoryDistributedCacheOptions, IOptions<MemoryDistributedCacheOptions>
-    {
-        public MemoryDistributedCacheOptions Value => this;
-    }
+    public MemoryDistributedCacheOptions Value => this;
 }

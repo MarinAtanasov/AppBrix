@@ -3,17 +3,16 @@
 //
 using System;
 
-namespace AppBrix.Factory.Impl
+namespace AppBrix.Factory.Impl;
+
+internal class Factory<T> : IFactory<T>
 {
-    internal class Factory<T> : IFactory<T>
+    public Factory(Func<object> factory)
     {
-        public Factory(Func<object> factory)
-        {
-            this.factory = factory;
-        }
-
-        public T Get() => (T)this.factory();
-
-        private readonly Func<object> factory;
+        this.factory = factory;
     }
+
+    public T Get() => (T)this.factory();
+
+    private readonly Func<object> factory;
 }

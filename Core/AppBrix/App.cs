@@ -5,57 +5,56 @@ using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Modules;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Static class used for loading of a default app.
+/// </summary>
+public static class App
 {
+    #region Public and overriden methods
     /// <summary>
-    /// Static class used for loading of a default app.
+    /// Creates a default application with a specified configuration service.
     /// </summary>
-    public static class App
+    /// <param name="configService">The configuration service.</param>
+    /// <returns>The created app.</returns>
+    public static IApp Create(IConfigService configService) => new DefaultApp(configService);
+
+
+    /// <summary>
+    /// Creates a default application with a specified configuration service.
+    /// Registers the provided module type in the <see cref="AppConfig"/>.
+    /// </summary>
+    /// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
+    /// <param name="configService">The configuration service.</param>
+    /// <returns>The created app.</returns>
+    public static IApp Create<T>(IConfigService configService) where T : MainModuleBase, new()
     {
-        #region Public and overriden methods
-        /// <summary>
-        /// Creates a default application with a specified configuration service.
-        /// </summary>
-        /// <param name="configService">The configuration service.</param>
-        /// <returns>The created app.</returns>
-        public static IApp Create(IConfigService configService) => new DefaultApp(configService);
-
-
-        /// <summary>
-        /// Creates a default application with a specified configuration service.
-        /// Registers the provided module type in the <see cref="AppConfig"/>.
-        /// </summary>
-        /// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
-        /// <param name="configService">The configuration service.</param>
-        /// <returns>The created app.</returns>
-        public static IApp Create<T>(IConfigService configService) where T : MainModuleBase, new()
+        var modules = configService.GetAppConfig().Modules;
+        var mainModuleConfigElement = ModuleConfigElement.Create<T>();
+        var type = mainModuleConfigElement.Type;
+        for (var i = 0; i < modules.Count; i++)
         {
-            var modules = configService.GetAppConfig().Modules;
-            var mainModuleConfigElement = ModuleConfigElement.Create<T>();
-            var type = mainModuleConfigElement.Type;
-            for (var i = 0; i < modules.Count; i++)
-            {
-                if (modules[i].Type == type)
-                    return App.Create(configService);
-            }
-            modules.Add(mainModuleConfigElement);
-            return App.Create(configService);
+            if (modules[i].Type == type)
+                return App.Create(configService);
         }
-
-
-        /// <summary>
-        /// Creates and starts a default application with a specified configuration service.
-        /// Registers the provided module type in the <see cref="AppConfig"/> before starting.
-        /// </summary>
-        /// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
-        /// <param name="configService">The configuration service.</param>
-        /// <returns>The created and started app.</returns>
-        public static IApp Start<T>(IConfigService configService) where T : MainModuleBase, new()
-        {
-            var app = App.Create<T>(configService);
-            app.Start();
-            return app;
-        }
-        #endregion
+        modules.Add(mainModuleConfigElement);
+        return App.Create(configService);
     }
+
+
+    /// <summary>
+    /// Creates and starts a default application with a specified configuration service.
+    /// Registers the provided module type in the <see cref="AppConfig"/> before starting.
+    /// </summary>
+    /// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
+    /// <param name="configService">The configuration service.</param>
+    /// <returns>The created and started app.</returns>
+    public static IApp Start<T>(IConfigService configService) where T : MainModuleBase, new()
+    {
+        var app = App.Create<T>(configService);
+        app.Start();
+        return app;
+    }
+    #endregion
 }

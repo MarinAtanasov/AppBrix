@@ -3,12 +3,11 @@
 //
 using System.Collections.Generic;
 
-namespace AppBrix.Web.Client
+namespace AppBrix.Web.Client;
+
+/// <summary>
+/// HTTP REST headers.
+/// </summary>
+public interface IHttpHeaders : IDictionary<string, IEnumerable<string>>
 {
-    /// <summary>
-    /// HTTP REST headers.
-    /// </summary>
-    public interface IHttpHeaders : IDictionary<string, IEnumerable<string>>
-    {
-    }
 }

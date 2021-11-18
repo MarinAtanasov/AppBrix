@@ -3,26 +3,25 @@
 //
 using System;
 
-namespace AppBrix.Lifecycle
+namespace AppBrix.Lifecycle;
+
+/// <summary>
+/// Context passed down during application installation to configure an <see cref="IInstallable"/> object.
+/// </summary>
+public interface IConfigureContext
 {
     /// <summary>
-    /// Context passed down during application installation to configure an <see cref="IInstallable"/> object.
+    /// Gets the current application.
     /// </summary>
-    public interface IConfigureContext
-    {
-        /// <summary>
-        /// Gets the current application.
-        /// </summary>
-        IApp App { get; }
+    IApp App { get; }
 
-        /// <summary>
-        /// Gets the previously installed version of the module.
-        /// </summary>
-        Version PreviousVersion { get; }
+    /// <summary>
+    /// Gets the previously installed version of the module.
+    /// </summary>
+    Version PreviousVersion { get; }
 
-        /// <summary>
-        /// Gets or sets the requested by the <see cref="IInstallable"/> object application action.
-        /// </summary>
-        RequestedAction RequestedAction { get; set; }
-    }
+    /// <summary>
+    /// Gets or sets the requested by the <see cref="IInstallable"/> object application action.
+    /// </summary>
+    RequestedAction RequestedAction { get; set; }
 }

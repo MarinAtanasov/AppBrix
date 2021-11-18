@@ -6,82 +6,81 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Used for storing commonly used extension methods.
+/// </summary>
+public static class CommonExtensions
 {
     /// <summary>
-    /// Used for storing commonly used extension methods.
+    /// Get the referenced assemblies, starting with the provided assembly.
     /// </summary>
-    public static class CommonExtensions
+    /// <param name="current">The current assembly.</param>
+    /// <param name="recursive">If true, gets all references. If false, gets only the direct ones.</param>
+    /// <returns>The referenced assemblies.</returns>
+    public static IEnumerable<Assembly> GetReferencedAssemblies(this Assembly current, bool recursive)
     {
-        /// <summary>
-        /// Get the referenced assemblies, starting with the provided assembly.
-        /// </summary>
-        /// <param name="current">The current assembly.</param>
-        /// <param name="recursive">If true, gets all references. If false, gets only the direct ones.</param>
-        /// <returns>The referenced assemblies.</returns>
-        public static IEnumerable<Assembly> GetReferencedAssemblies(this Assembly current, bool recursive)
+        var names = new HashSet<string> { current.GetName().FullName };
+        var locations = new HashSet<string> { current.Location };
+        var assemblyQueue = new List<Assembly> { current };
+
+        for (var i = 0; i < assemblyQueue.Count; i++)
         {
-            var names = new HashSet<string> { current.GetName().FullName };
-            var locations = new HashSet<string> { current.Location };
-            var assemblyQueue = new List<Assembly> { current };
-
-            for (var i = 0; i < assemblyQueue.Count; i++)
+            var referencedAssemblies = assemblyQueue[i].GetReferencedAssemblies();
+            for (var j = 0; j < referencedAssemblies.Length; j++)
             {
-                var referencedAssemblies = assemblyQueue[i].GetReferencedAssemblies();
-                for (var j = 0; j < referencedAssemblies.Length; j++)
+                var reference = referencedAssemblies[j];
+                if (!names.Add(reference.FullName))
+                    continue;
+
+                Assembly referencedAssembly;
+                try
                 {
-                    var reference = referencedAssemblies[j];
-                    if (!names.Add(reference.FullName))
-                        continue;
-
-                    Assembly referencedAssembly;
-                    try
-                    {
-                        referencedAssembly = Assembly.Load(reference);
-                    }
-                    catch (IOException)
-                    {
-                        // Ignore assemblies which cannot be found or loaded.
-                        continue;
-                    }
-
-                    if (locations.Add(referencedAssembly.Location))
-                    {
-                        assemblyQueue.Add(referencedAssembly);
-                    }
+                    referencedAssembly = Assembly.Load(reference);
+                }
+                catch (IOException)
+                {
+                    // Ignore assemblies which cannot be found or loaded.
+                    continue;
                 }
 
-                if (!recursive)
+                if (locations.Add(referencedAssembly.Location))
                 {
-                    break;
+                    assemblyQueue.Add(referencedAssembly);
                 }
             }
 
-            return assemblyQueue;
+            if (!recursive)
+            {
+                break;
+            }
         }
 
-        /// <summary>
-        /// Constructs an object.    
-        /// </summary>
-        /// <typeparam name="T">The type in which the result should be casted</typeparam>
-        /// <param name="type">The type of the object to be constructed.</param>
-        /// <param name="args">The constructor arguments.</param>
-        /// <returns>The constructed object.</returns>
-        public static T CreateObject<T>(this Type type, params object[] args) => (T)type.CreateObject(args);
-
-        /// <summary>
-        /// Constructs an object.
-        /// </summary>
-        /// <param name="type">The type of the object to be constructed.</param>
-        /// <param name="args">The constructor arguments.</param>
-        /// <returns>The constructed object.</returns>
-        public static object CreateObject(this Type type, params object[] args) => Activator.CreateInstance(type, args)!;
-
-        /// <summary>
-        /// Gets the assembly qualified name using only the assembly name without culture and version.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns>The assembly qualified name.</returns>
-        public static string GetAssemblyQualifiedName(this Type type) => $"{type.FullName}, {type.Assembly.GetName().Name}";
+        return assemblyQueue;
     }
+
+    /// <summary>
+    /// Constructs an object.    
+    /// </summary>
+    /// <typeparam name="T">The type in which the result should be casted</typeparam>
+    /// <param name="type">The type of the object to be constructed.</param>
+    /// <param name="args">The constructor arguments.</param>
+    /// <returns>The constructed object.</returns>
+    public static T CreateObject<T>(this Type type, params object[] args) => (T)type.CreateObject(args);
+
+    /// <summary>
+    /// Constructs an object.
+    /// </summary>
+    /// <param name="type">The type of the object to be constructed.</param>
+    /// <param name="args">The constructor arguments.</param>
+    /// <returns>The constructed object.</returns>
+    public static object CreateObject(this Type type, params object[] args) => Activator.CreateInstance(type, args)!;
+
+    /// <summary>
+    /// Gets the assembly qualified name using only the assembly name without culture and version.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <returns>The assembly qualified name.</returns>
+    public static string GetAssemblyQualifiedName(this Type type) => $"{type.FullName}, {type.Assembly.GetName().Name}";
 }

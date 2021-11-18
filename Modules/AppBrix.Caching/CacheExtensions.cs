@@ -3,18 +3,17 @@
 //
 using AppBrix.Caching;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Extension methods for easier manipulation of AppBrix caches.
+/// </summary>
+public static class CacheExtensions
 {
     /// <summary>
-    /// Extension methods for easier manipulation of AppBrix caches.
+    /// Gets the currently registered cache.
     /// </summary>
-    public static class CacheExtensions
-    {
-        /// <summary>
-        /// Gets the currently registered cache.
-        /// </summary>
-        /// <param name="app">The currently running application.</param>
-        /// <returns>The cache.</returns>
-        public static ICache GetCache(this IApp app) => (ICache)app.Get(typeof(ICache));
-    }
+    /// <param name="app">The currently running application.</param>
+    /// <returns>The cache.</returns>
+    public static ICache GetCache(this IApp app) => (ICache)app.Get(typeof(ICache));
 }

@@ -2,16 +2,15 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 
-namespace AppBrix.Lifecycle
+namespace AppBrix.Lifecycle;
+
+/// <summary>
+/// Context passed down during application uninstallation.
+/// </summary>
+public interface IUninstallContext
 {
     /// <summary>
-    /// Context passed down during application uninstallation.
+    /// Gets the current application.
     /// </summary>
-    public interface IUninstallContext
-    {
-        /// <summary>
-        /// Gets the current application.
-        /// </summary>
-        IApp App { get; }
-    }
+    IApp App { get; }
 }

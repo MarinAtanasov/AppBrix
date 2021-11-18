@@ -3,28 +3,27 @@
 //
 using AppBrix.Configuration;
 
-namespace AppBrix.Events.Delayed.Configuration
-{
-    /// <summary>
-    /// Configuration which sets how the delayed events should behave.
-    /// </summary>
-    public sealed class DelayedEventsConfig : IConfig
-    {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="DelayedEventsConfig"/>.
-        /// </summary>
-        public DelayedEventsConfig()
-        {
-            this.DefaultBehavior = EventBehavior.Immediate;
-        }
-        #endregion
+namespace AppBrix.Events.Delayed.Configuration;
 
-        #region Properties
-        /// <summary>
-        /// Gets or sets the default behavior for the events.
-        /// </summary>
-        public EventBehavior DefaultBehavior { get; set; }
-        #endregion
+/// <summary>
+/// Configuration which sets how the delayed events should behave.
+/// </summary>
+public sealed class DelayedEventsConfig : IConfig
+{
+    #region Construction
+    /// <summary>
+    /// Creates a new instance of <see cref="DelayedEventsConfig"/>.
+    /// </summary>
+    public DelayedEventsConfig()
+    {
+        this.DefaultBehavior = EventBehavior.Immediate;
     }
+    #endregion
+
+    #region Properties
+    /// <summary>
+    /// Gets or sets the default behavior for the events.
+    /// </summary>
+    public EventBehavior DefaultBehavior { get; set; }
+    #endregion
 }

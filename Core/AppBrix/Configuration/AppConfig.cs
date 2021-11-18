@@ -3,28 +3,27 @@
 //
 using System.Collections.Generic;
 
-namespace AppBrix.Configuration
-{
-    /// <summary>
-    /// Configuration which holds the modules collection.
-    /// </summary>
-    public sealed class AppConfig : IConfig
-    {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="AppConfig"/>.
-        /// </summary>
-        public AppConfig()
-        {
-            this.Modules = new List<ModuleConfigElement>();
-        }
-        #endregion
+namespace AppBrix.Configuration;
 
-        #region Properties
-        /// <summary>
-        /// Gets a list of modules to be loaded by the application.
-        /// </summary>
-        public List<ModuleConfigElement> Modules { get; private set; }
-        #endregion
+/// <summary>
+/// Configuration which holds the modules collection.
+/// </summary>
+public sealed class AppConfig : IConfig
+{
+    #region Construction
+    /// <summary>
+    /// Creates a new instance of <see cref="AppConfig"/>.
+    /// </summary>
+    public AppConfig()
+    {
+        this.Modules = new List<ModuleConfigElement>();
     }
+    #endregion
+
+    #region Properties
+    /// <summary>
+    /// Gets a list of modules to be loaded by the application.
+    /// </summary>
+    public List<ModuleConfigElement> Modules { get; private set; }
+    #endregion
 }

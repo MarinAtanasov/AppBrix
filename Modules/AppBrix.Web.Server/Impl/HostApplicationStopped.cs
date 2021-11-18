@@ -3,9 +3,8 @@
 //
 using AppBrix.Web.Server.Events;
 
-namespace AppBrix.Web.Server.Impl
+namespace AppBrix.Web.Server.Impl;
+
+internal sealed class HostApplicationStopped : IHostApplicationStopped
 {
-    internal sealed class HostApplicationStopped : IHostApplicationStopped
-    {
-    }
 }

@@ -4,16 +4,15 @@
 using AppBrix.Events;
 using Microsoft.AspNetCore.Builder;
 
-namespace AppBrix.Web.Server.Events
+namespace AppBrix.Web.Server.Events;
+
+/// <summary>
+/// An event which is called when the <see cref="IApp"/> is being attached to the <see cref="WebApplicationBuilder"/>.
+/// </summary>
+public interface IConfigureWebAppBuilder : IEvent
 {
     /// <summary>
-    /// An event which is called when the <see cref="IApp"/> is being attached to the <see cref="WebApplicationBuilder"/>.
+    /// Gets the <see cref="WebApplicationBuilder"/>.
     /// </summary>
-    public interface IConfigureWebAppBuilder : IEvent
-    {
-        /// <summary>
-        /// Gets the <see cref="WebApplicationBuilder"/>.
-        /// </summary>
-        WebApplicationBuilder Builder { get; }
-    }
+    WebApplicationBuilder Builder { get; }
 }

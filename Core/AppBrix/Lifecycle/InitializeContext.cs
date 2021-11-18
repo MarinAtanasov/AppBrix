@@ -3,24 +3,23 @@
 //
 using System;
 
-namespace AppBrix.Lifecycle
+namespace AppBrix.Lifecycle;
+
+internal sealed class InitializeContext : IInitializeContext
 {
-    internal sealed class InitializeContext : IInitializeContext
+    #region Construction
+    public InitializeContext(IApp app)
     {
-        #region Construction
-        public InitializeContext(IApp app)
-        {
-            if (app is null)
-                throw new ArgumentNullException(nameof(app));
+        if (app is null)
+            throw new ArgumentNullException(nameof(app));
 
-            this.App = app;
-        }
-        #endregion
-
-        #region Properties
-        public IApp App { get; }
-
-        public RequestedAction RequestedAction { get; set; }
-        #endregion
+        this.App = app;
     }
+    #endregion
+
+    #region Properties
+    public IApp App { get; }
+
+    public RequestedAction RequestedAction { get; set; }
+    #endregion
 }

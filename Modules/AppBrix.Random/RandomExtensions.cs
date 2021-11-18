@@ -3,18 +3,17 @@
 //
 using AppBrix.Random;
 
-namespace AppBrix
+namespace AppBrix;
+
+/// <summary>
+/// Extension methods for the <see cref="RandomModule"/>.
+/// </summary>
+public static class RandomExtensions
 {
     /// <summary>
-    /// Extension methods for the <see cref="RandomModule"/>.
+    /// Gets the application's currently registered <see cref="IRandomService"/>
     /// </summary>
-    public static class RandomExtensions
-    {
-        /// <summary>
-        /// Gets the application's currently registered <see cref="IRandomService"/>
-        /// </summary>
-        /// <param name="app">The application.</param>
-        /// <returns>The registered random service.</returns>
-        public static IRandomService GetRandomService(this IApp app) => (IRandomService)app.Get(typeof(IRandomService));
-    }
+    /// <param name="app">The application.</param>
+    /// <returns>The registered random service.</returns>
+    public static IRandomService GetRandomService(this IApp app) => (IRandomService)app.Get(typeof(IRandomService));
 }

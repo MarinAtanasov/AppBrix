@@ -4,33 +4,32 @@
 using System;
 using System.Globalization;
 
-namespace AppBrix.Time.Impl
+namespace AppBrix.Time.Impl;
+
+internal abstract class TimeServiceBase : ITimeService
 {
-    internal abstract class TimeServiceBase : ITimeService
+    #region Construction
+    /// <summary>
+    /// Creates a new instance of <see cref="TimeServiceBase"/>.
+    /// </summary>
+    /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
+    protected TimeServiceBase(string format)
     {
-        #region Construction
-        /// <summary>
-        /// Creates a new instance of <see cref="TimeServiceBase"/>.
-        /// </summary>
-        /// <param name="format">The string format to be used when converting a <see cref="DateTime"/> to a <see cref="string"/>.</param>
-        protected TimeServiceBase(string format)
-        {
-            this.format = format;
-        }
-        #endregion
-
-        #region ITimeService implementation
-        public abstract DateTime GetTime();
-
-        public abstract DateTime ToAppTime(DateTime time);
-
-        public DateTime ToDateTime(string time) => DateTime.ParseExact(time, this.format, CultureInfo.InvariantCulture);
-
-        public string ToString(DateTime time) => time.ToString(this.format);
-        #endregion
-
-        #region Private fields and constants
-        private readonly string format;
-        #endregion
+        this.format = format;
     }
+    #endregion
+
+    #region ITimeService implementation
+    public abstract DateTime GetTime();
+
+    public abstract DateTime ToAppTime(DateTime time);
+
+    public DateTime ToDateTime(string time) => DateTime.ParseExact(time, this.format, CultureInfo.InvariantCulture);
+
+    public string ToString(DateTime time) => time.ToString(this.format);
+    #endregion
+
+    #region Private fields and constants
+    private readonly string format;
+    #endregion
 }
