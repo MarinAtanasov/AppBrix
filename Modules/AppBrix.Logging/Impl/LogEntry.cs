@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
 namespace AppBrix.Logging.Impl;
 
@@ -23,7 +22,7 @@ internal sealed class LogEntry : ILogEntry
         this.CallerFile = callerFile ?? string.Empty;
         this.CallerMember = callerMember ?? string.Empty;
         this.CallerLineNumber = callerLineNumber;
-        this.ThreadId = Thread.CurrentThread.ManagedThreadId;
+        this.ThreadId = Environment.CurrentManagedThreadId;
         this.Created = created;
     }
     #endregion

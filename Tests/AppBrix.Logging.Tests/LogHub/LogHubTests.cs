@@ -161,7 +161,7 @@ public sealed class LogHubTests : TestsBase
     public void TestThreadId()
     {
         var message = "Test message";
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Thread.CurrentThread.ManagedThreadId, "thread id should be current thread id"));
+        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Environment.CurrentManagedThreadId, "thread id should be current thread id"));
         this.app.GetLogHub().Info(message);
     }
 
