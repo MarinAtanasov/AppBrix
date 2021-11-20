@@ -22,6 +22,19 @@ public static class App
 
 
     /// <summary>
+    /// Creates and starts a default application with a specified configuration service.
+    /// </summary>
+    /// <param name="configService">The configuration service.</param>
+    /// <returns>The created and started app.</returns>
+    public static IApp Start(IConfigService configService)
+    {
+        var app = App.Create(configService);
+        app.Start();
+        return app;
+    }
+
+
+    /// <summary>
     /// Creates a default application with a specified configuration service.
     /// Registers the provided module type in the <see cref="AppConfig"/>.
     /// </summary>
