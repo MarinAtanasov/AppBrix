@@ -4,7 +4,6 @@
 using AppBrix.Tests;
 using FluentAssertions;
 using System;
-using System.Threading;
 using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub;
