@@ -156,7 +156,7 @@ public sealed class StringDistanceServiceTests : TestsBase
     private void TestPerformanceGetDamerauLevenshteinDistanceInternal()
     {
         var service = this.app.GetStringDistanceService();
-        for (var i = 0; i < 15000; i++)
+        for (var i = 0; i < 12500; i++)
         {
             service.GetDamerauLevenshteinDistance("AppBrix", "Framework");
         }
@@ -165,7 +165,7 @@ public sealed class StringDistanceServiceTests : TestsBase
     private void TestPerformanceGetLevenshteinDistanceInternal()
     {
         var service = this.app.GetStringDistanceService();
-        for (var i = 0; i < 35000; i++)
+        for (var i = 0; i < 30000; i++)
         {
             service.GetLevenshteinDistance("AppBrix", "Framework");
         }
@@ -174,7 +174,7 @@ public sealed class StringDistanceServiceTests : TestsBase
     private void TestPerformanceGetOptimalStringAlignmentDistanceInternal()
     {
         var service = this.app.GetStringDistanceService();
-        for (var i = 0; i < 25000; i++)
+        for (var i = 0; i < 20000; i++)
         {
             service.GetOptimalStringAlignmentDistance("AppBrix", "Framework");
         }

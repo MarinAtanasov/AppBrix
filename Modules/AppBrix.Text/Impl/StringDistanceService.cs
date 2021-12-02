@@ -15,28 +15,24 @@ internal sealed class StringDistanceService : IStringDistanceService
         if (right is null)
             throw new ArgumentNullException(nameof(right));
 
+        if (left.Length == 0)
+            return right.Length;
+        if (right.Length == 0)
+            return left.Length;
         if (left == right)
             return 0;
 
-        var leftLength = left.Length;
-        var rightLength = right.Length;
-
-        if (leftLength == 0)
-            return rightLength;
-        if (rightLength == 0)
-            return leftLength;
-
         this.GetMinMaxCharacters(left, right, out var minChar, out var maxChar);
         var charArray = new int[maxChar - minChar + 1];
-        var matrix = this.CreateDamerauLevenshteinMatrix(leftLength, rightLength);
+        var matrix = this.CreateDamerauLevenshteinMatrix(left.Length, right.Length);
 
-        for (var i = 0; i < leftLength; i++)
+        for (var i = 0; i < left.Length; i++)
         {
             var db = 0;
             var leftI = left[i];
             var matrixIp1 = matrix[i + 1];
             var matrixIp2 = matrix[i + 2];
-            for (var j = 0; j < rightLength; j++)
+            for (var j = 0; j < right.Length; j++)
             {
                 var rightJ = right[j];
                 var k = charArray[rightJ - minChar];
@@ -74,45 +70,36 @@ internal sealed class StringDistanceService : IStringDistanceService
         if (right is null)
             throw new ArgumentNullException(nameof(right));
 
+        if (left.Length == 0)
+            return right.Length;
+        if (right.Length == 0)
+            return left.Length;
         if (left == right)
             return 0;
 
-        var leftLength = left.Length;
-        var rightLength = right.Length;
-
-        if (leftLength == 0)
-            return rightLength;
-        if (rightLength == 0)
-            return leftLength;
-
-        var next = new int[rightLength + 1];
-        for (var i = 0; i <= rightLength; i++)
+        var next = new int[right.Length];
+        for (var i = 0; i < next.Length;)
         {
-            next[i] = i;
+            next[i] = ++i;
         }
 
-        for (var i = 0; i < leftLength; i++)
+        for (var i = 0; i < left.Length; i++)
         {
-            var previousJ = next[0];
-
-            // First element of next distance is A[i+1][0] edit distance is delete (i+1) chars from left to match right
-            next[0] = i + 1;
-
             var leftI = left[i];
-            for (var j = 0; j < rightLength; j++)
+            var previousJm1 = i;
+            var nextJm1 = i + 1;
+            for (var j = 0; j < right.Length; j++)
             {
-                // next[j] is insert, previous[j+1] is delete, previous[j] is match, previous[j] + 1 is substitute
-                var previousJp1 = next[j + 1];
-                var nextJ = next[j];
-                var min = nextJ < previousJp1 ? nextJ + 1 : previousJp1 + 1;
-                if (previousJ < min)
-                    min = leftI == right[j] ? previousJ : previousJ + 1;
-                next[j + 1] = min;
-                previousJ = previousJp1;
+                var previousJ = next[j];
+                var min = nextJm1 < previousJ ? nextJm1 + 1 : previousJ + 1;
+                if (previousJm1 < min)
+                    min = leftI == right[j] ? previousJm1 : previousJm1 + 1;
+                next[j] = nextJm1 = min;
+                previousJm1 = previousJ;
             }
         }
 
-        return next[rightLength];
+        return next[^1];
     }
 
     public int GetOptimalStringAlignmentDistance(string left, string right)
@@ -122,18 +109,14 @@ internal sealed class StringDistanceService : IStringDistanceService
         if (right is null)
             throw new ArgumentNullException(nameof(right));
 
+        if (left.Length == 0)
+            return right.Length;
+        if (right.Length == 0)
+            return left.Length;
         if (left == right)
             return 0;
 
-        var leftLength = left.Length;
-        var rightLength = right.Length;
-
-        if (leftLength == 0)
-            return rightLength;
-        if (rightLength == 0)
-            return leftLength;
-
-        var previous = new int[rightLength + 1];
+        var previous = new int[right.Length + 1];
         var current = new int[previous.Length];
         var next = new int[previous.Length];
         for (var i = 0; i < next.Length; i++)
@@ -141,7 +124,7 @@ internal sealed class StringDistanceService : IStringDistanceService
             next[i] = i;
         }
 
-        for (var i = 0; i < leftLength; i++)
+        for (var i = 0; i < left.Length; i++)
         {
             (previous, current, next) = (current, next, previous);
 
@@ -149,7 +132,7 @@ internal sealed class StringDistanceService : IStringDistanceService
             next[0] = i + 1;
 
             var leftI = left[i];
-            for (var j = 0; j < rightLength; j++)
+            for (var j = 0; j < right.Length; j++)
             {
                 var currentJ = current[j];
                 var currentJp1 = current[j + 1];
@@ -174,7 +157,7 @@ internal sealed class StringDistanceService : IStringDistanceService
             }
         }
 
-        return next[rightLength];
+        return next[^1];
     }
     #endregion
 
