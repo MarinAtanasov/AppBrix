@@ -46,7 +46,6 @@ public sealed class WebServerModule : ModuleBase
 
         this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
         this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
-        this.App.GetEventHub().Subscribe<IHostApplicationStopped>(this.HostApplicationStopped);
     }
 
     /// <summary>
@@ -57,7 +56,6 @@ public sealed class WebServerModule : ModuleBase
     {
         this.App.GetEventHub().Unsubscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
         this.App.GetEventHub().Unsubscribe<IConfigureWebApp>(this.ConfigureWebApp);
-        this.App.GetEventHub().Unsubscribe<IHostApplicationStopped>(this.HostApplicationStopped);
     }
     #endregion
 
@@ -94,7 +92,11 @@ public sealed class WebServerModule : ModuleBase
 
     private void ApplicationStopping() => this.App.GetEventHub().Raise(new HostApplicationStopping());
 
-    private void ApplicationStopped() => this.App.GetEventHub().Raise(new HostApplicationStopped());
+    private void ApplicationStopped()
+    {
+        this.App.GetEventHub().Raise(new HostApplicationStopped());
+        this.App.Stop();
+    }
 
     private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
     {
@@ -118,7 +120,5 @@ public sealed class WebServerModule : ModuleBase
         if (httpClientFactory is not null)
             this.App.Container.Register(httpClientFactory);
     }
-
-    private void HostApplicationStopped(IHostApplicationStopped _) => this.App.Stop();
     #endregion
 }
