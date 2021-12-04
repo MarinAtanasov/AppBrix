@@ -1,6 +1,7 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Data.Events;
 using AppBrix.Lifecycle;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ internal sealed class SqlServerDbContextConfigurer : IDbContextConfigurer, IAppl
         this.connectionString = string.Empty;
     }
 
-    public void Configure(IOnConfiguringDbContext context)
+    public void Configure(IConfigureDbContext context)
     {
         context.OptionsBuilder.UseSqlServer(
             this.connectionString,

@@ -4,12 +4,12 @@
 using AppBrix.Events;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppBrix.Data;
+namespace AppBrix.Data.Events;
 
 /// <summary>
-/// Defines interface which is passed down to <see cref="IDbContextConfigurer.Configure(IOnConfiguringDbContext)"/>.
+/// Defines interface which is passed down to <see cref="IDbContextConfigurer.Configure(IConfigureDbContext)"/>.
 /// </summary>
-public interface IOnConfiguringDbContext : IEvent
+public interface IConfigureDbContext : IEvent
 {
     /// <summary>
     /// Gets the context.

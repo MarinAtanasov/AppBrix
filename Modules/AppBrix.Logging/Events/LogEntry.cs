@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace AppBrix.Logging.Impl;
+namespace AppBrix.Logging.Events;
 
 internal sealed class LogEntry : ILogEntry
 {

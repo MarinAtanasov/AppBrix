@@ -4,12 +4,12 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppBrix.Data.Impl;
+namespace AppBrix.Data.Events;
 
-internal sealed class OnConfiguringDbContext : IOnConfiguringDbContext
+internal sealed class ConfigureDbContext : IConfigureDbContext
 {
     #region Construction
-    public OnConfiguringDbContext(DbContext context, DbContextOptionsBuilder builder, string? migrationsAssembly = null, string? migrationsHistoryTable = null)
+    public ConfigureDbContext(DbContext context, DbContextOptionsBuilder builder, string? migrationsAssembly = null, string? migrationsHistoryTable = null)
     {
         if (context is null)
             throw new ArgumentNullException(nameof(context));

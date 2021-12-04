@@ -1,6 +1,7 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Data.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix.Data;
@@ -16,5 +17,5 @@ public interface IDbContextConfigurer
     /// This is called automatically when initializing <see cref="DbContextBase"/>.
     /// </summary>
     /// <param name="context">The database context options builder.</param>
-    void Configure(IOnConfiguringDbContext context);
+    void Configure(IConfigureDbContext context);
 }

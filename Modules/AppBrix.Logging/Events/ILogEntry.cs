@@ -4,7 +4,7 @@
 using AppBrix.Events;
 using System;
 
-namespace AppBrix.Logging;
+namespace AppBrix.Logging.Events;
 
 /// <summary>
 /// Base interface for all logging entry events.

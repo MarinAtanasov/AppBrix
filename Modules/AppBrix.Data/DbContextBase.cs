@@ -1,7 +1,7 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
-using AppBrix.Data.Impl;
+using AppBrix.Data.Events;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -63,7 +63,7 @@ public abstract class DbContextBase : DbContext
     /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var args = new OnConfiguringDbContext(this, optionsBuilder, this.MigrationsAssembly, this.MigrationsHistoryTable);
+        var args = new ConfigureDbContext(this, optionsBuilder, this.MigrationsAssembly, this.MigrationsHistoryTable);
         this.App.GetDbContextConfigurer().Configure(args);
         this.App.GetEventHub().Raise(args);
     }

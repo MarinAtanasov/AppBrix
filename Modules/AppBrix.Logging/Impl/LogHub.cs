@@ -3,6 +3,7 @@
 //
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
+using AppBrix.Logging.Events;
 using System;
 using System.Runtime.CompilerServices;
 

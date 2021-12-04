@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
 using AppBrix.Caching.Memory.Configuration;
-using AppBrix.Events;
+using AppBrix.Caching.Memory.Events;
 using AppBrix.Events.Schedule;
 using AppBrix.Lifecycle;
 using System;
@@ -17,17 +17,17 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     public void Initialize(IInitializeContext context)
     {
         this.app = context.App;
-        this.app.GetEventHub().Subscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
-        this.scheduledArgs = this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
+        this.app.GetEventHub().Subscribe<MemoryCacheCleanup>(this.MemoryCacheCleanup);
+        this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
     }
 
     public void Uninitialize()
     {
         lock (this.cache)
         {
-            this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.RemoveExpiredEntries);
-            this.app.GetTimerScheduledEventHub().Unschedule(this.scheduledArgs);
-            this.scheduledArgs = null;
+            this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.MemoryCacheCleanup);
+            this.app.GetTimerScheduledEventHub().Unschedule(this.cleanupScheduledEventArgs);
+            this.cleanupScheduledEventArgs = null;
 
             foreach (var key in this.cache.Keys.ToList())
             {
@@ -99,7 +99,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     #endregion
 
     #region Private methods
-    private void RemoveExpiredEntries(MemoryCacheCleanup unused)
+    private void MemoryCacheCleanup(MemoryCacheCleanup unused)
     {
         lock (this.cache)
         {
@@ -110,7 +110,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
 
             var itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
             this.RemoveItems(itemsToRemove);
-            this.scheduledArgs = this.app.GetTimerScheduledEventHub().Schedule(this.eventArgs, this.GetConfig().ExpirationCheck);
+            this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
             this.DisposeItems(itemsToRemove);
         }
     }
@@ -143,16 +143,10 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
 
     #region Private fields and constants
     private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
-    private readonly MemoryCacheCleanup eventArgs = new MemoryCacheCleanup();
+    private readonly MemoryCacheCleanup cleanupEventArgs = new MemoryCacheCleanup();
     #nullable disable
-    private IScheduledEvent<MemoryCacheCleanup> scheduledArgs;
+    private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs;
     private IApp app;
     #nullable restore
-    #endregion
-
-    #region Private classes
-    private sealed class MemoryCacheCleanup : IEvent
-    {
-    }
     #endregion
 }

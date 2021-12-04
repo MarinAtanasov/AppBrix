@@ -1,6 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 //
+using AppBrix.Data.Events;
 using AppBrix.Data.Impl;
 using AppBrix.Factory;
 using AppBrix.Lifecycle;
@@ -37,7 +38,7 @@ public sealed class DataModule : ModuleBase
         this.contextService.Initialize(context);
         this.App.Container.Register(this.contextService);
 
-        this.App.GetEventHub().Subscribe<IOnConfiguringDbContext>(this.ConfigureDbContextOptions);
+        this.App.GetEventHub().Subscribe<IConfigureDbContext>(this.ConfigureDbContext);
     }
 
     /// <summary>
@@ -46,14 +47,14 @@ public sealed class DataModule : ModuleBase
     /// </summary>
     protected override void Uninitialize()
     {
-        this.App.GetEventHub().Unsubscribe<IOnConfiguringDbContext>(this.ConfigureDbContextOptions);
+        this.App.GetEventHub().Unsubscribe<IConfigureDbContext>(this.ConfigureDbContext);
 
         this.contextService.Uninitialize();
     }
     #endregion
 
     #region Private methods
-    private void ConfigureDbContextOptions(IOnConfiguringDbContext args) => args.OptionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>());
+    private void ConfigureDbContext(IConfigureDbContext args) => args.OptionsBuilder.UseLoggerFactory(this.App.Get<ILoggerFactory>());
     #endregion
 
     #region Private fields and constants
