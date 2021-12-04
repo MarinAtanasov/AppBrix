@@ -8,7 +8,7 @@ namespace AppBrix;
 /// <summary>
 /// Extension methods for easier manipulation of AppBrix caches.
 /// </summary>
-public static class CacheExtensions
+public static class CachingExtensions
 {
     /// <summary>
     /// Gets the currently registered cache.
