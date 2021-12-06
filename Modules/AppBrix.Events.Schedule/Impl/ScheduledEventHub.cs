@@ -43,15 +43,12 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
         if (args is null)
             throw new ArgumentNullException(nameof(args));
 
-        var now = this.app.GetTime();
         var item = new PriorityQueueItem<T>(this.app, args);
-        item.MoveToNextOccurrence(now);
-        if (now < item.Occurrence)
+        item.MoveToNextOccurrence(this.app.GetTime());
+
+        lock (this.queue)
         {
-            lock (this.queue)
-            {
-                this.queue.Push(item);
-            }
+            this.queue.Push(item);
         }
     }
 
