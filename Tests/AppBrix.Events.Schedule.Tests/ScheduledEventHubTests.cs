@@ -36,11 +36,11 @@ public sealed class ScheduledEventHubTests : TestsBase
     public void TestScheduleArgs()
     {
         var called = false;
+        var func = () => called;
         this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
         var hub = this.app.GetScheduledEventHub();
         hub.Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
         called.Should().BeFalse("event should not be called immediately");
-        Func<bool> func = () => called;
         func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
     }
 
@@ -63,6 +63,28 @@ public sealed class ScheduledEventHubTests : TestsBase
         hub.Unschedule(scheduledEvent);
         Thread.Sleep(5);
         called.Should().BeFalse("event should be unscheduled");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestMemoryRelease()
+    {
+        var called = false;
+        var func = () => called;
+        this.app.GetEventHub().Subscribe<EventMock>(args => called = true);
+
+        var weakReference = this.GetEventMockWeakReference(0);
+        var schedule = (WeakReference<ScheduledEventMock<EventMock>> weakRef) =>
+        {
+            var hub = this.app.GetScheduledEventHub();
+            weakRef.TryGetTarget(out var args);
+            hub.Schedule(args);
+        };
+        schedule(weakReference);
+
+        func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
+
+        GC.Collect();
+        weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-reccuring events");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -91,6 +113,9 @@ public sealed class ScheduledEventHubTests : TestsBase
     #endregion
 
     #region Private methods
+    private WeakReference<ScheduledEventMock<EventMock>> GetEventMockWeakReference(int value) =>
+        new WeakReference<ScheduledEventMock<EventMock>>(new ScheduledEventMock<EventMock>(new EventMock(value), TimeSpan.FromMilliseconds(1)));
+    
     private void TestPerformanceScheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
     {
         var hub = this.app.GetScheduledEventHub();

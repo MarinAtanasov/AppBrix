@@ -23,8 +23,6 @@ internal sealed class TimerScheduledEventHub : ITimerScheduledEventHub, IApplica
     #region ITimerScheduledEventHub implementation
     public IScheduledEvent<T> Schedule<T>(T args, TimeSpan dueTime, TimeSpan period) where T : IEvent
     {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
         if (dueTime < TimeSpan.Zero)
             throw new ArgumentException($"Negative {nameof(dueTime)}: {dueTime}");
 
@@ -35,6 +33,8 @@ internal sealed class TimerScheduledEventHub : ITimerScheduledEventHub, IApplica
     {
         if (args is null)
             throw new ArgumentNullException(nameof(args));
+        if (period < TimeSpan.Zero)
+            throw new ArgumentException($"Negative {nameof(period)}: {period}");
 
         var scheduled = new TimerScheduledEvent<T>(args, dueTime, period);
         this.app.GetScheduledEventHub().Schedule(scheduled);

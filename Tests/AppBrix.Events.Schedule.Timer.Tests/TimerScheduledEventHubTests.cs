@@ -54,6 +54,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     public void TestScheduleArgs()
     {
         var called = new bool[3];
+        var funcs = Enumerable.Range(0, called.Length).Select(x => () => called[x]).ToList();
         this.app.GetEventHub().Subscribe<EventMock>(args =>
         {
             called[args.Value] = true;
@@ -62,20 +63,20 @@ public sealed class TimerScheduledEventHubTests : TestsBase
                 called[i].Should().Be(true, "events should be called in order");
             }
         });
+
         var hub = this.app.GetTimerScheduledEventHub();
         hub.Schedule(new EventMock(0), TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
         hub.Schedule(new EventMock(1), TimeSpan.FromMinutes(1), TimeSpan.FromHours(1));
         hub.Schedule(new EventMock(2), this.timeService.GetTime().AddHours(1));
-        called[0].Should().BeFalse("first event should not be called immediately");
-        called[1].Should().BeFalse("second event should not be called immediately");
-        called[2].Should().BeFalse("third event should not be called immediately");
+
+        funcs[0]().Should().BeFalse("first event should not be called immediately");
+        funcs[1]().Should().BeFalse("second event should not be called immediately");
+        funcs[2]().Should().BeFalse("third event should not be called immediately");
+
         this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
-        var funcs = Enumerable.Range(0, called.Length)
-            .Select(x => new Func<bool>(() => called[x]))
-            .ToList();
         funcs[0].ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "first event should have been raised");
         funcs[1].ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "second event should have been raised");
-        called[2].Should().BeFalse("third event shouldn't be called yet");
+        funcs[2]().Should().BeFalse("third event shouldn't be called yet");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -101,6 +102,29 @@ public sealed class TimerScheduledEventHubTests : TestsBase
         called.Should().BeFalse("event should be unscheduled");
     }
 
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestMemoryRelease()
+    {
+        var called = false;
+        var func = () => called;
+        this.app.GetEventHub().Subscribe<EventMock>(args => called = true);
+
+        var weakReference = this.GetEventMockWeakReference(0);
+        var schedule = (WeakReference<EventMock> weakRef) =>
+        {
+            var hub = this.app.GetTimerScheduledEventHub();
+            weakRef.TryGetTarget(out var args);
+            hub.Schedule(args, TimeSpan.FromMinutes(1));
+        };
+        schedule(weakReference);
+
+        this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
+        func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
+
+        GC.Collect();
+        weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-reccuring events");
+    }
+
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceSchedule()
     {
@@ -119,6 +143,8 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     #endregion
 
     #region Private methods
+    private WeakReference<EventMock> GetEventMockWeakReference(int value) => new WeakReference<EventMock>(new EventMock(value));
+
     private void TestPerformanceScheduleInternal(EventMock eventMock, int repeats)
     {
         var hub = this.app.GetTimerScheduledEventHub();
