@@ -1,8 +1,9 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Tests;
 using AppBrix.Web.Client;
+using AppBrix.Web.Client.Contracts;
 using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Tests.Mocks;
 using FluentAssertions;

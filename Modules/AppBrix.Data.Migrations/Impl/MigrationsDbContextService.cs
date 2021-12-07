@@ -1,11 +1,13 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
+using AppBrix.Data.Data;
 using AppBrix.Data.Migrations.Configuration;
 using AppBrix.Data.Migrations.Data;
+using AppBrix.Data.Services;
 using AppBrix.Lifecycle;
-using AppBrix.Logging;
 using AppBrix.Logging.Configuration;
+using AppBrix.Logging.Contracts;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +67,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     private SnapshotData? GetSnapshot(Type type)
     {
         SnapshotData? snapshot = null;
-        LogLevel logLevel = LogLevel.None;
+        var logLevel = LogLevel.None;
 
         try
         {

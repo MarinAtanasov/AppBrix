@@ -1,8 +1,8 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
-using AppBrix.Caching.Memory;
+
 using AppBrix.Caching.Memory.Configuration;
+using AppBrix.Caching.Memory.Services;
 using AppBrix.Configuration;
 
 namespace AppBrix;

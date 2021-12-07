@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Copyright (c) MarinAtanasov. All rights reserved.
+// Licensed under the MIT License (MIT). See License.txt in the project root for license information.
+
+using AppBrix.Data.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix.Data.Tests.Mocks;
 

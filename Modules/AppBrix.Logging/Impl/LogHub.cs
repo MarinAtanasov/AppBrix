@@ -1,9 +1,11 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
+using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
+using AppBrix.Logging.Services;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -29,13 +31,9 @@ internal sealed class LogHub : ILogHub, IApplicationLifecycle
     public void Subscribe(Action<ILogEntry> logger)
     {
         if (this.config.Async)
-        {
             this.app.GetAsyncEventHub().Subscribe(logger);
-        }
         else
-        {
             this.app.GetEventHub().Subscribe(logger);
-        }
     }
 
     public void Unsubscribe(Action<ILogEntry> logger)

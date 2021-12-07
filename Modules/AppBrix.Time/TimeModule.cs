@@ -1,10 +1,11 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Container;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using AppBrix.Time.Impl;
+using AppBrix.Time.Services;
 using System;
 using System.Collections.Generic;
 

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Factory;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
@@ -15,7 +15,7 @@ using System.Text.Json.Serialization;
 namespace AppBrix.Web.Client;
 
 /// <summary>
-/// Modules which registers a factory for creating <see cref="IHttpRequest"/> objects.
+/// A module for http communication.
 /// </summary>
 public sealed class WebClientModule : ModuleBase
 {

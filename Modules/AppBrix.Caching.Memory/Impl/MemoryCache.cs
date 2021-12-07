@@ -1,9 +1,10 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Caching.Memory.Configuration;
 using AppBrix.Caching.Memory.Events;
-using AppBrix.Events.Schedule;
+using AppBrix.Caching.Memory.Services;
+using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
@@ -99,7 +100,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     #endregion
 
     #region Private methods
-    private void MemoryCacheCleanup(MemoryCacheCleanup unused)
+    private void MemoryCacheCleanup(MemoryCacheCleanup _)
     {
         lock (this.cache)
         {

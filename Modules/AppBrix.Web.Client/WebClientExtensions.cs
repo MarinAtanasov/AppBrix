@@ -1,10 +1,11 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Configuration;
-using AppBrix.Factory;
+using AppBrix.Factory.Services;
 using AppBrix.Web.Client;
 using AppBrix.Web.Client.Configuration;
+using AppBrix.Web.Client.Contracts;
 using System.Net.Http;
 
 namespace AppBrix;

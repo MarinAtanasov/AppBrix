@@ -1,10 +1,10 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
-using AppBrix.Permissions;
-using System.Collections.Generic;
+
 using AppBrix.Configuration;
 using AppBrix.Permissions.Configuration;
+using AppBrix.Permissions.Services;
+using System.Collections.Generic;
 
 namespace AppBrix;
 

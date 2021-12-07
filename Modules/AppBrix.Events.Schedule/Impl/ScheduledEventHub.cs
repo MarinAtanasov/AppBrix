@@ -1,7 +1,10 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
+using AppBrix.Events.Contracts;
 using AppBrix.Events.Schedule.Configuration;
+using AppBrix.Events.Schedule.Contracts;
+using AppBrix.Events.Schedule.Services;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;

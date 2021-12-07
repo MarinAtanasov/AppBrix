@@ -1,7 +1,8 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
-using AppBrix.Events;
+
+using AppBrix.Data.Services;
+using AppBrix.Events.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix.Data.Events;

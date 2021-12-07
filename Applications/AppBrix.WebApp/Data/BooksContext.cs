@@ -1,4 +1,4 @@
-﻿using AppBrix.Data;
+﻿using AppBrix.Data.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix.WebApp.Data;

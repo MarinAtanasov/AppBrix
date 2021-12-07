@@ -1,6 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
-//
+
 using AppBrix.Logging.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -39,16 +39,16 @@ internal sealed class Logger : ILogger
     #endregion
 
     #region Private methods
-    private LogLevel ToAppBrixLogLevel(Microsoft.Extensions.Logging.LogLevel logLevel) => logLevel switch
+    private Contracts.LogLevel ToAppBrixLogLevel(LogLevel logLevel) => logLevel switch
     {
-        Microsoft.Extensions.Logging.LogLevel.Trace => LogLevel.Trace,
-        Microsoft.Extensions.Logging.LogLevel.Debug => LogLevel.Debug,
-        Microsoft.Extensions.Logging.LogLevel.Information => LogLevel.Info,
-        Microsoft.Extensions.Logging.LogLevel.Warning => LogLevel.Warning,
-        Microsoft.Extensions.Logging.LogLevel.Error => LogLevel.Error,
-        Microsoft.Extensions.Logging.LogLevel.Critical => LogLevel.Critical,
-        Microsoft.Extensions.Logging.LogLevel.None => LogLevel.None,
-        _ => LogLevel.Trace
+        LogLevel.Trace => Contracts.LogLevel.Trace,
+        LogLevel.Debug => Contracts.LogLevel.Debug,
+        LogLevel.Information => Contracts.LogLevel.Info,
+        LogLevel.Warning => Contracts.LogLevel.Warning,
+        LogLevel.Error => Contracts.LogLevel.Error,
+        LogLevel.Critical => Contracts.LogLevel.Critical,
+        LogLevel.None => Contracts.LogLevel.None,
+        _ => Contracts.LogLevel.Trace
     };
     #endregion
 
