@@ -114,11 +114,10 @@ public sealed class TimerScheduledEventHubTests : TestsBase
         {
             var hub = this.app.GetTimerScheduledEventHub();
             weakRef.TryGetTarget(out var args);
-            hub.Schedule(args, TimeSpan.FromMinutes(1));
+            hub.Schedule(args, TimeSpan.Zero);
         };
         schedule(weakReference);
 
-        this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
         func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
 
         GC.Collect();

@@ -114,7 +114,7 @@ public sealed class ScheduledEventHubTests : TestsBase
 
     #region Private methods
     private WeakReference<ScheduledEventMock<EventMock>> GetEventMockWeakReference(int value) =>
-        new WeakReference<ScheduledEventMock<EventMock>>(new ScheduledEventMock<EventMock>(new EventMock(value), TimeSpan.FromMilliseconds(1)));
+        new WeakReference<ScheduledEventMock<EventMock>>(new ScheduledEventMock<EventMock>(new EventMock(value), TimeSpan.Zero));
     
     private void TestPerformanceScheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
     {
