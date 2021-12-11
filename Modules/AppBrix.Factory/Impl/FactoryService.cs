@@ -34,11 +34,9 @@ internal sealed class FactoryService : IFactoryService, IApplicationLifecycle
         if (type is null)
             throw new ArgumentNullException(nameof(type));
 
-        var baseType = type;
-        while (baseType != typeof(object) && baseType is not null)
+        for (var baseType = type; baseType != typeof(object) && baseType is not null; baseType = baseType.BaseType)
         {
             this.factories[baseType] = factory;
-            baseType = baseType.BaseType;
         }
 
         var interfaces = type.GetInterfaces();

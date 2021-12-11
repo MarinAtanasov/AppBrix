@@ -50,11 +50,9 @@ internal sealed class Container : IContainer, IApplicationLifecycle
     #region Private methods
     private void RegisterInternal(object obj, Type type)
     {
-        var baseType = type;
-        while (baseType != typeof(object) && baseType is not null)
+        for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
         {
             this.objects[baseType] = obj;
-            baseType = baseType.BaseType;
         }
 
         var interfaces = type.GetInterfaces();

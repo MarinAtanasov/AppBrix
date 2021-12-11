@@ -242,15 +242,13 @@ public sealed class CloningTests : TestsBase
 
     private IEnumerable<FieldInfo> GetFields(Type type)
     {
-        var baseType = type;
-        while (baseType != typeof(object) && baseType is not null)
+        for (var baseType = type; baseType != typeof(object) && baseType is not null; baseType = baseType.BaseType)
         {
             var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
-            foreach (var field in fields)
+            for (var i = 0; i < fields.Length; i++)
             {
-                yield return field;
+                yield return fields[i];
             }
-            baseType = baseType.BaseType;
         }
     }
 

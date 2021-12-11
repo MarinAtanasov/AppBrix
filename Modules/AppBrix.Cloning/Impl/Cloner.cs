@@ -66,8 +66,7 @@ internal sealed class Cloner : ICloner
             this.ForEach((Array)original, (item, indices) => clonedArray.SetValue(this.DeepCopy(item, visited), indices));
         }
 
-        var baseType = type;
-        while (baseType != typeof(object) && baseType is not null)
+        for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
         {
             var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
             for (var i = 0; i < fields.Length; i++)
@@ -75,7 +74,6 @@ internal sealed class Cloner : ICloner
                 var field = fields[i];
                 field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
             }
-            baseType = baseType.BaseType;
         }
     }
 
