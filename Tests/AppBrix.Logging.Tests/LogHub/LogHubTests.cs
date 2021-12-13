@@ -20,7 +20,11 @@ public sealed class LogHubTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnsubscribedTrace()
     {
-        this.app.GetLogHub().Trace(string.Empty);
+        Action<ILogEntry> handler = _ => throw new InvalidOperationException("handler should have been unsubscribed");
+        var hub = this.app.GetLogHub();
+        hub.Subscribe(handler);
+        hub.Unsubscribe(handler);
+        hub.Trace(string.Empty);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -132,7 +136,7 @@ public sealed class LogHubTests : TestsBase
         var message = "Test message";
         var called = false;
         this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.None;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => { called = true; });
+        this.app.GetEventHub().Subscribe<ILogEntry>(_ => { called = true; });
         this.app.GetLogHub().Trace(message);
         this.app.GetLogHub().Debug(message);
         this.app.GetLogHub().Info(message);
@@ -181,7 +185,7 @@ public sealed class LogHubTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceLogging()
     {
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => { });
+        this.app.GetEventHub().Subscribe<ILogEntry>(_ => { });
 
         TestUtils.TestPerformance(this.TestPerformanceLoggingInternal);
     }

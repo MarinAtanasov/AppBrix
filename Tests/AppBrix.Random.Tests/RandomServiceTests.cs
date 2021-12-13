@@ -144,7 +144,7 @@ public sealed class RandomServiceTests : TestsBase
     public void TestMultiThreadRandom()
     {
         var service = this.app.GetRandomService();
-        var lists = new List<List<int>>(Enumerable.Range(0, 32).Select(x => new List<int>()));
+        var lists = new List<List<int>>(Enumerable.Range(0, 32).Select(_ => new List<int>()));
         Enumerable.Range(0, lists.Count)
             .Select(x => lists[x])
             .AsParallel()

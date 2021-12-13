@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{F6BC1FBE-D2EC-42E4-B760-1D919EA0A3A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bundles", "Bundles", "{44FD92A1-E8A6-484C-9287-7AAAC3CE0C41}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9C8A720D-7382-4C91-9B62-86EB554B2C29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FE5803DF-2805-4190-AE4C-82E778BC2106}"
@@ -40,6 +42,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Configuration.Yaml"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Utils", "Core\AppBrix.Utils\AppBrix.Utils.csproj", "{8DF190AB-96BE-44B0-B42C-7007889863CC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All", "Bundles\AppBrix.All\AppBrix.All.csproj", "{653EF513-D3B4-412C-8126-13BB57D24E77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All.Server", "Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj", "{C3783D6A-C7AF-4325-A502-131247B74FFA}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Caching", "Modules\AppBrix.Caching\AppBrix.Caching.csproj", "{127C6E7E-9F3A-4314-981C-B04C77E9BAA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Caching.Memory", "Modules\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj", "{47BCE141-B16B-4B0C-A6AC-CD5BF38EAE8D}"
@@ -62,9 +68,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events", "Modules\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Async", "Modules\AppBrix.Events.Async\AppBrix.Events.Async.csproj", "{9AD49682-94FB-424B-8DEE-529BB06823FC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed", "Modules\AppBrix.Events.Delayed\AppBrix.Events.Delayed.csproj", "{BEE6F4DF-8808-4C99-8173-28B7A70EE671}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule", "Modules\AppBrix.Events.Schedule\AppBrix.Events.Schedule.csproj", "{3009CFFA-20C8-4746-B338-1943B81D929B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Cron", "Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj", "{0E4EFFCC-C105-41DC-94D2-70F3D8CC5311}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Timer", "Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj", "{82D79660-2F2E-4741-ACB2-439B6D8752C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Factory", "Modules\AppBrix.Factory\AppBrix.Factory.csproj", "{53A97857-AD8F-4A1D-8231-F23B8AD6149D}"
 EndProject
@@ -73,6 +83,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Logging.Console", "Modules\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj", "{E6F23839-21C4-4CA6-91E4-F66EDAC0262C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Logging.File", "Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj", "{6E991EC7-D79E-4CD1-B39F-4DE8E062569A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions", "Modules\AppBrix.Permissions\AppBrix.Permissions.csproj", "{07388810-D296-4932-BE4F-D95566CE8C53}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random", "Modules\AppBrix.Random\AppBrix.Random.csproj", "{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Text", "Modules\AppBrix.Text\AppBrix.Text.csproj", "{1F275F10-FB52-4F77-9690-A39E7CAFE67E}"
 EndProject
@@ -92,7 +106,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Configuration.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Container.Tests", "Tests\AppBrix.Container.Tests\AppBrix.Container.Tests.csproj", "{CE05FF78-7F0A-45FA-A749-CEA23B821BB7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Tests", "Tests\AppBrix.Data.Tests\AppBrix.Data.Tests.csproj", "{90855AE8-A8F3-4925-902C-1A9552C5AF2A}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Async.Tests", "Tests\AppBrix.Events.Async.Tests\AppBrix.Events.Async.Tests.csproj", "{904C8597-DB45-4709-BBB0-983548DD4675}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed.Tests", "Tests\AppBrix.Events.Delayed.Tests\AppBrix.Events.Delayed.Tests.csproj", "{757AE0C9-03CF-451C-9DAD-49407D669841}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Cron.Tests", "Tests\AppBrix.Events.Schedule.Cron.Tests\AppBrix.Events.Schedule.Cron.Tests.csproj", "{A47CAD7C-A279-447F-93A1-C2BEDB308574}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Tests", "Tests\AppBrix.Events.Schedule.Tests\AppBrix.Events.Schedule.Tests.csproj", "{80954BDA-0884-4EF4-9149-DC42946AD90E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Timer.Tests", "Tests\AppBrix.Events.Schedule.Timer.Tests\AppBrix.Events.Schedule.Timer.Tests.csproj", "{E3BD1870-571A-4638-BC19-429A86343CF8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Tests", "Tests\AppBrix.Events.Tests\AppBrix.Events.Tests.csproj", "{F987BA5F-3B58-4316-9232-0253C47743E2}"
 EndProject
@@ -100,41 +124,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Factory.Tests", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Logging.Tests", "Tests\AppBrix.Logging.Tests\AppBrix.Logging.Tests.csproj", "{92DB36E3-273B-412E-80F4-21489FDB6276}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions.Tests", "Tests\AppBrix.Permissions.Tests\AppBrix.Permissions.Tests.csproj", "{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random.Tests", "Tests\AppBrix.Random.Tests\AppBrix.Random.Tests.csproj", "{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Tests", "Tests\AppBrix.Tests\AppBrix.Tests.csproj", "{3EE0E0A5-AD83-4D97-BAB7-88ABD3877D77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Text.Tests", "Tests\AppBrix.Text.Tests\AppBrix.Text.Tests.csproj", "{24126DBE-FB59-4D75-883C-A03CA0133720}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Time.Tests", "Tests\AppBrix.Time.Tests\AppBrix.Time.Tests.csproj", "{F9F1F6D5-1DA0-459A-851C-325A4D4426F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Web.Client.Tests", "Tests\AppBrix.Web.Client.Tests\AppBrix.Web.Client.Tests.csproj", "{A0C52482-3245-4E24-9131-CE118DED13F5}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Web.Server.Tests", "Tests\AppBrix.Web.Server.Tests\AppBrix.Web.Server.Tests.csproj", "{7DB372D5-0673-4852-B9C1-8F31EF57493F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Timer", "Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj", "{82D79660-2F2E-4741-ACB2-439B6D8752C3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Tests", "Tests\AppBrix.Events.Schedule.Tests\AppBrix.Events.Schedule.Tests.csproj", "{80954BDA-0884-4EF4-9149-DC42946AD90E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions", "Modules\AppBrix.Permissions\AppBrix.Permissions.csproj", "{07388810-D296-4932-BE4F-D95566CE8C53}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Permissions.Tests", "Tests\AppBrix.Permissions.Tests\AppBrix.Permissions.Tests.csproj", "{F43077EA-19F6-4220-AFCD-C8DD3AB9DDF9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bundles", "Bundles", "{44FD92A1-E8A6-484C-9287-7AAAC3CE0C41}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All", "Bundles\AppBrix.All\AppBrix.All.csproj", "{653EF513-D3B4-412C-8126-13BB57D24E77}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.All.Server", "Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj", "{C3783D6A-C7AF-4325-A502-131247B74FFA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Data.Tests", "Tests\AppBrix.Data.Tests\AppBrix.Data.Tests.csproj", "{90855AE8-A8F3-4925-902C-1A9552C5AF2A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed", "Modules\AppBrix.Events.Delayed\AppBrix.Events.Delayed.csproj", "{BEE6F4DF-8808-4C99-8173-28B7A70EE671}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Delayed.Tests", "Tests\AppBrix.Events.Delayed.Tests\AppBrix.Events.Delayed.Tests.csproj", "{757AE0C9-03CF-451C-9DAD-49407D669841}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random", "Modules\AppBrix.Random\AppBrix.Random.csproj", "{CBDA3A7E-85A5-480E-91D0-677F389B0F4C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Random.Tests", "Tests\AppBrix.Random.Tests\AppBrix.Random.Tests.csproj", "{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Cron.Tests", "Tests\AppBrix.Events.Schedule.Cron.Tests\AppBrix.Events.Schedule.Cron.Tests.csproj", "{A47CAD7C-A279-447F-93A1-C2BEDB308574}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Events.Schedule.Timer.Tests", "Tests\AppBrix.Events.Schedule.Timer.Tests\AppBrix.Events.Schedule.Timer.Tests.csproj", "{E3BD1870-571A-4638-BC19-429A86343CF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -367,6 +369,10 @@ Global
 		{E3BD1870-571A-4638-BC19-429A86343CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3BD1870-571A-4638-BC19-429A86343CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3BD1870-571A-4638-BC19-429A86343CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C52482-3245-4E24-9131-CE118DED13F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C52482-3245-4E24-9131-CE118DED13F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C52482-3245-4E24-9131-CE118DED13F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C52482-3245-4E24-9131-CE118DED13F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -428,6 +434,7 @@ Global
 		{51C2FC1E-EE21-42B6-9A79-7E6A48B88B55} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{A47CAD7C-A279-447F-93A1-C2BEDB308574} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{E3BD1870-571A-4638-BC19-429A86343CF8} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
+		{A0C52482-3245-4E24-9131-CE118DED13F5} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}

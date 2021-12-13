@@ -48,10 +48,28 @@ public sealed class StringDistanceServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestGetDamerauLevenshteinDistanceEqualStrings()
+    {
+        this.app.GetStringDistanceService()
+            .GetDamerauLevenshteinDistance("appbrix", "appbrix")
+            .Should()
+            .Be(0);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistance()
     {
         this.app.GetStringDistanceService()
             .GetDamerauLevenshteinDistance("appbrix", "apprtbix")
+            .Should()
+            .Be(2);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestGetDamerauLevenshteinDistanceMixedMinMaxCharacters()
+    {
+        this.app.GetStringDistanceService()
+            .GetDamerauLevenshteinDistance("cbd", "cae")
             .Should()
             .Be(2);
     }
@@ -91,6 +109,15 @@ public sealed class StringDistanceServiceTests : TestsBase
             .GetLevenshteinDistance("appbrix", string.Empty)
             .Should()
             .Be(7);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestGetLevenshteinDistanceEqualStrings()
+    {
+        this.app.GetStringDistanceService()
+            .GetLevenshteinDistance("appbrix", "appbrix")
+            .Should()
+            .Be(0);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -137,6 +164,15 @@ public sealed class StringDistanceServiceTests : TestsBase
             .GetOptimalStringAlignmentDistance("appbrix", string.Empty)
             .Should()
             .Be(7);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestGetOptimalStringAlignmentDistanceEqualStrings()
+    {
+        this.app.GetStringDistanceService()
+            .GetOptimalStringAlignmentDistance("appbrix", "appbrix")
+            .Should()
+            .Be(0);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

@@ -20,7 +20,22 @@ public sealed class CloningTests : TestsBase
     public CloningTests() : base(TestUtils.CreateTestApp<CloningModule>()) => this.app.Start();
     #endregion
 
-    #region Tests
+    #region Deep Copy Tests
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeepCopyNull()
+    {
+        var cloner = this.GetCloner();
+        var action = () => cloner.DeepCopy<object>(null);
+        action.Should().ThrowExactly<ArgumentNullException>("parameter cannot be null");
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeepCopyType()
+    {
+        var type = typeof(CloningTests);
+        this.GetCloner().DeepCopy(type).Should().Be(type, "deep copy of type is the same type");
+    }
+    
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDeepCopyInteger()
     {
@@ -28,15 +43,6 @@ public sealed class CloningTests : TestsBase
         var original = 5;
         var clone = cloner.DeepCopy(original);
         this.AssertIsDeepCopy(original, clone);
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestShallowCopyInteger()
-    {
-        var cloner = this.GetCloner();
-        var original = 5;
-        var clone = cloner.ShallowCopy(original);
-        this.AssertIsShallowCopy(original, clone);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -49,12 +55,21 @@ public sealed class CloningTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestShallowCopyString()
+    public void TestDeepCopyEmptyArray()
     {
         var cloner = this.GetCloner();
-        var original = "Test";
-        var clone = cloner.ShallowCopy(original);
-        this.AssertIsShallowCopy(original, clone);
+        var original = Array.Empty<int>();
+        var clone = cloner.DeepCopy(original);
+        this.AssertIsDeepCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeepCopyArray()
+    {
+        var cloner = this.GetCloner();
+        var original = new[,] { {1, 10}, {2, 20}, {3, 30} };
+        var clone = cloner.DeepCopy(original);
+        this.AssertIsDeepCopy(original, clone);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -67,30 +82,12 @@ public sealed class CloningTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestShallowCopyNumericPropertiesMock()
-    {
-        var cloner = this.GetCloner();
-        var original = new NumericPropertiesMock(1, 2, 3, 4, 5.5f, 6.6, (decimal)7.7);
-        var clone = cloner.ShallowCopy(original);
-        this.AssertIsShallowCopy(original, clone);
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDeepCopyPrimitivePropertiesMock()
     {
         var cloner = this.GetCloner();
         var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now, TimeSpan.FromMilliseconds(42));
         var clone = cloner.DeepCopy(original);
         this.AssertIsDeepCopy(original, clone);
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestShallowCopyPrimitivePropertiesMock()
-    {
-        var cloner = this.GetCloner();
-        var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now, TimeSpan.FromMilliseconds(42));
-        var clone = cloner.ShallowCopy(original);
-        this.AssertIsShallowCopy(original, clone);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -103,21 +100,12 @@ public sealed class CloningTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestShallowCopyComplexPropertiesMock()
-    {
-        var cloner = this.GetCloner();
-        var original = new ComplexPropertiesMock(10);
-        var clone = cloner.ShallowCopy(original);
-        this.AssertIsShallowCopy(original, clone);
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDeepCopyDirectRecursingMock()
     {
         var cloner = this.GetCloner();
         var original = new SelfReferencingMock();
         original.Other = original;
-        var clone = cloner.DeepCopy<SelfReferencingMock>(original);
+        var clone = cloner.DeepCopy(original);
         clone.Should().NotBeSameAs(original, "the original should be deep cloned");
         clone.Other.Should().BeSameAs(clone, "the clone should be referencing itself after the deep copy");
     }
@@ -128,7 +116,7 @@ public sealed class CloningTests : TestsBase
         var cloner = this.GetCloner();
         var original = new SelfReferencingMock();
         original.Other = new SelfReferencingMock { Other = original };
-        var clone = cloner.DeepCopy<SelfReferencingMock>(original);
+        var clone = cloner.DeepCopy(original);
         clone.Should().NotBeSameAs(original, "the original should be deep cloned");
         clone.Other.Should().NotBeSameAs(original.Other,
             "the original's referenced object and clone's referenced object should not be the same object");
@@ -141,7 +129,7 @@ public sealed class CloningTests : TestsBase
         var cloner = this.GetCloner();
         var original = new DelegateWrapperMock();
         original.Delegate = () => original;
-        var clone = cloner.DeepCopy<DelegateWrapperMock>(original);
+        var clone = cloner.DeepCopy(original);
         original.Delegate().Should().BeSameAs(original, "the original's delegate should not be changed");
         clone.Should().NotBeSameAs(original, "the original should be deep cloned");
         clone.Delegate.Should().NotBeNull("the delegate should be cloned");
@@ -150,11 +138,91 @@ public sealed class CloningTests : TestsBase
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceDeepCopy() => TestUtils.TestPerformance(this.TestPerformanceDeepCopyInternal);
+    #endregion
+
+    #region Shallow Copy Tests
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyNull()
+    {
+        var cloner = this.GetCloner();
+        var action = () => cloner.ShallowCopy<object>(null);
+        action.Should().ThrowExactly<ArgumentNullException>("parameter cannot be null");
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyType()
+    {
+        var type = typeof(CloningTests);
+        this.GetCloner().ShallowCopy(type).ToString().Should().Be(type.ToString(), "shallow copy of type is the same type");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyInteger()
+    {
+        var cloner = this.GetCloner();
+        var original = 5;
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyString()
+    {
+        var cloner = this.GetCloner();
+        var original = "Test";
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyEmptyArray()
+    {
+        var cloner = this.GetCloner();
+        var original = Array.Empty<int>();
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyArray()
+    {
+        var cloner = this.GetCloner();
+        var original = new[,] { {1, 10}, {2, 20}, {3, 30} };
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyNumericPropertiesMock()
+    {
+        var cloner = this.GetCloner();
+        var original = new NumericPropertiesMock(1, 2, 3, 4, 5.5f, 6.6, (decimal)7.7);
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyPrimitivePropertiesMock()
+    {
+        var cloner = this.GetCloner();
+        var original = new PrimitivePropertiesMock(true, 't', "Test", DateTime.Now, TimeSpan.FromMilliseconds(42));
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestShallowCopyComplexPropertiesMock()
+    {
+        var cloner = this.GetCloner();
+        var original = new ComplexPropertiesMock(10);
+        var clone = cloner.ShallowCopy(original);
+        this.AssertIsShallowCopy(original, clone);
+    }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceShallowCopy() => TestUtils.TestPerformance(this.TestPerformanceShallowCopyInternal);
     #endregion
-
+    
     #region Private methods
     private ICloner GetCloner() => this.app.GetCloner();
 
@@ -171,7 +239,7 @@ public sealed class CloningTests : TestsBase
         var type = original.GetType();
         copy.GetType().Should().Be(type, $"{property}'s type of the copy should be the same as the original");
 
-        if ((type.IsValueType && type.IsPrimitive) || type.IsEnum || type == typeof(string))
+        if (type.IsValueType && type.IsPrimitive || type.IsEnum || type == typeof(string))
         {
             copy.Should().Be(original, $"{property}'s value of the copy should be the same as the original");
             if (type.IsPrimitive || type == typeof(string))

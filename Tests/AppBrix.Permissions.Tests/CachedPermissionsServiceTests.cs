@@ -8,12 +8,13 @@ using Xunit;
 
 namespace AppBrix.Permissions.Tests;
 
-public sealed class PermissionsServiceTests : TestsBase
+public sealed class CachedPermissionsServiceTests : TestsBase
 {
     #region Setup and cleanup
-    public PermissionsServiceTests() : base(TestUtils.CreateTestApp<PermissionsModule>())
+
+    public CachedPermissionsServiceTests() : base(TestUtils.CreateTestApp<PermissionsModule>())
     {
-        this.app.ConfigService.GetPermissionsConfig().EnableCaching = false;
+        this.app.ConfigService.GetPermissionsConfig().EnableCaching = true;
         this.app.Start();
     }
     #endregion
@@ -384,7 +385,7 @@ public sealed class PermissionsServiceTests : TestsBase
     private void TestPerformanceHasPermissionInternal()
     {
         var service = this.app.GetPermissionsService();
-        for (var i = 0; i < 15000; i++)
+        for (var i = 0; i < 100000; i++)
         {
             service.HasPermission("a", "p");
             service.HasPermission("a", "p1");
@@ -395,7 +396,7 @@ public sealed class PermissionsServiceTests : TestsBase
     private void TestPerformanceAddPermissionInternal()
     {
         var service = this.app.GetPermissionsService();
-        for (var i = 0; i < 70000; i++)
+        for (var i = 0; i < 2000; i++)
         {
             var item = (i % 20).ToString();
             service.Allow("a", item);

@@ -78,7 +78,7 @@ public sealed class EventHubTests : TestsBase
         var hub = this.GetEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<EventMock> handler = (e => called++);
+        Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Subscribe<EventMockChild>(handler);
         hub.Raise(args);
@@ -91,7 +91,7 @@ public sealed class EventHubTests : TestsBase
         var hub = this.GetEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<IEvent> handler = (e => called++);
+        Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Subscribe(handler);
         hub.Raise(args);
@@ -106,19 +106,19 @@ public sealed class EventHubTests : TestsBase
         var parentCalled = false;
         var childCalled = false;
         var interfaceCalled = false;
-        hub.Subscribe<EventMock>(e =>
+        hub.Subscribe<EventMock>(_ =>
         {
             childCalled.Should().BeTrue("child should be called before parent");
             parentCalled = true;
             interfaceCalled.Should().BeFalse("interface should be called after parent");
         });
-        hub.Subscribe<EventMockChild>(e =>
+        hub.Subscribe<EventMockChild>(_ =>
         {
             childCalled = true;
             parentCalled.Should().BeFalse("parent should be called after child");
             interfaceCalled.Should().BeFalse("interface should be called after child");
         });
-        hub.Subscribe<IEvent>(e =>
+        hub.Subscribe<IEvent>(_ =>
         {
             parentCalled.Should().BeTrue("parent should be called before interface");
             childCalled.Should().BeTrue("child should be called before interface");
@@ -136,7 +136,7 @@ public sealed class EventHubTests : TestsBase
         var hub = this.GetEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<IEvent> handler = (e => called++);
+        Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
         called.Should().Be(1, "event handler should be called exactly once after the first raise");
@@ -150,7 +150,7 @@ public sealed class EventHubTests : TestsBase
         var hub = this.GetEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<EventMock> handler = (e => called++);
+        Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
         called.Should().Be(1, "event handler should be called exactly once after the first raise");
@@ -165,7 +165,7 @@ public sealed class EventHubTests : TestsBase
         var hub = this.GetEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<EventMock> handler = (e => called++);
+        Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
         called.Should().Be(1, "event handler should be called exactly once after the first raise");
@@ -202,16 +202,16 @@ public sealed class EventHubTests : TestsBase
         var args = new EventMock(10);
 
         var beforeHandlerCalled = 0;
-        Action<IEvent> beforeHandler = (e => beforeHandlerCalled++);
+        Action<IEvent> beforeHandler = _ => beforeHandlerCalled++;
         hub.Subscribe(beforeHandler);
 
         var unsubscribingHandlerCalled = 0;
         Action<IEvent> unsubscribingHandler = null;
-        unsubscribingHandler = (e => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); });
+        unsubscribingHandler = _ => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); };
         hub.Subscribe(unsubscribingHandler);
 
         var afterHandlerCalled = 0;
-        Action<IEvent> afterHandler = (e => afterHandlerCalled++);
+        Action<IEvent> afterHandler = _ => afterHandlerCalled++;
         hub.Subscribe(afterHandler);
 
         hub.Raise(args);
@@ -246,7 +246,7 @@ public sealed class EventHubTests : TestsBase
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
-            handlers.Add(e => j++);
+            handlers.Add(_ => j++);
         }
         for (var i = 0; i < handlers.Count; i++)
         {
@@ -263,7 +263,7 @@ public sealed class EventHubTests : TestsBase
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
-            handlers.Add(e => j++);
+            handlers.Add(_ => j++);
         }
         for (var i = 0; i < handlers.Count; i++)
         {
@@ -282,8 +282,8 @@ public sealed class EventHubTests : TestsBase
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
-        hub.Subscribe<EventMockChild>(e => childCalled++);
-        hub.Subscribe<IEvent>(e => interfaceCalled++);
+        hub.Subscribe<EventMockChild>(_ => childCalled++);
+        hub.Subscribe<IEvent>(_ => interfaceCalled++);
         var calledCount = 100000;
         for (var i = 0; i < calledCount; i++)
         {

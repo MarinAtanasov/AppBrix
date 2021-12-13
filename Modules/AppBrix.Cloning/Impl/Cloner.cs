@@ -78,7 +78,7 @@ internal sealed class Cloner : ICloner
     }
 
     private bool IsPrimitiveType(Type type) =>
-        (type.IsValueType && type.IsPrimitive) || type.IsEnum || type == typeof(string) || type == typeof(DateTime);
+        type.IsValueType && type.IsPrimitive || type.IsEnum || type == typeof(string) || type == typeof(DateTime);
 
     private bool IsValueType(Type type) => type == typeof(string) || type.IsValueType;
 

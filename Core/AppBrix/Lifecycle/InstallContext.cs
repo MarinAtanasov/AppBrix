@@ -10,11 +10,6 @@ internal class InstallContext : IInstallContext
     #region Construction
     public InstallContext(IApp app, Version previousVersion)
     {
-        if (app is null)
-            throw new ArgumentNullException(nameof(app));
-        if (previousVersion is null)
-            throw new ArgumentNullException(nameof(previousVersion));
-
         this.App = app;
         this.PreviousVersion = previousVersion;
     }
@@ -23,7 +18,7 @@ internal class InstallContext : IInstallContext
     #region Properties
     public IApp App { get; }
 
-    public Version PreviousVersion { get; set; }
+    public Version PreviousVersion { get; }
 
     public RequestedAction RequestedAction { get; set; }
     #endregion

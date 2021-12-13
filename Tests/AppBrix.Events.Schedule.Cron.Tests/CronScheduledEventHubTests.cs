@@ -94,7 +94,7 @@ public sealed class CronScheduledEventHubTests : TestsBase
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.app.Reinitialize();
         var called = false;
-        this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
+        this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
         var hub = this.app.GetCronScheduledEventHub();
         var scheduledEvent = hub.Schedule(new EventMock(0), CronScheduledEventHubTests.EveryHour);
         hub.Unschedule(scheduledEvent);

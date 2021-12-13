@@ -46,7 +46,6 @@ public sealed class WebClientModule : ModuleBase
 
         this.httpClientFactory.Initialize(context);
         this.App.Container.Register(this.httpClientFactory);
-        this.App.GetFactoryService().Register(this.CreateClient);
         this.App.GetFactoryService().Register(this.CreateRequest);
 
         this.jsonSerializerOptions = new JsonSerializerOptions();
@@ -71,8 +70,6 @@ public sealed class WebClientModule : ModuleBase
     #endregion
 
     #region Private methods
-    private HttpClient CreateClient() => this.App.GetHttpClientFactory().CreateClient();
-
     private HttpRequest CreateRequest() => new HttpRequest(this.App);
     #endregion
 

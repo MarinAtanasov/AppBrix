@@ -17,13 +17,7 @@ public interface IFactoryService
     /// </summary>
     /// <typeparam name="T">The type to be returned by the factory.</typeparam>
     /// <param name="factoryMethod">The factory method.</param>
-    void Register<T>(Func<T> factoryMethod) where T : class
-    {
-        if (factoryMethod is null)
-            throw new ArgumentNullException(nameof(factoryMethod));
-
-        this.Register(factoryMethod, typeof(T));
-    }
+    void Register<T>(Func<T> factoryMethod) where T : class => this.Register(factoryMethod, typeof(T));
 
     /// <summary>
     /// Registers a factory method for the specified type.

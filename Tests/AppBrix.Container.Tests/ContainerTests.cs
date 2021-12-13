@@ -31,7 +31,7 @@ public sealed class ContainerTests : TestsBase
     public void TestResolveByInterface()
     {
         var container = this.GetContainer();
-        var iContainer = container.Get<IContainer>();
+        var iContainer = this.app.Get<IContainer>();
         iContainer.Should().NotBeNull("unable to resolve the IContainer interface");
         iContainer.Should().BeSameAs(container, "returned IContainer is a different instance");
     }
@@ -42,7 +42,7 @@ public sealed class ContainerTests : TestsBase
         var container = this.GetContainer();
         var registered = new ChildMock();
         container.Register(registered);
-        var resolved = container.Get<ChildMock>();
+        var resolved = this.app.Get(typeof(ChildMock));
         resolved.Should().NotBeNull("unable to resolve the item by class");
         resolved.Should().BeSameAs(registered, "returned item is a different instance than the registered");
     }
@@ -93,7 +93,23 @@ public sealed class ContainerTests : TestsBase
     {
         var container = this.GetContainer();
         Action action = () => container.Register(new object());
-        action.Should().Throw<ArgumentException>("registering an item as System.Object should not be allowed.");
+        action.Should().Throw<ArgumentException>("registering a  System.Object should not be allowed.");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRegisterString()
+    {
+        var container = this.GetContainer();
+        Action action = () => container.Register("AppBrix");
+        action.Should().Throw<ArgumentException>("registering a string should not be allowed");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRegisterInt()
+    {
+        var container = this.GetContainer();
+        Action action = () => container.Register(42);
+        action.Should().Throw<ArgumentException>("registering a value type should not be allowed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

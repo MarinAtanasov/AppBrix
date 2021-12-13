@@ -39,11 +39,8 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
         if (!this.isDisposed)
         {
             this.isDisposed = true;
-
             this.channel.Writer.Complete();
-            try { this.runner.Wait(); }
-            catch (AggregateException) { }
-
+            this.runner.Wait();
             this.handlers.Clear();
         }
     }
@@ -63,13 +60,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
         }
     }
 
-    public void Enqueue(T task)
-    {
-        if (task is null)
-            throw new ArgumentNullException(nameof(task));
-
-        this.channel.Writer.TryWrite(task);
-    }
+    public void Enqueue(T task) => this.channel.Writer.TryWrite(task);
     #endregion
 
     #region Private methods

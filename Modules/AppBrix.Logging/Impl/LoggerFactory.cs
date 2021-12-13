@@ -17,6 +17,7 @@ internal sealed class LoggerFactory : ILoggerFactory, IApplicationLifecycle
     public void Uninitialize()
     {
         this.app = null;
+        this.Dispose();
     }
 
     public void Dispose()

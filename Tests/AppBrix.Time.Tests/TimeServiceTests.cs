@@ -47,7 +47,7 @@ public sealed class TimeServiceTests : TestsBase
         this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
         this.app.Reinitialize();
         var time = DateTime.UtcNow;
-        var appTime = app.GetTimeService().ToAppTime(time);
+        var appTime = this.app.GetTimeService().ToAppTime(time);
         appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
         appTime.Should().Be(time, "returned time should be the same as passed in");
     }
@@ -58,7 +58,7 @@ public sealed class TimeServiceTests : TestsBase
         this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
         this.app.Reinitialize();
         var time = DateTime.Now;
-        var appTime = app.GetTimeService().ToAppTime(time);
+        var appTime = this.app.GetTimeService().ToAppTime(time);
         appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
         appTime.Should().Be(time.ToUniversalTime(), "returned time should be equal to the passed in");
     }
@@ -69,7 +69,7 @@ public sealed class TimeServiceTests : TestsBase
         this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
         this.app.Reinitialize();
         var time = DateTime.UtcNow;
-        var appTime = app.GetTimeService().ToAppTime(time);
+        var appTime = this.app.GetTimeService().ToAppTime(time);
         appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
         appTime.Should().Be(time.ToLocalTime(), "returned time should be equal to the passed in");
     }
@@ -83,6 +83,16 @@ public sealed class TimeServiceTests : TestsBase
         var appTime = app.GetTimeService().ToAppTime(time);
         appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
         appTime.Should().Be(time, "returned time should be the same as passed in");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDateTimeSerialization()
+    {
+        var service = this.app.GetTimeService();
+        var time = service.GetTime();
+        time = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
+        var serialized = service.ToString(time);
+        service.ToDateTime(serialized).Should().Be(time, "serialization and deserialization should return the same time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -100,7 +110,7 @@ public sealed class TimeServiceTests : TestsBase
     {
         for (var i = 0; i < 200000; i++)
         {
-            app.GetTime();
+            this.app.GetTime();
         }
     }
 
@@ -108,7 +118,7 @@ public sealed class TimeServiceTests : TestsBase
     {
         var utcTime = DateTime.UtcNow;
         var localTime = utcTime.ToLocalTime();
-        var timeService = app.GetTimeService();
+        var timeService = this.app.GetTimeService();
 
         for (var i = 0; i < 100000; i++)
         {
@@ -120,7 +130,7 @@ public sealed class TimeServiceTests : TestsBase
     private void TestPerformanceConvertTimeInternal()
     {
         var time = DateTime.UtcNow;
-        var timeService = app.GetTimeService();
+        var timeService = this.app.GetTimeService();
 
         for (var i = 0; i < 15000; i++)
         {

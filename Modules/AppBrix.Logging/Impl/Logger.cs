@@ -29,10 +29,8 @@ internal sealed class Logger : ILogger
 
     public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
-        if (!this.Enabled)
-            return;
-
-        this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
+        if (this.Enabled)
+            this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
     }
 
     public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
@@ -41,7 +39,7 @@ internal sealed class Logger : ILogger
     #region Private methods
     private Contracts.LogLevel ToAppBrixLogLevel(LogLevel logLevel) => logLevel switch
     {
-        LogLevel.Trace => Contracts.LogLevel.Trace,
+        //LogLevel.Trace => Contracts.LogLevel.Trace,
         LogLevel.Debug => Contracts.LogLevel.Debug,
         LogLevel.Information => Contracts.LogLevel.Info,
         LogLevel.Warning => Contracts.LogLevel.Warning,

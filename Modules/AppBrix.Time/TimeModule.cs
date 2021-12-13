@@ -50,8 +50,7 @@ public sealed class TimeModule : ModuleBase
     private ITimeService CreateTimeService(DateTimeKind kind, string format) => kind switch
     {
         DateTimeKind.Local => new LocalTimeService(format),
-        DateTimeKind.Utc => new UtcTimeService(format),
-        _ => throw new NotSupportedException(string.Concat("The specified " + kind.GetType().Name + " is not supported: ", kind))
+        _ => new UtcTimeService(format),
     };
     #endregion
 }

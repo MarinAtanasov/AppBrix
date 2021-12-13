@@ -52,6 +52,14 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestScheduleNegativePeriodExpression()
+    {
+        var hub = this.app.GetTimerScheduledEventHub();
+        Action action = () => hub.Schedule(new EventMock(0), this.timeService.GetTime().AddMinutes(1) , TimeSpan.FromMilliseconds(-1));
+        action.Should().Throw<ArgumentException>("period must be non-negative");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestScheduleArgs()
     {
         var called = new bool[3];
@@ -94,7 +102,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.app.Reinitialize();
         var called = false;
-        this.app.GetEventHub().Subscribe<EventMock>((args) => called = true);
+        this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
         var hub = this.app.GetTimerScheduledEventHub();
         var scheduledEvent = hub.Schedule(new EventMock(0), TimeSpan.FromHours(1));
         hub.Unschedule(scheduledEvent);
@@ -108,7 +116,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     {
         var called = false;
         var func = () => called;
-        this.app.GetEventHub().Subscribe<EventMock>(args => called = true);
+        this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
 
         var weakReference = this.GetEventMockWeakReference(0);
         var schedule = (WeakReference<EventMock> weakRef) =>

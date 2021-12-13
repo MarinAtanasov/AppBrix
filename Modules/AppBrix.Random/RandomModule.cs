@@ -35,8 +35,6 @@ public sealed class RandomModule : ModuleBase
 
         this.randomService.Initialize(context);
         this.App.Container.Register(this.randomService);
-
-        this.App.GetFactoryService().Register(() => this.App.GetRandomService().GetRandom());
     }
 
     /// <summary>

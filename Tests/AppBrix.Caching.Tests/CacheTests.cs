@@ -39,6 +39,7 @@ public sealed class CacheTests : TestsBase
         cached.Should().NotBeNull("the item should be in the cache");
         cached.Should().Be(value, "the returned object should be equal to the original");
         cache.Remove(key).GetAwaiter().GetResult();
+        cache.Refresh(key).GetAwaiter().GetResult();
         cache.Get<object>(key).GetAwaiter().GetResult().Should().BeNull("item should have been removed");
     }
 

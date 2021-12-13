@@ -19,6 +19,35 @@ public sealed class AppTests
 {
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestCreateAppNullConfigService()
+    {
+        var action = () => App.Create(null);
+        action.Should().Throw<ArgumentNullException>("config service cannot be null");
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestAppConfigCreateNullType()
+    {
+        var action = () => ModuleConfigElement.Create(null);
+        action.Should().Throw<ArgumentNullException>("type cannot be null");
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestAppConfigCreateInvalidType()
+    {
+        var action = () => ModuleConfigElement.Create(typeof(object));
+        action.Should().Throw<ArgumentException>("type must implement IModule");
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestGetAllDependenciesExtensionNullModule()
+    {
+        IModule module = null;
+        var action = () => module.GetAllDependencies();
+        action.Should().Throw<ArgumentNullException>("module cannot be null");
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSaveConfig()
     {
         var app = this.CreateDefaultApp<SimpleModuleMock>();
@@ -31,6 +60,58 @@ public sealed class AppTests
         var config = configService.GetAppConfig();
         config.Should().Be(newConfig, "Should return new config after saving it");
         oldConfig.Modules.Should().BeEmpty("Original config should not be modified.");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestStartStartedApp()
+    {
+        var app = this.CreateDefaultApp<SimpleModuleMock>();
+        app.Start();
+        var action = () => app.Start();
+        action.Should().Throw<InvalidOperationException>("cannot start already started app");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestStopStoppedApp()
+    {
+        var app = this.CreateDefaultApp<SimpleModuleMock>();
+        var action = () => app.Stop();
+        action.Should().Throw<InvalidOperationException>("cannot stop already stopped app");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestInitializeInitialiedApp()
+    {
+        var app = this.CreateDefaultApp<SimpleModuleMock>();
+        app.Start();
+        var action = () => app.Initialize();
+        action.Should().NotThrow("initializing already initialized app should be safe");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestInitializeStoppedApp()
+    {
+        var app = this.CreateDefaultApp<SimpleModuleMock>();
+        var action = () => app.Initialize();
+        action.Should().Throw<InvalidOperationException>("cannot initialize stopped app");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestUninitializeUninitialiedApp()
+    {
+        var app = this.CreateDefaultApp<SimpleModuleMock>();
+        app.Start();
+        app.Uninitialize();
+        var action = () => app.Uninitialize();
+        action.Should().NotThrow("uninitializing already uninitialized app should be safe");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestUninitializeStoppedApp()
+    {
+        var app = this.CreateDefaultApp<SimpleModuleMock>();
+        var action = () => app.Uninitialize();
+        action.Should().Throw<InvalidOperationException>("cannot uninitialize stopped app");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

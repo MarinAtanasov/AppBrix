@@ -110,9 +110,10 @@ public sealed class MemoryCacheTests : TestsBase
     {
         var cache = this.app.GetMemoryCache();
         cache.Set(nameof(TestRemoveItem), this);
-        cache.Remove(nameof(TestRemoveItem));
+        cache.Remove(nameof(TestRemoveItem)).Should().BeTrue("the item should have been removed successfully");
         var item = cache.Get(nameof(TestGetItem));
-        item.Should().BeNull("the item shold have been removed from the cache");
+        item.Should().BeNull("the item should have been removed from the cache");
+        cache.Remove(nameof(TestRemoveItem)).Should().BeFalse("the item should have already been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -146,8 +147,14 @@ public sealed class MemoryCacheTests : TestsBase
     {
         var disposed = false;
 
+        void Dispose()
+        {
+            disposed = true;
+            throw new InvalidOperationException("Failed to dispose.");
+        }
+        
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestDisposeOnAbsoluteExpiration), this, dispose: () => disposed = true, absoluteExpiration: TimeSpan.FromMilliseconds(50));
+        cache.Set(nameof(TestDisposeOnAbsoluteExpiration), this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(50));
         var item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
         item.Should().Be(this, "returned item should be the same as the original");
         disposed.Should().BeFalse("the item should not have expired yet");

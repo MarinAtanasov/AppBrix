@@ -51,6 +51,17 @@ public sealed class DelayedEventHubTests : TestsBase
         called.Should().Be(1, "event handler should be called exactly once");
     }
 
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestNullArgumentRaiseDelayed()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.app.GetDelayedEventHub();
+        Action action = () => hub.RaiseDelayed(null);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestEventDefaultDelayed()
     {
@@ -91,6 +102,26 @@ public sealed class DelayedEventHubTests : TestsBase
         called.Should().Be(1, "event handler should be called exactly once after second flush");
     }
 
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestUnsubscribeDelayed()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.app.GetDelayedEventHub();
+        var args = new EventMock(10);
+        var called = 0;
+
+        Action<EventMock> handler = _ => called++;
+        hub.Subscribe(handler);
+        hub.Raise(args);
+        hub.Flush();
+        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+
+        hub.Unsubscribe(handler);
+        hub.Raise(args);
+        hub.Flush();
+        called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
+    }
+
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceEventsSubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
 
@@ -113,7 +144,7 @@ public sealed class DelayedEventHubTests : TestsBase
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
-            handlers.Add(e => j++);
+            handlers.Add(_ => j++);
         }
         for (var i = 0; i < handlers.Count; i++)
         {
@@ -130,7 +161,7 @@ public sealed class DelayedEventHubTests : TestsBase
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
-            handlers.Add(e => j++);
+            handlers.Add(_ => j++);
         }
         for (var i = 0; i < handlers.Count; i++)
         {
@@ -149,8 +180,8 @@ public sealed class DelayedEventHubTests : TestsBase
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
-        hub.Subscribe<EventMockChild>(e => childCalled++);
-        hub.Subscribe<IEvent>(e => interfaceCalled++);
+        hub.Subscribe<EventMockChild>(_ => childCalled++);
+        hub.Subscribe<IEvent>(_ => interfaceCalled++);
         var calledCount = 80000;
         for (var i = 0; i < calledCount; i++)
         {
@@ -168,8 +199,8 @@ public sealed class DelayedEventHubTests : TestsBase
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
-        hub.Subscribe<EventMockChild>(e => childCalled++);
-        hub.Subscribe<IEvent>(e => interfaceCalled++);
+        hub.Subscribe<EventMockChild>(_ => childCalled++);
+        hub.Subscribe<IEvent>(_ => interfaceCalled++);
         var calledCount = 75000;
         for (var i = 0; i < calledCount; i++)
         {

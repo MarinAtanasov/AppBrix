@@ -23,6 +23,7 @@ internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
         }
         this.loggers.Clear();
         this.app = null;
+        this.Dispose();
     }
 
     public void Dispose()

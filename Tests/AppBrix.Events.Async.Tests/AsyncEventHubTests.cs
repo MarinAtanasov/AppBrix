@@ -83,7 +83,7 @@ public sealed class AsyncEventHubTests : TestsBase
         var hub = this.GetAsyncEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<EventMock> handler = (e => called++);
+        Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Subscribe<EventMockChild>(handler);
         hub.Raise(args);
@@ -97,7 +97,7 @@ public sealed class AsyncEventHubTests : TestsBase
         var hub = this.GetAsyncEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<IEvent> handler = (e => called++);
+        Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Subscribe(handler);
         hub.Raise(args);
@@ -111,7 +111,7 @@ public sealed class AsyncEventHubTests : TestsBase
         var hub = this.GetAsyncEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<IEvent> handler = (e => called++);
+        Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
         hub.Raise(args);
@@ -125,7 +125,7 @@ public sealed class AsyncEventHubTests : TestsBase
         var hub = this.GetAsyncEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<EventMock> handler = (e => called++);
+        Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Unsubscribe(handler);
         hub.Raise(args);
@@ -139,7 +139,7 @@ public sealed class AsyncEventHubTests : TestsBase
         var hub = this.GetAsyncEventHub();
         var args = new EventMock(10);
         var called = 0;
-        Action<EventMock> handler = (e => called++);
+        Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
         this.app.Stop();
@@ -177,23 +177,48 @@ public sealed class AsyncEventHubTests : TestsBase
         var args = new EventMock(10);
 
         var beforeHandlerCalled = 0;
-        Action<IEvent> beforeHandler = (e => beforeHandlerCalled++);
-        hub.Subscribe(beforeHandler);
-
         var unsubscribingHandlerCalled = 0;
-        Action<IEvent> unsubscribingHandler = null;
-        unsubscribingHandler = (e => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); });
-        hub.Subscribe(unsubscribingHandler);
-
         var afterHandlerCalled = 0;
-        Action<IEvent> afterHandler = (e => afterHandlerCalled++);
-        hub.Subscribe(afterHandler);
+
+        hub.Subscribe<IEvent>(_ => beforeHandlerCalled++);
+        Action<IEvent> unsubscribingHandler = null;
+        unsubscribingHandler = _ => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); };
+        hub.Subscribe(unsubscribingHandler);
+        hub.Subscribe<IEvent>(_ => afterHandlerCalled++);
 
         hub.Raise(args);
         hub.Raise(args);
         this.app.Stop();
+
         beforeHandlerCalled.Should().Be(2, "before event handler should be called exactly twice");
         unsubscribingHandlerCalled.Should().Be(1, "unsubscribing event handler should not be called after the second raise since it has unsubscribed itself during the first");
+        afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestHandlerThrowingException()
+    {
+        var hub = this.GetAsyncEventHub();
+        var args = new EventMock(10);
+
+        var beforeHandlerCalled = 0;
+        var throwingHandlerCalled = 0;
+        var afterHandlerCalled = 0;
+
+        hub.Subscribe<IEvent>(_ => beforeHandlerCalled++);
+        hub.Subscribe<IEvent>(_ =>
+        {
+            throwingHandlerCalled++;
+            throw new InvalidOperationException("Exception during handler");
+        });
+        hub.Subscribe<IEvent>(_ => afterHandlerCalled++);
+
+        hub.Raise(args);
+        hub.Raise(args);
+        this.app.Stop();
+
+        beforeHandlerCalled.Should().Be(2, "before event handler should be called exactly twice");
+        throwingHandlerCalled.Should().Be(2, "throwing event handler should be called exactly twice");
         afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
     }
 
@@ -203,11 +228,11 @@ public sealed class AsyncEventHubTests : TestsBase
         var initialThreads = Process.GetCurrentProcess().Threads.Count;
         var hub = this.GetAsyncEventHub();
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when getting the async event hub");
-        hub.Subscribe<IEvent>(e => { });
+        hub.Subscribe<IEvent>(_ => { });
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a new event");
-        hub.Subscribe<IEvent>(e => { });
+        hub.Subscribe<IEvent>(_ => { });
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when subscribing to an event with subscribers");
-        hub.Subscribe<EventMock>(e => { });
+        hub.Subscribe<EventMock>(_ => { });
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a second new event");
         this.app.Stop();
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "threads should be disposed of on uninitialization");
@@ -234,7 +259,7 @@ public sealed class AsyncEventHubTests : TestsBase
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
-            handlers.Add(e => j++);
+            handlers.Add(_ => j++);
         }
         for (var i = 0; i < handlers.Count; i++)
         {
@@ -251,7 +276,7 @@ public sealed class AsyncEventHubTests : TestsBase
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
-            handlers.Add(e => j++);
+            handlers.Add(_ => j++);
         }
 
         for (var i = 0; i < handlers.Count; i++)
@@ -271,8 +296,8 @@ public sealed class AsyncEventHubTests : TestsBase
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
-        hub.Subscribe<EventMockChild>(e => childCalled++);
-        hub.Subscribe<IEvent>(e => interfaceCalled++);
+        hub.Subscribe<EventMockChild>(_ => childCalled++);
+        hub.Subscribe<IEvent>(_ => interfaceCalled++);
         var calledCount = 15000;
         for (var i = 0; i < calledCount; i++)
         {

@@ -91,10 +91,8 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
                 item.Dispose();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            
+            return false;
         }
     }
     #endregion
@@ -104,15 +102,14 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     {
         lock (this.cache)
         {
-            if (this.app is null)
-                return; // Unintialized
-
-            var now = this.app.GetTime();
-
-            var itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
-            this.RemoveItems(itemsToRemove);
-            this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
-            this.DisposeItems(itemsToRemove);
+            if (this.app is not null)
+            {
+                var now = this.app.GetTime();
+                var itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
+                this.RemoveItems(itemsToRemove);
+                this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
+                this.DisposeItems(itemsToRemove);
+            }
         }
     }
 
