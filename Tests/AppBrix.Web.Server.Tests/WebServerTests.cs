@@ -58,43 +58,143 @@ public sealed class WebServerTests
         var app1 = this.CreateApp();
         var app2 = this.CreateApp();
 
-        await using (var webApp1 = this.CreateTestWebApp(app1))
-        using (var app1Client = webApp1.GetTestClient())
-        await using (var webApp2 = this.CreateTestWebApp(app2))
-        using (var app2Client = webApp2.GetTestClient())
+        await using var webApp1 = this.CreateTestWebApp(app1);
+        using var app1Client = webApp1.GetTestClient();
+        await using var webApp2 = this.CreateTestWebApp(app2);
+        using var app2Client = webApp2.GetTestClient();
+
+        app1.Container.Register(app2Client);
+        var response1 = await app1.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.AppIdService2Url)
+            .Send<AppIdMessage>()
+            .ConfigureAwait(false);
+        response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
+        response1.Content.Id.Should().Be(app2.ConfigService.Get<AppIdConfig>().Id, "the first app should receive the second app's id");
+
+        app2.Container.Register(app1Client);
+        var response2 = await app2.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.AppIdServiceUrl)
+            .Send<AppIdMessage>()
+            .ConfigureAwait(false);
+        response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
+        response2.Content.Id.Should().Be(app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
+
+        await webApp2.StopAsync();
+        await webApp1.StopAsync();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public async Task TestEchoGetString()
+    {
+        var app = this.CreateApp();
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        var response = await app.GetFactoryService().GetHttpRequest()
+            .SetUrl($"{WebServerTests.EchoServiceUrl}/{nameof(this.TestEchoGetString)}")
+            .Send<string>()
+            .ConfigureAwait(false);
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
+        response.ReasonPhrase.Should().Be(HttpStatusCode.OK.ToString(), "the request should return status OK");
+        response.Version.Should().Be(new Version(1, 1), "the version of the response should be 1.1");
+        response.Content.Should().Be(nameof(this.TestEchoGetString), "the response should echo the request");
+        response.Headers.Count.Should().Be(1, "only the content-type header should be returned");
+        response.Headers["Content-Type"].Should().Equal(
+            new[] { "text/plain; charset=utf-8" },
+            "the content type should be a utf-8 string"
+        );
+        
+        await webApp.StopAsync();
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public async Task TestEchoPostJson()
+    {
+        var app = this.CreateApp();
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        var model = new EchoModel
         {
-            app1.Container.Register(app2Client);
-            var response1 = await app1.GetFactoryService().GetHttpRequest()
-                .SetUrl(WebServerTests.AppIdService2Url)
-                .Send<AppIdMessage>()
-                .ConfigureAwait(false);
-            response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
-            response1.Content.Id.Should().Be(app2.ConfigService.Get<AppIdConfig>().Id, "the first app should receive the second app's id");
+            DateTime = new DateTime(2021, 12, 13, 14, 30, 42, 230, DateTimeKind.Utc),
+            TimeSpan = TimeSpan.FromMilliseconds(42),
+            Value = 42,
+            Version = new Version(1, 0, 1)
+        };
+        var response = await app.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.EchoServiceUrl)
+            .SetContent(model)
+            .SetHeader("Content-Type", "application/json")
+            .SetMethod(HttpMethod.Post)
+            .Send<EchoModel>()
+            .ConfigureAwait(false);
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
+        response.Content.Should().Be(model, "the response should echo the request");
 
-            app2.Container.Register(app1Client);
-            var response2 = await app2.GetFactoryService().GetHttpRequest()
-                .SetUrl(WebServerTests.AppIdServiceUrl)
-                .Send<AppIdMessage>()
-                .ConfigureAwait(false);
-            response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
-            response2.Content.Id.Should().Be(app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
+        await webApp.StopAsync();
+    }
 
-            await webApp2.StopAsync();
-            await webApp1.StopAsync();
-        }
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public async Task TestEchoPostJsonDefaultModel()
+    {
+        var app = this.CreateApp();
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        var model = new EchoModel();
+        var response = await app.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.EchoServiceUrl)
+            .SetContent(model)
+            .SetHeader("Content-Type", "application/json")
+            .SetExpiresHeader(app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(app.GetTime())
+            .SetMethod(HttpMethod.Post)
+            .Send<EchoModel>()
+            .ConfigureAwait(false);
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
+        response.Content.Should().Be(model, "the response should echo the request");
+
+        await webApp.StopAsync();
+    }
+    
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public async Task TestEchoPostBytes()
+    {
+        var app = this.CreateApp();
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        var model = new EchoModel();
+        var response = await app.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.EchoServiceUrl)
+            .SetContent(model)
+            .SetHeader("Content-Type", "application/json")
+            .SetExpiresHeader(app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(app.GetTime())
+            .SetMethod(HttpMethod.Post)
+            .Send<byte[]>()
+            .ConfigureAwait(false);
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
+        response.Content.Length.Should().BePositive("the response should echo the request");
+
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public async Task TestPerformanceWebServer()
     {
         var app = this.CreateApp();
-        using (var webApp = this.CreateTestWebApp(app))
-        using (var client = webApp.GetTestClient())
-        {
-            app.Container.Register(client);
-            TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
-            await webApp.StopAsync();
-        }
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
+
+        await webApp.StopAsync();
     }
     #endregion
 
@@ -157,8 +257,9 @@ public sealed class WebServerTests
 
     #region Private fields and constants
     private const string ServerBaseAddress = "http://localhost:1337/";
-    private const string TestConnectionServiceUrl = WebServerTests.ServerBaseAddress + "api/testconnection";
     private const string AppIdServiceUrl = WebServerTests.ServerBaseAddress + "api/appid";
+    private const string TestConnectionServiceUrl = WebServerTests.ServerBaseAddress + "api/testconnection";
+    private const string EchoServiceUrl = WebServerTests.ServerBaseAddress + "api/echo";
 
     private const string Server2BaseAddress = "http://localhost:1338/";
     private const string AppIdService2Url = WebServerTests.Server2BaseAddress + "api/appid";

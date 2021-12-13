@@ -29,12 +29,28 @@ public interface IHttpRequest
     Task<IHttpResponse<T>> Send<T>(CancellationToken token = default);
 
     /// <summary>
+    /// Sets the Expires HTTP message header.
+    /// </summary>
+    /// <param name="value">The header's value.</param>
+    /// <returns></returns>
+    IHttpRequest SetExpiresHeader(DateTime? value) => value.HasValue ?
+        this.SetHeader("Expires", value.Value.ToString("R")) : this.SetHeader("Expires");
+
+    /// <summary>
     /// Sets an HTTP message header.
     /// </summary>
     /// <param name="header">The header's key.</param>
     /// <param name="values">The header's values.</param>
     /// <returns></returns>
     IHttpRequest SetHeader(string header, params string[] values);
+
+    /// <summary>
+    /// Sets the Last-Modified HTTP message header.
+    /// </summary>
+    /// <param name="value">The header's value.</param>
+    /// <returns></returns>
+    IHttpRequest SetLastModifiedHeader(DateTime? value) => value.HasValue ?
+        this.SetHeader("Last-Modified", value.Value.ToString("R")) : this.SetHeader("Last-Modified");
 
     /// <summary>
     /// Sets the name of the <see cref="HttpClient"/> to be used when sending the request.

@@ -90,7 +90,7 @@ public sealed class TimeServiceTests : TestsBase
     {
         var service = this.app.GetTimeService();
         var time = service.GetTime();
-        time = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
+        time = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, DateTimeKind.Utc);
         var serialized = service.ToString(time);
         service.ToDateTime(serialized).Should().Be(time, "serialization and deserialization should return the same time");
     }

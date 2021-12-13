@@ -161,12 +161,13 @@ internal sealed class HttpRequest : IHttpRequest
         else if (type == typeof(Stream))
             contentValue = await content.ReadAsStreamAsync(token).ConfigureAwait(false);
         else
-        {
-            var stringed = await content.ReadAsStreamAsync(token).ConfigureAwait(false);
-            contentValue = await JsonSerializer.DeserializeAsync<T>(stringed, this.app.Get<JsonSerializerOptions>(), token).ConfigureAwait(false);
-        }
+            contentValue = await JsonSerializer.DeserializeAsync<T>(
+                await content.ReadAsStreamAsync(token).ConfigureAwait(false),
+                this.app.Get<JsonSerializerOptions>(),
+                token
+            ).ConfigureAwait(false);
 
-        return (T)contentValue!;
+        return contentValue is T value ? value : default!;
     }
     #endregion
 

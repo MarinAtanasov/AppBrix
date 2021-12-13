@@ -25,7 +25,9 @@ internal abstract class TimeServiceBase : ITimeService
 
     public abstract DateTime ToAppTime(DateTime time);
 
-    public DateTime ToDateTime(string time) => DateTime.ParseExact(time, this.format, CultureInfo.InvariantCulture);
+    public DateTime ToDateTime(string time) => this.ToAppTime(
+        DateTime.ParseExact(time, this.format, CultureInfo.InvariantCulture)
+    );
 
     public string ToString(DateTime time) => time.ToString(this.format);
     #endregion
