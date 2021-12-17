@@ -29,6 +29,13 @@ public interface IHttpRequest
     Task<IHttpResponse<T>> Send<T>(CancellationToken token = default);
 
     /// <summary>
+    /// Executes the HTTP request and captures the response content as a stream.
+    /// </summary>
+    /// <param name="token">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+    /// <returns>The HTTP response.</returns>
+    Task<IStreamingHttpResponse> SendStream(CancellationToken token = default);
+
+    /// <summary>
     /// Sets the Expires HTTP message header.
     /// </summary>
     /// <param name="value">The header's value.</param>

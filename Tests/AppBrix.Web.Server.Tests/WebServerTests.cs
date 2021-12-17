@@ -184,6 +184,56 @@ public sealed class WebServerTests
         await webApp.StopAsync();
     }
 
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public async Task TestEchoPostStream()
+    {
+        var app = this.CreateApp();
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        var model = new EchoModel();
+        var request = app.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.EchoServiceUrl)
+            .SetContent(model)
+            .SetHeader("Content-Type", "application/json")
+            .SetExpiresHeader(app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(app.GetTime())
+            .SetMethod(HttpMethod.Post);
+        using (var response = await request.SendStream().ConfigureAwait(false))
+        {
+            response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
+            response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
+        }
+
+        await webApp.StopAsync();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public async Task TestEchoPostStreamAsyncDisposable()
+    {
+        var app = this.CreateApp();
+        await using var webApp = this.CreateTestWebApp(app);
+        using var client = webApp.GetTestClient();
+        app.Container.Register(client);
+
+        var model = new EchoModel();
+        var request = app.GetFactoryService().GetHttpRequest()
+            .SetUrl(WebServerTests.EchoServiceUrl)
+            .SetContent(model)
+            .SetHeader("Content-Type", "application/json")
+            .SetExpiresHeader(app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(app.GetTime())
+            .SetMethod(HttpMethod.Post);
+        await using (var response = await request.SendStream().ConfigureAwait(false))
+        {
+            response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
+            response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
+        }
+
+        await webApp.StopAsync();
+    }
+
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public async Task TestPerformanceWebServer()
     {

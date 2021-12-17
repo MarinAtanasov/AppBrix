@@ -49,6 +49,20 @@ internal sealed class HttpRequest : IHttpRequest
             response.Version);
     }
 
+    public async Task<IStreamingHttpResponse> SendStream(CancellationToken token = default)
+    {
+        var client = this.app.GetHttpClientFactory().CreateClient(this.clientName);
+        var response = await this.GetResponse(client, token).ConfigureAwait(false);
+        var responseContent = response.Content;
+        var contentValue = await this.GetResponseContent<Stream>(responseContent, token).ConfigureAwait(false);
+        return new StreamingHttpResponse(
+            new HttpHeaders(response.Headers.Concat(responseContent.Headers)),
+            new StreamingHttpResponseContent(response, contentValue),
+            (int)response.StatusCode,
+            response.ReasonPhrase ?? string.Empty,
+            response.Version);
+    }
+
     public IHttpRequest SetHeader(string header, params string[] values)
     {
         if (string.IsNullOrEmpty(header))
