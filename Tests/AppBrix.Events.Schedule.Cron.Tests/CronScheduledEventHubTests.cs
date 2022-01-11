@@ -55,7 +55,7 @@ public sealed class CronScheduledEventHubTests : TestsBase
     public void TestScheduleArgs()
     {
         var called = new bool[3];
-        var funcs = Enumerable.Range(0, called.Length).Select(x => () => called[x]).ToList();
+        var funcs = Enumerable.Range(0, called.Length).Select<int, Func<bool>>(x => () => called[x]).ToList();
         this.app.GetEventHub().Subscribe<EventMock>(args =>
         {
             called[args.Value] = true;
