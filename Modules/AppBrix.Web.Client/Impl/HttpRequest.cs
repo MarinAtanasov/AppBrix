@@ -116,9 +116,9 @@ internal sealed class HttpRequest : IHttpRequest
     #endregion
 
     #region Private methods
-    private Task<HttpResponseMessage> GetResponse(HttpClient client, CancellationToken token = default)
+    private async Task<HttpResponseMessage> GetResponse(HttpClient client, CancellationToken token = default)
     {
-        var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
+        using var message = new HttpRequestMessage(new System.Net.Http.HttpMethod(this.callMethod), this.requestUrl);
 
         this.SetHeaders(message.Headers, this.headers.Where(x => !this.IsContentHeader(x.Key)));
 
@@ -131,7 +131,7 @@ internal sealed class HttpRequest : IHttpRequest
         if (this.httpMessageVersion is not null)
             message.Version = this.httpMessageVersion;
 
-        return client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token);
+        return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token);
     }
 
     private void SetHeaders(System.Net.Http.Headers.HttpHeaders headers, IEnumerable<KeyValuePair<string, List<string>>> toAdd)
