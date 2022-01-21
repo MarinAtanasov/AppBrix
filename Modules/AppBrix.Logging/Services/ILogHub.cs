@@ -26,6 +26,13 @@ public interface ILogHub
     void Unsubscribe(Action<ILogEntry> logger);
 
     /// <summary>
+    /// Determines whether a given log severity level is enabled.
+    /// </summary>
+    /// <param name="level">The log severity level.</param>
+    /// <returns>True if the severity level is enabled.</returns>
+    bool IsEnabled(LogLevel level);
+
+    /// <summary>
     /// Creates a log entry and fires an <see cref="ILogEntry"/> event.
     /// </summary>
     /// <param name="level">The log severity level.</param>

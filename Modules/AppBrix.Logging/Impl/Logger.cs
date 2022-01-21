@@ -25,9 +25,9 @@ internal sealed class Logger : ILogger
     #endregion
 
     #region Public and overriden methods
-    public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) => this.Enabled && this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
+    public bool IsEnabled(LogLevel logLevel) => this.Enabled && this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
 
-    public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (this.Enabled)
             this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
