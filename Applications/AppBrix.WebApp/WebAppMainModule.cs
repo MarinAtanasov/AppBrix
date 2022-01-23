@@ -36,31 +36,31 @@ public sealed class WebAppMainModule : MainModuleBase
     #region Properties
     public override IEnumerable<Type> Dependencies => new[]
     {
-            //typeof(CachingModule),
-            typeof(MemoryCachingModule),
-            typeof(CloningModule),
-            typeof(ContainerModule),
-            typeof(DataModule),
-            //typeof(InMemoryDataModule),
-            typeof(MigrationsDataModule),
-            typeof(SqliteDataModule),
-            //typeof(SqlServerDataModule),
-            typeof(EventsModule),
-            typeof(AsyncEventsModule),
-            typeof(ScheduledEventsModule),
-            typeof(CronScheduledEventsModule),
-            typeof(TimerScheduledEventsModule),
-            typeof(Factory.FactoryModule),
-            typeof(Logging.LoggingModule),
-            //typeof(Logging.Console.ConsoleLoggingModule),
-            typeof(FileLoggingModule),
-            typeof(PermissionsModule),
-            typeof(RandomModule),
-            typeof(TextModule),
-            typeof(TimeModule),
-            typeof(WebClientModule),
-            typeof(WebServerModule)
-        };
+        //typeof(CachingModule),
+        typeof(MemoryCachingModule),
+        typeof(CloningModule),
+        typeof(ContainerModule),
+        typeof(DataModule),
+        //typeof(InMemoryDataModule),
+        typeof(MigrationsDataModule),
+        typeof(SqliteDataModule),
+        //typeof(SqlServerDataModule),
+        typeof(EventsModule),
+        typeof(AsyncEventsModule),
+        typeof(ScheduledEventsModule),
+        typeof(CronScheduledEventsModule),
+        typeof(TimerScheduledEventsModule),
+        typeof(Factory.FactoryModule),
+        typeof(Logging.LoggingModule),
+        //typeof(Logging.Console.ConsoleLoggingModule),
+        typeof(FileLoggingModule),
+        typeof(PermissionsModule),
+        typeof(RandomModule),
+        typeof(TextModule),
+        typeof(TimeModule),
+        typeof(WebClientModule),
+        typeof(WebServerModule)
+    };
     #endregion
 
     #region Public and overriden methods
