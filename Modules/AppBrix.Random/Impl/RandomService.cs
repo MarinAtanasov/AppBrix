@@ -28,24 +28,22 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
     #region IRandomService implementation
     public System.Random GetRandom(int? seed = null) => seed.HasValue ? new System.Random(seed.Value) : this.randomGenerator.Value!;
 
-    public IEnumerable<T> GetRandomItems<T>(IReadOnlyCollection<T> items, int? seed = null)
+    public IEnumerable<T> GetRandomItems<T>(IEnumerable<T> items, int? seed = null)
     {
         if (items is null)
             throw new ArgumentNullException(nameof(items));
-        if (items.Count == 0)
-            return Array.Empty<T>();
 
-        return this.InfiniteGenerator(items.ToArray(), this.GetRandom(seed));
+        var array = items.ToArray();
+        return array.Length == 0 ? array : this.InfiniteGenerator(array, this.GetRandom(seed));
     }
 
-    public IEnumerable<T> GetUniqueItems<T>(IReadOnlyCollection<T> items, int? seed = null)
+    public IEnumerable<T> GetUniqueItems<T>(IEnumerable<T> items, int? seed = null)
     {
         if (items is null)
             throw new ArgumentNullException(nameof(items));
-        if (items.Count == 0)
-            return Array.Empty<T>();
 
-        return this.ShuffleInternal(items.ToArray(), this.GetRandom(seed));
+        var array = items.ToArray();
+        return array.Length == 0 ? array : this.GetUniqueItemsInternal(array, this.GetRandom(seed));
     }
 
     public void Shuffle<T>(IList<T> items, int? seed = null)
@@ -60,6 +58,16 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
     #endregion
 
     #region Private methods
+    private IEnumerable<T> GetUniqueItemsInternal<T>(T[] items, System.Random random)
+    {
+        for (var i = items.Length - 1; i > 0; i--)
+        {
+            var n = random.Next(i + 1);
+            yield return items[n];
+            items[n] = items[i];
+        }
+    }
+
     private IEnumerable<T> InfiniteGenerator<T>(T[] items, System.Random random)
     {
         while (true)
