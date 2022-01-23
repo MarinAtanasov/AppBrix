@@ -66,6 +66,8 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
             yield return items[n];
             items[n] = items[i];
         }
+
+        yield return items[0];
     }
 
     private IEnumerable<T> InfiniteGenerator<T>(T[] items, System.Random random)
