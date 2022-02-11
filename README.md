@@ -1,4 +1,6 @@
 # AppBrix
+[![Build](https://github.com/MarinAtanasov/AppBrix/actions/workflows/test.yml/badge.svg)](https://github.com/MarinAtanasov/AppBrix/actions/workflows/test.yml)
+
 AppBrix is a way of thinking about and building scalable modular applications.
 
 This framework is using the latest version of [.NET](https://dotnet.microsoft.com/download).

@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  pull_request:
+    paths-ignore: [ '**.md' ]
+  push:
+    branches: [ master ]
+    paths-ignore: [ '**.md' ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ ubuntu-latest, windows-latest, macOS-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore
+        run: dotnet restore AppBrix.sln --verbosity minimal
+      - name: Build
+        run: dotnet build AppBrix.sln --configuration Release --no-restore --verbosity minimal
+      - name: Test
+        shell: pwsh
+        run: ./Test.ps1 -Release
