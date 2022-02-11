@@ -1,5 +1,5 @@
 # AppBrix
-[![Build](https://github.com/MarinAtanasov/AppBrix/actions/workflows/test.yml/badge.svg)](https://github.com/MarinAtanasov/AppBrix/actions/workflows/test.yml)
+[![Build](https://github.com/MarinAtanasov/AppBrix/actions/workflows/build.yml/badge.svg)](https://github.com/MarinAtanasov/AppBrix/actions/workflows/build.yml)
 
 AppBrix is a way of thinking about and building scalable modular applications.
 
