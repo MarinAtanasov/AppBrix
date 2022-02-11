@@ -44,7 +44,7 @@ public sealed class MemoryCacheTests : TestsBase
     public void TestGetUnregisteredItem()
     {
         var cache = this.app.GetMemoryCache();
-        var item = cache.Get(nameof(TestGetUnregisteredItem));
+        var item = cache.Get(nameof(this.TestGetUnregisteredItem));
         item.Should().BeNull("asking for non-existing key should return null");
     }
 
@@ -52,7 +52,7 @@ public sealed class MemoryCacheTests : TestsBase
     public void TestGetUnregisteredItemGenericExtension()
     {
         var cache = this.app.GetMemoryCache();
-        var item = cache.Get<TimeSpan>(nameof(TestGetUnregisteredItem));
+        var item = cache.Get<TimeSpan>(nameof(this.TestGetUnregisteredItem));
         item.Should().Be(default, "asking for non-existing struct should return its default value");
     }
 
@@ -68,7 +68,7 @@ public sealed class MemoryCacheTests : TestsBase
     public void TestSetNullItem()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(nameof(TestSetNullItem), null);
+        Action action = () => cache.Set(nameof(this.TestSetNullItem), null);
         action.Should().Throw<ArgumentNullException>("item should not be null");
     }
 
@@ -76,7 +76,7 @@ public sealed class MemoryCacheTests : TestsBase
     public void TestSetNegativeAbsoluteExpiration()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(nameof(TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
+        Action action = () => cache.Set(nameof(this.TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
         action.Should().Throw<ArgumentException>("absolute expiration should not be negative");
     }
 
@@ -84,7 +84,7 @@ public sealed class MemoryCacheTests : TestsBase
     public void TestSetNegativeSlidingExpiration()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(nameof(TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
+        Action action = () => cache.Set(nameof(this.TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
         action.Should().Throw<ArgumentException>("sliding expiration should not be negative");
     }
 
@@ -99,52 +99,64 @@ public sealed class MemoryCacheTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetItem()
     {
+        const string key = nameof(this.TestGetItem);
+
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestGetItem), this);
-        var item = cache.Get(nameof(TestGetItem));
+        cache.Set(key, this);
+
+        var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRemoveItem()
     {
+        const string key = nameof(this.TestRemoveItem);
+
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestRemoveItem), this);
-        cache.Remove(nameof(TestRemoveItem)).Should().BeTrue("the item should have been removed successfully");
-        var item = cache.Get(nameof(TestGetItem));
+        cache.Set(key, this);
+        cache.Remove(key).Should().BeTrue("the item should have been removed successfully");
+
+        var item = cache.Get(nameof(MemoryCacheTests.TestGetItem));
         item.Should().BeNull("the item should have been removed from the cache");
-        cache.Remove(nameof(TestRemoveItem)).Should().BeFalse("the item should have already been removed");
+        cache.Remove(key).Should().BeFalse("the item should have already been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAbsoluteExpiration()
     {
+        const string key = nameof(this.TestAbsoluteExpiration);
+
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50));
-        var item = cache.Get(nameof(TestAbsoluteExpiration));
+        cache.Set(key, this, absoluteExpiration: TimeSpan.FromMilliseconds(50));
+        var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
-        new Func<object>(() => cache.Get(nameof(TestAbsoluteExpiration)))
+        new Func<object>(() => cache.Get(key))
             .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestMixedExpiration()
     {
+        const string key = nameof(MemoryCacheTests.TestMixedExpiration);
+
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestMixedExpiration), this, absoluteExpiration: TimeSpan.FromMilliseconds(50), slidingExpiration: TimeSpan.FromMilliseconds(25));
-        var item = cache.Get(nameof(TestMixedExpiration));
+        cache.Set(key, this, absoluteExpiration: TimeSpan.FromMilliseconds(50), slidingExpiration: TimeSpan.FromMilliseconds(25));
+        var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
-        new Func<object>(() => cache.Get(nameof(TestMixedExpiration)))
+        new Func<object>(() => cache.Get(key))
             .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDisposeOnAbsoluteExpiration()
     {
+        const string key = nameof(MemoryCacheTests.TestDisposeOnAbsoluteExpiration);
+
         var disposed = false;
 
         void Dispose()
@@ -154,39 +166,44 @@ public sealed class MemoryCacheTests : TestsBase
         }
         
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestDisposeOnAbsoluteExpiration), this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(50));
-        var item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
+        cache.Set(key, this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(50));
+        var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
         disposed.Should().BeFalse("the item should not have expired yet");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(60));
         new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
-        item = cache.Get(nameof(TestDisposeOnAbsoluteExpiration));
+        item = cache.Get(key);
         item.Should().BeNull("the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDisposeOnSlidingExpiration()
     {
+        const string key = nameof(MemoryCacheTests.TestDisposeOnSlidingExpiration);
+
         var disposed = false;
 
+        this.timeService.SetTime(this.timeService.GetTime());
         var cache = this.app.GetMemoryCache();
-        cache.Set(nameof(TestDisposeOnSlidingExpiration), this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(50));
-        var item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
+        cache.Set(key, this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(2));
+
+        var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
 
-        for (var i = 0; i < 75; i++)
+        for (var i = 0; i < 5; i++)
         {
-            item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
+            item = cache.Get(key);
             item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
             disposed.Should().BeFalse($"the item should not have expired after {i} retries");
+            this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(1));
             Thread.Sleep(1);
         }
 
-        this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
+        this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(5));
         new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
-        item = cache.Get(nameof(TestDisposeOnSlidingExpiration));
-        item.Should().BeNull("the item shold have been removed from the cache");
+        item = cache.Get(key);
+        item.Should().BeNull("the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

@@ -19,7 +19,7 @@ internal class SimpleModuleMock : ModuleBase
     protected override void Initialize(IInitializeContext context)
     {
         if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
         this.IsInitialized = true;
     }
@@ -27,7 +27,7 @@ internal class SimpleModuleMock : ModuleBase
     protected override void Uninitialize()
     {
         if (this.App is null)
-            throw new InvalidOperationException($"this.{nameof(App)} should not be null.");
+            throw new InvalidOperationException($"this.{nameof(this.App)} should not be null.");
 
         this.IsUninitialized = true;
     }

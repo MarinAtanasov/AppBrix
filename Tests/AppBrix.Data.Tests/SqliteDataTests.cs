@@ -47,7 +47,7 @@ public sealed class SqliteDataTests : TestsBase
     {
         using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
         {
-            context.Items.Add(new DataItemMock { Content = nameof(TestCrudOperations) });
+            context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
         }
 
@@ -55,7 +55,7 @@ public sealed class SqliteDataTests : TestsBase
         {
             var item = context.Items.Single();
             item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
-            item.Content.Should().Be(nameof(TestCrudOperations), $"{nameof(item.Content)} should be saved");
+            item.Content.Should().Be(nameof(this.TestCrudOperations), $"{nameof(item.Content)} should be saved");
             item.Content = nameof(DataItemContextMock);
             context.SaveChanges();
         }
@@ -83,7 +83,7 @@ public sealed class SqliteDataTests : TestsBase
     {
         using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
         {
-            context.Items.Add(new DataItemMock { Content = nameof(TestCrudOperations) });
+            context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
         }
 

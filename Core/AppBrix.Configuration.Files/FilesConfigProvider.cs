@@ -68,7 +68,7 @@ public sealed class FilesConfigProvider : IConfigProvider
     private string BuildFilePath(Type type)
     {
         var typeName = type.Name;
-        var fileName = typeName.EndsWith(FilesConfigProvider.ToRemove, StringComparison.OrdinalIgnoreCase) && typeName.Length > ToRemove.Length ?
+        var fileName = typeName.EndsWith(FilesConfigProvider.ToRemove, StringComparison.OrdinalIgnoreCase) && typeName.Length > FilesConfigProvider.ToRemove.Length ?
             typeName[..^FilesConfigProvider.ToRemove.Length] : typeName;
         return Path.Combine(this.directory, string.Concat(fileName, FilesConfigProvider.ExtensionDot, this.extension));
     }

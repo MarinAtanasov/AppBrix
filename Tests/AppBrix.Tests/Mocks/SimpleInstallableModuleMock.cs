@@ -20,7 +20,7 @@ internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
     protected override void Configure(IConfigureContext context)
     {
         if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
         this.IsConfigured = true;
     }
@@ -28,7 +28,7 @@ internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
     protected override void Install(IInstallContext context)
     {
         if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
         this.IsInstalled = true;
     }
@@ -36,7 +36,7 @@ internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
     protected override void Uninstall(IUninstallContext context)
     {
         if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
         this.IsUninstalled = true;
     }
