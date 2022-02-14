@@ -18,7 +18,7 @@
     <PackageId>AppBrix.Data.Migrations</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 6.0.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 6.0.2.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Data Migrations</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -38,8 +38,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.1" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>

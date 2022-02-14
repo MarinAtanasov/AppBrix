@@ -20,7 +20,7 @@
     <PackageId>AppBrix.Text.Tests</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 6.0.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 6.0.2.</PackageReleaseNotes>
     <PackageTags>AppBrix Text Tests</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
