@@ -72,7 +72,7 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
         if (string.IsNullOrEmpty(permission))
             throw new ArgumentNullException(nameof(permission));
 
-        return this.cachedPermissions.GetOrEmpty(role).Contains(permission);
+        return this.cachedPermissions.TryGetValue(role, out var permissions) && permissions.Contains(permission);
     }
 
     public IReadOnlyCollection<string> GetAllowed(string role) => this.service.GetAllowed(role);
@@ -86,18 +86,18 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
         var permissions = new HashSet<string>(this.service.GetAllowed(role));
         foreach (var parent in this.service.GetParents(role))
         {
-            permissions.UnionWith(this.cachedPermissions.GetOrEmpty(parent));
+            if (this.cachedPermissions.TryGetValue(parent, out var parentPermissions))
+                permissions.UnionWith(parentPermissions);
         }
-        permissions.ExceptWith(this.service.GetDenied(role));
+
+        var denied = this.service.GetDenied(role);
+        if (denied.Count > 0)
+            permissions.ExceptWith(denied);
 
         if (permissions.Count > 0)
-        {
             this.cachedPermissions[role] = permissions;
-        }
         else
-        {
             this.cachedPermissions.Remove(role);
-        }
 
         foreach (var child in this.service.GetChildren(role))
         {

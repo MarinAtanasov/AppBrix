@@ -71,25 +71,27 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     private void ExecuteReadyEvents(object? unused = null)
     {
         List<PriorityQueueItem>? toExecute = null;
+
         lock (this.queue)
         {
-            if (this.executionTimer is not null) // not unintialized
-            {
-                var now = this.app.GetTime();
-                for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
-                {
-                    toExecute ??= new List<PriorityQueueItem>();
-                    toExecute.Add(args);
-                    args.MoveToNextOccurrence(now);
-                    if (now < args.Occurrence)
-                        this.queue.ReprioritizeHead();
-                    else
-                        this.queue.Pop();
-                }
+            if (this.executionTimer is null)
+                return; // Unintialized
 
-                this.executionTimer.Change(this.config.ExecutionCheck, Timeout.InfiniteTimeSpan);
+            var now = this.app.GetTime();
+            for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
+            {
+                toExecute ??= new List<PriorityQueueItem>();
+                toExecute.Add(args);
+                args.MoveToNextOccurrence(now);
+                if (now < args.Occurrence)
+                    this.queue.ReprioritizeHead();
+                else
+                    this.queue.Pop();
             }
+
+            this.executionTimer.Change(this.config.ExecutionCheck, Timeout.InfiniteTimeSpan);
         }
+
         toExecute?.ForEach(x => x.Execute());
     }
     #endregion

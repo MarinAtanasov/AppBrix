@@ -58,31 +58,31 @@ internal sealed class PriorityQueue
 
     private void BubbleUp(int index)
     {
-        if (index == 0)
-            return;
-
-        var parent = this.GetParent(index);
-        if (this.queue[parent].Occurrence > this.queue[index].Occurrence)
+        while (index > 0)
         {
+            var parent = this.GetParent(index);
+            if (this.queue[parent].Occurrence <= this.queue[index].Occurrence)
+                return;
+
             this.Swap(parent, index);
-            this.BubbleUp(parent);
+            index = parent;
         }
     }
 
     private void BubbleDown(int index)
     {
-        var firstChild = this.GetFirstChild(index);
-        if (firstChild >= this.queue.Count)
-            return;
-
-        var secondChild = firstChild + 1;
-        var child = secondChild == this.queue.Count || this.queue[firstChild].Occurrence < this.queue[secondChild].Occurrence ?
-            firstChild : secondChild;
-
-        if (this.queue[index].Occurrence > this.queue[child].Occurrence)
+        var child = this.GetFirstChild(index);
+        while (child < this.queue.Count)
         {
+            if (child < this.queue.Count - 1 && this.queue[child].Occurrence >= this.queue[child + 1].Occurrence)
+                child++;
+
+            if (this.queue[index].Occurrence <= this.queue[child].Occurrence)
+                return;
+
             this.Swap(index, child);
-            this.BubbleDown(child);
+            index = child;
+            child = this.GetFirstChild(index);
         }
     }
 

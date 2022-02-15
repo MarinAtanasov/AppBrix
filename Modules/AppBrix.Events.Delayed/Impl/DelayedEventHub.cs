@@ -93,9 +93,6 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
     public void RaiseImmediate(IEvent args) => this.EventHub.Raise(args);
     #endregion
 
-    #region Private methods
-    #endregion
-
     #region Private fields and constants
     #nullable disable
     private IApp app;

@@ -4,6 +4,7 @@
 using AppBrix.Configuration;
 using AppBrix.Permissions.Configuration;
 using AppBrix.Permissions.Services;
+using System;
 using System.Collections.Generic;
 
 namespace AppBrix;
@@ -49,8 +50,6 @@ public static class PermissionsExtensions
         }
     }
 
-    internal static HashSet<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
-        dictionary.TryGetValue(key, out var values) ? values : PermissionsExtensions.EmptyHashSet;
-
-    private static readonly HashSet<string> EmptyHashSet = new HashSet<string>();
+    internal static IReadOnlyCollection<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
+        dictionary.TryGetValue(key, out var values) ? values : Array.Empty<string>();
 }

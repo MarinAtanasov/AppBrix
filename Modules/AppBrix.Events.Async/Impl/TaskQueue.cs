@@ -68,24 +68,24 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
     {
         var reader = this.channel.Reader;
         while (await reader.WaitToReadAsync().ConfigureAwait(false))
-            while (reader.TryRead(out var args))
+        while (reader.TryRead(out var args))
+        {
+            for (var i = 0; i < this.handlers.Count; i++)
             {
-                for (var i = 0; i < this.handlers.Count; i++)
+                try
                 {
-                    try
-                    {
-                        var handler = this.handlers[i];
-                        handler(args);
+                    var handler = this.handlers[i];
+                    handler(args);
 
-                        // Check if the handler has unsubscribed itself.
-                        if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
-                            i--;
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    // Check if the handler has unsubscribed itself.
+                    if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
+                        i--;
+                }
+                catch (Exception)
+                {
                 }
             }
+        }
     }
     #endregion
 

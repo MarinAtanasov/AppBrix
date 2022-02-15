@@ -91,9 +91,9 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
                 item.Dispose();
                 return true;
             }
-            
-            return false;
         }
+
+        return false;
     }
     #endregion
 
