@@ -10,7 +10,7 @@ if ($Release)
 
 if ($Build)
 {
-    dotnet build AppBrix.sln --configuration $($configuration) --nologo;
+    dotnet build AppBrix.sln --configuration $($configuration) --nologo --verbosity minimal;
 }
 
 $filter = "";
@@ -30,4 +30,4 @@ if ($Parallel)
 }
 
 $paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/$($configuration)/$($version)/$($_.Name).dll") };
-dotnet vstest $paths $filter $execute --nologo;
+dotnet test $paths $filter $execute --nologo --verbosity minimal;

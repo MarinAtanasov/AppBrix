@@ -166,12 +166,13 @@ public sealed class MemoryCacheTests : TestsBase
         }
         
         var cache = this.app.GetMemoryCache();
-        cache.Set(key, this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(50));
+        this.timeService.SetTime(this.timeService.GetTime());
+        cache.Set(key, this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
         var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
         disposed.Should().BeFalse("the item should not have expired yet");
 
-        this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(60));
+        this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(10));
         new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
         item = cache.Get(key);
         item.Should().BeNull("the item should have been removed from the cache");
@@ -184,8 +185,8 @@ public sealed class MemoryCacheTests : TestsBase
 
         var disposed = false;
 
-        this.timeService.SetTime(this.timeService.GetTime());
         var cache = this.app.GetMemoryCache();
+        this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(2));
 
         var item = cache.Get(key);
