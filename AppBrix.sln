@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		.github\workflows\build.yml = .github\workflows\build.yml
 		Clean.ps1 = Clean.ps1
 		LICENSE = LICENSE
 		NuGet.Config = NuGet.Config
