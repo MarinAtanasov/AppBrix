@@ -219,6 +219,9 @@ public sealed class RandomServiceTests : TestsBase
     public void TestPerformanceGetRandom() => TestUtils.TestPerformance(this.TestPerformanceGetRandomInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    public void TestPerformanceGetRandomItems() => TestUtils.TestPerformance(this.TestPerformanceGetRandomItemsInternal);
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceGetUniqueItems() => TestUtils.TestPerformance(this.TestPerformanceGetUniqueItemsInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -233,6 +236,18 @@ public sealed class RandomServiceTests : TestsBase
         {
             service.GetRandom();
         }
+    }
+
+    private void TestPerformanceGetRandomItemsInternal()
+    {
+        var service = this.app.GetRandomService();
+        var items = Enumerable.Range(0, 100).ToList();
+        var sum = 0;
+        for (var i = 0; i < 30000; i++)
+        {
+            sum += service.GetRandomItems(items).Take(10).Sum();
+        }
+        sum.Should().BePositive();
     }
 
     private void TestPerformanceGetUniqueItemsInternal()

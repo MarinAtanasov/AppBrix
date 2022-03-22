@@ -29,18 +29,18 @@ The tests are using xUnit.
 # You can add -Build to restore dependencies and build the solution.
 # You can add -Release to use the Release configuration instead of Debug.
 # Run functional tests (default). Add -Parallel for parallel execution.
-./Test -Tests Functional # ./Test f
+./Test.ps1 -Tests Functional  # ./Test.ps1
 # Run performance tests
-./Test -Tests Performance # ./Test p
+./Test.ps1 -Tests Performance  # ./Test.ps1 p
 # Run all tests
-./Test -Tests All # ./Test a
+./Test.ps1 -Tests All  # ./Test.ps1 a
 ```
 
 ## Publishing packages
 Packaging and publishing of a new version of all projects can be done using PowerShell.
 It requires Nuget CLI to be set up locally with account API key.
 ```Powershell
-./Publish 1.0.0
+./Publish.ps1 1.0.0
 ```
 
 ## Sample Applications

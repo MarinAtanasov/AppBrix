@@ -33,8 +33,8 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
         if (items is null)
             throw new ArgumentNullException(nameof(items));
 
-        var array = items.ToArray();
-        return array.Length == 0 ? array : this.InfiniteGenerator(array, this.GetRandom(seed));
+        var array = items as T[] ?? items.ToArray();
+        return array.Length == 0 ? array : this.GetInfiniteGenerator(array, this.GetRandom(seed));
     }
 
     public IEnumerable<T> GetUniqueItems<T>(IEnumerable<T> items, int? seed = null)
@@ -43,7 +43,7 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
             throw new ArgumentNullException(nameof(items));
 
         var array = items.ToArray();
-        return array.Length == 0 ? array : this.GetUniqueItemsInternal(array, this.GetRandom(seed));
+        return array.Length == 0 ? array : this.GetUniqueGenerator(array, this.GetRandom(seed));
     }
 
     public void Shuffle<T>(IList<T> items, int? seed = null)
@@ -58,7 +58,13 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
     #endregion
 
     #region Private methods
-    private IEnumerable<T> GetUniqueItemsInternal<T>(T[] items, System.Random random)
+    private IEnumerable<T> GetInfiniteGenerator<T>(T[] items, System.Random random)
+    {
+        while (true)
+            yield return items[random.Next(items.Length)];
+    }
+
+    private IEnumerable<T> GetUniqueGenerator<T>(T[] items, System.Random random)
     {
         for (var i = items.Length - 1; i > 0; i--)
         {
@@ -68,12 +74,6 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
         }
 
         yield return items[0];
-    }
-
-    private IEnumerable<T> InfiniteGenerator<T>(T[] items, System.Random random)
-    {
-        while (true)
-            yield return items[random.Next(items.Length)];
     }
 
     private IList<T> ShuffleInternal<T>(IList<T> items, System.Random random)
