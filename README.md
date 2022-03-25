@@ -1,5 +1,10 @@
 # AppBrix
 [![Build](https://github.com/MarinAtanasov/AppBrix/actions/workflows/build.yml/badge.svg)](https://github.com/MarinAtanasov/AppBrix/actions/workflows/build.yml)
+[![GitHub Issues](https://img.shields.io/github/issues/MarinAtanasov/AppBrix.svg?style=flat&logo=github&label=Issues)](https://github.com/MarinAtanasov/AppBrix/issues)
+[![Code Size](https://img.shields.io/github/languages/code-size/MarinAtanasov/AppBrix.svg?style=flat&logo=github&label=Code)](https://github.com/MarinAtanasov/AppBrix)
+[![Repo Size](https://img.shields.io/github/repo-size/MarinAtanasov/AppBrix.svg?style=flat&logo=github&label=Repo)](https://github.com/MarinAtanasov/AppBrix)
+[![NuGet Package](https://img.shields.io/nuget/v/AppBrix.svg?style=flat&logo=nuget&color=success&label=Nuget)](https://www.nuget.org/packages?q=Owner%3Amarin.atanasov.bg+Tags%3AAppBrix)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/AppBrix.svg?style=flat&logo=nuget&label=Downloads)](https://www.nuget.org/packages?q=Owner%3Amarin.atanasov.bg+Tags%3AAppBrix)
 
 AppBrix is a way of thinking about and building scalable modular applications.
 
