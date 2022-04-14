@@ -23,11 +23,8 @@ public sealed class MemoryConfigService : IConfigService
         if (type is null)
             throw new ArgumentNullException(nameof(type));
 
-        if (!configs.TryGetValue(type, out var config))
-        {
-            config = (IConfig)type.CreateObject();
-            configs[type] = config;
-        }
+        if (!this.configs.TryGetValue(type, out var config))
+            this.configs[type] = config = (IConfig)type.CreateObject();
 
         return config;
     }

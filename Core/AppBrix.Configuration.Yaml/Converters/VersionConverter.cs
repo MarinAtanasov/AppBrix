@@ -20,5 +20,5 @@ internal sealed class VersionConverter : IYamlTypeConverter
     }
 
     public void WriteYaml(IEmitter emitter, object value, Type type) =>
-        emitter.Emit(new Scalar(((System.Version)value)?.ToString(4) ?? string.Empty));
+        emitter.Emit(new Scalar(((System.Version)value)?.ToString() ?? string.Empty));
 }

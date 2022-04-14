@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Configuration.Memory;
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
@@ -28,23 +27,15 @@ public sealed class ConfigServiceTests
         var action = () => service.Save((IConfig)null);
         action.Should().Throw<ArgumentNullException>("config cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestMemoryConfigServiceGetNullConfig()
+    public void TestSaveNullType()
     {
-        var service = new MemoryConfigService();
-        var action = () => service.Get(null);
+        var service = new ConfigService(new ConfigProviderMock(), new ConfigSerializerMock());
+        var action = () => service.Save((Type)null);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
-    
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestMemoryConfigServiceSaveNullConfig()
-    {
-        var service = new MemoryConfigService();
-        var action = () => service.Save((IConfig)null);
-        action.Should().Throw<ArgumentNullException>("config cannot be null");
-    }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetConfig()
     {
