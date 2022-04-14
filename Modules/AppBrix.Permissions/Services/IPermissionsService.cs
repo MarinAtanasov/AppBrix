@@ -27,6 +27,13 @@ public interface IPermissionsService
     void AddParent(string role, string parent);
 
     /// <summary>
+    /// Removes a child from a role.
+    /// </summary>
+    /// <param name="role">The parent role.</param>
+    /// <param name="child">The child role.</param>
+    void RemoveChild(string role, string child) => this.RemoveParent(child, role);
+
+    /// <summary>
     /// Removes a parent from a role.
     /// </summary>
     /// <param name="role">The child role.</param>
