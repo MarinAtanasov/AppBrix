@@ -4,7 +4,7 @@ ForEach ($category in "Core", "Modules", "Bundles")
 {
     ForEach ($folder in (Get-ChildItem -Path $category -Directory))
     {
-        dotnet pack $folder.FullName -c Release;
+        dotnet pack $folder.FullName --configuration Release --nologo;
         nuget push "$($folder.FullName)\bin\Release\$($folder.Name).$($Version).nupkg";
         nuget push "$($folder.FullName)\bin\Release\$($folder.Name).$($Version).snupkg";
     }
