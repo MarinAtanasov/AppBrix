@@ -30,6 +30,7 @@ internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
         if (this.App != context.App)
             throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
+        base.Install(context);
         this.IsInstalled = true;
     }
 
@@ -38,6 +39,7 @@ internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
         if (this.App != context.App)
             throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
+        base.Uninstall(context);
         this.IsUninstalled = true;
     }
 }

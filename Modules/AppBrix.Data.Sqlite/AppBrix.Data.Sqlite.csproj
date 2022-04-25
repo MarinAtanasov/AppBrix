@@ -18,14 +18,14 @@
     <PackageId>AppBrix.Data.Sqlite</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 6.0.3.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 6.0.4.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Data Sqlite</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>0.29.0</Version>
+    <Version>0.30.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
