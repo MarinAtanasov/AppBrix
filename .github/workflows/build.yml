@@ -1,11 +1,6 @@
 name: Build
 
-on:
-  pull_request:
-    paths-ignore: [ '**.md' ]
-  push:
-    branches: [ master ]
-    paths-ignore: [ '**.md' ]
+on: push
 
 jobs:
   build:
