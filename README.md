@@ -27,9 +27,9 @@ dotnet build AppBrix.sln
 
 ## Running Tests
 The tests are using xUnit.
-* In Visual Studio, Test Explorer must be opened before building test projects in order to discover the tests.
-* In Project Rider, they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
-* In PowerShell, while in the project's root folder:
+* In [Visual Studio](https://visualstudio.microsoft.com/), Test Explorer must be opened before building test projects in order to discover the tests.
+* In [JetBrains Rider](https://www.jetbrains.com/rider/), they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
+* In [PowerShell](https://github.com/PowerShell/PowerShell), while in the project's root folder:
 ```Powershell
 # You can add -Build to restore dependencies and build the solution.
 # You can add -Release to use the Release configuration instead of Debug.
