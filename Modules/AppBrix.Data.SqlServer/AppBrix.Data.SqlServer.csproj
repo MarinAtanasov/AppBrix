@@ -5,7 +5,7 @@
     <AssemblyName>AppBrix.Data.SqlServer</AssemblyName>
     <AssemblyTitle>AppBrix.Data.SqlServer</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
-    <Copyright>Copyright 2015-2020</Copyright>
+    <Copyright>Copyright 2015-2022</Copyright>
     <Description>Module used for regitering a SqlServer provider.</Description>
     <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -18,14 +18,14 @@
     <PackageId>AppBrix.Data.SqlServer</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 6.0.4.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 6.0.5.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Data SqlServer</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>0.30.0</Version>
+    <Version>0.31.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 

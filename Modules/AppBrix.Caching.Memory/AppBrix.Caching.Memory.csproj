@@ -5,7 +5,7 @@
     <AssemblyName>AppBrix.Caching.Memory</AssemblyName>
     <AssemblyTitle>AppBrix.Caching.Memory</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
-    <Copyright>Copyright 2015-2020</Copyright>
+    <Copyright>Copyright 2015-2022</Copyright>
     <Description>Module used for caching objects locally in-memory.</Description>
     <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -18,14 +18,14 @@
     <PackageId>AppBrix.Caching.Memory</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 6.0.4.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 6.0.5.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Cache Memory</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>0.30.0</Version>
+    <Version>0.31.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

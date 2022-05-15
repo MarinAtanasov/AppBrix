@@ -5,7 +5,7 @@
     <AssemblyName>AppBrix.Configuration.Json</AssemblyName>
     <AssemblyTitle>AppBrix.Configuration.Json</AssemblyTitle>
     <Authors>Marin Atanasov</Authors>
-    <Copyright>Copyright 2015-2020</Copyright>
+    <Copyright>Copyright 2015-2022</Copyright>
     <Description>Contains serializer/deserializer for JSON based configurations.</Description>
     <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -18,14 +18,14 @@
     <PackageId>AppBrix.Configuration.Json</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 6.0.4.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 6.0.5.</PackageReleaseNotes>
     <PackageTags>AppBrix Config JSON</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>0.30.0</Version>
+    <Version>0.31.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +38,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-    <PackageReference Include="System.Text.Json" Version="6.0.3" />
+    <PackageReference Include="System.Text.Json" Version="6.0.4" />
   </ItemGroup>
 
 </Project>
