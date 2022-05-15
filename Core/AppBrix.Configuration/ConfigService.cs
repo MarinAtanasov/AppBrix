@@ -44,10 +44,7 @@ public sealed class ConfigService : IConfigService
             throw new ArgumentNullException(nameof(type));
 
         if (!this.configs.TryGetValue(type, out var config))
-        {
-            config = this.ReadFromProvider(type) ?? (IConfig)type.CreateObject();
-            this.configs[type] = config;
-        }
+            this.configs[type] = config = this.ReadFromProvider(type) ?? (IConfig)type.CreateObject();
 
         return config;
     }

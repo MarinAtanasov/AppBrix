@@ -80,7 +80,7 @@ public sealed class TimeServiceTests : TestsBase
         this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
         this.app.Reinitialize();
         var time = DateTime.Now;
-        var appTime = app.GetTimeService().ToAppTime(time);
+        var appTime = this.app.GetTimeService().ToAppTime(time);
         appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
         appTime.Should().Be(time, "returned time should be the same as passed in");
     }

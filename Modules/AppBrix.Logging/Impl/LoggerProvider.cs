@@ -32,16 +32,13 @@ internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
 
     public ILogger CreateLogger(string categoryName)
     {
-        if (!this.loggers.TryGetValue(categoryName, out var logger))
+        if (this.loggers.TryGetValue(categoryName, out var logger))
+            return logger;
+
+        lock (this.loggers)
         {
-            lock (loggers)
-            {
-                if (!this.loggers.TryGetValue(categoryName, out logger))
-                {
-                    logger = new Logger(this.app, categoryName, this.app is not null);
-                    loggers.Add(categoryName, logger);
-                }
-            }
+            if (!this.loggers.TryGetValue(categoryName, out logger))
+                this.loggers[categoryName] = logger = new Logger(this.app, categoryName, this.app is not null);
         }
 
         return logger;

@@ -54,7 +54,7 @@ internal sealed class LogEntry : ILogEntry
     public override string ToString()
     {
         var result = new StringBuilder();
-        result.Append(app.GetTimeService().ToString(this.Created));
+        result.Append(this.app.GetTimeService().ToString(this.Created));
         result.Append(LogEntry.Separator);
         result.Append($"{this.Level,-5}");
         result.Append(LogEntry.Separator);

@@ -78,7 +78,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
                     handler(args);
 
                     // Check if the handler has unsubscribed itself.
-                    if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
+                    if (i < this.handlers.Count && !object.ReferenceEquals(handler, this.handlers[i]))
                         i--;
                 }
                 catch (Exception)

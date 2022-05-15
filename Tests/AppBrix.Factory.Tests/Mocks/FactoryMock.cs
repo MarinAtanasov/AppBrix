@@ -15,5 +15,5 @@ internal class FactoryMock<T> : IFactory<T>
 
     public T Value { get; }
 
-    public T Get() => Value;
+    public T Get() => this.Value;
 }

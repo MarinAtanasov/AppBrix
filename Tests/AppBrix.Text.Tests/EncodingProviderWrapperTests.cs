@@ -31,7 +31,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase
         var provider = new EncodingProviderMock(encoding);
         provider.Encoding.Should().BeSameAs(encoding, "provided encoding should be saved");
 
-        app.Container.Register(provider);
+        this.app.Container.Register(provider);
 
         provider.IsGetEncodingWithNameCalled.Should().BeFalse("encoding with name should not be called yet");
         provider.IsGetEncodingWithCodePageCalled.Should().BeFalse("encoding with code page should not be called yet");

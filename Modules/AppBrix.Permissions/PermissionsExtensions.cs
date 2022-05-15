@@ -31,10 +31,7 @@ public static class PermissionsExtensions
     internal static void AddValue(this Dictionary<string, HashSet<string>> dictionary, string key, string value)
     {
         if (!dictionary.TryGetValue(key, out var values))
-        {
-            values = new HashSet<string>();
-            dictionary.Add(key, values);
-        }
+            dictionary[key] = values = new HashSet<string>();
 
         values.Add(value);
     }

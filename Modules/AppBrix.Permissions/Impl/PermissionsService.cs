@@ -108,7 +108,7 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         if (string.IsNullOrEmpty(permission))
             throw new ArgumentNullException(nameof(permission));
 
-        return HasPermissionInternal(role, permission);
+        return this.HasPermissionInternal(role, permission);
     }
 
     public IReadOnlyCollection<string> GetAllowed(string role)

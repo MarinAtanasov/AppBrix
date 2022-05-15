@@ -16,7 +16,7 @@ internal sealed class TimeServiceMock : ITimeService
     #endregion
 
     #region Public and overriden methods
-    public DateTime GetTime() => dateTime ?? this.timeService.GetTime();
+    public DateTime GetTime() => this.dateTime ?? this.timeService.GetTime();
 
     public void SetTime(DateTime time) => this.dateTime = time;
 

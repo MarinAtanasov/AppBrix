@@ -16,7 +16,7 @@ internal sealed class FileLogger : IApplicationLifecycle
     public void Initialize(IInitializeContext context)
     {
         this.app = context.App;
-        var config = app.ConfigService.GetFileLoggerConfig();
+        var config = this.app.ConfigService.GetFileLoggerConfig();
         this.writer = System.IO.File.AppendText(config.Path);
         this.writer.AutoFlush = true;
         this.app.GetLogHub().Subscribe(this.LogEntry);

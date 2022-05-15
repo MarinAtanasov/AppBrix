@@ -52,10 +52,8 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
     private void SubscribeInternal(EventWrapper handler, Type type)
     {
         if (!this.subscriptions.TryGetValue(type, out var handlers))
-        {
-            handlers = new List<EventWrapper>();
-            this.subscriptions[type] = handlers;
-        }
+            this.subscriptions[type] = handlers = new List<EventWrapper>();
+
         handlers.Add(handler);
     }
 
