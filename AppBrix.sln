@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Global", ".Global", "{8ADB
 		.gitignore = .gitignore
 		.github\workflows\build.yml = .github\workflows\build.yml
 		Clean.ps1 = Clean.ps1
+		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
 		NuGet.Config = NuGet.Config
 		Publish.ps1 = Publish.ps1

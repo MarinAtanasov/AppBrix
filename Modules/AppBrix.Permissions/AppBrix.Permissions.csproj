@@ -1,43 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>AppBrix.Permissions</AssemblyName>
     <AssemblyTitle>AppBrix.Permissions</AssemblyTitle>
-    <Authors>Marin Atanasov</Authors>
-    <Copyright>Copyright 2015-2022</Copyright>
     <Description>Module which is used for working with permissions.</Description>
-    <Deterministic>true</Deterministic>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <Features>strict</Features>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <IncludeSymbols>true</IncludeSymbols>
-    <Nullable>enable</Nullable>
-    <PackageIcon>icon-64x64.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix/master/icon-64x64.png</PackageIconUrl>
     <PackageId>AppBrix.Permissions</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Update source link repository url.</PackageReleaseNotes>
     <PackageTags>AppBrix Module Date Permissions</PackageTags>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <TargetFramework>net6.0</TargetFramework>
-    <Version>0.31.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\icon-64x64.png" Pack="true" PackagePath="" Visible="false" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AppBrix.Container\AppBrix.Container.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
