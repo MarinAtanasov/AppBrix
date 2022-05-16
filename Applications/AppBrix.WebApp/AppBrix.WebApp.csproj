@@ -3,20 +3,12 @@
   <PropertyGroup>
     <AssemblyName>AppBrix.WebApp</AssemblyName>
     <AssemblyTitle>AppBrix.WebApp</AssemblyTitle>
-    <Authors>Marin Atanasov</Authors>
     <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
-    <Copyright>Copyright 2015-2022</Copyright>
     <Description>Sample web application using an AppBrix app.</Description>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <PackageId>AppBrix.WebApp</PackageId>
     <PackageTags>AppBrix Web Application</PackageTags>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ServerGarbageCollection>true</ServerGarbageCollection>
-    <TargetFramework>net6.0</TargetFramework>
-    <Version>0.31.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
