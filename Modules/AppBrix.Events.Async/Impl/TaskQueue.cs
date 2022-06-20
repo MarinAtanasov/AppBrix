@@ -72,17 +72,23 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
         {
             for (var i = 0; i < this.handlers.Count; i++)
             {
+                Action<T>? handler = null;
                 try
                 {
-                    var handler = this.handlers[i];
+                    handler = this.handlers[i];
                     handler(args);
-
-                    // Check if the handler has unsubscribed itself.
-                    if (i < this.handlers.Count && !object.ReferenceEquals(handler, this.handlers[i]))
-                        i--;
                 }
-                catch (Exception)
+                catch (Exception) { }
+        
+                if (handler is not null && i < this.handlers.Count)
                 {
+                    try
+                    {
+                        // Check if the handler has unsubscribed itself.
+                        if (!object.ReferenceEquals(handler, this.handlers[i]))
+                            i--;
+                    }
+                    catch (Exception) { }
                 }
             }
         }

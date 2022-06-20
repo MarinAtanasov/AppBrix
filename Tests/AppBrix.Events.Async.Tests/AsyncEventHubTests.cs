@@ -182,7 +182,12 @@ public sealed class AsyncEventHubTests : TestsBase
 
         hub.Subscribe<IEvent>(_ => beforeHandlerCalled++);
         Action<IEvent> unsubscribingHandler = null;
-        unsubscribingHandler = _ => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); };
+        unsubscribingHandler = _ =>
+        {
+            unsubscribingHandlerCalled++;
+            hub.Unsubscribe(unsubscribingHandler!);
+            throw new Exception();
+        };
         hub.Subscribe(unsubscribingHandler);
         hub.Subscribe<IEvent>(_ => afterHandlerCalled++);
 

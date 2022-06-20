@@ -207,7 +207,11 @@ public sealed class EventHubTests : TestsBase
 
         var unsubscribingHandlerCalled = 0;
         Action<IEvent> unsubscribingHandler = null;
-        unsubscribingHandler = _ => { unsubscribingHandlerCalled++; hub.Unsubscribe(unsubscribingHandler); };
+        unsubscribingHandler = _ =>
+        {
+            unsubscribingHandlerCalled++;
+            hub.Unsubscribe(unsubscribingHandler!);
+        };
         hub.Subscribe(unsubscribingHandler);
 
         var afterHandlerCalled = 0;
