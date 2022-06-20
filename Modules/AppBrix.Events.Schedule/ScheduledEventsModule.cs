@@ -1,6 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
+using AppBrix.Events.Async;
 using AppBrix.Events.Schedule.Impl;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
@@ -20,7 +21,7 @@ public sealed class ScheduledEventsModule : ModuleBase
     /// Gets the types of the modules which are direct dependencies for the current module.
     /// This is used to determine the order in which the modules are loaded.
     /// </summary>
-    public override IEnumerable<Type> Dependencies => new[] { typeof(EventsModule), typeof(TimeModule) };
+    public override IEnumerable<Type> Dependencies => new[] { typeof(AsyncEventsModule), typeof(TimeModule) };
     #endregion
 
     #region Public and overriden methods

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
@@ -25,7 +26,8 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
             SingleReader = true,
             SingleWriter = false
         });
-        this.runner = this.Run();
+        this.cts = new CancellationTokenSource();
+        this.runner = this.Run(this.cts.Token);
     }
     #endregion
 
@@ -39,8 +41,10 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
         if (!this.isDisposed)
         {
             this.isDisposed = true;
+            this.cts?.Cancel();
+            this.cts = null;
             this.channel.Writer.Complete();
-            this.runner.Wait();
+            this.runner.Dispose();
             this.handlers.Clear();
         }
     }
@@ -64,10 +68,10 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
     #endregion
 
     #region Private methods
-    private async Task Run()
+    private async Task Run(CancellationToken token)
     {
         var reader = this.channel.Reader;
-        while (await reader.WaitToReadAsync().ConfigureAwait(false))
+        while (await reader.WaitToReadAsync(token).ConfigureAwait(false))
         while (reader.TryRead(out var args))
         {
             for (var i = 0; i < this.handlers.Count; i++)
@@ -96,6 +100,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
     #endregion
 
     #region Private fields and constants
+    private CancellationTokenSource? cts;
     private readonly Channel<T> channel;
     private readonly List<Action<T>> handlers = new List<Action<T>>();
     private readonly Task runner;

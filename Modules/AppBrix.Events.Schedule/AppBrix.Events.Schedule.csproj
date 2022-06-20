@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj" />
+    <ProjectReference Include="..\AppBrix.Events.Async\AppBrix.Events.Async.csproj" />
     <ProjectReference Include="..\AppBrix.Time\AppBrix.Time.csproj" />
   </ItemGroup>
 

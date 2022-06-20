@@ -55,16 +55,12 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     private void SubscribeInternal<T>(Action<T> handler) where T : IEvent
     {
         if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
-        {
-            ((ITaskQueue<T>)queueObject).Subscribe(handler);
-        }
+            ((TaskQueue<T>)queueObject).Subscribe(handler);
         else
-        {
             this.CreateTaskQueue<T>().Subscribe(handler);
-        }
     }
 
-    private ITaskQueue<T> CreateTaskQueue<T>() where T : IEvent
+    private TaskQueue<T> CreateTaskQueue<T>() where T : IEvent
     {
         var queue = new TaskQueue<T>();
         this.taskQueues[typeof(T)] = queue;
@@ -77,12 +73,10 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     {
         if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
         {
-            var queue = (ITaskQueue<T>)queueObject;
+            var queue = (TaskQueue<T>)queueObject;
             queue.Unsubscribe(handler);
             if (queue.Count == 0)
-            {
                 this.RemoveTaskQueue(typeof(T));
-            }
         }
     }
 
@@ -97,9 +91,7 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     private void RaiseEvent<T>(T args) where T : IEvent
     {
         if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
-        {
-            ((ITaskQueue<T>)queueObject).Enqueue(args);
-        }
+            ((TaskQueue<T>)queueObject).Enqueue(args);
     }
     #endregion
 

@@ -7,7 +7,7 @@ using System;
 
 namespace AppBrix.Events.Schedule.Impl;
 
-internal abstract class PriorityQueueItem
+internal abstract class PriorityQueueItem : IEvent
 {
     #region Properties
     public abstract object ScheduledEvent { get; }

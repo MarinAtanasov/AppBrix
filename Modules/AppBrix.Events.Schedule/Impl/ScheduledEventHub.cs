@@ -7,8 +7,8 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Services;
 using AppBrix.Lifecycle;
 using System;
-using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AppBrix.Events.Schedule.Impl;
 
@@ -19,22 +19,25 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     {
         this.app = context.App;
         this.config = this.app.ConfigService.GetScheduledEventsConfig();
-        var timeout = this.config.ExecutionCheck;
-        lock (this.queue)
-        {
-            this.executionTimer = new Timer(this.ExecuteReadyEvents, null, timeout, Timeout.InfiniteTimeSpan);
-        }
+        this.timer = new PeriodicTimer(this.config.ExecutionCheck);
+
+        this.app.GetAsyncEventHub().Subscribe<PriorityQueueItem>(this.PriorityQueueItemRaised);
+        this.cts = new CancellationTokenSource();
+        this.runner = this.Run(this.cts.Token);
     }
 
     public void Uninitialize()
     {
         lock (this.queue)
         {
-            this.executionTimer?.Dispose();
-            this.executionTimer = null;
+            this.cts?.Cancel();
+            this.cts = null;
+            this.timer.Dispose();
+            this.runner.Dispose();
             this.queue.Clear();
         }
 
+        this.app.GetAsyncEventHub().Unsubscribe<PriorityQueueItem>(this.PriorityQueueItemRaised);
         this.config = null;
         this.app = null;
     }
@@ -68,40 +71,40 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     #endregion
 
     #region Private methods
-    private void ExecuteReadyEvents(object? unused = null)
+    private void PriorityQueueItemRaised(PriorityQueueItem args) => args.Execute();
+
+    private async Task Run(CancellationToken token)
     {
-        List<PriorityQueueItem>? toExecute = null;
-
-        lock (this.queue)
+        while (await this.timer.WaitForNextTickAsync(token).ConfigureAwait(false))
         {
-            if (this.executionTimer is null)
-                return; // Unintialized
-
+            var eventHub = this.app.GetEventHub();
             var now = this.app.GetTime();
-            for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
+
+            lock (this.queue)
             {
-                toExecute ??= new List<PriorityQueueItem>();
-                toExecute.Add(args);
-                args.MoveToNextOccurrence(now);
-                if (now < args.Occurrence)
-                    this.queue.ReprioritizeHead();
-                else
-                    this.queue.Pop();
+                token.ThrowIfCancellationRequested(); // Unintialized
+                for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
+                {
+                    eventHub.Raise(args);
+                    args.MoveToNextOccurrence(now);
+                    if (now < args.Occurrence)
+                        this.queue.ReprioritizeHead();
+                    else
+                        this.queue.Pop();
+                }
             }
-
-            this.executionTimer.Change(this.config.ExecutionCheck, Timeout.InfiniteTimeSpan);
         }
-
-        toExecute?.ForEach(x => x.Execute());
     }
     #endregion
 
     #region Private fields and constants
     private readonly PriorityQueue queue = new PriorityQueue();
+    private CancellationTokenSource? cts;
     #nullable disable
     private IApp app;
     private ScheduledEventsConfig config;
-    private Timer executionTimer;
+    private PeriodicTimer timer;
+    private Task runner;
     #nullable restore
     #endregion
 }
