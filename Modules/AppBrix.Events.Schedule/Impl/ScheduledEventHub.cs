@@ -33,7 +33,6 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
             this.cts?.Cancel();
             this.cts = null;
             this.timer.Dispose();
-            this.runner.Dispose();
             this.queue.Clear();
         }
 

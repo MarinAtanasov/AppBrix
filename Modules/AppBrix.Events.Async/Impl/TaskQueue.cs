@@ -44,7 +44,6 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
             this.cts?.Cancel();
             this.cts = null;
             this.channel.Writer.Complete();
-            this.runner.Dispose();
             this.handlers.Clear();
         }
     }
