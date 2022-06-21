@@ -26,7 +26,7 @@ public sealed class FactoryTests : TestsBase
         var action = () => service.Register(factory);
         action.Should().Throw<ArgumentNullException>("factory cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterNullFactoryType()
     {
@@ -35,7 +35,7 @@ public sealed class FactoryTests : TestsBase
         var action = () => service.Register(factory, null);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterNullFactoryMethod()
     {
@@ -44,7 +44,7 @@ public sealed class FactoryTests : TestsBase
         var action = () => service.Register(factory, typeof(FactoryTests));
         action.Should().Throw<ArgumentNullException>("factory method cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterNullFactoryMethodType()
     {
@@ -53,7 +53,7 @@ public sealed class FactoryTests : TestsBase
         var action = () => service.Register(factory, null);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestFactoryNonRegisteredObject()
     {

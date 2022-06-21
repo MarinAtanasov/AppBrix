@@ -24,21 +24,21 @@ public sealed class AppTests
         var action = () => App.Create(null);
         action.Should().Throw<ArgumentNullException>("config service cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAppConfigCreateNullType()
     {
         var action = () => ModuleConfigElement.Create(null);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAppConfigCreateInvalidType()
     {
         var action = () => ModuleConfigElement.Create(typeof(object));
         action.Should().Throw<ArgumentException>("type must implement IModule");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetAllDependenciesExtensionNullModule()
     {
@@ -46,7 +46,7 @@ public sealed class AppTests
         var action = () => module.GetAllDependencies();
         action.Should().Throw<ArgumentNullException>("module cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSaveConfig()
     {

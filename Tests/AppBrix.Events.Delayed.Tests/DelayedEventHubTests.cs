@@ -51,7 +51,6 @@ public sealed class DelayedEventHubTests : TestsBase
         called.Should().Be(1, "event handler should be called exactly once");
     }
 
-    
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestNullArgumentRaiseDelayed()
     {
@@ -61,7 +60,6 @@ public sealed class DelayedEventHubTests : TestsBase
         action.Should().Throw<ArgumentNullException>();
     }
 
-    
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestEventDefaultDelayed()
     {

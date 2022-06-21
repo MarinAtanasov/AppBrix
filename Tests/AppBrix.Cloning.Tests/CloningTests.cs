@@ -28,14 +28,14 @@ public sealed class CloningTests : TestsBase
         var action = () => cloner.DeepCopy<object>(null);
         action.Should().ThrowExactly<ArgumentNullException>("parameter cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDeepCopyType()
     {
         var type = typeof(CloningTests);
         this.GetCloner().DeepCopy(type).Should().Be(type, "deep copy of type is the same type");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDeepCopyInteger()
     {
@@ -148,7 +148,7 @@ public sealed class CloningTests : TestsBase
         var action = () => cloner.ShallowCopy<object>(null);
         action.Should().ThrowExactly<ArgumentNullException>("parameter cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShallowCopyType()
     {
@@ -222,7 +222,7 @@ public sealed class CloningTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceShallowCopy() => TestUtils.TestPerformance(this.TestPerformanceShallowCopyInternal);
     #endregion
-    
+
     #region Private methods
     private ICloner GetCloner() => this.app.GetCloner();
 

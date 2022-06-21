@@ -82,7 +82,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
                     handler(args);
                 }
                 catch (Exception) { }
-        
+
                 if (handler is not null && i < this.handlers.Count)
                 {
                     try

@@ -19,7 +19,7 @@ public sealed class ConfigServiceTests
         var action = () => service.Get(null);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSaveNullConfig()
     {

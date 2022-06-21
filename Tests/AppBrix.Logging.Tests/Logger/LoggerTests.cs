@@ -53,7 +53,7 @@ public sealed class LoggerTests : TestsBase
         entries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
         entries[0].Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestLoggerLog()
     {
@@ -70,7 +70,7 @@ public sealed class LoggerTests : TestsBase
             expected = expectedLevel;
             this.app.Get<ILoggerProvider>().CreateLogger("test").Log(level, "");
         }
-        
+
         TestLogLevel(Contracts.LogLevel.Trace, LogLevel.Trace);
         TestLogLevel(Contracts.LogLevel.Debug, LogLevel.Debug);
         TestLogLevel(Contracts.LogLevel.Info, LogLevel.Information);

@@ -133,8 +133,8 @@ public sealed class MemoryCacheTests : TestsBase
         item.Should().Be(this, "returned item should be the same as the original");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
-        new Func<object>(() => cache.Get(key))
-            .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");
+        var func = () => cache.Get(key);
+        func.ShouldReturn(null, "the item shold have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -148,8 +148,8 @@ public sealed class MemoryCacheTests : TestsBase
         item.Should().Be(this, "returned item should be the same as the original");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
-        new Func<object>(() => cache.Get(key))
-            .ShouldReturn(null, TimeSpan.FromMilliseconds(10000), "the item shold have been removed from the cache");
+        var func = () => cache.Get(key);
+        func.ShouldReturn(null, "the item shold have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -164,7 +164,7 @@ public sealed class MemoryCacheTests : TestsBase
             disposed = true;
             throw new InvalidOperationException("Failed to dispose.");
         }
-        
+
         var cache = this.app.GetMemoryCache();
         this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
@@ -173,7 +173,8 @@ public sealed class MemoryCacheTests : TestsBase
         disposed.Should().BeFalse("the item should not have expired yet");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(10));
-        new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
+        var func = () => disposed;
+        func.ShouldReturn(true, "the item should have expired");
         item = cache.Get(key);
         item.Should().BeNull("the item should have been removed from the cache");
     }
@@ -202,7 +203,8 @@ public sealed class MemoryCacheTests : TestsBase
         }
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(5));
-        new Func<bool>(() => disposed).ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "the item should have expired");
+        var func = () => disposed;
+        func.ShouldReturn(true, "the item should have expired");
         item = cache.Get(key);
         item.Should().BeNull("the item should have been removed from the cache");
     }

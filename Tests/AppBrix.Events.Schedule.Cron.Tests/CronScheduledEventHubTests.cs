@@ -75,8 +75,8 @@ public sealed class CronScheduledEventHubTests : TestsBase
         funcs[2]().Should().BeFalse("third event should not be called immediately");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
-        funcs[0].ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "first event should have been raised");
-        funcs[1].ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "second event should have been raised");
+        funcs[0].ShouldReturn(true, "first event should have been raised");
+        funcs[1].ShouldReturn(true, "second event should have been raised");
         funcs[2]().Should().BeFalse("third event shouldn't be called yet");
     }
 

@@ -39,7 +39,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
         this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
         called.Should().BeFalse("event should not be called immediately");
-        func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
+        func.ShouldReturn(true, "event should have been raised");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -56,7 +56,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.Zero));
 
         var func = () => called[0];
-        func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "first event should have been raised");
+        func.ShouldReturn(true, "first event should have been raised");
         called[1].Should().BeTrue("second event should be raised");
         called[2].Should().BeFalse("third event should not be raised");
     }
@@ -80,7 +80,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         this.app.GetScheduledEventHub().Unschedule(scheduledEvent);
 
         var func = () => called[1];
-        func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "first event should have been raised");
+        func.ShouldReturn(true, "first event should have been raised");
         called[0].Should().BeFalse("first event should not be raised");
     }
 
@@ -100,7 +100,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         };
         schedule(weakReference);
 
-        func.ShouldReturn(true, TimeSpan.FromMilliseconds(10000), "event should have been raised");
+        func.ShouldReturn(true, "event should have been raised");
 
         GC.Collect();
         weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-reccuring events");
@@ -134,7 +134,7 @@ public sealed class ScheduledEventHubTests : TestsBase
     #region Private methods
     private WeakReference<ScheduledEventMock<EventMock>> GetEventMockWeakReference(int value) =>
         new WeakReference<ScheduledEventMock<EventMock>>(new ScheduledEventMock<EventMock>(new EventMock(value), TimeSpan.Zero));
-    
+
     private void TestPerformanceScheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
     {
         var hub = this.app.GetScheduledEventHub();

@@ -104,10 +104,10 @@ public sealed class WebServerTests
             new[] { "text/plain; charset=utf-8" },
             "the content type should be a utf-8 string"
         );
-        
+
         await webApp.StopAsync();
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostJson()
     {
@@ -159,7 +159,7 @@ public sealed class WebServerTests
 
         await webApp.StopAsync();
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostBytes()
     {

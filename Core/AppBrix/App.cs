@@ -20,7 +20,6 @@ public static class App
     /// <returns>The created app.</returns>
     public static IApp Create(IConfigService configService) => new DefaultApp(configService);
 
-
     /// <summary>
     /// Creates and starts a default application with a specified configuration service.
     /// </summary>
@@ -32,7 +31,6 @@ public static class App
         app.Start();
         return app;
     }
-
 
     /// <summary>
     /// Creates a default application with a specified configuration service.
@@ -54,7 +52,6 @@ public static class App
         modules.Add(mainModuleConfigElement);
         return App.Create(configService);
     }
-
 
     /// <summary>
     /// Creates and starts a default application with a specified configuration service.

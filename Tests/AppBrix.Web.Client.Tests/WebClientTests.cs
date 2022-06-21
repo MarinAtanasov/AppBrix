@@ -23,7 +23,7 @@ public sealed class WebClientTests : TestsBase
         var action = () => request.SetHeader(string.Empty);
         action.Should().Throw<ArgumentNullException>("header cannot be empty");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullMethod()
     {
@@ -31,7 +31,7 @@ public sealed class WebClientTests : TestsBase
         var action = () => request.SetMethod(string.Empty);
         action.Should().Throw<ArgumentNullException>("method cannot be empty");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullUrl()
     {

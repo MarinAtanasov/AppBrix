@@ -11,9 +11,9 @@ namespace AppBrix.Web.Server.Tests.Mocks;
 public sealed class EchoModel
 {
     public DateTime? DateTime { get; set; }
-    
+
     public TimeSpan ?TimeSpan { get; set; }
-    
+
     public int Value { get; set; }
 
     public Version Version { get; set; }

@@ -61,7 +61,7 @@ public static class CommonExtensions
     }
 
     /// <summary>
-    /// Constructs an object.    
+    /// Constructs an object.
     /// </summary>
     /// <typeparam name="T">The type in which the result should be casted</typeparam>
     /// <param name="type">The type of the object to be constructed.</param>

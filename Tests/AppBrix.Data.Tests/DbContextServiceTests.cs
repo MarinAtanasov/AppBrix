@@ -27,7 +27,7 @@ public sealed class DbContextServiceTests : TestsBase
         var action = () => service.Get(null);
         action.Should().Throw<ArgumentNullException>("type should not be null");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseConfigureDbContextEvent()
     {

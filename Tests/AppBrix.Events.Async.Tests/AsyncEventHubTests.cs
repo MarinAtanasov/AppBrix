@@ -31,9 +31,11 @@ public sealed class AsyncEventHubTests : TestsBase
             e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
             called++;
         });
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(1, "event handler should be called exactly once");
+
+        var func = () => called;
+        func.ShouldReturn(1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -47,9 +49,11 @@ public sealed class AsyncEventHubTests : TestsBase
             e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
             called++;
         });
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(1, "event handler should be called exactly once");
+
+        var func = () => called;
+        func.ShouldReturn(1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -63,9 +67,11 @@ public sealed class AsyncEventHubTests : TestsBase
             e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
             called++;
         });
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(1, "event handler should be called exactly once");
+
+        var func = () => called;
+        func.ShouldReturn(1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -74,7 +80,6 @@ public sealed class AsyncEventHubTests : TestsBase
         var hub = this.GetAsyncEventHub();
         var args = new EventMock(10);
         hub.Raise(args);
-        this.app.Stop();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -86,9 +91,11 @@ public sealed class AsyncEventHubTests : TestsBase
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Subscribe<EventMockChild>(handler);
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(1, "event handler should be called exactly once");
+
+        var func = () => called;
+        func.ShouldReturn(1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -100,9 +107,11 @@ public sealed class AsyncEventHubTests : TestsBase
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Subscribe(handler);
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(2, "event handler should be called exactly twice");
+
+        var func = () => called;
+        func.ShouldReturn(2, "event handler should be called exactly twice");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -113,10 +122,12 @@ public sealed class AsyncEventHubTests : TestsBase
         var called = 0;
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
+
         hub.Raise(args);
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(2, "event handler should be called exactly twice after the second raise");
+
+        var func = () => called;
+        func.ShouldReturn(2, "event handler should be called exactly twice after the second raise");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -128,9 +139,11 @@ public sealed class AsyncEventHubTests : TestsBase
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Unsubscribe(handler);
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(0, "event handler should not be called after the unsubscription");
+
+        var func = () => called;
+        func.ShouldReturn(0, "event handler should not be called after the unsubscription");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -141,9 +154,11 @@ public sealed class AsyncEventHubTests : TestsBase
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
+
         hub.Raise(args);
-        this.app.Stop();
-        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+
+        var func = () => called;
+        func.ShouldReturn(1, "event handler should be called exactly once after the first raise");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -193,11 +208,15 @@ public sealed class AsyncEventHubTests : TestsBase
 
         hub.Raise(args);
         hub.Raise(args);
-        this.app.Stop();
 
-        beforeHandlerCalled.Should().Be(2, "before event handler should be called exactly twice");
-        unsubscribingHandlerCalled.Should().Be(1, "unsubscribing event handler should not be called after the second raise since it has unsubscribed itself during the first");
-        afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
+        var beforeHandlerCalledFunc = () => beforeHandlerCalled;
+        beforeHandlerCalledFunc.ShouldReturn(2, "before event handler should be called exactly twice");
+
+        var unsubscribingHandlerCalledFunc = () => unsubscribingHandlerCalled;
+        unsubscribingHandlerCalledFunc.ShouldReturn(1, "unsubscribing event handler should not be called after the second raise since it has unsubscribed itself during the first");
+
+        var afterHandlerCalledFunc = () => afterHandlerCalled;
+        afterHandlerCalledFunc.ShouldReturn(2, "after event handler should be called exactly twice");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -220,11 +239,15 @@ public sealed class AsyncEventHubTests : TestsBase
 
         hub.Raise(args);
         hub.Raise(args);
-        this.app.Stop();
 
-        beforeHandlerCalled.Should().Be(2, "before event handler should be called exactly twice");
-        throwingHandlerCalled.Should().Be(2, "throwing event handler should be called exactly twice");
-        afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
+        var beforeHandlerCalledFunc = () => beforeHandlerCalled;
+        beforeHandlerCalledFunc.ShouldReturn(2, "before event handler should be called exactly twice");
+
+        var throwingHandlerCalledFunc = () => throwingHandlerCalled;
+        throwingHandlerCalledFunc.ShouldReturn(2, "throwing event handler should be called exactly twice");
+
+        var afterHandlerCalledFunc = () => afterHandlerCalled;
+        afterHandlerCalledFunc.ShouldReturn(2, "after event handler should be called exactly twice");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -239,7 +262,7 @@ public sealed class AsyncEventHubTests : TestsBase
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when subscribing to an event with subscribers");
         hub.Subscribe<EventMock>(_ => { });
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a second new event");
-        this.app.Stop();
+        this.app.Reinitialize();
         Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "threads should be disposed of on uninitialization");
     }
 
@@ -308,10 +331,14 @@ public sealed class AsyncEventHubTests : TestsBase
         {
             hub.Raise(args);
         }
-        this.app.Stop();
-        childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
-        interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
-        this.app.Start();
+
+        var childCalledFunc = () => childCalled;
+        childCalledFunc.ShouldReturn(calledCount, $"The child should be called exactly {calledCount} times");
+
+        var interfaceCalledFunc = () => interfaceCalled;
+        interfaceCalledFunc.ShouldReturn(calledCount, $"The interface should be called exactly {calledCount} times");
+
+        this.app.Reinitialize();
     }
     #endregion
 }

@@ -23,7 +23,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase
         Encoding.GetEncoding(encoding.BodyName).Should().BeSameAs(encoding, "provider should return encoding by body name");
         Encoding.GetEncoding(encoding.CodePage).Should().BeSameAs(encoding, "provider should return encoding by code page");
     }
-    
+
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestEncodingWrapper()
     {
