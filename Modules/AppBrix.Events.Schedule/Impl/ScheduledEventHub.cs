@@ -23,16 +23,16 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
 
         this.app.GetAsyncEventHub().Subscribe<PriorityQueueItem>(this.PriorityQueueItemRaised);
         this.cts = new CancellationTokenSource();
-        this.runner = this.Run(this.cts.Token);
+        _ = this.Run(this.cts.Token);
     }
 
     public void Uninitialize()
     {
         lock (this.queue)
         {
+            this.timer.Dispose();
             this.cts?.Cancel();
             this.cts = null;
-            this.timer.Dispose();
             this.queue.Clear();
         }
 
@@ -103,7 +103,6 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     private IApp app;
     private ScheduledEventsConfig config;
     private PeriodicTimer timer;
-    private Task runner;
     #nullable restore
     #endregion
 }

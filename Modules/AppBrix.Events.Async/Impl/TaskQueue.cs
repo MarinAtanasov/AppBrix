@@ -27,7 +27,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
             SingleWriter = false
         });
         this.cts = new CancellationTokenSource();
-        this.runner = this.Run(this.cts.Token);
+        _ = this.Run(this.cts.Token);
     }
     #endregion
 
@@ -41,9 +41,9 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
         if (!this.isDisposed)
         {
             this.isDisposed = true;
+            this.channel.Writer.Complete();
             this.cts?.Cancel();
             this.cts = null;
-            this.channel.Writer.Complete();
             this.handlers.Clear();
         }
     }
@@ -73,7 +73,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
         while (await reader.WaitToReadAsync(token).ConfigureAwait(false))
         while (reader.TryRead(out var args))
         {
-            for (var i = 0; i < this.handlers.Count; i++)
+            for (var i = 0; i < this.handlers.Count && !token.IsCancellationRequested; i++)
             {
                 Action<T>? handler = null;
                 try
@@ -102,7 +102,6 @@ internal sealed class TaskQueue<T> : ITaskQueue<T>
     private CancellationTokenSource? cts;
     private readonly Channel<T> channel;
     private readonly List<Action<T>> handlers = new List<Action<T>>();
-    private readonly Task runner;
     private bool isDisposed;
     #endregion
 }
