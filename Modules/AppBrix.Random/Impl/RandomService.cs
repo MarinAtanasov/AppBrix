@@ -53,7 +53,7 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
         if (items.Count == 0)
             return;
 
-        this.ShuffleInternal(items, this.GetRandom(seed));
+        this.Shuffle(items, this.GetRandom(seed));
     }
     #endregion
 
@@ -76,7 +76,7 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
         yield return items[0];
     }
 
-    private IList<T> ShuffleInternal<T>(IList<T> items, System.Random random)
+    private void Shuffle<T>(IList<T> items, System.Random random)
     {
         for (var i = items.Count - 1; i > 0; i--)
         {
@@ -85,7 +85,6 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
             items[i] = items[n];
             items[n] = temp;
         }
-        return items;
     }
     #endregion
 

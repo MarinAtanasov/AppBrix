@@ -41,15 +41,6 @@ internal sealed class Container : IContainer, IApplicationLifecycle
         if (type.IsValueType)
             throw new ArgumentException("Container does not support value types.");
 
-        this.RegisterInternal(obj, type);
-    }
-
-    public object Get(Type type) => this.objects[type];
-    #endregion
-
-    #region Private methods
-    private void RegisterInternal(object obj, Type type)
-    {
         for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
         {
             this.objects[baseType] = obj;
@@ -61,6 +52,8 @@ internal sealed class Container : IContainer, IApplicationLifecycle
             this.objects[interfaces[i]] = obj;
         }
     }
+
+    public object Get(Type type) => this.objects[type];
     #endregion
 
     #region Private fields and constants

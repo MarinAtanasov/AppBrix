@@ -85,14 +85,10 @@ public sealed class ConfigService : IConfigService
     {
         var stringed = this.provider.ReadConfig(type);
         if (string.IsNullOrEmpty(stringed))
-        {
             return null;
-        }
-        else
-        {
-            this.configStringed[type] = stringed;
-            return this.serializer.Deserialize(stringed, type);
-        }
+
+        this.configStringed[type] = stringed;
+        return this.serializer.Deserialize(stringed, type);
     }
 
     private void SaveInternal(IConfig config)
