@@ -7,6 +7,7 @@ using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppBrix.Events.Async.Impl;
 
@@ -31,7 +32,21 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
         if (handler is null)
             throw new ArgumentNullException(nameof(handler));
 
-        this.SubscribeInternal(handler);
+        if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
+            ((TaskQueue<T>)queueObject).Subscribe(handler);
+        else
+            this.CreateTaskQueue<T>().Subscribe(handler);
+    }
+
+    public void Subscribe<T>(Func<T, Task> handler) where T : IEvent
+    {
+        if (handler is null)
+            throw new ArgumentNullException(nameof(handler));
+
+        if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
+            ((TaskQueue<T>)queueObject).Subscribe(handler);
+        else
+            this.CreateTaskQueue<T>().Subscribe(handler);
     }
 
     public void Unsubscribe<T>(Action<T> handler) where T : IEvent
@@ -39,7 +54,27 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
         if (handler is null)
             throw new ArgumentNullException(nameof(handler));
 
-        this.UnsubscribeInternal(handler);
+        if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
+        {
+            var queue = (TaskQueue<T>)queueObject;
+            queue.Unsubscribe(handler);
+            if (queue.Count == 0)
+                this.RemoveTaskQueue(typeof(T));
+        }
+    }
+
+    public void Unsubscribe<T>(Func<T, Task> handler) where T : IEvent
+    {
+        if (handler is null)
+            throw new ArgumentNullException(nameof(handler));
+
+        if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
+        {
+            var queue = (TaskQueue<T>)queueObject;
+            queue.Unsubscribe(handler);
+            if (queue.Count == 0)
+                this.RemoveTaskQueue(typeof(T));
+        }
     }
 
     public void Raise(IEvent args)
@@ -52,14 +87,6 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     #endregion
 
     #region Private methods
-    private void SubscribeInternal<T>(Action<T> handler) where T : IEvent
-    {
-        if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
-            ((TaskQueue<T>)queueObject).Subscribe(handler);
-        else
-            this.CreateTaskQueue<T>().Subscribe(handler);
-    }
-
     private TaskQueue<T> CreateTaskQueue<T>() where T : IEvent
     {
         var queue = new TaskQueue<T>();
@@ -69,15 +96,10 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
         return queue;
     }
 
-    private void UnsubscribeInternal<T>(Action<T> handler) where T : IEvent
+    private void RaiseEvent<T>(T args) where T : IEvent
     {
         if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
-        {
-            var queue = (TaskQueue<T>)queueObject;
-            queue.Unsubscribe(handler);
-            if (queue.Count == 0)
-                this.RemoveTaskQueue(typeof(T));
-        }
+            ((TaskQueue<T>)queueObject).Enqueue(args);
     }
 
     private void RemoveTaskQueue(Type type)
@@ -86,12 +108,6 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
         this.taskQueueUnsubscribers.Remove(type);
         this.taskQueues[type].Dispose();
         this.taskQueues.Remove(type);
-    }
-
-    private void RaiseEvent<T>(T args) where T : IEvent
-    {
-        if (this.taskQueues.TryGetValue(typeof(T), out var queueObject))
-            ((TaskQueue<T>)queueObject).Enqueue(args);
     }
     #endregion
 

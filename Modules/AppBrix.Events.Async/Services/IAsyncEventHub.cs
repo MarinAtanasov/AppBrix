@@ -3,6 +3,7 @@
 
 using AppBrix.Events.Contracts;
 using System;
+using System.Threading.Tasks;
 
 namespace AppBrix.Events.Async.Services;
 
@@ -12,11 +13,18 @@ namespace AppBrix.Events.Async.Services;
 public interface IAsyncEventHub
 {
     /// <summary>
-    /// Subscribes the event handler to the event.
+    /// Subscribes a synchronous event handler to the event.
     /// </summary>
     /// <typeparam name="T">The event type.</typeparam>
     /// <param name="handler">The event handler. Required.</param>
     void Subscribe<T>(Action<T> handler) where T : IEvent;
+
+    /// <summary>
+    /// Subscribes an asynchronous event handler to the event.
+    /// </summary>
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="handler">The event handler. Required.</param>
+    void Subscribe<T>(Func<T, Task> handler) where T : IEvent;
 
     /// <summary>
     /// Unsubscribes the event handler from the event.
@@ -24,6 +32,13 @@ public interface IAsyncEventHub
     /// <typeparam name="T">The event type.</typeparam>
     /// <param name="handler">The event handler.</param>
     void Unsubscribe<T>(Action<T> handler) where T : IEvent;
+
+    /// <summary>
+    /// Unsubscribes the event handler from the event.
+    /// </summary>
+    /// <typeparam name="T">The event type.</typeparam>
+    /// <param name="handler">The event handler.</param>
+    void Unsubscribe<T>(Func<T, Task> handler) where T : IEvent;
 
     /// <summary>
     /// Raises the event and all of its base class and interface events.

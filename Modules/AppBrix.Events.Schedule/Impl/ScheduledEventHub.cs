@@ -76,15 +76,13 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     {
         while (await this.timer.WaitForNextTickAsync(token).ConfigureAwait(false))
         {
-            var eventHub = this.app.GetEventHub();
             var now = this.app.GetTime();
-
             lock (this.queue)
             {
                 token.ThrowIfCancellationRequested(); // Unintialized
                 for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
                 {
-                    eventHub.Raise(args);
+                    this.app.GetAsyncEventHub().Raise(args);
                     args.MoveToNextOccurrence(now);
                     if (now < args.Occurrence)
                         this.queue.ReprioritizeHead();

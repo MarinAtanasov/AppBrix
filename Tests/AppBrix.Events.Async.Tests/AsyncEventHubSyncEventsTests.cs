@@ -13,10 +13,10 @@ using Xunit;
 
 namespace AppBrix.Events.Async.Tests;
 
-public sealed class AsyncEventHubTests : TestsBase
+public sealed class AsyncEventHubSyncEventsTests : TestsBase
 {
     #region Setup and cleanup
-    public AsyncEventHubTests() : base(TestUtils.CreateTestApp<AsyncEventsModule>()) => this.app.Start();
+    public AsyncEventHubSyncEventsTests() : base(TestUtils.CreateTestApp<AsyncEventsModule>()) => this.app.Start();
     #endregion
 
     #region Tests
@@ -165,7 +165,7 @@ public sealed class AsyncEventHubTests : TestsBase
     public void TestNullArgumentSubscribe()
     {
         var hub = this.GetAsyncEventHub();
-        Action action = () => hub.Subscribe<IEvent>(null);
+        Action action = () => hub.Subscribe((Action<IEvent>)null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -173,7 +173,7 @@ public sealed class AsyncEventHubTests : TestsBase
     public void TestNullArgumentUnsubscribe()
     {
         var hub = this.GetAsyncEventHub();
-        Action action = () => hub.Unsubscribe<IEvent>(null);
+        Action action = () => hub.Unsubscribe((Action<IEvent>)null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -230,11 +230,12 @@ public sealed class AsyncEventHubTests : TestsBase
         var afterHandlerCalled = 0;
 
         hub.Subscribe<IEvent>(_ => beforeHandlerCalled++);
-        hub.Subscribe<IEvent>(_ =>
+        Action<IEvent> handler = _ =>
         {
             throwingHandlerCalled++;
             throw new InvalidOperationException("Exception during handler");
-        });
+        };
+        hub.Subscribe(handler);
         hub.Subscribe<IEvent>(_ => afterHandlerCalled++);
 
         hub.Raise(args);
