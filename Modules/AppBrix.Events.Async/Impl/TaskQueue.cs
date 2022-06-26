@@ -95,7 +95,7 @@ internal sealed class TaskQueue<T> : ITaskQueue<T> where T : IEvent
                 try
                 {
                     item = this.items[i];
-                    await item.Execute(args);
+                    await item.Execute(args).ConfigureAwait(false);
                 }
                 catch (Exception) { }
 

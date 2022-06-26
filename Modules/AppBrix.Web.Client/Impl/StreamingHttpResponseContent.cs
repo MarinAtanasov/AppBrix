@@ -69,8 +69,8 @@ internal sealed class StreamingHttpResponseContent : Stream, IDisposable
 
     public override async ValueTask DisposeAsync()
     {
-        await base.DisposeAsync();
-        await this.stream.DisposeAsync();
+        await base.DisposeAsync().ConfigureAwait(false);
+        await this.stream.DisposeAsync().ConfigureAwait(false);
         this.response.Dispose();
     }
 

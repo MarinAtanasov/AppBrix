@@ -131,7 +131,7 @@ internal sealed class HttpRequest : IHttpRequest
         if (this.httpMessageVersion is not null)
             message.Version = this.httpMessageVersion;
 
-        return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token);
+        return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
     }
 
     private void SetHeaders(System.Net.Http.Headers.HttpHeaders headers, IEnumerable<KeyValuePair<string, List<string>>> toAdd)

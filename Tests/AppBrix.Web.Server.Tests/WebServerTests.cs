@@ -49,7 +49,7 @@ public sealed class WebServerTests
         postResponse.StatusCode.Should().Be((int)HttpStatusCode.OK, "the POST request should return status OK");
         postResponse.Content.Should().Be(42, "the request should return the same integer that has been passed");
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -79,8 +79,8 @@ public sealed class WebServerTests
         response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
         response2.Content.Id.Should().Be(app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
 
-        await webApp2.StopAsync();
-        await webApp1.StopAsync();
+        await webApp2.StopAsync().ConfigureAwait(false);
+        await webApp1.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -105,7 +105,7 @@ public sealed class WebServerTests
             "the content type should be a utf-8 string"
         );
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -133,7 +133,7 @@ public sealed class WebServerTests
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.Content.Should().Be(model, "the response should echo the request");
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -157,7 +157,7 @@ public sealed class WebServerTests
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.Content.Should().Be(model, "the response should echo the request");
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -181,7 +181,7 @@ public sealed class WebServerTests
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.Content.Length.Should().BePositive("the response should echo the request");
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -206,7 +206,7 @@ public sealed class WebServerTests
             response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
         }
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -231,7 +231,7 @@ public sealed class WebServerTests
             response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
         }
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -244,7 +244,7 @@ public sealed class WebServerTests
 
         TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
 
-        await webApp.StopAsync();
+        await webApp.StopAsync().ConfigureAwait(false);
     }
     #endregion
 

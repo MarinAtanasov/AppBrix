@@ -258,17 +258,18 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestThreadManagement()
     {
-        var initialThreads = Process.GetCurrentProcess().Threads.Count;
+        var getThreads = () => Process.GetCurrentProcess().Threads.Count;
+        var initialThreads = getThreads();
         var hub = this.GetAsyncEventHub();
-        Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when getting the async event hub");
+        getThreads.ShouldReturn(initialThreads, "no threads should be created when getting the async event hub");
         hub.Subscribe<IEvent>(_ => Task.CompletedTask);
-        Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a new event");
+        getThreads.ShouldReturn(initialThreads, "no thread should be created when subscribing to a new event");
         hub.Subscribe<IEvent>(_ => Task.CompletedTask);
-        Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no threads should be created when subscribing to an event with subscribers");
+        getThreads.ShouldReturn(initialThreads, "no threads should be created when subscribing to an event with subscribers");
         hub.Subscribe<EventMock>(_ => Task.CompletedTask);
-        Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "no thread should be created when subscribing to a second new event");
+        getThreads.ShouldReturn(initialThreads, "no thread should be created when subscribing to a second new event");
         this.app.Reinitialize();
-        Process.GetCurrentProcess().Threads.Count.Should().Be(initialThreads, "threads should be disposed of on uninitialization");
+        getThreads.ShouldReturn(initialThreads, "threads should be disposed of on uninitialization");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
