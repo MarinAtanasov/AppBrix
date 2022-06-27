@@ -9,9 +9,9 @@ using System.Reflection;
 namespace AppBrix.Cloning.Impl;
 
 /// <summary>
-/// Default cloner used for shallow or deep copying.
+/// Default cloning service used for shallow or deep copying.
 /// </summary>
-internal sealed class Cloner : ICloner
+internal sealed class CloningService : ICloningService
 {
     #region ICloner implementation
     public T DeepCopy<T>(T obj)
@@ -30,7 +30,7 @@ internal sealed class Cloner : ICloner
         if (this.IsValueType(obj.GetType()))
             return obj;
 
-        return (T)Cloner.ShallowCopyMethod.Invoke(obj, null)!;
+        return (T)CloningService.ShallowCopyMethod.Invoke(obj, null)!;
     }
     #endregion
 

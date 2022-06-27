@@ -33,7 +33,7 @@ public sealed class CloningModule : ModuleBase
     protected override void Initialize(IInitializeContext context)
     {
         this.App.Container.Register(this);
-        this.App.Container.Register(this.cloner);
+        this.App.Container.Register(this.cloningService);
     }
 
     /// <summary>
@@ -46,6 +46,6 @@ public sealed class CloningModule : ModuleBase
     #endregion
 
     #region Private fields and constants
-    private readonly Cloner cloner = new Cloner();
+    private readonly CloningService cloningService = new CloningService();
     #endregion
 }

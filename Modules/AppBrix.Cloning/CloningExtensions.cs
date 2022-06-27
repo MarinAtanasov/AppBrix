@@ -11,9 +11,9 @@ namespace AppBrix;
 public static class CloningExtensions
 {
     /// <summary>
-    /// Gets the registered <see cref="ICloner"/>.
+    /// Gets the registered <see cref="ICloningService"/>.
     /// </summary>
     /// <param name="app">The current application.</param>
-    /// <returns>The registered <see cref="ICloner"/>.</returns>
-    public static ICloner GetCloner(this IApp app) => (ICloner)app.Get(typeof(ICloner));
+    /// <returns>The registered <see cref="ICloningService"/>.</returns>
+    public static ICloningService GetCloningService(this IApp app) => (ICloningService)app.Get(typeof(ICloningService));
 }

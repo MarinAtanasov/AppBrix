@@ -5,9 +5,9 @@
 namespace AppBrix.Cloning.Services;
 
 /// <summary>
-/// Creates deep or shallow copies of objects.
+/// Service that creates deep and shallow copies of objects.
 /// </summary>
-public interface ICloner
+public interface ICloningService
 {
     /// <summary>
     /// Creates a deep copy of the specified object.
