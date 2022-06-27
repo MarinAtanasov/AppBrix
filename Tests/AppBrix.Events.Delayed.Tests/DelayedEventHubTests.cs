@@ -20,7 +20,50 @@ public sealed class DelayedEventHubTests : TestsBase
 
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestEventDefaultImmediate()
+    public void TestSubscribeNullHandler()
+    {
+        var hub = this.app.GetDelayedEventHub();
+        Action action = () => hub.Subscribe<EventMock>(null);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestUnsubscribeNullHandler()
+    {
+        var hub = this.app.GetDelayedEventHub();
+        Action action = () => hub.Unsubscribe<EventMock>(null);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestUnsubscribeImmediate()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.app.GetDelayedEventHub();
+        var args = new EventMock(10);
+        var called = 0;
+
+        Action<EventMock> handler = _ => called++;
+        hub.Subscribe(handler);
+        hub.Raise(args);
+        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+
+        hub.Unsubscribe(handler);
+        hub.Raise(args);
+        called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRaiseImmediateNullArgument()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.app.GetDelayedEventHub();
+        Action action = () => hub.RaiseImmediate(null);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRaiseImmediateDefaultEvent()
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.app.GetDelayedEventHub();
@@ -36,7 +79,7 @@ public sealed class DelayedEventHubTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestEventImmediate()
+    public void TestRaiseImmediate()
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.app.GetDelayedEventHub();
@@ -49,55 +92,6 @@ public sealed class DelayedEventHubTests : TestsBase
         });
         hub.RaiseImmediate(args);
         called.Should().Be(1, "event handler should be called exactly once");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestNullArgumentRaiseDelayed()
-    {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
-        Action action = () => hub.RaiseDelayed(null);
-        action.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestEventDefaultDelayed()
-    {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
-        var args = new EventMock(10);
-        var called = 0;
-        hub.Subscribe<EventMock>(e =>
-        {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
-            called++;
-        });
-        hub.Raise(args);
-        called.Should().Be(0, "event handler should not be called before flush");
-        hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after flush");
-        hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after second flush");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestEventDelayed()
-    {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
-        var args = new EventMock(10);
-        var called = 0;
-        hub.Subscribe<EventMock>(e =>
-        {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
-            called++;
-        });
-        hub.RaiseDelayed(args);
-        called.Should().Be(0, "event handler should not be called before flush");
-        hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after flush");
-        hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after second flush");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -118,6 +112,55 @@ public sealed class DelayedEventHubTests : TestsBase
         hub.Raise(args);
         hub.Flush();
         called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRaiseDelayedNullArgument()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.app.GetDelayedEventHub();
+        Action action = () => hub.RaiseDelayed(null);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRaiseDelayedDefaultEvent()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.app.GetDelayedEventHub();
+        var args = new EventMock(10);
+        var called = 0;
+        hub.Subscribe<EventMock>(e =>
+        {
+            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            called++;
+        });
+        hub.Raise(args);
+        called.Should().Be(0, "event handler should not be called before flush");
+        hub.Flush();
+        called.Should().Be(1, "event handler should be called exactly once after flush");
+        hub.Flush();
+        called.Should().Be(1, "event handler should be called exactly once after second flush");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestRaiseDelayed()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.app.GetDelayedEventHub();
+        var args = new EventMock(10);
+        var called = 0;
+        hub.Subscribe<EventMock>(e =>
+        {
+            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            called++;
+        });
+        hub.RaiseDelayed(args);
+        called.Should().Be(0, "event handler should not be called before flush");
+        hub.Flush();
+        called.Should().Be(1, "event handler should be called exactly once after flush");
+        hub.Flush();
+        called.Should().Be(1, "event handler should be called exactly once after second flush");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

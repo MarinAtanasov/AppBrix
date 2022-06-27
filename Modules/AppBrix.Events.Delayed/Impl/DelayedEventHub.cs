@@ -49,9 +49,22 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
     #endregion
 
     #region IEventHub implementation
-    public void Subscribe<T>(Action<T> handler) where T : IEvent => this.EventHub.Subscribe(handler);
 
-    public void Unsubscribe<T>(Action<T> handler) where T : IEvent => this.EventHub.Unsubscribe(handler);
+    public void Subscribe<T>(Action<T> handler) where T : IEvent
+    {
+        if (handler is null)
+            throw new ArgumentNullException(nameof(handler));
+
+        this.EventHub.Subscribe(handler);
+    }
+
+    public void Unsubscribe<T>(Action<T> handler) where T : IEvent
+    {
+        if (handler is null)
+            throw new ArgumentNullException(nameof(handler));
+
+        this.EventHub.Unsubscribe(handler);
+    }
 
     public void Raise(IEvent args)
     {
@@ -90,7 +103,14 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
         this.channel.Writer.TryWrite(args);
     }
 
-    public void RaiseImmediate(IEvent args) => this.EventHub.Raise(args);
+    public void RaiseImmediate(IEvent args)
+    {
+        if (args is null)
+            throw new ArgumentNullException(nameof(args));
+
+        this.EventHub.Raise(args);
+    }
+
     #endregion
 
     #region Private fields and constants
