@@ -45,7 +45,7 @@ The tests are using xUnit.
 Packaging and publishing of a new version of all projects can be done using PowerShell.
 It requires Nuget CLI to be set up locally with account API key.
 ```Powershell
-./Publish.ps1 1.0.0
+./Publish.ps1
 ```
 
 ## Sample Applications

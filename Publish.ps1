@@ -1,4 +1,5 @@
-param([String]$Version="0.0.0");
+[xml]$Properties = Get-Content Directory.Build.props;
+$Version = $Properties.Project.PropertyGroup.Version;
 
 ForEach ($category in "Core", "Modules", "Bundles")
 {
