@@ -13,11 +13,11 @@ internal interface IEventsWrapper
 
 internal interface IEventsWrapper<out T> : IEventsWrapper where T : IEvent
 {
-    public bool IsEmpty { get; }
+    bool IsEmpty { get; }
 
-    public void Subscribe(Action<T> handler);
+    void Subscribe(Action<T> handler);
     
-    public void Unsubscribe(Action<T> handler);
+    void Unsubscribe(Action<T> handler);
 }
 
 internal sealed class EventsWrapper<T> : IEventsWrapper<T> where T : IEvent
