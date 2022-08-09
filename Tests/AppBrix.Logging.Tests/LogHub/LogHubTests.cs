@@ -194,13 +194,14 @@ public sealed class LogHubTests : TestsBase
     #region Private methods
     private void TestPerformanceLoggingInternal()
     {
-        var message = "Test message";
+        const int repeat = 10000;
+        const string message = "Test message";
         var error = new ArgumentException("Test error");
         var called = 0;
-        var repeat = 8000;
-        void handler(ILogEntry x) { called++; }
-        this.app.GetEventHub().Subscribe((Action<ILogEntry>)handler);
         var logHub = this.app.GetLogHub();
+
+        void Handler(ILogEntry x) { called++; }
+        this.app.GetEventHub().Subscribe((Action<ILogEntry>)Handler);
         for (var i = 0; i < repeat; i++)
         {
             logHub.Critical(message, error);
@@ -210,7 +211,9 @@ public sealed class LogHubTests : TestsBase
             logHub.Trace(message);
             logHub.Warning(message, error);
         }
+
         called.Should().Be(repeat * 6, "the event should have been called");
+
         this.app.Reinitialize();
     }
     #endregion

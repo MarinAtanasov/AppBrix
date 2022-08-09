@@ -138,7 +138,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 30000));
+        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 50000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -146,7 +146,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 25000));
+        TestUtils.TestPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 40000));
     }
     #endregion
 

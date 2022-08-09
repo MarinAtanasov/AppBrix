@@ -283,9 +283,10 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase
 
     private void TestPerformanceEventsSubscribeInternal()
     {
+        const int calledCount = 100000;
         var hub = this.GetAsyncEventHub();
-        var calledCount = 100000;
         var handlers = new List<Action<EventMockChild>>(calledCount);
+
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
@@ -295,20 +296,21 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase
         {
             hub.Subscribe(handlers[i]);
         }
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsUnsubscribeInternal()
     {
+        const int calledCount = 60000;
         var hub = this.GetAsyncEventHub();
-        var calledCount = 60000;
         var handlers = new List<Action<EventMockChild>>(calledCount);
+
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
             handlers.Add(_ => j++);
         }
-
         for (var i = 0; i < handlers.Count; i++)
         {
             hub.Subscribe(handlers[i]);
@@ -317,18 +319,20 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase
         {
             hub.Unsubscribe(handlers[i]);
         }
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseInternal()
     {
+        const int calledCount = 15000;
         var hub = this.GetAsyncEventHub();
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
+
         hub.Subscribe<EventMockChild>(_ => childCalled++);
         hub.Subscribe<IEvent>(_ => interfaceCalled++);
-        var calledCount = 15000;
         for (var i = 0; i < calledCount; i++)
         {
             hub.Raise(args);
@@ -336,7 +340,6 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase
 
         var childCalledFunc = () => childCalled;
         childCalledFunc.ShouldReturn(calledCount, $"The child should be called exactly {calledCount} times");
-
         var interfaceCalledFunc = () => interfaceCalled;
         interfaceCalledFunc.ShouldReturn(calledCount, $"The interface should be called exactly {calledCount} times");
 

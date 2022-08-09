@@ -216,8 +216,9 @@ public sealed class MemoryCacheTests : TestsBase
     #region Private methods
     private void TestPerformanceMemoryCacheInternal()
     {
+        const int items = 750;
         var cache = this.app.GetMemoryCache();
-        var items = 750;
+
         for (var i = 0; i < items; i++)
         {
             cache.Set(i.ToString(), i);

@@ -179,9 +179,10 @@ public sealed class DelayedEventHubTests : TestsBase
     #region Private methods
     private void TestPerformanceEventsSubscribeInternal()
     {
+        const int calledCount = 80000;
         var hub = this.app.GetDelayedEventHub();
-        var calledCount = 100000;
         var handlers = new List<Action<EventMockChild>>(calledCount);
+
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
@@ -191,14 +192,16 @@ public sealed class DelayedEventHubTests : TestsBase
         {
             hub.Subscribe(handlers[i]);
         }
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsUnsubscribeInternal()
     {
+        const int calledCount = 3000;
         var hub = this.app.GetDelayedEventHub();
-        var calledCount = 75000;
         var handlers = new List<Action<EventMockChild>>(calledCount);
+
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
@@ -212,46 +215,53 @@ public sealed class DelayedEventHubTests : TestsBase
         {
             hub.Unsubscribe(handlers[i]);
         }
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseImmediateInternal()
     {
+        const int calledCount = 100000;
         var hub = this.app.GetDelayedEventHub();
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
+
         hub.Subscribe<EventMockChild>(_ => childCalled++);
         hub.Subscribe<IEvent>(_ => interfaceCalled++);
-        var calledCount = 80000;
         for (var i = 0; i < calledCount; i++)
         {
             hub.Raise(args);
         }
+
         childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
         interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseDelayedInternal()
     {
+        const int calledCount = 80000;
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.app.GetDelayedEventHub();
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
+
         hub.Subscribe<EventMockChild>(_ => childCalled++);
         hub.Subscribe<IEvent>(_ => interfaceCalled++);
-        var calledCount = 75000;
         for (var i = 0; i < calledCount; i++)
         {
             hub.Raise(args);
         }
+
         childCalled.Should().Be(0, "The child should not be called before flush");
         interfaceCalled.Should().Be(0, "The interface should not be called before flush");
         hub.Flush();
         childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
         interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
+
         this.app.Reinitialize();
     }
     #endregion

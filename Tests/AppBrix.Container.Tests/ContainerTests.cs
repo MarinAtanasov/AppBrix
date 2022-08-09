@@ -122,6 +122,7 @@ public sealed class ContainerTests : TestsBase
     private void TestPerformanceContainerInternal()
     {
         var container = this.GetContainer();
+
         for (var i = 0; i < 1000; i++)
         {
             container.Register(new ChildMock());
@@ -132,6 +133,7 @@ public sealed class ContainerTests : TestsBase
             container.Get(typeof(ParentMock));
             container.Get(typeof(IContainer));
         }
+
         this.app.Reinitialize();
     }
     #endregion

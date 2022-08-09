@@ -112,7 +112,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
         var time = this.app.GetTime().AddHours(1);
-        var scheduledEvents = Enumerable.Range(0, 50000)
+        var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
         TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));
@@ -124,7 +124,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
         var time = this.app.GetTime().AddHours(1);
-        var scheduledEvents = Enumerable.Range(0, 50000)
+        var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
         TestUtils.TestPerformance(() => this.TestPerformanceUnscheduleInternal(scheduledEvents));

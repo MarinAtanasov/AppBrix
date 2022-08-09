@@ -119,7 +119,6 @@ public sealed class TimeServiceTests : TestsBase
         var utcTime = DateTime.UtcNow;
         var localTime = utcTime.ToLocalTime();
         var timeService = this.app.GetTimeService();
-
         for (var i = 0; i < 100000; i++)
         {
             timeService.ToAppTime(utcTime);
@@ -131,7 +130,6 @@ public sealed class TimeServiceTests : TestsBase
     {
         var time = DateTime.UtcNow;
         var timeService = this.app.GetTimeService();
-
         for (var i = 0; i < 15000; i++)
         {
             timeService.ToDateTime(timeService.ToString(time));

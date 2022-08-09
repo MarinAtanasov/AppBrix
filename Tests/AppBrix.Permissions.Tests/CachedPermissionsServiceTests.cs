@@ -58,7 +58,7 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
     private void TestPerformanceHasPermissionInternal()
     {
         var service = this.app.GetPermissionsService();
-        for (var i = 0; i < 100000; i++)
+        for (var i = 0; i < 120000; i++)
         {
             service.HasPermission("a", "p");
             service.HasPermission("a", "p1");

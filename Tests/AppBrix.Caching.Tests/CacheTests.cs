@@ -69,13 +69,14 @@ public sealed class CacheTests : TestsBase
     #region Private methods
     private void TestPerformanceCacheInternal()
     {
+        const int items = 2000;
+        const int gets = items * 10;
         var cache = this.app.GetCache();
-        var items = 2000;
+
         for (var i = 0; i < items; i++)
         {
             cache.Set(i.ToString(), i).GetAwaiter().GetResult();
         }
-        var gets = items * 10;
         for (var i = 0; i < gets; i++)
         {
             var itemId = i % items;

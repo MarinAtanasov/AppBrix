@@ -108,7 +108,7 @@ public sealed class CronScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 3000));
+        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -124,10 +124,12 @@ public sealed class CronScheduledEventHubTests : TestsBase
     private void TestPerformanceScheduleInternal(EventMock eventMock, int repeats)
     {
         var hub = this.app.GetCronScheduledEventHub();
+
         for (var i = 0; i < repeats; i++)
         {
             hub.Schedule(eventMock, CronScheduledEventHubTests.EveryHour);
         }
+
         this.app.Reinitialize();
     }
 
@@ -135,6 +137,7 @@ public sealed class CronScheduledEventHubTests : TestsBase
     {
         var hub = this.app.GetCronScheduledEventHub();
         var scheduledEvents = new List<IScheduledEvent<EventMock>>(repeats);
+
         for (var i = 0; i < repeats; i++)
         {
             scheduledEvents.Add(hub.Schedule(eventMock, CronScheduledEventHubTests.EveryHour));

@@ -244,9 +244,10 @@ public sealed class EventHubTests : TestsBase
 
     private void TestPerformanceEventsSubscribeInternal()
     {
+        const int calledCount = 50000;
         var hub = this.GetEventHub();
-        var calledCount = 100000;
         var handlers = new List<Action<EventMockChild>>(calledCount);
+
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
@@ -256,14 +257,16 @@ public sealed class EventHubTests : TestsBase
         {
             hub.Subscribe(handlers[i]);
         }
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsUnsubscribeInternal()
     {
+        const int calledCount = 2500;
         var hub = this.GetEventHub();
-        var calledCount = 50000;
         var handlers = new List<Action<EventMockChild>>(calledCount);
+
         for (var i = 0; i < calledCount; i++)
         {
             var j = i;
@@ -277,24 +280,32 @@ public sealed class EventHubTests : TestsBase
         {
             hub.Unsubscribe(handlers[i]);
         }
+
         this.app.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseInternal()
     {
+        const int subscribers = 10;
+        const int calledCount = 70000;
         var hub = this.GetEventHub();
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
-        hub.Subscribe<EventMockChild>(_ => childCalled++);
-        hub.Subscribe<IEvent>(_ => interfaceCalled++);
-        var calledCount = 100000;
+
+        for (var i = 0; i < subscribers; i++)
+        {
+            hub.Subscribe<EventMockChild>(_ => childCalled++);
+            hub.Subscribe<IEvent>(_ => interfaceCalled++);
+        }
         for (var i = 0; i < calledCount; i++)
         {
             hub.Raise(args);
         }
-        childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
-        interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
+
+        childCalled.Should().Be(calledCount * subscribers, "The child should be called exactly {0} times", calledCount * subscribers);
+        interfaceCalled.Should().Be(calledCount * subscribers, "The interface should be called exactly {0} times", calledCount * subscribers);
+
         this.app.Reinitialize();
     }
     #endregion

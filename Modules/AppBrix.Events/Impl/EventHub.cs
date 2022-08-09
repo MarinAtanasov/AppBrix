@@ -30,9 +30,9 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
 
         var type = typeof(T);
         if (!this.subscriptions.TryGetValue(type, out var handlers))
-            this.subscriptions[type] = handlers = new List<EventWrapper>();
+            this.subscriptions[type] = handlers = new EventsWrapper<T>();
 
-        handlers.Add(new EventWrapper<T>(handler));
+        ((IEventsWrapper<T>)handlers).Subscribe(handler);
     }
 
     public void Unsubscribe<T>(Action<T> handler) where T : IEvent
@@ -40,17 +40,12 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
         if (handler is null)
             throw new ArgumentNullException(nameof(handler));
 
-        if (this.subscriptions.TryGetValue(typeof(T), out var handlers))
+        var type = typeof(T);
+        if (this.subscriptions.TryGetValue(type, out var h) && h is IEventsWrapper<T> handlers)
         {
-            // Optimize for unsubscribing the last element since this is the most common scenario.
-            for (var i = handlers.Count - 1; i >= 0; i--)
-            {
-                if (handlers[i].Handler.Equals(handler))
-                {
-                    handlers.RemoveAt(i);
-                    break;
-                }
-            }
+            handlers.Unsubscribe(handler);
+            if (handlers.IsEmpty)
+                this.subscriptions.Remove(type);
         }
     }
 
@@ -77,21 +72,11 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
     private void RaiseEvent(IEvent args, Type eventType)
     {
         if (this.subscriptions.TryGetValue(eventType, out var handlers))
-        {
-            for (var i = 0; i < handlers.Count; i++)
-            {
-                var handler = handlers[i];
-                handler.Execute(args);
-
-                // Check if the handler has unsubscribed itself.
-                if (i < handlers.Count && !object.ReferenceEquals(handler, handlers[i]))
-                    i--;
-            }
-        }
+            handlers.Execute(args);
     }
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<Type, List<EventWrapper>> subscriptions = new Dictionary<Type, List<EventWrapper>>();
+    private readonly Dictionary<Type, IEventsWrapper> subscriptions = new Dictionary<Type, IEventsWrapper>();
     #endregion
 }
