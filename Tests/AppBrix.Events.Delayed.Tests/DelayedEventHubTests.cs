@@ -95,6 +95,20 @@ public sealed class DelayedEventHubTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestHandlerThrowingExceptionImmediate()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.app.GetDelayedEventHub();
+        var called = 0;
+        hub.Subscribe<EventMock>(x => called++);
+        hub.Subscribe<EventMock>(x => throw new InvalidOperationException());
+        hub.Subscribe<EventMock>(x => called++);
+        Action action = () => hub.RaiseImmediate(new EventMock(5));
+        action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
+        called.Should().Be(1, "the handler after the failing one shouldn't be called");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnsubscribeDelayed()
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
@@ -161,6 +175,21 @@ public sealed class DelayedEventHubTests : TestsBase
         called.Should().Be(1, "event handler should be called exactly once after flush");
         hub.Flush();
         called.Should().Be(1, "event handler should be called exactly once after second flush");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestHandlerThrowingExceptionDelayed()
+    {
+        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.app.GetDelayedEventHub();
+        var called = 0;
+        hub.Subscribe<EventMock>(x => called++);
+        hub.Subscribe<EventMock>(x => throw new InvalidOperationException());
+        hub.Subscribe<EventMock>(x => called++);
+        hub.RaiseDelayed(new EventMock(5));
+        Action action = () => hub.Flush();
+        action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
+        called.Should().Be(1, "the handler after the failing one shouldn't be called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
