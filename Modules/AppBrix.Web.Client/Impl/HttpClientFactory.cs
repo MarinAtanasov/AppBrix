@@ -13,7 +13,11 @@ internal sealed class HttpClientFactory : IHttpClientFactory, IApplicationLifecy
     {
         this.app = context.App;
         var config = this.app.ConfigService.GetWebClientConfig();
-        this.client = new HttpClient(new HttpClientHandler { MaxConnectionsPerServer = config.MaxConnectionsPerServer }, true)
+        this.client = new HttpClient(new SocketsHttpHandler
+        {
+            MaxConnectionsPerServer = config.MaxConnectionsPerServer,
+            PooledConnectionLifetime = config.PooledConnectionLifetime
+        }, true)
         {
             Timeout = config.RequestTimeout
         };

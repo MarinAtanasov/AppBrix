@@ -18,7 +18,8 @@ public sealed class WebClientConfig : IConfig
     public WebClientConfig()
     {
         this.MaxConnectionsPerServer = 128;
-        this.RequestTimeout = TimeSpan.FromMinutes(5);
+        this.PooledConnectionLifetime = TimeSpan.FromMinutes(2);
+        this.RequestTimeout = TimeSpan.FromSeconds(100);
     }
     #endregion
 
@@ -27,6 +28,11 @@ public sealed class WebClientConfig : IConfig
     /// Gets or sets the maximum connections per server.
     /// </summary>
     public int MaxConnectionsPerServer { get; set; }
+
+    /// <summary>
+    /// Gets or sets how long a connection can be in the pool to be considered reusable.
+    /// </summary>
+    public TimeSpan PooledConnectionLifetime { get; set; }
 
     /// <summary>
     /// Gets or sets the timeout used when making HTTP requests.
