@@ -8,7 +8,6 @@ using AppBrix.Time;
 using AppBrix.Web.Client.Impl;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -37,13 +36,6 @@ public sealed class WebClientModule : ModuleBase
     {
         this.App.Container.Register(this);
 
-        var config = this.App.ConfigService.GetWebClientConfig();
-        this.client = new HttpClient(new HttpClientHandler { MaxConnectionsPerServer = config.MaxConnectionsPerServer }, true)
-        {
-            Timeout = config.RequestTimeout
-        };
-        this.App.Container.Register(this.client);
-
         this.httpClientFactory.Initialize(context);
         this.App.Container.Register(this.httpClientFactory);
         this.App.GetFactoryService().Register(this.CreateRequest);
@@ -64,8 +56,6 @@ public sealed class WebClientModule : ModuleBase
     {
         this.jsonSerializerOptions = null;
         this.httpClientFactory.Uninitialize();
-        this.client?.Dispose();
-        this.client = null;
     }
     #endregion
 
@@ -75,7 +65,6 @@ public sealed class WebClientModule : ModuleBase
 
     #region Private fields and constants
     private readonly HttpClientFactory httpClientFactory = new HttpClientFactory();
-    private HttpClient? client;
     private JsonSerializerOptions? jsonSerializerOptions;
     #endregion
 }
