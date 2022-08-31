@@ -40,7 +40,7 @@ public interface ILogEntry : IEvent
     /// <summary>
     /// Gets the name of the file of the caller.
     /// </summary>
-    string CallerFileName { get; }
+    ReadOnlySpan<char> CallerFileName { get; }
 
     /// <summary>
     /// Gets the member name of the caller.

@@ -194,7 +194,7 @@ public sealed class LogHubTests : TestsBase
     #region Private methods
     private void TestPerformanceLoggingInternal()
     {
-        const int repeat = 10000;
+        const int repeat = 7500;
         const string message = "Test message";
         var error = new ArgumentException("Test error");
         var called = 0;

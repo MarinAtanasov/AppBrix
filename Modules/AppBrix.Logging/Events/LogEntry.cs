@@ -3,9 +3,6 @@
 
 using AppBrix.Logging.Contracts;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace AppBrix.Logging.Events;
@@ -25,6 +22,15 @@ internal sealed class LogEntry : ILogEntry
         this.CallerLineNumber = callerLineNumber;
         this.ThreadId = Environment.CurrentManagedThreadId;
         this.Created = created;
+
+        for (var i = this.CallerFile.Length - 2; i >= 0; i--)
+        {
+            if (this.CallerFile[i] is '/' or '\\')
+            {
+                this.callerFileNameIndex = i + 1;
+                break;
+            }
+        }
     }
     #endregion
 
@@ -33,7 +39,7 @@ internal sealed class LogEntry : ILogEntry
 
     public string CallerFile { get; }
 
-    public string CallerFileName => this.CallerFile.Split(LogEntry.DirectorySeparatorChars, StringSplitOptions.RemoveEmptyEntries)[^1];
+    public ReadOnlySpan<char> CallerFileName => this.CallerFile.AsSpan(this.callerFileNameIndex);
 
     public string CallerMember { get; }
 
@@ -81,7 +87,7 @@ internal sealed class LogEntry : ILogEntry
     #region Private fields and constants
     private const string Separator = " | ";
     private const char LineNumberSeparator = ':';
-    private static readonly char[] DirectorySeparatorChars = new HashSet<char> { '/', '\\', Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.ToArray();
     private readonly IApp app;
+    private readonly int callerFileNameIndex;
     #endregion
 }
