@@ -33,9 +33,9 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         if (string.IsNullOrEmpty(parent))
             throw new ArgumentNullException(nameof(parent));
         if (role == parent)
-            throw new InvalidOperationException($"Trying to create circular dependency between {role} and {parent}.");
-        if (this.GetAllParents(parent).Contains(role))
-            throw new InvalidOperationException($"Trying to create circular dependency between {role} and {parent}.");
+            throw new InvalidOperationException($"Role cannot have itself as a parent: {role}.");
+        if (this.HasParent(parent, role))
+            throw new InvalidOperationException($"Trying to create a circular dependency between {role} and {parent}.");
 
         this.parents.AddValue(role, parent);
         this.children.AddValue(parent, role);
@@ -129,8 +129,19 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
     #endregion
 
     #region Private methods
-    private IEnumerable<string> GetAllParents(string role) => this.parents.TryGetValue(role, out var roleParents) ?
-        roleParents.Concat(roleParents.SelectMany(this.GetAllParents)) : Array.Empty<string>();
+    private bool HasParent(string role, string parent)
+    {
+        if (this.parents.TryGetValue(role, out var roleParents))
+        {
+            foreach (var roleParent in roleParents)
+            {
+                if (roleParent == parent || this.HasParent(roleParent, parent))
+                    return true;
+            }
+        }
+
+        return false;
+    }
 
     private bool HasPermissionInternal(string role, string permission) =>
         !(this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission)) && (
