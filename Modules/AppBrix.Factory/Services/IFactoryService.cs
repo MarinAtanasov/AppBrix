@@ -74,7 +74,7 @@ public interface IFactoryService
     /// </summary>
     /// <typeparam name="T">The type of the object to be returned.</typeparam>
     /// <returns>An instance of an object of the specified type.</returns>
-    IFactory<T>? GetFactory<T>() where T : class => (IFactory<T>)this.GetFactory(typeof(T))!;
+    IFactory<T>? GetFactory<T>() where T : class => (IFactory<T>?)this.GetFactory(typeof(T));
 
     /// <summary>
     /// Returns the registered factory for the specified type.

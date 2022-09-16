@@ -9,10 +9,6 @@ using System.Collections.Generic;
 
 namespace AppBrix.Factory.Impl;
 
-/// <summary>
-/// Default factory which will execute the default constructor
-/// unless a different method has been registered.
-/// </summary>
 internal sealed class FactoryService : IFactoryService, IApplicationLifecycle
 {
     #region IApplicationLifecycle implementation
