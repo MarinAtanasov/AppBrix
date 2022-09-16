@@ -23,7 +23,7 @@ internal sealed class StringDistanceService : IStringDistanceService
         if (left == right)
             return 0;
 
-        this.GetMinMaxCharacters(left, right, out var minChar, out var maxChar);
+        var (minChar, maxChar) = this.GetMinMaxCharacters(left, right);
         var charArray = new int[maxChar - minChar + 1];
         var matrix = this.CreateDamerauLevenshteinMatrix(left.Length, right.Length);
 
@@ -211,10 +211,10 @@ internal sealed class StringDistanceService : IStringDistanceService
         return matrix;
     }
 
-    private void GetMinMaxCharacters(string left, string right, out int minChar, out int maxChar)
+    private (int minChar, int maxChar) GetMinMaxCharacters(string left, string right)
     {
-        minChar = left[0];
-        maxChar = left[0];
+        var minChar = (int)left[0];
+        var maxChar = minChar;
 
         for (var i = 1; i < left.Length; i++)
         {
@@ -233,6 +233,8 @@ internal sealed class StringDistanceService : IStringDistanceService
             else if (character > maxChar)
                 maxChar = character;
         }
+
+        return (minChar, maxChar);
     }
     #endregion
 }
