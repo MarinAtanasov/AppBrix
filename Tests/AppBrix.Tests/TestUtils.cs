@@ -21,7 +21,8 @@ public static class TestUtils
     /// </summary>
     /// <typeparam name="T">The module to load inside the application.</typeparam>
     /// <returns>The created application.</returns>
-    public static IApp CreateTestApp<T>() where T : IModule => App.Create<MainModuleMock<T>>(new MemoryConfigService());
+    public static IApp CreateTestApp<T>() where T : class, IModule =>
+        App.Create<MainModuleMock<T>>(new MemoryConfigService());
 
     /// <summary>
     /// Creates an app with an in-memory configuration using the provided module and its dependencies.
@@ -29,7 +30,8 @@ public static class TestUtils
     /// <typeparam name="T1">The first module to load inside the application.</typeparam>
     /// <typeparam name="T2">The second module to load inside the application.</typeparam>
     /// <returns>The created application.</returns>
-    public static IApp CreateTestApp<T1, T2>() where T1 : IModule where T2 : IModule => App.Create<MainModuleMock<T1, T2>>(new MemoryConfigService());
+    public static IApp CreateTestApp<T1, T2>() where T1 : class, IModule where T2 : class, IModule =>
+        App.Create<MainModuleMock<T1, T2>>(new MemoryConfigService());
 
     public static void TestPerformance(Action action)
     {

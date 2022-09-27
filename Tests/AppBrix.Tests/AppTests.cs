@@ -332,7 +332,7 @@ public sealed class AppTests
     #endregion
 
     #region Private methods
-    private DefaultApp CreateDefaultApp<T>() where T : IModule => (DefaultApp)TestUtils.CreateTestApp<T>();
+    private DefaultApp CreateDefaultApp<T>() where T : class, IModule => (DefaultApp)TestUtils.CreateTestApp<T>();
 
     private IEnumerable<ModuleInfo> GetModules(DefaultApp app) => (IEnumerable<ModuleInfo>)this.modulesField.GetValue(app)!;
 
