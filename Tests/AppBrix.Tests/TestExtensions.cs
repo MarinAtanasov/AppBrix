@@ -39,8 +39,11 @@ public static class TestExtensions
             throw new ArgumentNullException(nameof(func));
 
         var sw = Stopwatch.StartNew();
-        while (sw.Elapsed < timeout && !object.Equals(func(), result))
+        while (sw.Elapsed < timeout)
         {
+            if (object.Equals(func(), result))
+                return;
+
             Thread.Sleep(1);
         }
 
