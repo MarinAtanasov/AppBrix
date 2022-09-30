@@ -2,10 +2,10 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Time;
-using System;
 using AppBrix.Configuration;
 using AppBrix.Time.Configuration;
 using AppBrix.Time.Services;
+using System;
 
 namespace AppBrix;
 
@@ -29,10 +29,23 @@ public static class TimeExtensions
     public static TimeConfig GetTimeConfig(this IConfigService service) => (TimeConfig)service.Get(typeof(TimeConfig));
 
     /// <summary>
-    /// A shorthand for getting the current time
-    /// from the registered <see cref="ITimeService"/>.
+    /// A shorthand for getting the current date and time from the registered <see cref="ITimeService"/>.
     /// </summary>
     /// <param name="app">The currently running application.</param>
     /// <returns>The current <see cref="DateTime"/>.</returns>
     public static DateTime GetTime(this IApp app) => app.GetTimeService().GetTime();
+
+    /// <summary>
+    /// A shorthand for getting the current date and time offset from the registered <see cref="ITimeService"/>.
+    /// </summary>
+    /// <param name="app">The currently running application.</param>
+    /// <returns>The current <see cref="DateTimeOffset"/> in local time.</returns>
+    public static DateTimeOffset GetTimeLocal(this IApp app) => app.GetTimeService().GetTimeLocal();
+
+    /// <summary>
+    /// A shorthand for getting the current date and time offset from the registered <see cref="ITimeService"/>.
+    /// </summary>
+    /// <param name="app">The currently running application.</param>
+    /// <returns>The current <see cref="DateTimeOffset"/> in UTC.</returns>
+    public static DateTimeOffset GetTimeUtc(this IApp app) => app.GetTimeService().GetTimeUtc();
 }

@@ -134,7 +134,7 @@ public sealed class MemoryCacheTests : TestsBase
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
         var func = () => cache.Get(key);
-        func.ShouldReturn(null, "the item shold have been removed from the cache");
+        func.ShouldReturn(null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -149,7 +149,7 @@ public sealed class MemoryCacheTests : TestsBase
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
         var func = () => cache.Get(key);
-        func.ShouldReturn(null, "the item shold have been removed from the cache");
+        func.ShouldReturn(null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

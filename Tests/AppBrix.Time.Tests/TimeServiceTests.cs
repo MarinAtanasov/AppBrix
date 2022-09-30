@@ -16,10 +16,8 @@ public sealed class TimeServiceTests : TestsBase
 
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestUtcTimeService()
+    public void TestGetTime()
     {
-        this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
-        this.app.Reinitialize();
         var timeBefore = DateTime.UtcNow;
         var time = this.app.GetTime();
         var timeAfter = DateTime.UtcNow;
@@ -29,60 +27,25 @@ public sealed class TimeServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestLocalTimeService()
+    public void TestGetTimeLocal()
     {
-        this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
-        this.app.Reinitialize();
-        var timeBefore = DateTime.Now;
-        var time = this.app.GetTime();
-        var timeAfter = DateTime.Now;
+        var timeBefore = DateTimeOffset.Now;
+        var time = this.app.GetTimeLocal();
+        var timeAfter = DateTimeOffset.Now;
         time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
-        time.Kind.Should().Be(DateTimeKind.Local, "kind is not Local");
+        time.Offset.Should().Be(timeBefore.Offset, "offset is not local");
         time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestUtcToUtcTime()
+    public void TestGetTimeUtc()
     {
-        this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
-        this.app.Reinitialize();
-        var time = DateTime.UtcNow;
-        var appTime = this.app.GetTimeService().ToAppTime(time);
-        appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
-        appTime.Should().Be(time, "returned time should be the same as passed in");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestLocalToUtcTime()
-    {
-        this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Utc;
-        this.app.Reinitialize();
-        var time = DateTime.Now;
-        var appTime = this.app.GetTimeService().ToAppTime(time);
-        appTime.Kind.Should().Be(DateTimeKind.Utc, "kind should be converted");
-        appTime.Should().Be(time.ToUniversalTime(), "returned time should be equal to the passed in");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestUtcToLocalTime()
-    {
-        this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
-        this.app.Reinitialize();
-        var time = DateTime.UtcNow;
-        var appTime = this.app.GetTimeService().ToAppTime(time);
-        appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
-        appTime.Should().Be(time.ToLocalTime(), "returned time should be equal to the passed in");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestLocalToLocalTime()
-    {
-        this.app.ConfigService.GetTimeConfig().Kind = DateTimeKind.Local;
-        this.app.Reinitialize();
-        var time = DateTime.Now;
-        var appTime = this.app.GetTimeService().ToAppTime(time);
-        appTime.Kind.Should().Be(DateTimeKind.Local, "kind should be converted");
-        appTime.Should().Be(time, "returned time should be the same as passed in");
+        var timeBefore = DateTimeOffset.UtcNow;
+        var time = this.app.GetTimeUtc();
+        var timeAfter = DateTimeOffset.UtcNow;
+        time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
+        time.Offset.Should().Be(timeBefore.Offset, "offset is not Utc");
+        time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -95,44 +58,84 @@ public sealed class TimeServiceTests : TestsBase
         service.ToDateTime(serialized).Should().Be(time, "serialization and deserialization should return the same time");
     }
 
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDateTimeOffsetLocalSerialization()
+    {
+        var service = this.app.GetTimeService();
+        var time = service.GetTimeLocal();
+        time = new DateTimeOffset(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
+        var serialized = service.ToString(time);
+        service.ToDateTimeOffset(serialized).Should().Be(time, "serialization and deserialization should return the same time");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDateTimeOffsetUtcSerialization()
+    {
+        var service = this.app.GetTimeService();
+        var time = service.GetTimeUtc();
+        time = new DateTimeOffset(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
+        var serialized = service.ToString(time);
+        service.ToDateTimeOffset(serialized).Should().Be(time, "serialization and deserialization should return the same time");
+    }
+
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceGetTime() => TestUtils.TestPerformance(this.TestPerformanceGetTimeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceToAppTime() => TestUtils.TestPerformance(this.TestPerformanceToAppTimeInternal);
+    public void TestPerformanceGetTimeLocal() => TestUtils.TestPerformance(this.TestPerformanceGetTimeLocalInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConvertTime() => TestUtils.TestPerformance(this.TestPerformanceConvertTimeInternal);
+    public void TestPerformanceGetTimeUtc() => TestUtils.TestPerformance(this.TestPerformanceGetTimeUtcInternal);
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    public void TestPerformanceConvertDateTime() => TestUtils.TestPerformance(this.TestPerformanceConvertDateTimeInternal);
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    public void TestPerformanceConvertDateTimeOffset() => TestUtils.TestPerformance(this.TestPerformanceConvertDateTimeOffsetInternal);
     #endregion
 
     #region Private methods
     private void TestPerformanceGetTimeInternal()
     {
-        for (var i = 0; i < 200000; i++)
+        for (var i = 0; i < 250000; i++)
         {
             this.app.GetTime();
         }
     }
 
-    private void TestPerformanceToAppTimeInternal()
+    private void TestPerformanceGetTimeLocalInternal()
     {
-        var utcTime = DateTime.UtcNow;
-        var localTime = utcTime.ToLocalTime();
-        var timeService = this.app.GetTimeService();
-        for (var i = 0; i < 100000; i++)
+        for (var i = 0; i < 250000; i++)
         {
-            timeService.ToAppTime(utcTime);
-            timeService.ToAppTime(localTime);
+            this.app.GetTime();
         }
     }
 
-    private void TestPerformanceConvertTimeInternal()
+    private void TestPerformanceGetTimeUtcInternal()
+    {
+        for (var i = 0; i < 250000; i++)
+        {
+            this.app.GetTime();
+        }
+    }
+
+    private void TestPerformanceConvertDateTimeInternal()
     {
         var time = DateTime.UtcNow;
         var timeService = this.app.GetTimeService();
-        for (var i = 0; i < 15000; i++)
+        for (var i = 0; i < 12500; i++)
         {
             timeService.ToDateTime(timeService.ToString(time));
+        }
+    }
+
+    private void TestPerformanceConvertDateTimeOffsetInternal()
+    {
+        var time = DateTimeOffset.UtcNow;
+        var timeService = this.app.GetTimeService();
+        for (var i = 0; i < 15000; i++)
+        {
+            timeService.ToDateTimeOffset(timeService.ToString(time));
         }
     }
     #endregion

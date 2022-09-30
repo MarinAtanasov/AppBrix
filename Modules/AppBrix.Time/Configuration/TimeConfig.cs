@@ -17,23 +17,22 @@ public sealed class TimeConfig : IConfig
     /// </summary>
     public TimeConfig()
     {
-        this.Kind = DateTimeKind.Utc;
-        this.Format = @"yyyy-MM-ddTHH:mm:ss.fffK";
+        this.DateTimeFormat = @"yyyy-MM-ddTHH:mm:ss.fffK";
+        this.OffsetFormat = @"yyyy-MM-ddTHH:mm:ss.fffK";
     }
     #endregion
 
     #region Properties
     /// <summary>
-    /// Gets or sets the time kind to be used inside the application.
-    /// Supported values: Utc, Local
-    /// Changing this property requires module/application reinitialization.
-    /// </summary>
-    public DateTimeKind Kind { get; set; }
-
-    /// <summary>
     /// Gets or sets the time string format to be used inside the application.
     /// Changing this property requires module/application reinitialization.
     /// </summary>
-    public string Format { get; set; }
+    public string DateTimeFormat { get; set; }
+
+    /// <summary>
+    /// Gets or sets the time offset string format to be used inside the application.
+    /// Changing this property requires module/application reinitialization.
+    /// </summary>
+    public string OffsetFormat { get; set; }
     #endregion
 }

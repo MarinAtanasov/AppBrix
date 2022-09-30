@@ -5,7 +5,6 @@ using AppBrix.Container;
 using AppBrix.Lifecycle;
 using AppBrix.Modules;
 using AppBrix.Time.Impl;
-using AppBrix.Time.Services;
 using System;
 using System.Collections.Generic;
 
@@ -33,8 +32,8 @@ public sealed class TimeModule : ModuleBase
     protected override void Initialize(IInitializeContext context)
     {
         this.App.Container.Register(this);
-        var config = this.App.ConfigService.GetTimeConfig();
-        this.App.Container.Register(this.CreateTimeService(config.Kind, config.Format));
+        this.timeService.Initialize(context);
+        this.App.Container.Register(this.timeService);
     }
 
     /// <summary>
@@ -43,14 +42,11 @@ public sealed class TimeModule : ModuleBase
     /// </summary>
     protected override void Uninitialize()
     {
+        this.timeService.Uninitialize();
     }
     #endregion
 
-    #region Private methods
-    private ITimeService CreateTimeService(DateTimeKind kind, string format) => kind switch
-    {
-        DateTimeKind.Local => new LocalTimeService(format),
-        _ => new UtcTimeService(format),
-    };
+    #region Private fields and constants
+    private readonly TimeService timeService = new TimeService();
     #endregion
 }

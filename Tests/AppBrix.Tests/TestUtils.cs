@@ -15,7 +15,6 @@ namespace AppBrix.Tests;
 public static class TestUtils
 {
     #region Public and overriden methods
-
     /// <summary>
     /// Creates an app with an in-memory configuration using the provided module and its dependencies.
     /// </summary>
