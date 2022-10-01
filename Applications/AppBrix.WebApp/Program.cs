@@ -10,7 +10,7 @@ public class Program
     public static void Main(string[] args)
     {
         WebApplication.CreateBuilder(args)
-            .Build(App.Start<WebAppMainModule>(new ConfigService(
+            .Build(App.Start<MainModule>(new ConfigService(
                 new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer())))
             .Run();
     }

@@ -14,7 +14,7 @@ internal sealed class Program
     internal static void Main(string[] _)
     {
         var stopwatch = Stopwatch.StartNew();
-        var app = App.Start<ConsoleAppMainModule>(new ConfigService(
+        var app = App.Start<MainModule>(new ConfigService(
             new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer()));
         try
         {

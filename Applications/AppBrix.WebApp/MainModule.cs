@@ -31,7 +31,7 @@ namespace AppBrix.WebApp;
 /// <summary>
 /// Initializes web application configuration.
 /// </summary>
-public sealed class WebAppMainModule : MainModuleBase
+public sealed class MainModule : MainModuleBase
 {
     #region Properties
     public override IEnumerable<Type> Dependencies => new[]
