@@ -13,10 +13,10 @@ using Xunit;
 
 namespace AppBrix.Events.Schedule.Timer.Tests;
 
-public sealed class TimerScheduledEventHubTests : TestsBase
+public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEventsModule>
 {
     #region Setup and cleanup
-    public TimerScheduledEventHubTests() : base(TestUtils.CreateTestApp<TimerScheduledEventsModule>())
+    public TimerScheduledEventHubTests()
     {
         this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
@@ -138,7 +138,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 50000));
+        TestUtils.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 50000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -146,7 +146,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 40000));
+        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 40000));
     }
     #endregion
 

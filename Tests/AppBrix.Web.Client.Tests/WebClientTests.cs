@@ -2,17 +2,16 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Tests;
-using AppBrix.Web.Client;
 using FluentAssertions;
 using System;
 using Xunit;
 
-namespace AppBrix.Web.Server.Tests;
+namespace AppBrix.Web.Client.Tests;
 
-public sealed class WebClientTests : TestsBase
+public sealed class WebClientTests : TestsBase<WebClientModule>
 {
     #region Setup and cleanup
-    public WebClientTests() : base(TestUtils.CreateTestApp<WebClientModule>()) => this.app.Start();
+    public WebClientTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -41,7 +40,7 @@ public sealed class WebClientTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetHttpRequest() => TestUtils.TestPerformance(this.TestPerformanceGetHttpRequestInternal);
+    public void TestPerformanceGetHttpRequest() => TestUtils.AssertPerformance(this.TestPerformanceGetHttpRequestInternal);
     #endregion
 
     #region Private methods

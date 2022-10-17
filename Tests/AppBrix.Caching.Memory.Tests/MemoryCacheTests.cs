@@ -10,10 +10,10 @@ using Xunit;
 
 namespace AppBrix.Caching.Memory.Tests;
 
-public sealed class MemoryCacheTests : TestsBase
+public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 {
     #region Setup and cleanup
-    public MemoryCacheTests() : base(TestUtils.CreateTestApp<MemoryCachingModule>())
+    public MemoryCacheTests()
     {
         this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
@@ -210,7 +210,7 @@ public sealed class MemoryCacheTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceMemoryCache() => TestUtils.TestPerformance(this.TestPerformanceMemoryCacheInternal);
+    public void TestPerformanceMemoryCache() => TestUtils.AssertPerformance(this.TestPerformanceMemoryCacheInternal);
     #endregion
 
     #region Private methods

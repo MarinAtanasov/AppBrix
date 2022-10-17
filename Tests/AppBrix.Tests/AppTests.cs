@@ -145,7 +145,7 @@ public sealed class AppTests
     public void TestInstallMainModule()
     {
         var configService = new MemoryConfigService();
-        var app = App.Create<MainModuleMock<SimpleModuleMock>>(configService);
+        var app = App.Create<MainModule<SimpleModuleMock>>(configService);
         configService.GetAppConfig().Modules.Should().HaveCount(1, $"{nameof(App)}.{nameof(App.Create)} should add the main module");
         app.Start();
         var dependency = app.ConfigService.GetAppConfig().Modules[0];
@@ -154,7 +154,7 @@ public sealed class AppTests
         app.Stop();
         configService.GetAppConfig().Modules.Should().HaveCount(2, $"Stopping the application shouldn't change the config");
 
-        app = App.Create<MainModuleMock<SimpleModuleMock>>(configService);
+        app = App.Create<MainModule<SimpleModuleMock>>(configService);
         configService.GetAppConfig().Modules.Should().HaveCount(2, $"Creating a new app shouldn't change the valid config");
         app.Start();
         configService.GetAppConfig().Modules.Should().HaveCount(2, $"Starting the new app shouldn't change the valid config");
@@ -315,7 +315,7 @@ public sealed class AppTests
         var app = this.CreateDefaultApp<SimpleModuleMock>();
         app.Start();
 
-        TestUtils.TestPerformance(() => this.TestPerformanceReinitializeInternal(app));
+        TestUtils.AssertPerformance(() => this.TestPerformanceReinitializeInternal(app));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -324,11 +324,11 @@ public sealed class AppTests
         var app = this.CreateDefaultApp<SimpleModuleMock>();
         app.Start();
 
-        TestUtils.TestPerformance(() => this.TestPerformanceRestartInternal(app));
+        TestUtils.AssertPerformance(() => this.TestPerformanceRestartInternal(app));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetDependencies() => TestUtils.TestPerformance(this.TestPerformanceGetDependenciesInternal);
+    public void TestPerformanceGetDependencies() => TestUtils.AssertPerformance(this.TestPerformanceGetDependenciesInternal);
     #endregion
 
     #region Private methods

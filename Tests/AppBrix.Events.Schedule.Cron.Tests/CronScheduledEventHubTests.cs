@@ -13,10 +13,10 @@ using Xunit;
 
 namespace AppBrix.Events.Schedule.Cron.Tests;
 
-public sealed class CronScheduledEventHubTests : TestsBase
+public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsModule>
 {
     #region Setup and cleanup
-    public CronScheduledEventHubTests() : base(TestUtils.CreateTestApp<CronScheduledEventsModule>())
+    public CronScheduledEventHubTests()
     {
         this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
@@ -108,7 +108,7 @@ public sealed class CronScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
+        TestUtils.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -116,7 +116,7 @@ public sealed class CronScheduledEventHubTests : TestsBase
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.TestPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 5000));
+        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 5000));
     }
     #endregion
 

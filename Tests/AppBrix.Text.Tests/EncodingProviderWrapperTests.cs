@@ -9,10 +9,10 @@ using Xunit;
 
 namespace AppBrix.Text.Tests;
 
-public sealed class EncodingProviderWrapperTests : TestsBase
+public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
 {
     #region Setup and cleanup
-    public EncodingProviderWrapperTests() : base(TestUtils.CreateTestApp<TextModule>()) => this.app.Start();
+    public EncodingProviderWrapperTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -44,7 +44,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEncodingProviderWrapper() => TestUtils.TestPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
+    public void TestPerformanceEncodingProviderWrapper() => TestUtils.AssertPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
     #endregion
 
     #region Private methods

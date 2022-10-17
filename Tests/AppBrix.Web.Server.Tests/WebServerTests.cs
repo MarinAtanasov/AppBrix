@@ -242,7 +242,7 @@ public sealed class WebServerTests
         using var client = webApp.GetTestClient();
         app.Container.Register(client);
 
-        TestUtils.TestPerformance(() => this.TestPerformanceWebServerInternal(app));
+        TestUtils.AssertPerformance(() => this.TestPerformanceWebServerInternal(app));
 
         await webApp.StopAsync().ConfigureAwait(false);
     }

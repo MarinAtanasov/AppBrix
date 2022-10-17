@@ -8,10 +8,10 @@ using Xunit;
 
 namespace AppBrix.Time.Tests;
 
-public sealed class TimeServiceTests : TestsBase
+public sealed class TimeServiceTests : TestsBase<TimeModule>
 {
     #region Setup and cleanup
-    public TimeServiceTests() : base(TestUtils.CreateTestApp<TimeModule>()) => this.app.Start();
+    public TimeServiceTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -79,19 +79,19 @@ public sealed class TimeServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetTime() => TestUtils.TestPerformance(this.TestPerformanceGetTimeInternal);
+    public void TestPerformanceGetTime() => TestUtils.AssertPerformance(this.TestPerformanceGetTimeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetTimeLocal() => TestUtils.TestPerformance(this.TestPerformanceGetTimeLocalInternal);
+    public void TestPerformanceGetTimeLocal() => TestUtils.AssertPerformance(this.TestPerformanceGetTimeLocalInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetTimeUtc() => TestUtils.TestPerformance(this.TestPerformanceGetTimeUtcInternal);
+    public void TestPerformanceGetTimeUtc() => TestUtils.AssertPerformance(this.TestPerformanceGetTimeUtcInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConvertDateTime() => TestUtils.TestPerformance(this.TestPerformanceConvertDateTimeInternal);
+    public void TestPerformanceConvertDateTime() => TestUtils.AssertPerformance(this.TestPerformanceConvertDateTimeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConvertDateTimeOffset() => TestUtils.TestPerformance(this.TestPerformanceConvertDateTimeOffsetInternal);
+    public void TestPerformanceConvertDateTimeOffset() => TestUtils.AssertPerformance(this.TestPerformanceConvertDateTimeOffsetInternal);
     #endregion
 
     #region Private methods

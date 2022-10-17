@@ -12,10 +12,10 @@ using Xunit;
 
 namespace AppBrix.Data.Tests;
 
-public sealed class InMemoryDataTests : TestsBase
+public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, MigrationsDataModule>
 {
     #region Setup and cleanup
-    public InMemoryDataTests() : base(TestUtils.CreateTestApp<InMemoryDataModule, MigrationsDataModule>())
+    public InMemoryDataTests()
     {
         this.app.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
         this.app.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
@@ -57,7 +57,7 @@ public sealed class InMemoryDataTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetItem() => TestUtils.TestPerformance(this.TestPerformanceGetItemInternal);
+    public void TestPerformanceGetItem() => TestUtils.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion
 
     #region Private methods

@@ -10,10 +10,10 @@ using Xunit;
 
 namespace AppBrix.Random.Tests;
 
-public sealed class RandomServiceTests : TestsBase
+public sealed class RandomServiceTests : TestsBase<RandomModule>
 {
     #region Setup and cleanup
-    public RandomServiceTests() : base(TestUtils.CreateTestApp<RandomModule>()) => this.app.Start();
+    public RandomServiceTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -216,16 +216,16 @@ public sealed class RandomServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetRandom() => TestUtils.TestPerformance(this.TestPerformanceGetRandomInternal);
+    public void TestPerformanceGetRandom() => TestUtils.AssertPerformance(this.TestPerformanceGetRandomInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetRandomItems() => TestUtils.TestPerformance(this.TestPerformanceGetRandomItemsInternal);
+    public void TestPerformanceGetRandomItems() => TestUtils.AssertPerformance(this.TestPerformanceGetRandomItemsInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetUniqueItems() => TestUtils.TestPerformance(this.TestPerformanceGetUniqueItemsInternal);
+    public void TestPerformanceGetUniqueItems() => TestUtils.AssertPerformance(this.TestPerformanceGetUniqueItemsInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceShuffle() => TestUtils.TestPerformance(this.TestPerformanceShuffleInternal);
+    public void TestPerformanceShuffle() => TestUtils.AssertPerformance(this.TestPerformanceShuffleInternal);
     #endregion
 
     #region Private methods

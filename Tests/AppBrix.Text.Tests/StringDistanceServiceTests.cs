@@ -8,10 +8,10 @@ using Xunit;
 
 namespace AppBrix.Text.Tests;
 
-public sealed class StringDistanceServiceTests : TestsBase
+public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 {
     #region Setup and cleanup
-    public StringDistanceServiceTests() : base(TestUtils.CreateTestApp<TextModule>()) => this.app.Start();
+    public StringDistanceServiceTests() => this.app.Start();
     #endregion
 
     #region Tests Damerau-Levenshtein distance
@@ -75,7 +75,7 @@ public sealed class StringDistanceServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetDamerauLevenshteinDistance() => TestUtils.TestPerformance(this.TestPerformanceGetDamerauLevenshteinDistanceInternal);
+    public void TestPerformanceGetDamerauLevenshteinDistance() => TestUtils.AssertPerformance(this.TestPerformanceGetDamerauLevenshteinDistanceInternal);
     #endregion
 
     #region Test Levenshtein distance
@@ -130,7 +130,7 @@ public sealed class StringDistanceServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetLevenshteinDistance() => TestUtils.TestPerformance(this.TestPerformanceGetLevenshteinDistanceInternal);
+    public void TestPerformanceGetLevenshteinDistance() => TestUtils.AssertPerformance(this.TestPerformanceGetLevenshteinDistanceInternal);
     #endregion
 
     #region Test Optimal String Alignment distance
@@ -185,7 +185,7 @@ public sealed class StringDistanceServiceTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetOptimalStringAlignmentDistance() => TestUtils.TestPerformance(this.TestPerformanceGetOptimalStringAlignmentDistanceInternal);
+    public void TestPerformanceGetOptimalStringAlignmentDistance() => TestUtils.AssertPerformance(this.TestPerformanceGetOptimalStringAlignmentDistanceInternal);
     #endregion
 
     #region Private methods

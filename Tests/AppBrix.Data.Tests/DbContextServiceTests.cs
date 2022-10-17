@@ -12,11 +12,11 @@ using Xunit;
 
 namespace AppBrix.Data.Tests;
 
-public sealed class DbContextServiceTests : TestsBase
+public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
 {
     #region Setup and cleanup
 
-    public DbContextServiceTests() : base(TestUtils.CreateTestApp<InMemoryDataModule>()) => this.app.Start();
+    public DbContextServiceTests() => this.app.Start();
     #endregion
 
     #region Tests

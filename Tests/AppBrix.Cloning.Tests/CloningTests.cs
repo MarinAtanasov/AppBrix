@@ -14,10 +14,10 @@ using Xunit;
 
 namespace AppBrix.Cloning.Tests;
 
-public sealed class CloningTests : TestsBase
+public sealed class CloningTests : TestsBase<CloningModule>
 {
     #region Setup and cleanup
-    public CloningTests() : base(TestUtils.CreateTestApp<CloningModule>()) => this.app.Start();
+    public CloningTests() => this.app.Start();
     #endregion
 
     #region Deep Copy Tests
@@ -137,7 +137,7 @@ public sealed class CloningTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceDeepCopy() => TestUtils.TestPerformance(this.TestPerformanceDeepCopyInternal);
+    public void TestPerformanceDeepCopy() => TestUtils.AssertPerformance(this.TestPerformanceDeepCopyInternal);
     #endregion
 
     #region Shallow Copy Tests
@@ -220,7 +220,7 @@ public sealed class CloningTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceShallowCopy() => TestUtils.TestPerformance(this.TestPerformanceShallowCopyInternal);
+    public void TestPerformanceShallowCopy() => TestUtils.AssertPerformance(this.TestPerformanceShallowCopyInternal);
     #endregion
 
     #region Private methods

@@ -11,10 +11,10 @@ using Xunit;
 
 namespace AppBrix.Factory.Tests;
 
-public sealed class FactoryTests : TestsBase
+public sealed class FactoryTests : TestsBase<FactoryModule>
 {
     #region Setup and cleanup
-    public FactoryTests() : base(TestUtils.CreateTestApp<FactoryModule>()) => this.app.Start();
+    public FactoryTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -136,7 +136,7 @@ public sealed class FactoryTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceFactory() => TestUtils.TestPerformance(this.TestPerformanceFactoryInternal);
+    public void TestPerformanceFactory() => TestUtils.AssertPerformance(this.TestPerformanceFactoryInternal);
     #endregion
 
     #region Private methods

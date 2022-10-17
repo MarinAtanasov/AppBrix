@@ -9,10 +9,10 @@ using Xunit;
 
 namespace AppBrix.Caching.Tests;
 
-public sealed class CacheTests : TestsBase
+public sealed class CacheTests : TestsBase<CachingModule>
 {
     #region Setup and cleanup
-    public CacheTests() : base(TestUtils.CreateTestApp<CachingModule>())
+    public CacheTests()
     {
         this.app.Start();
         this.app.Container.Register(new JsonCacheSerializer());
@@ -63,7 +63,7 @@ public sealed class CacheTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceCache() => TestUtils.TestPerformance(this.TestPerformanceCacheInternal);
+    public void TestPerformanceCache() => TestUtils.AssertPerformance(this.TestPerformanceCacheInternal);
     #endregion
 
     #region Private methods

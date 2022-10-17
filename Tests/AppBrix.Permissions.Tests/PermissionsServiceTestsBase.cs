@@ -8,14 +8,8 @@ using Xunit;
 
 namespace AppBrix.Permissions.Tests;
 
-public abstract class PermissionsServiceTestsBase : TestsBase
+public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 {
-    #region Setup and cleanup
-    public PermissionsServiceTestsBase(IApp app) : base(app)
-    {
-    }
-    #endregion
-
     #region Tests Parents
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAddChildNullParent()

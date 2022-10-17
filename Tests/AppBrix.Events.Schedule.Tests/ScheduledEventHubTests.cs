@@ -11,10 +11,10 @@ using Xunit;
 
 namespace AppBrix.Events.Schedule.Tests;
 
-public sealed class ScheduledEventHubTests : TestsBase
+public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
 {
     #region Setup and cleanup
-    public ScheduledEventHubTests() : base(TestUtils.CreateTestApp<ScheduledEventsModule>())
+    public ScheduledEventHubTests()
     {
         this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
@@ -115,7 +115,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
-        TestUtils.TestPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));
+        TestUtils.AssertPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -127,7 +127,7 @@ public sealed class ScheduledEventHubTests : TestsBase
         var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
-        TestUtils.TestPerformance(() => this.TestPerformanceUnscheduleInternal(scheduledEvents));
+        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(scheduledEvents));
     }
     #endregion
 

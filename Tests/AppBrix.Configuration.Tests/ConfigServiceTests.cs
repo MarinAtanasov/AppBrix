@@ -102,7 +102,7 @@ public sealed class ConfigServiceTests
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConfigService() => TestUtils.TestPerformance(this.TestPerformanceConfigServiceInternal);
+    public void TestPerformanceConfigService() => TestUtils.AssertPerformance(this.TestPerformanceConfigServiceInternal);
     #endregion
 
     #region Private methods

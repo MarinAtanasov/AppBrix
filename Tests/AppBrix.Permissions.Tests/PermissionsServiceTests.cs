@@ -9,7 +9,7 @@ namespace AppBrix.Permissions.Tests;
 public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
 {
     #region Setup and cleanup
-    public PermissionsServiceTests() : base(TestUtils.CreateTestApp<PermissionsModule>())
+    public PermissionsServiceTests()
     {
         this.app.ConfigService.GetPermissionsConfig().EnableCaching = false;
         this.app.Start();
@@ -32,7 +32,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
         service.AddParent("a2", "a22");
         service.Allow("a22", "p22");
 
-        TestUtils.TestPerformance(this.TestPerformanceHasPermissionInternal);
+        TestUtils.AssertPerformance(this.TestPerformanceHasPermissionInternal);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -50,7 +50,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
         service.AddParent("a2", "a22");
         service.Allow("a22", "p22");
 
-        TestUtils.TestPerformance(this.TestPerformanceAddPermissionInternal);
+        TestUtils.AssertPerformance(this.TestPerformanceAddPermissionInternal);
     }
     #endregion
 

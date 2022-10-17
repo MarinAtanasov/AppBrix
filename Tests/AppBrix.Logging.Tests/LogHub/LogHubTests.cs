@@ -10,10 +10,10 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub;
 
-public sealed class LogHubTests : TestsBase
+public sealed class LogHubTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LogHubTests() : base(TestUtils.CreateTestApp<LoggingModule>()) => this.app.Start();
+    public LogHubTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -187,7 +187,7 @@ public sealed class LogHubTests : TestsBase
     {
         this.app.GetEventHub().Subscribe<ILogEntry>(_ => { });
 
-        TestUtils.TestPerformance(this.TestPerformanceLoggingInternal);
+        TestUtils.AssertPerformance(this.TestPerformanceLoggingInternal);
     }
     #endregion
 

@@ -12,10 +12,10 @@ using Xunit;
 
 namespace AppBrix.Events.Tests;
 
-public sealed class EventHubTests : TestsBase
+public sealed class EventHubTests : TestsBase<EventsModule>
 {
     #region Setup and cleanup
-    public EventHubTests() : base(TestUtils.CreateTestApp<EventsModule>()) => this.app.Start();
+    public EventHubTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -243,13 +243,13 @@ public sealed class EventHubTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsSubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsSubscribeInternal);
+    public void TestPerformanceEventsSubscribe() => TestUtils.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsUnsubscribe() => TestUtils.TestPerformance(this.TestPerformanceEventsUnsubscribeInternal);
+    public void TestPerformanceEventsUnsubscribe() => TestUtils.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsRaise() => TestUtils.TestPerformance(this.TestPerformanceEventsRaiseInternal);
+    public void TestPerformanceEventsRaise() => TestUtils.AssertPerformance(this.TestPerformanceEventsRaiseInternal);
     #endregion
 
     #region Private methods

@@ -10,10 +10,10 @@ using Xunit;
 
 namespace AppBrix.Logging.Tests.Config;
 
-public sealed class LoggingConfigTests : TestsBase
+public sealed class LoggingConfigTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LoggingConfigTests() : base(TestUtils.CreateTestApp<LoggingModule>()) => this.app.Start();
+    public LoggingConfigTests() => this.app.Start();
     #endregion
 
     #region Tests

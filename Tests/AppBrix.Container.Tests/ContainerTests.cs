@@ -10,10 +10,10 @@ using Xunit;
 
 namespace AppBrix.Container.Tests;
 
-public sealed class ContainerTests : TestsBase
+public sealed class ContainerTests : TestsBase<ContainerModule>
 {
     #region Setup and cleanup
-    public ContainerTests() : base(TestUtils.CreateTestApp<ContainerModule>()) => this.app.Start();
+    public ContainerTests() => this.app.Start();
     #endregion
 
     #region Tests
@@ -113,7 +113,7 @@ public sealed class ContainerTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceContainer() => TestUtils.TestPerformance(this.TestPerformanceContainerInternal);
+    public void TestPerformanceContainer() => TestUtils.AssertPerformance(this.TestPerformanceContainerInternal);
     #endregion
 
     #region Private methods

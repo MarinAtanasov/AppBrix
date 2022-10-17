@@ -15,10 +15,10 @@ using Xunit;
 
 namespace AppBrix.Data.Tests;
 
-public sealed class SqliteDataTests : TestsBase
+public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsDataModule>
 {
     #region Setup and cleanup
-    public SqliteDataTests() : base(TestUtils.CreateTestApp<SqliteDataModule, MigrationsDataModule>())
+    public SqliteDataTests()
     {
         this.app.Start();
         this.app.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
@@ -75,7 +75,7 @@ public sealed class SqliteDataTests : TestsBase
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetItem() => TestUtils.TestPerformance(this.TestPerformanceGetItemInternal);
+    public void TestPerformanceGetItem() => TestUtils.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion
 
     #region Private methods
