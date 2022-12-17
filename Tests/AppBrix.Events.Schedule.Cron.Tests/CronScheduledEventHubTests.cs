@@ -18,9 +18,9 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     #region Setup and cleanup
     public CronScheduledEventHubTests()
     {
-        this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Reinitialize();
+        this.app.Start();
+
         this.timeService = new TimeServiceMock(this.app);
         this.app.Container.Register(this.timeService);
     }

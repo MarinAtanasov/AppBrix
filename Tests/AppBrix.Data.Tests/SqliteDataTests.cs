@@ -20,9 +20,10 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
     #region Setup and cleanup
     public SqliteDataTests()
     {
-        this.app.Start();
         this.app.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
         this.app.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
+        this.app.Start();
+
         this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
         this.app.Restart();
 

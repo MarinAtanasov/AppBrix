@@ -18,9 +18,9 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     #region Setup and cleanup
     public TimerScheduledEventHubTests()
     {
-        this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Reinitialize();
+        this.app.Start();
+
         this.timeService = new TimeServiceMock(this.app);
         this.app.Container.Register(this.timeService);
     }

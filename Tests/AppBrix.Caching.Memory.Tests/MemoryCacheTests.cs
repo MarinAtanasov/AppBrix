@@ -15,10 +15,10 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     #region Setup and cleanup
     public MemoryCacheTests()
     {
-        this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Reinitialize();
+        this.app.Start();
+
         this.timeService = new TimeServiceMock(this.app);
         this.app.Container.Register(this.timeService);
     }

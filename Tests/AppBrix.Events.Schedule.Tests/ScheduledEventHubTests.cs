@@ -16,9 +16,8 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     #region Setup and cleanup
     public ScheduledEventHubTests()
     {
-        this.app.Start();
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Reinitialize();
+        this.app.Start();
     }
     #endregion
 
