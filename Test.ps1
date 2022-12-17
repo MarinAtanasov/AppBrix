@@ -1,33 +1,34 @@
-param([String]$Tests="Functional", [switch]$Parallel, [switch]$Build, [switch]$Release);
+param([String]$tests="Functional", [switch]$parallel, [switch]$build, [switch]$release);
 
-$version = "net6.0"
+[xml]$properties = Get-Content Directory.Build.props;
+$framework = $properties.Project.PropertyGroup.TargetFramework;
 
 $configuration = "Debug";
-if ($Release)
+if ($release)
 {
     $configuration = "Release";
 }
 
-if ($Build)
+if ($build)
 {
     dotnet build AppBrix.sln --configuration $($configuration) --nologo --verbosity minimal;
 }
 
 $filter = "";
-if ($Tests -eq "functional" -or $Tests -eq "f")
+if ($tests -eq "functional" -or $tests -eq "f")
 {
     $filter = "--TestCaseFilter:Category=Functional";
 }
-elseif ($Tests -eq "performance" -or $Tests -eq "p")
+elseif ($tests -eq "performance" -or $tests -eq "p")
 {
     $filter = "--TestCaseFilter:Category=Performance";
 }
 
 $execute = "";
-if ($Parallel)
+if ($parallel)
 {
     $execute = "--Parallel";
 }
 
-$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/$($configuration)/$($version)/$($_.Name).dll") };
+$paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/$($configuration)/$($framework)/$($_.Name).dll") };
 dotnet test $paths $filter $execute --nologo --verbosity minimal;

@@ -283,7 +283,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
 
     private void TestPerformanceEventsSubscribeInternal()
     {
-        const int calledCount = 100000;
+        const int calledCount = 80000;
         var hub = this.GetAsyncEventHub();
         var handlers = new List<Action<EventMockChild>>(calledCount);
 

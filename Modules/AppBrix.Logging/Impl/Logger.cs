@@ -33,7 +33,7 @@ internal sealed class Logger : ILogger
             this.app.GetLogHub().Log(this.ToAppBrixLogLevel(logLevel), formatter(state, null), exception, this.categoryName, eventId.Name ?? this.categoryName, eventId.Id);
     }
 
-    public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => NullScope.Instance;
     #endregion
 
     #region Private methods

@@ -146,7 +146,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 40000));
+        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 30000));
     }
     #endregion
 

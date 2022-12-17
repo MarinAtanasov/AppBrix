@@ -332,7 +332,7 @@ public sealed class CloningTests : TestsBase<CloningModule>
     {
         var cloner = this.app.GetCloningService();
         var original = new ComplexPropertiesMock(10);
-        for (var i = 0; i < 100000; i++)
+        for (var i = 0; i < 200000; i++)
         {
             cloner.ShallowCopy(original);
         }

@@ -58,7 +58,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
     private void TestPerformanceHasPermissionInternal()
     {
         var service = this.app.GetPermissionsService();
-        for (var i = 0; i < 15000; i++)
+        for (var i = 0; i < 20000; i++)
         {
             service.HasPermission("a", "p");
             service.HasPermission("a", "p1");
@@ -69,7 +69,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
     private void TestPerformanceAddPermissionInternal()
     {
         var service = this.app.GetPermissionsService();
-        for (var i = 0; i < 70000; i++)
+        for (var i = 0; i < 75000; i++)
         {
             var item = (i % 20).ToString();
             service.Allow("a", item);

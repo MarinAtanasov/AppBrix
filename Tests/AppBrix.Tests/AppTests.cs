@@ -355,7 +355,7 @@ public sealed class AppTests
     private void TestPerformanceGetDependenciesInternal()
     {
         var module = new SimpleEmptyModuleMock();
-        for (var i = 0; i < 70; i++)
+        for (var i = 0; i < 100; i++)
         {
             var _ = module.Dependencies.ToList();
         }

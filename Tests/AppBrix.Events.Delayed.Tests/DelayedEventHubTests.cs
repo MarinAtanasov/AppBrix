@@ -208,7 +208,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     #region Private methods
     private void TestPerformanceEventsSubscribeInternal()
     {
-        const int calledCount = 80000;
+        const int calledCount = 60000;
         var hub = this.app.GetDelayedEventHub();
         var handlers = new List<Action<EventMockChild>>(calledCount);
 

@@ -287,7 +287,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
 
     private void TestPerformanceEventsSubscribeInternal()
     {
-        const int calledCount = 100000;
+        const int calledCount = 80000;
         var hub = this.GetAsyncEventHub();
         var handlers = new List<Func<EventMockChild, Task>>(calledCount);
 
@@ -306,7 +306,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
 
     private void TestPerformanceEventsUnsubscribeInternal()
     {
-        const int calledCount = 50000;
+        const int calledCount = 60000;
         var hub = this.GetAsyncEventHub();
         var handlers = new List<Func<EventMockChild, Task>>(calledCount);
 

@@ -47,7 +47,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     private void TestPerformanceGetHttpRequestInternal()
     {
         var service = this.app.GetFactoryService();
-        for (var i = 0; i < 100000; i++)
+        for (var i = 0; i < 150000; i++)
         {
             service.GetHttpRequest();
         }

@@ -22,7 +22,7 @@ public static class TestExtensions
     /// <param name="because">A formatted phrase explaining why the assertion should be satisfied. If the phrase does not start with the word because, it is prepended to the message.</param>
     /// <param name="becauseArgs">Zero or more values to use for filling in any <see cref="string.Format(string, object[])"/> compatible placeholders.</param>
     public static void ShouldReturn<T>(this Func<T> func, T result, string because = "", params object[] becauseArgs) =>
-        func.ShouldReturn(result, TimeSpan.FromSeconds(10), because, becauseArgs);
+        func.ShouldReturn(result, TimeSpan.FromSeconds(15), because, becauseArgs);
 
     /// <summary>
     /// Asserts that a function will return a predefined value by a certain timeout.

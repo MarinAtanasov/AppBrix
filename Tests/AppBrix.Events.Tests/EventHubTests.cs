@@ -257,7 +257,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
 
     private void TestPerformanceEventsSubscribeInternal()
     {
-        const int calledCount = 50000;
+        const int calledCount = 60000;
         var hub = this.GetEventHub();
         var handlers = new List<Action<EventMockChild>>(calledCount);
 
@@ -276,7 +276,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
 
     private void TestPerformanceEventsUnsubscribeInternal()
     {
-        const int calledCount = 2500;
+        const int calledCount = 3000;
         var hub = this.GetEventHub();
         var handlers = new List<Action<EventMockChild>>(calledCount);
 
