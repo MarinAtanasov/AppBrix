@@ -86,23 +86,28 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestMemoryRelease()
     {
-        var called = false;
-        var func = () => called;
-        this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
+        var called = new bool[2];
+        var func = Enumerable.Range(0, called.Length).Select(i => (Func<bool>)(() => called[i])).ToArray();
+        this.app.GetEventHub().Subscribe<EventMock>(args =>
+        {
+            called[args.Value] = true;
+            if (args.Value == 0)
+                this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.Zero));
+        });
 
         var weakReference = this.GetEventMockWeakReference(0);
         var schedule = (WeakReference<ScheduledEventMock<EventMock>> weakRef) =>
         {
-            var hub = this.app.GetScheduledEventHub();
-            weakRef.TryGetTarget(out var args);
-            hub.Schedule(args);
+            if (weakRef.TryGetTarget(out var args))
+                this.app.GetScheduledEventHub().Schedule(args);
         };
         schedule(weakReference);
 
-        func.ShouldReturn(true, "event should have been raised");
+        func[0].ShouldReturn(true, "the first event should have been raised");
+        func[1].ShouldReturn(true, "the second event should have been raised");
 
         GC.Collect();
-        weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-reccuring events");
+        weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-recurring events");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
