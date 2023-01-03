@@ -5,7 +5,6 @@ using AppBrix.Lifecycle;
 using AppBrix.Permissions.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AppBrix.Permissions.Impl;
 
@@ -143,11 +142,25 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         return false;
     }
 
-    private bool HasPermissionInternal(string role, string permission) =>
-        !(this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission)) && (
-            this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission) ||
-            this.parents.TryGetValue(role, out var roleParents) && roleParents.Any(r => this.HasPermissionInternal(r, permission))
-        );
+    private bool HasPermissionInternal(string role, string permission)
+    {
+        if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
+            return false;
+
+        if (this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission))
+            return true;
+
+        if (this.parents.TryGetValue(role, out var roleParents))
+        {
+            foreach (var roleParent in roleParents)
+            {
+                if (this.HasPermissionInternal(roleParent, permission))
+                    return true;
+            }
+        }
+
+        return false;
+    }
     #endregion
 
     #region Private fields and constants
