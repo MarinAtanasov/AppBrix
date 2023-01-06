@@ -26,7 +26,8 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
     public void Uninitialize()
     {
         this.service.Uninitialize();
-        this.cachedPermissions.Clear();
+        this.cachedAllowed.Clear();
+        this.cachedDenied.Clear();
     }
     #endregion
 
@@ -72,7 +73,7 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
         if (string.IsNullOrEmpty(permission))
             throw new ArgumentNullException(nameof(permission));
 
-        return this.cachedPermissions.TryGetValue(role, out var permissions) && permissions.Contains(permission);
+        return this.cachedAllowed.TryGetValue(role, out var permissions) && permissions.Contains(permission);
     }
 
     public IReadOnlyCollection<string> GetAllowed(string role) => this.service.GetAllowed(role);
@@ -81,23 +82,41 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
     #endregion
 
     #region Private methods
+    /// <summary>
+    /// Caches the permissions for the role and its children.
+    /// Role Denied > Role Allowed > Parent Denied > Parent Allowed.
+    /// </summary>
+    /// <param name="role">The role to cache.</param>
     private void CacheRolePermissions(string role)
     {
-        var permissions = new HashSet<string>(this.service.GetAllowed(role));
+        var parentsAllowed = new HashSet<string>();
+        var parentsDenied = new HashSet<string>();
         foreach (var parent in this.service.GetParents(role))
         {
-            if (this.cachedPermissions.TryGetValue(parent, out var parentPermissions))
-                permissions.UnionWith(parentPermissions);
+            if (this.cachedAllowed.TryGetValue(parent, out var parentAllowed) && parentAllowed.Count > 0)
+                parentsAllowed.UnionWith(parentAllowed);
+            if (this.cachedDenied.TryGetValue(parent, out var parentDenied) && parentDenied.Count > 0)
+                parentsDenied.UnionWith(parentDenied);
         }
 
-        var denied = this.service.GetDenied(role);
-        if (denied.Count > 0)
-            permissions.ExceptWith(denied);
+        var allowed = new HashSet<string>(this.service.GetAllowed(role));
+        var denied = new HashSet<string>(this.service.GetDenied(role));
 
-        if (permissions.Count > 0)
-            this.cachedPermissions[role] = permissions;
+        parentsAllowed.ExceptWith(parentsDenied);
+        parentsDenied.ExceptWith(allowed);
+        allowed.UnionWith(parentsAllowed);
+        allowed.ExceptWith(denied);
+        denied.UnionWith(parentsDenied);
+
+        if (allowed.Count > 0)
+            this.cachedAllowed[role] = allowed;
         else
-            this.cachedPermissions.Remove(role);
+            this.cachedAllowed.Remove(role);
+
+        if (denied.Count > 0)
+            this.cachedDenied[role] = denied;
+        else
+            this.cachedDenied.Remove(role);
 
         foreach (var child in this.service.GetChildren(role))
         {
@@ -107,7 +126,8 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<string, HashSet<string>> cachedPermissions = new Dictionary<string, HashSet<string>>();
+    private readonly Dictionary<string, HashSet<string>> cachedAllowed = new Dictionary<string, HashSet<string>>();
+    private readonly Dictionary<string, HashSet<string>> cachedDenied = new Dictionary<string, HashSet<string>>();
     private readonly PermissionsService service;
     #endregion
 }

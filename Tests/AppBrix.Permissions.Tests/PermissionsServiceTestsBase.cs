@@ -517,18 +517,28 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestOneParentAllowedChildUnset()
+    public void TestOneParentAllowedAnotherUnsetChildUnset()
     {
         var service = this.app.GetPermissionsService();
         service.AddParent("a", "b");
         service.AddParent("a", "c");
-        service.AddParent("a", "d");
 
-        service.Deny("b", "p");
-        service.Allow("c", "p");
+        service.Allow("b", "p");
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
         service.HasPermission("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestOneParentAllowedAnotherDeniedChildUnset()
+    {
+        var service = this.app.GetPermissionsService();
+        service.AddParent("a", "b");
+        service.AddParent("a", "c");
+
+        service.Allow("b", "p");
+        service.Deny("c", "p");
+        service.HasPermission("a", "p").Should().BeFalse("parent with denied permission should have priority");
     }
     #endregion
 }

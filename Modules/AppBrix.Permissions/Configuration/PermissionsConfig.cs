@@ -16,7 +16,7 @@ public sealed class PermissionsConfig : IConfig
     /// </summary>
     public PermissionsConfig()
     {
-        this.EnableCaching = true;
+        this.EnableCaching = false;
     }
     #endregion
 

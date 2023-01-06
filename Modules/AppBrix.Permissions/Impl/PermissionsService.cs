@@ -107,7 +107,7 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         if (string.IsNullOrEmpty(permission))
             throw new ArgumentNullException(nameof(permission));
 
-        return this.HasPermissionInternal(role, permission);
+        return this.HasPermissionInternal(role, permission) ?? false;
     }
 
     public IReadOnlyCollection<string> GetAllowed(string role)
@@ -142,7 +142,7 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         return false;
     }
 
-    private bool HasPermissionInternal(string role, string permission)
+    private bool? HasPermissionInternal(string role, string permission)
     {
         if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
             return false;
@@ -150,16 +150,21 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         if (this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission))
             return true;
 
+        bool? hasPermission = null;
+
         if (this.parents.TryGetValue(role, out var roleParents))
         {
             foreach (var roleParent in roleParents)
             {
-                if (this.HasPermissionInternal(roleParent, permission))
-                    return true;
+                var parentPermission = this.HasPermissionInternal(roleParent, permission);
+                if (parentPermission.HasValue)
+                    hasPermission = parentPermission;
+                if (parentPermission == false)
+                    break;
             }
         }
 
-        return false;
+        return hasPermission;
     }
     #endregion
 
