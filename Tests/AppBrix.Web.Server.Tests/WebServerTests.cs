@@ -200,7 +200,7 @@ public sealed class WebServerTests
             .SetExpiresHeader(app.GetTime().AddYears(1))
             .SetLastModifiedHeader(app.GetTime())
             .SetMethod(HttpMethod.Post);
-        using (var response = await request.SendStream().ConfigureAwait(false))
+        await using (var response = await request.SendStream().ConfigureAwait(false))
         {
             response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
             response.Content.ReadByte().Should().BePositive("the response stream should not be empty");

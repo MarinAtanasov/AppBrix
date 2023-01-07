@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace AppBrix.Data.Sqlite;
 
 /// <summary>
-/// Module used for regitering a SqlServer provider.
+/// Module used for registering a SqlServer provider.
 /// </summary>
 public sealed class SqliteDataModule : ModuleBase
 {

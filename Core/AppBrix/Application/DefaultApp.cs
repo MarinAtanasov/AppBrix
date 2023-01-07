@@ -30,9 +30,9 @@ internal sealed class DefaultApp : IApp
 
     public IConfigService ConfigService { get; }
 
-    public bool IsStarted { get; private set; }
+    private bool IsStarted { get; set; }
 
-    public bool IsInitialized { get; private set; }
+    private bool IsInitialized { get; set; }
     #endregion
 
     #region Public and overriden methods

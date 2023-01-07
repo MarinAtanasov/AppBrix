@@ -174,7 +174,7 @@ internal sealed class StringDistanceService : IStringDistanceService
     /// [N 2 0 0 0]
     /// </remarks>
     /// <param name="leftLength">The length of the left string.</param>
-    /// <param name="rightLength">The legnth of the right string.</param>
+    /// <param name="rightLength">The length of the right string.</param>
     /// <returns>The initialized matrix.</returns>
     private int[][] CreateDamerauLevenshteinMatrix(int leftLength, int rightLength)
     {

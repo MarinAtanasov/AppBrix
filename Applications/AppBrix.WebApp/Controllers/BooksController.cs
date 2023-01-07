@@ -21,7 +21,7 @@ public class BooksController : Controller
     [HttpGet]
     public IEnumerable<Book> Get() => this.app.Get<BooksService>().Get();
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public Book? Get(Guid id) => this.app.Get<BooksService>().Get(id);
 
     [HttpPost]
@@ -30,7 +30,7 @@ public class BooksController : Controller
     [HttpPut]
     public void Put([FromBody] Book book) => this.app.Get<BooksService>().Update(book);
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public void Delete(Guid id) => this.app.Get<BooksService>().Delete(id);
     #endregion
 

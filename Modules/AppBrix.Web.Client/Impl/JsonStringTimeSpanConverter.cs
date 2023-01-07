@@ -12,10 +12,7 @@ internal sealed class JsonStringTimeSpanConverter : JsonConverter<TimeSpan?>
     public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var stringed = reader.GetString();
-        if (string.IsNullOrEmpty(stringed))
-            return null;
-        else
-            return TimeSpan.Parse(stringed);
+        return string.IsNullOrEmpty(stringed) ? null : TimeSpan.Parse(stringed);
     }
 
     public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)

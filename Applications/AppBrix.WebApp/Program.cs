@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace AppBrix.WebApp;
 
-public class Program
+internal static class Program
 {
     public static void Main(string[] args)
     {

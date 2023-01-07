@@ -58,7 +58,7 @@ internal sealed class CloningService : ICloningService
 
     private void CloneReferenceType(object original, Type type, Dictionary<object, object> visited)
     {
-        var cloned = this.ShallowCopy(original)!;
+        var cloned = this.ShallowCopy(original);
         visited[original] = cloned;
         if (type.IsArray)
         {

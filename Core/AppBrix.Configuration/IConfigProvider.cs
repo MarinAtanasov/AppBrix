@@ -27,14 +27,14 @@ public interface IConfigProvider
     string ReadConfig(Type type);
 
     /// <summary>
-    /// Writes a configuraton.
+    /// Writes a configuration.
     /// </summary>
     /// <typeparam name="T">The type of the configuration.</typeparam>
     /// <param name="config">The configuration.</param>
     void WriteConfig<T>(string config) where T : class, IConfig => this.WriteConfig(config, typeof(T));
 
     /// <summary>
-    /// Writes a configuraton.
+    /// Writes a configuration.
     /// </summary>
     /// <param name="config">The configuration.</param>
     /// <param name="type">The type of the configuration.</param>

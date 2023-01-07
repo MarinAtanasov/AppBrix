@@ -15,7 +15,7 @@ public static class DataExtensions
     /// Gets the application's currently registered <see cref="IDbContextService"/>
     /// </summary>
     /// <param name="app">The application.</param>
-    /// <returns>The registered databse context service.</returns>
+    /// <returns>The registered database context service.</returns>
     public static IDbContextService GetDbContextService(this IApp app) => (IDbContextService)app.Get(typeof(IDbContextService));
 
     /// <summary>

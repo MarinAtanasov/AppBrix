@@ -24,7 +24,7 @@ public sealed class LoggingConfig : IConfig
 
     #region Properties
     /// <summary>
-    /// Gets or sets whether to use an asychronous logger.
+    /// Gets or sets whether to use an asynchronous logger.
     /// Changing this value requires module/application restart.
     /// </summary>
     public bool Async { get; set; }

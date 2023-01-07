@@ -41,7 +41,7 @@ public interface IApp
     }
 
     /// <summary>
-    /// Initializes the applicaiton and all of its modules.
+    /// Initializes the application and all of its modules.
     /// </summary>
     void Initialize();
 
@@ -51,7 +51,7 @@ public interface IApp
     void Uninitialize();
 
     /// <summary>
-    /// Uninitializes and reinitializes the application.
+    /// Uninitializes and re-initializes the application.
     /// </summary>
     void Reinitialize()
     {

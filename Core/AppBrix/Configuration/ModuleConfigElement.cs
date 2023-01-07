@@ -60,7 +60,7 @@ public sealed class ModuleConfigElement
 
     /// <summary>
     /// Gets or sets the module's installed version.
-    /// This property is automatically updated when the module is intalled or upgraded.
+    /// This property is automatically updated when the module is installed or upgraded.
     /// An install can be forced by removing the value.
     /// An upgrade can be forced by lowering the value to a previous version of the assembly.
     /// </summary>

@@ -138,9 +138,7 @@ internal sealed class HttpRequest : IHttpRequest
     {
         foreach (var header in toAdd)
         {
-            if (headers.Contains(header.Key))
-                headers.Remove(header.Key);
-
+            headers.Remove(header.Key);
             headers.Add(header.Key, header.Value);
         }
     }

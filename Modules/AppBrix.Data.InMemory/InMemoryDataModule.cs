@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace AppBrix.Data.InMemory;
 
 /// <summary>
-/// Module used for regitering an InMemory data provider.
+/// Module used for registering an InMemory data provider.
 /// </summary>
 public sealed class InMemoryDataModule : ModuleBase
 {

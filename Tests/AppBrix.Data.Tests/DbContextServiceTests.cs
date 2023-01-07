@@ -31,7 +31,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseConfigureDbContextEvent()
     {
-        DataItemContextMock eventContext = null;;
+        DataItemContextMock eventContext = null;
         this.app.GetEventHub().Subscribe<IConfigureDbContext>(args =>
         {
             eventContext = args.Context as DataItemContextMock;

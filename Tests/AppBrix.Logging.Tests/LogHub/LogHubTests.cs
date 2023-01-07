@@ -150,7 +150,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     public void TestCallerFile()
     {
         var message = "Test message";
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(typeof(LogHubTests).Name + ".cs", "caller file should be set to current file"));
+        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(nameof(LogHubTests) + ".cs", "caller file should be set to current file"));
         this.app.GetLogHub().Warning(message);
     }
 

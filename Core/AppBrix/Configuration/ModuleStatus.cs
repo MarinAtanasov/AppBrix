@@ -7,7 +7,7 @@ namespace AppBrix.Configuration;
 /// <summary>
 /// Enumeration used for storing a module's lifecycle status.
 /// If the module is <see cref="Disabled"/>, it will not be loaded during application initialization.
-/// If the module is <see cref="Uninstalling"/>, it will be uninstalled during the next applicaiton uninitialization.
+/// If the module is <see cref="Uninstalling"/>, it will be uninstalled during the next application uninitialization.
 /// </summary>
 public enum ModuleStatus
 {

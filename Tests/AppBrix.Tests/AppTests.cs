@@ -80,7 +80,7 @@ public sealed class AppTests
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestInitializeInitialiedApp()
+    public void TestInitializeInitializedApp()
     {
         var app = this.CreateDefaultApp<SimpleModuleMock>();
         app.Start();
@@ -97,7 +97,7 @@ public sealed class AppTests
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestUninitializeUninitialiedApp()
+    public void TestUninitializeUninitializedApp()
     {
         var app = this.CreateDefaultApp<SimpleModuleMock>();
         app.Start();
@@ -150,16 +150,16 @@ public sealed class AppTests
         app.Start();
         var dependency = app.ConfigService.GetAppConfig().Modules[0];
         dependency.Type.Should().Be(typeof(SimpleModuleMock).GetAssemblyQualifiedName(), "The dependency should be placed before the main module");
-        configService.GetAppConfig().Modules.Should().HaveCount(2, $"Main module should add its dependencies");
+        configService.GetAppConfig().Modules.Should().HaveCount(2, "Main module should add its dependencies");
         app.Stop();
-        configService.GetAppConfig().Modules.Should().HaveCount(2, $"Stopping the application shouldn't change the config");
+        configService.GetAppConfig().Modules.Should().HaveCount(2, "Stopping the application shouldn't change the config");
 
         app = App.Create<MainModule<SimpleModuleMock>>(configService);
-        configService.GetAppConfig().Modules.Should().HaveCount(2, $"Creating a new app shouldn't change the valid config");
+        configService.GetAppConfig().Modules.Should().HaveCount(2, "Creating a new app shouldn't change the valid config");
         app.Start();
-        configService.GetAppConfig().Modules.Should().HaveCount(2, $"Starting the new app shouldn't change the valid config");
+        configService.GetAppConfig().Modules.Should().HaveCount(2, "Starting the new app shouldn't change the valid config");
         app.Stop();
-        configService.GetAppConfig().Modules.Should().HaveCount(2, $"Stopping the new app shouldn't change the config");
+        configService.GetAppConfig().Modules.Should().HaveCount(2, "Stopping the new app shouldn't change the config");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

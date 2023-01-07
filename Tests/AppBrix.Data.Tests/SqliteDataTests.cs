@@ -91,7 +91,7 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
         for (var i = 0; i < 30; i++)
         {
             using var context = this.app.GetDbContextService().Get<DataItemContextMock>();
-            context.Items.Single();
+            var _ = context.Items.Single();
         }
 
         using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())

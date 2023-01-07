@@ -158,16 +158,15 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         const string key = nameof(MemoryCacheTests.TestDisposeOnAbsoluteExpiration);
 
         var disposed = false;
-
-        void Dispose()
+        var dispose = () =>
         {
             disposed = true;
             throw new InvalidOperationException("Failed to dispose.");
-        }
+        };
 
         var cache = this.app.GetMemoryCache();
         this.timeService.SetTime(this.timeService.GetTime());
-        cache.Set(key, this, dispose: Dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
+        cache.Set(key, this, dispose: dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
         var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
         disposed.Should().BeFalse("the item should not have expired yet");

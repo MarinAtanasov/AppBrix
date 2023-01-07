@@ -12,10 +12,7 @@ internal sealed class JsonStringVersionConverter : JsonConverter<Version?>
     public override Version? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var stringed = reader.GetString();
-        if (string.IsNullOrEmpty(stringed))
-            return null;
-        else
-            return Version.Parse(stringed);
+        return string.IsNullOrEmpty(stringed) ? null : Version.Parse(stringed);
     }
 
     public override void Write(Utf8JsonWriter writer, Version? value, JsonSerializerOptions options)

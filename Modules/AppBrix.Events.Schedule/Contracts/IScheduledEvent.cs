@@ -9,7 +9,7 @@ namespace AppBrix.Events.Schedule.Contracts;
 /// <summary>
 /// Scheduled event which decides when it needs to be called.
 /// </summary>
-public interface IScheduledEvent<T> where T : IEvent
+public interface IScheduledEvent<out T> where T : IEvent
 {
     /// <summary>
     /// Gets the event to be called at the next scheduled occurrence.

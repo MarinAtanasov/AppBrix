@@ -43,9 +43,7 @@ internal sealed class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
         {
             this.app.GetEventHub().Raise(this.scheduledEvent.Event);
         }
-        catch (Exception)
-        {
-        }
+        catch (Exception) { }
     }
 
     public override void MoveToNextOccurrence(DateTime now) => this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);

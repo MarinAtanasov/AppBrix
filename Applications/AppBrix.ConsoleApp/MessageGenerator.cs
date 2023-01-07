@@ -11,9 +11,9 @@ internal sealed class MessageGenerator
     #endregion
 
     #region Properties
-    public string Level { get; }
+    private string Level { get; }
 
-    public int MessagesSent { get; private set; }
+    private int MessagesSent { get; set; }
     #endregion
 
     #region Public and overriden methods

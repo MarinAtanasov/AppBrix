@@ -49,7 +49,7 @@ public sealed class FilesConfigProvider : IConfigProvider
     }
 
     /// <summary>
-    /// Writes a configuraton.
+    /// Writes a configuration.
     /// </summary>
     /// <param name="config">The configuration.</param>
     /// <param name="type">The type of the configuration.</param>
