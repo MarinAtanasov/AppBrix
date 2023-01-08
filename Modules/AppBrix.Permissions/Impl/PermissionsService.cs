@@ -40,6 +40,31 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         this.children.AddValue(parent, role);
     }
 
+    public void DeleteRole(string role)
+    {
+        if (string.IsNullOrEmpty(role))
+            throw new ArgumentNullException(nameof(role));
+
+        if (this.parents.Remove(role, out var roleParents))
+        {
+            foreach (var parent in roleParents)
+            {
+                this.children.RemoveValue(parent, role);
+            }
+        }
+
+        if (this.children.Remove(role, out var roleChildren))
+        {
+            foreach (var child in roleChildren)
+            {
+                this.parents.RemoveValue(child, role);
+            }
+        }
+
+        this.allowed.Remove(role);
+        this.denied.Remove(role);
+    }
+
     public void RemoveParent(string role, string parent)
     {
         if (string.IsNullOrEmpty(role))

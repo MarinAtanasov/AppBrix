@@ -10,7 +10,7 @@ namespace AppBrix.Permissions.Tests;
 
 public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 {
-    #region Tests Parents
+    #region Tests Roles
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAddChildNullParent()
     {
@@ -265,6 +265,47 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
     {
         Action action = () => this.app.GetPermissionsService().GetChildren(string.Empty);
         action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeleteRoleNullRole()
+    {
+        Action action = () => this.app.GetPermissionsService().DeleteRole(null);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeleteRoleEmptyRole()
+    {
+        Action action = () => this.app.GetPermissionsService().DeleteRole(string.Empty);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeleteRoleUnusedRole()
+    {
+        this.app.GetPermissionsService().DeleteRole("a");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestDeleteRole()
+    {
+        var service = this.app.GetPermissionsService();
+        service.AddChild("a", "b");
+        service.AddChild("b", "c");
+        service.Allow("a", "p-a");
+        service.Allow("b", "p-b");
+
+        service.DeleteRole("b");
+
+        service.GetParents("b").Should().BeEmpty("the role should ha been removed with its parents");
+        service.GetChildren("b").Should().BeEmpty("the role should ha been removed with its children");
+        service.GetAllowed("b").Should().BeEmpty("the role should ha been removed with its allowed permissions");
+        service.GetDenied("b").Should().BeEmpty("the role should ha been removed with its denied permissions");
+        service.GetChildren("a").Should().BeEmpty("the only child has been removed");
+        service.GetParents("c").Should().BeEmpty("the only parent has been removed");
+        service.HasPermission("c", "a-b").Should().BeFalse("the parent has been removed with its parents");
+        service.HasPermission("c", "p-b").Should().BeFalse("the parent has been removed with its permissions");
     }
     #endregion
 

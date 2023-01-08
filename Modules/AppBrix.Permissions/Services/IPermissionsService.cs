@@ -27,6 +27,12 @@ public interface IPermissionsService
     void AddParent(string role, string parent);
 
     /// <summary>
+    /// Deletes a role from the hierarchy and removes its permissions.
+    /// </summary>
+    /// <param name="role">The role.</param>
+    void DeleteRole(string role);
+
+    /// <summary>
     /// Removes a child from a role.
     /// </summary>
     /// <param name="role">The parent role.</param>

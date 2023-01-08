@@ -38,6 +38,16 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
         this.CacheRolePermissions(role);
     }
 
+    public void DeleteRole(string role)
+    {
+        var children = this.service.GetChildren(role);
+        this.service.DeleteRole(role);
+        foreach (var child in children)
+        {
+            this.CacheRolePermissions(child);
+        }
+    }
+
     public void RemoveParent(string role, string parent)
     {
         this.service.RemoveParent(role, parent);
