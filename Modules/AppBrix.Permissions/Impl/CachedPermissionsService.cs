@@ -76,7 +76,7 @@ internal sealed class CachedPermissionsService : IPermissionsService, IApplicati
         this.CacheRolePermissions(role);
     }
 
-    public bool HasPermission(string role, string permission)
+    public bool Check(string role, string permission)
     {
         if (string.IsNullOrEmpty(role))
             throw new ArgumentNullException(nameof(role));

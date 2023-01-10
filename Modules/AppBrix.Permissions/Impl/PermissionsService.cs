@@ -125,14 +125,14 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         this.denied.RemoveValue(role, permission);
     }
 
-    public bool HasPermission(string role, string permission)
+    public bool Check(string role, string permission)
     {
         if (string.IsNullOrEmpty(role))
             throw new ArgumentNullException(nameof(role));
         if (string.IsNullOrEmpty(permission))
             throw new ArgumentNullException(nameof(permission));
 
-        return this.HasPermissionInternal(role, permission) ?? false;
+        return this.HasPermission(role, permission) ?? false;
     }
 
     public IReadOnlyCollection<string> GetAllowed(string role)
@@ -167,7 +167,7 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         return false;
     }
 
-    private bool? HasPermissionInternal(string role, string permission)
+    private bool? HasPermission(string role, string permission)
     {
         if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
             return false;
@@ -181,7 +181,7 @@ internal sealed class PermissionsService : IPermissionsService, IApplicationLife
         {
             foreach (var roleParent in roleParents)
             {
-                var parentPermission = this.HasPermissionInternal(roleParent, permission);
+                var parentPermission = this.HasPermission(roleParent, permission);
                 if (parentPermission.HasValue)
                     hasPermission = parentPermission;
                 if (parentPermission == false)

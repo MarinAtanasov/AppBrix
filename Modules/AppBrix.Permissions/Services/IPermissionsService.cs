@@ -90,7 +90,7 @@ public interface IPermissionsService
     /// <param name="role">The role.</param>
     /// <param name="permission">The permission.</param>
     /// <returns>Whether the role has access to the permission.</returns>
-    bool HasPermission(string role, string permission);
+    bool Check(string role, string permission);
 
     /// <summary>
     /// Gets a collection of the allowed permission for the role.

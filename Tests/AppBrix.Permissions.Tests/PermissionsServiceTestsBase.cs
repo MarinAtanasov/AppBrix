@@ -304,8 +304,8 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         service.GetDenied("b").Should().BeEmpty("the role should ha been removed with its denied permissions");
         service.GetChildren("a").Should().BeEmpty("the only child has been removed");
         service.GetParents("c").Should().BeEmpty("the only parent has been removed");
-        service.HasPermission("c", "a-b").Should().BeFalse("the parent has been removed with its parents");
-        service.HasPermission("c", "p-b").Should().BeFalse("the parent has been removed with its permissions");
+        service.Check("c", "a-b").Should().BeFalse("the parent has been removed with its parents");
+        service.Check("c", "p-b").Should().BeFalse("the parent has been removed with its permissions");
     }
     #endregion
 
@@ -397,28 +397,28 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestHasPermissionNullRole()
     {
-        Action action = () => this.app.GetPermissionsService().HasPermission(null, "p");
+        Action action = () => this.app.GetPermissionsService().Check(null, "p");
         action.Should().Throw<ArgumentNullException>();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestHasPermissionEmptyRole()
     {
-        Action action = () => this.app.GetPermissionsService().HasPermission(string.Empty, "p");
+        Action action = () => this.app.GetPermissionsService().Check(string.Empty, "p");
         action.Should().Throw<ArgumentNullException>();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestHasPermissionNullPermission()
     {
-        Action action = () => this.app.GetPermissionsService().HasPermission("a", null);
+        Action action = () => this.app.GetPermissionsService().Check("a", null);
         action.Should().Throw<ArgumentNullException>();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestHasPermissionEmptyPermission()
     {
-        Action action = () => this.app.GetPermissionsService().HasPermission("a", string.Empty);
+        Action action = () => this.app.GetPermissionsService().Check("a", string.Empty);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -456,22 +456,22 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         var service = this.app.GetPermissionsService();
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeFalse("no permission has been added");
+        service.Check("a", "p").Should().BeFalse("no permission has been added");
 
         service.Allow("a", "p");
         service.GetAllowed("a").Should().Equal(new[] { "p" }, because: "permission should have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeTrue("permission should have been allowed");
+        service.Check("a", "p").Should().BeTrue("permission should have been allowed");
 
         service.Deny("a", "p");
         service.GetAllowed("a").Should().BeEmpty("permission has been denied");
         service.GetDenied("a").Should().Equal(new[] { "p" }, because: "permission should have been denied");
-        service.HasPermission("a", "p").Should().BeFalse("permission should have been denied");
+        service.Check("a", "p").Should().BeFalse("permission should have been denied");
 
         service.Unset("a", "p");
         service.GetAllowed("a").Should().BeEmpty("permission has been unset");
         service.GetDenied("a").Should().BeEmpty("permission has been unset");
-        service.HasPermission("a", "p").Should().BeFalse("permission has been unset");
+        service.Check("a", "p").Should().BeFalse("permission has been unset");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -480,22 +480,22 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         var service = this.app.GetPermissionsService();
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeFalse("no permission has been added");
+        service.Check("a", "p").Should().BeFalse("no permission has been added");
 
         service.Deny("a", "p");
         service.GetAllowed("a").Should().BeEmpty("permission has been denied");
         service.GetDenied("a").Should().Equal(new[] { "p" }, because: "permission should have been denied");
-        service.HasPermission("a", "p").Should().BeFalse("permission should have been denied");
+        service.Check("a", "p").Should().BeFalse("permission should have been denied");
 
         service.Allow("a", "p");
         service.GetAllowed("a").Should().Equal(new[] { "p" }, because: "permission should have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeTrue("permission should have been allowed");
+        service.Check("a", "p").Should().BeTrue("permission should have been allowed");
 
         service.Unset("a", "p");
         service.GetAllowed("a").Should().BeEmpty("permission has been unset");
         service.GetDenied("a").Should().BeEmpty("permission has been unset");
-        service.HasPermission("a", "p").Should().BeFalse("permission has been unset");
+        service.Check("a", "p").Should().BeFalse("permission has been unset");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -507,7 +507,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         service.Allow("b", "p");
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
+        service.Check("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -519,7 +519,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         service.Deny("b", "p");
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeFalse("parent denied permission should have been inherited");
+        service.Check("a", "p").Should().BeFalse("parent denied permission should have been inherited");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -530,7 +530,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 
         service.Allow("b", "p");
         service.Deny("a", "p");
-        service.HasPermission("a", "p").Should().BeFalse("child permission should override parent");
+        service.Check("a", "p").Should().BeFalse("child permission should override parent");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -541,7 +541,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 
         service.Deny("b", "p");
         service.Allow("a", "p");
-        service.HasPermission("a", "p").Should().BeTrue("child permission should override parent");
+        service.Check("a", "p").Should().BeTrue("child permission should override parent");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -554,7 +554,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         service.Allow("c", "p");
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeTrue("grandparent allowed permission should have been inherited");
+        service.Check("a", "p").Should().BeTrue("grandparent allowed permission should have been inherited");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -567,7 +567,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         service.Allow("b", "p");
         service.GetAllowed("a").Should().BeEmpty("no permissions have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
-        service.HasPermission("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
+        service.Check("a", "p").Should().BeTrue("parent allowed permission should have been inherited");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -579,7 +579,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 
         service.Allow("b", "p");
         service.Deny("c", "p");
-        service.HasPermission("a", "p").Should().BeFalse("parent with denied permission should have priority");
+        service.Check("a", "p").Should().BeFalse("parent with denied permission should have priority");
     }
     #endregion
 }

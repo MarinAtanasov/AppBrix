@@ -60,9 +60,9 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
         var service = this.app.GetPermissionsService();
         for (var i = 0; i < 120000; i++)
         {
-            service.HasPermission("a", "p");
-            service.HasPermission("a", "p1");
-            service.HasPermission("a", "p22");
+            service.Check("a", "p");
+            service.Check("a", "p1");
+            service.Check("a", "p22");
         }
     }
 
