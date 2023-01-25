@@ -8,7 +8,6 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AppBrix.Caching.Memory.Impl;
 
@@ -30,10 +29,8 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
             this.app.GetTimerScheduledEventHub().Unschedule(this.cleanupScheduledEventArgs);
             this.cleanupScheduledEventArgs = null;
 
-            foreach (var key in this.cache.Keys.ToList())
-            {
-                this.Remove(key);
-            }
+            this.keysToRemove.AddRange(this.cache.Keys);
+            this.RemoveItemsByKeys();
             this.app = null;
         }
     }
@@ -98,6 +95,8 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     #endregion
 
     #region Private methods
+    private MemoryCachingConfig GetConfig() => this.app.ConfigService.GetMemoryCachingConfig();
+
     private void MemoryCacheCleanup(MemoryCacheCleanup _)
     {
         lock (this.cache)
@@ -105,42 +104,43 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
             if (this.app is not null)
             {
                 var now = this.app.GetTime();
-                var itemsToRemove = this.cache.Where(x => x.Value.HasExpired(now)).ToList();
-                this.RemoveItems(itemsToRemove);
+                foreach (var item in this.cache)
+                {
+                    if (item.Value.HasExpired(now))
+                        this.keysToRemove.Add(item.Key);
+                }
+
+                this.RemoveItemsByKeys();
+
                 this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
-                this.DisposeItems(itemsToRemove);
             }
         }
     }
 
-    private void RemoveItems(List<KeyValuePair<object, CacheItem>> items)
+    private void RemoveItemsByKeys()
     {
-        for (var i = 0; i < items.Count; i++)
+        for (var i = 0; i < this.keysToRemove.Count; i++)
         {
-            this.cache.Remove(items[i].Key);
-        }
-    }
-
-    private void DisposeItems(List<KeyValuePair<object, CacheItem>> items)
-    {
-        for (var i = 0; i < items.Count; i++)
-        {
-            try
+            if (this.cache.Remove(this.keysToRemove[i], out var item))
             {
-                items[i].Value.Dispose();
-            }
-            catch (Exception)
-            {
-                // Ignore error and continue disposing the rest of the items.
+                try
+                {
+                    item.Dispose();
+                }
+                catch (Exception)
+                {
+                    // Ignore error and continue disposing the rest of the items.
+                }
             }
         }
-    }
 
-    private MemoryCachingConfig GetConfig() => this.app.ConfigService.GetMemoryCachingConfig();
+        this.keysToRemove.Clear();
+    }
     #endregion
 
     #region Private fields and constants
     private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
+    private readonly List<object> keysToRemove = new List<object>();
     private readonly MemoryCacheCleanup cleanupEventArgs = new MemoryCacheCleanup();
     #nullable disable
     private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs;
