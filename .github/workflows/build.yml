@@ -22,4 +22,4 @@ jobs:
         run: dotnet build AppBrix.sln --configuration Release --no-restore --nologo --verbosity minimal
       - name: Test
         shell: pwsh
-        run: ./Test.ps1 -Release
+        run: ./Test.ps1 -release

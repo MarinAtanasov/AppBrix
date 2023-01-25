@@ -34,11 +34,11 @@ The tests are using xUnit.
 # You can add -Build to restore dependencies and build the solution.
 # You can add -Release to use the Release configuration instead of Debug.
 # Run functional tests (default). Add -Parallel for parallel execution.
-./Test.ps1 -Tests Functional  # ./Test.ps1
+./Test.ps1 -tests Functional  # ./Test.ps1
 # Run performance tests
-./Test.ps1 -Tests Performance  # ./Test.ps1 p
+./Test.ps1 -tests Performance  # ./Test.ps1 p
 # Run all tests
-./Test.ps1 -Tests All  # ./Test.ps1 a
+./Test.ps1 -tests All  # ./Test.ps1 a
 ```
 
 ## Publishing packages
