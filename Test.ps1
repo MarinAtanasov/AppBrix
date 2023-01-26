@@ -31,4 +31,4 @@ if ($parallel)
 }
 
 $paths = Get-ChildItem Tests -Directory | % { Join-Path $_.FullName -ChildPath ("bin/$($configuration)/$($framework)/$($_.Name).dll") };
-dotnet test $paths $filter $execute --nologo --verbosity minimal;
+dotnet test $paths $filter $execute --nologo --verbosity detailed;
