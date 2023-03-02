@@ -14,13 +14,13 @@
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix/master/icon-64x64.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
-    <PackageReleaseNotes>Upgrade .NET to 7.0.2.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 7.0.3.</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net7.0</TargetFramework>
-    <Version>0.37.0</Version>
+    <Version>0.38.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

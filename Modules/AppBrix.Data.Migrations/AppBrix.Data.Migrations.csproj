@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>AppBrix.Data.Migrations</AssemblyName>
     <AssemblyTitle>AppBrix.Data.Migrations</AssemblyTitle>
-    <Description>Module which enables database CodeFirst migrations functionality.</Description>
+    <Description>Module which enables database code first migrations functionality.</Description>
     <PackageId>AppBrix.Data.Migrations</PackageId>
     <PackageTags>AppBrix Module Data Migrations</PackageTags>
   </PropertyGroup>
@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.3" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
