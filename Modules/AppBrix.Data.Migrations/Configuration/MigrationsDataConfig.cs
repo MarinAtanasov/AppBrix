@@ -17,6 +17,12 @@ public sealed class MigrationsDataConfig : IConfig
     public MigrationsDataConfig()
     {
         this.EntryAssembly = string.Empty;
+        this.MigrationsHistoryTablePrefix = "__MH_";
+        this.MigrationsHistoryTableSuffixes = new []
+        {
+            "DbContext",
+            "Context"
+        };
     }
     #endregion
 
@@ -26,5 +32,17 @@ public sealed class MigrationsDataConfig : IConfig
     /// This is used during creation of migration scripts in order to find necessary assembly references.
     /// </summary>
     public string EntryAssembly { get; set; }
+
+    /// <summary>
+    /// Gets or sets the prefix used for migrations history table names.
+    /// This should not be changed once the application has been initialized.
+    /// </summary>
+    public string MigrationsHistoryTablePrefix { get; set; }
+
+    /// <summary>
+    /// Gets or sets the suffixes to trim from the migrations history table names.
+    /// This should not be changed once the application has been initialized.
+    /// </summary>
+    public string[] MigrationsHistoryTableSuffixes { get; set; }
     #endregion
 }

@@ -296,7 +296,21 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
     private string GenerateMigrationName(Type type, Version version) => $"{type.Name}_{version.ToString().Replace('.', '_')}";
 
-    private string GenerateMigrationsHistoryTableName(Type type) => $"__EFMH_{type.Name}";
+    private string GenerateMigrationsHistoryTableName(Type type)
+    {
+        var name = type.Name;
+        for (var i = 0; i < this.config.MigrationsHistoryTableSuffixes.Length; i++)
+        {
+            var suffix = this.config.MigrationsHistoryTableSuffixes[i];
+            if (name.Length > suffix.Length && name.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+            {
+                name = name[..^suffix.Length];
+                break;
+            }
+        }
+
+        return $"{this.config.MigrationsHistoryTablePrefix}{name}";
+    }
     #endregion
 
     #region Private fields and constants
