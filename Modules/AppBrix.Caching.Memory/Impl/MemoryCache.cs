@@ -18,19 +18,28 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     {
         this.app = context.App;
         this.app.GetEventHub().Subscribe<MemoryCacheCleanup>(this.MemoryCacheCleanup);
-        this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
+        this.config = this.app.ConfigService.GetMemoryCachingConfig();
+        this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.config.ExpirationCheck);
     }
 
     public void Uninitialize()
     {
+        lock (this.cleanupEventArgs)
+        {
+            if (this.cleanupScheduledEventArgs is not null)
+            {
+                this.app.GetTimerScheduledEventHub().Unschedule(this.cleanupScheduledEventArgs);
+                this.cleanupScheduledEventArgs = null;
+            }
+        }
+
         lock (this.cache)
         {
             this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.MemoryCacheCleanup);
-            this.app.GetTimerScheduledEventHub().Unschedule(this.cleanupScheduledEventArgs);
-            this.cleanupScheduledEventArgs = null;
 
             this.keysToRemove.AddRange(this.cache.Keys);
             this.RemoveItemsByKeys();
+            this.config = null;
             this.app = null;
         }
     }
@@ -62,14 +71,13 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
         if (slidingExpiration < TimeSpan.Zero)
             throw new ArgumentException($"Negative sliding expiration: {slidingExpiration}.");
 
-        var config = this.GetConfig();
         lock (this.cache)
         {
             this.cache.Remove(key, out var oldItem);
 
             this.cache.Add(key, new CacheItem(item, dispose,
-                absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : config.DefaultAbsoluteExpiration,
-                slidingExpiration > TimeSpan.Zero ? slidingExpiration : config.DefaultSlidingExpiration,
+                absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : this.config.DefaultAbsoluteExpiration,
+                slidingExpiration > TimeSpan.Zero ? slidingExpiration : this.config.DefaultSlidingExpiration,
                 this.app.GetTime()));
 
             oldItem?.Dispose();
@@ -95,8 +103,6 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     #endregion
 
     #region Private methods
-    private MemoryCachingConfig GetConfig() => this.app.ConfigService.GetMemoryCachingConfig();
-
     private void MemoryCacheCleanup(MemoryCacheCleanup _)
     {
         lock (this.cache)
@@ -111,8 +117,14 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
                 }
 
                 this.RemoveItemsByKeys();
+            }
+        }
 
-                this.cleanupScheduledEventArgs = this.app.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.GetConfig().ExpirationCheck);
+        lock (this.cleanupEventArgs)
+        {
+            if (this.cleanupScheduledEventArgs is not null)
+            {
+                this.cleanupScheduledEventArgs = this.app!.GetTimerScheduledEventHub().Schedule(this.cleanupEventArgs, this.config.ExpirationCheck);
             }
         }
     }
@@ -143,8 +155,9 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     private readonly List<object> keysToRemove = new List<object>();
     private readonly MemoryCacheCleanup cleanupEventArgs = new MemoryCacheCleanup();
     #nullable disable
-    private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs;
     private IApp app;
+    private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs;
+    private MemoryCachingConfig config;
     #nullable restore
     #endregion
 }

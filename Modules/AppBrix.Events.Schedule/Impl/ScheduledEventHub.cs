@@ -7,6 +7,7 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Services;
 using AppBrix.Lifecycle;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -79,10 +80,10 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
             var now = this.app.GetTime();
             lock (this.queue)
             {
-                token.ThrowIfCancellationRequested(); // Unintialized
+                token.ThrowIfCancellationRequested(); // Uninitialized
                 for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
                 {
-                    this.app.GetAsyncEventHub().Raise(args);
+                    this.executing.Add(args);
                     args.MoveToNextOccurrence(now);
                     if (now < args.Occurrence)
                         this.queue.ReprioritizeHead();
@@ -90,12 +91,23 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
                         this.queue.Pop();
                 }
             }
+
+            if (this.executing.Count == 0)
+                continue;
+
+            for (var i = 0; i < this.executing.Count; i++)
+            {
+                this.app.GetAsyncEventHub().Raise(this.executing[i]);
+            }
+
+            this.executing.Clear();
         }
     }
     #endregion
 
     #region Private fields and constants
     private readonly PriorityQueue queue = new PriorityQueue();
+    private readonly List<PriorityQueueItem> executing = new List<PriorityQueueItem>();
     private CancellationTokenSource? cts;
     #nullable disable
     private IApp app;
