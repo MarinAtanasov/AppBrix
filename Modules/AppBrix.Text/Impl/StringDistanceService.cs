@@ -39,15 +39,15 @@ internal sealed class StringDistanceService : IStringDistanceService
                 var k = charArray[rightJ - minChar];
                 var l = db;
 
-                var matrixIp2Jp1 = matrixIp2[j + 1];                        // insert
-                var matrixIp1Jp2 = matrixIp1[j + 2];                        // delete
-                var matrixIp1Jp1 = matrixIp1[j + 1];                        // match
-                var matrixKLpIJ1mKL = matrix[k][l] + (i - k) + 1 + (j - l); // transpose
+                var matrixIp2Jp1 = matrixIp2[j + 1];                         // insert
+                var matrixIp1Jp2 = matrixIp1[j + 2];                         // delete
+                var matrixIp1Jp1 = matrixIp1[j + 1];                         // match
+                var matrixKLpIJ1mKL = matrix[k][l] + (i - k) + 1 + (j - l);  // transpose
 
                 if (leftI == rightJ)
                     db = j + 1;
                 else
-                    matrixIp1Jp1++;                                         // substitute
+                    matrixIp1Jp1++;                                             // substitute
 
                 var min = matrixIp2Jp1 < matrixIp1Jp2 ? matrixIp2Jp1 + 1 : matrixIp1Jp2 + 1;
                 if (matrixIp1Jp1 < min)

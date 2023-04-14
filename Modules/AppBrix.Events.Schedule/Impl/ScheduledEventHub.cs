@@ -34,6 +34,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
             this.timer.Dispose();
             this.cts?.Cancel();
             this.cts = null;
+            this.executing.Clear();
             this.queue.Clear();
         }
 
@@ -80,7 +81,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
             var now = this.app.GetTime();
             lock (this.queue)
             {
-                token.ThrowIfCancellationRequested(); // Uninitialized
+                token.ThrowIfCancellationRequested();  // Uninitialized
                 for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
                 {
                     this.executing.Add(args);
