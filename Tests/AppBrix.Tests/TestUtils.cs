@@ -6,6 +6,7 @@ using AppBrix.Modules;
 using AppBrix.Tests.Mocks;
 using FluentAssertions;
 using System;
+using System.Threading.Tasks;
 
 namespace AppBrix.Tests;
 
@@ -27,6 +28,16 @@ public static class TestUtils
         GC.Collect();
 
         action.ExecutionTime().Should().BeLessThan(TimeSpan.FromMilliseconds(100), "this is a performance test");
+    }
+
+    /// <summary>
+    /// Checks that the function is executed under a specified time.
+    /// </summary>
+    /// <param name="func">The function to be invoked.</param>
+    public static void AssertPerformance(Func<Task> func)
+    {
+        Action action = () => func().GetAwaiter().GetResult();
+        TestUtils.AssertPerformance(action);
     }
 
     /// <summary>

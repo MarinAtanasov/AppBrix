@@ -20,9 +20,9 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetContainer()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         container.Should().NotBeNull("unable to get the container");
-        var container2 = this.GetContainer();
+        var container2 = this.app.Container;
         container2.Should().NotBeNull("second call did not return a container");
         container2.Should().BeSameAs(container, "returned a different instance of the container");
     }
@@ -30,7 +30,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestResolveByInterface()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         var iContainer = this.app.Get<IContainer>();
         iContainer.Should().NotBeNull("unable to resolve the IContainer interface");
         iContainer.Should().BeSameAs(container, "returned IContainer is a different instance");
@@ -39,7 +39,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestResolveByClass()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         var registered = new ChildMock();
         container.Register(registered);
         var resolved = this.app.Get(typeof(ChildMock));
@@ -50,7 +50,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestResolveByBaseClass()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         var original = new ChildMock();
         container.Register(original);
         var resolved = container.Get<ParentMock>();
@@ -61,15 +61,15 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterNull()
     {
-        var container = this.GetContainer();
-        Action action = () => container.Register(null);
+        var container = this.app.Container;
+        Action action = () => container.Register(null!);
         action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestObjectBaseTypeNotRegistered()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         container.Register(new ChildMock());
         Action action = () => container.Get<object>();
         action.Should().Throw<KeyNotFoundException>("items should not be registered as type of object");
@@ -78,7 +78,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDoubleRegistration()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         var resolved = new ChildMock();
         var resolved2 = new ChildMock();
         container.Register(resolved);
@@ -91,7 +91,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterGenericObjectError()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         Action action = () => container.Register(new object());
         action.Should().Throw<ArgumentException>("registering a  System.Object should not be allowed.");
     }
@@ -99,7 +99,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterString()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         Action action = () => container.Register("AppBrix");
         action.Should().Throw<ArgumentException>("registering a string should not be allowed");
     }
@@ -107,7 +107,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRegisterInt()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
         Action action = () => container.Register(42);
         action.Should().Throw<ArgumentException>("registering a value type should not be allowed");
     }
@@ -117,11 +117,9 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     #endregion
 
     #region Private methods
-    private IContainer GetContainer() => this.app.Container;
-
     private void TestPerformanceContainerInternal()
     {
-        var container = this.GetContainer();
+        var container = this.app.Container;
 
         for (var i = 0; i < 1000; i++)
         {

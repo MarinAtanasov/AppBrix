@@ -21,7 +21,7 @@ internal sealed class JsonCacheSerializer : ICacheSerializer
     #region Public and overriden methods
     public byte[] Serialize(object item) => JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), this.settings);
 
-    public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings);
+    public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings)!;
     #endregion
 
     #region Private fields and constants

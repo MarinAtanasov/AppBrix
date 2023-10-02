@@ -22,7 +22,7 @@ public sealed class MigrationsDbContextServiceTests : TestsBase<InMemoryDataModu
     public void TestGetNullType()
     {
         var service = this.app.GetDbContextService();
-        var action = () => service.Get(null);
+        var action = () => service.Get(null!);
         action.Should().Throw<ArgumentNullException>("type should not be null");
     }
 

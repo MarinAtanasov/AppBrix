@@ -5,6 +5,7 @@ using AppBrix.Caching.Tests.Mocks;
 using AppBrix.Tests;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AppBrix.Caching.Tests;
@@ -29,37 +30,39 @@ public sealed class CacheTests : TestsBase<CachingModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestCacheItem()
+    public async Task TestCacheItem()
     {
         var cache = this.app.GetCache();
         var key = "key";
         var value = "Test Value";
-        cache.Set(key, value);
-        var cached = cache.Get<string>(key).GetAwaiter().GetResult();
+        await cache.Set(key, value);
+        var cached = await cache.Get<string>(key);
         cached.Should().NotBeNull("the item should be in the cache");
         cached.Should().Be(value, "the returned object should be equal to the original");
-        cache.Remove(key).GetAwaiter().GetResult();
-        cache.Refresh(key).GetAwaiter().GetResult();
-        cache.Get<object>(key).GetAwaiter().GetResult().Should().BeNull("item should have been removed");
+        await cache.Remove(key);
+        await cache.Refresh(key);
+        var removed = await cache.Get<object>(key);
+        removed.Should().BeNull("item should have been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestReplaceItem()
+    public async Task TestReplaceItem()
     {
         var cache = this.app.GetCache();
         var key = "key";
         var value = "Test Value";
-        cache.Set(key, value);
-        var cached = cache.Get<string>(key).GetAwaiter().GetResult();
+        await cache.Set(key, value);
+        var cached = await cache.Get<string>(key);
         cached.Should().NotBeNull("the item should be in the cache");
         cached.Should().Be(value, "the returned object should be equal to the original");
         value = "Test Replaced Value";
-        cache.Set(key, value).GetAwaiter().GetResult();
-        cached = cache.Get<string>(key).GetAwaiter().GetResult();
+        await cache.Set(key, value);
+        cached = await cache.Get<string>(key);
         cached.Should().NotBeNull("the item should be in the cache after being replaced");
         cached.Should().Be(value, "the returned object should be equal to the replaced");
-        cache.Remove(key).GetAwaiter().GetResult();
-        cache.Get<object>(key).GetAwaiter().GetResult().Should().BeNull("item should have been removed");
+        await cache.Remove(key);
+        var removed = await cache.Get<object>(key);
+        removed.Should().BeNull("item should have been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -67,7 +70,7 @@ public sealed class CacheTests : TestsBase<CachingModule>
     #endregion
 
     #region Private methods
-    private void TestPerformanceCacheInternal()
+    private async Task TestPerformanceCacheInternal()
     {
         const int items = 2000;
         const int gets = items * 10;
@@ -75,16 +78,16 @@ public sealed class CacheTests : TestsBase<CachingModule>
 
         for (var i = 0; i < items; i++)
         {
-            cache.Set(i.ToString(), i).GetAwaiter().GetResult();
+            await cache.Set(i.ToString(), i);
         }
         for (var i = 0; i < gets; i++)
         {
             var itemId = i % items;
-            cache.Get(itemId.ToString(), typeof(int)).GetAwaiter().GetResult();
+            await cache.Get(itemId.ToString(), typeof(int));
         }
         for (var i = 0; i < items; i++)
         {
-            cache.Remove(i.ToString()).GetAwaiter().GetResult();
+            await cache.Remove(i.ToString());
         }
     }
     #endregion

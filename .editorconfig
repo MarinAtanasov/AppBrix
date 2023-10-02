@@ -217,8 +217,12 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix = 
 dotnet_naming_style.begins_with_i.word_separator = 
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
 csharp_style_prefer_local_over_anonymous_function = true:silent
 csharp_style_prefer_tuple_swap = true:silent
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:silent
 
 [*.{cs,vb}]
 dotnet_diagnostic.CA1822.severity=silent

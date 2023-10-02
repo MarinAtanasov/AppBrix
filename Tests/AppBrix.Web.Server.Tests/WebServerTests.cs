@@ -33,8 +33,7 @@ public sealed class WebServerTests
             .SetUrl(WebServerTests.TestConnectionServiceUrl)
             .SetHeader("x-test", "test")
             .SetHeader("x-test")
-            .Send()
-            .ConfigureAwait(false);
+            .Send();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the GET request should return status OK");
 
         var postResponse = await app.GetFactoryService().GetHttpRequest()
@@ -44,12 +43,11 @@ public sealed class WebServerTests
             .SetHeader("Content-Type", "application/json")
             .SetMethod(HttpMethod.Post)
             .SetVersion(new Version(1, 1))
-            .Send<int>()
-            .ConfigureAwait(false);
+            .Send<int>();
         postResponse.StatusCode.Should().Be((int)HttpStatusCode.OK, "the POST request should return status OK");
         postResponse.Content.Should().Be(42, "the request should return the same integer that has been passed");
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -66,21 +64,19 @@ public sealed class WebServerTests
         app1.Container.Register(app2Client);
         var response1 = await app1.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.AppIdService2Url)
-            .Send<AppIdMessage>()
-            .ConfigureAwait(false);
+            .Send<AppIdMessage>();
         response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
         response1.Content.Id.Should().Be(app2.ConfigService.Get<AppIdConfig>().Id, "the first app should receive the second app's id");
 
         app2.Container.Register(app1Client);
         var response2 = await app2.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.AppIdServiceUrl)
-            .Send<AppIdMessage>()
-            .ConfigureAwait(false);
+            .Send<AppIdMessage>();
         response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
         response2.Content.Id.Should().Be(app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
 
-        await webApp2.StopAsync().ConfigureAwait(false);
-        await webApp1.StopAsync().ConfigureAwait(false);
+        await webApp2.StopAsync();
+        await webApp1.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -93,8 +89,7 @@ public sealed class WebServerTests
 
         var response = await app.GetFactoryService().GetHttpRequest()
             .SetUrl($"{WebServerTests.EchoServiceUrl}/{nameof(this.TestEchoGetString)}")
-            .Send<string>()
-            .ConfigureAwait(false);
+            .Send<string>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.ReasonPhrase.Should().Be(HttpStatusCode.OK.ToString(), "the request should return status OK");
         response.Version.Should().Be(new Version(1, 1), "the version of the response should be 1.1");
@@ -105,7 +100,7 @@ public sealed class WebServerTests
             "the content type should be a utf-8 string"
         );
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -128,12 +123,11 @@ public sealed class WebServerTests
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
             .SetMethod(HttpMethod.Post)
-            .Send<EchoModel>()
-            .ConfigureAwait(false);
+            .Send<EchoModel>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.Content.Should().Be(model, "the response should echo the request");
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -152,12 +146,11 @@ public sealed class WebServerTests
             .SetExpiresHeader(app.GetTime().AddYears(1))
             .SetLastModifiedHeader(app.GetTime())
             .SetMethod(HttpMethod.Post)
-            .Send<EchoModel>()
-            .ConfigureAwait(false);
+            .Send<EchoModel>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.Content.Should().Be(model, "the response should echo the request");
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -176,12 +169,11 @@ public sealed class WebServerTests
             .SetExpiresHeader(app.GetTime().AddYears(1))
             .SetLastModifiedHeader(app.GetTime())
             .SetMethod(HttpMethod.Post)
-            .Send<byte[]>()
-            .ConfigureAwait(false);
+            .Send<byte[]>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
         response.Content.Length.Should().BePositive("the response should echo the request");
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -200,13 +192,13 @@ public sealed class WebServerTests
             .SetExpiresHeader(app.GetTime().AddYears(1))
             .SetLastModifiedHeader(app.GetTime())
             .SetMethod(HttpMethod.Post);
-        await using (var response = await request.SendStream().ConfigureAwait(false))
+        await using (var response = await request.SendStream())
         {
             response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
             response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
         }
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -225,13 +217,13 @@ public sealed class WebServerTests
             .SetExpiresHeader(app.GetTime().AddYears(1))
             .SetLastModifiedHeader(app.GetTime())
             .SetMethod(HttpMethod.Post);
-        await using (var response = await request.SendStream().ConfigureAwait(false))
+        await using (var response = await request.SendStream())
         {
             response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
             response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
         }
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -244,7 +236,7 @@ public sealed class WebServerTests
 
         TestUtils.AssertPerformance(() => this.TestPerformanceWebServerInternal(app));
 
-        await webApp.StopAsync().ConfigureAwait(false);
+        await webApp.StopAsync();
     }
     #endregion
 
@@ -291,16 +283,14 @@ public sealed class WebServerTests
         app.MapControllers();
     }
 
-    private void TestPerformanceWebServerInternal(IApp app)
+    private async Task TestPerformanceWebServerInternal(IApp app)
     {
         for (var i = 0; i < 100; i++)
         {
-            app.GetFactoryService()
+            await app.GetFactoryService()
                 .GetHttpRequest()
                 .SetUrl(WebServerTests.TestConnectionServiceUrl)
-                .Send<string>()
-                .GetAwaiter()
-                .GetResult();
+                .Send<string>();
         }
     }
     #endregion
