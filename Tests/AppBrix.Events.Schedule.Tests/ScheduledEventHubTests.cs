@@ -26,7 +26,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     public void TestScheduleNullArgs()
     {
         var hub = this.app.GetScheduledEventHub();
-        Action action = () => hub.Schedule<EventMock>(null);
+        var action = () => hub.Schedule<EventMock>(null);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 
@@ -64,7 +64,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     public void TestUnscheduleNullArgs()
     {
         var hub = this.app.GetScheduledEventHub();
-        Action action = () => hub.Unschedule<EventMock>(null);
+        var action = () => hub.Unschedule<EventMock>(null);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 

@@ -36,7 +36,7 @@ public static class TestUtils
     /// <param name="func">The function to be invoked.</param>
     public static void AssertPerformance(Func<Task> func)
     {
-        Action action = () => func().GetAwaiter().GetResult();
+        var action = () => func().GetAwaiter().GetResult();
         TestUtils.AssertPerformance(action);
     }
 

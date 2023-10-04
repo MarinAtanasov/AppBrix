@@ -11,7 +11,7 @@ namespace AppBrix.ConsoleApp;
 /// </summary>
 internal static class Program
 {
-    internal static void Main(string[] _)
+    internal static void Main()
     {
         var stopwatch = Stopwatch.StartNew();
         var app = App.Start<MainModule>(new ConfigService(

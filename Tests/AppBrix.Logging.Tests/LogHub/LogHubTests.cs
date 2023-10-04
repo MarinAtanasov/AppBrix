@@ -175,7 +175,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     {
         var message = "Test message";
         var before = this.app.GetTime();
-        DateTime executed = DateTime.MinValue;
+        var executed = DateTime.MinValue;
         this.app.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
         this.app.GetLogHub().Debug(message);
         executed.Should().BeOnOrAfter(before, "created date time should be greater than the time before creation");

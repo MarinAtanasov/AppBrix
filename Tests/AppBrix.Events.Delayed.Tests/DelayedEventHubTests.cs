@@ -23,7 +23,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     public void TestSubscribeNullHandler()
     {
         var hub = this.app.GetDelayedEventHub();
-        Action action = () => hub.Subscribe<EventMock>(null);
+        var action = () => hub.Subscribe<EventMock>(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -31,7 +31,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     public void TestUnsubscribeNullHandler()
     {
         var hub = this.app.GetDelayedEventHub();
-        Action action = () => hub.Unsubscribe<EventMock>(null);
+        var action = () => hub.Unsubscribe<EventMock>(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -58,7 +58,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.app.GetDelayedEventHub();
-        Action action = () => hub.RaiseImmediate(null);
+        var action = () => hub.RaiseImmediate(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -103,7 +103,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
-        Action action = () => hub.RaiseImmediate(new EventMock(5));
+        var action = () => hub.RaiseImmediate(new EventMock(5));
         action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
         called.Should().Be(1, "the handler after the failing one shouldn't be called");
     }
@@ -133,7 +133,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.app.GetDelayedEventHub();
-        Action action = () => hub.RaiseDelayed(null);
+        var action = () => hub.RaiseDelayed(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -187,7 +187,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
         hub.RaiseDelayed(new EventMock(5));
-        Action action = () => hub.Flush();
+        var action = () => hub.Flush();
         action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
         called.Should().Be(1, "the handler after the failing one shouldn't be called");
     }

@@ -16,7 +16,7 @@ public sealed class SqliteDataConfig : IConfig
     /// </summary>
     public SqliteDataConfig()
     {
-        this.ConnectionString = @"Data Source=AppBrix.sqlite3;";
+        this.ConnectionString = "Data Source=AppBrix.sqlite3;";
     }
     #endregion
 

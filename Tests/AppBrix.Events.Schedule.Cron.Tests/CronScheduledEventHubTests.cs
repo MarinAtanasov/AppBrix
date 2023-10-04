@@ -84,7 +84,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     public void TestUnscheduleNullArgs()
     {
         var hub = this.app.GetCronScheduledEventHub();
-        Action action = () => hub.Unschedule<EventMock>(null);
+        var action = () => hub.Unschedule<EventMock>(null);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 

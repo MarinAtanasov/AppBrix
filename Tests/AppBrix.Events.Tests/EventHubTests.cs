@@ -175,7 +175,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNullArgumentSubscribe()
     {
         var hub = this.GetEventHub();
-        Action action = () => hub.Subscribe<IEvent>(null);
+        var action = () => hub.Subscribe<IEvent>(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -183,7 +183,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNullArgumentUnsubscribe()
     {
         var hub = this.GetEventHub();
-        Action action = () => hub.Unsubscribe<IEvent>(null);
+        var action = () => hub.Unsubscribe<IEvent>(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -191,7 +191,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNullArgumentRaise()
     {
         var hub = this.GetEventHub();
-        Action action = () => hub.Raise(null);
+        var action = () => hub.Raise(null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -203,7 +203,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
-        Action action = () => hub.Raise(new EventMock(5));
+        var action = () => hub.Raise(new EventMock(5));
         action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
         called.Should().Be(1, "the handler after the failing one shouldn't be called");
     }

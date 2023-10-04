@@ -30,14 +30,14 @@ public sealed class WebServerTests
         app.Container.Register(client);
 
         var response = await app.GetFactoryService().GetHttpRequest()
-            .SetUrl(WebServerTests.TestConnectionServiceUrl)
+            .SetUrl(WebServerTests.ConnectionTestServiceUrl)
             .SetHeader("x-test", "test")
             .SetHeader("x-test")
             .Send();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the GET request should return status OK");
 
         var postResponse = await app.GetFactoryService().GetHttpRequest()
-            .SetUrl(WebServerTests.TestConnectionServiceUrl)
+            .SetUrl(WebServerTests.ConnectionTestServiceUrl)
             .SetClientName(string.Empty)
             .SetContent(42)
             .SetHeader("Content-Type", "application/json")
@@ -289,7 +289,7 @@ public sealed class WebServerTests
         {
             await app.GetFactoryService()
                 .GetHttpRequest()
-                .SetUrl(WebServerTests.TestConnectionServiceUrl)
+                .SetUrl(WebServerTests.ConnectionTestServiceUrl)
                 .Send<string>();
         }
     }
@@ -298,7 +298,7 @@ public sealed class WebServerTests
     #region Private fields and constants
     private const string ServerBaseAddress = "http://localhost:1337/";
     private const string AppIdServiceUrl = WebServerTests.ServerBaseAddress + "api/appid";
-    private const string TestConnectionServiceUrl = WebServerTests.ServerBaseAddress + "api/testconnection";
+    private const string ConnectionTestServiceUrl = WebServerTests.ServerBaseAddress + "api/testconnection";
     private const string EchoServiceUrl = WebServerTests.ServerBaseAddress + "api/echo";
 
     private const string Server2BaseAddress = "http://localhost:1338/";

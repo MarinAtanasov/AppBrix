@@ -177,7 +177,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestShuffleNullItems()
     {
         var service = this.app.GetRandomService();
-        Action action = () => service.Shuffle<object>(null);
+        var action = () => service.Shuffle<object>(null);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
 

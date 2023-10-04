@@ -72,7 +72,7 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
         for (var i = 0; i < 60; i++)
         {
             using var context = this.app.GetDbContextService().Get<DataItemContextMock>();
-            var _ = context.Items.Single();
+            _ = context.Items.Single();
         }
 
         using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())

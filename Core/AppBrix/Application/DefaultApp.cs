@@ -20,6 +20,7 @@ internal sealed class DefaultApp : IApp
             throw new ArgumentNullException(nameof(configService));
 
         this.ConfigService = configService;
+        this.Container = null;
     }
     #endregion
 
@@ -176,7 +177,7 @@ internal sealed class DefaultApp : IApp
                     this.RegisterModules();
                     goto case RequestedAction.Reinitialize;
                 default:
-                    throw new ArgumentOutOfRangeException($@"{nameof(RequestedAction)}: {requestedAction}");
+                    throw new ArgumentOutOfRangeException($"{nameof(RequestedAction)}: {requestedAction}");
             }
         }
     }
@@ -218,7 +219,7 @@ internal sealed class DefaultApp : IApp
                     this.Start();
                     return;
                 default:
-                    throw new ArgumentOutOfRangeException($@"{nameof(RequestedAction)}: {requestedAction}");
+                    throw new ArgumentOutOfRangeException($"{nameof(RequestedAction)}: {requestedAction}");
             }
         }
     }

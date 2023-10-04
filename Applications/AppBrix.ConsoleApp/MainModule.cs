@@ -34,8 +34,7 @@ public sealed class MainModule : MainModuleBase
         typeof(Random.RandomModule),
         typeof(Text.TextModule),
         typeof(Time.TimeModule),
-        typeof(Web.Client.WebClientModule),
-        //typeof(Web.Server.WebServerModule)
+        typeof(Web.Client.WebClientModule)
     };
     #endregion
 }

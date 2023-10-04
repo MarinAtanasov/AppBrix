@@ -49,7 +49,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     public void TestRegisterNullFactoryMethodType()
     {
         var service = this.GetFactoryService();
-        Func<FactoryTests> factory = () => this;
+        var factory = () => this;
         var action = () => service.Register(factory, null);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }

@@ -92,7 +92,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     public void TestUnscheduleNullArgs()
     {
         var hub = this.app.GetTimerScheduledEventHub();
-        Action action = () => hub.Unschedule<EventMock>(null);
+        var action = () => hub.Unschedule<EventMock>(null);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 

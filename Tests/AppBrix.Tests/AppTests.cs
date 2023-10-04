@@ -21,14 +21,14 @@ public sealed class AppTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCreateAppNullConfigService()
     {
-        var action = () => App.Create(null);
+        var action = () => App.Create(null!);
         action.Should().Throw<ArgumentNullException>("config service cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAppConfigCreateNullType()
     {
-        var action = () => ModuleConfigElement.Create(null);
+        var action = () => ModuleConfigElement.Create(null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
@@ -42,8 +42,7 @@ public sealed class AppTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetAllDependenciesExtensionNullModule()
     {
-        IModule module = null;
-        var action = () => module.GetAllDependencies();
+        var action = () => AppBrixExtensions.GetAllDependencies(null!);
         action.Should().Throw<ArgumentNullException>("module cannot be null");
     }
 
@@ -52,7 +51,7 @@ public sealed class AppTests
     {
         var app = this.CreateDefaultApp<SimpleModuleMock>();
         var configService = app.ConfigService;
-        var oldConfig = configService.GetAppConfig();
+        var oldConfig = configService.Get<AppConfig>();
         oldConfig.Modules.Clear();
         var newConfig = new AppConfig();
         newConfig.Modules.Add(ModuleConfigElement.Create<SimpleModuleMock>());
@@ -357,7 +356,7 @@ public sealed class AppTests
         var module = new SimpleEmptyModuleMock();
         for (var i = 0; i < 100; i++)
         {
-            var _ = module.Dependencies.ToList();
+            _ = module.Dependencies.ToList();
         }
     }
     #endregion

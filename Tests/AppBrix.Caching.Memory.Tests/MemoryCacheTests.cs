@@ -60,7 +60,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestSetNullKey()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(null, this);
+        var action = () => cache.Set(null, this);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
 
@@ -68,7 +68,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestSetNullItem()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(nameof(this.TestSetNullItem), null);
+        var action = () => cache.Set(nameof(this.TestSetNullItem), null);
         action.Should().Throw<ArgumentNullException>("item should not be null");
     }
 
@@ -76,7 +76,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestSetNegativeAbsoluteExpiration()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(nameof(this.TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
+        var action = () => cache.Set(nameof(this.TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
         action.Should().Throw<ArgumentException>("absolute expiration should not be negative");
     }
 
@@ -84,7 +84,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestSetNegativeSlidingExpiration()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Set(nameof(this.TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
+        var action = () => cache.Set(nameof(this.TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
         action.Should().Throw<ArgumentException>("sliding expiration should not be negative");
     }
 

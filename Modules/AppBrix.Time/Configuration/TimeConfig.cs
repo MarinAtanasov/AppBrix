@@ -17,8 +17,8 @@ public sealed class TimeConfig : IConfig
     /// </summary>
     public TimeConfig()
     {
-        this.DateTimeFormat = @"yyyy-MM-ddTHH:mm:ss.fffK";
-        this.OffsetFormat = @"yyyy-MM-ddTHH:mm:ss.fffK";
+        this.DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffK";
+        this.OffsetFormat = "yyyy-MM-ddTHH:mm:ss.fffK";
     }
     #endregion
 

@@ -165,7 +165,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public void TestNullArgumentSubscribe()
     {
         var hub = this.GetAsyncEventHub();
-        Action action = () => hub.Subscribe((Action<IEvent>)null);
+        var action = () => hub.Subscribe((Action<IEvent>)null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -173,7 +173,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public void TestNullArgumentUnsubscribe()
     {
         var hub = this.GetAsyncEventHub();
-        Action action = () => hub.Unsubscribe((Action<IEvent>)null);
+        var action = () => hub.Unsubscribe((Action<IEvent>)null);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -181,7 +181,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public void TestNullArgumentRaise()
     {
         var hub = this.GetAsyncEventHub();
-        Action action = () => hub.Raise(null);
+        var action = () => hub.Raise(null);
         action.Should().Throw<ArgumentNullException>();
     }
 

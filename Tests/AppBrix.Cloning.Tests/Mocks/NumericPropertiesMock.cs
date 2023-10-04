@@ -40,6 +40,6 @@ internal class NumericPropertiesMock
     #endregion
 
     #region Private fields and constants
-    public float f = 0;
+    public float f;
     #endregion
 }

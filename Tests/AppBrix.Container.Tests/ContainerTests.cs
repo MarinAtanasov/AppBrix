@@ -62,7 +62,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     public void TestRegisterNull()
     {
         var container = this.app.Container;
-        Action action = () => container.Register(null!);
+        var action = () => container.Register(null!);
         action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
     }
 
@@ -92,7 +92,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     public void TestRegisterGenericObjectError()
     {
         var container = this.app.Container;
-        Action action = () => container.Register(new object());
+        var action = () => container.Register(new object());
         action.Should().Throw<ArgumentException>("registering a  System.Object should not be allowed.");
     }
 
@@ -100,7 +100,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     public void TestRegisterString()
     {
         var container = this.app.Container;
-        Action action = () => container.Register("AppBrix");
+        var action = () => container.Register("AppBrix");
         action.Should().Throw<ArgumentException>("registering a string should not be allowed");
     }
 
@@ -108,7 +108,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     public void TestRegisterInt()
     {
         var container = this.app.Container;
-        Action action = () => container.Register(42);
+        var action = () => container.Register(42);
         action.Should().Throw<ArgumentException>("registering a value type should not be allowed");
     }
 
