@@ -3,6 +3,7 @@
 
 using AppBrix.Caching.Memory.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using System.Threading;

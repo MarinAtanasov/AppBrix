@@ -4,6 +4,7 @@
 using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using Xunit;

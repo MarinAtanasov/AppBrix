@@ -5,6 +5,7 @@ using AppBrix.Factory.Contracts;
 using AppBrix.Factory.Services;
 using AppBrix.Factory.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using Xunit;

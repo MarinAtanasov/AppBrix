@@ -2,6 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using AppBrix.Text.Tests.Mocks;
 using FluentAssertions;
 using System.Text;

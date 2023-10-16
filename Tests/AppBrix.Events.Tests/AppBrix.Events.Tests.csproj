@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Events\AppBrix.Events.csproj" />
-    <ProjectReference Include="..\..\Testing\AppBrix.Testing\AppBrix.Testing.csproj" />
+    <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

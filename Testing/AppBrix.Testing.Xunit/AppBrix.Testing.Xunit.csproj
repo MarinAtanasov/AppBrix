@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>AppBrix.Testing.Xunit</AssemblyName>
+    <AssemblyTitle>AppBrix.Testing.Xunit</AssemblyTitle>
+    <Description>Tooling for testing AppBrix applications and modules using xUnit.</Description>
+    <PackageId>AppBrix.Testing.xUnit</PackageId>
+    <PackageTags>AppBrix Testing xUnit</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Testing\AppBrix.Testing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.5.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

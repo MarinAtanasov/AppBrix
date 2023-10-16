@@ -4,6 +4,7 @@
 using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Cron.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;

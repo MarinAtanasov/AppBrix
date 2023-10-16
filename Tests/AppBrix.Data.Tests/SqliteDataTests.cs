@@ -7,6 +7,7 @@ using AppBrix.Data.Migrations.Data;
 using AppBrix.Data.Sqlite;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;

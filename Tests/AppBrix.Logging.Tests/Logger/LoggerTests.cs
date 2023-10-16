@@ -3,6 +3,7 @@
 
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using System;

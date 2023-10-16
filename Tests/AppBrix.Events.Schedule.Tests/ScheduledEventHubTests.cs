@@ -3,6 +3,7 @@
 
 using AppBrix.Events.Schedule.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;

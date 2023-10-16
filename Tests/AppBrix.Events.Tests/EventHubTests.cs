@@ -5,6 +5,7 @@ using AppBrix.Events.Contracts;
 using AppBrix.Events.Services;
 using AppBrix.Events.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;

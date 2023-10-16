@@ -3,6 +3,7 @@
 
 using AppBrix.Caching.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Threading.Tasks;

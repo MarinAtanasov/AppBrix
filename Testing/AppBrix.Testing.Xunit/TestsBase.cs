@@ -3,11 +3,10 @@
 
 using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
-using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 
-namespace AppBrix.Testing;
+namespace AppBrix.Testing.Xunit;
 
 /// <summary>
 /// A base testing class that holds an application.
@@ -45,19 +44,8 @@ public abstract class TestsBase : IDisposable
     /// <param name="action">The action to be invoked.</param>
     /// <param name="duration">The maximum allowed duration.</param>
     /// <param name="firstPass">The maximum allowed duration on the first pass.</param>
-    protected void AssertPerformance(Action action, TimeSpan duration = default, TimeSpan firstPass = default)
-    {
-        if (duration == default)
-            duration = TimeSpan.FromMilliseconds(100);
-        if (firstPass == default)
-            firstPass = TimeSpan.FromMilliseconds(5000);
-
-        action.ExecutionTime().Should().BeLessThan(firstPass, "this is a performance test first pass");
-
-        GC.Collect();
-
-        action.ExecutionTime().Should().BeLessThan(duration, "this is a performance test");
-    }
+    protected void AssertPerformance(Action action, TimeSpan duration = default, TimeSpan firstPass = default) =>
+        action.AssertPerformance(duration, firstPass);
 
     /// <summary>
     /// Checks that the function is executed under a specified time.
@@ -65,11 +53,8 @@ public abstract class TestsBase : IDisposable
     /// <param name="func">The function to be invoked.</param>
     /// <param name="duration">The maximum allowed duration.</param>
     /// <param name="firstPass">The maximum allowed duration on the first pass.</param>
-    protected void AssertPerformance(Func<Task> func, TimeSpan duration = default, TimeSpan firstPass = default)
-    {
-        var action = () => func().GetAwaiter().GetResult();
-        this.AssertPerformance(action, duration, firstPass);
-    }
+    protected void AssertPerformance(Func<Task> func, TimeSpan duration = default, TimeSpan firstPass = default) =>
+        func.AssertPerformance(duration, firstPass);
     #endregion
 
     #region Private fields and constants

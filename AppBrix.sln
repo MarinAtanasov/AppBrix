@@ -145,6 +145,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Web.Client.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.Web.Server.Tests", "Tests\AppBrix.Web.Server.Tests\AppBrix.Web.Server.Tests.csproj", "{7DB372D5-0673-4852-B9C1-8F31EF57493F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBrix.Testing.Xunit", "Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj", "{7600BD9E-E721-4D6A-AEAF-B8FEC4A40A23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -384,6 +386,10 @@ Global
 		{F5954D10-7C98-4223-B135-4A37A2DB6703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5954D10-7C98-4223-B135-4A37A2DB6703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5954D10-7C98-4223-B135-4A37A2DB6703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7600BD9E-E721-4D6A-AEAF-B8FEC4A40A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7600BD9E-E721-4D6A-AEAF-B8FEC4A40A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7600BD9E-E721-4D6A-AEAF-B8FEC4A40A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7600BD9E-E721-4D6A-AEAF-B8FEC4A40A23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -447,6 +453,7 @@ Global
 		{A0C52482-3245-4E24-9131-CE118DED13F5} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{7DB372D5-0673-4852-B9C1-8F31EF57493F} = {32FF1B46-A25D-406E-9F71-1FD25A3F52E8}
 		{F5954D10-7C98-4223-B135-4A37A2DB6703} = {2943556E-0B95-4E17-BE68-9DEF1CB20B5A}
+		{7600BD9E-E721-4D6A-AEAF-B8FEC4A40A23} = {2943556E-0B95-4E17-BE68-9DEF1CB20B5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D3EF8B-A819-42CD-8987-D250605868C5}

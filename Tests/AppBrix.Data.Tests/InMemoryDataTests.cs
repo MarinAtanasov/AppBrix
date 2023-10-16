@@ -5,6 +5,7 @@ using AppBrix.Data.InMemory;
 using AppBrix.Data.Migrations;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
 using System.Linq;

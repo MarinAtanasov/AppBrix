@@ -4,6 +4,7 @@
 using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Testing;
+using AppBrix.Testing.Xunit;
 using AppBrix.Tests.Mocks;
 using FluentAssertions;
 using System;
