@@ -4,7 +4,7 @@
 using AppBrix.Events.Contracts;
 using AppBrix.Events.Delayed.Configuration;
 using AppBrix.Events.Delayed.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     public void TestSubscribeNullHandler()
     {
         var hub = this.app.GetDelayedEventHub();
-        var action = () => hub.Subscribe<EventMock>(null);
+        var action = () => hub.Subscribe<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -31,7 +31,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     public void TestUnsubscribeNullHandler()
     {
         var hub = this.app.GetDelayedEventHub();
-        var action = () => hub.Unsubscribe<EventMock>(null);
+        var action = () => hub.Unsubscribe<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -58,7 +58,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.app.GetDelayedEventHub();
-        var action = () => hub.RaiseImmediate(null);
+        var action = () => hub.RaiseImmediate(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -133,7 +133,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.app.GetDelayedEventHub();
-        var action = () => hub.RaiseDelayed(null);
+        var action = () => hub.RaiseDelayed(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -193,16 +193,16 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsSubscribe() => TestUtils.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
+    public void TestPerformanceEventsSubscribe() => this.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsUnsubscribe() => TestUtils.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
+    public void TestPerformanceEventsUnsubscribe() => this.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsRaiseImmediate() => TestUtils.AssertPerformance(this.TestPerformanceEventsRaiseImmediateInternal);
+    public void TestPerformanceEventsRaiseImmediate() => this.AssertPerformance(this.TestPerformanceEventsRaiseImmediateInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsRaiseDelayed() => TestUtils.AssertPerformance(this.TestPerformanceEventsRaiseDelayedInternal);
+    public void TestPerformanceEventsRaiseDelayed() => this.AssertPerformance(this.TestPerformanceEventsRaiseDelayedInternal);
     #endregion
 
     #region Private methods

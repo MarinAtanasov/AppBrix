@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Caching.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Threading.Tasks;
@@ -66,7 +66,7 @@ public sealed class CacheTests : TestsBase<CachingModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceCache() => TestUtils.AssertPerformance(this.TestPerformanceCacheInternal);
+    public void TestPerformanceCache() => this.AssertPerformance(this.TestPerformanceCacheInternal);
     #endregion
 
     #region Private methods

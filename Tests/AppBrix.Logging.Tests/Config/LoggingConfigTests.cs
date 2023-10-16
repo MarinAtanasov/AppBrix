@@ -3,7 +3,7 @@
 
 using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;

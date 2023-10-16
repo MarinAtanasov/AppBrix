@@ -3,12 +3,13 @@
 
 using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Cron.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AppBrix.Events.Schedule.Cron.Tests;
@@ -39,7 +40,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     public void TestScheduleNullExpression()
     {
         var hub = this.app.GetCronScheduledEventHub();
-        Action action = () => hub.Schedule(new EventMock(0), null);
+        Action action = () => hub.Schedule(new EventMock(0), null!);
         action.Should().Throw<ArgumentNullException>("expression is null");
     }
 
@@ -52,7 +53,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestScheduleArgs()
+    public async Task TestScheduleArgs()
     {
         var called = new bool[3];
         var funcs = Enumerable.Range(0, called.Length).Select<int, Func<bool>>(x => () => called[x]).ToList();
@@ -75,8 +76,8 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         funcs[2]().Should().BeFalse("third event should not be called immediately");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
-        funcs[0].ShouldReturn(true, "first event should have been raised");
-        funcs[1].ShouldReturn(true, "second event should have been raised");
+        await funcs[0].ShouldReturn(true, "first event should have been raised");
+        await funcs[1].ShouldReturn(true, "second event should have been raised");
         funcs[2]().Should().BeFalse("third event shouldn't be called yet");
     }
 
@@ -84,7 +85,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     public void TestUnscheduleNullArgs()
     {
         var hub = this.app.GetCronScheduledEventHub();
-        var action = () => hub.Unschedule<EventMock>(null);
+        var action = () => hub.Unschedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 
@@ -108,7 +109,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
+        this.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -116,7 +117,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 5000));
+        this.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 5000));
     }
     #endregion
 

@@ -3,12 +3,13 @@
 
 using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Timer.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AppBrix.Events.Schedule.Timer.Tests;
@@ -60,7 +61,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestScheduleArgs()
+    public async Task TestScheduleArgs()
     {
         var called = new bool[3];
         var funcs = Enumerable.Range(0, called.Length).Select<int, Func<bool>>(x => () => called[x]).ToList();
@@ -83,8 +84,8 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         funcs[2]().Should().BeFalse("third event should not be called immediately");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
-        funcs[0].ShouldReturn(true, "first event should have been raised");
-        funcs[1].ShouldReturn(true, "second event should have been raised");
+        await funcs[0].ShouldReturn(true, "first event should have been raised");
+        await funcs[1].ShouldReturn(true, "second event should have been raised");
         funcs[2]().Should().BeFalse("third event shouldn't be called yet");
     }
 
@@ -92,7 +93,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     public void TestUnscheduleNullArgs()
     {
         var hub = this.app.GetTimerScheduledEventHub();
-        var action = () => hub.Unschedule<EventMock>(null);
+        var action = () => hub.Unschedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 
@@ -112,7 +113,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestMemoryRelease()
+    public async Task TestMemoryRelease()
     {
         var called = new bool[2];
         var func = Enumerable.Range(0, called.Length).Select(i => (Func<bool>)(() => called[i])).ToArray();
@@ -131,8 +132,8 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         };
         schedule(weakReference);
 
-        func[0].ShouldReturn(true, "the first event should have been raised");
-        func[1].ShouldReturn(true, "the second event should have been raised");
+        await func[0].ShouldReturn(true, "the first event should have been raised");
+        await func[1].ShouldReturn(true, "the second event should have been raised");
 
         GC.Collect();
         weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-recurring events");
@@ -143,7 +144,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 50000));
+        this.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 50000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -151,7 +152,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
         this.app.Reinitialize();
-        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 30000));
+        this.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 30000));
     }
     #endregion
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Cloning.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections;
@@ -136,7 +136,7 @@ public sealed class CloningTests : TestsBase<CloningModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceDeepCopy() => TestUtils.AssertPerformance(this.TestPerformanceDeepCopyInternal);
+    public void TestPerformanceDeepCopy() => this.AssertPerformance(this.TestPerformanceDeepCopyInternal);
     #endregion
 
     #region Shallow Copy Tests
@@ -219,7 +219,7 @@ public sealed class CloningTests : TestsBase<CloningModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceShallowCopy() => TestUtils.AssertPerformance(this.TestPerformanceShallowCopyInternal);
+    public void TestPerformanceShallowCopy() => this.AssertPerformance(this.TestPerformanceShallowCopyInternal);
     #endregion
 
     #region Private methods

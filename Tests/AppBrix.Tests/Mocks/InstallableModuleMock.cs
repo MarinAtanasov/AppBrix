@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace AppBrix.Tests.Mocks;
 
-internal sealed class SimpleInstallableModuleMock : SimpleModuleMock
+public sealed class InstallableModuleMock : SimpleModuleMock
 {
     public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
 

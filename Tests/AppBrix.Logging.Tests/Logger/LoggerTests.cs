@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Logging.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using System;
@@ -60,24 +60,21 @@ public sealed class LoggerTests : TestsBase<LoggingModule>
         this.app.ConfigService.GetLoggingConfig().Async = false;
 
         var expected = Contracts.LogLevel.None;
-        this.app.GetLogHub().Subscribe(x =>
-        {
-            x.Level.Should().Be(expected, "the logger should map the levels correctly");
-        });
-
-        void TestLogLevel(Contracts.LogLevel expectedLevel, LogLevel level)
+        var testLogLevel = (Contracts.LogLevel expectedLevel, LogLevel level) =>
         {
             expected = expectedLevel;
             this.app.Get<ILoggerProvider>().CreateLogger("test").Log(level, "");
-        }
+        };
 
-        TestLogLevel(Contracts.LogLevel.Trace, LogLevel.Trace);
-        TestLogLevel(Contracts.LogLevel.Debug, LogLevel.Debug);
-        TestLogLevel(Contracts.LogLevel.Info, LogLevel.Information);
-        TestLogLevel(Contracts.LogLevel.Warning, LogLevel.Warning);
-        TestLogLevel(Contracts.LogLevel.Error, LogLevel.Error);
-        TestLogLevel(Contracts.LogLevel.Critical, LogLevel.Critical);
-        TestLogLevel(Contracts.LogLevel.None, LogLevel.None);
+        this.app.GetLogHub().Subscribe(x => x.Level.Should().Be(expected, "the logger should map the levels correctly"));
+
+        testLogLevel(Contracts.LogLevel.Trace, LogLevel.Trace);
+        testLogLevel(Contracts.LogLevel.Debug, LogLevel.Debug);
+        testLogLevel(Contracts.LogLevel.Info, LogLevel.Information);
+        testLogLevel(Contracts.LogLevel.Warning, LogLevel.Warning);
+        testLogLevel(Contracts.LogLevel.Error, LogLevel.Error);
+        testLogLevel(Contracts.LogLevel.Critical, LogLevel.Critical);
+        testLogLevel(Contracts.LogLevel.None, LogLevel.None);
     }
     #endregion
 }

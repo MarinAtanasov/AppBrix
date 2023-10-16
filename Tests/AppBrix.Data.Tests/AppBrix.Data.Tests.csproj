@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Migrations\AppBrix.Data.Migrations.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\..\Testing\AppBrix.Testing\AppBrix.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>

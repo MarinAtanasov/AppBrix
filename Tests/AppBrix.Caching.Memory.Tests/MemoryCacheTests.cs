@@ -2,10 +2,11 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Caching.Memory.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AppBrix.Caching.Memory.Tests;
@@ -36,7 +37,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestGetNullKey()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Get(null);
+        Action action = () => cache.Get(null!);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
 
@@ -60,7 +61,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestSetNullKey()
     {
         var cache = this.app.GetMemoryCache();
-        var action = () => cache.Set(null, this);
+        var action = () => cache.Set(null!, this);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
 
@@ -68,7 +69,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestSetNullItem()
     {
         var cache = this.app.GetMemoryCache();
-        var action = () => cache.Set(nameof(this.TestSetNullItem), null);
+        var action = () => cache.Set(nameof(this.TestSetNullItem), null!);
         action.Should().Throw<ArgumentNullException>("item should not be null");
     }
 
@@ -92,7 +93,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     public void TestRemoveNullKey()
     {
         var cache = this.app.GetMemoryCache();
-        Action action = () => cache.Remove(null);
+        Action action = () => cache.Remove(null!);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
 
@@ -123,7 +124,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestAbsoluteExpiration()
+    public Task TestAbsoluteExpiration()
     {
         const string key = nameof(this.TestAbsoluteExpiration);
 
@@ -134,11 +135,11 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
         var func = () => cache.Get(key);
-        func.ShouldReturn(null, "the item should have been removed from the cache");
+        return func.ShouldReturn(null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestMixedExpiration()
+    public Task TestMixedExpiration()
     {
         const string key = nameof(MemoryCacheTests.TestMixedExpiration);
 
@@ -149,11 +150,11 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
         var func = () => cache.Get(key);
-        func.ShouldReturn(null, "the item should have been removed from the cache");
+        return func.ShouldReturn(null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestDisposeOnAbsoluteExpiration()
+    public async Task TestDisposeOnAbsoluteExpiration()
     {
         const string key = nameof(MemoryCacheTests.TestDisposeOnAbsoluteExpiration);
 
@@ -173,13 +174,13 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(10));
         var func = () => disposed;
-        func.ShouldReturn(true, "the item should have expired");
+        await func.ShouldReturn(true, "the item should have expired");
         item = cache.Get(key);
         item.Should().BeNull("the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestDisposeOnSlidingExpiration()
+    public async Task TestDisposeOnSlidingExpiration()
     {
         const string key = nameof(MemoryCacheTests.TestDisposeOnSlidingExpiration);
 
@@ -203,13 +204,13 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(5));
         var func = () => disposed;
-        func.ShouldReturn(true, "the item should have expired");
+        await func.ShouldReturn(true, "the item should have expired");
         item = cache.Get(key);
         item.Should().BeNull("the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceMemoryCache() => TestUtils.AssertPerformance(this.TestPerformanceMemoryCacheInternal);
+    public void TestPerformanceMemoryCache() => this.AssertPerformance(this.TestPerformanceMemoryCacheInternal);
     #endregion
 
     #region Private methods

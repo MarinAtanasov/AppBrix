@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>AppBrix.Testing</AssemblyName>
+    <AssemblyTitle>AppBrix.Testing</AssemblyTitle>
+    <Description>Tooling for testing AppBrix applications and modules.</Description>
+    <PackageId>AppBrix.Testing</PackageId>
+    <PackageTags>AppBrix Testing</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\AppBrix\AppBrix.csproj" />
+    <ProjectReference Include="..\..\Core\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="xunit" Version="2.5.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

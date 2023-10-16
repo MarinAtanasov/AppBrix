@@ -4,7 +4,7 @@
 using AppBrix.Data.InMemory;
 using AppBrix.Data.Migrations;
 using AppBrix.Data.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -57,7 +57,7 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetItem() => TestUtils.AssertPerformance(this.TestPerformanceGetItemInternal);
+    public void TestPerformanceGetItem() => this.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion
 
     #region Private methods

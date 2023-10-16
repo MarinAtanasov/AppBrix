@@ -5,7 +5,7 @@ using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 
-namespace AppBrix.Tests.Mocks;
+namespace AppBrix.Testing.Modules;
 
 /// <summary>
 /// A main module that registers the provided module type and its dependencies.

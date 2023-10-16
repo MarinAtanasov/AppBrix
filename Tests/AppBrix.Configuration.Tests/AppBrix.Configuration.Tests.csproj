@@ -14,11 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration\AppBrix.Configuration.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Json\AppBrix.Configuration.Json.csproj" />
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
+    <ProjectReference Include="..\..\Testing\AppBrix.Testing\AppBrix.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>

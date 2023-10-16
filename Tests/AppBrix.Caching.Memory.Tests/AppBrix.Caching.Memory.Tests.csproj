@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppBrix.Tests\AppBrix.Tests.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj" />
+    <ProjectReference Include="..\..\Testing\AppBrix.Testing\AppBrix.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>

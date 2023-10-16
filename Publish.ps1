@@ -1,7 +1,7 @@
 [xml]$properties = Get-Content Directory.Build.props;
 $version = $properties.Project.PropertyGroup.Version;
 
-ForEach ($category in "Core", "Modules", "Bundles")
+ForEach ($category in "Core", "Modules", "Bundles", "Testing")
 {
     ForEach ($folder in (Get-ChildItem -Path $category -Directory))
     {

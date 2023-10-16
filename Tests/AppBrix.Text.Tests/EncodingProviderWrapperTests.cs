@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Tests;
+using AppBrix.Testing;
 using AppBrix.Text.Tests.Mocks;
 using FluentAssertions;
 using System.Text;
@@ -44,7 +44,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEncodingProviderWrapper() => TestUtils.AssertPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
+    public void TestPerformanceEncodingProviderWrapper() => this.AssertPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
     #endregion
 
     #region Private methods

@@ -4,7 +4,7 @@
 using AppBrix.Events.Contracts;
 using AppBrix.Events.Services;
 using AppBrix.Events.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -175,7 +175,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNullArgumentSubscribe()
     {
         var hub = this.GetEventHub();
-        var action = () => hub.Subscribe<IEvent>(null);
+        var action = () => hub.Subscribe<IEvent>(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -183,7 +183,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNullArgumentUnsubscribe()
     {
         var hub = this.GetEventHub();
-        var action = () => hub.Unsubscribe<IEvent>(null);
+        var action = () => hub.Unsubscribe<IEvent>(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -191,7 +191,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNullArgumentRaise()
     {
         var hub = this.GetEventHub();
-        var action = () => hub.Raise(null);
+        var action = () => hub.Raise(null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -243,13 +243,13 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsSubscribe() => TestUtils.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
+    public void TestPerformanceEventsSubscribe() => this.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsUnsubscribe() => TestUtils.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
+    public void TestPerformanceEventsUnsubscribe() => this.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceEventsRaise() => TestUtils.AssertPerformance(this.TestPerformanceEventsRaiseInternal);
+    public void TestPerformanceEventsRaise() => this.AssertPerformance(this.TestPerformanceEventsRaiseInternal);
     #endregion
 
     #region Private methods

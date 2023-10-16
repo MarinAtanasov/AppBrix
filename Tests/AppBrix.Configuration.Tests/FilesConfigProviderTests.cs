@@ -3,7 +3,7 @@
 
 using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.IO;
@@ -12,7 +12,7 @@ using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
-public sealed class FilesConfigProviderTests
+public sealed class FilesConfigProviderTests : TestsBase
 {
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

@@ -25,7 +25,7 @@ internal sealed class ConfigSerializerMock : IConfigSerializer
     public IConfig Deserialize(string config, Type type)
     {
         this.Deserialized.Add(new KeyValuePair<Type, string>(type, config));
-        return null;
+        return null!;
     }
     #endregion
 }

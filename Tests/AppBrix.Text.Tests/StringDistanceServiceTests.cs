@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -18,14 +18,14 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceNullLeft()
     {
-        var action = () => this.app.GetStringDistanceService().GetDamerauLevenshteinDistance(null, "appbrix");
+        var action = () => this.app.GetStringDistanceService().GetDamerauLevenshteinDistance(null!, "appbrix");
         action.Should().Throw<ArgumentNullException>("left should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceNullRight()
     {
-        var action = () => this.app.GetStringDistanceService().GetDamerauLevenshteinDistance("appbrix", null);
+        var action = () => this.app.GetStringDistanceService().GetDamerauLevenshteinDistance("appbrix", null!);
         action.Should().Throw<ArgumentNullException>("right should not be null");
     }
 
@@ -75,21 +75,21 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetDamerauLevenshteinDistance() => TestUtils.AssertPerformance(this.TestPerformanceGetDamerauLevenshteinDistanceInternal);
+    public void TestPerformanceGetDamerauLevenshteinDistance() => this.AssertPerformance(this.TestPerformanceGetDamerauLevenshteinDistanceInternal);
     #endregion
 
     #region Test Levenshtein distance
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceNullLeft()
     {
-        var action = () => this.app.GetStringDistanceService().GetLevenshteinDistance(null, "appbrix");
+        var action = () => this.app.GetStringDistanceService().GetLevenshteinDistance(null!, "appbrix");
         action.Should().Throw<ArgumentNullException>("left should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceNullRight()
     {
-        var action = () => this.app.GetStringDistanceService().GetLevenshteinDistance("appbrix", null);
+        var action = () => this.app.GetStringDistanceService().GetLevenshteinDistance("appbrix", null!);
         action.Should().Throw<ArgumentNullException>("right should not be null");
     }
 
@@ -130,21 +130,21 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetLevenshteinDistance() => TestUtils.AssertPerformance(this.TestPerformanceGetLevenshteinDistanceInternal);
+    public void TestPerformanceGetLevenshteinDistance() => this.AssertPerformance(this.TestPerformanceGetLevenshteinDistanceInternal);
     #endregion
 
     #region Test Optimal String Alignment distance
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceNullLeft()
     {
-        var action = () => this.app.GetStringDistanceService().GetOptimalStringAlignmentDistance(null, "appbrix");
+        var action = () => this.app.GetStringDistanceService().GetOptimalStringAlignmentDistance(null!, "appbrix");
         action.Should().Throw<ArgumentNullException>("left should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceNullRight()
     {
-        var action = () => this.app.GetStringDistanceService().GetOptimalStringAlignmentDistance("appbrix", null);
+        var action = () => this.app.GetStringDistanceService().GetOptimalStringAlignmentDistance("appbrix", null!);
         action.Should().Throw<ArgumentNullException>("right should not be null");
     }
 
@@ -185,7 +185,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetOptimalStringAlignmentDistance() => TestUtils.AssertPerformance(this.TestPerformanceGetOptimalStringAlignmentDistanceInternal);
+    public void TestPerformanceGetOptimalStringAlignmentDistance() => this.AssertPerformance(this.TestPerformanceGetOptimalStringAlignmentDistanceInternal);
     #endregion
 
     #region Private methods

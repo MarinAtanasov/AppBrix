@@ -2,7 +2,7 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Container.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -113,7 +113,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceContainer() => TestUtils.AssertPerformance(this.TestPerformanceContainerInternal);
+    public void TestPerformanceContainer() => this.AssertPerformance(this.TestPerformanceContainerInternal);
     #endregion
 
     #region Private methods

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Tests;
+using AppBrix.Testing;
 using AppBrix.Web.Client;
 using AppBrix.Web.Client.Contracts;
 using AppBrix.Web.Server.Events;
@@ -18,25 +18,30 @@ using Xunit;
 
 namespace AppBrix.Web.Server.Tests;
 
-public sealed class WebServerTests
+public sealed class WebServerTests : TestsBase
 {
+    #region Setup and cleanup
+    public WebServerTests() : base(WebServerTests.CreateApp())
+    {
+    }
+    #endregion
+
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestConnection()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
-        var response = await app.GetFactoryService().GetHttpRequest()
+        var response = await this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.ConnectionTestServiceUrl)
             .SetHeader("x-test", "test")
             .SetHeader("x-test")
             .Send();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the GET request should return status OK");
 
-        var postResponse = await app.GetFactoryService().GetHttpRequest()
+        var postResponse = await this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.ConnectionTestServiceUrl)
             .SetClientName(string.Empty)
             .SetContent(42)
@@ -53,8 +58,8 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestConnectionBetweenTwoApps()
     {
-        var app1 = this.CreateApp();
-        var app2 = this.CreateApp();
+        var app1 = this.app;
+        var app2 = WebServerTests.CreateApp();
 
         await using var webApp1 = this.CreateTestWebApp(app1);
         using var app1Client = webApp1.GetTestClient();
@@ -82,12 +87,11 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoGetString()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
-        var response = await app.GetFactoryService().GetHttpRequest()
+        var response = await this.app.GetFactoryService().GetHttpRequest()
             .SetUrl($"{WebServerTests.EchoServiceUrl}/{nameof(this.TestEchoGetString)}")
             .Send<string>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
@@ -106,10 +110,9 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostJson()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
         var model = new EchoModel
         {
@@ -118,7 +121,7 @@ public sealed class WebServerTests
             Value = 42,
             Version = new Version(1, 0, 1)
         };
-        var response = await app.GetFactoryService().GetHttpRequest()
+        var response = await this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
@@ -133,18 +136,17 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostJsonDefaultModel()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
         var model = new EchoModel();
-        var response = await app.GetFactoryService().GetHttpRequest()
+        var response = await this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(app.GetTime())
+            .SetExpiresHeader(this.app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.app.GetTime())
             .SetMethod(HttpMethod.Post)
             .Send<EchoModel>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
@@ -156,18 +158,17 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostBytes()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
         var model = new EchoModel();
-        var response = await app.GetFactoryService().GetHttpRequest()
+        var response = await this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(app.GetTime())
+            .SetExpiresHeader(this.app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.app.GetTime())
             .SetMethod(HttpMethod.Post)
             .Send<byte[]>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
@@ -179,18 +180,17 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostStream()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
         var model = new EchoModel();
-        var request = app.GetFactoryService().GetHttpRequest()
+        var request = this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(app.GetTime())
+            .SetExpiresHeader(this.app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.app.GetTime())
             .SetMethod(HttpMethod.Post);
         await using (var response = await request.SendStream())
         {
@@ -204,18 +204,17 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostStreamAsyncDisposable()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
         var model = new EchoModel();
-        var request = app.GetFactoryService().GetHttpRequest()
+        var request = this.app.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(app.GetTime())
+            .SetExpiresHeader(this.app.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.app.GetTime())
             .SetMethod(HttpMethod.Post);
         await using (var response = await request.SendStream())
         {
@@ -229,12 +228,11 @@ public sealed class WebServerTests
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public async Task TestPerformanceWebServer()
     {
-        var app = this.CreateApp();
-        await using var webApp = this.CreateTestWebApp(app);
+        await using var webApp = this.CreateTestWebApp(this.app);
         using var client = webApp.GetTestClient();
-        app.Container.Register(client);
+        this.app.Container.Register(client);
 
-        TestUtils.AssertPerformance(() => this.TestPerformanceWebServerInternal(app));
+        this.AssertPerformance(() => this.TestPerformanceWebServerInternal(this.app));
 
         await webApp.StopAsync();
     }
@@ -253,22 +251,22 @@ public sealed class WebServerTests
         return webApp;
     }
 
-    private IApp CreateApp()
+    private static IApp CreateApp()
     {
-        var app = TestUtils.CreateTestApp<WebServerModule, WebClientModule>();
+        var app = TestApp.Create<WebServerModule, WebClientModule>();
         app.ConfigService.Get<AppIdConfig>().Id = Guid.NewGuid();
         app.Start();
-        app.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
-        app.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
+        app.GetEventHub().Subscribe<IConfigureWebAppBuilder>(WebServerTests.ConfigureWebAppBuilder);
+        app.GetEventHub().Subscribe<IConfigureWebApp>(WebServerTests.ConfigureWebApp);
         return app;
     }
 
-    private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
+    private static void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
     {
         args.Builder.Services.AddControllers();
     }
 
-    private void ConfigureWebApp(IConfigureWebApp args)
+    private static void ConfigureWebApp(IConfigureWebApp args)
     {
         var app = args.App;
         if (app.Environment.IsDevelopment())

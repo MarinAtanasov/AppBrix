@@ -3,21 +3,21 @@
 
 using AppBrix.Configuration.Memory;
 using AppBrix.Configuration.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
-public sealed class MemoryConfigServiceTests
+public sealed class MemoryConfigServiceTests : TestsBase
 {
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetNullType()
     {
         var service = new MemoryConfigService();
-        var action = () => service.Get(null);
+        var action = () => service.Get(null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
@@ -25,7 +25,7 @@ public sealed class MemoryConfigServiceTests
     public void TestSaveNullConfig()
     {
         var service = new MemoryConfigService();
-        var action = () => service.Save(null);
+        var action = () => service.Save(null!);
         action.Should().Throw<ArgumentNullException>("config cannot be null");
     }
 

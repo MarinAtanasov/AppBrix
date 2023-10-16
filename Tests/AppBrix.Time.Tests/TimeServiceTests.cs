@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -79,19 +79,19 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetTime() => TestUtils.AssertPerformance(this.TestPerformanceGetTimeInternal);
+    public void TestPerformanceGetTime() => this.AssertPerformance(this.TestPerformanceGetTimeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetTimeLocal() => TestUtils.AssertPerformance(this.TestPerformanceGetTimeLocalInternal);
+    public void TestPerformanceGetTimeLocal() => this.AssertPerformance(this.TestPerformanceGetTimeLocalInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetTimeUtc() => TestUtils.AssertPerformance(this.TestPerformanceGetTimeUtcInternal);
+    public void TestPerformanceGetTimeUtc() => this.AssertPerformance(this.TestPerformanceGetTimeUtcInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConvertDateTime() => TestUtils.AssertPerformance(this.TestPerformanceConvertDateTimeInternal);
+    public void TestPerformanceConvertDateTime() => this.AssertPerformance(this.TestPerformanceConvertDateTimeInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConvertDateTimeOffset() => TestUtils.AssertPerformance(this.TestPerformanceConvertDateTimeOffsetInternal);
+    public void TestPerformanceConvertDateTimeOffset() => this.AssertPerformance(this.TestPerformanceConvertDateTimeOffsetInternal);
     #endregion
 
     #region Private methods

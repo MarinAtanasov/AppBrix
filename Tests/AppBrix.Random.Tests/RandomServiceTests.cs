@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateRandomItemsNullItems()
     {
         var service = this.app.GetRandomService();
-        Action action = () => service.GetRandomItems<object>(null);
+        Action action = () => service.GetRandomItems<object>(null!);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
 
@@ -88,7 +88,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateUniqueItemsNullItems()
     {
         var service = this.app.GetRandomService();
-        Action action = () => service.GetUniqueItems<object>(null);
+        Action action = () => service.GetUniqueItems<object>(null!);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
 
@@ -177,7 +177,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestShuffleNullItems()
     {
         var service = this.app.GetRandomService();
-        var action = () => service.Shuffle<object>(null);
+        var action = () => service.Shuffle<object>(null!);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
 
@@ -216,16 +216,16 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetRandom() => TestUtils.AssertPerformance(this.TestPerformanceGetRandomInternal);
+    public void TestPerformanceGetRandom() => this.AssertPerformance(this.TestPerformanceGetRandomInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetRandomItems() => TestUtils.AssertPerformance(this.TestPerformanceGetRandomItemsInternal);
+    public void TestPerformanceGetRandomItems() => this.AssertPerformance(this.TestPerformanceGetRandomItemsInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetUniqueItems() => TestUtils.AssertPerformance(this.TestPerformanceGetUniqueItemsInternal);
+    public void TestPerformanceGetUniqueItems() => this.AssertPerformance(this.TestPerformanceGetUniqueItemsInternal);
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceShuffle() => TestUtils.AssertPerformance(this.TestPerformanceShuffleInternal);
+    public void TestPerformanceShuffle() => this.AssertPerformance(this.TestPerformanceShuffleInternal);
     #endregion
 
     #region Private methods

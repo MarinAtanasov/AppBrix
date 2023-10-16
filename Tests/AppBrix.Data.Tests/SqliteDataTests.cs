@@ -6,7 +6,7 @@ using AppBrix.Data.Migrations;
 using AppBrix.Data.Migrations.Data;
 using AppBrix.Data.Sqlite;
 using AppBrix.Data.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -76,7 +76,7 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceGetItem() => TestUtils.AssertPerformance(this.TestPerformanceGetItemInternal);
+    public void TestPerformanceGetItem() => this.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion
 
     #region Private methods

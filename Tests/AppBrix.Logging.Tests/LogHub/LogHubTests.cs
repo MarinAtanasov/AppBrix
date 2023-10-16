@@ -3,7 +3,7 @@
 
 using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -40,7 +40,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             x.Exception.Should().Be(error, "the error message same as the passed in error");
             x.Level.Should().Be(LogLevel.Error, "log level should be Error");
             var stringed = x.ToString();
-            stringed.Should().Contain(x.Exception.Message, "ToString should include the exception");
+            stringed.Should().Contain(x.Exception!.Message, "ToString should include the exception");
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
@@ -62,7 +62,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             x.Level.Should().Be(LogLevel.Debug, "log level should be Debug");
             x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
             var stringed = x.ToString();
-            stringed.Should().Contain(x.Exception.Message, "ToString should include the exception");
+            stringed.Should().Contain(x.Exception!.Message, "ToString should include the exception");
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
@@ -103,7 +103,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             x.Level.Should().Be(LogLevel.Warning, "log level should be Warning");
             x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
             var stringed = x.ToString();
-            stringed.Should().Contain(x.Exception.Message, "ToString should include the exception");
+            stringed.Should().Contain(x.Exception!.Message, "ToString should include the exception");
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
@@ -187,7 +187,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     {
         this.app.GetEventHub().Subscribe<ILogEntry>(_ => { });
 
-        TestUtils.AssertPerformance(this.TestPerformanceLoggingInternal);
+        this.AssertPerformance(this.TestPerformanceLoggingInternal);
     }
     #endregion
 

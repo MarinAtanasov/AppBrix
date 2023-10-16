@@ -3,21 +3,21 @@
 
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Configuration.Yaml;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
-public sealed class YamlConfigSerializerTests
+public sealed class YamlConfigSerializerTests : TestsBase
 {
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSerializeNullConfig()
     {
         var serializer = new YamlConfigSerializer();
-        var action = () => serializer.Serialize(null);
+        var action = () => serializer.Serialize(null!);
         action.Should().Throw<ArgumentNullException>("config cannot be null");
     }
 
@@ -25,7 +25,7 @@ public sealed class YamlConfigSerializerTests
     public void TestDeserializeNullConfig()
     {
         var serializer = new YamlConfigSerializer();
-        var action = () => serializer.Deserialize(null, typeof(ConfigMock));
+        var action = () => serializer.Deserialize(null!, typeof(ConfigMock));
         action.Should().Throw<ArgumentNullException>("config cannot be null");
     }
 
@@ -41,7 +41,7 @@ public sealed class YamlConfigSerializerTests
     public void TestDeserializeNullType()
     {
         var serializer = new YamlConfigSerializer();
-        var action = () => serializer.Deserialize(nameof(ConfigMock), null);
+        var action = () => serializer.Deserialize(nameof(ConfigMock), null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 

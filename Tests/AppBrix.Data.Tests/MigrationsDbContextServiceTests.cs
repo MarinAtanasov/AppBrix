@@ -4,7 +4,7 @@
 using AppBrix.Data.InMemory;
 using AppBrix.Data.Migrations;
 using AppBrix.Data.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;

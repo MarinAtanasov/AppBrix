@@ -2,11 +2,12 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Events.Schedule.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AppBrix.Events.Schedule.Tests;
@@ -26,23 +27,23 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     public void TestScheduleNullArgs()
     {
         var hub = this.app.GetScheduledEventHub();
-        var action = () => hub.Schedule<EventMock>(null);
+        var action = () => hub.Schedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestScheduleArgs()
+    public Task TestScheduleArgs()
     {
         var called = false;
         var func = () => called;
         this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
         this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
         called.Should().BeFalse("event should not be called immediately");
-        func.ShouldReturn(true, "event should have been raised");
+        return func.ShouldReturn(true, "event should have been raised");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestScheduleThreeArgs()
+    public async Task TestScheduleThreeArgs()
     {
         var called = new bool[3];
         this.app.GetEventHub().Subscribe<EventMock>(args =>
@@ -55,7 +56,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.Zero));
 
         var func = () => called[0];
-        func.ShouldReturn(true, "first event should have been raised");
+        await func.ShouldReturn(true, "first event should have been raised");
         called[1].Should().BeTrue("second event should be raised");
         called[2].Should().BeFalse("third event should not be raised");
     }
@@ -64,12 +65,12 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     public void TestUnscheduleNullArgs()
     {
         var hub = this.app.GetScheduledEventHub();
-        var action = () => hub.Unschedule<EventMock>(null);
+        var action = () => hub.Unschedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestUnscheduleArgs()
+    public async Task TestUnscheduleArgs()
     {
         var called = new bool[2];
         this.app.GetEventHub().Subscribe<EventMock>(args => called[args.Value] = true);
@@ -79,12 +80,12 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.app.GetScheduledEventHub().Unschedule(scheduledEvent);
 
         var func = () => called[1];
-        func.ShouldReturn(true, "first event should have been raised");
+        await func.ShouldReturn(true, "first event should have been raised");
         called[0].Should().BeFalse("first event should not be raised");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestMemoryRelease()
+    public async Task TestMemoryRelease()
     {
         var called = new bool[2];
         var func = Enumerable.Range(0, called.Length).Select(i => (Func<bool>)(() => called[i])).ToArray();
@@ -103,8 +104,8 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         };
         schedule(weakReference);
 
-        func[0].ShouldReturn(true, "the first event should have been raised");
-        func[1].ShouldReturn(true, "the second event should have been raised");
+        await func[0].ShouldReturn(true, "the first event should have been raised");
+        await func[1].ShouldReturn(true, "the second event should have been raised");
 
         GC.Collect();
         weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-recurring events");
@@ -119,7 +120,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
-        TestUtils.AssertPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));
+        this.AssertPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -131,7 +132,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
-        TestUtils.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(scheduledEvents));
+        this.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(scheduledEvents));
     }
     #endregion
 

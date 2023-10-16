@@ -4,7 +4,7 @@
 using AppBrix.Factory.Contracts;
 using AppBrix.Factory.Services;
 using AppBrix.Factory.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -22,8 +22,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     public void TestRegisterNullFactory()
     {
         var service = this.GetFactoryService();
-        IFactory<FactoryTests> factory = null;
-        var action = () => service.Register(factory);
+        var action = () => service.Register(((IFactory<FactoryTests>)null)!);
         action.Should().Throw<ArgumentNullException>("factory cannot be null");
     }
 
@@ -32,7 +31,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     {
         var service = this.GetFactoryService();
         var factory = new FactoryMock<FactoryTests>(this);
-        var action = () => service.Register(factory, null);
+        var action = () => service.Register(factory, null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
@@ -40,8 +39,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     public void TestRegisterNullFactoryMethod()
     {
         var service = this.GetFactoryService();
-        Func<FactoryTests> factory = null;
-        var action = () => service.Register(factory, typeof(FactoryTests));
+        var action = () => service.Register(((Func<FactoryTests>)null)!, typeof(FactoryTests));
         action.Should().Throw<ArgumentNullException>("factory method cannot be null");
     }
 
@@ -50,7 +48,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     {
         var service = this.GetFactoryService();
         var factory = () => this;
-        var action = () => service.Register(factory, null);
+        var action = () => service.Register(factory, null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
@@ -121,7 +119,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     {
         var service = this.GetFactoryService();
         service.Register(() => new NonDefaultConstructorClass(true));
-        var method = service.GetFactory<NonDefaultConstructorClass>();
+        var method = service.GetFactory<NonDefaultConstructorClass>()!;
         service.Register(() =>
         {
             var obj = method.Get();
@@ -136,7 +134,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceFactory() => TestUtils.AssertPerformance(this.TestPerformanceFactoryInternal);
+    public void TestPerformanceFactory() => this.AssertPerformance(this.TestPerformanceFactoryInternal);
     #endregion
 
     #region Private methods

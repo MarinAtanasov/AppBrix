@@ -1,7 +1,7 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Tests;
+using AppBrix.Testing;
 using Xunit;
 
 namespace AppBrix.Permissions.Tests;
@@ -32,7 +32,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
         service.AddParent("a2", "a22");
         service.Allow("a22", "p22");
 
-        TestUtils.AssertPerformance(this.TestPerformanceHasPermissionInternal);
+        this.AssertPerformance(this.TestPerformanceHasPermissionInternal);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -50,7 +50,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
         service.AddParent("a2", "a22");
         service.Allow("a22", "p22");
 
-        TestUtils.AssertPerformance(this.TestPerformanceAddPermissionInternal);
+        this.AssertPerformance(this.TestPerformanceAddPermissionInternal);
     }
     #endregion
 

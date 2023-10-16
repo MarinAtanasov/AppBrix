@@ -4,7 +4,7 @@
 using AppBrix.Data.Events;
 using AppBrix.Data.InMemory;
 using AppBrix.Data.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -24,7 +24,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
     public void TestGetNullType()
     {
         var service = this.app.GetDbContextService();
-        var action = () => service.Get(null);
+        var action = () => service.Get(null!);
         action.Should().Throw<ArgumentNullException>("type should not be null");
     }
 

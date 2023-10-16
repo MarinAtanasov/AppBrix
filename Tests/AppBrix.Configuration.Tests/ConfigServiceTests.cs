@@ -2,21 +2,21 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Configuration.Tests.Mocks;
-using AppBrix.Tests;
+using AppBrix.Testing;
 using FluentAssertions;
 using System;
 using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
-public sealed class ConfigServiceTests
+public sealed class ConfigServiceTests : TestsBase
 {
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetNullConfig()
     {
         var service = new ConfigService(new ConfigProviderMock(), new ConfigSerializerMock());
-        var action = () => service.Get(null);
+        var action = () => service.Get(null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
@@ -24,7 +24,7 @@ public sealed class ConfigServiceTests
     public void TestSaveNullConfig()
     {
         var service = new ConfigService(new ConfigProviderMock(), new ConfigSerializerMock());
-        var action = () => service.Save((IConfig)null);
+        var action = () => service.Save(((IConfig)null)!);
         action.Should().Throw<ArgumentNullException>("config cannot be null");
     }
 
@@ -32,7 +32,7 @@ public sealed class ConfigServiceTests
     public void TestSaveNullType()
     {
         var service = new ConfigService(new ConfigProviderMock(), new ConfigSerializerMock());
-        var action = () => service.Save((Type)null);
+        var action = () => service.Save(((Type)null)!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
@@ -102,7 +102,7 @@ public sealed class ConfigServiceTests
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
-    public void TestPerformanceConfigService() => TestUtils.AssertPerformance(this.TestPerformanceConfigServiceInternal);
+    public void TestPerformanceConfigService() => this.AssertPerformance(this.TestPerformanceConfigServiceInternal);
     #endregion
 
     #region Private methods
