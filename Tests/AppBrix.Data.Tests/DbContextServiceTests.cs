@@ -17,14 +17,14 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
 {
     #region Setup and cleanup
 
-    public DbContextServiceTests() => this.app.Start();
+    public DbContextServiceTests() => this.App.Start();
     #endregion
 
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetNullType()
     {
-        var service = this.app.GetDbContextService();
+        var service = this.App.GetDbContextService();
         var action = () => service.Get(null!);
         action.Should().Throw<ArgumentNullException>("type should not be null");
     }
@@ -33,7 +33,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
     public void TestRaiseConfigureDbContextEvent()
     {
         DataItemContextMock eventContext = null;
-        this.app.GetEventHub().Subscribe<IConfigureDbContext>(args =>
+        this.App.GetEventHub().Subscribe<IConfigureDbContext>(args =>
         {
             eventContext = args.Context as DataItemContextMock;
             args.Context.Should().NotBeNull("context should be provided");
@@ -41,7 +41,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
             args.MigrationsHistoryTable.Should().Be("__EFMigrationsHistory", "migrations module is not available");
         });
 
-        using var context = this.app.GetDbContextService().Get<DataItemContextMock>();
+        using var context = this.App.GetDbContextService().Get<DataItemContextMock>();
         context.Items.Count().Should().Be(0, "no items have been created");
         context.Should().BeSameAs(eventContext, "context in event should be the same as created context");
     }

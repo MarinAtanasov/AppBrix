@@ -21,18 +21,18 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
     #region Setup and cleanup
     public SqliteDataTests()
     {
-        this.app.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
-        this.app.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
-        this.app.Start();
+        this.App.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
+        this.App.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
+        this.App.Start();
 
-        this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
-        this.app.Restart();
+        this.App.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
+        this.App.Restart();
 
-        this.globalContext = this.app.GetDbContextService().Get<MigrationsContext>();
+        this.globalContext = this.App.GetDbContextService().Get<MigrationsContext>();
         this.globalContext.Database.OpenConnection();
 
-        this.app.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
-        this.app.Restart();
+        this.App.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
+        this.App.Restart();
     }
 
     public override void Dispose()
@@ -47,13 +47,13 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCrudOperations()
     {
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             var item = context.Items.Single();
             item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
@@ -62,7 +62,7 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
             context.SaveChanges();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             var item = context.Items.Single();
             item.Content.Should().Be(nameof(DataItemContextMock), $"{nameof(item.Content)} should be updated");
@@ -70,7 +70,7 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
             context.SaveChanges();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Count().Should().Be(0, "the item should have been deleted");
         }
@@ -83,7 +83,7 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
     #region Private methods
     private void TestPerformanceGetItemInternal()
     {
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
@@ -91,11 +91,11 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
 
         for (var i = 0; i < 30; i++)
         {
-            using var context = this.app.GetDbContextService().Get<DataItemContextMock>();
+            using var context = this.App.GetDbContextService().Get<DataItemContextMock>();
             _ = context.Items.Single();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Remove(context.Items.Single());
             context.SaveChanges();

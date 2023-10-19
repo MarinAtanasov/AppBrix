@@ -18,22 +18,29 @@ public abstract class TestsBase : IDisposable
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase"/> with a blank app.
     /// </summary>
-    protected TestsBase() => this.app = App.Create(new MemoryConfigService());
+    protected TestsBase() => this.App = AppBrix.App.Create(new MemoryConfigService());
 
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase"/> with the provided app.
     /// </summary>
     /// <param name="app">The app to be tested.</param>
-    protected TestsBase(IApp app) => this.app = app;
+    protected TestsBase(IApp app) => this.App = app;
 
     /// <summary>
     /// Stops the application.
     /// </summary>
     public virtual void Dispose()
     {
-        try { this.app.Stop(); } catch (InvalidOperationException) { }
+        try { this.App.Stop(); } catch (InvalidOperationException) { }
         GC.SuppressFinalize(this);
     }
+    #endregion
+
+    #region Properties
+    /// <summary>
+    /// Gets the app that is being tested.
+    /// </summary>
+    protected IApp App { get; }
     #endregion
 
     #region Public and protected methods
@@ -55,13 +62,6 @@ public abstract class TestsBase : IDisposable
     /// <param name="firstPass">The maximum allowed duration on the first pass.</param>
     protected void AssertPerformance(Func<Task> func, TimeSpan duration = default, TimeSpan firstPass = default) =>
         func.AssertPerformance(duration, firstPass);
-    #endregion
-
-    #region Private fields and constants
-    /// <summary>
-    /// The app that is being tested.
-    /// </summary>
-    protected readonly IApp app;
     #endregion
 }
 

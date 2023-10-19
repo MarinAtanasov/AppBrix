@@ -17,12 +17,12 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     #region Setup and cleanup
     public MemoryCacheTests()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Start();
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+        this.App.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
+        this.App.Start();
 
-        this.timeService = new TimeServiceMock(this.app);
-        this.app.Container.Register(this.timeService);
+        this.timeService = new TimeServiceMock(this.App);
+        this.App.Container.Register(this.timeService);
     }
     #endregion
 
@@ -30,14 +30,14 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetMemoryCache()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         cache.Should().NotBeNull("cache must be registered and resolved");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetNullKey()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         Action action = () => cache.Get(null!);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
@@ -45,7 +45,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetUnregisteredItem()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         var item = cache.Get(nameof(this.TestGetUnregisteredItem));
         item.Should().BeNull("asking for non-existing key should return null");
     }
@@ -53,7 +53,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetUnregisteredItemGenericExtension()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         var item = cache.Get<TimeSpan>(nameof(this.TestGetUnregisteredItem));
         item.Should().Be(default, "asking for non-existing struct should return its default value");
     }
@@ -61,7 +61,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullKey()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(null!, this);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
@@ -69,7 +69,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullItem()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(nameof(this.TestSetNullItem), null!);
         action.Should().Throw<ArgumentNullException>("item should not be null");
     }
@@ -77,7 +77,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNegativeAbsoluteExpiration()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(nameof(this.TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
         action.Should().Throw<ArgumentException>("absolute expiration should not be negative");
     }
@@ -85,7 +85,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNegativeSlidingExpiration()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(nameof(this.TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
         action.Should().Throw<ArgumentException>("sliding expiration should not be negative");
     }
@@ -93,7 +93,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRemoveNullKey()
     {
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         Action action = () => cache.Remove(null!);
         action.Should().Throw<ArgumentNullException>("key should not be null");
     }
@@ -103,7 +103,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         const string key = nameof(this.TestGetItem);
 
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         cache.Set(key, this);
 
         var item = cache.Get(key);
@@ -115,7 +115,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         const string key = nameof(this.TestRemoveItem);
 
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         cache.Set(key, this);
         cache.Remove(key).Should().BeTrue("the item should have been removed successfully");
 
@@ -129,7 +129,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         const string key = nameof(this.TestAbsoluteExpiration);
 
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         cache.Set(key, this, absoluteExpiration: TimeSpan.FromMilliseconds(50));
         var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
@@ -144,7 +144,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         const string key = nameof(MemoryCacheTests.TestMixedExpiration);
 
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         cache.Set(key, this, absoluteExpiration: TimeSpan.FromMilliseconds(50), slidingExpiration: TimeSpan.FromMilliseconds(25));
         var item = cache.Get(key);
         item.Should().Be(this, "returned item should be the same as the original");
@@ -166,7 +166,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
             throw new InvalidOperationException("Failed to dispose.");
         };
 
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
         var item = cache.Get(key);
@@ -187,7 +187,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         var disposed = false;
 
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
         this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(2));
 
@@ -218,7 +218,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     private void TestPerformanceMemoryCacheInternal()
     {
         const int items = 800;
-        var cache = this.app.GetMemoryCache();
+        var cache = this.App.GetMemoryCache();
 
         for (var i = 0; i < items; i++)
         {

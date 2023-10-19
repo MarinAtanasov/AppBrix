@@ -31,18 +31,18 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestConnection()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
-        var response = await this.app.GetFactoryService().GetHttpRequest()
+        var response = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.ConnectionTestServiceUrl)
             .SetHeader("x-test", "test")
             .SetHeader("x-test")
             .Send();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the GET request should return status OK");
 
-        var postResponse = await this.app.GetFactoryService().GetHttpRequest()
+        var postResponse = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.ConnectionTestServiceUrl)
             .SetClientName(string.Empty)
             .SetContent(42)
@@ -59,7 +59,7 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestConnectionBetweenTwoApps()
     {
-        var app1 = this.app;
+        var app1 = this.App;
         var app2 = WebServerTests.CreateApp();
 
         await using var webApp1 = this.CreateTestWebApp(app1);
@@ -88,11 +88,11 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoGetString()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
-        var response = await this.app.GetFactoryService().GetHttpRequest()
+        var response = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl($"{WebServerTests.EchoServiceUrl}/{nameof(this.TestEchoGetString)}")
             .Send<string>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
@@ -111,9 +111,9 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostJson()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
         var model = new EchoModel
         {
@@ -122,7 +122,7 @@ public sealed class WebServerTests : TestsBase
             Value = 42,
             Version = new Version(1, 0, 1)
         };
-        var response = await this.app.GetFactoryService().GetHttpRequest()
+        var response = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
@@ -137,17 +137,17 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostJsonDefaultModel()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
         var model = new EchoModel();
-        var response = await this.app.GetFactoryService().GetHttpRequest()
+        var response = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(this.app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(this.app.GetTime())
+            .SetExpiresHeader(this.App.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.App.GetTime())
             .SetMethod(HttpMethod.Post)
             .Send<EchoModel>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
@@ -159,17 +159,17 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostBytes()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
         var model = new EchoModel();
-        var response = await this.app.GetFactoryService().GetHttpRequest()
+        var response = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(this.app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(this.app.GetTime())
+            .SetExpiresHeader(this.App.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.App.GetTime())
             .SetMethod(HttpMethod.Post)
             .Send<byte[]>();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
@@ -181,17 +181,17 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostStream()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
         var model = new EchoModel();
-        var request = this.app.GetFactoryService().GetHttpRequest()
+        var request = this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(this.app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(this.app.GetTime())
+            .SetExpiresHeader(this.App.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.App.GetTime())
             .SetMethod(HttpMethod.Post);
         await using (var response = await request.SendStream())
         {
@@ -205,17 +205,17 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestEchoPostStreamAsyncDisposable()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
         var model = new EchoModel();
-        var request = this.app.GetFactoryService().GetHttpRequest()
+        var request = this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.EchoServiceUrl)
             .SetContent(model)
             .SetHeader("Content-Type", "application/json")
-            .SetExpiresHeader(this.app.GetTime().AddYears(1))
-            .SetLastModifiedHeader(this.app.GetTime())
+            .SetExpiresHeader(this.App.GetTime().AddYears(1))
+            .SetLastModifiedHeader(this.App.GetTime())
             .SetMethod(HttpMethod.Post);
         await using (var response = await request.SendStream())
         {
@@ -229,11 +229,11 @@ public sealed class WebServerTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public async Task TestPerformanceWebServer()
     {
-        await using var webApp = this.CreateTestWebApp(this.app);
+        await using var webApp = this.CreateTestWebApp(this.App);
         using var client = webApp.GetTestClient();
-        this.app.Container.Register(client);
+        this.App.Container.Register(client);
 
-        this.AssertPerformance(() => this.TestPerformanceWebServerInternal(this.app));
+        this.AssertPerformance(() => this.TestPerformanceWebServerInternal(this.App));
 
         await webApp.StopAsync();
     }

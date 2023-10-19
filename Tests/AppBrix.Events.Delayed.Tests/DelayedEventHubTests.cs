@@ -16,14 +16,14 @@ namespace AppBrix.Events.Delayed.Tests;
 public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
 {
     #region Setup and cleanup
-    public DelayedEventHubTests() => this.app.Start();
+    public DelayedEventHubTests() => this.App.Start();
     #endregion
 
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSubscribeNullHandler()
     {
-        var hub = this.app.GetDelayedEventHub();
+        var hub = this.App.GetDelayedEventHub();
         var action = () => hub.Subscribe<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>();
     }
@@ -31,7 +31,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnsubscribeNullHandler()
     {
-        var hub = this.app.GetDelayedEventHub();
+        var hub = this.App.GetDelayedEventHub();
         var action = () => hub.Unsubscribe<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>();
     }
@@ -39,8 +39,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnsubscribeImmediate()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMock(10);
         var called = 0;
 
@@ -57,8 +57,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseImmediateNullArgument()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
         var action = () => hub.RaiseImmediate(null!);
         action.Should().Throw<ArgumentNullException>();
     }
@@ -66,8 +66,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseImmediateDefaultEvent()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMock(10);
         var called = 0;
         hub.Subscribe<EventMock>(e =>
@@ -82,8 +82,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseImmediate()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMock(10);
         var called = 0;
         hub.Subscribe<EventMock>(e =>
@@ -98,8 +98,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestHandlerThrowingExceptionImmediate()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
         var called = 0;
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
@@ -112,8 +112,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnsubscribeDelayed()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMock(10);
         var called = 0;
 
@@ -132,8 +132,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseDelayedNullArgument()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.App.GetDelayedEventHub();
         var action = () => hub.RaiseDelayed(null!);
         action.Should().Throw<ArgumentNullException>();
     }
@@ -141,8 +141,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseDelayedDefaultEvent()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMock(10);
         var called = 0;
         hub.Subscribe<EventMock>(e =>
@@ -161,8 +161,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseDelayed()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMock(10);
         var called = 0;
         hub.Subscribe<EventMock>(e =>
@@ -181,8 +181,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestHandlerThrowingExceptionDelayed()
     {
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.App.GetDelayedEventHub();
         var called = 0;
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
@@ -210,7 +210,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     private void TestPerformanceEventsSubscribeInternal()
     {
         const int calledCount = 60000;
-        var hub = this.app.GetDelayedEventHub();
+        var hub = this.App.GetDelayedEventHub();
         var handlers = new List<Action<EventMockChild>>(calledCount);
 
         for (var i = 0; i < calledCount; i++)
@@ -223,13 +223,13 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
             hub.Subscribe(handlers[i]);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceEventsUnsubscribeInternal()
     {
         const int calledCount = 3000;
-        var hub = this.app.GetDelayedEventHub();
+        var hub = this.App.GetDelayedEventHub();
         var handlers = new List<Action<EventMockChild>>(calledCount);
 
         for (var i = 0; i < calledCount; i++)
@@ -246,13 +246,13 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
             hub.Unsubscribe(handlers[i]);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseImmediateInternal()
     {
         const int calledCount = 100000;
-        var hub = this.app.GetDelayedEventHub();
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
@@ -267,14 +267,14 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
         interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseDelayedInternal()
     {
         const int calledCount = 80000;
-        this.app.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
-        var hub = this.app.GetDelayedEventHub();
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
         var args = new EventMockChild(10);
         var childCalled = 0;
         var interfaceCalled = 0;
@@ -292,7 +292,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
         interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
     #endregion
 }

@@ -14,7 +14,7 @@ namespace AppBrix.Logging.Tests.Config;
 public sealed class LoggingConfigTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LoggingConfigTests() => this.app.Start();
+    public LoggingConfigTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -27,8 +27,8 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Error;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Error;
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
             {
@@ -51,11 +51,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
                     throw new NotSupportedException(x.Level.ToString());
             }
         });
-        this.app.GetLogHub().Error(message);
-        this.app.GetLogHub().Warning(message);
-        this.app.GetLogHub().Info(message);
-        this.app.GetLogHub().Debug(message);
-        this.app.GetLogHub().Trace(message);
+        this.App.GetLogHub().Error(message);
+        this.App.GetLogHub().Warning(message);
+        this.App.GetLogHub().Info(message);
+        this.App.GetLogHub().Debug(message);
+        this.App.GetLogHub().Trace(message);
         errorCalled.Should().BeTrue("the error event should have been called");
         warningCalled.Should().BeFalse("the warning event should not have been called");
         infoCalled.Should().BeFalse("the info event should not have been called");
@@ -72,8 +72,8 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Warning;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Warning;
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
             {
@@ -96,11 +96,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
                     throw new NotSupportedException(x.Level.ToString());
             }
         });
-        this.app.GetLogHub().Error(message);
-        this.app.GetLogHub().Warning(message);
-        this.app.GetLogHub().Info(message);
-        this.app.GetLogHub().Debug(message);
-        this.app.GetLogHub().Trace(message);
+        this.App.GetLogHub().Error(message);
+        this.App.GetLogHub().Warning(message);
+        this.App.GetLogHub().Info(message);
+        this.App.GetLogHub().Debug(message);
+        this.App.GetLogHub().Trace(message);
         errorCalled.Should().BeTrue("the error event should have been called");
         warningCalled.Should().BeTrue("the warning event should have been called");
         infoCalled.Should().BeFalse("the info event should not have been called");
@@ -117,8 +117,8 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Info;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Info;
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
             {
@@ -141,11 +141,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
                     throw new NotSupportedException(x.Level.ToString());
             }
         });
-        this.app.GetLogHub().Error(message);
-        this.app.GetLogHub().Warning(message);
-        this.app.GetLogHub().Info(message);
-        this.app.GetLogHub().Debug(message);
-        this.app.GetLogHub().Trace(message);
+        this.App.GetLogHub().Error(message);
+        this.App.GetLogHub().Warning(message);
+        this.App.GetLogHub().Info(message);
+        this.App.GetLogHub().Debug(message);
+        this.App.GetLogHub().Trace(message);
         errorCalled.Should().BeTrue("the error event should have been called");
         warningCalled.Should().BeTrue("the warning event should have been called");
         infoCalled.Should().BeTrue("the info event should have been called");
@@ -162,8 +162,8 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Debug;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Debug;
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
             {
@@ -186,11 +186,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
                     throw new NotSupportedException(x.Level.ToString());
             }
         });
-        this.app.GetLogHub().Error(message);
-        this.app.GetLogHub().Warning(message);
-        this.app.GetLogHub().Info(message);
-        this.app.GetLogHub().Debug(message);
-        this.app.GetLogHub().Trace(message);
+        this.App.GetLogHub().Error(message);
+        this.App.GetLogHub().Warning(message);
+        this.App.GetLogHub().Info(message);
+        this.App.GetLogHub().Debug(message);
+        this.App.GetLogHub().Trace(message);
         errorCalled.Should().BeTrue("the error event should have been called");
         warningCalled.Should().BeTrue("the warning event should have been called");
         infoCalled.Should().BeTrue("the info event should have been called");
@@ -207,8 +207,8 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Trace;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Trace;
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
             {
@@ -231,11 +231,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
                     throw new NotSupportedException(x.Level.ToString());
             }
         });
-        this.app.GetLogHub().Error(message);
-        this.app.GetLogHub().Warning(message);
-        this.app.GetLogHub().Info(message);
-        this.app.GetLogHub().Debug(message);
-        this.app.GetLogHub().Trace(message);
+        this.App.GetLogHub().Error(message);
+        this.App.GetLogHub().Warning(message);
+        this.App.GetLogHub().Info(message);
+        this.App.GetLogHub().Debug(message);
+        this.App.GetLogHub().Trace(message);
         errorCalled.Should().BeTrue("the error event should have been called");
         warningCalled.Should().BeTrue("the warning event should have been called");
         infoCalled.Should().BeTrue("the info event should have been called");

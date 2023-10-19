@@ -15,7 +15,7 @@ namespace AppBrix.Factory.Tests;
 public sealed class FactoryTests : TestsBase<FactoryModule>
 {
     #region Setup and cleanup
-    public FactoryTests() => this.app.Start();
+    public FactoryTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -139,7 +139,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     #endregion
 
     #region Private methods
-    private IFactoryService GetFactoryService() => this.app.GetFactoryService();
+    private IFactoryService GetFactoryService() => this.App.GetFactoryService();
 
     private void TestPerformanceFactoryInternal()
     {
@@ -157,7 +157,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
             service.Get(type);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
     #endregion
 }

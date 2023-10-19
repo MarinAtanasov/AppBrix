@@ -16,7 +16,7 @@ namespace AppBrix.Events.Tests;
 public sealed class EventHubTests : TestsBase<EventsModule>
 {
     #region Setup and cleanup
-    public EventHubTests() => this.app.Start();
+    public EventHubTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -254,7 +254,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     #endregion
 
     #region Private methods
-    private IEventHub GetEventHub() => this.app.GetEventHub();
+    private IEventHub GetEventHub() => this.App.GetEventHub();
 
     private void TestPerformanceEventsSubscribeInternal()
     {
@@ -272,7 +272,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
             hub.Subscribe(handlers[i]);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceEventsUnsubscribeInternal()
@@ -295,7 +295,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
             hub.Unsubscribe(handlers[i]);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceEventsRaiseInternal()
@@ -320,7 +320,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         childCalled.Should().Be(calledCount * subscribers, "The child should be called exactly {0} times", calledCount * subscribers);
         interfaceCalled.Should().Be(calledCount * subscribers, "The interface should be called exactly {0} times", calledCount * subscribers);
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
     #endregion
 }

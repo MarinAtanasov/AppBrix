@@ -11,8 +11,8 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
     #region Setup and cleanup
     public CachedPermissionsServiceTests()
     {
-        this.app.ConfigService.GetPermissionsConfig().EnableCaching = true;
-        this.app.Start();
+        this.App.ConfigService.GetPermissionsConfig().EnableCaching = true;
+        this.App.Start();
     }
     #endregion
 
@@ -20,7 +20,7 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceHasPermission()
     {
-        var service = this.app.GetPermissionsService();
+        var service = this.App.GetPermissionsService();
         service.Allow("a", "p");
         service.AddParent("a", "a1");
         service.Allow("a1", "p1");
@@ -38,7 +38,7 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceAddPermission()
     {
-        var service = this.app.GetPermissionsService();
+        var service = this.App.GetPermissionsService();
         service.Allow("a", "p");
         service.AddParent("a", "a1");
         service.Allow("a1", "p1");
@@ -57,7 +57,7 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
     #region Private methods
     private void TestPerformanceHasPermissionInternal()
     {
-        var service = this.app.GetPermissionsService();
+        var service = this.App.GetPermissionsService();
         for (var i = 0; i < 120000; i++)
         {
             service.Check("a", "p");
@@ -68,7 +68,7 @@ public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
 
     private void TestPerformanceAddPermissionInternal()
     {
-        var service = this.app.GetPermissionsService();
+        var service = this.App.GetPermissionsService();
         for (var i = 0; i < 800; i++)
         {
             var item = (i % 20).ToString();

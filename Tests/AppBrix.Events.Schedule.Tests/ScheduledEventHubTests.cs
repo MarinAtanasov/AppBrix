@@ -18,8 +18,8 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     #region Setup and cleanup
     public ScheduledEventHubTests()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Start();
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+        this.App.Start();
     }
     #endregion
 
@@ -27,7 +27,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestScheduleNullArgs()
     {
-        var hub = this.app.GetScheduledEventHub();
+        var hub = this.App.GetScheduledEventHub();
         var action = () => hub.Schedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
@@ -37,8 +37,8 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     {
         var called = false;
         var func = () => called;
-        this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
-        this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
+        this.App.GetEventHub().Subscribe<EventMock>(_ => called = true);
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
         called.Should().BeFalse("event should not be called immediately");
         return func.ShouldReturn(true, "event should have been raised");
     }
@@ -47,14 +47,14 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     public async Task TestScheduleThreeArgs()
     {
         var called = new bool[3];
-        this.app.GetEventHub().Subscribe<EventMock>(args =>
+        this.App.GetEventHub().Subscribe<EventMock>(args =>
         {
             called[args.Value] = true;
             throw new InvalidOperationException();
         });
-        this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(2), TimeSpan.FromHours(1)));
-        this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.Zero));
-        this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.Zero));
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(2), TimeSpan.FromHours(1)));
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.Zero));
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.Zero));
 
         var func = () => called[0];
         await func.ShouldReturn(true, "first event should have been raised");
@@ -65,7 +65,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnscheduleNullArgs()
     {
-        var hub = this.app.GetScheduledEventHub();
+        var hub = this.App.GetScheduledEventHub();
         var action = () => hub.Unschedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
@@ -74,11 +74,11 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     public async Task TestUnscheduleArgs()
     {
         var called = new bool[2];
-        this.app.GetEventHub().Subscribe<EventMock>(args => called[args.Value] = true);
+        this.App.GetEventHub().Subscribe<EventMock>(args => called[args.Value] = true);
         var scheduledEvent = new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2));
-        this.app.GetScheduledEventHub().Schedule(scheduledEvent);
-        this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.FromMilliseconds(2)));
-        this.app.GetScheduledEventHub().Unschedule(scheduledEvent);
+        this.App.GetScheduledEventHub().Schedule(scheduledEvent);
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.FromMilliseconds(2)));
+        this.App.GetScheduledEventHub().Unschedule(scheduledEvent);
 
         var func = () => called[1];
         await func.ShouldReturn(true, "first event should have been raised");
@@ -90,18 +90,18 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     {
         var called = new bool[2];
         var func = Enumerable.Range(0, called.Length).Select(i => (Func<bool>)(() => called[i])).ToArray();
-        this.app.GetEventHub().Subscribe<EventMock>(args =>
+        this.App.GetEventHub().Subscribe<EventMock>(args =>
         {
             called[args.Value] = true;
             if (args.Value == 0)
-                this.app.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.Zero));
+                this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.Zero));
         });
 
         var weakReference = this.GetEventMockWeakReference(0);
         var schedule = (WeakReference<ScheduledEventMock<EventMock>> weakRef) =>
         {
             if (weakRef.TryGetTarget(out var args))
-                this.app.GetScheduledEventHub().Schedule(args);
+                this.App.GetScheduledEventHub().Schedule(args);
         };
         schedule(weakReference);
 
@@ -115,9 +115,9 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceSchedule()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
-        this.app.Reinitialize();
-        var time = this.app.GetTime().AddHours(1);
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
+        this.App.Reinitialize();
+        var time = this.App.GetTime().AddHours(1);
         var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
@@ -127,9 +127,9 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceUnschedule()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
-        this.app.Reinitialize();
-        var time = this.app.GetTime().AddHours(1);
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
+        this.App.Reinitialize();
+        var time = this.App.GetTime().AddHours(1);
         var scheduledEvents = Enumerable.Range(0, 80000)
             .Select(_ => new ScheduledEventMock<EventMock>(new EventMock(0), time))
             .ToList();
@@ -143,17 +143,17 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
 
     private void TestPerformanceScheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
     {
-        var hub = this.app.GetScheduledEventHub();
+        var hub = this.App.GetScheduledEventHub();
         for (var i = 0; i < scheduledEvents.Count; i++)
         {
             hub.Schedule(scheduledEvents[i]);
         }
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceUnscheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
     {
-        var hub = this.app.GetScheduledEventHub();
+        var hub = this.App.GetScheduledEventHub();
         for (var i = 0; i < scheduledEvents.Count; i++)
         {
             hub.Schedule(scheduledEvents[i]);

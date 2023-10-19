@@ -14,14 +14,14 @@ namespace AppBrix.Random.Tests;
 public sealed class RandomServiceTests : TestsBase<RandomModule>
 {
     #region Setup and cleanup
-    public RandomServiceTests() => this.app.Start();
+    public RandomServiceTests() => this.App.Start();
     #endregion
 
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateRandomItemsNullItems()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         Action action = () => service.GetRandomItems<object>(null!);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
@@ -29,7 +29,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateRandomItemsEmptyItems()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var generated = service.GetRandomItems(Array.Empty<object>());
         generated.Should().NotBeNull($"{nameof(service.GetRandomItems)} should never return null.");
         generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GetRandomItems)} should return an empty array.");
@@ -38,7 +38,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateRandomItemsRepeated()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var original = Enumerable.Range(0, 1000).ToList();
         var items = original.ToList();
         var generated = service.GetRandomItems(items);
@@ -68,7 +68,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateRandomItemsDifferentSeeds()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var original = Enumerable.Range(0, 1000).ToList();
         var items1 = service.GetRandomItems(original, 23).Take(original.Count).ToList();
         var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
@@ -78,7 +78,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateRandomItemsEqualSeeds()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var original = Enumerable.Range(0, 1000).ToList();
         var items1 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
         var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
@@ -88,7 +88,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateUniqueItemsNullItems()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         Action action = () => service.GetUniqueItems<object>(null!);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
@@ -96,7 +96,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateUniqueItemsEmptyItems()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var generated = service.GetUniqueItems(Array.Empty<object>());
         generated.Should().NotBeNull($"{nameof(service.GetUniqueItems)} should never return null.");
         generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GetUniqueItems)} should return an empty array.");
@@ -105,7 +105,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateUniqueItems()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var original = Enumerable.Range(0, 1000).ToList();
         var items = original.ToList();
         var generated = service.GetUniqueItems(items).ToList();
@@ -124,7 +124,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateUniqueItemsDifferentSeeds()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var original = Enumerable.Range(0, 1000).ToList();
         var items1 = service.GetUniqueItems(original, 23).ToList();
         var items2 = service.GetUniqueItems(original, 42).ToList();
@@ -134,7 +134,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGenerateUniqueItemsEqualSeeds()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var original = Enumerable.Range(0, 1000).ToList();
         var items1 = service.GetUniqueItems(original, 42).ToList();
         var items2 = service.GetUniqueItems(original, 42).ToList();
@@ -144,7 +144,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestMultiThreadRandom()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var lists = new List<List<int>>(Enumerable.Range(0, 32).Select(_ => new List<int>()));
         Enumerable.Range(0, lists.Count)
             .Select(x => lists[x])
@@ -177,18 +177,18 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShuffleNullItems()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var action = () => service.Shuffle<object>(null!);
         action.Should().Throw<ArgumentNullException>("items should not be null.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestShuffleEmptyItems() => this.app.GetRandomService().Shuffle(Array.Empty<object>());
+    public void TestShuffleEmptyItems() => this.App.GetRandomService().Shuffle(Array.Empty<object>());
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShuffle()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 1000).ToList();
         service.Shuffle(items);
         Enumerable.Range(0, items.Count).Any(x => items[x] != x).Should().BeTrue("Some items should have been shuffled.");
@@ -197,7 +197,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShuffleDifferentSeeds()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var items1 = Enumerable.Range(0, 1000).ToList();
         var items2 = Enumerable.Range(0, 1000).ToList();
         service.Shuffle(items1, 23);
@@ -208,7 +208,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShuffleEqualSeeds()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var items1 = Enumerable.Range(0, 1000).ToList();
         var items2 = Enumerable.Range(0, 1000).ToList();
         service.Shuffle(items1, 42);
@@ -232,7 +232,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     #region Private methods
     private void TestPerformanceGetRandomInternal()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         for (var i = 0; i < 1000000; i++)
         {
             service.GetRandom();
@@ -241,7 +241,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
 
     private void TestPerformanceGetRandomItemsInternal()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 100).ToList();
         var sum = 0;
         for (var i = 0; i < 30000; i++)
@@ -253,7 +253,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
 
     private void TestPerformanceGetUniqueItemsInternal()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 100).ToList();
         var sum = 0;
         for (var i = 0; i < 30000; i++)
@@ -265,7 +265,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
 
     private void TestPerformanceShuffleInternal()
     {
-        var service = this.app.GetRandomService();
+        var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 100).ToList();
         for (var i = 0; i < 8000; i++)
         {

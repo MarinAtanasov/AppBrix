@@ -12,7 +12,7 @@ namespace AppBrix.Time.Tests;
 public sealed class TimeServiceTests : TestsBase<TimeModule>
 {
     #region Setup and cleanup
-    public TimeServiceTests() => this.app.Start();
+    public TimeServiceTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -20,7 +20,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     public void TestGetTime()
     {
         var timeBefore = DateTime.UtcNow;
-        var time = this.app.GetTime();
+        var time = this.App.GetTime();
         var timeAfter = DateTime.UtcNow;
         time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
         time.Kind.Should().Be(DateTimeKind.Utc, "kind is not Utc");
@@ -31,7 +31,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     public void TestGetTimeLocal()
     {
         var timeBefore = DateTimeOffset.Now;
-        var time = this.app.GetTimeLocal();
+        var time = this.App.GetTimeLocal();
         var timeAfter = DateTimeOffset.Now;
         time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
         time.Offset.Should().Be(timeBefore.Offset, "offset is not local");
@@ -42,7 +42,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     public void TestGetTimeUtc()
     {
         var timeBefore = DateTimeOffset.UtcNow;
-        var time = this.app.GetTimeUtc();
+        var time = this.App.GetTimeUtc();
         var timeAfter = DateTimeOffset.UtcNow;
         time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
         time.Offset.Should().Be(timeBefore.Offset, "offset is not Utc");
@@ -52,7 +52,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDateTimeSerialization()
     {
-        var service = this.app.GetTimeService();
+        var service = this.App.GetTimeService();
         var time = service.GetTime();
         time = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, DateTimeKind.Utc);
         var serialized = service.ToString(time);
@@ -62,7 +62,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDateTimeOffsetLocalSerialization()
     {
-        var service = this.app.GetTimeService();
+        var service = this.App.GetTimeService();
         var time = service.GetTimeLocal();
         time = new DateTimeOffset(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
         var serialized = service.ToString(time);
@@ -72,7 +72,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDateTimeOffsetUtcSerialization()
     {
-        var service = this.app.GetTimeService();
+        var service = this.App.GetTimeService();
         var time = service.GetTimeUtc();
         time = new DateTimeOffset(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
         var serialized = service.ToString(time);
@@ -100,7 +100,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     {
         for (var i = 0; i < 250000; i++)
         {
-            this.app.GetTime();
+            this.App.GetTime();
         }
     }
 
@@ -108,7 +108,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     {
         for (var i = 0; i < 250000; i++)
         {
-            this.app.GetTime();
+            this.App.GetTime();
         }
     }
 
@@ -116,14 +116,14 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     {
         for (var i = 0; i < 250000; i++)
         {
-            this.app.GetTime();
+            this.App.GetTime();
         }
     }
 
     private void TestPerformanceConvertDateTimeInternal()
     {
         var time = DateTime.UtcNow;
-        var timeService = this.app.GetTimeService();
+        var timeService = this.App.GetTimeService();
         for (var i = 0; i < 12500; i++)
         {
             timeService.ToDateTime(timeService.ToString(time));
@@ -133,7 +133,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
     private void TestPerformanceConvertDateTimeOffsetInternal()
     {
         var time = DateTimeOffset.UtcNow;
-        var timeService = this.app.GetTimeService();
+        var timeService = this.App.GetTimeService();
         for (var i = 0; i < 15000; i++)
         {
             timeService.ToDateTimeOffset(timeService.ToString(time));

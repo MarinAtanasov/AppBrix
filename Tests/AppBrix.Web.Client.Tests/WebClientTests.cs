@@ -12,14 +12,14 @@ namespace AppBrix.Web.Client.Tests;
 public sealed class WebClientTests : TestsBase<WebClientModule>
 {
     #region Setup and cleanup
-    public WebClientTests() => this.app.Start();
+    public WebClientTests() => this.App.Start();
     #endregion
 
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullHeader()
     {
-        var request = this.app.GetFactoryService().GetHttpRequest();
+        var request = this.App.GetFactoryService().GetHttpRequest();
         var action = () => request.SetHeader(string.Empty);
         action.Should().Throw<ArgumentNullException>("header cannot be empty");
     }
@@ -27,7 +27,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullMethod()
     {
-        var request = this.app.GetFactoryService().GetHttpRequest();
+        var request = this.App.GetFactoryService().GetHttpRequest();
         var action = () => request.SetMethod(string.Empty);
         action.Should().Throw<ArgumentNullException>("method cannot be empty");
     }
@@ -35,7 +35,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestSetNullUrl()
     {
-        var request = this.app.GetFactoryService().GetHttpRequest();
+        var request = this.App.GetFactoryService().GetHttpRequest();
         var action = () => request.SetUrl(string.Empty);
         action.Should().Throw<ArgumentNullException>("url cannot be empty");
     }
@@ -47,7 +47,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     #region Private methods
     private void TestPerformanceGetHttpRequestInternal()
     {
-        var service = this.app.GetFactoryService();
+        var service = this.App.GetFactoryService();
         for (var i = 0; i < 150000; i++)
         {
             service.GetHttpRequest();

@@ -18,9 +18,9 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
     #region Setup and cleanup
     public InMemoryDataTests()
     {
-        this.app.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
-        this.app.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
-        this.app.Start();
+        this.App.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
+        this.App.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
+        this.App.Start();
     }
     #endregion
 
@@ -28,13 +28,13 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCrudOperations()
     {
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Add(new DataItemMock { Content = nameof(InMemoryDataTests.TestCrudOperations) });
             context.SaveChanges();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             var item = context.Items.Single();
             item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
@@ -43,7 +43,7 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
             context.SaveChanges();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             var item = context.Items.Single();
             item.Content.Should().Be(nameof(DataItemContextMock), $"{nameof(item.Content)} should be updated");
@@ -51,7 +51,7 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
             context.SaveChanges();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Count().Should().Be(0, "the item should have been deleted");
         }
@@ -64,7 +64,7 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
     #region Private methods
     private void TestPerformanceGetItemInternal()
     {
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
@@ -72,11 +72,11 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
 
         for (var i = 0; i < 60; i++)
         {
-            using var context = this.app.GetDbContextService().Get<DataItemContextMock>();
+            using var context = this.App.GetDbContextService().Get<DataItemContextMock>();
             _ = context.Items.Single();
         }
 
-        using (var context = this.app.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
         {
             context.Items.Remove(context.Items.Single());
             context.SaveChanges();

@@ -18,7 +18,7 @@ namespace AppBrix.Events.Async.Tests;
 public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
 {
     #region Setup and cleanup
-    public AsyncEventHubAsyncEventsTests() => this.app.Start();
+    public AsyncEventHubAsyncEventsTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -269,7 +269,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         await getThreads.ShouldReturn(initialThreads, "no threads should be created when subscribing to an event with subscribers");
         hub.Subscribe<EventMock>(_ => Task.CompletedTask);
         await getThreads.ShouldReturn(initialThreads, "no thread should be created when subscribing to a second new event");
-        this.app.Reinitialize();
+        this.App.Reinitialize();
         await getThreads.ShouldReturn(initialThreads, "threads should be disposed of on uninitialization");
     }
 
@@ -284,7 +284,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
     #endregion
 
     #region Private methods
-    private IAsyncEventHub GetAsyncEventHub() => this.app.GetAsyncEventHub();
+    private IAsyncEventHub GetAsyncEventHub() => this.App.GetAsyncEventHub();
 
     private void TestPerformanceEventsSubscribeInternal()
     {
@@ -302,7 +302,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
             hub.Subscribe(handlers[i]);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceEventsUnsubscribeInternal()
@@ -325,7 +325,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
             hub.Unsubscribe(handlers[i]);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private async Task TestPerformanceEventsRaiseInternal()
@@ -348,7 +348,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         var interfaceCalledFunc = () => interfaceCalled;
         await interfaceCalledFunc.ShouldReturn(calledCount, $"The interface should be called exactly {calledCount} times");
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
     #endregion
 }

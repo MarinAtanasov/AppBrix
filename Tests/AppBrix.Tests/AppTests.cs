@@ -18,7 +18,7 @@ public sealed class AppTests : TestsBase
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCreateAppNullConfigService()
     {
-        var action = () => App.Create(null!);
+        var action = () => AppBrix.App.Create(null!);
         action.Should().Throw<ArgumentNullException>("config service cannot be null");
     }
 

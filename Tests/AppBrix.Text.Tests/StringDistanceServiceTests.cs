@@ -12,28 +12,28 @@ namespace AppBrix.Text.Tests;
 public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 {
     #region Setup and cleanup
-    public StringDistanceServiceTests() => this.app.Start();
+    public StringDistanceServiceTests() => this.App.Start();
     #endregion
 
     #region Tests Damerau-Levenshtein distance
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceNullLeft()
     {
-        var action = () => this.app.GetStringDistanceService().GetDamerauLevenshteinDistance(null!, "appbrix");
+        var action = () => this.App.GetStringDistanceService().GetDamerauLevenshteinDistance(null!, "appbrix");
         action.Should().Throw<ArgumentNullException>("left should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceNullRight()
     {
-        var action = () => this.app.GetStringDistanceService().GetDamerauLevenshteinDistance("appbrix", null!);
+        var action = () => this.App.GetStringDistanceService().GetDamerauLevenshteinDistance("appbrix", null!);
         action.Should().Throw<ArgumentNullException>("right should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceEmptyLeft()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetDamerauLevenshteinDistance(string.Empty, "appbrix")
             .Should()
             .Be(7);
@@ -42,7 +42,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceEmptyRight()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetDamerauLevenshteinDistance("appbrix", string.Empty)
             .Should()
             .Be(7);
@@ -51,7 +51,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceEqualStrings()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetDamerauLevenshteinDistance("appbrix", "appbrix")
             .Should()
             .Be(0);
@@ -60,7 +60,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistance()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetDamerauLevenshteinDistance("appbrix", "apprtbix")
             .Should()
             .Be(2);
@@ -69,7 +69,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetDamerauLevenshteinDistanceMixedMinMaxCharacters()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetDamerauLevenshteinDistance("cbd", "cae")
             .Should()
             .Be(2);
@@ -83,21 +83,21 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceNullLeft()
     {
-        var action = () => this.app.GetStringDistanceService().GetLevenshteinDistance(null!, "appbrix");
+        var action = () => this.App.GetStringDistanceService().GetLevenshteinDistance(null!, "appbrix");
         action.Should().Throw<ArgumentNullException>("left should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceNullRight()
     {
-        var action = () => this.app.GetStringDistanceService().GetLevenshteinDistance("appbrix", null!);
+        var action = () => this.App.GetStringDistanceService().GetLevenshteinDistance("appbrix", null!);
         action.Should().Throw<ArgumentNullException>("right should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceEmptyLeft()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetLevenshteinDistance(string.Empty, "appbrix")
             .Should()
             .Be(7);
@@ -106,7 +106,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceEmptyRight()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetLevenshteinDistance("appbrix", string.Empty)
             .Should()
             .Be(7);
@@ -115,7 +115,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistanceEqualStrings()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetLevenshteinDistance("appbrix", "appbrix")
             .Should()
             .Be(0);
@@ -124,7 +124,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetLevenshteinDistance()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetLevenshteinDistance("appbrix", "apbtix")
             .Should()
             .Be(2);
@@ -138,21 +138,21 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceNullLeft()
     {
-        var action = () => this.app.GetStringDistanceService().GetOptimalStringAlignmentDistance(null!, "appbrix");
+        var action = () => this.App.GetStringDistanceService().GetOptimalStringAlignmentDistance(null!, "appbrix");
         action.Should().Throw<ArgumentNullException>("left should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceNullRight()
     {
-        var action = () => this.app.GetStringDistanceService().GetOptimalStringAlignmentDistance("appbrix", null!);
+        var action = () => this.App.GetStringDistanceService().GetOptimalStringAlignmentDistance("appbrix", null!);
         action.Should().Throw<ArgumentNullException>("right should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceEmptyLeft()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetOptimalStringAlignmentDistance(string.Empty, "appbrix")
             .Should()
             .Be(7);
@@ -161,7 +161,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceEmptyRight()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetOptimalStringAlignmentDistance("appbrix", string.Empty)
             .Should()
             .Be(7);
@@ -170,7 +170,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistanceEqualStrings()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetOptimalStringAlignmentDistance("appbrix", "appbrix")
             .Should()
             .Be(0);
@@ -179,7 +179,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetOptimalStringAlignmentDistance()
     {
-        this.app.GetStringDistanceService()
+        this.App.GetStringDistanceService()
             .GetOptimalStringAlignmentDistance("appbrix", "aprbix")
             .Should()
             .Be(2);
@@ -192,7 +192,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
     #region Private methods
     private void TestPerformanceGetDamerauLevenshteinDistanceInternal()
     {
-        var service = this.app.GetStringDistanceService();
+        var service = this.App.GetStringDistanceService();
         for (var i = 0; i < 12500; i++)
         {
             service.GetDamerauLevenshteinDistance("AppBrix", "Framework");
@@ -201,7 +201,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 
     private void TestPerformanceGetLevenshteinDistanceInternal()
     {
-        var service = this.app.GetStringDistanceService();
+        var service = this.App.GetStringDistanceService();
         for (var i = 0; i < 30000; i++)
         {
             service.GetLevenshteinDistance("AppBrix", "Framework");
@@ -210,7 +210,7 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 
     private void TestPerformanceGetOptimalStringAlignmentDistanceInternal()
     {
-        var service = this.app.GetStringDistanceService();
+        var service = this.App.GetStringDistanceService();
         for (var i = 0; i < 20000; i++)
         {
             service.GetOptimalStringAlignmentDistance("AppBrix", "Framework");

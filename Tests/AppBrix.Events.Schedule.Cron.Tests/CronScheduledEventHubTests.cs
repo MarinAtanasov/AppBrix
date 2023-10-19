@@ -20,11 +20,11 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     #region Setup and cleanup
     public CronScheduledEventHubTests()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Start();
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+        this.App.Start();
 
-        this.timeService = new TimeServiceMock(this.app);
-        this.app.Container.Register(this.timeService);
+        this.timeService = new TimeServiceMock(this.App);
+        this.App.Container.Register(this.timeService);
     }
     #endregion
 
@@ -32,7 +32,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestScheduleNullArgs()
     {
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
         Action action = () => hub.Schedule<EventMock>(null, CronScheduledEventHubTests.EveryMinute);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
@@ -40,7 +40,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestScheduleNullExpression()
     {
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
         Action action = () => hub.Schedule(new EventMock(0), null!);
         action.Should().Throw<ArgumentNullException>("expression is null");
     }
@@ -48,7 +48,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestScheduleEmptyExpression()
     {
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
         Action action = () => hub.Schedule(new EventMock(0), string.Empty);
         action.Should().Throw<ArgumentNullException>("expression is empty");
     }
@@ -58,7 +58,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         var called = new bool[3];
         var funcs = Enumerable.Range(0, called.Length).Select<int, Func<bool>>(x => () => called[x]).ToList();
-        this.app.GetEventHub().Subscribe<EventMock>(args =>
+        this.App.GetEventHub().Subscribe<EventMock>(args =>
         {
             called[args.Value] = true;
             for (var i = 0; i < args.Value; i++)
@@ -67,7 +67,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
             }
         });
 
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
         hub.Schedule(new EventMock(0), CronScheduledEventHubTests.EveryMinute);
         hub.Schedule(new EventMock(1), CronScheduledEventHubTests.EveryMinute);
         //hub.Schedule(new EventMock(2), CronScheduledEventHubTests.EveryHour);
@@ -85,7 +85,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnscheduleNullArgs()
     {
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
         var action = () => hub.Unschedule<EventMock>(null!);
         action.Should().Throw<ArgumentNullException>("args is null");
     }
@@ -93,11 +93,11 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestUnscheduleArgs()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
-        this.app.Reinitialize();
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
+        this.App.Reinitialize();
         var called = false;
-        this.app.GetEventHub().Subscribe<EventMock>(_ => called = true);
-        var hub = this.app.GetCronScheduledEventHub();
+        this.App.GetEventHub().Subscribe<EventMock>(_ => called = true);
+        var hub = this.App.GetCronScheduledEventHub();
         var scheduledEvent = hub.Schedule(new EventMock(0), CronScheduledEventHubTests.EveryHour);
         hub.Unschedule(scheduledEvent);
         this.timeService.SetTime(this.timeService.GetTime().AddHours(1));
@@ -108,16 +108,16 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceSchedule()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
-        this.app.Reinitialize();
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
+        this.App.Reinitialize();
         this.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceUnschedule()
     {
-        this.app.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
-        this.app.Reinitialize();
+        this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
+        this.App.Reinitialize();
         this.AssertPerformance(() => this.TestPerformanceUnscheduleInternal(new EventMock(0), 5000));
     }
     #endregion
@@ -125,19 +125,19 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     #region Private methods
     private void TestPerformanceScheduleInternal(EventMock eventMock, int repeats)
     {
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
 
         for (var i = 0; i < repeats; i++)
         {
             hub.Schedule(eventMock, CronScheduledEventHubTests.EveryHour);
         }
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
 
     private void TestPerformanceUnscheduleInternal(EventMock eventMock, int repeats)
     {
-        var hub = this.app.GetCronScheduledEventHub();
+        var hub = this.App.GetCronScheduledEventHub();
         var scheduledEvents = new List<IScheduledEvent<EventMock>>(repeats);
 
         for (var i = 0; i < repeats; i++)

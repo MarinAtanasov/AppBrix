@@ -14,7 +14,7 @@ namespace AppBrix.Logging.Tests.LogHub;
 public sealed class LogHubTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LogHubTests() => this.app.Start();
+    public LogHubTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -22,7 +22,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     public void TestUnsubscribedTrace()
     {
         Action<ILogEntry> handler = _ => throw new InvalidOperationException("handler should have been unsubscribed");
-        var hub = this.app.GetLogHub();
+        var hub = this.App.GetLogHub();
         hub.Subscribe(handler);
         hub.Unsubscribe(handler);
         hub.Trace(string.Empty);
@@ -34,7 +34,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         var message = "Test message";
         var error = new ArgumentException("Test exception");
         var called = false;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
             x.Message.Should().Be(message, "the error message same as the passed in error");
@@ -45,7 +45,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
-        this.app.GetLogHub().Error(message, error);
+        this.App.GetLogHub().Error(message, error);
         called.Should().BeTrue("the event should have been called");
     }
 
@@ -55,7 +55,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         var message = "Test message";
         var error = new ArgumentException("Test exception");
         var called = false;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
             x.Message.Should().Be(message, "the debug message is different than the passed in message");
@@ -67,7 +67,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
-        this.app.GetLogHub().Debug(message, error);
+        this.App.GetLogHub().Debug(message, error);
         called.Should().BeTrue("the event should have been called");
     }
 
@@ -76,7 +76,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     {
         var message = "Test message";
         var called = false;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
             x.Message.Should().Be(message, "the info message is different than the passed in message");
@@ -86,7 +86,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
-        this.app.GetLogHub().Info(message);
+        this.App.GetLogHub().Info(message);
         called.Should().BeTrue("the event should have been called");
     }
 
@@ -96,7 +96,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         var message = "Test message";
         var error = new ArgumentException("Test exception");
         var called = false;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
             x.Message.Should().Be(message, "the warning message is different than the passed in message");
@@ -108,7 +108,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
-        this.app.GetLogHub().Warning(message, error);
+        this.App.GetLogHub().Warning(message, error);
         called.Should().BeTrue("the event should have been called");
     }
 
@@ -117,7 +117,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     {
         var message = "Test message";
         var called = false;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x =>
+        this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
             x.Message.Should().Be(message, "the trace message is different than the passed in message");
@@ -127,7 +127,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             stringed.Should().Contain(x.Message, "ToString should include the message");
             stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
         });
-        this.app.GetLogHub().Trace(message);
+        this.App.GetLogHub().Trace(message);
         called.Should().BeTrue("the event should have been called");
     }
 
@@ -136,14 +136,14 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     {
         var message = "Test message";
         var called = false;
-        this.app.ConfigService.GetLoggingConfig().LogLevel = LogLevel.None;
-        this.app.GetEventHub().Subscribe<ILogEntry>(_ => { called = true; });
-        this.app.GetLogHub().Trace(message);
-        this.app.GetLogHub().Debug(message);
-        this.app.GetLogHub().Info(message);
-        this.app.GetLogHub().Warning(message);
-        this.app.GetLogHub().Error(message);
-        this.app.GetLogHub().Critical(message);
+        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.None;
+        this.App.GetEventHub().Subscribe<ILogEntry>(_ => { called = true; });
+        this.App.GetLogHub().Trace(message);
+        this.App.GetLogHub().Debug(message);
+        this.App.GetLogHub().Info(message);
+        this.App.GetLogHub().Warning(message);
+        this.App.GetLogHub().Error(message);
+        this.App.GetLogHub().Critical(message);
         called.Should().BeFalse("the event should not have been called");
     }
 
@@ -151,42 +151,42 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     public void TestCallerFile()
     {
         var message = "Test message";
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(nameof(LogHubTests) + ".cs", "caller file should be set to current file"));
-        this.app.GetLogHub().Warning(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(nameof(LogHubTests) + ".cs", "caller file should be set to current file"));
+        this.App.GetLogHub().Warning(message);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCallerMemberName()
     {
         var message = "Test message";
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.CallerMember.Should().Be("TestCallerMemberName", "member name should be the current function"));
-        this.app.GetLogHub().Error(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => x.CallerMember.Should().Be("TestCallerMemberName", "member name should be the current function"));
+        this.App.GetLogHub().Error(message);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestThreadId()
     {
         var message = "Test message";
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Environment.CurrentManagedThreadId, "thread id should be current thread id"));
-        this.app.GetLogHub().Info(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Environment.CurrentManagedThreadId, "thread id should be current thread id"));
+        this.App.GetLogHub().Info(message);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestTimeLogEntry()
     {
         var message = "Test message";
-        var before = this.app.GetTime();
+        var before = this.App.GetTime();
         var executed = DateTime.MinValue;
-        this.app.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
-        this.app.GetLogHub().Debug(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
+        this.App.GetLogHub().Debug(message);
         executed.Should().BeOnOrAfter(before, "created date time should be greater than the time before creation");
-        executed.Should().BeOnOrBefore(this.app.GetTime(), "created date time should be greater than the time after creation");
+        executed.Should().BeOnOrBefore(this.App.GetTime(), "created date time should be greater than the time after creation");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceLogging()
     {
-        this.app.GetEventHub().Subscribe<ILogEntry>(_ => { });
+        this.App.GetEventHub().Subscribe<ILogEntry>(_ => { });
 
         this.AssertPerformance(this.TestPerformanceLoggingInternal);
     }
@@ -199,10 +199,10 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         const string message = "Test message";
         var error = new ArgumentException("Test error");
         var called = 0;
-        var logHub = this.app.GetLogHub();
+        var logHub = this.App.GetLogHub();
 
         void Handler(ILogEntry x) { called++; }
-        this.app.GetEventHub().Subscribe((Action<ILogEntry>)Handler);
+        this.App.GetEventHub().Subscribe((Action<ILogEntry>)Handler);
         for (var i = 0; i < repeat; i++)
         {
             logHub.Critical(message, error);
@@ -215,7 +215,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
 
         called.Should().Be(repeat * 6, "the event should have been called");
 
-        this.app.Reinitialize();
+        this.App.Reinitialize();
     }
     #endregion
 }

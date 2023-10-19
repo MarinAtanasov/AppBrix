@@ -16,9 +16,9 @@ public sealed class CacheTests : TestsBase<CachingModule>
     #region Setup and cleanup
     public CacheTests()
     {
-        this.app.Start();
-        this.app.Container.Register(new JsonCacheSerializer());
-        this.app.Container.Register(new MemoryDistributedCache(new CustomMemoryDistributedCacheOptions()));
+        this.App.Start();
+        this.App.Container.Register(new JsonCacheSerializer());
+        this.App.Container.Register(new MemoryDistributedCache(new CustomMemoryDistributedCacheOptions()));
     }
     #endregion
 
@@ -26,14 +26,14 @@ public sealed class CacheTests : TestsBase<CachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetCache()
     {
-        var cache = this.app.GetCache();
+        var cache = this.App.GetCache();
         cache.Should().NotBeNull("cache must be registered and resolved");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestCacheItem()
     {
-        var cache = this.app.GetCache();
+        var cache = this.App.GetCache();
         var key = "key";
         var value = "Test Value";
         await cache.Set(key, value);
@@ -49,7 +49,7 @@ public sealed class CacheTests : TestsBase<CachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestReplaceItem()
     {
-        var cache = this.app.GetCache();
+        var cache = this.App.GetCache();
         var key = "key";
         var value = "Test Value";
         await cache.Set(key, value);
@@ -75,7 +75,7 @@ public sealed class CacheTests : TestsBase<CachingModule>
     {
         const int items = 2000;
         const int gets = items * 10;
-        var cache = this.app.GetCache();
+        var cache = this.App.GetCache();
 
         for (var i = 0; i < items; i++)
         {

@@ -13,7 +13,7 @@ namespace AppBrix.Text.Tests;
 public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
 {
     #region Setup and cleanup
-    public EncodingProviderWrapperTests() => this.app.Start();
+    public EncodingProviderWrapperTests() => this.App.Start();
     #endregion
 
     #region Tests
@@ -32,7 +32,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
         var provider = new EncodingProviderMock(encoding);
         provider.Encoding.Should().BeSameAs(encoding, "provided encoding should be saved");
 
-        this.app.Container.Register(provider);
+        this.App.Container.Register(provider);
 
         provider.IsGetEncodingWithNameCalled.Should().BeFalse("encoding with name should not be called yet");
         provider.IsGetEncodingWithCodePageCalled.Should().BeFalse("encoding with code page should not be called yet");
@@ -51,7 +51,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
     #region Private methods
     private void TestPerformanceEncodingProviderWrapperInternal()
     {
-        this.app.Container.Register(new EncodingProviderMock(Encoding.UTF8));
+        this.App.Container.Register(new EncodingProviderMock(Encoding.UTF8));
 
         for (var i = 0; i < 100000; i++)
         {
