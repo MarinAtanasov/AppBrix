@@ -18,16 +18,12 @@ public sealed class ConfigService : IConfigService
     /// Creates a new instance of <see cref="ConfigService"/>
     /// </summary>
     /// <param name="provider">The provider which will be used to load and store the configurations.</param>
-    /// <param name="serializer">The serializer which will be used to serialize and deserialize the configurations.</param>
-    public ConfigService(IConfigProvider provider, IConfigSerializer serializer)
+    public ConfigService(IConfigProvider provider)
     {
         if (provider is null)
             throw new ArgumentNullException(nameof(provider));
-        if (serializer is null)
-            throw new ArgumentNullException(nameof(serializer));
 
         this.provider = provider;
-        this.serializer = serializer;
     }
     #endregion
 
@@ -44,7 +40,7 @@ public sealed class ConfigService : IConfigService
             throw new ArgumentNullException(nameof(type));
 
         if (!this.configs.TryGetValue(type, out var config))
-            this.configs[type] = config = this.ReadFromProvider(type) ?? (IConfig)type.CreateObject();
+            this.configs[type] = config = this.provider.Get(type) ?? (IConfig)type.CreateObject();
 
         return config;
     }
@@ -52,22 +48,10 @@ public sealed class ConfigService : IConfigService
     /// <summary>
     /// Saves all modified configurations.
     /// </summary>
-    public void Save()
-    {
-        foreach (var config in this.configs)
-        {
-            this.SaveInternal(config.Value);
-        }
-    }
+    public void Save() => this.provider.Save(this.configs.Values);
 
     /// <summary>
-    /// Saves one configuration.
-    /// </summary>
-    /// <param name="type">The type of the configuration.</param>
-    public void Save(Type type) => this.SaveInternal(this.Get(type));
-
-    /// <summary>
-    /// Saves one configuration.
+    /// Saves a configuration.
     /// </summary>
     /// <param name="config">The configuration to save.</param>
     public void Save(IConfig config)
@@ -76,38 +60,12 @@ public sealed class ConfigService : IConfigService
             throw new ArgumentNullException(nameof(config));
 
         this.configs[config.GetType()] = config;
-        this.SaveInternal(config);
-    }
-    #endregion
-
-    #region Private methods
-    private IConfig? ReadFromProvider(Type type)
-    {
-        var stringed = this.provider.ReadConfig(type);
-        if (string.IsNullOrEmpty(stringed))
-            return null;
-
-        this.configStringed[type] = stringed;
-        return this.serializer.Deserialize(stringed, type);
-    }
-
-    private void SaveInternal(IConfig config)
-    {
-        var type = config.GetType();
-        var stringed = this.serializer.Serialize(config);
-
-        if (!this.configStringed.TryGetValue(type, out var cached) || cached != stringed)
-        {
-            this.provider.WriteConfig(stringed, type);
-            this.configStringed[type] = stringed;
-        }
+        this.provider.Save(config);
     }
     #endregion
 
     #region Private fields and constants
     private readonly Dictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
-    private readonly Dictionary<Type, string> configStringed = new Dictionary<Type, string>();
     private readonly IConfigProvider provider;
-    private readonly IConfigSerializer serializer;
     #endregion
 }

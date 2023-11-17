@@ -17,66 +17,55 @@ public sealed class FilesConfigProviderTests : TestsBase
 {
     #region Tests
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestConstructorNullSerializer()
+    {
+        var action = () => new FilesConfigProvider(null!, "test_dir");
+        action.Should().Throw<ArgumentNullException>("serializer cannot be null");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestConstructorNullDirectory()
     {
-        var action = () => new FilesConfigProvider(null!);
+        var action = () => new FilesConfigProvider(new ConfigSerializerMock(), null!);
         action.Should().Throw<ArgumentNullException>("directory cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestConstructorEmptyDirectory()
     {
-        var action = () => new FilesConfigProvider(string.Empty);
+        var action = () => new FilesConfigProvider(new ConfigSerializerMock(), string.Empty);
         action.Should().Throw<ArgumentNullException>("directory cannot be empty");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestConstructorNullFileExtension()
     {
-        var action = () => new FilesConfigProvider("test_dir", null!);
+        var action = () => new FilesConfigProvider(new ConfigSerializerMock(), "test_dir", null!);
         action.Should().Throw<ArgumentNullException>("fileExtension cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestConstructorEmptyFileExtension()
     {
-        var action = () => new FilesConfigProvider("test_dir", string.Empty);
+        var action = () => new FilesConfigProvider(new ConfigSerializerMock(), "test_dir", string.Empty);
         action.Should().Throw<ArgumentNullException>("fileExtension cannot be empty");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestReadConfigNullType()
+    public void TestGetConfigNullType()
     {
         var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var provider = new FilesConfigProvider(directory);
-        var action = () => provider.ReadConfig(null!);
+        var provider = new FilesConfigProvider(new ConfigSerializerMock(), directory);
+        var action = () => provider.Get(null!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestWriteConfigNullConfig()
+    public void TestSaveConfigNullConfig()
     {
         var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var provider = new FilesConfigProvider(directory);
-        var action = () => provider.WriteConfig(null!, typeof(ConfigMock));
-        action.Should().Throw<ArgumentNullException>("config cannot be null");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestWriteConfigEmptyConfig()
-    {
-        var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var provider = new FilesConfigProvider(directory);
-        var action = () => ((IConfigProvider)provider).WriteConfig<ConfigMock>(string.Empty);
-        action.Should().Throw<ArgumentNullException>("config cannot be empty");
-    }
-
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestWriteConfigNullType()
-    {
-        var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var provider = new FilesConfigProvider(directory);
-        var action = () => provider.WriteConfig(nameof(ConfigMock), null!);
+        var provider = new FilesConfigProvider(new ConfigSerializerMock(), directory);
+        var action = () => provider.Save(((IConfig)null)!);
         action.Should().Throw<ArgumentNullException>("type cannot be null");
     }
     #endregion

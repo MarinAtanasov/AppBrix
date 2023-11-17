@@ -32,7 +32,7 @@ public interface IConfigService
     void Save();
 
     /// <summary>
-    /// Saves one cached configuration.
+    /// Saves one configuration.
     /// </summary>
     /// <typeparam name="T">The type of the configuration.</typeparam>
     void Save<T>() where T : class, IConfig, new() => this.Save(typeof(T));

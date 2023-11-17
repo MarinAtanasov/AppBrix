@@ -11,16 +11,26 @@ internal sealed class ConfigProviderMock : IConfigProvider
     #region Properties
     public IList<Type> ReadConfigs { get; } = new List<Type>();
 
-    public IList<KeyValuePair<Type, string>> WrittenConfigs { get; } = new List<KeyValuePair<Type, string>>();
+    public IList<KeyValuePair<Type, IConfig>> WrittenConfigs { get; } = new List<KeyValuePair<Type, IConfig>>();
     #endregion
 
     #region Public and overriden methods
-    public string ReadConfig(Type type)
+    public IConfig Get(Type config)
     {
-        this.ReadConfigs.Add(type);
-        return type.FullName + " Read";
+        this.ReadConfigs.Add(config);
+        return null;
     }
 
-    public void WriteConfig(string config, Type type) => this.WrittenConfigs.Add(new KeyValuePair<Type, string>(type, config));
+    public void Save(IConfig config) => 
+        this.WrittenConfigs.Add(new KeyValuePair<Type, IConfig>(config.GetType(), config));
+
+    public void Save(IEnumerable<IConfig> configs)
+    {
+        foreach (var config in configs)
+        {
+            this.Save(config);
+        }
+    }
     #endregion
+
 }

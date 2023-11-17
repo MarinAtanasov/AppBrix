@@ -14,8 +14,8 @@ internal static class Program
     internal static void Main()
     {
         var stopwatch = Stopwatch.StartNew();
-        var app = App.Start<MainModule>(new ConfigService(
-            new FilesConfigProvider("./Config", "json"), new JsonConfigSerializer()));
+        var app = App.Start<MainModule>(new ConfigService(new FilesConfigProvider(
+            new JsonConfigSerializer(), "./Config", "json")));
         try
         {
             Program.Run(app);

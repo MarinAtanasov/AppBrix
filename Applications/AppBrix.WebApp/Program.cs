@@ -10,8 +10,8 @@ internal static class Program
     public static void Main(string[] args)
     {
         WebApplication.CreateBuilder(args)
-            .Build(App.Start<MainModule>(new ConfigService(
-                new FilesConfigProvider("./Config", "yaml"), new YamlConfigSerializer())))
+            .Build(App.Start<MainModule>(new ConfigService(new FilesConfigProvider(
+                new YamlConfigSerializer(), "./Config", "yaml"))))
             .Run();
     }
 }
