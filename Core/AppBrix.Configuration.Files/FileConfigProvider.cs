@@ -8,7 +8,7 @@ using System.IO;
 namespace AppBrix.Configuration.Files;
 
 /// <summary>
-/// An implementation of a file provider which stores each config inside its own file.
+/// A file provider which stores all configs inside one file.
 /// </summary>
 public sealed class FileConfigProvider : IConfigProvider
 {
