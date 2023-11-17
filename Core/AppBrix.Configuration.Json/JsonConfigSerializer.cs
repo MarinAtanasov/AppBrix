@@ -23,6 +23,7 @@ public sealed class JsonConfigSerializer : IConfigSerializer
         this.settings.Converters.Add(new JsonStringEnumConverter());
         this.settings.Converters.Add(new JsonStringTimeSpanConverter());
         this.settings.Converters.Add(new JsonStringVersionConverter());
+        this.settings.Converters.Add(new JsonStringConfigConverter());
         this.settings.WriteIndented = true;
     }
     #endregion
@@ -33,7 +34,7 @@ public sealed class JsonConfigSerializer : IConfigSerializer
     /// </summary>
     /// <param name="config">The configuration.</param>
     /// <returns>The JSON representation of the configuration.</returns>
-    public string Serialize(IConfig config)
+    public string Serialize(object config)
     {
         if (config is null)
             throw new ArgumentNullException(nameof(config));
@@ -47,14 +48,14 @@ public sealed class JsonConfigSerializer : IConfigSerializer
     /// <param name="config">The JSON representation of the configuration.</param>
     /// <param name="type">The type of the configuration.</param>
     /// <returns>The deserialized configuration.</returns>
-    public IConfig Deserialize(string config, Type type)
+    public object Deserialize(string config, Type type)
     {
         if (string.IsNullOrEmpty(config))
             throw new ArgumentNullException(nameof(config));
         if (type is null)
             throw new ArgumentNullException(nameof(type));
 
-        return (IConfig)JsonSerializer.Deserialize(config, type, this.settings)!;
+        return JsonSerializer.Deserialize(config, type, this.settings)!;
     }
     #endregion
 

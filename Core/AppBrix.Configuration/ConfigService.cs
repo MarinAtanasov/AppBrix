@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace AppBrix.Configuration;
 
@@ -24,6 +26,8 @@ public sealed class ConfigService : IConfigService
             throw new ArgumentNullException(nameof(provider));
 
         this.provider = provider;
+
+        this.configTypes = this.FindAllConfigTypes(Assembly.GetCallingAssembly());
     }
     #endregion
 
@@ -64,8 +68,18 @@ public sealed class ConfigService : IConfigService
     }
     #endregion
 
+    #region Private methods
+    private List<Type> FindAllConfigTypes(Assembly assembly) => assembly
+        .GetReferencedAssemblies(true)
+        .SelectMany(x => x.ExportedTypes)
+        .Where(x => x.IsClass && !x.IsAbstract)
+        .Where(typeof(IConfig).IsAssignableFrom)
+        .ToList();
+    #endregion
+
     #region Private fields and constants
     private readonly Dictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
+    private readonly List<Type> configTypes;
     private readonly IConfigProvider provider;
     #endregion
 }

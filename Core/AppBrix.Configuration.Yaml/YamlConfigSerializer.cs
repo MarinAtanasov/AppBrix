@@ -20,17 +20,20 @@ public sealed class YamlConfigSerializer : IConfigSerializer
     /// </summary>
     /// <param name="config">The configuration.</param>
     /// <returns>The YAML representation of the configuration.</returns>
-    public string Serialize(IConfig config)
+    public string Serialize(object config)
     {
         if (config is null)
             throw new ArgumentNullException(nameof(config));
 
         using var writer = new StringWriter();
-        var serializer = new SerializerBuilder()
+        var builder = new SerializerBuilder()
             .EmitDefaults()
             .WithNamingConvention(new NullNamingConvention())
-            .WithTypeConverter(new VersionConverter())
+            .WithTypeConverter(new VersionConverter());
+        var serializer = builder
+            .WithTypeConverter(new ConfigConverter(builder.BuildValueSerializer()))
             .Build();
+
         serializer.Serialize(writer, config);
         return writer.ToString();
     }
@@ -41,7 +44,7 @@ public sealed class YamlConfigSerializer : IConfigSerializer
     /// <param name="config">The YAML representation of the configuration.</param>
     /// <param name="type">The type of the configuration.</param>
     /// <returns>The deserialized configuration.</returns>
-    public IConfig Deserialize(string config, Type type)
+    public object Deserialize(string config, Type type)
     {
         if (string.IsNullOrEmpty(config))
             throw new ArgumentNullException(nameof(config));
@@ -49,12 +52,14 @@ public sealed class YamlConfigSerializer : IConfigSerializer
             throw new ArgumentNullException(nameof(type));
 
         using var reader = new StringReader(config);
-        var deserializer = new DeserializerBuilder()
+        var builder = new DeserializerBuilder()
             .WithNamingConvention(new NullNamingConvention())
             .IgnoreUnmatchedProperties()
-            .WithTypeConverter(new VersionConverter())
+            .WithTypeConverter(new VersionConverter());
+        var deserializer = builder
+            .WithTypeConverter(new ConfigConverter(builder.BuildValueDeserializer()))
             .Build();
-        return (IConfig)deserializer.Deserialize(reader, type);
+        return deserializer.Deserialize(reader, type);
     }
     #endregion
 }

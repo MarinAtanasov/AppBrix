@@ -10,30 +10,27 @@ namespace AppBrix.Configuration.Files;
 /// <summary>
 /// An implementation of a file provider which stores each config inside its own file.
 /// </summary>
-public sealed class FilesConfigProvider : IConfigProvider
+public sealed class FileConfigProvider : IConfigProvider
 {
     #region Construction
     /// <summary>
     /// Creates a new instance of <see cref="FilesConfigProvider"/>.
     /// </summary>
     /// <param name="serializer">The serializer which will be used to serialize and deserialize the configurations.</param>
-    /// <param name="directory">The directory where the configuration files are stored.</param>
-    /// <param name="fileExtension">The extension to be used when reading/writing config files.</param>
-    public FilesConfigProvider(IConfigSerializer serializer, string directory, string fileExtension = FilesConfigProvider.DefaultExtension)
+    /// <param name="path">The path to the configuration file.</param>
+    public FileConfigProvider(IConfigSerializer serializer, string path)
     {
         if (serializer is null)
             throw new ArgumentNullException(nameof(serializer));
-        if (string.IsNullOrEmpty(directory))
-            throw new ArgumentNullException(nameof(directory));
-        if (string.IsNullOrEmpty(fileExtension))
-            throw new ArgumentNullException(nameof(fileExtension));
+        if (string.IsNullOrEmpty(path))
+            throw new ArgumentNullException(nameof(path));
 
+        var directory = new FileInfo(path).Directory!.FullName;
         if (!Directory.Exists(directory))
             Directory.CreateDirectory(directory);
 
         this.serializer = serializer;
-        this.directory = directory;
-        this.extension = fileExtension.TrimStart(FilesConfigProvider.ExtensionDot);
+        this.path = path;
     }
     #endregion
 
@@ -49,9 +46,11 @@ public sealed class FilesConfigProvider : IConfigProvider
         if (type is null)
             throw new ArgumentNullException(nameof(type));
 
-        var path = this.BuildFilePath(type);
-        var content = File.Exists(path) ? File.ReadAllText(path) : string.Empty;
-        return string.IsNullOrEmpty(content) ? null : (IConfig)this.serializer.Deserialize(content, type);
+        this.LoadConfigs();
+        if (!this.configs.TryGetValue(type, out var config))
+            this.configs[type] = null;
+
+        return config;
     }
 
     /// <summary>
@@ -63,8 +62,10 @@ public sealed class FilesConfigProvider : IConfigProvider
         if (config is null)
             throw new ArgumentNullException(nameof(config));
 
-        var type = config.GetType();
-        this.SaveInternal(type, config);
+        this.LoadConfigs();
+        this.configs[config.GetType()] = config;
+        this.savedConfigs![config.GetType()] = config;
+        this.SaveInternal();
     }
 
     /// <summary>
@@ -76,40 +77,61 @@ public sealed class FilesConfigProvider : IConfigProvider
         if (configs is null)
             throw new ArgumentNullException(nameof(configs));
 
+        this.LoadConfigs();
         foreach (var config in configs)
         {
-            this.SaveInternal(config.GetType(), config);
+            this.configs[config.GetType()] = config;
+            this.savedConfigs![config.GetType()] = config;
         }
+        this.SaveInternal();
     }
     #endregion
 
     #region Private methods
-    private string BuildFilePath(Type type)
+    private Dictionary<Type, IConfig> GetConfigs(string content) =>
+        this.serializer.Deserialize<Dictionary<Type, IConfig>>(content);
+
+    private void LoadConfigs()
     {
-        var typeName = type.Name;
-        var fileName = typeName.EndsWith(FilesConfigProvider.ToRemove, StringComparison.OrdinalIgnoreCase) && typeName.Length > FilesConfigProvider.ToRemove.Length ?
-            typeName[..^FilesConfigProvider.ToRemove.Length] : typeName;
-        return Path.Combine(this.directory, string.Concat(fileName, FilesConfigProvider.ExtensionDot, this.extension));
+        if (this.savedConfigs is not null)
+            return;
+
+        var file = new FileInfo(this.path);
+        if (!file.Exists)
+        {
+            this.savedConfigs = new Dictionary<Type, IConfig>();
+            return;
+        }
+
+        var content = File.ReadAllText(file.FullName);
+        if (string.IsNullOrEmpty(content))
+        {
+            this.savedConfigs = new Dictionary<Type, IConfig>();
+            return;
+        }
+
+        this.configs = this.GetConfigs(content)!;
+        this.savedConfigs = this.GetConfigs(content);
+        this.savedContent = content;
     }
 
-    private void SaveInternal(Type type, IConfig config)
+    private void SaveInternal()
     {
-        var content = this.serializer.Serialize(config);
-        if (!this.configs.TryGetValue(type, out var saved) || saved != content)
+        var content = this.serializer.Serialize(this.savedConfigs!);
+        if (this.savedContent != content)
         {
-            File.WriteAllText(this.BuildFilePath(type), content);
-            this.configs[type] = content;
+            File.WriteAllText(this.path, content);
+            this.savedConfigs = this.GetConfigs(content);
+            this.savedContent = content;
         }
     }
     #endregion
 
     #region Private fields and constants
-    private const string DefaultExtension = "config";
-    private const string ToRemove = "config";
-    private const char ExtensionDot = '.';
-    private readonly Dictionary<Type, string> configs = new Dictionary<Type, string>();
     private readonly IConfigSerializer serializer;
-    private readonly string directory;
-    private readonly string extension;
+    private readonly string path;
+    private Dictionary<Type, IConfig?> configs = new Dictionary<Type, IConfig?>();
+    private Dictionary<Type, IConfig>? savedConfigs;
+    private string savedContent = string.Empty;
     #endregion
 }
