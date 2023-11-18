@@ -14,13 +14,13 @@ namespace AppBrix.Configuration.Yaml.Converters;
 internal sealed class ConfigConverter : IYamlTypeConverter
 {
     #region Construction
-    public ConfigConverter(Dictionary<string, Type> configTypes, IValueSerializer serializer)
+    public ConfigConverter(Lazy<Dictionary<string, Type>> configTypes, IValueSerializer serializer)
     {
         this.configTypes = configTypes;
         this.serializer = serializer;
     }
     
-    public ConfigConverter(Dictionary<string, Type> configTypes, IValueDeserializer deserializer)
+    public ConfigConverter(Lazy<Dictionary<string, Type>> configTypes, IValueDeserializer deserializer)
     {
         this.configTypes = configTypes;
         this.deserializer = deserializer;
@@ -47,7 +47,7 @@ internal sealed class ConfigConverter : IYamlTypeConverter
                 parser.MoveNext();
 
             var typeName = ((Scalar)parser.Current).Value;
-            var configType = this.configTypes.TryGetValue(typeName, out var foundType) ? foundType : null;
+            var configType = this.configTypes.Value.TryGetValue(typeName, out var foundType) ? foundType : null;
 
             parser.MoveNext();
             while (parser.Current is not MappingStart && parser.Current is not Scalar)
@@ -115,7 +115,7 @@ internal sealed class ConfigConverter : IYamlTypeConverter
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<string, Type> configTypes;
+    private readonly Lazy<Dictionary<string, Type>> configTypes;
     private readonly IValueSerializer? serializer;
     private readonly IValueDeserializer? deserializer;
     #endregion

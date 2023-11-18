@@ -3,6 +3,7 @@
 
 using AppBrix.Configuration.Yaml.Converters;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,12 +23,15 @@ public sealed class YamlConfigSerializer : IConfigSerializer
     /// </summary>
     public YamlConfigSerializer()
     {
-        var configTypes = Assembly.GetCallingAssembly()
-            .GetReferencedAssemblies(true)
-            .SelectMany(x => x.ExportedTypes)
-            .Where(x => x.IsClass && !x.IsAbstract)
-            .Where(typeof(IConfig).IsAssignableFrom)
-            .ToDictionary(x => x.Name);
+        var callingAssembly = Assembly.GetCallingAssembly();
+        var configTypes = new Lazy<Dictionary<string, Type>>(
+            () => callingAssembly
+                .GetReferencedAssemblies(true)
+                .SelectMany(x => x.ExportedTypes)
+                .Where(x => x.IsClass && !x.IsAbstract)
+                .Where(typeof(IConfig).IsAssignableFrom)
+                .ToDictionary(x => x.Name)
+        );
 
         var serializerBuilder = new SerializerBuilder()
             .EmitDefaults()

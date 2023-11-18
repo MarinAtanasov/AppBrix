@@ -3,6 +3,7 @@
 
 using AppBrix.Configuration.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -21,12 +22,15 @@ public sealed class JsonConfigSerializer : IConfigSerializer
     /// </summary>
     public JsonConfigSerializer()
     {
-        var configTypes = Assembly.GetCallingAssembly()
-            .GetReferencedAssemblies(true)
-            .SelectMany(x => x.ExportedTypes)
-            .Where(x => x.IsClass && !x.IsAbstract)
-            .Where(typeof(IConfig).IsAssignableFrom)
-            .ToDictionary(x => x.Name);
+        var callingAssembly = Assembly.GetCallingAssembly();
+        var configTypes = new Lazy<Dictionary<string, Type>>(
+            () => callingAssembly
+                .GetReferencedAssemblies(true)
+                .SelectMany(x => x.ExportedTypes)
+                .Where(x => x.IsClass && !x.IsAbstract)
+                .Where(typeof(IConfig).IsAssignableFrom)
+                .ToDictionary(x => x.Name)
+        );
 
         this.settings = new JsonSerializerOptions();
         this.settings.Converters.Add(new JsonStringConfigConverter(configTypes));

@@ -13,7 +13,7 @@ namespace AppBrix.Configuration.Json.Converters;
 internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type, IConfig>?>
 {
     #region Construction
-    public JsonStringConfigConverter(Dictionary<string, Type> configTypes)
+    public JsonStringConfigConverter(Lazy<Dictionary<string, Type>> configTypes)
     {
         this.configTypes = configTypes;
     }
@@ -35,7 +35,7 @@ internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type,
                 reader.Read();
 
             var typeName = reader.GetString()!;
-            var type = this.configTypes.TryGetValue(typeName, out var configType) ? configType : null;
+            var type = this.configTypes.Value.TryGetValue(typeName, out var configType) ? configType : null;
 
             while (reader.TokenType != JsonTokenType.StartObject && reader.TokenType != JsonTokenType.Null)
                 reader.Read();
@@ -102,7 +102,7 @@ internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type,
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<string, Type> configTypes;
+    private readonly Lazy<Dictionary<string, Type>> configTypes;
     #endregion
 
     #region Private classes
