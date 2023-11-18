@@ -3,6 +3,8 @@
 
 using AppBrix.Configuration.Json.Converters;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -19,11 +21,18 @@ public sealed class JsonConfigSerializer : IConfigSerializer
     /// </summary>
     public JsonConfigSerializer()
     {
+        var configTypes = Assembly.GetCallingAssembly()
+            .GetReferencedAssemblies(true)
+            .SelectMany(x => x.ExportedTypes)
+            .Where(x => x.IsClass && !x.IsAbstract)
+            .Where(typeof(IConfig).IsAssignableFrom)
+            .ToDictionary(x => x.Name);
+
         this.settings = new JsonSerializerOptions();
+        this.settings.Converters.Add(new JsonStringConfigConverter(configTypes));
         this.settings.Converters.Add(new JsonStringEnumConverter());
         this.settings.Converters.Add(new JsonStringTimeSpanConverter());
         this.settings.Converters.Add(new JsonStringVersionConverter());
-        this.settings.Converters.Add(new JsonStringConfigConverter());
         this.settings.WriteIndented = true;
     }
     #endregion

@@ -4,6 +4,8 @@
 using AppBrix.Configuration.Yaml.Converters;
 using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -14,6 +16,37 @@ namespace AppBrix.Configuration.Yaml;
 /// </summary>
 public sealed class YamlConfigSerializer : IConfigSerializer
 {
+    #region Construction
+    /// <summary>
+    /// Creates a new instance of <see cref="YamlConfigSerializer"/>.
+    /// </summary>
+    public YamlConfigSerializer()
+    {
+        var configTypes = Assembly.GetCallingAssembly()
+            .GetReferencedAssemblies(true)
+            .SelectMany(x => x.ExportedTypes)
+            .Where(x => x.IsClass && !x.IsAbstract)
+            .Where(typeof(IConfig).IsAssignableFrom)
+            .ToDictionary(x => x.Name);
+
+        var serializerBuilder = new SerializerBuilder()
+            .EmitDefaults()
+            .WithNamingConvention(new NullNamingConvention())
+            .WithTypeConverter(new VersionConverter());
+        this.serializer = serializerBuilder
+            .WithTypeConverter(new ConfigConverter(configTypes, serializerBuilder.BuildValueSerializer()))
+            .Build();
+
+        var deserializerBuilder = new DeserializerBuilder()
+            .WithNamingConvention(new NullNamingConvention())
+            .IgnoreUnmatchedProperties()
+            .WithTypeConverter(new VersionConverter());
+        this.deserializer = deserializerBuilder
+            .WithTypeConverter(new ConfigConverter(configTypes, deserializerBuilder.BuildValueDeserializer()))
+            .Build();
+    }
+    #endregion
+
     #region Public and overriden methods
     /// <summary>
     /// Serializes a config to YAML.
@@ -26,15 +59,7 @@ public sealed class YamlConfigSerializer : IConfigSerializer
             throw new ArgumentNullException(nameof(config));
 
         using var writer = new StringWriter();
-        var builder = new SerializerBuilder()
-            .EmitDefaults()
-            .WithNamingConvention(new NullNamingConvention())
-            .WithTypeConverter(new VersionConverter());
-        var serializer = builder
-            .WithTypeConverter(new ConfigConverter(builder.BuildValueSerializer()))
-            .Build();
-
-        serializer.Serialize(writer, config);
+        this.serializer.Serialize(writer, config);
         return writer.ToString();
     }
 
@@ -52,14 +77,12 @@ public sealed class YamlConfigSerializer : IConfigSerializer
             throw new ArgumentNullException(nameof(type));
 
         using var reader = new StringReader(config);
-        var builder = new DeserializerBuilder()
-            .WithNamingConvention(new NullNamingConvention())
-            .IgnoreUnmatchedProperties()
-            .WithTypeConverter(new VersionConverter());
-        var deserializer = builder
-            .WithTypeConverter(new ConfigConverter(builder.BuildValueDeserializer()))
-            .Build();
-        return deserializer.Deserialize(reader, type);
+        return this.deserializer.Deserialize(reader, type);
     }
+    #endregion
+
+    #region Private fields and constants
+    private readonly Serializer serializer;
+    private readonly Deserializer deserializer;
     #endregion
 }

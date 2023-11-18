@@ -13,20 +13,21 @@ namespace AppBrix.Configuration.Yaml.Converters;
 
 internal sealed class ConfigConverter : IYamlTypeConverter
 {
-    public ConfigConverter(IValueSerializer serializer)
+    #region Construction
+    public ConfigConverter(Dictionary<string, Type> configTypes, IValueSerializer serializer)
     {
-        this.Serializer = serializer;
+        this.configTypes = configTypes;
+        this.serializer = serializer;
     }
     
-    public ConfigConverter(IValueDeserializer deserializer)
+    public ConfigConverter(Dictionary<string, Type> configTypes, IValueDeserializer deserializer)
     {
-        this.Deserializer = deserializer;
+        this.configTypes = configTypes;
+        this.deserializer = deserializer;
     }
+    #endregion
 
-    public IValueSerializer? Serializer { get; }
-
-    public IValueDeserializer? Deserializer { get; }
-
+    #region Public and overriden methods
     public bool Accepts(Type type) => type == typeof(Dictionary<Type, IConfig>);
 
     public object? ReadYaml(IParser parser, Type type)
@@ -46,16 +47,24 @@ internal sealed class ConfigConverter : IYamlTypeConverter
                 parser.MoveNext();
 
             var typeName = ((Scalar)parser.Current).Value;
-            var configType = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.ExportedTypes)
-                .Where(x => x.IsClass && !x.IsAbstract && x.Name == typeName)
-                .First(x => typeof(IConfig).IsAssignableFrom(x));
+            var configType = this.configTypes.TryGetValue(typeName, out var foundType) ? foundType : null;
 
-            while (parser.Current is not MappingStart)
+            parser.MoveNext();
+            while (parser.Current is not MappingStart && parser.Current is not Scalar)
                 parser.MoveNext();
 
-            var config = this.Deserializer!.DeserializeValue(parser, configType, new SerializerState(), this.Deserializer);
-            configs[configType] = (IConfig)config;
+            if (parser.Current is Scalar)
+                throw new ArgumentNullException(typeName);
+
+            if (configType is null)
+            {
+                this.SkipObject(parser);
+            }
+            else
+            {
+                var config = this.deserializer!.DeserializeValue(parser, configType, new SerializerState(), this.deserializer);
+                configs[configType] = (IConfig)config;
+            }
         }
 
         parser.MoveNext();
@@ -83,9 +92,31 @@ internal sealed class ConfigConverter : IYamlTypeConverter
                 continue;
             }
 
-            this.Serializer!.SerializeValue(emitter, config.Value, config.Key);
+            this.serializer!.SerializeValue(emitter, config.Value, config.Key);
         }
 
         emitter.Emit(new MappingEnd());
     }
+    #endregion
+
+    #region Private methods
+    private void SkipObject(IParser parser)
+    {
+        var depth = 0;
+        do {
+            if (parser.Current is MappingStart)
+                depth++;
+            else if (parser.Current is MappingEnd)
+                depth--;
+
+            parser.MoveNext();
+        } while (depth > 0);
+    }
+    #endregion
+
+    #region Private fields and constants
+    private readonly Dictionary<string, Type> configTypes;
+    private readonly IValueSerializer? serializer;
+    private readonly IValueDeserializer? deserializer;
+    #endregion
 }
