@@ -25,10 +25,6 @@ public sealed class FileConfigProvider : IConfigProvider
         if (string.IsNullOrEmpty(path))
             throw new ArgumentNullException(nameof(path));
 
-        var directory = new FileInfo(path).Directory!.FullName;
-        if (!Directory.Exists(directory))
-            Directory.CreateDirectory(directory);
-
         this.serializer = serializer;
         this.path = path;
     }
@@ -117,6 +113,10 @@ public sealed class FileConfigProvider : IConfigProvider
 
     private void SaveInternal()
     {
+        var directory = new FileInfo(this.path).Directory!.FullName;
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory);
+
         var content = this.serializer.Serialize(this.savedConfigs!);
         if (this.savedContent != content)
         {

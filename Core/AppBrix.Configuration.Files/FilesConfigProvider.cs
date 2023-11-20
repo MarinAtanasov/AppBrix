@@ -28,9 +28,6 @@ public sealed class FilesConfigProvider : IConfigProvider
         if (string.IsNullOrEmpty(fileExtension))
             throw new ArgumentNullException(nameof(fileExtension));
 
-        if (!Directory.Exists(directory))
-            Directory.CreateDirectory(directory);
-
         this.serializer = serializer;
         this.directory = directory;
         this.extension = fileExtension.TrimStart(FilesConfigProvider.ExtensionDot);
@@ -94,6 +91,9 @@ public sealed class FilesConfigProvider : IConfigProvider
 
     private void SaveInternal(Type type, IConfig config)
     {
+        if (!Directory.Exists(this.directory))
+            Directory.CreateDirectory(this.directory);
+
         var content = this.serializer.Serialize(config);
         if (!this.configs.TryGetValue(type, out var saved) || saved != content)
         {
