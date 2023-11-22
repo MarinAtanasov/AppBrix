@@ -9,7 +9,7 @@ namespace AppBrix.Data.Migrations.Data;
 /// <summary>
 /// Database context used for database migrations.
 /// </summary>
-public sealed class MigrationsContext : DbContextBase
+public sealed class MigrationsDbContext : DbContextBase
 {
     #nullable disable
     /// <summary>

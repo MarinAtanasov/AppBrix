@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Logging</AssemblyTitle>
     <Description>Module which enables throwing of logging events and subscribing to those events.</Description>
     <PackageId>AppBrix.Logging</PackageId>
-    <PackageTags>AppBrix Module Log</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Logging</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

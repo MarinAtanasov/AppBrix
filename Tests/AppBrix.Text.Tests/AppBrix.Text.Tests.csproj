@@ -4,22 +4,14 @@
     <AssemblyName>AppBrix.Text.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Text.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Text module</Description>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <Nullable>disable</Nullable>
     <PackageId>AppBrix.Text.Tests</PackageId>
-    <PackageTags>AppBrix Text Tests</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Text.Tests</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Text\AppBrix.Text.csproj" />
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Text</AssemblyTitle>
     <Description>Module which is used for enhancing text manipulation functionality.</Description>
     <PackageId>AppBrix.Text</PackageId>
-    <PackageTags>AppBrix Module Text</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Text</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

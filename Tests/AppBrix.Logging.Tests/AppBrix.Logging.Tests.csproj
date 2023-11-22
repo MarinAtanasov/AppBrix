@@ -4,22 +4,14 @@
     <AssemblyName>AppBrix.Logging.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Logging.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Logging module</Description>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <Nullable>disable</Nullable>
     <PackageId>AppBrix.Logging.Tests</PackageId>
-    <PackageTags>AppBrix Log Tests</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Logging.Tests</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Logging\AppBrix.Logging.csproj" />
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
   </ItemGroup>
 
 </Project>

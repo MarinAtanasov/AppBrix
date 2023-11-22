@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Configuration.Json</AssemblyTitle>
     <Description>Contains serializer/deserializer for JSON based configurations.</Description>
     <PackageId>AppBrix.Configuration.Json</PackageId>
-    <PackageTags>AppBrix Config JSON</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Configuration.Json</Title>
   </PropertyGroup>
 
   <ItemGroup>

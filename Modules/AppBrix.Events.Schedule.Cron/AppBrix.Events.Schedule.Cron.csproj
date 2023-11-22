@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Events.Schedule.Cron</AssemblyTitle>
     <Description>Module used for registering cron based scheduled events.</Description>
     <PackageId>AppBrix.Events.Schedule.Cron</PackageId>
-    <PackageTags>AppBrix Module Events Scheduled Cron Crontab</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Schedule.Cron</Title>
   </PropertyGroup>
 
   <ItemGroup>

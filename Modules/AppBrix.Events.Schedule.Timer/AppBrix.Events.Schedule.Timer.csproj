@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Events.Schedule.Timer</AssemblyTitle>
     <Description>Module used for registering timer based scheduled events.</Description>
     <PackageId>AppBrix.Events.Schedule.Timer</PackageId>
-    <PackageTags>AppBrix Module Events Scheduled Timer</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Schedule.Timer</Title>
   </PropertyGroup>
 
   <ItemGroup>

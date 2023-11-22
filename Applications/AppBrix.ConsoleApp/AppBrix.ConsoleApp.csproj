@@ -7,7 +7,8 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <OutputType>Exe</OutputType>
     <PackageId>AppBrix.ConsoleApp</PackageId>
-    <PackageTags>AppBrix Console Application</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.ConsoleApp</Title>
   </PropertyGroup>
 
   <ItemGroup>

@@ -7,8 +7,9 @@
     <Description>Sample web application using an AppBrix app.</Description>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <PackageId>AppBrix.WebApp</PackageId>
-    <PackageTags>AppBrix Web Application</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
     <ServerGarbageCollection>true</ServerGarbageCollection>
+    <Title>AppBrix.WebApp</Title>
   </PropertyGroup>
 
   <ItemGroup>

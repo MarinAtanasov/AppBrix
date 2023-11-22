@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Data.SqlServer</AssemblyTitle>
     <Description>Module used for regitering a SqlServer provider.</Description>
     <PackageId>AppBrix.Data.SqlServer</PackageId>
-    <PackageTags>AppBrix Module Data SqlServer</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Data.SqlServer</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

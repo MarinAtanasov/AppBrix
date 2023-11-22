@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Cloning</AssemblyTitle>
     <Description>Module used for making shallow or deep copies of items.</Description>
     <PackageId>AppBrix.Cloning</PackageId>
-    <PackageTags>AppBrix Module Copy Clone</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Cloning</Title>
   </PropertyGroup>
 
   <ItemGroup>

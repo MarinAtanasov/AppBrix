@@ -30,7 +30,7 @@ internal sealed class CloningService : ICloningService
         if (this.IsValueType(obj.GetType()))
             return obj;
 
-        return (T)CloningService.ShallowCopyMethod.Invoke(obj, null)!;
+        return (T)CloningService.ShallowCopyMethod.Invoke(obj)!;
     }
     #endregion
 
@@ -113,6 +113,6 @@ internal sealed class CloningService : ICloningService
     #endregion
 
     #region Private fields and constants
-    private static readonly MethodInfo ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!;
+    private static readonly Func<object, object> ShallowCopyMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!.CreateDelegate<Func<object, object>>();
     #endregion
 }

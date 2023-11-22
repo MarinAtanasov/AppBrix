@@ -4,22 +4,14 @@
     <AssemblyName>AppBrix.Cloning.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Cloning.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Cloning module</Description>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <Nullable>disable</Nullable>
     <PackageId>AppBrix.Cloning.Tests</PackageId>
-    <PackageTags>AppBrix Copy Clone Tests</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Cloning.Tests</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Cloning\AppBrix.Cloning.csproj" />
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
   </ItemGroup>
 
 </Project>

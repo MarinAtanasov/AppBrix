@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Data</AssemblyTitle>
     <Description>Module which enables database functionality.</Description>
     <PackageId>AppBrix.Data</PackageId>
-    <PackageTags>AppBrix Module Data</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Data</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

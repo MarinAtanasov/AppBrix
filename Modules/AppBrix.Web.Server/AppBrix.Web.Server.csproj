@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Web.Server</AssemblyTitle>
     <Description>Module used for working with web services.</Description>
     <PackageId>AppBrix.Web.Server</PackageId>
-    <PackageTags>AppBrix Module Web Server</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Web.Server</Title>
   </PropertyGroup>
 
   <ItemGroup>

@@ -32,18 +32,18 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestRaiseConfigureDbContextEvent()
     {
-        DataItemContextMock eventContext = null;
+        DataItemDbContextMock eventDbContext = null;
         this.App.GetEventHub().Subscribe<IConfigureDbContext>(args =>
         {
-            eventContext = args.Context as DataItemContextMock;
+            eventDbContext = args.Context as DataItemDbContextMock;
             args.Context.Should().NotBeNull("context should be provided");
             args.MigrationsAssembly.Should().BeNull("migrations module is not available");
             args.MigrationsHistoryTable.Should().Be("__EFMigrationsHistory", "migrations module is not available");
         });
 
-        using var context = this.App.GetDbContextService().Get<DataItemContextMock>();
+        using var context = this.App.GetDbContextService().Get<DataItemDbContextMock>();
         context.Items.Count().Should().Be(0, "no items have been created");
-        context.Should().BeSameAs(eventContext, "context in event should be the same as created context");
+        context.Should().BeSameAs(eventDbContext, "context in event should be the same as created context");
     }
     #endregion
 }

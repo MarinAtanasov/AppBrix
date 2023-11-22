@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Permissions</AssemblyTitle>
     <Description>Module which is used for working with permissions.</Description>
     <PackageId>AppBrix.Permissions</PackageId>
-    <PackageTags>AppBrix Module Date Permissions</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Permissions</Title>
   </PropertyGroup>
 
   <ItemGroup>

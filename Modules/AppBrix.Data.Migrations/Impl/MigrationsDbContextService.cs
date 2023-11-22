@@ -72,7 +72,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         try
         {
             using var context = this.contextService.GetMigrationsContext();
-            if (type == typeof(MigrationsContext))
+            if (type == typeof(MigrationsDbContext))
             {
                 logLevel = this.loggingConfig.LogLevel;
                 this.loggingConfig.LogLevel = LogLevel.Critical;
@@ -82,7 +82,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         catch (Exception) { }
         finally
         {
-            if (type == typeof(MigrationsContext))
+            if (type == typeof(MigrationsDbContext))
                 this.loggingConfig.LogLevel = logLevel;
         }
 
@@ -116,7 +116,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
     private void MigrateMigrationContext()
     {
-        var migrationContextType = typeof(MigrationsContext);
+        var migrationContextType = typeof(MigrationsDbContext);
         if (this.initializedContexts.Add(migrationContextType))
             this.MigrateContext(migrationContextType);
     }

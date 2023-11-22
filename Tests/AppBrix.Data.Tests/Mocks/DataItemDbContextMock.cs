@@ -9,7 +9,7 @@ namespace AppBrix.Data.Tests.Mocks;
 /// <summary>
 /// A dummy DB context used during tests.
 /// </summary>
-public sealed class DataItemContextMock : DbContextBase
+public sealed class DataItemDbContextMock : DbContextBase
 {
     /// <summary>
     /// Gets or sets the items in the context.

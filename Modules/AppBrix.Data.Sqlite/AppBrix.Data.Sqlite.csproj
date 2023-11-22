@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Data.Sqlite</AssemblyTitle>
     <Description>Module used for regitering a Sqlite provider.</Description>
     <PackageId>AppBrix.Data.Sqlite</PackageId>
-    <PackageTags>AppBrix Module Data Sqlite</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Data.Sqlite</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

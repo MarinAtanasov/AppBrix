@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix</AssemblyTitle>
     <Description>AppBrix Core containing the application and module classes and interfaces.</Description>
     <PackageId>AppBrix</PackageId>
-    <PackageTags>AppBrix</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix</Title>
   </PropertyGroup>
 
   <ItemGroup>

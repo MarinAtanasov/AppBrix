@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Events.Schedule</AssemblyTitle>
     <Description>Base module used for registering scheduled events.</Description>
     <PackageId>AppBrix.Events.Schedule</PackageId>
-    <PackageTags>AppBrix Module Events Scheduled</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Schedule</Title>
   </PropertyGroup>
 
   <ItemGroup>

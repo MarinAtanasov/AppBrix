@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Events.Async</AssemblyTitle>
     <Description>Module which allows subscribing and raising asynchronous application level events.</Description>
     <PackageId>AppBrix.Events.Async</PackageId>
-    <PackageTags>AppBrix Module Events Async</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Async</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Threading.Channels" Version="7.0.0" />
+    <PackageReference Include="System.Threading.Channels" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

@@ -4,22 +4,14 @@
     <AssemblyName>AppBrix.Events.Schedule.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Events.Schedule.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Events.Schedule module</Description>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <Nullable>disable</Nullable>
     <PackageId>AppBrix.Events.Schedule.Tests</PackageId>
-    <PackageTags>AppBrix Events Schedule Tests</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Schedule.Tests</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule\AppBrix.Events.Schedule.csproj" />
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
   </ItemGroup>
 
 </Project>

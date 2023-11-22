@@ -4,22 +4,14 @@
     <AssemblyName>AppBrix.Events.Schedule.Timer.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Events.Schedule.Timer.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Events.Schedule.Timer module</Description>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <Nullable>disable</Nullable>
     <PackageId>AppBrix.Events.Schedule.Timer.Tests</PackageId>
-    <PackageTags>AppBrix Events Schedule Timer Tests</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Schedule.Timer.Tests</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
   </ItemGroup>
 
 </Project>

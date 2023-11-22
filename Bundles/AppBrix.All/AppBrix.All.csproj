@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.All</AssemblyTitle>
     <Description>Reference to all AppBrix projects.</Description>
     <PackageId>AppBrix.All</PackageId>
-    <PackageTags>AppBrix All</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.All</Title>
   </PropertyGroup>
 
   <ItemGroup>

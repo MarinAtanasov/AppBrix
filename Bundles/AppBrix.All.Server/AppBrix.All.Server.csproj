@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.All.Server</AssemblyTitle>
     <Description>Reference to all AppBrix projects, including the web sever modules.</Description>
     <PackageId>AppBrix.All.Server</PackageId>
-    <PackageTags>AppBrix All Server</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.All.Server</Title>
   </PropertyGroup>
 
   <ItemGroup>

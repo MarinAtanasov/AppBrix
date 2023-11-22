@@ -28,6 +28,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{2943556E-0B95-4E17-BE68-9DEF1CB20B5A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{32FF1B46-A25D-406E-9F71-1FD25A3F52E8}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Directory.Build.props = Tests\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBrix.ConsoleApp", "Applications\AppBrix.ConsoleApp\AppBrix.ConsoleApp.csproj", "{80E1FF2A-A37B-460F-A3B4-98112217C883}"
 EndProject

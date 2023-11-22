@@ -22,8 +22,8 @@ public static class MigrationsDataExtensions
     public static MigrationsDataConfig GetMigrationsDataConfig(this IConfigService service) => (MigrationsDataConfig)service.Get(typeof(MigrationsDataConfig));
 
     /// <summary>
-    /// Gets an instance of <see cref="MigrationsContext"/>.
+    /// Gets an instance of <see cref="MigrationsDbContext"/>.
     /// </summary>
     /// <returns>A database context.</returns>
-    internal static MigrationsContext GetMigrationsContext(this IDbContextService service) => (MigrationsContext)service.Get(typeof(MigrationsContext));
+    internal static MigrationsDbContext GetMigrationsContext(this IDbContextService service) => (MigrationsDbContext)service.Get(typeof(MigrationsDbContext));
 }

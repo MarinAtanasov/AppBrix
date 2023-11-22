@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Time</AssemblyTitle>
     <Description>Module which is used for getting the current time. This should be used instead of DateTime.(Utc)Now in order for the time to always be of the same kind and the code to be more easily testable.</Description>
     <PackageId>AppBrix.Time</PackageId>
-    <PackageTags>AppBrix Module Date Time</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Time</Title>
   </PropertyGroup>
 
   <ItemGroup>

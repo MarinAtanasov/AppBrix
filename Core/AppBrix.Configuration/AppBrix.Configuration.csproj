@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Configuration</AssemblyTitle>
     <Description>Base classes and interfaces for managing configurations.</Description>
     <PackageId>AppBrix.Configuration</PackageId>
-    <PackageTags>AppBrix Config</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Configuration</Title>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Events.Delayed</AssemblyTitle>
     <Description>Module which allows raising delayed application level events.</Description>
     <PackageId>AppBrix.Events.Delayed</PackageId>
-    <PackageTags>AppBrix Module Events Delayed</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Events.Delayed</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Threading.Channels" Version="7.0.0" />
+    <PackageReference Include="System.Threading.Channels" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

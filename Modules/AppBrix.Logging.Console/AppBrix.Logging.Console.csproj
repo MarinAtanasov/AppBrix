@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Logging.Console</AssemblyTitle>
     <Description>Module which attaches to logging events and writes the information to the console.</Description>
     <PackageId>AppBrix.Logging.Console</PackageId>
-    <PackageTags>AppBrix Module Log Console</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Logging.Console</Title>
   </PropertyGroup>
 
   <ItemGroup>

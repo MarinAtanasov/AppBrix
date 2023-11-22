@@ -4,13 +4,9 @@
     <AssemblyName>AppBrix.Caching.Tests</AssemblyName>
     <AssemblyTitle>AppBrix.Caching.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Caching module</Description>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <Nullable>disable</Nullable>
     <PackageId>AppBrix.Caching.Tests</PackageId>
-    <PackageTags>AppBrix Cache Tests</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Caching.Tests</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.3" />
   </ItemGroup>
 

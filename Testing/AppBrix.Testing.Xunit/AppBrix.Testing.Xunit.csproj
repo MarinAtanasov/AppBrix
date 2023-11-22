@@ -5,7 +5,8 @@
     <AssemblyTitle>AppBrix.Testing.Xunit</AssemblyTitle>
     <Description>Tooling for testing AppBrix applications and modules using xUnit.</Description>
     <PackageId>AppBrix.Testing.xUnit</PackageId>
-    <PackageTags>AppBrix Testing xUnit</PackageTags>
+    <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Testing.xUnit</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,11 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.5.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit" Version="2.6.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4" />
   </ItemGroup>
 
 </Project>

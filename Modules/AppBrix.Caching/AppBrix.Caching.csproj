@@ -6,6 +6,7 @@
     <Description>Module used for caching objects.</Description>
     <PackageId>AppBrix.Caching</PackageId>
     <PackageTags>AppBrix Module Cache</PackageTags>
+    <Title>AppBrix.Caching</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

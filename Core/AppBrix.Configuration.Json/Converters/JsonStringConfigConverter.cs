@@ -50,9 +50,13 @@ internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type,
             else
             {
                 var converter = options.GetConverter(type);
-                var method = converter.GetType().GetMethod(nameof(this.Read), BindingFlags.Public | BindingFlags.Instance)!;
-                var config = method.CreateDelegate<ReadDelegate>(converter).Invoke(ref reader, type, options);
-                result[type] = config;
+                if (!this.readMethods.TryGetValue(type, out var method))
+                {
+                    var methodInfo = converter.GetType().GetMethod(nameof(this.Read), BindingFlags.Public | BindingFlags.Instance)!;
+                    this.readMethods[type] = method = methodInfo.CreateDelegate<ReadDelegate>(converter);
+                }
+
+                result[type] = method.Invoke(ref reader, type, options);
             }
 
             reader.Read();
@@ -76,9 +80,13 @@ internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type,
             writer.WritePropertyName(config.Key.Name);
 
             var converter = options.GetConverter(config.Key);
-            var method = converter.GetType().GetMethod(nameof(this.Write), BindingFlags.Public | BindingFlags.Instance)!;
+            if (!this.writeMethods.TryGetValue(config.Key, out var method))
+            {
+                var methodInfo = converter.GetType().GetMethod(nameof(this.Write), BindingFlags.Public | BindingFlags.Instance)!;
+                this.writeMethods[config.Key] = method = MethodInvoker.Create(methodInfo);
+            }
 
-            method.Invoke(converter, new object[] { writer, config.Value, options });
+            method.Invoke(converter, writer, config.Value, options);
         }
 
         writer.WriteEndObject();
@@ -103,6 +111,8 @@ internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type,
 
     #region Private fields and constants
     private readonly Lazy<Dictionary<string, Type>> configTypes;
+    private readonly Dictionary<Type, ReadDelegate> readMethods = new Dictionary<Type, ReadDelegate>();
+    private readonly Dictionary<Type, MethodInvoker> writeMethods = new Dictionary<Type, MethodInvoker>();
     #endregion
 
     #region Private classes

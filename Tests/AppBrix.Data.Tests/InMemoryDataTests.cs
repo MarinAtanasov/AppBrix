@@ -28,30 +28,30 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCrudOperations()
     {
-        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             context.Items.Add(new DataItemMock { Content = nameof(InMemoryDataTests.TestCrudOperations) });
             context.SaveChanges();
         }
 
-        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             var item = context.Items.Single();
             item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
             item.Content.Should().Be(nameof(InMemoryDataTests.TestCrudOperations), $"{nameof(item.Content)} should be saved");
-            item.Content = nameof(DataItemContextMock);
+            item.Content = nameof(DataItemDbContextMock);
             context.SaveChanges();
         }
 
-        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             var item = context.Items.Single();
-            item.Content.Should().Be(nameof(DataItemContextMock), $"{nameof(item.Content)} should be updated");
+            item.Content.Should().Be(nameof(DataItemDbContextMock), $"{nameof(item.Content)} should be updated");
             context.Items.Remove(item);
             context.SaveChanges();
         }
 
-        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             context.Items.Count().Should().Be(0, "the item should have been deleted");
         }
@@ -64,7 +64,7 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
     #region Private methods
     private void TestPerformanceGetItemInternal()
     {
-        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
@@ -72,11 +72,11 @@ public sealed class InMemoryDataTests : TestsBase<InMemoryDataModule, Migrations
 
         for (var i = 0; i < 60; i++)
         {
-            using var context = this.App.GetDbContextService().Get<DataItemContextMock>();
+            using var context = this.App.GetDbContextService().Get<DataItemDbContextMock>();
             _ = context.Items.Single();
         }
 
-        using (var context = this.App.GetDbContextService().Get<DataItemContextMock>())
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             context.Items.Remove(context.Items.Single());
             context.SaveChanges();
