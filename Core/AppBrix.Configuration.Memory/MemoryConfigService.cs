@@ -1,55 +1,19 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
+using AppBrix.Configuration.Memory.Impl;
 
 namespace AppBrix.Configuration.Memory;
 
 /// <summary>
 /// In-memory implementation of the <see cref="IConfigService"/>.
 /// </summary>
-public sealed class MemoryConfigService : IConfigService
+public sealed class MemoryConfigService : ConfigService
 {
-    #region Public and overriden methods
     /// <summary>
-    /// Gets the currently loaded instance of the specified config.
-    /// If the config is not loaded, creates a new instance.
+    /// Creates a new instance of <see cref="MemoryConfigService"/>.
     /// </summary>
-    /// <param name="type">The type of the configuration.</param>
-    /// <returns>The configuration.</returns>
-    public IConfig Get(Type type)
-    {
-        if (type is null)
-            throw new ArgumentNullException(nameof(type));
-
-        if (!this.configs.TryGetValue(type, out var config))
-            this.configs[type] = config = (IConfig)type.CreateObject();
-
-        return config;
-    }
-
-    /// <summary>
-    /// Saves one configuration. Does not do anything.
-    /// </summary>
-    /// <param name="config">The configuration to save.</param>
-    public void Save(IConfig config)
-    {
-        if (config is null)
-            throw new ArgumentNullException(nameof(config));
-
-        this.configs[config.GetType()] = config;
-    }
-
-    /// <summary>
-    /// Saves all modified configurations. Does not do anything.
-    /// </summary>
-    public void Save()
+    public MemoryConfigService() : base(new MemoryConfigProvider())
     {
     }
-    #endregion
-
-    #region Private fields and constants
-    private readonly Dictionary<Type, IConfig> configs = new Dictionary<Type, IConfig>();
-    #endregion
 }

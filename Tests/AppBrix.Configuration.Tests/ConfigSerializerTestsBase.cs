@@ -54,7 +54,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         var serialized = serializer.Serialize(config);
         serialized.Should().NotBeNullOrEmpty("the config should be successfully serialized");
 
-        var deserialized = (ConfigMock)serializer.Deserialize(serialized, config.GetType());
+        var deserialized = serializer.Deserialize<ConfigMock>(serialized);
         deserialized.Should().NotBeNull("the config should be successfully deserialized");
         deserialized.Should().NotBeSameAs(config, "a new instance should be reserialized");
         deserialized.Enum.Should().Be(config.Enum, "the enum should be successfully reserialized");

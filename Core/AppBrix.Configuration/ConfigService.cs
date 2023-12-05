@@ -11,7 +11,7 @@ namespace AppBrix.Configuration;
 /// Uses <see cref="IConfigSerializer"/> to load and store the configuration and
 /// <see cref="IConfigSerializer"/> to serialize and deserialize the configurations.
 /// </summary>
-public sealed class ConfigService : IConfigService
+public class ConfigService : IConfigService
 {
     #region Construction
     /// <summary>
