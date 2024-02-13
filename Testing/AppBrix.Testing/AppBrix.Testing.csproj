@@ -4,6 +4,7 @@
     <AssemblyName>AppBrix.Testing</AssemblyName>
     <AssemblyTitle>AppBrix.Testing</AssemblyTitle>
     <Description>Tooling for testing AppBrix applications and modules.</Description>
+    <IsTestProject>false</IsTestProject>
     <PackageId>AppBrix.Testing</PackageId>
     <PackageTags>AppBrix Module Cache</PackageTags>
     <Title>AppBrix.Testing</Title>

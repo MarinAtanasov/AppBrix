@@ -4,6 +4,7 @@
     <AssemblyName>AppBrix.Testing.Xunit</AssemblyName>
     <AssemblyTitle>AppBrix.Testing.Xunit</AssemblyTitle>
     <Description>Tooling for testing AppBrix applications and modules using xUnit.</Description>
+    <IsTestProject>false</IsTestProject>
     <PackageId>AppBrix.Testing.xUnit</PackageId>
     <PackageTags>AppBrix Module Cache</PackageTags>
     <Title>AppBrix.Testing.xUnit</Title>
@@ -14,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.6.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4" />
+    <PackageReference Include="xunit" Version="2.6.6" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6" />
   </ItemGroup>
 
 </Project>
