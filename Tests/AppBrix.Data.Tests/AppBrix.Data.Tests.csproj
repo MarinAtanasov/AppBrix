@@ -13,7 +13,6 @@
     <ProjectReference Include="..\..\Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Migrations\AppBrix.Data.Migrations.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
-    <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
   </ItemGroup>
 
 </Project>

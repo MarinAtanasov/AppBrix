@@ -12,7 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj" />
     <ProjectReference Include="..\..\Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
-    <ProjectReference Include="..\..\Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
