@@ -6,7 +6,6 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <IsPackable>false</IsPackable>
-    <IsTestProject>false</IsTestProject>
     <IsTestProject>true</IsTestProject>
     <Nullable>disable</Nullable>
   </PropertyGroup>
