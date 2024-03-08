@@ -39,7 +39,6 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         this.config = this.app.ConfigService.GetMigrationsDataConfig();
         this.contextService = this.app.GetDbContextService();
         this.loggingConfig = this.app.ConfigService.GetLoggingConfig();
-        this.dbSupportsMigrations = true;
     }
 
     public void Uninitialize()
@@ -48,7 +47,6 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         this.config = null;
         this.contextService = null;
         this.loggingConfig = null;
-        this.dbSupportsMigrations = false;
         this.initializedContexts.Clear();
     }
 
@@ -91,7 +89,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
     private void MigrateContextIfNeeded(Type type)
     {
-        if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
+        if (!this.initializedContexts.Contains(type))
         {
             if (!typeof(DbContextBase).IsAssignableFrom(type))
             {
@@ -101,14 +99,11 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
             lock (this.initializedContexts)
             {
-                if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
+                if (!this.initializedContexts.Contains(type))
                 {
                     this.MigrateMigrationContext();
-                    if (!this.initializedContexts.Contains(type) && this.dbSupportsMigrations)
-                    {
-                        this.initializedContexts.Add(type);
+                    if (this.initializedContexts.Add(type))
                         this.MigrateContext(type);
-                    }
                 }
             }
         }
@@ -147,7 +142,6 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
             catch (InvalidOperationException)
             {
                 // Context does not support migrations.
-                this.dbSupportsMigrations = false;
                 using var context = this.contextService.Get(type);
                 context.Database.EnsureCreated();
             }
@@ -322,6 +316,5 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     private IDbContextService contextService;
     private LoggingConfig loggingConfig;
     #nullable restore
-    private bool dbSupportsMigrations;
     #endregion
 }
