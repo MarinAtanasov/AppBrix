@@ -71,7 +71,7 @@ internal sealed class HttpRequest : IHttpRequest
         if (values is null || values.Length == 0)
             this.headers.Remove(header);
         else
-            this.headers[header] = new List<string>(values);
+            this.headers[header] = [..values];
 
         return this;
     }

@@ -460,13 +460,13 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         service.Check("a", "p").Should().BeFalse("no permission has been added");
 
         service.Allow("a", "p");
-        service.GetAllowed("a").Should().Equal(new[] { "p" }, because: "permission should have been allowed");
+        service.GetAllowed("a").Should().Equal(["p"], because: "permission should have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
         service.Check("a", "p").Should().BeTrue("permission should have been allowed");
 
         service.Deny("a", "p");
         service.GetAllowed("a").Should().BeEmpty("permission has been denied");
-        service.GetDenied("a").Should().Equal(new[] { "p" }, because: "permission should have been denied");
+        service.GetDenied("a").Should().Equal(["p"], because: "permission should have been denied");
         service.Check("a", "p").Should().BeFalse("permission should have been denied");
 
         service.Unset("a", "p");
@@ -485,11 +485,11 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 
         service.Deny("a", "p");
         service.GetAllowed("a").Should().BeEmpty("permission has been denied");
-        service.GetDenied("a").Should().Equal(new[] { "p" }, because: "permission should have been denied");
+        service.GetDenied("a").Should().Equal([ "p"], because: "permission should have been denied");
         service.Check("a", "p").Should().BeFalse("permission should have been denied");
 
         service.Allow("a", "p");
-        service.GetAllowed("a").Should().Equal(new[] { "p" }, because: "permission should have been allowed");
+        service.GetAllowed("a").Should().Equal(["p"], because: "permission should have been allowed");
         service.GetDenied("a").Should().BeEmpty("no permissions have been denied");
         service.Check("a", "p").Should().BeTrue("permission should have been allowed");
 

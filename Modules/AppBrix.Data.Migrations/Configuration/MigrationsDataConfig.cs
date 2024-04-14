@@ -18,11 +18,11 @@ public sealed class MigrationsDataConfig : IConfig
     {
         this.EntryAssembly = string.Empty;
         this.MigrationsHistoryTablePrefix = "__MH_";
-        this.MigrationsHistoryTableSuffixes = new []
-        {
+        this.MigrationsHistoryTableSuffixes =
+        [
             "DbContext",
             "Context"
-        };
+        ];
     }
     #endregion
 

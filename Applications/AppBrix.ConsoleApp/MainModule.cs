@@ -10,8 +10,8 @@ namespace AppBrix.ConsoleApp;
 public sealed class MainModule : MainModuleBase
 {
     #region Properties
-    public override IEnumerable<Type> Dependencies => new[]
-    {
+    public override IEnumerable<Type> Dependencies =>
+    [
         //typeof(Caching.CachingModule),
         typeof(Caching.Memory.MemoryCachingModule),
         typeof(Cloning.CloningModule),
@@ -35,6 +35,6 @@ public sealed class MainModule : MainModuleBase
         typeof(Text.TextModule),
         typeof(Time.TimeModule),
         typeof(Web.Client.WebClientModule)
-    };
+    ];
     #endregion
 }

@@ -32,7 +32,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var service = this.App.GetRandomService();
         var generated = service.GetRandomItems(Array.Empty<object>());
         generated.Should().NotBeNull($"{nameof(service.GetRandomItems)} should never return null.");
-        generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GetRandomItems)} should return an empty array.");
+        generated.Should().BeSameAs([], $"{nameof(service.GetRandomItems)} should return an empty array.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -99,7 +99,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var service = this.App.GetRandomService();
         var generated = service.GetUniqueItems(Array.Empty<object>());
         generated.Should().NotBeNull($"{nameof(service.GetUniqueItems)} should never return null.");
-        generated.Should().BeSameAs(Array.Empty<object>(), $"{nameof(service.GetUniqueItems)} should return an empty array.");
+        generated.Should().BeSameAs([], $"{nameof(service.GetUniqueItems)} should return an empty array.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]

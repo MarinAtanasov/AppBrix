@@ -48,5 +48,5 @@ public static class PermissionsExtensions
     }
 
     internal static IReadOnlyCollection<string> GetOrEmpty(this Dictionary<string, HashSet<string>> dictionary, string key) =>
-        dictionary.TryGetValue(key, out var values) ? values : Array.Empty<string>();
+        dictionary.TryGetValue(key, out var values) ? values : [];
 }

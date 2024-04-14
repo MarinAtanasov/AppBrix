@@ -18,7 +18,7 @@ public sealed class MainModule<T> : MainModuleBase
     /// Gets the types of the modules which are direct dependencies for the current module.
     /// This is used to determine the order in which the modules are loaded.
     /// </summary>
-    public override IEnumerable<Type> Dependencies => new[] { typeof(T) };
+    public override IEnumerable<Type> Dependencies => [typeof(T)];
 }
 
 /// <summary>
@@ -34,5 +34,5 @@ public sealed class MainModule<T1, T2> : MainModuleBase
     /// Gets the types of the modules which are direct dependencies for the current module.
     /// This is used to determine the order in which the modules are loaded.
     /// </summary>
-    public override IEnumerable<Type> Dependencies => new[] { typeof(T1), typeof(T2) };
+    public override IEnumerable<Type> Dependencies => [typeof(T1), typeof(T2)];
 }

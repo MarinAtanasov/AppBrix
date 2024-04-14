@@ -9,7 +9,7 @@ namespace AppBrix.Tests.Mocks;
 
 public sealed class InstallableModuleMock : SimpleModuleMock
 {
-    public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
+    public override IEnumerable<Type> Dependencies => [];
 
     public bool IsConfigured { get; private set; }
 

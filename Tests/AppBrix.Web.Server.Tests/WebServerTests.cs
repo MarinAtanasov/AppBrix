@@ -100,10 +100,7 @@ public sealed class WebServerTests : TestsBase
         response.Version.Should().Be(new Version(1, 1), "the version of the response should be 1.1");
         response.Content.Should().Be(nameof(this.TestEchoGetString), "the response should echo the request");
         response.Headers.Count.Should().Be(1, "only the content-type header should be returned");
-        response.Headers["Content-Type"].Should().Equal(
-            new[] { "text/plain; charset=utf-8" },
-            "the content type should be a utf-8 string"
-        );
+        response.Headers["Content-Type"].Should().Equal(["text/plain; charset=utf-8"], "the content type should be a utf-8 string");
 
         await webApp.StopAsync();
     }

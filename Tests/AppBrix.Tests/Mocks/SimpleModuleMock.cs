@@ -10,7 +10,7 @@ namespace AppBrix.Tests.Mocks;
 
 public class SimpleModuleMock : ModuleBase
 {
-    public override IEnumerable<Type> Dependencies => Array.Empty<Type>();
+    public override IEnumerable<Type> Dependencies => [];
 
     public bool IsInitialized { get; private set; }
 

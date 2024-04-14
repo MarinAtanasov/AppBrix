@@ -34,8 +34,8 @@ namespace AppBrix.WebApp;
 public sealed class MainModule : MainModuleBase
 {
     #region Properties
-    public override IEnumerable<Type> Dependencies => new[]
-    {
+    public override IEnumerable<Type> Dependencies =>
+    [
         //typeof(CachingModule),
         typeof(MemoryCachingModule),
         typeof(CloningModule),
@@ -60,7 +60,7 @@ public sealed class MainModule : MainModuleBase
         typeof(TimeModule),
         typeof(WebClientModule),
         typeof(WebServerModule)
-    };
+    ];
     #endregion
 
     #region Public and overriden methods
