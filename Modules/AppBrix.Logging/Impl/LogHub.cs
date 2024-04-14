@@ -22,8 +22,8 @@ internal sealed class LogHub : ILogHub, IApplicationLifecycle
 
     public void Uninitialize()
     {
-        this.config = null;
-        this.app = null;
+        this.config = null!;
+        this.app = null!;
     }
     #endregion
 
@@ -59,9 +59,7 @@ internal sealed class LogHub : ILogHub, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    private LoggingConfig config;
-    #nullable restore
+    private IApp app = null!;
+    private LoggingConfig config = null!;
     #endregion
 }

@@ -14,9 +14,7 @@ namespace AppBrix.Events.Delayed.Impl;
 internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
 {
     #region Properties
-    #nullable disable
-    public IEventHub EventHub { get; private set; }
-    #nullable restore
+    public IEventHub EventHub { get; private set; } = null!;
     #endregion
 
     #region IApplicationLifecycle implementation
@@ -41,10 +39,10 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
             this.Flush();
         }
 
-        this.EventHub = null;
-        this.config = null;
-        this.channel = null;
-        this.app = null;
+        this.EventHub = null!;
+        this.config = null!;
+        this.channel = null!;
+        this.app = null!;
     }
     #endregion
 
@@ -110,14 +108,11 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
 
         this.EventHub.Raise(args);
     }
-
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    private Channel<IEvent> channel;
-    private DelayedEventsConfig config;
-    #nullable restore
+    private IApp app = null!;
+    private Channel<IEvent> channel = null!;
+    private DelayedEventsConfig config = null!;
     #endregion
 }

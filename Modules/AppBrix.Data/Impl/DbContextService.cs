@@ -19,7 +19,7 @@ internal sealed class DbContextService : IDbContextService, IApplicationLifecycl
 
     public void Uninitialize()
     {
-        this.app = null;
+        this.app = null!;
     }
 
     public DbContext Get(Type type)
@@ -35,8 +35,6 @@ internal sealed class DbContextService : IDbContextService, IApplicationLifecycl
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

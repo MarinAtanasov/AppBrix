@@ -28,7 +28,7 @@ internal sealed class HttpClientFactory : IHttpClientFactory, IApplicationLifecy
     {
         this.client?.Dispose();
         this.client = null;
-        this.app = null;
+        this.app = null!;
     }
     #endregion
 
@@ -37,9 +37,7 @@ internal sealed class HttpClientFactory : IHttpClientFactory, IApplicationLifecy
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     private HttpClient? client;
     #endregion
 }

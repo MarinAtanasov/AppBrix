@@ -43,10 +43,10 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
     public void Uninitialize()
     {
-        this.app = null;
-        this.config = null;
-        this.contextService = null;
-        this.loggingConfig = null;
+        this.app = null!;
+        this.config = null!;
+        this.contextService = null!;
+        this.loggingConfig = null!;
         this.initializedContexts.Clear();
     }
 
@@ -310,11 +310,9 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     #region Private fields and constants
     private const string EmptyVersion = "0.0.0.0";
     private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
-    #nullable disable
-    private IApp app;
-    private MigrationsDataConfig config;
-    private IDbContextService contextService;
-    private LoggingConfig loggingConfig;
-    #nullable restore
+    private IApp app = null!;
+    private MigrationsDataConfig config = null!;
+    private IDbContextService contextService = null!;
+    private LoggingConfig loggingConfig = null!;
     #endregion
 }

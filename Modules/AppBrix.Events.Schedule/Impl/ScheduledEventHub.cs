@@ -39,8 +39,8 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
         }
 
         this.app.GetAsyncEventHub().Unsubscribe<PriorityQueueItem>(this.PriorityQueueItemRaised);
-        this.config = null;
-        this.app = null;
+        this.config = null!;
+        this.app = null!;
     }
     #endregion
 
@@ -110,10 +110,8 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     private readonly PriorityQueue queue = new PriorityQueue();
     private readonly List<PriorityQueueItem> executing = new List<PriorityQueueItem>();
     private CancellationTokenSource? cts;
-    #nullable disable
-    private IApp app;
-    private ScheduledEventsConfig config;
-    private PeriodicTimer timer;
-    #nullable restore
+    private IApp app = null!;
+    private ScheduledEventsConfig config = null!;
+    private PeriodicTimer timer = null!;
     #endregion
 }

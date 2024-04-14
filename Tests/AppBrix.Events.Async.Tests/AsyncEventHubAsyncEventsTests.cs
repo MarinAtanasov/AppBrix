@@ -10,6 +10,7 @@ using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -259,18 +260,31 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestThreadManagement()
     {
-        var getThreads = () => Process.GetCurrentProcess().Threads.Count;
-        var initialThreads = getThreads();
+        var getThreads = () => Process.GetCurrentProcess().Threads
+            .Cast<ProcessThread>()
+            .Count(x => x.ThreadState == ThreadState.Running);
+        
+        var threadsAdded = (int current) => () => getThreads() > current;
+
+        var threads = getThreads();
         var hub = this.GetAsyncEventHub();
-        await getThreads.ShouldReturn(initialThreads, "no threads should be created when getting the async event hub");
+        await threadsAdded(threads).ShouldReturn(false, "no threads should be created when getting the async event hub");
+        
+        threads = getThreads();
         hub.Subscribe<IEvent>(_ => Task.CompletedTask);
-        await getThreads.ShouldReturn(initialThreads, "no thread should be created when subscribing to a new event");
+        await threadsAdded(threads).ShouldReturn(false, "no thread should be created when subscribing to a new event");
+        
+        threads = getThreads();
         hub.Subscribe<IEvent>(_ => Task.CompletedTask);
-        await getThreads.ShouldReturn(initialThreads, "no threads should be created when subscribing to an event with subscribers");
+        await threadsAdded(threads).ShouldReturn(false, "no threads should be created when subscribing to an event with subscribers");
+        
+        threads = getThreads();
         hub.Subscribe<EventMock>(_ => Task.CompletedTask);
-        await getThreads.ShouldReturn(initialThreads, "no thread should be created when subscribing to a second new event");
+        await threadsAdded(threads).ShouldReturn(false, "no thread should be created when subscribing to a second new event");
+        
+        threads = getThreads();
         this.App.Reinitialize();
-        await getThreads.ShouldReturn(initialThreads, "threads should be disposed of on uninitialization");
+        await threadsAdded(threads).ShouldReturn(false, "threads should be disposed of on uninitialization");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

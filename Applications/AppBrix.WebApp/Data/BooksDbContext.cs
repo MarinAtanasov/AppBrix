@@ -5,9 +5,7 @@ namespace AppBrix.WebApp.Data;
 
 public class BooksDbContext : DbContextBase
 {
-    #nullable disable
     public DbSet<Book> Books { get; set; }
-    #nullable restore
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

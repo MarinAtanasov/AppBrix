@@ -11,7 +11,6 @@ namespace AppBrix.Data.Migrations.Data;
 /// </summary>
 public sealed class MigrationsDbContext : DbContextBase
 {
-    #nullable disable
     /// <summary>
     /// Gets or sets the database migration data.
     /// </summary>
@@ -21,7 +20,6 @@ public sealed class MigrationsDbContext : DbContextBase
     /// Gets or sets the database migration snapshots.
     /// </summary>
     public DbSet<SnapshotData> Snapshots { get; set; }
-    #nullable restore
 
     /// <summary>
     /// Configures the creation of the database migration models.

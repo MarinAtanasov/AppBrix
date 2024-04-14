@@ -20,14 +20,12 @@ internal sealed class DefaultApp : IApp
             throw new ArgumentNullException(nameof(configService));
 
         this.ConfigService = configService;
-        this.Container = null;
+        this.Container = null!;
     }
     #endregion
 
     #region Properties
-    #nullable disable
     public IContainer Container { get; set; }
-    #nullable restore
 
     public IConfigService ConfigService { get; }
 

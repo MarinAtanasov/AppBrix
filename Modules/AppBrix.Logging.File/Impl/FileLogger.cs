@@ -25,26 +25,27 @@ internal sealed class FileLogger : IApplicationLifecycle
     public void Uninitialize()
     {
         this.app?.GetLogHub().Unsubscribe(this.LogEntry);
-        this.app = null;
+        this.app = null!;
         this.writer?.Dispose();
-        this.writer = null;
+        this.writer = null!;
     }
     #endregion
 
     #region Private methods
     private void LogEntry(ILogEntry entry)
     {
-        lock (this.writer)
+        if (this.writer is not null)
         {
-            this.writer.WriteLine(entry.ToString());
+            lock (this.writer)
+            {
+                this.writer.WriteLine(entry.ToString());
+            }
         }
     }
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    private StreamWriter writer;
-    #nullable restore
+    private IApp? app;
+    private StreamWriter? writer;
     #endregion
 }

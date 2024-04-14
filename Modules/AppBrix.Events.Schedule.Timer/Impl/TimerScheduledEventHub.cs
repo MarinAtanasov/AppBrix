@@ -19,7 +19,7 @@ internal sealed class TimerScheduledEventHub : ITimerScheduledEventHub, IApplica
 
     public void Uninitialize()
     {
-        this.app = null;
+        this.app = null!;
     }
     #endregion
 
@@ -54,8 +54,6 @@ internal sealed class TimerScheduledEventHub : ITimerScheduledEventHub, IApplica
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

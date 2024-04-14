@@ -22,7 +22,7 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     public void Uninitialize()
     {
         this.taskQueues.Keys.ToList().ForEach(this.RemoveTaskQueue);
-        this.app = null;
+        this.app = null!;
     }
     #endregion
 
@@ -114,8 +114,6 @@ internal sealed class AsyncEventHub : IAsyncEventHub, IApplicationLifecycle
     #region Private fields and constants
     private readonly Dictionary<Type, ITaskQueue> taskQueues = new Dictionary<Type, ITaskQueue>();
     private readonly Dictionary<Type, Action> taskQueueUnsubscribers = new Dictionary<Type, Action>();
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

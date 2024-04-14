@@ -20,7 +20,7 @@ internal sealed class Cache : ICache, IApplicationLifecycle
 
     public void Uninitialize()
     {
-        this.app = null;
+        this.app = null!;
     }
     #endregion
 
@@ -39,8 +39,6 @@ internal sealed class Cache : ICache, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

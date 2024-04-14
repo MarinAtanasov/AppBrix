@@ -22,7 +22,7 @@ internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
             logger.Enabled = false;
         }
         this.loggers.Clear();
-        this.app = null;
+        this.app = null!;
         this.Dispose();
     }
 
@@ -47,8 +47,6 @@ internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
 
     #region Private fields and constants
     private readonly Dictionary<string, Logger> loggers = new Dictionary<string, Logger>();
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

@@ -17,7 +17,7 @@ public class BooksService : IApplicationLifecycle
 
     public void Uninitialize()
     {
-        this.app = null;
+        this.app = null!;
     }
 
     public IEnumerable<Book> Get()
@@ -64,8 +64,6 @@ public class BooksService : IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

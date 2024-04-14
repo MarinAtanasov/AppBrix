@@ -15,12 +15,10 @@ namespace AppBrix.Modules;
 public abstract class ModuleBase : IModule
 {
     #region Properties
-    #nullable disable
     /// <summary>
     /// Gets the current module's app.
     /// </summary>
-    protected IApp App { get; private set; }
-    #nullable restore
+    protected IApp App { get; private set; } = null!;
 
     /// <summary>
     /// Gets the types of the modules which are direct dependencies for the current module.
@@ -38,21 +36,21 @@ public abstract class ModuleBase : IModule
     {
         this.App = context.App;
         this.Configure(context);
-        this.App = null;
+        this.App = null!;
     }
 
     void IInstallable.Install(IInstallContext context)
     {
         this.App = context.App;
         this.Install(context);
-        this.App = null;
+        this.App = null!;
     }
 
     void IInstallable.Uninstall(IUninstallContext context)
     {
         this.App = context.App;
         this.Uninstall(context);
-        this.App = null;
+        this.App = null!;
     }
 
     void IApplicationLifecycle.Initialize(IInitializeContext context)
@@ -64,7 +62,7 @@ public abstract class ModuleBase : IModule
     void IApplicationLifecycle.Uninitialize()
     {
         this.Uninitialize();
-        this.App = null;
+        this.App = null!;
     }
     #endregion
 

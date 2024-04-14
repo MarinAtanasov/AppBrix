@@ -20,8 +20,8 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
 
     public void Uninitialize()
     {
-        this.randomGenerator.Dispose();
-        this.randomGenerator = null;
+        this.randomGenerator?.Dispose();
+        this.randomGenerator = null!;
     }
     #endregion
 
@@ -89,8 +89,6 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private ThreadLocal<System.Random> randomGenerator;
-    #nullable restore
+    private ThreadLocal<System.Random> randomGenerator = null!;
     #endregion
 }

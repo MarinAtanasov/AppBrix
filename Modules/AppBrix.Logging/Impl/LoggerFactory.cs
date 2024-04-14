@@ -16,7 +16,7 @@ internal sealed class LoggerFactory : ILoggerFactory, IApplicationLifecycle
 
     public void Uninitialize()
     {
-        this.app = null;
+        this.app = null!;
         this.Dispose();
     }
 
@@ -30,8 +30,6 @@ internal sealed class LoggerFactory : ILoggerFactory, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
-    #nullable disable
-    private IApp app;
-    #nullable restore
+    private IApp app = null!;
     #endregion
 }

@@ -29,7 +29,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
             if (this.cleanupScheduledEventArgs is not null)
             {
                 this.app.GetTimerScheduledEventHub().Unschedule(this.cleanupScheduledEventArgs);
-                this.cleanupScheduledEventArgs = null;
+                this.cleanupScheduledEventArgs = null!;
             }
         }
 
@@ -39,8 +39,8 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
 
             this.keysToRemove.AddRange(this.cache.Keys);
             this.RemoveItemsByKeys();
-            this.config = null;
-            this.app = null;
+            this.config = null!;
+            this.app = null!;
         }
     }
     #endregion
@@ -154,10 +154,8 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
     private readonly List<object> keysToRemove = new List<object>();
     private readonly MemoryCacheCleanup cleanupEventArgs = new MemoryCacheCleanup();
-    #nullable disable
-    private IApp app;
-    private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs;
-    private MemoryCachingConfig config;
-    #nullable restore
+    private IApp app = null!;
+    private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs = null!;
+    private MemoryCachingConfig config = null!;
     #endregion
 }

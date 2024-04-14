@@ -20,7 +20,6 @@ public interface ICache
     /// <returns></returns>
     Task Refresh(string key, CancellationToken token = default);
 
-    #nullable disable
     /// <summary>
     /// Gets a cached object by its key.
     /// </summary>
@@ -28,8 +27,7 @@ public interface ICache
     /// <param name="key">The key which is used to store the object in the cache.</param>
     /// <param name="token">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
     /// <returns></returns>
-    async Task<T> Get<T>(string key, CancellationToken token = default) => (T)(await this.Get(key, typeof(T), token).ConfigureAwait(false) ?? default(T));
-    #nullable restore
+    async Task<T> Get<T>(string key, CancellationToken token = default) => (T)(await this.Get(key, typeof(T), token).ConfigureAwait(false) ?? default(T))!;
 
     /// <summary>
     /// Gets a cached object by its key.

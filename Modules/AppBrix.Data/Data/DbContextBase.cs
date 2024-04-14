@@ -15,12 +15,10 @@ namespace AppBrix.Data.Data;
 public abstract class DbContextBase : DbContext
 {
     #region Properties
-    #nullable disable
     /// <summary>
     /// Gets the current <see cref="IApp"/>.
     /// </summary>
-    protected IApp App { get; private set; }
-    #nullable restore
+    protected IApp App { get; private set; } = null!;
 
     /// <summary>
     /// Gets the migrations assembly to be used during migrations.
@@ -53,7 +51,7 @@ public abstract class DbContextBase : DbContext
     public override void Dispose()
     {
         base.Dispose();
-        this.App = null;
+        this.App = null!;
         this.MigrationsAssembly = null;
         this.MigrationsHistoryTable = null;
         GC.SuppressFinalize(this);
