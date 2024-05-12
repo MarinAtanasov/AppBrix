@@ -16,13 +16,13 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Upgrade .NET to 8.0.2.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 8.0.4.</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net8.0</TargetFramework>
-    <Version>0.44.0</Version>
+    <Version>0.45.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
