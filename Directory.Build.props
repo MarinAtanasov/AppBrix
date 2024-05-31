@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>
     <Authors>Marin Atanasov</Authors>
-    <Copyright>Copyright 2015-2023</Copyright>
+    <Copyright>Copyright 2015-2024</Copyright>
     <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Features>strict</Features>
@@ -16,13 +16,13 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Upgrade .NET to 8.0.4.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 8.0.6.</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net8.0</TargetFramework>
-    <Version>0.45.0</Version>
+    <Version>0.46.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
