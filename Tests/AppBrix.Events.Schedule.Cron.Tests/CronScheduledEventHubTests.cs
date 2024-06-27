@@ -144,6 +144,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         {
             scheduledEvents.Add(hub.Schedule(eventMock, CronScheduledEventHubTests.EveryHour));
         }
+
         for (var i = scheduledEvents.Count - 1; i >= 0; i--)
         {
             hub.Unschedule(scheduledEvents[i]);

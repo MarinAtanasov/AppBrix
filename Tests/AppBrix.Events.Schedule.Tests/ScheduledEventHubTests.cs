@@ -144,9 +144,9 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     private void TestPerformanceScheduleInternal(List<ScheduledEventMock<EventMock>> scheduledEvents)
     {
         var hub = this.App.GetScheduledEventHub();
-        for (var i = 0; i < scheduledEvents.Count; i++)
+        foreach (var scheduledEvent in scheduledEvents)
         {
-            hub.Schedule(scheduledEvents[i]);
+            hub.Schedule(scheduledEvent);
         }
         this.App.Reinitialize();
     }

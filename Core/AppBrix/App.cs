@@ -41,15 +41,17 @@ public static class App
     /// <returns>The created app.</returns>
     public static IApp Create<T>(IConfigService configService) where T : MainModuleBase, new()
     {
-        var modules = configService.GetAppConfig().Modules;
         var mainModuleConfigElement = ModuleConfigElement.Create<T>();
         var type = mainModuleConfigElement.Type;
-        for (var i = 0; i < modules.Count; i++)
+
+        var modules = configService.GetAppConfig().Modules;
+        foreach (var module in modules)
         {
-            if (modules[i].Type == type)
+            if (module.Type == type)
                 return App.Create(configService);
         }
         modules.Add(mainModuleConfigElement);
+
         return App.Create(configService);
     }
 

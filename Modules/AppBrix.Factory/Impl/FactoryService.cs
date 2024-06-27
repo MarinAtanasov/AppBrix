@@ -35,10 +35,9 @@ internal sealed class FactoryService : IFactoryService, IApplicationLifecycle
             this.factories[baseType] = factory;
         }
 
-        var interfaces = type.GetInterfaces();
-        for (var i = 0; i < interfaces.Length; i++)
+        foreach (var typeInterface in type.GetInterfaces())
         {
-            this.factories[interfaces[i]] = factory;
+            this.factories[typeInterface] = factory;
         }
     }
 

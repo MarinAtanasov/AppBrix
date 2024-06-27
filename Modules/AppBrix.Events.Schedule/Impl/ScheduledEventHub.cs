@@ -96,9 +96,9 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
             if (this.executing.Count == 0)
                 continue;
 
-            for (var i = 0; i < this.executing.Count; i++)
+            foreach (var item in this.executing)
             {
-                this.app.GetAsyncEventHub().Raise(this.executing[i]);
+                this.app.GetAsyncEventHub().Raise(item);
             }
 
             this.executing.Clear();

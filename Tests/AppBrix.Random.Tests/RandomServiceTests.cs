@@ -157,9 +157,9 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
                     x.Add(random.Next(0, int.MaxValue / 2));
                 }
             });
-        for (var i = 0; i < lists.Count; i++)
+
+        foreach (var list in lists)
         {
-            var list = lists[i];
             var last = list[^1];
             var ok = false;
             for (var j = 1; j <= 10; j++)

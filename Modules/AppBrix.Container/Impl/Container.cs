@@ -46,10 +46,9 @@ internal sealed class Container : IContainer, IApplicationLifecycle
             this.objects[baseType] = obj;
         }
 
-        var interfaces = type.GetInterfaces();
-        for (var i = 0; i < interfaces.Length; i++)
+        foreach (var typeInterface in type.GetInterfaces())
         {
-            this.objects[interfaces[i]] = obj;
+            this.objects[typeInterface] = obj;
         }
     }
 

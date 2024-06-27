@@ -267,9 +267,10 @@ public sealed class EventHubTests : TestsBase<EventsModule>
             var j = i;
             handlers.Add(_ => j++);
         }
-        for (var i = 0; i < handlers.Count; i++)
+
+        foreach (var handler in handlers)
         {
-            hub.Subscribe(handlers[i]);
+            hub.Subscribe(handler);
         }
 
         this.App.Reinitialize();
@@ -286,10 +287,12 @@ public sealed class EventHubTests : TestsBase<EventsModule>
             var j = i;
             handlers.Add(_ => j++);
         }
-        for (var i = 0; i < handlers.Count; i++)
+
+        foreach (var handler in handlers)
         {
-            hub.Subscribe(handlers[i]);
+            hub.Subscribe(handler);
         }
+
         for (var i = handlers.Count - 1; i >= 0; i--)
         {
             hub.Unsubscribe(handlers[i]);
@@ -312,6 +315,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
             hub.Subscribe<EventMockChild>(_ => childCalled++);
             hub.Subscribe<IEvent>(_ => interfaceCalled++);
         }
+
         for (var i = 0; i < calledCount; i++)
         {
             hub.Raise(args);

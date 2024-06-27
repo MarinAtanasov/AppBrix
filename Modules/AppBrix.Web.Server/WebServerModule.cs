@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AppBrix.Web.Server;
 
@@ -65,9 +66,9 @@ public sealed class WebServerModule : ModuleBase
         var appOptions = this.App.Get<JsonSerializerOptions>();
         var appConverters = appOptions.Converters;
         var hostConverters = options.JsonSerializerOptions.Converters;
-        for (var i = 0; i < appConverters.Count; i++)
+        foreach (var converter in appConverters)
         {
-            hostConverters.Add(appConverters[i]);
+            hostConverters.Add(converter);
         }
 
         options.JsonSerializerOptions.AllowTrailingCommas = appOptions.AllowTrailingCommas;

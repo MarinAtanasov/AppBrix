@@ -310,10 +310,9 @@ public sealed class CloningTests : TestsBase<CloningModule>
     {
         for (var baseType = type; baseType != typeof(object) && baseType is not null; baseType = baseType.BaseType)
         {
-            var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
-            for (var i = 0; i < fields.Length; i++)
+            foreach (var field in baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
             {
-                yield return fields[i];
+                yield return field;
             }
         }
     }

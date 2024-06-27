@@ -172,9 +172,8 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
         if (migrations is not null)
         {
-            for (var i = 0; i < migrations.Length; i++)
+            foreach (var migration in migrations)
             {
-                var migration = migrations[i];
                 trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Migration));
                 trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Metadata));
             }
@@ -293,9 +292,8 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     private string GenerateMigrationsHistoryTableName(Type type)
     {
         var name = type.Name;
-        for (var i = 0; i < this.config.MigrationsHistoryTableSuffixes.Length; i++)
+        foreach (var suffix in this.config.MigrationsHistoryTableSuffixes)
         {
-            var suffix = this.config.MigrationsHistoryTableSuffixes[i];
             if (name.Length > suffix.Length && name.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
             {
                 name = name[..^suffix.Length];

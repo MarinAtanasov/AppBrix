@@ -68,10 +68,8 @@ internal sealed class CloningService : ICloningService
 
         for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
         {
-            var fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public);
-            for (var i = 0; i < fields.Length; i++)
+            foreach (var field in baseType.GetFields(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic | BindingFlags.Public))
             {
-                var field = fields[i];
                 field.SetValue(cloned, this.DeepCopy(field.GetValue(original), visited));
             }
         }

@@ -60,10 +60,9 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
             this.RaiseEvent(args, baseType);
         }
         
-        var interfaces = type.GetInterfaces();
-        for (var i = 0; i < interfaces.Length; i++)
+        foreach (var typeInterface in type.GetInterfaces())
         {
-            this.RaiseEvent(args, interfaces[i]);
+            this.RaiseEvent(args, typeInterface);
         }
     }
     #endregion

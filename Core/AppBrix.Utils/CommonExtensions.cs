@@ -27,10 +27,8 @@ public static class CommonExtensions
 
         for (var i = 0; i < assemblyQueue.Count; i++)
         {
-            var referencedAssemblies = assemblyQueue[i].GetReferencedAssemblies();
-            for (var j = 0; j < referencedAssemblies.Length; j++)
+            foreach (var reference in assemblyQueue[i].GetReferencedAssemblies())
             {
-                var reference = referencedAssemblies[j];
                 if (!names.Add(reference.FullName))
                     continue;
 

@@ -218,9 +218,10 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
             var j = i;
             handlers.Add(_ => j++);
         }
-        for (var i = 0; i < handlers.Count; i++)
+
+        foreach (var handler in handlers)
         {
-            hub.Subscribe(handlers[i]);
+            hub.Subscribe(handler);
         }
 
         this.App.Reinitialize();
@@ -237,10 +238,12 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
             var j = i;
             handlers.Add(_ => j++);
         }
-        for (var i = 0; i < handlers.Count; i++)
+
+        foreach (var handler in handlers)
         {
-            hub.Subscribe(handlers[i]);
+            hub.Subscribe(handler);
         }
+
         for (var i = handlers.Count - 1; i >= 0; i--)
         {
             hub.Unsubscribe(handlers[i]);
