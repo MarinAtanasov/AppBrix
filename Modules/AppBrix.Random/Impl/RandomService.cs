@@ -6,6 +6,7 @@ using AppBrix.Random.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace AppBrix.Random.Impl;
@@ -34,7 +35,7 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
             throw new ArgumentNullException(nameof(items));
 
         var array = items as T[] ?? items.ToArray();
-        return array.Length == 0 ? array : this.GetInfiniteGenerator(array, this.GetRandom(seed));
+        return array.Length == 0 ? Array.Empty<T>() : this.GetInfiniteGenerator(array, this.GetRandom(seed));
     }
 
     public IEnumerable<T> GetUniqueItems<T>(IEnumerable<T> items, int? seed = null)
@@ -43,7 +44,7 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
             throw new ArgumentNullException(nameof(items));
 
         var array = items.ToArray();
-        return array.Length == 0 ? array : this.GetUniqueGenerator(array, this.GetRandom(seed));
+        return array.Length == 0 ? Array.Empty<T>() : this.GetUniqueGenerator(array, this.GetRandom(seed));
     }
 
     public void Shuffle<T>(IList<T> items, int? seed = null)
@@ -53,7 +54,13 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
         if (items.Count == 0)
             return;
 
-        this.Shuffle(items, this.GetRandom(seed));
+        var random = this.GetRandom(seed);
+        if (items is T[] array)
+            random.Shuffle(array);
+        else if (items is List<T> list)
+            random.Shuffle(CollectionsMarshal.AsSpan(list));
+        else
+            this.Shuffle(items, random);
     }
     #endregion
 
@@ -78,12 +85,17 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
 
     private void Shuffle<T>(IList<T> items, System.Random random)
     {
-        for (var i = items.Count - 1; i > 0; i--)
+        var count = items.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; i++)
         {
-            var n = random.Next(i + 1);
-            var temp = items[i];
-            items[i] = items[n];
-            items[n] = temp;
+            var n = random.Next(i, count);
+            if (i != n)
+            {
+                var temp = items[i];
+                items[i] = items[n];
+                items[n] = temp;
+            }
         }
     }
     #endregion

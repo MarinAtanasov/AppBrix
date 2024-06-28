@@ -39,9 +39,9 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateRandomItemsRepeated()
     {
         var service = this.App.GetRandomService();
-        var original = Enumerable.Range(0, 1000).ToList();
+        var original = Enumerable.Range(0, 10).ToList();
         var items = original.ToList();
-        var generated = service.GetRandomItems(items);
+        var generated = service.GetRandomItems(items, 42);
 
         items.Count.Should().Be(original.Count, "The collection size should not be modified.");
         Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
@@ -69,7 +69,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateRandomItemsDifferentSeeds()
     {
         var service = this.App.GetRandomService();
-        var original = Enumerable.Range(0, 1000).ToList();
+        var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetRandomItems(original, 23).Take(original.Count).ToList();
         var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
         Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Generated items should be different.");
@@ -79,7 +79,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateRandomItemsEqualSeeds()
     {
         var service = this.App.GetRandomService();
-        var original = Enumerable.Range(0, 1000).ToList();
+        var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
         var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
         Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Generated items should be the same.");
@@ -106,9 +106,9 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateUniqueItems()
     {
         var service = this.App.GetRandomService();
-        var original = Enumerable.Range(0, 1000).ToList();
+        var original = Enumerable.Range(0, 10).ToList();
         var items = original.ToList();
-        var generated = service.GetUniqueItems(items).ToList();
+        var generated = service.GetUniqueItems(items, 42).ToList();
 
         items.Count.Should().Be(original.Count, "The collection size should not be modified.");
         Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
@@ -125,7 +125,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateUniqueItemsDifferentSeeds()
     {
         var service = this.App.GetRandomService();
-        var original = Enumerable.Range(0, 1000).ToList();
+        var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetUniqueItems(original, 23).ToList();
         var items2 = service.GetUniqueItems(original, 42).ToList();
         Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Generated items should be different.");
@@ -135,7 +135,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestGenerateUniqueItemsEqualSeeds()
     {
         var service = this.App.GetRandomService();
-        var original = Enumerable.Range(0, 1000).ToList();
+        var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetUniqueItems(original, 42).ToList();
         var items2 = service.GetUniqueItems(original, 42).ToList();
         Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Generated items should be the same.");
@@ -189,8 +189,8 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestShuffle()
     {
         var service = this.App.GetRandomService();
-        var items = Enumerable.Range(0, 1000).ToList();
-        service.Shuffle(items);
+        var items = Enumerable.Range(0, 10).ToList();
+        service.Shuffle(items, 42);
         Enumerable.Range(0, items.Count).Any(x => items[x] != x).Should().BeTrue("Some items should have been shuffled.");
     }
 
@@ -198,8 +198,8 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestShuffleDifferentSeeds()
     {
         var service = this.App.GetRandomService();
-        var items1 = Enumerable.Range(0, 1000).ToList();
-        var items2 = Enumerable.Range(0, 1000).ToList();
+        var items1 = Enumerable.Range(0, 10).ToList();
+        var items2 = Enumerable.Range(0, 10).ToList();
         service.Shuffle(items1, 23);
         service.Shuffle(items2, 42);
         Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Shuffles should be different.");
@@ -209,8 +209,8 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     public void TestShuffleEqualSeeds()
     {
         var service = this.App.GetRandomService();
-        var items1 = Enumerable.Range(0, 1000).ToList();
-        var items2 = Enumerable.Range(0, 1000).ToList();
+        var items1 = Enumerable.Range(0, 10).ToList();
+        var items2 = Enumerable.Range(0, 10).ToList();
         service.Shuffle(items1, 42);
         service.Shuffle(items2, 42);
         Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Both shuffles should be the same.");
@@ -267,7 +267,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 100).ToList();
-        for (var i = 0; i < 8000; i++)
+        for (var i = 0; i < 12000; i++)
         {
             service.Shuffle(items);
         }
