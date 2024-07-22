@@ -88,7 +88,7 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<Type, IEventsWrapper> subscriptions = new Dictionary<Type, IEventsWrapper>();
     private readonly Dictionary<Type, Type[]> interfaces = new Dictionary<Type, Type[]>();
+    private readonly Dictionary<Type, IEventsWrapper> subscriptions = new Dictionary<Type, IEventsWrapper>();
     #endregion
 }
