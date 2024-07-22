@@ -55,8 +55,8 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
             throw new ArgumentNullException(nameof(args));
 
         var type = args.GetType();
-        if (!this.interfaces.TryGetValue(type, out var types))
-            this.interfaces[type] = types = this.GetEventTypes(type);
+        if (!this.eventTypes.TryGetValue(type, out var types))
+            this.eventTypes[type] = types = this.GetEventTypes(type);
 
         foreach (var eventType in types)
         {
@@ -69,26 +69,26 @@ internal sealed class EventHub : IEventHub, IApplicationLifecycle
     #region Private methods
     private Type[] GetEventTypes(Type type)
     {
-        var typeList = new List<Type>();
+        var types = new List<Type>();
 
         for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
         {
             if (baseType.IsAssignableTo(typeof(IEvent)))
-                typeList.Add(baseType);
+                types.Add(baseType);
         }
 
         foreach (var interfaceType in type.GetInterfaces())
         {
             if (interfaceType.IsAssignableTo(typeof(IEvent)))
-                typeList.Add(interfaceType);
+                types.Add(interfaceType);
         }
 
-        return typeList.ToArray();
+        return types.ToArray();
     }
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<Type, Type[]> interfaces = new Dictionary<Type, Type[]>();
+    private readonly Dictionary<Type, Type[]> eventTypes = new Dictionary<Type, Type[]>();
     private readonly Dictionary<Type, IEventsWrapper> subscriptions = new Dictionary<Type, IEventsWrapper>();
     #endregion
 }
