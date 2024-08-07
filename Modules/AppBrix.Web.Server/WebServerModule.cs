@@ -101,9 +101,23 @@ public sealed class WebServerModule : ModuleBase
 
     private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
     {
+        var level = this.App.ConfigService.GetLoggingConfig().LogLevel switch
+        {
+            AppBrix.Logging.Contracts.LogLevel.Critical => LogLevel.Critical,
+            AppBrix.Logging.Contracts.LogLevel.Debug => LogLevel.Debug,
+            AppBrix.Logging.Contracts.LogLevel.Error => LogLevel.Error,
+            AppBrix.Logging.Contracts.LogLevel.Info => LogLevel.Information,
+            AppBrix.Logging.Contracts.LogLevel.None => LogLevel.None,
+            AppBrix.Logging.Contracts.LogLevel.Trace => LogLevel.Trace,
+            AppBrix.Logging.Contracts.LogLevel.Warning => LogLevel.Warning,
+            _ => LogLevel.Trace
+        };
+
         args.Builder.Logging
             .ClearProviders()
-            .AddProvider(this.App.Get<ILoggerProvider>());
+            .AddProvider(this.App.Get<ILoggerProvider>())
+            .SetMinimumLevel(level)
+            .AddFilter(x => x >= level);
 
         args.Builder.Services
             .AddSingleton(this.App)
