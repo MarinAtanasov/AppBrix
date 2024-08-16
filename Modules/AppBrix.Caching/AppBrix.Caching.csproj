@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Caching</AssemblyTitle>
     <Description>Module used for caching objects.</Description>
     <PackageId>AppBrix.Caching</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Caching</PackageTags>
     <Title>AppBrix.Caching</Title>
   </PropertyGroup>
 

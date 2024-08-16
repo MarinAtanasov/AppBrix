@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Utils</AssemblyTitle>
     <Description>Commonly used utils and extension methods. Automatically included as dependency of all other AppBrix packages.</Description>
     <PackageId>AppBrix.Utils</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Utils</PackageTags>
     <Title>AppBrix.Utils</Title>
   </PropertyGroup>
 

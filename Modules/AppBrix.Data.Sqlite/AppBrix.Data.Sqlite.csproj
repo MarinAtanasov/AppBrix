@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Data.Sqlite</AssemblyTitle>
     <Description>Module used for regitering a Sqlite provider.</Description>
     <PackageId>AppBrix.Data.Sqlite</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Data Sqlite</PackageTags>
     <Title>AppBrix.Data.Sqlite</Title>
   </PropertyGroup>
 

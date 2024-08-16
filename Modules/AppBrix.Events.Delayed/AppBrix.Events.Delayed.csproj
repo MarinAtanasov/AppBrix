@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events.Delayed</AssemblyTitle>
     <Description>Module which allows raising delayed application level events.</Description>
     <PackageId>AppBrix.Events.Delayed</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Events Delayed</PackageTags>
     <Title>AppBrix.Events.Delayed</Title>
   </PropertyGroup>
 

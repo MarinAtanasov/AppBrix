@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Container</AssemblyTitle>
     <Description>Module which allows registration and resolving of single-instance objects.</Description>
     <PackageId>AppBrix.Container</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Container</PackageTags>
     <Title>AppBrix.Container</Title>
   </PropertyGroup>
 

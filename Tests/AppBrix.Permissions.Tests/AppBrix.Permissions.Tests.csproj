@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Permissions.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Permissions module</Description>
     <PackageId>AppBrix.Permissions.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Permissions Tests</PackageTags>
     <Title>AppBrix.Permissions.Tests</Title>
   </PropertyGroup>
 

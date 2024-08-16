@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Configuration.Memory</AssemblyTitle>
     <Description>Adds configuration provider which reads and writes into memory. Usually used when creating applications inside tests.</Description>
     <PackageId>AppBrix.Configuration.Memory</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Configuration Memory</PackageTags>
     <Title>AppBrix.Configuration.Memory</Title>
   </PropertyGroup>
 

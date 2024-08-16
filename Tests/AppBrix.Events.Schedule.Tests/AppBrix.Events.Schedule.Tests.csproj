@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events.Schedule.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Events.Schedule module</Description>
     <PackageId>AppBrix.Events.Schedule.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Events Schedule Tests</PackageTags>
     <Title>AppBrix.Events.Schedule.Tests</Title>
   </PropertyGroup>
 

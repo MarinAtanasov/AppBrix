@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Logging.File</AssemblyTitle>
     <Description>Module which attaches to logging events and writes the information to a file.</Description>
     <PackageId>AppBrix.Logging.File</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Logging File</PackageTags>
     <Title>AppBrix.Logging.File</Title>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Data.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Data module</Description>
     <PackageId>AppBrix.Data.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Data Tests</PackageTags>
     <Title>AppBrix.Data.Tests</Title>
   </PropertyGroup>
 

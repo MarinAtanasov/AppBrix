@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Web.Client</AssemblyTitle>
     <Description>Module used for making HTTP REST requests. You can override the factory for HttpClient to change the behavior.</Description>
     <PackageId>AppBrix.Web.Client</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Web Client</PackageTags>
     <Title>AppBrix.Web.Client</Title>
   </PropertyGroup>
 

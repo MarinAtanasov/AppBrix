@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Factory</AssemblyTitle>
     <Description>Module which allows creation of simple mutable classes.</Description>
     <PackageId>AppBrix.Factory</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Factory</PackageTags>
     <Title>AppBrix.Factory</Title>
   </PropertyGroup>
 

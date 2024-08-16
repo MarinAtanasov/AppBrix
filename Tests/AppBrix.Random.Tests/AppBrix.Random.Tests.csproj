@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Random.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Random module</Description>
     <PackageId>AppBrix.Random.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Random Tests</PackageTags>
     <Title>AppBrix.Random.Tests</Title>
   </PropertyGroup>
 

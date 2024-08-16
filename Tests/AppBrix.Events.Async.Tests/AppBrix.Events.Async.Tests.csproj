@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events.Async.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Events.Async module</Description>
     <PackageId>AppBrix.Events.Async.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Events Async Tests</PackageTags>
     <Title>AppBrix.Events.Async.Tests</Title>
   </PropertyGroup>
 

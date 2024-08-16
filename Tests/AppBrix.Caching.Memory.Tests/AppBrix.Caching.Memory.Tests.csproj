@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Caching.Memory.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Caching.Memory module</Description>
     <PackageId>AppBrix.Caching.Memory.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Caching Memory Tests</PackageTags>
     <Title>AppBrix.Caching.Memory.Tests</Title>
   </PropertyGroup>
 

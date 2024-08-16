@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Logging</AssemblyTitle>
     <Description>Module which enables throwing of logging events and subscribing to those events.</Description>
     <PackageId>AppBrix.Logging</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Logging</PackageTags>
     <Title>AppBrix.Logging</Title>
   </PropertyGroup>
 

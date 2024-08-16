@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events.Delayed.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Events.Delayed module</Description>
     <PackageId>AppBrix.Events.Delayed.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Events Delayed Tests</PackageTags>
     <Title>AppBrix.Events.Delayed.Tests</Title>
   </PropertyGroup>
 

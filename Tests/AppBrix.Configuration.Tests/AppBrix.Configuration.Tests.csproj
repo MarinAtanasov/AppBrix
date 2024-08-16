@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Configuration.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Configuration library</Description>
     <PackageId>AppBrix.Configuration.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Configuration Tests</PackageTags>
     <Title>AppBrix.Configuration.Tests</Title>
   </PropertyGroup>
 

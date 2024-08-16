@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Data</AssemblyTitle>
     <Description>Module which enables database functionality.</Description>
     <PackageId>AppBrix.Data</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Data</PackageTags>
     <Title>AppBrix.Data</Title>
   </PropertyGroup>
 

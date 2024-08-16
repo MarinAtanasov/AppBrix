@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Cloning.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Cloning module</Description>
     <PackageId>AppBrix.Cloning.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Cloning Tests</PackageTags>
     <Title>AppBrix.Cloning.Tests</Title>
   </PropertyGroup>
 

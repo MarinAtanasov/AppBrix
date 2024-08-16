@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events.Schedule.Cron.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Events.Schedule.Cron module</Description>
     <PackageId>AppBrix.Events.Schedule.Cron.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Events Schedule Cron Tests</PackageTags>
     <Title>AppBrix.Events.Schedule.Cron.Tests</Title>
   </PropertyGroup>
 

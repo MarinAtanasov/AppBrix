@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Text</AssemblyTitle>
     <Description>Module which is used for enhancing text manipulation functionality.</Description>
     <PackageId>AppBrix.Text</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Text</PackageTags>
     <Title>AppBrix.Text</Title>
   </PropertyGroup>
 

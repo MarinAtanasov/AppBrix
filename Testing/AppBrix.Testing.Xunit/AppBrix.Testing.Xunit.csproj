@@ -6,7 +6,7 @@
     <Description>Tooling for testing AppBrix applications and modules using xUnit.</Description>
     <IsTestProject>false</IsTestProject>
     <PackageId>AppBrix.Testing.xUnit</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Testing xUnit</PackageTags>
     <Title>AppBrix.Testing.xUnit</Title>
   </PropertyGroup>
 

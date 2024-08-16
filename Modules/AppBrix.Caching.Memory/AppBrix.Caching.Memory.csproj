@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Caching.Memory</AssemblyTitle>
     <Description>Module used for caching objects locally in-memory.</Description>
     <PackageId>AppBrix.Caching.Memory</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Caching Memory</PackageTags>
     <Title>AppBrix.Caching.Memory</Title>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Data.SqlServer</AssemblyTitle>
     <Description>Module used for regitering a SqlServer provider.</Description>
     <PackageId>AppBrix.Data.SqlServer</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Data SqlServer</PackageTags>
     <Title>AppBrix.Data.SqlServer</Title>
   </PropertyGroup>
 

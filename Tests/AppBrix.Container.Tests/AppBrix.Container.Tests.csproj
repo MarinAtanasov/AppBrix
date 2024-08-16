@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Container.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Container module</Description>
     <PackageId>AppBrix.Container.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Container Tests</PackageTags>
     <Title>AppBrix.Container.Tests</Title>
   </PropertyGroup>
 

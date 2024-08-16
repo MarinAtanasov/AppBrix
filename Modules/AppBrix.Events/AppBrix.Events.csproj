@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events</AssemblyTitle>
     <Description>Module which allows subscribing and raising application level events.</Description>
     <PackageId>AppBrix.Events</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Events</PackageTags>
     <Title>AppBrix.Events</Title>
   </PropertyGroup>
 

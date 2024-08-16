@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Configuration.Files</AssemblyTitle>
     <Description>Adds configuration provider which reads and writes into files.</Description>
     <PackageId>AppBrix.Configuration.Files</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Configuration Files</PackageTags>
     <Title>AppBrix.Configuration.Files</Title>
   </PropertyGroup>
 

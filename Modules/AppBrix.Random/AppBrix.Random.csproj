@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Random</AssemblyTitle>
     <Description>Module which is used for generating random objects and values.</Description>
     <PackageId>AppBrix.Random</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Random</PackageTags>
     <Title>AppBrix.Random</Title>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Configuration.Yaml</AssemblyTitle>
     <Description>Contains serializer/deserializer for YAML based configurations.</Description>
     <PackageId>AppBrix.Configuration.Yaml</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Configuration Yaml</PackageTags>
     <Title>AppBrix.Configuration.Yaml</Title>
   </PropertyGroup>
 

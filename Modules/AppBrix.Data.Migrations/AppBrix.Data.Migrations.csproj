@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Data.Migrations</AssemblyTitle>
     <Description>Module which enables database code first migrations functionality.</Description>
     <PackageId>AppBrix.Data.Migrations</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Data Migrations</PackageTags>
     <Title>AppBrix.Data.Migrations</Title>
   </PropertyGroup>
 

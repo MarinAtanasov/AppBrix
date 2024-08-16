@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Time.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Time module</Description>
     <PackageId>AppBrix.Time.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Time Tests</PackageTags>
     <Title>AppBrix.Time.Tests</Title>
   </PropertyGroup>
 

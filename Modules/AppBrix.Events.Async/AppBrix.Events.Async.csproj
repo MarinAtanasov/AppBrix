@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Events.Async</AssemblyTitle>
     <Description>Module which allows subscribing and raising asynchronous application level events.</Description>
     <PackageId>AppBrix.Events.Async</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Events Async</PackageTags>
     <Title>AppBrix.Events.Async</Title>
   </PropertyGroup>
 

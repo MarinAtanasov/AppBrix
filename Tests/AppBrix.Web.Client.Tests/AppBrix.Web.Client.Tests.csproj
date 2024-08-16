@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Web.Client.Tests</AssemblyTitle>
     <Description>Contains tests for the AppBrix.Web.Client module</Description>
     <PackageId>AppBrix.Web.Client.Tests</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Web Client Tests</PackageTags>
     <Title>AppBrix.Web.Client.Tests</Title>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@
     <AssemblyTitle>AppBrix.Data.InMemory</AssemblyTitle>
     <Description>Module used for regitering an In-Memory provider used for testing.</Description>
     <PackageId>AppBrix.Data.InMemory</PackageId>
-    <PackageTags>AppBrix Module Cache</PackageTags>
+    <PackageTags>AppBrix Module Data InMemory</PackageTags>
     <Title>AppBrix.Data.InMemory</Title>
   </PropertyGroup>
 
