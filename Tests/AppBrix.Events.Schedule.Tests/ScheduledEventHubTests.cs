@@ -33,13 +33,21 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestScheduleDelayedRaise()
+    {
+        var called = false;
+        this.App.GetEventHub().Subscribe<EventMock>(_ => called = true);
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMinutes(1)));
+        called.Should().BeFalse("event should not be called immediately");
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public Task TestScheduleArgs()
     {
         var called = false;
         var func = () => called;
         this.App.GetEventHub().Subscribe<EventMock>(_ => called = true);
         this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2)));
-        called.Should().BeFalse("event should not be called immediately");
         return func.ShouldReturn(true, "event should have been raised");
     }
 
@@ -75,13 +83,13 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     {
         var called = new bool[2];
         this.App.GetEventHub().Subscribe<EventMock>(args => called[args.Value] = true);
-        var scheduledEvent = new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(2));
+        var scheduledEvent = new ScheduledEventMock<EventMock>(new EventMock(0), TimeSpan.FromMilliseconds(5));
         this.App.GetScheduledEventHub().Schedule(scheduledEvent);
-        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.FromMilliseconds(2)));
+        this.App.GetScheduledEventHub().Schedule(new ScheduledEventMock<EventMock>(new EventMock(1), TimeSpan.FromMilliseconds(5)));
         this.App.GetScheduledEventHub().Unschedule(scheduledEvent);
 
         var func = () => called[1];
-        await func.ShouldReturn(true, "first event should have been raised");
+        await func.ShouldReturn(true, "second event should have been raised");
         called[0].Should().BeFalse("first event should not be raised");
     }
 
