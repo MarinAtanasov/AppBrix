@@ -10,6 +10,7 @@ using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -54,42 +55,45 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestMigrationEvents()
     {
-        var migrationContext = false;
-        var migratedContext = false;
+        var started = new HashSet<Type>();
+        var completed = new HashSet<Type>();
+        
+        this.App.GetEventHub().Subscribe<IDbContextMigratingEvent>(args =>
+        {
+            this.VerifyMigrationContextData(args);
+            started.Add(args.Type).Should().BeTrue($"{args.Type.Name} migration should be started only once");
+            completed.Should().NotContain(args.Type, $"{args.Type.Name} migration should not be completed before being started");
+        });
         this.App.GetEventHub().Subscribe<IDbContextMigratedEvent>(args =>
         {
+            this.VerifyMigrationContextData(args);
+            started.Should().Contain(args.Type, $"{args.Type.Name} migration should be started before being completed");
+            completed.Add(args.Type).Should().BeTrue($"{args.Type.Name} migration should be completed only once");
+        });
+        this.App.GetEventHub().Subscribe<IDbContextMigrationEvent>(args =>
+        {
+            this.VerifyMigrationContextData(args);
             if (args.Type == typeof(MigrationsDbContext))
-            {
-                args.PreviousVersion.Should().Be(new Version(), "No previous migration context version should exist");
-                args.Version.Should().Be(typeof(MigrationsDbContext).Assembly.GetName().Version, "Migration context version should match assembly version");
-                args.Type.Should().Be(typeof(MigrationsDbContext), "Migration context type should match requested type");
-                migrationContext.Should().BeFalse("Migration context migration should be done only once");
-                migratedContext.Should().BeFalse("Context should be called after migration context");
-                migrationContext = true;
-            }
+                started.Should().NotContain(typeof(DataItemDbContextMock), "Context migration should be after migration context");
             else
-            {
-                args.PreviousVersion.Should().Be(new Version(), "No previous context version should exist");
-                args.Version.Should().Be(typeof(DataItemDbContextMock).Assembly.GetName().Version, "Context version should match assembly version");
-                args.Type.Should().Be(typeof(DataItemDbContextMock), "Context type should match requested type");
-                migrationContext.Should().BeTrue("Migration context should be called first");
-                migratedContext.Should().BeFalse("Context migration should be done only once");
-                migratedContext = true;
-            }
+                completed.Should().Contain(typeof(MigrationsDbContext), "Migration context should be before context migration");
         });
 
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            context.SaveChanges();
-        }
+        using (this.App.GetDbContextService().Get<DataItemDbContextMock>()) { }
 
-        migrationContext.Should().BeTrue("Migration context should have been migrated");
-        migratedContext.Should().BeTrue("Context should have been migrated");
+        completed.Should().HaveCount(2, "Both contexts should have been migrated");
 
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            context.SaveChanges();
-        }
+        using (this.App.GetDbContextService().Get<DataItemDbContextMock>()) { }
+    }
+    #endregion
+
+    #region Private methods
+    private void VerifyMigrationContextData(IDbContextMigrationEvent args)
+    {
+        var type = args.Type == typeof(MigrationsDbContext) ? typeof(MigrationsDbContext) : typeof(DataItemDbContextMock);
+        args.PreviousVersion.Should().Be(new Version(), $"No previous {type.Name} version should exist");
+        args.Version.Should().Be(type.Assembly.GetName().Version, $"{type.Name} version should match assembly version");
+        args.Type.Should().Be(type, $"{type.Name} type should match requested type");
     }
     #endregion
 }

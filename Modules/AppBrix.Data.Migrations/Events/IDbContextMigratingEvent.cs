@@ -4,6 +4,6 @@
 namespace AppBrix.Data.Migrations.Events;
 
 /// <summary>
-/// Event that is called when a database context has been migrated to a newer version.
+/// Event that is called when a database context is about to be migrated to a newer version.
 /// </summary>
-public interface IDbContextMigratedEvent : IDbContextMigrationEvent;
+public interface IDbContextMigratingEvent : IDbContextMigrationEvent;

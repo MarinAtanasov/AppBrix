@@ -122,8 +122,9 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
             var oldVersion = snapshot is null ? MigrationsDbContextService.EmptyVersion : Version.Parse(snapshot.Version);
             var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
             this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
-
             var newMigrationName = this.GenerateMigrationName(type, assemblyVersion);
+
+            this.app.GetEventHub().Raise(new DbContextMigratingEvent(oldVersion, assemblyVersion, type));
 
             try
             {
