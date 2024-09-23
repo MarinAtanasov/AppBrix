@@ -7,8 +7,6 @@ using AppBrix.Data.Migrations.Data;
 using AppBrix.Data.Sqlite;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -16,7 +14,7 @@ using Xunit;
 
 namespace AppBrix.Data.Tests;
 
-public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsDataModule>
+public sealed class SqliteDataTests : DataTestsBase<SqliteDataModule>
 {
     #region Setup and cleanup
     public SqliteDataTests()
@@ -44,38 +42,6 @@ public sealed class SqliteDataTests : TestsBase<SqliteDataModule, MigrationsData
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
-    public void TestCrudOperations()
-    {
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
-            context.SaveChanges();
-        }
-
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            var item = context.Items.Single();
-            item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
-            item.Content.Should().Be(nameof(this.TestCrudOperations), $"{nameof(item.Content)} should be saved");
-            item.Content = nameof(DataItemDbContextMock);
-            context.SaveChanges();
-        }
-
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            var item = context.Items.Single();
-            item.Content.Should().Be(nameof(DataItemDbContextMock), $"{nameof(item.Content)} should be updated");
-            context.Items.Remove(item);
-            context.SaveChanges();
-        }
-
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            context.Items.Count().Should().Be(0, "the item should have been deleted");
-        }
-    }
-
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
     public void TestPerformanceGetItem() => this.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion

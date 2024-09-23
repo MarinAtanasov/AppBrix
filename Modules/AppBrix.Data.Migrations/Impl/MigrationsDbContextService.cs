@@ -4,6 +4,7 @@
 using AppBrix.Data.Data;
 using AppBrix.Data.Migrations.Configuration;
 using AppBrix.Data.Migrations.Data;
+using AppBrix.Data.Migrations.Events;
 using AppBrix.Data.Services;
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Configuration;
@@ -99,25 +100,17 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
             lock (this.initializedContexts)
             {
-                if (!this.initializedContexts.Contains(type))
-                {
-                    this.MigrateMigrationContext();
-                    if (this.initializedContexts.Add(type))
-                        this.MigrateContext(type);
-                }
+                this.MigrateContext(typeof(MigrationsDbContext));
+                this.MigrateContext(type);
             }
         }
     }
 
-    private void MigrateMigrationContext()
-    {
-        var migrationContextType = typeof(MigrationsDbContext);
-        if (this.initializedContexts.Add(migrationContextType))
-            this.MigrateContext(migrationContextType);
-    }
-
     private void MigrateContext(Type type)
     {
+        if (!this.initializedContexts.Add(type))
+            return;
+
         var snapshot = this.GetSnapshot(type);
         var assemblyVersion = type.Assembly.GetName().Version;
         if (assemblyVersion is null)
@@ -126,7 +119,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         if (snapshot is null || Version.Parse(snapshot.Version) < assemblyVersion)
         {
             var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
-            var oldVersion = Version.Parse(snapshot?.Version ?? MigrationsDbContextService.EmptyVersion);
+            var oldVersion = snapshot is null ? MigrationsDbContextService.EmptyVersion : Version.Parse(snapshot.Version);
             var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
             this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
 
@@ -145,6 +138,8 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
                 using var context = this.contextService.Get(type);
                 context.Database.EnsureCreated();
             }
+
+            this.app.GetEventHub().Raise(new DbContextMigratedEvent(oldVersion, assemblyVersion, type));
         }
     }
 
@@ -285,7 +280,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     }
 
     private string GenerateMigrationAssemblyName(Type type, Version? version = null) =>
-        $"Generated.Migrations.{this.GenerateMigrationName(type, version ?? type.Assembly.GetName().Version!)}.{Guid.NewGuid()}.dll";
+        $"{typeof(MigrationsDataModule).Namespace}.Generated.{this.GenerateMigrationName(type, version ?? type.Assembly.GetName().Version!)}.{Guid.NewGuid()}.dll";
 
     private string GenerateMigrationName(Type type, Version version) => $"{type.Name}_{version.ToString().Replace('.', '_')}";
 
@@ -306,8 +301,8 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     #endregion
 
     #region Private fields and constants
-    private const string EmptyVersion = "0.0.0.0";
-    private readonly HashSet<Type> initializedContexts = new HashSet<Type>();
+    private static readonly Version EmptyVersion = new Version();
+    private readonly HashSet<Type> initializedContexts = [];
     private IApp app = null!;
     private MigrationsDataConfig config = null!;
     private IDbContextService contextService = null!;
