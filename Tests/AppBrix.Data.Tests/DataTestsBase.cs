@@ -22,6 +22,38 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCrudOperations()
     {
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
+        {
+            context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
+            context.SaveChanges();
+        }
+
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
+        {
+            var item = context.Items.Single();
+            item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
+            item.Content.Should().Be(nameof(this.TestCrudOperations), $"{nameof(item.Content)} should be saved");
+            item.Content = nameof(DataItemDbContextMock);
+            context.SaveChanges();
+        }
+
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
+        {
+            var item = context.Items.Single();
+            item.Content.Should().Be(nameof(DataItemDbContextMock), $"{nameof(item.Content)} should be updated");
+            context.Items.Remove(item);
+            context.SaveChanges();
+        }
+
+        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
+        {
+            context.Items.Count().Should().Be(0, "the item should have been deleted");
+        }
+    }
+
+    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    public void TestMigrationEvents()
+    {
         var migrationContext = false;
         var migratedContext = false;
         this.App.GetEventHub().Subscribe<IDbContextMigratedEvent>(args =>
@@ -48,7 +80,6 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
 
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
-            context.Items.Add(new DataItemMock { Content = nameof(this.TestCrudOperations) });
             context.SaveChanges();
         }
 
@@ -57,24 +88,7 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
 
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
-            var item = context.Items.Single();
-            item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
-            item.Content.Should().Be(nameof(this.TestCrudOperations), $"{nameof(item.Content)} should be saved");
-            item.Content = nameof(DataItemDbContextMock);
             context.SaveChanges();
-        }
-
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            var item = context.Items.Single();
-            item.Content.Should().Be(nameof(DataItemDbContextMock), $"{nameof(item.Content)} should be updated");
-            context.Items.Remove(item);
-            context.SaveChanges();
-        }
-
-        using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
-        {
-            context.Items.Count().Should().Be(0, "the item should have been deleted");
         }
     }
     #endregion
