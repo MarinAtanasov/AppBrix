@@ -256,7 +256,9 @@ public sealed class CloningTests : TestsBase<CloningModule>
         if (typeof(IEnumerable).IsAssignableFrom(type))
         {
             var originalEnumerator = ((IEnumerable)original).GetEnumerator();
+            using var originalEnumeratorDisposable = originalEnumerator as IDisposable;
             var copiedEnumerator = ((IEnumerable)copy).GetEnumerator();
+            using var copiedEnumeratorDisposable = copiedEnumerator as IDisposable;
 
             var index = -1;
             while (true)

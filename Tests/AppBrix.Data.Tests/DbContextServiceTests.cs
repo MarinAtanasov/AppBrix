@@ -8,7 +8,6 @@ using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
 using FluentAssertions;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace AppBrix.Data.Tests;
@@ -41,7 +40,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
         });
 
         using var context = this.App.GetDbContextService().Get<DataItemDbContextMock>();
-        context.Items.Count().Should().Be(0, "no items have been created");
+        context.Items.Should().HaveCount(0, "no items have been created");
         context.Should().BeSameAs(eventDbContext, "context in event should be the same as created context");
     }
     #endregion

@@ -48,7 +48,7 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
 
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
-            context.Items.Count().Should().Be(0, "the item should have been deleted");
+            context.Items.Should().HaveCount(0, "the item should have been deleted");
         }
     }
 
