@@ -92,14 +92,14 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     {
         if (!this.initializedContexts.Contains(type))
         {
-            if (!typeof(DbContextBase).IsAssignableFrom(type))
-            {
-                this.initializedContexts.Add(type);
-                return;
-            }
-
             lock (this.initializedContexts)
             {
+                if (!typeof(DbContextBase).IsAssignableFrom(type))
+                {
+                    this.initializedContexts.Add(type);
+                    return;
+                }
+
                 this.MigrateContext(typeof(MigrationsDbContext));
                 this.MigrateContext(type);
             }
@@ -108,39 +108,40 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
     private void MigrateContext(Type type)
     {
-        if (!this.initializedContexts.Add(type))
+        if (this.initializedContexts.Contains(type))
             return;
 
         var snapshot = this.GetSnapshot(type);
         var assemblyVersion = type.Assembly.GetName().Version;
-        if (assemblyVersion is null)
-            return;
-
-        if (snapshot is null || Version.Parse(snapshot.Version) < assemblyVersion)
+        if (assemblyVersion is null || 
+            snapshot is not null && Version.Parse(snapshot.Version) >= assemblyVersion)
         {
-            var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
-            var oldVersion = snapshot is null ? MigrationsDbContextService.EmptyVersion : Version.Parse(snapshot.Version);
-            var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
-            this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
-
-            var newMigrationName = this.GenerateMigrationName(type, assemblyVersion);
-
-            try
-            {
-                var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
-                var migration = scaffoldedMigration.SnapshotCode != oldSnapshotCode ?
-                    this.ApplyMigration(type, assemblyVersion, scaffoldedMigration) : null;
-                this.AddMigration(type.Name, assemblyVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot);
-            }
-            catch (InvalidOperationException)
-            {
-                // Context does not support migrations.
-                using var context = this.contextService.Get(type);
-                context.Database.EnsureCreated();
-            }
-
-            this.app.GetEventHub().Raise(new DbContextMigratedEvent(oldVersion, assemblyVersion, type));
+            this.initializedContexts.Add(type);
+            return;
         }
+
+        var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
+        var oldVersion = snapshot is null ? MigrationsDbContextService.EmptyVersion : Version.Parse(snapshot.Version);
+        var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
+        this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
+        var newMigrationName = this.GenerateMigrationName(type, assemblyVersion);
+
+        try
+        {
+            var scaffoldedMigration = this.CreateMigration(type, oldMigrationsAssembly, newMigrationName);
+            var migration = scaffoldedMigration.SnapshotCode != oldSnapshotCode ?
+                this.ApplyMigration(type, assemblyVersion, scaffoldedMigration) : null;
+            this.AddMigration(type.Name, assemblyVersion.ToString(), migration, scaffoldedMigration.SnapshotCode, snapshot);
+        }
+        catch (InvalidOperationException)
+        {
+            // Context does not support migrations.
+            using var context = this.contextService.Get(type);
+            context.Database.EnsureCreated();
+        }
+
+        this.initializedContexts.Add(type);
+        this.app.GetEventHub().Raise(new DbContextMigratedEvent(oldVersion, assemblyVersion, type));
     }
 
     private void LoadAssembly(string assemblyName, string snapshot, params MigrationData[] migrations)
