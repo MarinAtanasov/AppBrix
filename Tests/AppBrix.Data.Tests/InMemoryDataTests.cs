@@ -16,7 +16,6 @@ public sealed class InMemoryDataTests : DataTestsBase<InMemoryDataModule>
     public InMemoryDataTests()
     {
         this.App.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
-        this.App.ConfigService.GetMigrationsDataConfig().EntryAssembly = this.GetType().Assembly.FullName!;
         this.App.Start();
     }
     #endregion

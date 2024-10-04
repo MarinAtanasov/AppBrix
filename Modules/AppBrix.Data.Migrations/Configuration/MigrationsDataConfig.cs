@@ -16,7 +16,6 @@ public sealed class MigrationsDataConfig : IConfig
     /// </summary>
     public MigrationsDataConfig()
     {
-        this.EntryAssembly = string.Empty;
         this.MigrationsHistoryTablePrefix = "__MH_";
         this.MigrationsHistoryTableSuffixes =
         [
@@ -27,12 +26,6 @@ public sealed class MigrationsDataConfig : IConfig
     #endregion
 
     #region Properties
-    /// <summary>
-    /// Gets or sets the entry assembly for the application. Leave blank to get from the runtime.
-    /// This is used during creation of migration scripts in order to find necessary assembly references.
-    /// </summary>
-    public string EntryAssembly { get; set; }
-
     /// <summary>
     /// Gets or sets the prefix used for migrations history table names.
     /// This should not be changed once the application has been initialized.

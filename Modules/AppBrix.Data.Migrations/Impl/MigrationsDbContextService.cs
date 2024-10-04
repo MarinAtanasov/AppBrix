@@ -26,7 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Loader;
 
 namespace AppBrix.Data.Migrations.Impl;
@@ -123,7 +122,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         var oldSnapshotCode = snapshot?.Snapshot ?? string.Empty;
         var oldVersion = snapshot is null ? MigrationsDbContextService.EmptyVersion : Version.Parse(snapshot.Version);
         var oldMigrationsAssembly = this.GenerateMigrationAssemblyName(type, oldVersion);
-        this.LoadAssembly(oldMigrationsAssembly, oldSnapshotCode);
+        this.LoadAssembly(type, oldMigrationsAssembly, oldSnapshotCode);
         var newMigrationName = this.GenerateMigrationName(type, assemblyVersion);
 
         try
@@ -144,11 +143,11 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         this.app.GetEventHub().Raise(new DbContextMigratedEvent(oldVersion, assemblyVersion, type));
     }
 
-    private void LoadAssembly(string assemblyName, string snapshot, params MigrationData[] migrations)
+    private void LoadAssembly(Type type, string assemblyName, string snapshot, params MigrationData[] migrations)
     {
         var compilation = CSharpCompilation.Create(assemblyName,
             syntaxTrees: this.GetSyntaxTrees(snapshot, migrations),
-            references: this.GetReferences(),
+            references: this.GetReferences(type),
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
         using var ms = new MemoryStream();
@@ -178,12 +177,9 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         return trees;
     }
 
-    private IEnumerable<MetadataReference> GetReferences()
-    {
-        var entryAssemblyName = this.config.EntryAssembly;
-        var entryAssembly = string.IsNullOrEmpty(entryAssemblyName) ? Assembly.GetEntryAssembly()! : Assembly.Load(entryAssemblyName);
-        return entryAssembly.GetReferencedAssemblies(recursive: true).Select(x => MetadataReference.CreateFromFile(x.Location));
-    }
+    private IEnumerable<MetadataReference> GetReferences(Type type) => type.Assembly
+        .GetReferencedAssemblies(recursive: true)
+        .Select(x => MetadataReference.CreateFromFile(x.Location));
 
     private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)
     {
@@ -250,7 +246,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         };
 
         var migrationAssemblyName = this.GenerateMigrationAssemblyName(type, version);
-        this.LoadAssembly(migrationAssemblyName, scaffoldedMigration.SnapshotCode, migration);
+        this.LoadAssembly(type, migrationAssemblyName, scaffoldedMigration.SnapshotCode, migration);
         using var context = (DbContextBase)this.contextService.Get(type);
         context.Initialize(new InitializeDbContext(this.app, migrationAssemblyName, this.GenerateMigrationsHistoryTableName(type)));
         context.Database.Migrate();
