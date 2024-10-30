@@ -1,33 +1,18 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Lifecycle;
 using AppBrix.Random.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace AppBrix.Random.Impl;
 
-internal sealed class RandomService : IRandomService, IApplicationLifecycle
+internal sealed class RandomService : IRandomService
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-        this.randomGenerator = new ThreadLocal<System.Random>(() => new System.Random());
-    }
-
-    public void Uninitialize()
-    {
-        this.randomGenerator?.Dispose();
-        this.randomGenerator = null!;
-    }
-    #endregion
-
     #region IRandomService implementation
-    public System.Random GetRandom(int? seed = null) => seed.HasValue ? new System.Random(seed.Value) : this.randomGenerator.Value!;
+    public System.Random GetRandom(int? seed = null) => seed.HasValue ? new System.Random(seed.Value) : System.Random.Shared;
 
     public IEnumerable<T> GetRandomItems<T>(IEnumerable<T> items, int? seed = null)
     {
@@ -98,9 +83,5 @@ internal sealed class RandomService : IRandomService, IApplicationLifecycle
             }
         }
     }
-    #endregion
-
-    #region Private fields and constants
-    private ThreadLocal<System.Random> randomGenerator = null!;
     #endregion
 }

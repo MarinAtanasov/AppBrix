@@ -33,17 +33,7 @@ public sealed class RandomModule : ModuleBase
     {
         this.App.Container.Register(this);
 
-        this.randomService.Initialize(context);
         this.App.Container.Register(this.randomService);
-    }
-
-    /// <summary>
-    /// Uninitializes the module.
-    /// Automatically called by <see cref="ModuleBase.Uninitialize"/>
-    /// </summary>
-    protected override void Uninitialize()
-    {
-        this.randomService.Uninitialize();
     }
     #endregion
 

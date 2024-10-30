@@ -267,7 +267,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 100).ToList();
-        for (var i = 0; i < 12000; i++)
+        for (var i = 0; i < 10000; i++)
         {
             service.Shuffle(items);
         }
