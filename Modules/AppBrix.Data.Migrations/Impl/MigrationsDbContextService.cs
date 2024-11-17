@@ -143,10 +143,10 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         this.app.GetEventHub().Raise(new DbContextMigratedEvent(oldVersion, assemblyVersion, type));
     }
 
-    private void LoadAssembly(Type type, string assemblyName, string snapshot, params MigrationData[] migrations)
+    private void LoadAssembly(Type type, string assemblyName, string snapshot, MigrationData? migration = null)
     {
         var compilation = CSharpCompilation.Create(assemblyName,
-            syntaxTrees: this.GetSyntaxTrees(snapshot, migrations),
+            syntaxTrees: this.GetSyntaxTrees(snapshot, migration),
             references: this.GetReferences(type),
             options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
@@ -156,22 +156,19 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         AssemblyLoadContext.Default.LoadFromStream(ms);
     }
 
-    private IEnumerable<SyntaxTree> GetSyntaxTrees(string snapshot, params MigrationData[] migrations)
+    private List<SyntaxTree> GetSyntaxTrees(string snapshot, MigrationData? migration)
     {
         var trees = new List<SyntaxTree>();
 
-        if (snapshot is not null)
+        if (!string.IsNullOrEmpty(snapshot))
         {
             trees.Add(SyntaxFactory.ParseSyntaxTree(snapshot));
         }
 
-        if (migrations is not null)
+        if (migration is not null)
         {
-            foreach (var migration in migrations)
-            {
-                trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Migration));
-                trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Metadata));
-            }
+            trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Migration));
+            trees.Add(SyntaxFactory.ParseSyntaxTree(migration.Metadata));
         }
 
         return trees;

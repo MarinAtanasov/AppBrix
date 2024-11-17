@@ -68,10 +68,10 @@ internal sealed class HttpRequest : IHttpRequest
         if (string.IsNullOrEmpty(header))
             throw new ArgumentNullException(nameof(header));
 
-        if (values is null || values.Length == 0)
+        if (values.Length == 0)
             this.headers.Remove(header);
         else
-            this.headers[header] = [..values];
+            this.headers[header] = values;
 
         return this;
     }
@@ -134,7 +134,7 @@ internal sealed class HttpRequest : IHttpRequest
         return await client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
     }
 
-    private void SetHeaders(System.Net.Http.Headers.HttpHeaders headers, IEnumerable<KeyValuePair<string, List<string>>> toAdd)
+    private void SetHeaders(System.Net.Http.Headers.HttpHeaders headers, IEnumerable<KeyValuePair<string, string[]>> toAdd)
     {
         foreach (var header in toAdd)
         {
@@ -184,7 +184,7 @@ internal sealed class HttpRequest : IHttpRequest
     #endregion
 
     #region Private fields and constants
-    private readonly Dictionary<string, List<string>> headers = new Dictionary<string, List<string>>();
+    private readonly Dictionary<string, string[]> headers = new Dictionary<string, string[]>();
     private readonly IApp app;
     private string callMethod = "GET";
     private string clientName = string.Empty;
