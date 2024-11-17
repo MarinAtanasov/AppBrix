@@ -8,6 +8,7 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace AppBrix.Caching.Memory.Impl;
 
@@ -24,7 +25,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
 
     public void Uninitialize()
     {
-        lock (this.cleanupEventArgs)
+        lock (this.cleanupLock)
         {
             if (this.cleanupScheduledEventArgs is not null)
             {
@@ -33,7 +34,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
             }
         }
 
-        lock (this.cache)
+        lock (this.classLock)
         {
             this.app.GetEventHub().Unsubscribe<MemoryCacheCleanup>(this.MemoryCacheCleanup);
 
@@ -52,7 +53,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
             throw new ArgumentNullException(nameof(key));
 
         CacheItem? cacheItem;
-        lock (this.cache)
+        lock (this.classLock)
         {
             if (this.cache.TryGetValue(key, out cacheItem))
                 cacheItem.UpdateLastAccessed(this.app.GetTime());
@@ -71,7 +72,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
         if (slidingExpiration < TimeSpan.Zero)
             throw new ArgumentException($"Negative sliding expiration: {slidingExpiration}.");
 
-        lock (this.cache)
+        lock (this.classLock)
         {
             this.cache.Remove(key, out var oldItem);
 
@@ -89,7 +90,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
         if (key is null)
             throw new ArgumentNullException(nameof(key));
 
-        lock (this.cache)
+        lock (this.classLock)
         {
             if (this.cache.Remove(key, out var item))
             {
@@ -105,7 +106,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
     #region Private methods
     private void MemoryCacheCleanup(MemoryCacheCleanup _)
     {
-        lock (this.cache)
+        lock (this.classLock)
         {
             if (this.app is not null)
             {
@@ -120,7 +121,7 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
             }
         }
 
-        lock (this.cleanupEventArgs)
+        lock (this.cleanupLock)
         {
             if (this.cleanupScheduledEventArgs is not null)
             {
@@ -152,8 +153,10 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
 
     #region Private fields and constants
     private readonly Dictionary<object, CacheItem> cache = new Dictionary<object, CacheItem>();
-    private readonly List<object> keysToRemove = new List<object>();
+    private readonly Lock classLock = new Lock();
     private readonly MemoryCacheCleanup cleanupEventArgs = new MemoryCacheCleanup();
+    private readonly Lock cleanupLock = new Lock();
+    private readonly List<object> keysToRemove = new List<object>();
     private IApp app = null!;
     private IScheduledEvent<MemoryCacheCleanup> cleanupScheduledEventArgs = null!;
     private MemoryCachingConfig config = null!;

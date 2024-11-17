@@ -8,6 +8,7 @@ using AppBrix.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace AppBrix.Application;
 
@@ -37,7 +38,7 @@ internal sealed class DefaultApp : IApp
     #region Public and overriden methods
     public void Start()
     {
-        lock (this.modules)
+        lock (this.classLock)
         {
             if (this.IsStarted)
                 throw new InvalidOperationException("The application is already started.");
@@ -49,7 +50,7 @@ internal sealed class DefaultApp : IApp
 
     public void Stop()
     {
-        lock (this.modules)
+        lock (this.classLock)
         {
             if (!this.IsStarted)
                 throw new InvalidOperationException("The application is not started.");
@@ -61,7 +62,7 @@ internal sealed class DefaultApp : IApp
 
     public void Initialize()
     {
-        lock (this.modules)
+        lock (this.classLock)
         {
             if (!this.IsStarted)
                 throw new InvalidOperationException("The application is stopped.");
@@ -81,7 +82,7 @@ internal sealed class DefaultApp : IApp
 
     public void Uninitialize()
     {
-        lock (this.modules)
+        lock (this.classLock)
         {
             if (!this.IsStarted)
                 throw new InvalidOperationException("The application is stopped.");
@@ -261,6 +262,7 @@ internal sealed class DefaultApp : IApp
 
     #region Private fields and constants
     private static readonly Version EmptyVersion = new Version();
+    private readonly Lock classLock = new Lock();
     private readonly List<ModuleInfo> modules = new List<ModuleInfo>();
     #endregion
 }

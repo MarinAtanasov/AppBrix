@@ -4,6 +4,7 @@
 using AppBrix.Lifecycle;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace AppBrix.Logging.Impl;
 
@@ -35,7 +36,7 @@ internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
         if (this.loggers.TryGetValue(categoryName, out var logger))
             return logger;
 
-        lock (this.loggers)
+        lock (this.classLock)
         {
             if (!this.loggers.TryGetValue(categoryName, out logger))
                 this.loggers[categoryName] = logger = new Logger(this.app, categoryName, this.app is not null);
@@ -46,6 +47,7 @@ internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
+    private readonly Lock classLock = new Lock();
     private readonly Dictionary<string, Logger> loggers = new Dictionary<string, Logger>();
     private IApp app = null!;
     #endregion

@@ -4,6 +4,7 @@
 using AppBrix.Lifecycle;
 using AppBrix.Logging.Events;
 using System.IO;
+using System.Threading;
 
 namespace AppBrix.Logging.File.Impl;
 
@@ -36,7 +37,7 @@ internal sealed class FileLogger : IApplicationLifecycle
     {
         if (this.writer is not null)
         {
-            lock (this.writer)
+            lock (this.logLock)
             {
                 this.writer.WriteLine(entry.ToString());
             }
@@ -45,6 +46,7 @@ internal sealed class FileLogger : IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
+    private readonly Lock logLock = new Lock();
     private IApp? app;
     private StreamWriter? writer;
     #endregion

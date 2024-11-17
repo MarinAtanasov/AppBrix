@@ -29,7 +29,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
 
     public void Uninitialize()
     {
-        lock (this.queue)
+        lock (this.classLock)
         {
             this.timer.Dispose();
             this.cts?.Cancel();
@@ -53,7 +53,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
         var item = new PriorityQueueItem<T>(this.app, args);
         item.MoveToNextOccurrence(this.app.GetTime());
 
-        lock (this.queue)
+        lock (this.classLock)
         {
             this.queue.Push(item);
         }
@@ -64,7 +64,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
         if (args is null)
             throw new ArgumentNullException(nameof(args));
 
-        lock (this.queue)
+        lock (this.classLock)
         {
             this.queue.Remove(args);
         }
@@ -79,7 +79,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
         while (await this.timer.WaitForNextTickAsync(token).ConfigureAwait(false))
         {
             var now = this.app.GetTime();
-            lock (this.queue)
+            lock (this.classLock)
             {
                 token.ThrowIfCancellationRequested();  // Uninitialized
                 for (var args = this.queue.Peek(); args is not null && args.Occurrence <= now; args = this.queue.Peek())
@@ -107,6 +107,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     #endregion
 
     #region Private fields and constants
+    private readonly Lock classLock = new Lock();
     private readonly PriorityQueue queue = new PriorityQueue();
     private readonly List<PriorityQueueItem> executing = new List<PriorityQueueItem>();
     private CancellationTokenSource? cts;

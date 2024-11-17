@@ -7,6 +7,7 @@ using AppBrix.Events.Delayed.Services;
 using AppBrix.Events.Services;
 using AppBrix.Lifecycle;
 using System;
+using System.Threading;
 using System.Threading.Channels;
 
 namespace AppBrix.Events.Delayed.Impl;
@@ -83,7 +84,7 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
     #region IDelayedEventHub implementation
     public void Flush()
     {
-        lock (this.channel)
+        lock (this.flushLock)
         {
             var reader = this.channel.Reader;
             while (reader.TryRead(out var args))
@@ -111,6 +112,7 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
     #endregion
 
     #region Private fields and constants
+    private readonly Lock flushLock = new Lock();
     private IApp app = null!;
     private Channel<IEvent> channel = null!;
     private DelayedEventsConfig config = null!;

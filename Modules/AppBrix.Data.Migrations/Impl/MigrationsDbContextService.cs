@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Loader;
+using System.Threading;
 
 namespace AppBrix.Data.Migrations.Impl;
 
@@ -91,7 +92,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     {
         if (!this.initializedContexts.Contains(type))
         {
-            lock (this.initializedContexts)
+            lock (this.migrationLock)
             {
                 if (!typeof(DbContextBase).IsAssignableFrom(type))
                 {
@@ -297,6 +298,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
     #region Private fields and constants
     private static readonly Version EmptyVersion = new Version();
     private readonly HashSet<Type> initializedContexts = [];
+    private readonly Lock migrationLock = new Lock();
     private IApp app = null!;
     private MigrationsDataConfig config = null!;
     private IDbContextService contextService = null!;
