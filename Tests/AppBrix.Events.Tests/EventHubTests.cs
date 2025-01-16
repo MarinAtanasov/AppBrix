@@ -6,7 +6,6 @@ using AppBrix.Events.Services;
 using AppBrix.Events.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -28,11 +27,11 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once");
+        this.Assert(called == 1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -43,11 +42,11 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once");
+        this.Assert(called == 1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -58,11 +57,11 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         var called = 0;
         hub.Subscribe<IEvent>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once");
+        this.Assert(called == 1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -83,7 +82,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Subscribe(handler);
         hub.Subscribe<EventMockChild>(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once");
+        this.Assert(called == 1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -96,7 +95,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Subscribe(handler);
         hub.Subscribe(handler);
         hub.Raise(args);
-        called.Should().Be(2, "event handler should be called exactly twice");
+        this.Assert(called == 2, "event handler should be called exactly twice");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -109,26 +108,26 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         var interfaceCalled = false;
         hub.Subscribe<EventMock>(_ =>
         {
-            childCalled.Should().BeTrue("child should be called before parent");
+            this.Assert(childCalled, "child should be called before parent");
             parentCalled = true;
-            interfaceCalled.Should().BeFalse("interface should be called after parent");
+            this.Assert(interfaceCalled == false, "interface should be called after parent");
         });
         hub.Subscribe<EventMockChild>(_ =>
         {
             childCalled = true;
-            parentCalled.Should().BeFalse("parent should be called after child");
-            interfaceCalled.Should().BeFalse("interface should be called after child");
+            this.Assert(parentCalled == false, "parent should be called after child");
+            this.Assert(interfaceCalled == false, "interface should be called after child");
         });
         hub.Subscribe<IEvent>(_ =>
         {
-            parentCalled.Should().BeTrue("parent should be called before interface");
-            childCalled.Should().BeTrue("child should be called before interface");
+            this.Assert(parentCalled, "parent should be called before interface");
+            this.Assert(childCalled, "child should be called before interface");
             interfaceCalled = true;
         });
         hub.Raise(args);
-        parentCalled.Should().BeTrue("parent should be called");
-        childCalled.Should().BeTrue("child should be called");
-        interfaceCalled.Should().BeTrue("interface should be called");
+        this.Assert(parentCalled, "parent should be called");
+        this.Assert(childCalled, "child should be called");
+        this.Assert(interfaceCalled, "interface should be called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -140,9 +139,9 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+        this.Assert(called == 1, "event handler should be called exactly once after the first raise");
         hub.Raise(args);
-        called.Should().Be(2, "event handler should be called exactly twice after the second raise");
+        this.Assert(called == 2, "event handler should be called exactly twice after the second raise");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -154,10 +153,10 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+        this.Assert(called == 1, "event handler should be called exactly once after the first raise");
         hub.Unsubscribe(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
+        this.Assert(called == 1, "event handler should be called exactly once after the unsubscription");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -169,7 +168,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+        this.Assert(called == 1, "event handler should be called exactly once after the first raise");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -177,7 +176,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     {
         var hub = this.GetEventHub();
         var action = () => hub.Subscribe<IEvent>(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -185,7 +184,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     {
         var hub = this.GetEventHub();
         var action = () => hub.Unsubscribe<IEvent>(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -193,7 +192,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     {
         var hub = this.GetEventHub();
         var action = () => hub.Raise(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -205,8 +204,8 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
         var action = () => hub.Raise(new EventMock(5));
-        action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
-        called.Should().Be(1, "the handler after the failing one shouldn't be called");
+        this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
+        this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -233,14 +232,14 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Subscribe(afterHandler);
 
         hub.Raise(args);
-        beforeHandlerCalled.Should().Be(1, "before event handler should be called exactly once after the first raise");
-        unsubscribingHandlerCalled.Should().Be(1, "unsubscribing event handler should be called exactly once after the first raise");
-        afterHandlerCalled.Should().Be(1, "after event handler should be called exactly once after the first raise");
+        this.Assert(beforeHandlerCalled == 1, "before event handler should be called exactly once after the first raise");
+        this.Assert(unsubscribingHandlerCalled == 1, "unsubscribing event handler should be called exactly once after the first raise");
+        this.Assert(afterHandlerCalled == 1, "after event handler should be called exactly once after the first raise");
 
         hub.Raise(args);
-        beforeHandlerCalled.Should().Be(2, "before event handler should be called exactly twice");
-        unsubscribingHandlerCalled.Should().Be(1, "unsubscribing event handler should not be called after the second raise since it has unsubscribed itself during the first");
-        afterHandlerCalled.Should().Be(2, "after event handler should be called exactly twice");
+        this.Assert(beforeHandlerCalled == 2, "before event handler should be called exactly twice");
+        this.Assert(unsubscribingHandlerCalled == 1, "unsubscribing event handler should not be called after the second raise since it has unsubscribed itself during the first");
+        this.Assert(afterHandlerCalled == 2, "after event handler should be called exactly twice");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -321,8 +320,8 @@ public sealed class EventHubTests : TestsBase<EventsModule>
             hub.Raise(args);
         }
 
-        childCalled.Should().Be(calledCount * subscribers, "The child should be called exactly {0} times", calledCount * subscribers);
-        interfaceCalled.Should().Be(calledCount * subscribers, "The interface should be called exactly {0} times", calledCount * subscribers);
+        this.Assert(childCalled == calledCount * subscribers, $"The child should be called exactly {calledCount * subscribers} times");
+        this.Assert(interfaceCalled == calledCount * subscribers, $"The interface should be called exactly {calledCount * subscribers} times");
 
         this.App.Reinitialize();
     }

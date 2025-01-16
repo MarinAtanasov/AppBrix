@@ -6,7 +6,6 @@ using AppBrix.Factory.Services;
 using AppBrix.Factory.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -24,7 +23,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     {
         var service = this.GetFactoryService();
         var action = () => service.Register(((IFactory<FactoryTests>)null)!);
-        action.Should().Throw<ArgumentNullException>("factory cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "factory cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -33,7 +32,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         var service = this.GetFactoryService();
         var factory = new FactoryMock<FactoryTests>(this);
         var action = () => service.Register(factory, null!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -41,7 +40,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     {
         var service = this.GetFactoryService();
         var action = () => service.Register(((Func<FactoryTests>)null)!, typeof(FactoryTests));
-        action.Should().Throw<ArgumentNullException>("factory method cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "factory method cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -50,7 +49,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         var service = this.GetFactoryService();
         var factory = () => this;
         var action = () => service.Register(factory, null!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -58,11 +57,10 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
     {
         var service = this.GetFactoryService();
 
-        var method = service.GetFactory<DefaultConstructorClass>();
-        method.Should().BeNull("no factory has been registered");
+        this.Assert(service.GetFactory<DefaultConstructorClass>() is null, "no factory has been registered");
 
         Action action = () => service.Get<DefaultConstructorClass>();
-        action.Should().Throw<InvalidOperationException>("no factory has been registered");
+        this.AssertThrows<InvalidOperationException>(action, "no factory has been registered");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -73,9 +71,9 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         var returned1 = factory.Get<DefaultConstructorClass>();
         var returned2 = factory.Get<DefaultConstructorClass>();
 
-        returned1.Should().NotBeNull("the factory should return first object");
-        returned2.Should().NotBeNull("the factory should return second object");
-        returned1.Should().NotBeSameAs(returned2, "the factory should always return a new object");
+        this.Assert(returned1 is not null, "the factory should return first object");
+        this.Assert(returned2 is not null, "the factory should return second object");
+        this.Assert(returned2 != returned1, "the factory should always return a new object");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -86,13 +84,13 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         var returned1 = service.Get<NonDefaultConstructorClass>();
         var returned2 = service.Get<NonDefaultConstructorClass>();
 
-        returned1.Should().NotBeNull("the factory should return first object");
-        returned1.Value.Should().BeTrue($"first object value should be {true}");
-        returned1.Modified.Should().BeFalse($"first object modified should be {false}");
-        returned2.Should().NotBeNull("the factory should return second object");
-        returned2.Value.Should().BeTrue($"second object value should be {true}");
-        returned2.Modified.Should().BeFalse($"first object modified should be {false}");
-        returned1.Should().NotBeSameAs(returned2, "the factory should always return a new object");
+        this.Assert(returned1 is not null, "the factory should return first object");
+        this.Assert(returned1.Value, $"first object value should be {true}");
+        this.Assert(returned1.Modified == false, $"first object modified should be {false}");
+        this.Assert(returned2 is not null, "the factory should return second object");
+        this.Assert(returned2.Value, $"second object value should be {true}");
+        this.Assert(returned2.Modified == false, $"first object modified should be {false}");
+        this.Assert(returned2 != returned1, "the factory should always return a new object");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -103,16 +101,10 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         service.Register(() => original);
 
         var returnedChild = service.Get<NonDefaultConstructorClass>();
-        returnedChild.Should().NotBeNull("the factory should return child object");
-        returnedChild.Should().BeSameAs(original, "child object should be the same as the original object");
-
-        var returnedParent = service.Get<DefaultConstructorClass>();
-        returnedParent.Should().NotBeNull("the factory should return parent object");
-        returnedParent.Should().BeSameAs(original, "parent object should be the same as the original object");
-
-        var returnedInterface = service.Get<ITestInterface>();
-        returnedInterface.Should().NotBeNull("the factory should return object from interface");
-        returnedInterface.Should().BeSameAs(original, "interface object should be the same as the original object");
+        this.Assert(returnedChild is not null, "the factory should return child object");
+        this.Assert(returnedChild == original, "child object should be the same as the original object");
+        this.Assert(service.Get<DefaultConstructorClass>() == original, "parent object should be the same as the original object");
+        this.Assert(service.Get<ITestInterface>() == original, "interface object should be the same as the original object");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -129,9 +121,9 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         });
 
         var returned = service.Get<NonDefaultConstructorClass>();
-        returned.Should().NotBeNull("the factory should return child object");
-        returned.Value.Should().BeTrue($"object value should be {true}");
-        returned.Modified.Should().BeTrue($"object modified should be {true}");
+        this.Assert(returned is not null, "the factory should return child object");
+        this.Assert(returned.Value, $"object value should be {true}");
+        this.Assert(returned.Modified, $"object modified should be {true}");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

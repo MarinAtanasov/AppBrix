@@ -4,7 +4,6 @@
 using AppBrix.Container.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -22,19 +21,14 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     public void TestGetContainer()
     {
         var container = this.App.Container;
-        container.Should().NotBeNull("unable to get the container");
-        var container2 = this.App.Container;
-        container2.Should().NotBeNull("second call did not return a container");
-        container2.Should().BeSameAs(container, "returned a different instance of the container");
+        this.Assert(container is not null, "the container should be registered");
+        this.Assert(this.App.Container == container, "should return the same instance of the container");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestResolveByInterface()
     {
-        var container = this.App.Container;
-        var iContainer = this.App.Get<IContainer>();
-        iContainer.Should().NotBeNull("unable to resolve the IContainer interface");
-        iContainer.Should().BeSameAs(container, "returned IContainer is a different instance");
+        this.Assert(this.App.Get<IContainer>() == this.App.Container, "IContainer must be the same instance");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -43,9 +37,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
         var container = this.App.Container;
         var registered = new ChildMock();
         container.Register(registered);
-        var resolved = this.App.Get(typeof(ChildMock));
-        resolved.Should().NotBeNull("unable to resolve the item by class");
-        resolved.Should().BeSameAs(registered, "returned item is a different instance than the registered");
+        this.Assert(this.App.Get(typeof(ChildMock)) == registered, "returned item must be the same instance than as registered");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -54,9 +46,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
         var container = this.App.Container;
         var original = new ChildMock();
         container.Register(original);
-        var resolved = container.Get<ParentMock>();
-        resolved.Should().NotBeNull("unable to resolve the Parent class");
-        resolved.Should().BeSameAs(original, "returned Child is a different instance");
+        this.Assert(container.Get<ParentMock>() == original, "returned Child must be the same instance");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -64,7 +54,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     {
         var container = this.App.Container;
         var action = () => container.Register(null!);
-        action.Should().Throw<ArgumentNullException>("passing a null object is not allowed");
+        this.AssertThrows<ArgumentNullException>(action, "passing a null object is not allowed");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -73,7 +63,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
         var container = this.App.Container;
         container.Register(new ChildMock());
         Action action = () => container.Get<object>();
-        action.Should().Throw<KeyNotFoundException>("items should not be registered as type of object");
+        this.AssertThrows<KeyNotFoundException>(action, "items should not be registered as type of object");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -83,10 +73,12 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
         var resolved = new ChildMock();
         var resolved2 = new ChildMock();
         container.Register(resolved);
+
         container.Register(resolved2);
-        container.Get<ChildMock>().Should().BeSameAs(resolved2, "object not replaced with second");
+        this.Assert(container.Get<ChildMock>() == resolved2, "object should be replaced with second");
+
         container.Register(resolved);
-        container.Get<ChildMock>().Should().BeSameAs(resolved, "object not replaced with original");
+        this.Assert(container.Get<ChildMock>() == resolved, "object should be replaced with original");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -94,7 +86,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     {
         var container = this.App.Container;
         var action = () => container.Register(new object());
-        action.Should().Throw<ArgumentException>("registering a  System.Object should not be allowed.");
+        this.AssertThrows<ArgumentException>(action, "registering a System.Object should not be allowed.");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -102,7 +94,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     {
         var container = this.App.Container;
         var action = () => container.Register("AppBrix");
-        action.Should().Throw<ArgumentException>("registering a string should not be allowed");
+        this.AssertThrows<ArgumentException>(action, "registering a string should not be allowed");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -110,7 +102,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
     {
         var container = this.App.Container;
         var action = () => container.Register(42);
-        action.Should().Throw<ArgumentException>("registering a value type should not be allowed");
+        this.AssertThrows<ArgumentException>(action, "registering a value type should not be allowed");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

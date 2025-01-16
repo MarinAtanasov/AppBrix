@@ -6,7 +6,6 @@ using AppBrix.Events.Delayed.Configuration;
 using AppBrix.Events.Delayed.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -25,7 +24,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         var hub = this.App.GetDelayedEventHub();
         var action = () => hub.Subscribe<EventMock>(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -33,7 +32,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         var hub = this.App.GetDelayedEventHub();
         var action = () => hub.Unsubscribe<EventMock>(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -47,11 +46,11 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+        this.Assert(called == 1, "event handler should be called exactly once after the first raise");
 
         hub.Unsubscribe(handler);
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
+        this.Assert(called == 1, "event handler should be called exactly once after the unsubscription");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -60,7 +59,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.App.GetDelayedEventHub();
         var action = () => hub.RaiseImmediate(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -72,11 +71,11 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.Raise(args);
-        called.Should().Be(1, "event handler should be called exactly once");
+        this.Assert(called == 1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -88,11 +87,11 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.RaiseImmediate(args);
-        called.Should().Be(1, "event handler should be called exactly once");
+        this.Assert(called == 1, "event handler should be called exactly once");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -105,8 +104,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
         var action = () => hub.RaiseImmediate(new EventMock(5));
-        action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
-        called.Should().Be(1, "the handler after the failing one shouldn't be called");
+        this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
+        this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -121,12 +120,12 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe(handler);
         hub.Raise(args);
         hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after the first raise");
+        this.Assert(called == 1, "event handler should be called exactly once after the first raise");
 
         hub.Unsubscribe(handler);
         hub.Raise(args);
         hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after the unsubscription");
+        this.Assert(called == 1, "event handler should be called exactly once after the unsubscription");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -135,7 +134,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.App.GetDelayedEventHub();
         var action = () => hub.RaiseDelayed(null!);
-        action.Should().Throw<ArgumentNullException>();
+        this.AssertThrows<ArgumentNullException>(action);
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -147,15 +146,15 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.Raise(args);
-        called.Should().Be(0, "event handler should not be called before flush");
+        this.Assert(called == 0, "event handler should not be called before flush");
         hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after flush");
+        this.Assert(called == 1, "event handler should be called exactly once after flush");
         hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after second flush");
+        this.Assert(called == 1, "event handler should be called exactly once after second flush");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -167,15 +166,15 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
-            e.Should().BeSameAs(args, "the passed arguments should be the same as provided");
+            this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
         });
         hub.RaiseDelayed(args);
-        called.Should().Be(0, "event handler should not be called before flush");
+        this.Assert(called == 0, "event handler should not be called before flush");
         hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after flush");
+        this.Assert(called == 1, "event handler should be called exactly once after flush");
         hub.Flush();
-        called.Should().Be(1, "event handler should be called exactly once after second flush");
+        this.Assert(called == 1, "event handler should be called exactly once after second flush");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -189,8 +188,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe<EventMock>(_ => called++);
         hub.RaiseDelayed(new EventMock(5));
         var action = () => hub.Flush();
-        action.Should().Throw<InvalidOperationException>("the exception should be propagated to the called");
-        called.Should().Be(1, "the handler after the failing one shouldn't be called");
+        this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
+        this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -267,8 +266,8 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
             hub.Raise(args);
         }
 
-        childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
-        interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
+        this.Assert(childCalled == calledCount, $"The child should be called exactly {calledCount} times");
+        this.Assert(interfaceCalled == calledCount, $"The interface should be called exactly {calledCount} times");
 
         this.App.Reinitialize();
     }
@@ -289,11 +288,11 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
             hub.Raise(args);
         }
 
-        childCalled.Should().Be(0, "The child should not be called before flush");
-        interfaceCalled.Should().Be(0, "The interface should not be called before flush");
+        this.Assert(childCalled == 0, "The child should not be called before flush");
+        this.Assert(interfaceCalled == 0, "The interface should not be called before flush");
         hub.Flush();
-        childCalled.Should().Be(calledCount, "The child should be called exactly {0} times", calledCount);
-        interfaceCalled.Should().Be(calledCount, "The interface should be called exactly {0} times", calledCount);
+        this.Assert(childCalled == calledCount, $"The child should be called exactly {calledCount} times");
+        this.Assert(interfaceCalled == calledCount, $"The interface should be called exactly {calledCount} times");
 
         this.App.Reinitialize();
     }

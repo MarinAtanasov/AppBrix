@@ -4,7 +4,6 @@
 using AppBrix.Cloning.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,14 +25,14 @@ public sealed class CloningTests : TestsBase<CloningModule>
     {
         var cloner = this.App.GetCloningService();
         var action = () => cloner.DeepCopy<object>(null);
-        action.Should().ThrowExactly<ArgumentNullException>("parameter cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "parameter cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestDeepCopyType()
     {
         var type = typeof(CloningTests);
-        this.App.GetCloningService().DeepCopy(type).Should().Be(type, "deep copy of type is the same type");
+        this.Assert(this.App.GetCloningService().DeepCopy(type) == type, "deep copy of type is the same type");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -106,8 +105,8 @@ public sealed class CloningTests : TestsBase<CloningModule>
         var original = new SelfReferencingMock();
         original.Other = original;
         var clone = cloner.DeepCopy(original);
-        clone.Should().NotBeSameAs(original, "the original should be deep cloned");
-        clone.Other.Should().BeSameAs(clone, "the clone should be referencing itself after the deep copy");
+        this.Assert(clone != original, "the original should be deep cloned");
+        this.Assert(clone.Other == clone, "the clone should be referencing itself after the deep copy");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -117,10 +116,9 @@ public sealed class CloningTests : TestsBase<CloningModule>
         var original = new SelfReferencingMock();
         original.Other = new SelfReferencingMock { Other = original };
         var clone = cloner.DeepCopy(original);
-        clone.Should().NotBeSameAs(original, "the original should be deep cloned");
-        clone.Other.Should().NotBeSameAs(original.Other,
-            "the original's referenced object and clone's referenced object should not be the same object");
-        clone.Other.Other.Should().BeSameAs(clone, "the clone's reference should be referencing the clone");
+        this.Assert(clone != original, "the original should be deep cloned");
+        this.Assert(clone.Other != original.Other, "the original's referenced object and clone's referenced object should not be the same object");
+        this.Assert(clone.Other.Other == clone, "the clone's reference should be referencing the clone");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -130,10 +128,10 @@ public sealed class CloningTests : TestsBase<CloningModule>
         var original = new DelegateWrapperMock();
         original.Delegate = () => original;
         var clone = cloner.DeepCopy(original);
-        original.Delegate().Should().BeSameAs(original, "the original's delegate should not be changed");
-        clone.Should().NotBeSameAs(original, "the original should be deep cloned");
-        clone.Delegate.Should().NotBeNull("the delegate should be cloned");
-        clone.Delegate().Should().BeSameAs(clone, "the delegated reference to the original object should be switched to the cloned one");
+        this.Assert(original.Delegate() == original, "the original's delegate should not be changed");
+        this.Assert(clone != original, "the original should be deep cloned");
+        this.Assert(clone.Delegate is not null, "the delegate should be cloned");
+        this.Assert(clone.Delegate!() == clone, "the delegated reference to the original object should be switched to the cloned one");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -146,21 +144,21 @@ public sealed class CloningTests : TestsBase<CloningModule>
     {
         var cloner = this.App.GetCloningService();
         var action = () => cloner.ShallowCopy<object>(null);
-        action.Should().ThrowExactly<ArgumentNullException>("parameter cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "parameter cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShallowCopyType()
     {
         var type = typeof(CloningTests);
-        this.App.GetCloningService().ShallowCopy(type).ToString().Should().Be(type.ToString(), "shallow copy of type is the same type");
+        this.Assert(this.App.GetCloningService().ShallowCopy(type).ToString() == type.ToString(), "shallow copy of type is the same type");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShallowCopyInteger()
     {
+        const int original = 5;
         var cloner = this.App.GetCloningService();
-        var original = 5;
         var clone = cloner.ShallowCopy(original);
         this.AssertIsShallowCopy(original, clone);
     }
@@ -168,8 +166,8 @@ public sealed class CloningTests : TestsBase<CloningModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestShallowCopyString()
     {
-        var cloner = this.App.GetCloningService();
         var original = "Test";
+        var cloner = this.App.GetCloningService();
         var clone = cloner.ShallowCopy(original);
         this.AssertIsShallowCopy(original, clone);
     }
@@ -228,24 +226,24 @@ public sealed class CloningTests : TestsBase<CloningModule>
     {
         if (original is null)
         {
-            copy.Should().BeNull($"{property}'s copy should be null when the original is null");
+            this.Assert(copy is null, $"{property}'s copy should be null when the original is null");
             return;
         }
 
-        copy.Should().NotBeNull($"{property}'s copy should not be null when the original is not");
+        this.Assert(copy is not null, $"{property}'s copy should not be null when the original is not");
 
         var type = original.GetType();
-        copy.GetType().Should().Be(type, $"{property}'s type of the copy should be the same as the original");
+        this.Assert(copy!.GetType() == type, $"{property}'s type of the copy should be the same as the original");
 
         if (type.IsValueType && type.IsPrimitive || type.IsEnum || type == typeof(string))
         {
-            copy.Should().Be(original, $"{property}'s value of the copy should be the same as the original");
+            this.Assert(copy.Equals(original), $"{property}'s value of the copy should be the same as the original");
             if (type.IsPrimitive || type == typeof(string))
                 return;
         }
         else if (!type.IsValueType)
         {
-            copy.Should().NotBeSameAs(original, $"{property}'s copied object should not be the same instance as the original");
+            this.Assert(copy != original, $"{property}'s copied object should not be the same instance as the original");
         }
 
         foreach (var field in this.GetFields(type))
@@ -264,10 +262,9 @@ public sealed class CloningTests : TestsBase<CloningModule>
             while (true)
             {
                 var moveNext = originalEnumerator.MoveNext();
-                copiedEnumerator.MoveNext().Should().Be(moveNext,
-                    $"{property}'s original enumeration elements are {{0}}, copied enumeration elements are {{1}}",
-                    ((IEnumerable)original).Cast<object>().Count(),
-                    ((IEnumerable)copy).Cast<object>().Count());
+                this.Assert(copiedEnumerator.MoveNext() == moveNext,
+                    $"{property}'s original enumeration elements are {((IEnumerable)original).Cast<object>().Count()}, copied enumeration elements are {((IEnumerable)copy).Cast<object>().Count()}");
+
                 index++;
 
                 if (!moveNext)
@@ -282,24 +279,24 @@ public sealed class CloningTests : TestsBase<CloningModule>
     {
         if (original is null)
         {
-            copy.Should().BeNull("the copy should be null when the original is null");
+            this.Assert(copy is null, "the copy should be null when the original is null");
             return;
         }
 
-        copy.Should().NotBeNull("the copy should not be null when the original is not");
+        this.Assert(copy is not null, "the copy should not be null when the original is not");
 
         var type = original.GetType();
-        copy.GetType().Should().Be(type, "the type of the copy should be the same as the original");
+        this.Assert(copy!.GetType() == type, "the type of the copy should be the same as the original");
 
         if (type.IsValueType || type == typeof(string))
         {
-            copy.Should().Be(original, "the value of the copy should be the same as the original");
+            this.Assert(copy.Equals(original), "the value of the copy should be the same as the original");
             if (type.IsPrimitive || type == typeof(string))
                 return;
         }
         else if (!isInitialObject)
         {
-            copy.Should().BeSameAs(original, "the copied object should be the same instance as the original");
+            this.Assert(copy == original, "the copied object should be the same instance as the original");
         }
 
         foreach (var field in this.GetFields(type))

@@ -7,12 +7,12 @@ using AppBrix.Web.Client;
 using AppBrix.Web.Client.Contracts;
 using AppBrix.Web.Server.Events;
 using AppBrix.Web.Server.Tests.Mocks;
-using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -40,7 +40,7 @@ public sealed class WebServerTests : TestsBase
             .SetHeader("x-test", "test")
             .SetHeader("x-test")
             .Send();
-        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the GET request should return status OK");
+        this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the GET request should return status OK");
 
         var postResponse = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.ConnectionTestServiceUrl)
@@ -50,8 +50,8 @@ public sealed class WebServerTests : TestsBase
             .SetMethod(HttpMethod.Post)
             .SetVersion(new Version(1, 1))
             .Send<int>();
-        postResponse.StatusCode.Should().Be((int)HttpStatusCode.OK, "the POST request should return status OK");
-        postResponse.Content.Should().Be(42, "the request should return the same integer that has been passed");
+        this.Assert(postResponse.StatusCode == (int)HttpStatusCode.OK, "the POST request should return status OK");
+        this.Assert(postResponse.Content == 42, "the request should return the same integer that has been passed");
 
         await webApp.StopAsync();
     }
@@ -71,15 +71,15 @@ public sealed class WebServerTests : TestsBase
         var response1 = await app1.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.AppIdService2Url)
             .Send<AppIdMessage>();
-        response1.StatusCode.Should().Be((int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
-        response1.Content.Id.Should().Be(app2.ConfigService.Get<AppIdConfig>().Id, "the first app should receive the second app's id");
+        this.Assert(response1.StatusCode == (int)HttpStatusCode.OK, "the first app's call should reach the second app's service");
+        this.Assert(response1.Content.Id == app2.ConfigService.Get<AppIdConfig>().Id, "the first app should receive the second app's id");
 
         app2.Container.Register(app1Client);
         var response2 = await app2.GetFactoryService().GetHttpRequest()
             .SetUrl(WebServerTests.AppIdServiceUrl)
             .Send<AppIdMessage>();
-        response2.StatusCode.Should().Be((int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
-        response2.Content.Id.Should().Be(app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
+        this.Assert(response2.StatusCode == (int)HttpStatusCode.OK, "the second app's call should reach the first app's service");
+        this.Assert(response2.Content.Id == app1.ConfigService.Get<AppIdConfig>().Id, "the second app should receive the first app's id");
 
         await webApp2.StopAsync();
         await webApp1.StopAsync();
@@ -95,12 +95,13 @@ public sealed class WebServerTests : TestsBase
         var response = await this.App.GetFactoryService().GetHttpRequest()
             .SetUrl($"{WebServerTests.EchoServiceUrl}/{nameof(this.TestEchoGetString)}")
             .Send<string>();
-        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
-        response.ReasonPhrase.Should().Be(HttpStatusCode.OK.ToString(), "the request should return status OK");
-        response.Version.Should().Be(new Version(1, 1), "the version of the response should be 1.1");
-        response.Content.Should().Be(nameof(this.TestEchoGetString), "the response should echo the request");
-        response.Headers.Count.Should().Be(1, "only the content-type header should be returned");
-        response.Headers["Content-Type"].Should().Equal(["text/plain; charset=utf-8"], "the content type should be a utf-8 string");
+        this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the request should return status OK");
+        this.Assert(response.ReasonPhrase == HttpStatusCode.OK.ToString(), "the request should return status OK");
+        this.Assert(response.Version == new Version(1, 1), "the version of the response should be 1.1");
+        this.Assert(response.Content == nameof(this.TestEchoGetString), "the response should echo the request");
+        this.Assert(response.Headers.Count == 1, "only the content-type header should be returned");
+        this.Assert(response.Headers["Content-Type"].Count() == 1, "the content type should be only a utf-8 string");
+        this.Assert(response.Headers["Content-Type"].Contains("text/plain; charset=utf-8"), "the content type should be a utf-8 string");
 
         await webApp.StopAsync();
     }
@@ -125,8 +126,8 @@ public sealed class WebServerTests : TestsBase
             .SetHeader("Content-Type", "application/json")
             .SetMethod(HttpMethod.Post)
             .Send<EchoModel>();
-        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
-        response.Content.Should().Be(model, "the response should echo the request");
+        this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the request should return status OK");
+        this.Assert(response.Content.Equals(model), "the response should echo the request");
 
         await webApp.StopAsync();
     }
@@ -147,8 +148,8 @@ public sealed class WebServerTests : TestsBase
             .SetLastModifiedHeader(this.App.GetTime())
             .SetMethod(HttpMethod.Post)
             .Send<EchoModel>();
-        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
-        response.Content.Should().Be(model, "the response should echo the request");
+        this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the request should return status OK");
+        this.Assert(response.Content.Equals(model), "the response should echo the request");
 
         await webApp.StopAsync();
     }
@@ -169,8 +170,8 @@ public sealed class WebServerTests : TestsBase
             .SetLastModifiedHeader(this.App.GetTime())
             .SetMethod(HttpMethod.Post)
             .Send<byte[]>();
-        response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
-        response.Content.Length.Should().BePositive("the response should echo the request");
+        this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the request should return status OK");
+        this.Assert(response.Content.Length > 0, "the response should echo the request");
 
         await webApp.StopAsync();
     }
@@ -192,8 +193,8 @@ public sealed class WebServerTests : TestsBase
             .SetMethod(HttpMethod.Post);
         await using (var response = await request.SendStream())
         {
-            response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
-            response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
+            this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the request should return status OK");
+            this.Assert(response.Content.ReadByte() > 0, "the response stream should not be empty");
         }
 
         await webApp.StopAsync();
@@ -216,8 +217,8 @@ public sealed class WebServerTests : TestsBase
             .SetMethod(HttpMethod.Post);
         await using (var response = await request.SendStream())
         {
-            response.StatusCode.Should().Be((int)HttpStatusCode.OK, "the request should return status OK");
-            response.Content.ReadByte().Should().BePositive("the response stream should not be empty");
+            this.Assert(response.StatusCode == (int)HttpStatusCode.OK, "the request should return status OK");
+            this.Assert(response.Content.ReadByte() > 0, "the response stream should not be empty");
         }
 
         await webApp.StopAsync();

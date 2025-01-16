@@ -6,7 +6,6 @@ using AppBrix.Configuration;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
 using AppBrix.Tests.Mocks;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,17 +22,17 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
     {
         this.App.Start();
         var module = this.GetModules().Select(x => x.Module).OfType<InstallableModuleMock>().Single();
-        module.IsConfigured.Should().BeTrue("Configure should be called after starting the application");
-        module.IsInstalled.Should().BeTrue("Install should be called after starting the application");
-        module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+        this.Assert(module.IsConfigured, "Configure should be called after starting the application");
+        this.Assert(module.IsInstalled, "Install should be called after starting the application");
+        this.Assert(module.IsInitialized, "Initialize should be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called before uninitializing the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after starting the application");
         this.App.Uninitialize();
-        module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
-        this.App.ConfigService.GetAppConfig().Modules
-            .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName())
-            .Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
+        this.Assert(module.IsUninitialized, "Uninitialize should be called after uninitializing the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after uninitializing the application");
+        var moduleConfig = this.App.ConfigService.GetAppConfig().Modules
+            .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
+        this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -45,17 +44,17 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         moduleConfig.Version = new Version(0, 0, 0, 0);
         ((IApp)this.App).Restart();
         var module = this.GetModules().Select(x => x.Module).OfType<InstallableModuleMock>().Single();
-        module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-        module.IsInstalled.Should().BeTrue("Install should not be called after starting the application");
-        module.IsConfigured.Should().BeTrue("Configure should be called after starting the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+        this.Assert(module.IsInitialized, "Initialize should be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called before uninitializing the application");
+        this.Assert(module.IsInstalled, "Install should not be called after starting the application");
+        this.Assert(module.IsConfigured, "Configure should be called after starting the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after starting the application");
         this.App.Uninitialize();
-        module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
+        this.Assert(module.IsUninitialized, "Uninitialize should be called after uninitializing the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after uninitializing the application");
         moduleConfig = this.App.ConfigService.GetAppConfig().Modules
             .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
-        moduleConfig.Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
+        this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -64,19 +63,19 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         this.App.Start();
         this.App.Restart();
         var module = this.GetModules().Select(x => x.Module).OfType<InstallableModuleMock>().Single();
-        module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-        module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-        module.IsConfigured.Should().BeFalse("Configure should be not called after starting the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+        this.Assert(module.IsInitialized, "Initialize should be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called before uninitializing the application");
+        this.Assert(module.IsInstalled == false, "Install should not be called after starting the application");
+        this.Assert(module.IsConfigured == false, "Configure should be not called after starting the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after starting the application");
         this.App.Uninitialize();
-        module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-        module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
-        module.IsConfigured.Should().BeFalse("Configure should not be called after uninitializing the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after uninitializing the application");
-        this.App.ConfigService.GetAppConfig().Modules
-            .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName())
-            .Status.Should().Be(ModuleStatus.Enabled, "module status should not be changed");
+        this.Assert(module.IsUninitialized, "Uninitialize should be called after uninitializing the application");
+        this.Assert(module.IsInstalled == false, "Install should not be called after uninitializing the application");
+        this.Assert(module.IsConfigured == false, "Configure should not be called after uninitializing the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after uninitializing the application");
+        var moduleConfig = this.App.ConfigService.GetAppConfig().Modules
+            .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
+        this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -88,21 +87,21 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         moduleConfig.Version = new Version(0, 0, 0, 0);
         this.App.Restart();
         var module = this.GetModules().Select(x => x.Module).OfType<InstallableModuleMock>().Single();
-        module.IsInitialized.Should().BeTrue("Initialize should be called after starting the application");
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-        module.IsInstalled.Should().BeTrue("Install should be called after starting the application");
-        module.IsConfigured.Should().BeTrue("Configure should be called after starting the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+        this.Assert(module.IsInitialized, "Initialize should be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called before uninitializing the application");
+        this.Assert(module.IsInstalled, "Install should be called after starting the application");
+        this.Assert(module.IsConfigured, "Configure should be called after starting the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after starting the application");
         moduleConfig = this.App.ConfigService.GetAppConfig().Modules
             .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
         moduleConfig.Status = ModuleStatus.Uninstalling;
         this.App.Uninitialize();
-        module.IsUninitialized.Should().BeTrue("Uninitialize should be called after uninitializing the application");
-        module.IsUninstalled.Should().BeTrue("Uninstall should be called after uninitializing the application");
+        this.Assert(module.IsUninitialized, "Uninitialize should be called after uninitializing the application");
+        this.Assert(module.IsUninstalled, "Uninstall should be called after uninitializing the application");
         moduleConfig = this.App.ConfigService.GetAppConfig().Modules
             .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
-        moduleConfig.Status.Should().Be(ModuleStatus.Disabled, "module status be set to disabled after uninstall");
-        moduleConfig.Version.Should().BeNull("module version should be cleared after uninstall");
+        this.Assert(moduleConfig.Status == ModuleStatus.Disabled, "module status be set to disabled after uninstall");
+        this.Assert(moduleConfig.Version is null, "module version should be cleared after uninstall");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -115,22 +114,22 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         moduleConfig.Status = ModuleStatus.Disabled;
         this.App.Restart();
         var module = this.GetModules().Select(x => x.Module).OfType<InstallableModuleMock>().Single();
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-        module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-        module.IsConfigured.Should().BeFalse("Configure should not be called after starting the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called before uninitializing the application");
+        this.Assert(module.IsInstalled == false, "Install should not be called after starting the application");
+        this.Assert(module.IsConfigured == false, "Configure should not be called after starting the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after starting the application");
         moduleConfig = this.App.ConfigService.GetAppConfig().Modules
             .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
         moduleConfig.Status = ModuleStatus.Uninstalling;
         this.App.Uninitialize();
-        module.IsInitialized.Should().BeFalse("Initialize should not be called after starting the application");
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called after uninitializing the application");
-        module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
-        module.IsUninstalled.Should().BeTrue("Uninstall should be called after uninitializing the application");
+        this.Assert(module.IsInitialized == false, "Initialize should not be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called after uninitializing the application");
+        this.Assert(module.IsInstalled == false, "Install should not be called after uninitializing the application");
+        this.Assert(module.IsUninstalled, "Uninstall should be called after uninitializing the application");
         moduleConfig = this.App.ConfigService.GetAppConfig().Modules
             .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
-        moduleConfig.Status.Should().Be(ModuleStatus.Disabled, "module status be set to disabled after uninstall");
-        moduleConfig.Version.Should().BeNull("module version should be cleared after uninstall");
+        this.Assert(moduleConfig.Status == ModuleStatus.Disabled, "module status be set to disabled after uninstall");
+        this.Assert(moduleConfig.Version is null, "module version should be cleared after uninstall");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -144,19 +143,19 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         moduleConfig.Version = typeof(InstallableModuleMock).Assembly.GetName().Version;
         this.App.Start();
         var module = this.GetModules().Select(x => x.Module).OfType<InstallableModuleMock>().Single();
-        module.IsInitialized.Should().BeFalse("Initialize should not be called after starting the application");
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called before uninitializing the application");
-        module.IsInstalled.Should().BeFalse("Install should not be called after starting the application");
-        module.IsConfigured.Should().BeFalse("Configure should not be called after starting the application");
-        module.IsUninstalled.Should().BeFalse("Uninstall should not be called after starting the application");
+        this.Assert(module.IsInitialized == false, "Initialize should not be called after starting the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called before uninitializing the application");
+        this.Assert(module.IsInstalled == false, "Install should not be called after starting the application");
+        this.Assert(module.IsConfigured == false, "Configure should not be called after starting the application");
+        this.Assert(module.IsUninstalled == false, "Uninstall should not be called after starting the application");
         this.App.Uninitialize();
-        module.IsUninitialized.Should().BeFalse("Uninitialize should not be called after uninitializing the application");
-        module.IsInstalled.Should().BeFalse("Install should not be called after uninitializing the application");
-        module.IsUninstalled.Should().BeTrue("Uninstall should be called after uninitializing the application");
+        this.Assert(module.IsUninitialized == false, "Uninitialize should not be called after uninitializing the application");
+        this.Assert(module.IsInstalled == false, "Install should not be called after uninitializing the application");
+        this.Assert(module.IsUninstalled, "Uninstall should be called after uninitializing the application");
         moduleConfig = this.App.ConfigService.GetAppConfig().Modules
             .Single(x => x.Type == typeof(InstallableModuleMock).GetAssemblyQualifiedName());
-        moduleConfig.Status.Should().Be(ModuleStatus.Disabled, "module status be set to disabled after uninstall");
-        moduleConfig.Version.Should().BeNull("module version should be cleared after uninstall");
+        this.Assert(moduleConfig.Status == ModuleStatus.Disabled, "module status be set to disabled after uninstall");
+        this.Assert(moduleConfig.Version is null, "module version should be cleared after uninstall");
     }
     #endregion
 

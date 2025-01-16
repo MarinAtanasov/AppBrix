@@ -5,7 +5,6 @@ using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -37,16 +36,16 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
-            x.Message.Should().Be(message, "the error message same as the passed in error");
-            x.Exception.Should().Be(error, "the error message same as the passed in error");
-            x.Level.Should().Be(LogLevel.Error, "log level should be Error");
-            var stringed = x.ToString();
-            stringed.Should().Contain(x.Exception!.Message, "ToString should include the exception");
-            stringed.Should().Contain(x.Message, "ToString should include the message");
-            stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
+            this.Assert(x.Message == message, "the error message same as the passed in error");
+            this.Assert(x.Exception == error, "the error message same as the passed in error");
+            this.Assert(x.Level == LogLevel.Error, "log level should be Error");
+            var stringed = x.ToString()!;
+            this.Assert(stringed.Contains(x.Exception!.Message), "ToString should include the exception");
+            this.Assert(stringed.Contains(x.Message), "ToString should include the message");
+            this.Assert(stringed.Contains(x.Level.ToString()), "ToString should include the level");
         });
         this.App.GetLogHub().Error(message, error);
-        called.Should().BeTrue("the event should have been called");
+        this.Assert(called, "the event should have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -58,17 +57,17 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
-            x.Message.Should().Be(message, "the debug message is different than the passed in message");
-            x.Exception.Should().Be(error, "the error message same as the passed in error");
-            x.Level.Should().Be(LogLevel.Debug, "log level should be Debug");
-            x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
-            var stringed = x.ToString();
-            stringed.Should().Contain(x.Exception!.Message, "ToString should include the exception");
-            stringed.Should().Contain(x.Message, "ToString should include the message");
-            stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
+            this.Assert(x.Message == message, "the debug message is different than the passed in message");
+            this.Assert(x.Exception == error, "the error message same as the passed in error");
+            this.Assert(x.Level == LogLevel.Debug, "log level should be Debug");
+            this.Assert(x.GetHashCode() == x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+            var stringed = x.ToString()!;
+            this.Assert(stringed.Contains(x.Exception!.Message), "ToString should include the exception");
+            this.Assert(stringed.Contains(x.Message), "ToString should include the message");
+            this.Assert(stringed.Contains(x.Level.ToString()), "ToString should include the level");
         });
         this.App.GetLogHub().Debug(message, error);
-        called.Should().BeTrue("the event should have been called");
+        this.Assert(called, "the event should have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -79,15 +78,15 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
-            x.Message.Should().Be(message, "the info message is different than the passed in message");
-            x.Level.Should().Be(LogLevel.Info, "log level should be Info");
-            x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
-            var stringed = x.ToString();
-            stringed.Should().Contain(x.Message, "ToString should include the message");
-            stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
+            this.Assert(x.Message == message, "the info message is different than the passed in message");
+            this.Assert(x.Level == LogLevel.Info, "log level should be Info");
+            this.Assert(x.GetHashCode() == x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+            var stringed = x.ToString()!;
+            this.Assert(stringed.Contains(x.Message), "ToString should include the message");
+            this.Assert(stringed.Contains(x.Level.ToString()), "ToString should include the level");
         });
         this.App.GetLogHub().Info(message);
-        called.Should().BeTrue("the event should have been called");
+        this.Assert(called, "the event should have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -99,17 +98,17 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
-            x.Message.Should().Be(message, "the warning message is different than the passed in message");
-            x.Exception.Should().Be(error, "the error message same as the passed in error");
-            x.Level.Should().Be(LogLevel.Warning, "log level should be Warning");
-            x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
-            var stringed = x.ToString();
-            stringed.Should().Contain(x.Exception!.Message, "ToString should include the exception");
-            stringed.Should().Contain(x.Message, "ToString should include the message");
-            stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
+            this.Assert(x.Message == message, "the warning message is different than the passed in message");
+            this.Assert(x.Exception == error, "the error message same as the passed in error");
+            this.Assert(x.Level == LogLevel.Warning, "log level should be Warning");
+            this.Assert(x.GetHashCode() == x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+            var stringed = x.ToString()!;
+            this.Assert(stringed.Contains(x.Exception!.Message), "ToString should include the exception");
+            this.Assert(stringed.Contains(x.Message), "ToString should include the message");
+            this.Assert(stringed.Contains(x.Level.ToString()), "ToString should include the level");
         });
         this.App.GetLogHub().Warning(message, error);
-        called.Should().BeTrue("the event should have been called");
+        this.Assert(called, "the event should have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -120,15 +119,15 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             called = true;
-            x.Message.Should().Be(message, "the trace message is different than the passed in message");
-            x.Level.Should().Be(LogLevel.Trace, "log level should be Trace");
-            x.GetHashCode().Should().Be(x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
-            var stringed = x.ToString();
-            stringed.Should().Contain(x.Message, "ToString should include the message");
-            stringed.Should().Contain(x.Level.ToString(), "ToString should include the level");
+            this.Assert(x.Message == message, "the trace message is different than the passed in message");
+            this.Assert(x.Level == LogLevel.Trace, "log level should be Trace");
+            this.Assert(x.GetHashCode() == x.Message.GetHashCode(), "hash code should be the same as the message's hash code");
+            var stringed = x.ToString()!;
+            this.Assert(stringed.Contains(x.Message), "ToString should include the message");
+            this.Assert(stringed.Contains(x.Level.ToString()), "ToString should include the level");
         });
         this.App.GetLogHub().Trace(message);
-        called.Should().BeTrue("the event should have been called");
+        this.Assert(called, "the event should have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -144,31 +143,28 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.App.GetLogHub().Warning(message);
         this.App.GetLogHub().Error(message);
         this.App.GetLogHub().Critical(message);
-        called.Should().BeFalse("the event should not have been called");
+        this.Assert(called == false, "the event should not have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCallerFile()
     {
-        var message = "Test message";
-        this.App.GetEventHub().Subscribe<ILogEntry>(x => x.CallerFile.Should().EndWith(nameof(LogHubTests) + ".cs", "caller file should be set to current file"));
-        this.App.GetLogHub().Warning(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerFile.EndsWith(nameof(LogHubTests) + ".cs"), "caller file should be set to current file"));
+        this.App.GetLogHub().Warning("Test message");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCallerMemberName()
     {
-        var message = "Test message";
-        this.App.GetEventHub().Subscribe<ILogEntry>(x => x.CallerMember.Should().Be("TestCallerMemberName", "member name should be the current function"));
-        this.App.GetLogHub().Error(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerMember == nameof(LogHubTests.TestCallerMemberName), "member name should be the current function"));
+        this.App.GetLogHub().Error("Test message");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestThreadId()
     {
-        var message = "Test message";
-        this.App.GetEventHub().Subscribe<ILogEntry>(x => x.ThreadId.Should().Be(Environment.CurrentManagedThreadId, "thread id should be current thread id"));
-        this.App.GetLogHub().Info(message);
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.ThreadId == Environment.CurrentManagedThreadId, "thread id should be current thread id"));
+        this.App.GetLogHub().Info("Test message");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -179,8 +175,8 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         var executed = DateTime.MinValue;
         this.App.GetEventHub().Subscribe<ILogEntry>(x => executed = x.Created);
         this.App.GetLogHub().Debug(message);
-        executed.Should().BeOnOrAfter(before, "created date time should be greater than the time before creation");
-        executed.Should().BeOnOrBefore(this.App.GetTime(), "created date time should be greater than the time after creation");
+        this.Assert(executed >= before, "created date time should be greater than the time before creation");
+        this.Assert(executed <= this.App.GetTime(), "created date time should be greater than the time after creation");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -213,7 +209,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
             logHub.Warning(message, error);
         }
 
-        called.Should().Be(repeat * 6, "the event should have been called");
+        this.Assert(called == repeat * 6, "the event should have been called");
 
         this.App.Reinitialize();
     }

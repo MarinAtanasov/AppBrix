@@ -8,7 +8,6 @@ using AppBrix.Data.Tests.Mocks;
 using AppBrix.Modules;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +31,8 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             var item = context.Items.Single();
-            item.Id.Should().NotBe(Guid.Empty, "Id should be automatically generated");
-            item.Content.Should().Be(nameof(this.TestCrudOperations), $"{nameof(item.Content)} should be saved");
+            this.Assert(item.Id != Guid.Empty, "Id should be automatically generated");
+            this.Assert(item.Content == nameof(this.TestCrudOperations), $"{nameof(item.Content)} should be saved");
             item.Content = nameof(DataItemDbContextMock);
             context.SaveChanges();
         }
@@ -41,14 +40,14 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
             var item = context.Items.Single();
-            item.Content.Should().Be(nameof(DataItemDbContextMock), $"{nameof(item.Content)} should be updated");
+            this.Assert(item.Content == nameof(DataItemDbContextMock), $"{nameof(item.Content)} should be updated");
             context.Items.Remove(item);
             context.SaveChanges();
         }
 
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
         {
-            context.Items.Should().HaveCount(0, "the item should have been deleted");
+            this.Assert(context.Items.Any() == false, "the item should have been deleted");
         }
     }
 
@@ -60,19 +59,19 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
         this.App.GetEventHub().Subscribe<IDbContextMigratedEvent>(args =>
         {
             var type = args.Type == typeof(MigrationsDbContext) ? typeof(MigrationsDbContext) : typeof(DataItemDbContextMock);
-            args.PreviousVersion.Should().Be(new Version(), $"No previous {type.Name} version should exist");
-            args.Version.Should().Be(type.Assembly.GetName().Version, $"{type.Name} version should match assembly version");
-            args.Type.Should().Be(type, $"{type.Name} type should match requested type");
+            this.Assert(args.PreviousVersion == new Version(), $"No previous {type.Name} version should exist");
+            this.Assert(args.Version == type.Assembly.GetName().Version, $"{type.Name} version should match assembly version");
+            this.Assert(args.Type == type, $"{type.Name} type should match requested type");
 
             if (args.Type != typeof(MigrationsDbContext))
-                contexts.Should().Contain(typeof(MigrationsDbContext), "Migration context should be before context migration");
+                this.Assert(contexts.Contains(typeof(MigrationsDbContext)), "Migration context should be before context migration");
 
-            contexts.Add(args.Type).Should().BeTrue($"{args.Type.Name} migration should be completed only once");
+            this.Assert(contexts.Add(args.Type), $"{args.Type.Name} migration should be completed only once");
         });
 
         using (this.App.GetDbContextService().Get<DataItemDbContextMock>()) { }
 
-        contexts.Should().HaveCount(2, "Both contexts should have been migrated");
+        this.Assert(contexts.Count == 2, "Both contexts should have been migrated");
 
         using (this.App.GetDbContextService().Get<DataItemDbContextMock>()) { }
     }

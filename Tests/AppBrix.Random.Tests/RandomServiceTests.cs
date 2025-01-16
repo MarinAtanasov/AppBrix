@@ -3,7 +3,6 @@
 
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +22,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         Action action = () => service.GetRandomItems<object>(null!);
-        action.Should().Throw<ArgumentNullException>("items should not be null.");
+        this.AssertThrows<ArgumentNullException>(action, "items should not be null.");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -31,8 +30,8 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         var generated = service.GetRandomItems(Array.Empty<object>());
-        generated.Should().NotBeNull($"{nameof(service.GetRandomItems)} should never return null.");
-        generated.Should().BeSameAs([], $"{nameof(service.GetRandomItems)} should return an empty array.");
+        this.Assert(generated is not null, $"{nameof(service.GetRandomItems)} should never return null.");
+        this.Assert(generated == Array.Empty<object>(), $"{nameof(service.GetRandomItems)} should return an empty array.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -43,8 +42,8 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var items = original.ToList();
         var generated = service.GetRandomItems(items, 42);
 
-        items.Count.Should().Be(original.Count, "The collection size should not be modified.");
-        Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
+        this.Assert(items.Count == original.Count, "The collection size should not be modified.");
+        this.Assert(Enumerable.Range(0, original.Count).All(x => items[x] == original[x]), "All items should be in their original position.");
 
         var visited = new int[original.Count];
         var moved = false;
@@ -60,9 +59,9 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
             if (moved && repeated && total > original.Count || total > original.Count * 2)
                 break;
         }
-        moved.Should().BeTrue("Some items should have been shuffled.");
-        repeated.Should().BeTrue("Some items should be seen more than once.");
-        total.Should().BeGreaterThan(original.Count, "Item generation should continue after exhausting the collection.");
+        this.Assert(moved, "Some items should have been shuffled.");
+        this.Assert(repeated, "Some items should be seen more than once.");
+        this.Assert(total > original.Count, "Item generation should continue after exhausting the collection.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -72,7 +71,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetRandomItems(original, 23).Take(original.Count).ToList();
         var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
-        Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Generated items should be different.");
+        this.Assert(Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]), "Generated items should be different.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -82,7 +81,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
         var items2 = service.GetRandomItems(original, 42).Take(original.Count).ToList();
-        Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Generated items should be the same.");
+        this.Assert(Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]), "Generated items should be the same.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -90,7 +89,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         Action action = () => service.GetUniqueItems<object>(null!);
-        action.Should().Throw<ArgumentNullException>("items should not be null.");
+        this.AssertThrows<ArgumentNullException>(action, "items should not be null.");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -98,8 +97,8 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         var generated = service.GetUniqueItems(Array.Empty<object>());
-        generated.Should().NotBeNull($"{nameof(service.GetUniqueItems)} should never return null.");
-        generated.Should().BeSameAs([], $"{nameof(service.GetUniqueItems)} should return an empty array.");
+        this.Assert(generated is not null, $"{nameof(service.GetUniqueItems)} should never return null.");
+        this.Assert(generated == Array.Empty<object>(), $"{nameof(service.GetUniqueItems)} should return an empty array.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -110,15 +109,15 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var items = original.ToList();
         var generated = service.GetUniqueItems(items, 42).ToList();
 
-        items.Count.Should().Be(original.Count, "The collection size should not be modified.");
-        Enumerable.Range(0, original.Count).All(x => items[x] == original[x]).Should().BeTrue("All items should be in their original position.");
+        this.Assert(items.Count == original.Count, "The collection size should not be modified.");
+        this.Assert(Enumerable.Range(0, original.Count).All(x => items[x] == original[x]), "All items should be in their original position.");
 
-        generated.Count.Should().Be(original.Count, "Maximum unique generated items should be the same as original count.");
-        Enumerable.Range(0, original.Count).Any(x => generated[x] != original[x]).Should().BeTrue("Some items should have been shuffled.");
+        this.Assert(generated.Count == original.Count, "Maximum unique generated items should be the same as original count.");
+        this.Assert(Enumerable.Range(0, original.Count).Any(x => generated[x] != original[x]), "Some items should have been shuffled.");
 
         generated.Sort();
         items.Sort();
-        Enumerable.Range(0, original.Count).All(x => generated[x] == items[x]).Should().BeTrue("Generated collection should contain the original items.");
+        this.Assert(Enumerable.Range(0, original.Count).All(x => generated[x] == items[x]), "Generated collection should contain the original items.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -128,7 +127,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetUniqueItems(original, 23).ToList();
         var items2 = service.GetUniqueItems(original, 42).ToList();
-        Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Generated items should be different.");
+        this.Assert(Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]), "Generated items should be different.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -138,7 +137,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var original = Enumerable.Range(0, 10).ToList();
         var items1 = service.GetUniqueItems(original, 42).ToList();
         var items2 = service.GetUniqueItems(original, 42).ToList();
-        Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Generated items should be the same.");
+        this.Assert(Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]), "Generated items should be the same.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -170,7 +169,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
                     break;
                 }
             }
-            ok.Should().BeTrue($"{nameof(System.Random)} generation should be thread safe.");
+            this.Assert(ok, $"{nameof(System.Random)} generation should be thread safe.");
         }
     }
 
@@ -179,7 +178,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
     {
         var service = this.App.GetRandomService();
         var action = () => service.Shuffle<object>(null!);
-        action.Should().Throw<ArgumentNullException>("items should not be null.");
+        this.AssertThrows<ArgumentNullException>(action, "items should not be null.");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -191,7 +190,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var service = this.App.GetRandomService();
         var items = Enumerable.Range(0, 10).ToList();
         service.Shuffle(items, 42);
-        Enumerable.Range(0, items.Count).Any(x => items[x] != x).Should().BeTrue("Some items should have been shuffled.");
+        this.Assert(Enumerable.Range(0, items.Count).Any(x => items[x] != x), "Some items should have been shuffled.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -202,7 +201,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var items2 = Enumerable.Range(0, 10).ToList();
         service.Shuffle(items1, 23);
         service.Shuffle(items2, 42);
-        Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]).Should().BeTrue("Shuffles should be different.");
+        this.Assert(Enumerable.Range(0, items1.Count).Any(x => items1[x] != items2[x]), "Shuffles should be different.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -213,7 +212,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         var items2 = Enumerable.Range(0, 10).ToList();
         service.Shuffle(items1, 42);
         service.Shuffle(items2, 42);
-        Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]).Should().BeTrue("Both shuffles should be the same.");
+        this.Assert(Enumerable.Range(0, items1.Count).All(x => items1[x] == items2[x]), "Both shuffles should be the same.");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
@@ -248,7 +247,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         {
             sum += service.GetRandomItems(items).Take(10).Sum();
         }
-        sum.Should().BePositive();
+        this.Assert(sum > 0);
     }
 
     private void TestPerformanceGetUniqueItemsInternal()
@@ -260,7 +259,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
         {
             sum += service.GetUniqueItems(items).Take(10).Sum();
         }
-        sum.Should().BePositive();
+        this.Assert(sum > 0);
     }
 
     private void TestPerformanceShuffleInternal()

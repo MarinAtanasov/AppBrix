@@ -5,7 +5,6 @@ using AppBrix.Configuration.Memory;
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -19,7 +18,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
     {
         var service = new MemoryConfigService();
         var action = () => service.Get(null!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -27,7 +26,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
     {
         var service = new MemoryConfigService();
         var action = () => service.Save(null!);
-        action.Should().Throw<ArgumentNullException>("config cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -38,8 +37,8 @@ public sealed class MemoryConfigServiceTests : TestsBase
     {
         var service = new MemoryConfigService();
         var config = service.Get(typeof(ConfigMock));
-        config.Should().NotBeNull("a new instance should be created and returned");
-        service.Get(typeof(ConfigMock)).Should().BeSameAs(config, "the same config should be returned");
+        this.Assert(config is not null, "a new instance should be created and returned");
+        this.Assert(service.Get(typeof(ConfigMock)) == config, "the same config should be returned");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -48,7 +47,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
         var service = new MemoryConfigService();
         var config = new ConfigMock();
         service.Save(config);
-        service.Get(typeof(ConfigMock)).Should().BeSameAs(config, "the saved config should be returned");
+        this.Assert(service.Get(typeof(ConfigMock)) == config, "the saved config should be returned");
     }
     #endregion
 }

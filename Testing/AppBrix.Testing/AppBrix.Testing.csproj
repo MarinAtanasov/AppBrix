@@ -15,8 +15,4 @@
     <ProjectReference Include="..\..\Core\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.12.2" />
-  </ItemGroup>
-
 </Project>

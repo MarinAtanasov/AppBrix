@@ -6,8 +6,8 @@ using AppBrix.Data.InMemory;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace AppBrix.Data.Tests;
@@ -24,7 +24,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
     {
         var service = this.App.GetDbContextService();
         var action = () => service.Get(null!);
-        action.Should().Throw<ArgumentNullException>("type should not be null");
+        this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -34,14 +34,14 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
         this.App.GetEventHub().Subscribe<IConfigureDbContext>(args =>
         {
             eventDbContext = args.Context as DataItemDbContextMock;
-            args.Context.Should().NotBeNull("context should be provided");
-            args.MigrationsAssembly.Should().BeNull("migrations module is not available");
-            args.MigrationsHistoryTable.Should().Be("__EFMigrationsHistory", "migrations module is not available");
+            this.Assert(args.Context is not null, "context should be provided");
+            this.Assert(args.MigrationsAssembly is null, "migrations module is not available");
+            this.Assert(args.MigrationsHistoryTable == "__EFMigrationsHistory", "migrations module is not available");
         });
 
         using var context = this.App.GetDbContextService().Get<DataItemDbContextMock>();
-        context.Items.Should().HaveCount(0, "no items have been created");
-        context.Should().BeSameAs(eventDbContext, "context in event should be the same as created context");
+        this.Assert(context.Items.Any() == false, "no items have been created");
+        this.Assert(object.ReferenceEquals(context, eventDbContext), "context in event should be the same as created context");
     }
     #endregion
 }

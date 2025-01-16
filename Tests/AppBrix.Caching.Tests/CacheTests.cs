@@ -4,7 +4,6 @@
 using AppBrix.Caching.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Threading.Tasks;
 using Xunit;
@@ -26,44 +25,40 @@ public sealed class CacheTests : TestsBase<CachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetCache()
     {
-        var cache = this.App.GetCache();
-        cache.Should().NotBeNull("cache must be registered and resolved");
+        this.Assert(this.App.GetCache() is not null, "cache must be registered and resolved");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestCacheItem()
     {
+        const string key = "key";
+        const string value = "Test Value";
+
         var cache = this.App.GetCache();
-        var key = "key";
-        var value = "Test Value";
         await cache.Set(key, value);
-        var cached = await cache.Get<string>(key);
-        cached.Should().NotBeNull("the item should be in the cache");
-        cached.Should().Be(value, "the returned object should be equal to the original");
+        this.Assert(await cache.Get<string>(key) == value, "the returned object should be equal to the original");
+
         await cache.Remove(key);
         await cache.Refresh(key);
-        var removed = await cache.Get<object>(key);
-        removed.Should().BeNull("item should have been removed");
+        this.Assert(await cache.Get<object>(key) is null, "item should have been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public async Task TestReplaceItem()
     {
+        const string key = "key";
+        const string value = "Test Value";
+        const string newValue = "Test Replaced Value";
+
         var cache = this.App.GetCache();
-        var key = "key";
-        var value = "Test Value";
         await cache.Set(key, value);
-        var cached = await cache.Get<string>(key);
-        cached.Should().NotBeNull("the item should be in the cache");
-        cached.Should().Be(value, "the returned object should be equal to the original");
-        value = "Test Replaced Value";
-        await cache.Set(key, value);
-        cached = await cache.Get<string>(key);
-        cached.Should().NotBeNull("the item should be in the cache after being replaced");
-        cached.Should().Be(value, "the returned object should be equal to the replaced");
+        this.Assert(await cache.Get<string>(key) == value, "the returned object should be equal to the original");
+
+        await cache.Set(key, newValue);
+        this.Assert(await cache.Get<string>(key) == newValue, "the returned object should be equal to the replaced");
+
         await cache.Remove(key);
-        var removed = await cache.Get<object>(key);
-        removed.Should().BeNull("item should have been removed");
+        this.Assert(await cache.Get<object>(key) is null, "item should have been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

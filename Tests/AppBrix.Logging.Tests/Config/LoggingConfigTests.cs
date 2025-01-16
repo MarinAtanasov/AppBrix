@@ -5,7 +5,6 @@ using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -56,11 +55,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.App.GetLogHub().Info(message);
         this.App.GetLogHub().Debug(message);
         this.App.GetLogHub().Trace(message);
-        errorCalled.Should().BeTrue("the error event should have been called");
-        warningCalled.Should().BeFalse("the warning event should not have been called");
-        infoCalled.Should().BeFalse("the info event should not have been called");
-        debugCalled.Should().BeFalse("the debug event should not have been called");
-        traceCalled.Should().BeFalse("the trace event should not have been called");
+        this.Assert(errorCalled, "the error event should have been called");
+        this.Assert(warningCalled == false, "the warning event should not have been called");
+        this.Assert(infoCalled == false, "the info event should not have been called");
+        this.Assert(debugCalled == false, "the debug event should not have been called");
+        this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -101,11 +100,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.App.GetLogHub().Info(message);
         this.App.GetLogHub().Debug(message);
         this.App.GetLogHub().Trace(message);
-        errorCalled.Should().BeTrue("the error event should have been called");
-        warningCalled.Should().BeTrue("the warning event should have been called");
-        infoCalled.Should().BeFalse("the info event should not have been called");
-        debugCalled.Should().BeFalse("the debug event should not have been called");
-        traceCalled.Should().BeFalse("the trace event should not have been called");
+        this.Assert(errorCalled, "the error event should have been called");
+        this.Assert(warningCalled, "the warning event should have been called");
+        this.Assert(infoCalled == false, "the info event should not have been called");
+        this.Assert(debugCalled == false, "the debug event should not have been called");
+        this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -146,11 +145,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.App.GetLogHub().Info(message);
         this.App.GetLogHub().Debug(message);
         this.App.GetLogHub().Trace(message);
-        errorCalled.Should().BeTrue("the error event should have been called");
-        warningCalled.Should().BeTrue("the warning event should have been called");
-        infoCalled.Should().BeTrue("the info event should have been called");
-        debugCalled.Should().BeFalse("the debug event should not have been called");
-        traceCalled.Should().BeFalse("the trace event should not have been called");
+        this.Assert(errorCalled, "the error event should have been called");
+        this.Assert(warningCalled, "the warning event should have been called");
+        this.Assert(infoCalled, "the info event should have been called");
+        this.Assert(debugCalled == false, "the debug event should not have been called");
+        this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -191,11 +190,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.App.GetLogHub().Info(message);
         this.App.GetLogHub().Debug(message);
         this.App.GetLogHub().Trace(message);
-        errorCalled.Should().BeTrue("the error event should have been called");
-        warningCalled.Should().BeTrue("the warning event should have been called");
-        infoCalled.Should().BeTrue("the info event should have been called");
-        debugCalled.Should().BeTrue("the debug event should have been called");
-        traceCalled.Should().BeFalse("the trace event should not have been called");
+        this.Assert(errorCalled, "the error event should have been called");
+        this.Assert(warningCalled, "the warning event should have been called");
+        this.Assert(infoCalled, "the info event should have been called");
+        this.Assert(debugCalled, "the debug event should have been called");
+        this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -236,11 +235,11 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.App.GetLogHub().Info(message);
         this.App.GetLogHub().Debug(message);
         this.App.GetLogHub().Trace(message);
-        errorCalled.Should().BeTrue("the error event should have been called");
-        warningCalled.Should().BeTrue("the warning event should have been called");
-        infoCalled.Should().BeTrue("the info event should have been called");
-        debugCalled.Should().BeTrue("the debug event should have been called");
-        traceCalled.Should().BeTrue("the trace event should have been called");
+        this.Assert(errorCalled, "the error event should have been called");
+        this.Assert(warningCalled, "the warning event should have been called");
+        this.Assert(infoCalled, "the info event should have been called");
+        this.Assert(debugCalled, "the debug event should have been called");
+        this.Assert(traceCalled, "the trace event should have been called");
     }
     #endregion
 }

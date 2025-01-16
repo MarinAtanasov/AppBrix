@@ -4,7 +4,6 @@
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
 using AppBrix.Text.Tests.Mocks;
-using FluentAssertions;
 using System.Text;
 using Xunit;
 
@@ -21,8 +20,8 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
     public void TestEncodingProvider()
     {
         var encoding = Encoding.UTF8;
-        Encoding.GetEncoding(encoding.BodyName).Should().BeSameAs(encoding, "provider should return encoding by body name");
-        Encoding.GetEncoding(encoding.CodePage).Should().BeSameAs(encoding, "provider should return encoding by code page");
+        this.Assert(object.ReferenceEquals(Encoding.GetEncoding(encoding.BodyName), encoding), "provider should return encoding by body name");
+        this.Assert(object.ReferenceEquals(Encoding.GetEncoding(encoding.CodePage), encoding), "provider should return encoding by code page");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -30,18 +29,18 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
     {
         var encoding = Encoding.UTF8;
         var provider = new EncodingProviderMock(encoding);
-        provider.Encoding.Should().BeSameAs(encoding, "provided encoding should be saved");
+        this.Assert(object.ReferenceEquals(provider.Encoding, encoding), "provided encoding should be saved");
 
         this.App.Container.Register(provider);
 
-        provider.IsGetEncodingWithNameCalled.Should().BeFalse("encoding with name should not be called yet");
-        provider.IsGetEncodingWithCodePageCalled.Should().BeFalse("encoding with code page should not be called yet");
+        this.Assert(provider.IsGetEncodingWithNameCalled == false, "encoding with name should not be called yet");
+        this.Assert(provider.IsGetEncodingWithCodePageCalled == false, "encoding with code page should not be called yet");
 
-        Encoding.GetEncoding("test").Should().BeSameAs(encoding, "wrapper should have called the registered provider with name");
-        provider.IsGetEncodingWithNameCalled.Should().BeTrue("encoding with name should be called");
+        this.Assert(object.Equals(Encoding.GetEncoding("test"), encoding), "wrapper should have called the registered provider with name");
+        this.Assert(provider.IsGetEncodingWithNameCalled, "encoding with name should be called");
 
-        Encoding.GetEncoding(12).Should().BeSameAs(encoding, "wrapper should have called the registered provider with code page");
-        provider.IsGetEncodingWithCodePageCalled.Should().BeTrue("encoding with cade page should be called");
+        this.Assert(object.ReferenceEquals(Encoding.GetEncoding(12), encoding), "wrapper should have called the registered provider with code page");
+        this.Assert(provider.IsGetEncodingWithCodePageCalled, "encoding with cade page should be called");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

@@ -6,7 +6,6 @@ using AppBrix.Data.Migrations;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -24,14 +23,14 @@ public sealed class MigrationsDbContextServiceTests : TestsBase<InMemoryDataModu
     {
         var service = this.App.GetDbContextService();
         var action = () => service.Get(null!);
-        action.Should().Throw<ArgumentNullException>("type should not be null");
+        this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestCreateExternalDbContext()
     {
         using var context = this.App.GetDbContextService().Get<ExternalDbContextMock>();
-        context.Should().NotBeNull("the db context service should return a new instance");
+        this.Assert(context is not null, "the db context service should return a new instance");
     }
     #endregion
 }

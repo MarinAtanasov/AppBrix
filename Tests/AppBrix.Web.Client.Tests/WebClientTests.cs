@@ -3,7 +3,6 @@
 
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -21,7 +20,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     {
         var request = this.App.GetFactoryService().GetHttpRequest();
         var action = () => request.SetHeader(string.Empty);
-        action.Should().Throw<ArgumentNullException>("header cannot be empty");
+        this.AssertThrows<ArgumentNullException>(action, "header cannot be empty");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -29,7 +28,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     {
         var request = this.App.GetFactoryService().GetHttpRequest();
         var action = () => request.SetMethod(string.Empty);
-        action.Should().Throw<ArgumentNullException>("method cannot be empty");
+        this.AssertThrows<ArgumentNullException>(action, "method cannot be empty");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -37,7 +36,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
     {
         var request = this.App.GetFactoryService().GetHttpRequest();
         var action = () => request.SetUrl(string.Empty);
-        action.Should().Throw<ArgumentNullException>("url cannot be empty");
+        this.AssertThrows<ArgumentNullException>(action, "url cannot be empty");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

@@ -4,7 +4,6 @@
 using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
 using System;
-using System.Threading.Tasks;
 
 namespace AppBrix.Testing.Xunit;
 
@@ -12,13 +11,13 @@ namespace AppBrix.Testing.Xunit;
 /// A base testing class that holds an application.
 /// The application is stopped on <see cref="Dispose"/>.
 /// </summary>
-public abstract class TestsBase : IDisposable
+public abstract class TestsBase : TestingBase, IDisposable
 {
     #region Setup and cleanup
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase"/> with a blank app.
     /// </summary>
-    protected TestsBase() => this.App = AppBrix.App.Create(new MemoryConfigService());
+    protected TestsBase() : this(AppBrix.App.Create(new MemoryConfigService())) { }
 
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase"/> with the provided app.
@@ -41,27 +40,6 @@ public abstract class TestsBase : IDisposable
     /// Gets the app that is being tested.
     /// </summary>
     protected IApp App { get; }
-    #endregion
-
-    #region Public and protected methods
-    /// <summary>
-    /// Checks that the action is executed under a specified time.
-    /// It does one initial pass to make sure that the code path is loaded and hot.
-    /// </summary>
-    /// <param name="action">The action to be invoked.</param>
-    /// <param name="duration">The maximum allowed duration.</param>
-    /// <param name="firstPass">The maximum allowed duration on the first pass.</param>
-    protected void AssertPerformance(Action action, TimeSpan duration = default, TimeSpan firstPass = default) =>
-        action.AssertPerformance(duration, firstPass);
-
-    /// <summary>
-    /// Checks that the function is executed under a specified time.
-    /// </summary>
-    /// <param name="func">The function to be invoked.</param>
-    /// <param name="duration">The maximum allowed duration.</param>
-    /// <param name="firstPass">The maximum allowed duration on the first pass.</param>
-    protected void AssertPerformance(Func<Task> func, TimeSpan duration = default, TimeSpan firstPass = default) =>
-        func.AssertPerformance(duration, firstPass);
     #endregion
 }
 

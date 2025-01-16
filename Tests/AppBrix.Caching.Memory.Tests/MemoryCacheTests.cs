@@ -4,7 +4,6 @@
 using AppBrix.Caching.Memory.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,8 +29,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetMemoryCache()
     {
-        var cache = this.App.GetMemoryCache();
-        cache.Should().NotBeNull("cache must be registered and resolved");
+        this.Assert(this.App.GetMemoryCache() is not null, "cache must be registered and resolved");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -39,7 +37,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         Action action = () => cache.Get(null!);
-        action.Should().Throw<ArgumentNullException>("key should not be null");
+        this.AssertThrows<ArgumentNullException>(action, "key should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -47,15 +45,15 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         var item = cache.Get(nameof(this.TestGetUnregisteredItem));
-        item.Should().BeNull("asking for non-existing key should return null");
+        this.Assert(item is null, "asking for non-existing key should return null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetUnregisteredItemGenericExtension()
     {
         var cache = this.App.GetMemoryCache();
-        var item = cache.Get<TimeSpan>(nameof(this.TestGetUnregisteredItem));
-        item.Should().Be(default, "asking for non-existing struct should return its default value");
+        var item = cache.Get<TimeSpan>(nameof(this.TestGetUnregisteredItemGenericExtension));
+        this.Assert(item == TimeSpan.Zero,"asking for non-existing struct should return its default value");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -63,7 +61,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(null!, this);
-        action.Should().Throw<ArgumentNullException>("key should not be null");
+        this.AssertThrows<ArgumentNullException>(action, "key should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -71,7 +69,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(nameof(this.TestSetNullItem), null!);
-        action.Should().Throw<ArgumentNullException>("item should not be null");
+        this.AssertThrows<ArgumentNullException>(action, "item should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -79,7 +77,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(nameof(this.TestSetNegativeAbsoluteExpiration), this, absoluteExpiration: TimeSpan.FromSeconds(-1));
-        action.Should().Throw<ArgumentException>("absolute expiration should not be negative");
+        this.AssertThrows<ArgumentException>(action, "absolute expiration should not be negative");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -87,7 +85,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         var action = () => cache.Set(nameof(this.TestSetNegativeSlidingExpiration), this, slidingExpiration: TimeSpan.FromSeconds(-1));
-        action.Should().Throw<ArgumentException>("sliding expiration should not be negative");
+        this.AssertThrows<ArgumentException>(action, "sliding expiration should not be negative");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -95,7 +93,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     {
         var cache = this.App.GetMemoryCache();
         Action action = () => cache.Remove(null!);
-        action.Should().Throw<ArgumentNullException>("key should not be null");
+        this.AssertThrows<ArgumentNullException>(action, "key should not be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -106,8 +104,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         var cache = this.App.GetMemoryCache();
         cache.Set(key, this);
 
-        var item = cache.Get(key);
-        item.Should().Be(this, "returned item should be the same as the original");
+        this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -117,11 +114,10 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         var cache = this.App.GetMemoryCache();
         cache.Set(key, this);
-        cache.Remove(key).Should().BeTrue("the item should have been removed successfully");
 
-        var item = cache.Get(nameof(MemoryCacheTests.TestGetItem));
-        item.Should().BeNull("the item should have been removed from the cache");
-        cache.Remove(key).Should().BeFalse("the item should have already been removed");
+        this.Assert(cache.Remove(key), "the item should have been removed successfully");
+        this.Assert(cache.Get(key) is null, "the item should have been removed from the cache");
+        this.Assert(cache.Remove(key) == false, "the item should have already been removed");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -131,12 +127,11 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         var cache = this.App.GetMemoryCache();
         cache.Set(key, this, absoluteExpiration: TimeSpan.FromMilliseconds(50));
-        var item = cache.Get(key);
-        item.Should().Be(this, "returned item should be the same as the original");
+        this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
         var func = () => cache.Get(key);
-        return func.ShouldReturn(null, "the item should have been removed from the cache");
+        return this.AssertReturns(func, null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -146,12 +141,11 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 
         var cache = this.App.GetMemoryCache();
         cache.Set(key, this, absoluteExpiration: TimeSpan.FromMilliseconds(50), slidingExpiration: TimeSpan.FromMilliseconds(25));
-        var item = cache.Get(key);
-        item.Should().Be(this, "returned item should be the same as the original");
+        this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(52));
         var func = () => cache.Get(key);
-        return func.ShouldReturn(null, "the item should have been removed from the cache");
+        return this.AssertReturns(func, null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -169,15 +163,13 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         var cache = this.App.GetMemoryCache();
         this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
-        var item = cache.Get(key);
-        item.Should().Be(this, "returned item should be the same as the original");
-        disposed.Should().BeFalse("the item should not have expired yet");
+        this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
+        this.Assert(disposed == false, "the item should not have expired yet");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(10));
         var func = () => disposed;
-        await func.ShouldReturn(true, "the item should have expired");
-        item = cache.Get(key);
-        item.Should().BeNull("the item should have been removed from the cache");
+        await this.AssertReturns(func, true, "the item should have expired");
+        this.Assert(cache.Get(key) is null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -191,23 +183,20 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(2));
 
-        var item = cache.Get(key);
-        item.Should().Be(this, "returned item should be the same as the original");
+        this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
 
         for (var i = 0; i < 5; i++)
         {
-            item = cache.Get(key);
-            item.Should().Be(this, $"returned item should be the same as the original after {i} retries");
-            disposed.Should().BeFalse($"the item should not have expired after {i} retries");
+            this.Assert(cache.Get(key) == this, $"returned item should be the same as the original after {i} retries");
+            this.Assert(disposed == false, $"the item should not have expired after {i} retries");
             this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(1));
             Thread.Sleep(1);
         }
 
         this.timeService.SetTime(this.timeService.GetTime().AddMilliseconds(5));
         var func = () => disposed;
-        await func.ShouldReturn(true, "the item should have expired");
-        item = cache.Get(key);
-        item.Should().BeNull("the item should have been removed from the cache");
+        await this.AssertReturns(func, true, "the item should have expired");
+        this.Assert(cache.Get(key) is null, "the item should have been removed from the cache");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

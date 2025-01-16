@@ -4,7 +4,6 @@
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using System;
 using Xunit;
@@ -23,16 +22,16 @@ public sealed class LoggerTests : TestsBase<LoggingModule>
     {
         this.App.ConfigService.GetLoggingConfig().Async = false;
         var logger = new LoggerMock();
-        logger.LoggedEntries.Count.Should().Be(0, "no entries should be logged before initialization");
+        this.Assert(logger.LoggedEntries.Count == 0, "no entries should be logged before initialization");
         this.App.GetLogHub().Subscribe(logger.LogEntry);
-        logger.LoggedEntries.Count.Should().Be(0, "no entries should be logged just after initialization");
+        this.Assert(logger.LoggedEntries.Count == 0, "no entries should be logged just after initialization");
 
         var message = "Message";
         Exception ex = new ArgumentException("Test");
         this.App.GetLogHub().Info(message, ex);
-        logger.LoggedEntries.Count.Should().Be(1, "writer should have 1 entry passed in to it");
-        logger.LoggedEntries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
-        logger.LoggedEntries[0].Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
+        this.Assert(logger.LoggedEntries.Count == 1, "writer should have 1 entry passed in to it");
+        this.Assert(logger.LoggedEntries[0].Message == message, "the logged message should be the same as the passed in message");
+        this.Assert(logger.LoggedEntries[0].Exception == ex, "the logged exception should be the same as the passed in exception");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -40,17 +39,17 @@ public sealed class LoggerTests : TestsBase<LoggingModule>
     {
         this.App.ConfigService.GetLoggingConfig().Async = true;
         var logger = new LoggerMock();
-        logger.LoggedEntries.Count.Should().Be(0, "no entries should be logged before initialization");
+        this.Assert(logger.LoggedEntries.Count == 0, "no entries should be logged before initialization");
         this.App.GetLogHub().Subscribe(logger.LogEntry);
-        logger.LoggedEntries.Count.Should().Be(0,"no entries should be logged just after initialization");
+        this.Assert(logger.LoggedEntries.Count == 0,"no entries should be logged just after initialization");
 
         var message = "Message";
         Exception ex = new ArgumentException("Test");
         this.App.GetLogHub().Info(message, ex);
         this.App.Restart();
-        logger.LoggedEntries.Count.Should().Be(1, "writer should have 1 entry passed in to it");
-        logger.LoggedEntries[0].Message.Should().Be(message, "the logged message should be the same as the passed in message");
-        logger.LoggedEntries[0].Exception.Should().Be(ex, "the logged exception should be the same as the passed in exception");
+        this.Assert(logger.LoggedEntries.Count == 1, "writer should have 1 entry passed in to it");
+        this.Assert(logger.LoggedEntries[0].Message == message, "the logged message should be the same as the passed in message");
+        this.Assert(logger.LoggedEntries[0].Exception == ex, "the logged exception should be the same as the passed in exception");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -65,7 +64,7 @@ public sealed class LoggerTests : TestsBase<LoggingModule>
             this.App.Get<ILoggerProvider>().CreateLogger("test").Log(level, "");
         };
 
-        this.App.GetLogHub().Subscribe(x => x.Level.Should().Be(expected, "the logger should map the levels correctly"));
+        this.App.GetLogHub().Subscribe(x => this.Assert(x.Level == expected, "the logger should map the levels correctly"));
 
         testLogLevel(Contracts.LogLevel.Trace, LogLevel.Trace);
         testLogLevel(Contracts.LogLevel.Debug, LogLevel.Debug);

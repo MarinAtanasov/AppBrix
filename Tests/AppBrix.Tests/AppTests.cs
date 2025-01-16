@@ -5,7 +5,6 @@ using AppBrix.Configuration;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
 using AppBrix.Tests.Mocks;
-using FluentAssertions;
 using System;
 using System.Linq;
 using Xunit;
@@ -19,28 +18,28 @@ public sealed class AppTests : TestsBase
     public void TestCreateAppNullConfigService()
     {
         var action = () => AppBrix.App.Create(null!);
-        action.Should().Throw<ArgumentNullException>("config service cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "config service cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAppConfigCreateNullType()
     {
         var action = () => ModuleConfigElement.Create(null!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestAppConfigCreateInvalidType()
     {
         var action = () => ModuleConfigElement.Create(typeof(object));
-        action.Should().Throw<ArgumentException>("type must implement IModule");
+        this.AssertThrows<ArgumentException>(action, "type must implement IModule");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
     public void TestGetAllDependenciesExtensionNullModule()
     {
         var action = () => AppBrixExtensions.GetAllDependencies(null!);
-        action.Should().Throw<ArgumentNullException>("module cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "module cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

@@ -5,7 +5,6 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Timer.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +33,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         var hub = this.App.GetTimerScheduledEventHub();
         Action action = () => hub.Schedule<EventMock>(null, TimeSpan.FromMinutes(1));
-        action.Should().Throw<ArgumentNullException>("args is null");
+        this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -42,7 +41,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         var hub = this.App.GetTimerScheduledEventHub();
         Action action = () => hub.Schedule<EventMock>(null, this.timeService.GetTime().AddMinutes(1));
-        action.Should().Throw<ArgumentNullException>("args is null");
+        this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -50,7 +49,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         var hub = this.App.GetTimerScheduledEventHub();
         Action action = () => hub.Schedule(new EventMock(0), TimeSpan.FromMilliseconds(-1));
-        action.Should().Throw<ArgumentException>("dueTime must be non-negative");
+        this.AssertThrows<ArgumentException>(action, "dueTime must be non-negative");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -58,7 +57,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         var hub = this.App.GetTimerScheduledEventHub();
         Action action = () => hub.Schedule(new EventMock(0), this.timeService.GetTime().AddMinutes(1) , TimeSpan.FromMilliseconds(-1));
-        action.Should().Throw<ArgumentException>("period must be non-negative");
+        this.AssertThrows<ArgumentException>(action, "period must be non-negative");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -71,7 +70,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
             called[args.Value] = true;
             for (var i = 0; i < args.Value; i++)
             {
-                called[i].Should().Be(true, "events should be called in order");
+                this.Assert(called[i], "events should be called in order");
             }
         });
 
@@ -80,14 +79,14 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         hub.Schedule(new EventMock(1), TimeSpan.FromMinutes(1), TimeSpan.FromHours(1));
         hub.Schedule(new EventMock(2), this.timeService.GetTime().AddHours(1));
 
-        funcs[0]().Should().BeFalse("first event should not be called immediately");
-        funcs[1]().Should().BeFalse("second event should not be called immediately");
-        funcs[2]().Should().BeFalse("third event should not be called immediately");
+        this.Assert(funcs[0]() == false, "first event should not be called immediately");
+        this.Assert(funcs[1]() == false, "second event should not be called immediately");
+        this.Assert(funcs[2]() == false, "third event should not be called immediately");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
-        await funcs[0].ShouldReturn(true, "first event should have been raised");
-        await funcs[1].ShouldReturn(true, "second event should have been raised");
-        funcs[2]().Should().BeFalse("third event shouldn't be called yet");
+        await this.AssertReturns(funcs[0], true, "first event should have been raised");
+        await this.AssertReturns(funcs[1], true, "second event should have been raised");
+        this.Assert(funcs[2]() == false, "third event shouldn't be called yet");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -95,7 +94,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     {
         var hub = this.App.GetTimerScheduledEventHub();
         var action = () => hub.Unschedule<EventMock>(null!);
-        action.Should().Throw<ArgumentNullException>("args is null");
+        this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -110,7 +109,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         hub.Unschedule(scheduledEvent);
         this.timeService.SetTime(this.timeService.GetTime().AddHours(1));
         Thread.Sleep(5);
-        called.Should().BeFalse("event should be unscheduled");
+        this.Assert(called == false, "event should be unscheduled");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -133,11 +132,11 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         };
         schedule(weakReference);
 
-        await func[0].ShouldReturn(true, "the first event should have been raised");
-        await func[1].ShouldReturn(true, "the second event should have been raised");
+        await this.AssertReturns(func[0], true, "the first event should have been raised");
+        await this.AssertReturns(func[1], true, "the second event should have been raised");
 
         GC.Collect();
-        weakReference.TryGetTarget(out _).Should().BeFalse("the event hub shouldn't hold references to completed non-recurring events");
+        this.Assert(weakReference.TryGetTarget(out _) == false, "the event hub shouldn't hold references to completed non-recurring events");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

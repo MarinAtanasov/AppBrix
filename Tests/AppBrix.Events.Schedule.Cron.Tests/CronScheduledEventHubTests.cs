@@ -5,7 +5,6 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Cron.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +33,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         var hub = this.App.GetCronScheduledEventHub();
         Action action = () => hub.Schedule<EventMock>(null, CronScheduledEventHubTests.EveryMinute);
-        action.Should().Throw<ArgumentNullException>("args is null");
+        this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -42,7 +41,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         var hub = this.App.GetCronScheduledEventHub();
         Action action = () => hub.Schedule(new EventMock(0), null!);
-        action.Should().Throw<ArgumentNullException>("expression is null");
+        this.AssertThrows<ArgumentNullException>(action, "expression is null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -50,7 +49,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         var hub = this.App.GetCronScheduledEventHub();
         Action action = () => hub.Schedule(new EventMock(0), string.Empty);
-        action.Should().Throw<ArgumentNullException>("expression is empty");
+        this.AssertThrows<ArgumentNullException>(action, "expression is empty");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -63,7 +62,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
             called[args.Value] = true;
             for (var i = 0; i < args.Value; i++)
             {
-                called[i].Should().Be(true, "events should be called in order");
+                this.Assert(called[i], "events should be called in order");
             }
         });
 
@@ -72,14 +71,14 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         hub.Schedule(new EventMock(1), CronScheduledEventHubTests.EveryMinute);
         //hub.Schedule(new EventMock(2), CronScheduledEventHubTests.EveryHour);
 
-        funcs[0]().Should().BeFalse("first event should not be called immediately");
-        funcs[1]().Should().BeFalse("second event should not be called immediately");
-        funcs[2]().Should().BeFalse("third event should not be called immediately");
+        this.Assert(funcs[0]() == false, "first event should not be called immediately");
+        this.Assert(funcs[1]() == false, "second event should not be called immediately");
+        this.Assert(funcs[2]() == false, "third event should not be called immediately");
 
         this.timeService.SetTime(this.timeService.GetTime().AddMinutes(30));
-        await funcs[0].ShouldReturn(true, "first event should have been raised");
-        await funcs[1].ShouldReturn(true, "second event should have been raised");
-        funcs[2]().Should().BeFalse("third event shouldn't be called yet");
+        await this.AssertReturns(funcs[0], true, "first event should have been raised");
+        await this.AssertReturns(funcs[1], true, "second event should have been raised");
+        this.Assert(funcs[2]() == false, "third event shouldn't be called yet");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -87,7 +86,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     {
         var hub = this.App.GetCronScheduledEventHub();
         var action = () => hub.Unschedule<EventMock>(null!);
-        action.Should().Throw<ArgumentNullException>("args is null");
+        this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -102,7 +101,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         hub.Unschedule(scheduledEvent);
         this.timeService.SetTime(this.timeService.GetTime().AddHours(1));
         Thread.Sleep(5);
-        called.Should().BeFalse("event should be unscheduled");
+        this.Assert(called == false, "event should be unscheduled");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

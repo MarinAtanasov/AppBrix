@@ -4,7 +4,6 @@
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -17,7 +16,7 @@ public sealed class ConfigServiceTests : TestsBase
     public void TestConstructorNullProvider()
     {
         var action = () => new ConfigService(null!);
-        action.Should().Throw<ArgumentNullException>("provider cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "provider cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -25,7 +24,7 @@ public sealed class ConfigServiceTests : TestsBase
     {
         var service = new ConfigService(new ConfigProviderMock());
         var action = () => service.Get(null!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -33,7 +32,7 @@ public sealed class ConfigServiceTests : TestsBase
     {
         var service = new ConfigService(new ConfigProviderMock());
         var action = () => service.Save(((IConfig)null)!);
-        action.Should().Throw<ArgumentNullException>("config cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -41,7 +40,7 @@ public sealed class ConfigServiceTests : TestsBase
     {
         IConfigService service = new ConfigService(new ConfigProviderMock());
         var action = () => service.Save(((Type)null)!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -51,13 +50,13 @@ public sealed class ConfigServiceTests : TestsBase
         IConfigService service = new ConfigService(provider);
 
         service.Get<ConfigMock>();
-        provider.ReadConfigs.Should().ContainSingle("the service should have tried to read the config");
-        provider.ReadConfigs[0].Should().Be(typeof(ConfigMock), "the read config should be of the requested type");
-        provider.WrittenConfigs.Should().BeEmpty("the service should not have tried to write the config");
+        this.Assert(provider.ReadConfigs.Count == 1, "the service should have tried to read the config");
+        this.Assert(provider.ReadConfigs[0] == typeof(ConfigMock), "the read config should be of the requested type");
+        this.Assert(provider.WrittenConfigs.Count == 0, "the service should not have tried to write the config");
 
         service.Get<ConfigMock>();
-        provider.ReadConfigs.Should().ContainSingle("the service should not have tried to reread the config");
-        provider.WrittenConfigs.Should().BeEmpty("the service should not have tried to write the config when returning it a second time");
+        this.Assert(provider.ReadConfigs.Count == 1, "the service should not have tried to reread the config");
+        this.Assert(provider.WrittenConfigs.Count == 0, "the service should not have tried to write the config when returning it a second time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -67,13 +66,13 @@ public sealed class ConfigServiceTests : TestsBase
         IConfigService service = new ConfigService(provider);
 
         service.Save();
-        provider.ReadConfigs.Should().BeEmpty("the service should have not tried to read any configs");
-        provider.WrittenConfigs.Should().BeEmpty("the service should not have tried to write any configs");
+        this.Assert(provider.ReadConfigs.Count == 0, "the service should have not tried to read any configs");
+        this.Assert(provider.WrittenConfigs.Count == 0, "the service should not have tried to write any configs");
 
         service.Get<ConfigMock>();
         service.Save();
-        provider.WrittenConfigs.Should().ContainSingle("the service should have tried to write the config");
-        provider.WrittenConfigs[0].Key.Should().Be(typeof(ConfigMock), "the written config should be the same as the requested one");
+        this.Assert(provider.WrittenConfigs.Count == 1, "the service should have tried to write the config");
+        this.Assert(provider.WrittenConfigs[0].Key == typeof(ConfigMock), "the written config should be the same as the requested one");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -84,8 +83,8 @@ public sealed class ConfigServiceTests : TestsBase
         var config = service.Get<ConfigMock>();
 
         service.Save<ConfigMock>();
-        provider.WrittenConfigs.Should().ContainSingle("the service should have tried to write the config");
-        provider.WrittenConfigs[0].Key.Should().Be(config.GetType(), "the written config should be the same as the provided one one");
+        this.Assert(provider.WrittenConfigs.Count == 1, "the service should have tried to write the config");
+        this.Assert(provider.WrittenConfigs[0].Key == config.GetType(), "the written config should be the same as the provided one one");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]

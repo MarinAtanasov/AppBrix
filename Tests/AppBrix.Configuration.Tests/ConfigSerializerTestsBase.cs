@@ -4,7 +4,6 @@
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -18,7 +17,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
     {
         var serializer = this.GetSerializer();
         var action = () => serializer.Serialize(null!);
-        action.Should().Throw<ArgumentNullException>("config cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "config cannot be null");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -26,7 +25,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
     {
         var serializer = this.GetSerializer();
         var action = () => serializer.Deserialize(null!, typeof(ConfigMock));
-        action.Should().Throw<ArgumentNullException>("config cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -34,7 +33,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
     {
         var serializer = this.GetSerializer();
         var action = () => serializer.Deserialize(string.Empty, typeof(ConfigMock));
-        action.Should().Throw<ArgumentNullException>("config cannot be empty");
+        this.AssertThrows<ArgumentNullException>(action, "config cannot be empty");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -42,7 +41,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
     {
         var serializer = this.GetSerializer();
         var action = () => serializer.Deserialize(nameof(ConfigMock), null!);
-        action.Should().Throw<ArgumentNullException>("type cannot be null");
+        this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -52,14 +51,14 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         var config = new ConfigMock();
 
         var serialized = serializer.Serialize(config);
-        serialized.Should().NotBeNullOrEmpty("the config should be successfully serialized");
+        this.Assert(string.IsNullOrEmpty(serialized) == false, "the config should be successfully serialized");
 
         var deserialized = serializer.Deserialize<ConfigMock>(serialized);
-        deserialized.Should().NotBeNull("the config should be successfully deserialized");
-        deserialized.Should().NotBeSameAs(config, "a new instance should be reserialized");
-        deserialized.Enum.Should().Be(config.Enum, "the enum should be successfully reserialized");
-        deserialized.TimeSpan.Should().Be(config.TimeSpan, "the timespan should be successfully reserialized");
-        deserialized.Version.Should().Be(config.Version, "the version should be successfully reserialized");
+        this.Assert(deserialized is not null, "the config should be successfully deserialized");
+        this.Assert(deserialized != config, "a new instance should be reserialized");
+        this.Assert(deserialized!.Enum == config.Enum, "the enum should be successfully reserialized");
+        this.Assert(deserialized!.TimeSpan == config.TimeSpan, "the timespan should be successfully reserialized");
+        this.Assert(deserialized!.Version == config.Version, "the version should be successfully reserialized");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -74,14 +73,14 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         };
 
         var serialized = serializer.Serialize(config);
-        serialized.Should().NotBeNullOrEmpty("the config should be successfully serialized");
+        this.Assert(string.IsNullOrEmpty(serialized) == false, "the config should be successfully serialized");
 
         var deserialized = (ConfigMock)serializer.Deserialize(serialized, config.GetType());
-        deserialized.Should().NotBeNull("the config should be successfully deserialized");
-        deserialized.Should().NotBeSameAs(config, "a new instance should be reserialized");
-        deserialized.Enum.Should().Be(config.Enum, "the enum should be successfully reserialized");
-        deserialized.TimeSpan.Should().Be(config.TimeSpan, "the timespan should be successfully reserialized");
-        deserialized.Version.Should().Be(config.Version, "the version should be successfully reserialized");
+        this.Assert(deserialized is not null, "the config should be successfully deserialized");
+        this.Assert(deserialized != config, "a new instance should be reserialized");
+        this.Assert(deserialized.Enum == config.Enum, "the enum should be successfully reserialized");
+        this.Assert(deserialized.TimeSpan == config.TimeSpan, "the timespan should be successfully reserialized");
+        this.Assert(deserialized.Version == config.Version, "the version should be successfully reserialized");
     }
     #endregion
 

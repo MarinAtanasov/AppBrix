@@ -3,7 +3,6 @@
 
 using AppBrix.Testing;
 using AppBrix.Testing.Xunit;
-using FluentAssertions;
 using System;
 using Xunit;
 
@@ -22,9 +21,9 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         var timeBefore = DateTime.UtcNow;
         var time = this.App.GetTime();
         var timeAfter = DateTime.UtcNow;
-        time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
-        time.Kind.Should().Be(DateTimeKind.Utc, "kind is not Utc");
-        time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
+        this.Assert(time >= timeBefore, "before time should be <= call time");
+        this.Assert(time.Kind == DateTimeKind.Utc, "kind is not Utc");
+        this.Assert(time <= timeAfter, "after time should be >= call time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -33,9 +32,9 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         var timeBefore = DateTimeOffset.Now;
         var time = this.App.GetTimeLocal();
         var timeAfter = DateTimeOffset.Now;
-        time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
-        time.Offset.Should().Be(timeBefore.Offset, "offset is not local");
-        time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
+        this.Assert(time >= timeBefore, "before time should be <= call time");
+        this.Assert(time.Offset == timeBefore.Offset, "offset is not local");
+        this.Assert(time <= timeAfter, "after time should be >= call time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -44,9 +43,9 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         var timeBefore = DateTimeOffset.UtcNow;
         var time = this.App.GetTimeUtc();
         var timeAfter = DateTimeOffset.UtcNow;
-        time.Should().BeOnOrAfter(timeBefore, "before time should be <= call time");
-        time.Offset.Should().Be(timeBefore.Offset, "offset is not Utc");
-        time.Should().BeOnOrBefore(timeAfter, "after time should be >= call time");
+        this.Assert(time >= timeBefore, "before time should be <= call time");
+        this.Assert(time.Offset == timeBefore.Offset, "offset is not Utc");
+        this.Assert(time <= timeAfter, "after time should be >= call time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -56,7 +55,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         var time = service.GetTime();
         time = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, DateTimeKind.Utc);
         var serialized = service.ToString(time);
-        service.ToDateTime(serialized).Should().Be(time, "serialization and deserialization should return the same time");
+        this.Assert(service.ToDateTime(serialized) == time, "serialization and deserialization should return the same time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -66,7 +65,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         var time = service.GetTimeLocal();
         time = new DateTimeOffset(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
         var serialized = service.ToString(time);
-        service.ToDateTimeOffset(serialized).Should().Be(time, "serialization and deserialization should return the same time");
+        this.Assert(service.ToDateTimeOffset(serialized) == time, "serialization and deserialization should return the same time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
@@ -76,7 +75,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         var time = service.GetTimeUtc();
         time = new DateTimeOffset(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
         var serialized = service.ToString(time);
-        service.ToDateTimeOffset(serialized).Should().Be(time, "serialization and deserialization should return the same time");
+        this.Assert(service.ToDateTimeOffset(serialized) == time, "serialization and deserialization should return the same time");
     }
 
     [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
