@@ -16,7 +16,7 @@ namespace AppBrix.Data.Tests;
 [TestClass]
 public sealed class SqliteDataTests : DataTestsBase<SqliteDataModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";

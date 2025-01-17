@@ -13,7 +13,7 @@ namespace AppBrix.Testing;
 /// </summary>
 public abstract class TestsBase : TestingBase
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// NUnit initialize method.
     /// </summary>
@@ -39,7 +39,7 @@ public abstract class TestsBase : TestingBase
 public abstract class TestsBase<T> : TestsBase
     where T : class, IModule
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// NUnit initialize method.
     /// </summary>
@@ -60,7 +60,7 @@ public abstract class TestsBase<T1, T2> : TestsBase
     where T1 : class, IModule
     where T2 : class, IModule
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// NUnit initialize method.
     /// </summary>

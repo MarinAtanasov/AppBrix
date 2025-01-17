@@ -16,7 +16,7 @@ namespace AppBrix.Events.Async.Tests;
 [TestClass]
 public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => this.App.Start();
     #endregion
 

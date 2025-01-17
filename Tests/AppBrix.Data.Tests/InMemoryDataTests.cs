@@ -12,7 +12,7 @@ namespace AppBrix.Data.Tests;
 [TestClass]
 public sealed class InMemoryDataTests : DataTestsBase<InMemoryDataModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();

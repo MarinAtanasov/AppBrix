@@ -13,7 +13,7 @@ namespace AppBrix.Events.Tests;
 [TestClass]
 public sealed class EventHubTests : TestsBase<EventsModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => this.App.Start();
     #endregion
 

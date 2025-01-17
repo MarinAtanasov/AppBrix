@@ -15,7 +15,7 @@ namespace AppBrix.Events.Schedule.Cron.Tests;
 [TestClass]
 public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);

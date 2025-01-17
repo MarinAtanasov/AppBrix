@@ -12,7 +12,7 @@ namespace AppBrix.Caching.Memory.Tests;
 [TestClass]
 public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);

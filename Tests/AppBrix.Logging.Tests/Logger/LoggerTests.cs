@@ -11,7 +11,7 @@ namespace AppBrix.Logging.Tests.Logger;
 [TestClass]
 public sealed class LoggerTests : TestsBase<LoggingModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => this.App.Start();
     #endregion
 

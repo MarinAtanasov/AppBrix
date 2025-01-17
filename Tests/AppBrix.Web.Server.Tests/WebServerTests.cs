@@ -20,7 +20,7 @@ namespace AppBrix.Web.Server.Tests;
 [TestClass]
 public sealed class WebServerTests : TestsBase<WebServerModule, WebClientModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => WebServerTests.CreateApp(this.App);
     #endregion
 

@@ -11,7 +11,7 @@ namespace AppBrix.Caching.Tests;
 [TestClass]
 public sealed class CacheTests : TestsBase<CachingModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.Start();

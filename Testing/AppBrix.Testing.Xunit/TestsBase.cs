@@ -13,7 +13,7 @@ namespace AppBrix.Testing;
 /// </summary>
 public abstract class TestsBase : TestingBase, IDisposable
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase"/> with a blank app.
     /// NUnit initialize method.
@@ -49,7 +49,7 @@ public abstract class TestsBase : TestingBase, IDisposable
 public abstract class TestsBase<T> : TestsBase
     where T : class, IModule
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase{T}"/>
     /// NUnit initialize method.
@@ -68,7 +68,7 @@ public abstract class TestsBase<T1, T2> : TestsBase
     where T1 : class, IModule
     where T2 : class, IModule
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// Creates a new instance of <see cref="TestsBase{T1,T2}"/>.
     /// NUnit initialize method.

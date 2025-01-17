@@ -11,7 +11,7 @@ namespace AppBrix.Container.Tests;
 [TestClass]
 public sealed class ContainerTests : TestsBase<ContainerModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => this.App.Start();
     #endregion
 

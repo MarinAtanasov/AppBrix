@@ -13,7 +13,7 @@ namespace AppBrix.Events.Schedule.Tests;
 [TestClass]
 public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);

@@ -14,7 +14,7 @@ namespace AppBrix.Cloning.Tests;
 [TestClass]
 public sealed class CloningTests : TestsBase<CloningModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => this.App.Start();
     #endregion
 

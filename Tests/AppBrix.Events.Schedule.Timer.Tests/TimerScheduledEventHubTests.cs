@@ -15,7 +15,7 @@ namespace AppBrix.Events.Schedule.Timer.Tests;
 [TestClass]
 public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEventsModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);

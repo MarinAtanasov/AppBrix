@@ -11,7 +11,7 @@ namespace AppBrix.Random.Tests;
 [TestClass]
 public sealed class RandomServiceTests : TestsBase<RandomModule>
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize() => this.App.Start();
     #endregion
 

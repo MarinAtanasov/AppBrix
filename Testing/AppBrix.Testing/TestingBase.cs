@@ -14,7 +14,7 @@ namespace AppBrix.Testing;
 /// </summary>
 public abstract class TestingBase
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     /// <summary>
     /// Sets up the application.
     /// </summary>

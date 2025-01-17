@@ -8,7 +8,7 @@ namespace AppBrix.Permissions.Tests;
 [TestClass]
 public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
 {
-    #region Setup and cleanup
+    #region Test lifecycle
     protected override void Initialize()
     {
         this.App.ConfigService.GetPermissionsConfig().EnableCaching = true;
