@@ -51,7 +51,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
             throw new ArgumentNullException(nameof(args));
 
         var item = new PriorityQueueItem<T>(this.app, args);
-        item.MoveToNextOccurrence(this.app.GetTime());
+        item.MoveToNextOccurrence(this.app.GetTime().ToUniversalTime());
 
         lock (this.classLock)
         {
@@ -78,7 +78,7 @@ internal sealed class ScheduledEventHub : IScheduledEventHub, IApplicationLifecy
     {
         while (await this.timer.WaitForNextTickAsync(token).ConfigureAwait(false))
         {
-            var now = this.app.GetTime();
+            var now = this.app.GetTime().ToUniversalTime();
             lock (this.classLock)
             {
                 token.ThrowIfCancellationRequested();  // Uninitialized

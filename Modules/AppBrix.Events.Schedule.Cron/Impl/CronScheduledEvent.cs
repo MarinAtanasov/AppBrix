@@ -3,7 +3,6 @@
 
 using AppBrix.Events.Contracts;
 using AppBrix.Events.Schedule.Contracts;
-using NCrontab;
 using System;
 
 namespace AppBrix.Events.Schedule.Cron.Impl;
@@ -11,10 +10,10 @@ namespace AppBrix.Events.Schedule.Cron.Impl;
 internal sealed class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEvent
 {
     #region Construction
-    public CronScheduledEvent(T args, CrontabSchedule schedule)
+    public CronScheduledEvent(T args, Cronos.CronExpression expression)
     {
         this.Event = args;
-        this.schedule = schedule;
+        this.expression = expression;
     }
     #endregion
 
@@ -23,10 +22,10 @@ internal sealed class CronScheduledEvent<T> : IScheduledEvent<T> where T : IEven
     #endregion
 
     #region Public and overriden methods
-    public DateTime GetNextOccurrence(DateTime now) => this.schedule.GetNextOccurrence(now);
+    public DateTime GetNextOccurrence(DateTime now) => this.expression.GetNextOccurrence(now) ?? now;
     #endregion
 
     #region Private fields and constants
-    private readonly CrontabSchedule schedule;
+    private readonly Cronos.CronExpression expression;
     #endregion
 }

@@ -160,7 +160,6 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         };
 
         var cache = this.App.GetMemoryCache();
-        this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: dispose, absoluteExpiration: TimeSpan.FromMilliseconds(5));
         this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
         this.Assert(disposed == false, "the item should not have expired yet");
@@ -179,7 +178,6 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         var disposed = false;
 
         var cache = this.App.GetMemoryCache();
-        this.timeService.SetTime(this.timeService.GetTime());
         cache.Set(key, this, dispose: () => disposed = true, slidingExpiration: TimeSpan.FromMilliseconds(2));
 
         this.Assert(cache.Get(key) == this, "returned item should be the same as the original");

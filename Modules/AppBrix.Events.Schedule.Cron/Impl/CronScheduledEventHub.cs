@@ -31,7 +31,7 @@ internal sealed class CronScheduledEventHub : ICronScheduledEventHub, IApplicati
         if (string.IsNullOrEmpty(expression))
             throw new ArgumentNullException(nameof(expression));
 
-        var scheduled = new CronScheduledEvent<T>(args, NCrontab.CrontabSchedule.Parse(expression));
+        var scheduled = new CronScheduledEvent<T>(args, Cronos.CronExpression.Parse(expression));
         this.app.GetScheduledEventHub().Schedule(scheduled);
         return scheduled;
     }

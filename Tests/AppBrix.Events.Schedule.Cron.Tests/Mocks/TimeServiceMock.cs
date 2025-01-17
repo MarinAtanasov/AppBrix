@@ -12,6 +12,7 @@ internal sealed class TimeServiceMock : ITimeService
     public TimeServiceMock(IApp app)
     {
         this.timeService = app.GetTimeService();
+        this.SetTime(this.GetTime());
     }
     #endregion
 
@@ -24,7 +25,7 @@ internal sealed class TimeServiceMock : ITimeService
 
     public void SetOffset(DateTimeOffset time)
     {
-        this.dateTime = time.DateTime;
+        this.dateTime = new DateTime(time.DateTime.Ticks, time.Offset == TimeSpan.Zero ? DateTimeKind.Utc : DateTimeKind.Local);
         this.dateTimeOffset = time;
     }
 
