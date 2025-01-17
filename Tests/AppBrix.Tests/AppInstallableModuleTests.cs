@@ -15,6 +15,10 @@ namespace AppBrix.Tests;
 [TestClass]
 public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
 {
+    #region Test lifecycle
+    protected override void Initialize() { }
+    #endregion
+
     #region Tests
     [Test, Functional]
     public void TestInstallModule()

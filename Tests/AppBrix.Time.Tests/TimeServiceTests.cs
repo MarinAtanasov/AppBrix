@@ -9,10 +9,6 @@ namespace AppBrix.Time.Tests;
 [TestClass]
 public sealed class TimeServiceTests : TestsBase<TimeModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestGetTime()

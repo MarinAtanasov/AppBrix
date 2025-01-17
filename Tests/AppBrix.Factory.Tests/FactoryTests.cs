@@ -12,10 +12,6 @@ namespace AppBrix.Factory.Tests;
 [TestClass]
 public sealed class FactoryTests : TestsBase<FactoryModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestRegisterNullFactory()

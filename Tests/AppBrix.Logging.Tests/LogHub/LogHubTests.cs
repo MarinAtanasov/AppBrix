@@ -11,10 +11,6 @@ namespace AppBrix.Logging.Tests.LogHub;
 [TestClass]
 public sealed class LogHubTests : TestsBase<LoggingModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestUnsubscribedTrace()

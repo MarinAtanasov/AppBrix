@@ -14,10 +14,6 @@ namespace AppBrix.Cloning.Tests;
 [TestClass]
 public sealed class CloningTests : TestsBase<CloningModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Deep Copy Tests
     [Test, Functional]
     public void TestDeepCopyNull()

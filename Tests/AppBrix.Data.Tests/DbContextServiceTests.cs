@@ -13,10 +13,6 @@ namespace AppBrix.Data.Tests;
 [TestClass]
 public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestGetNullType()

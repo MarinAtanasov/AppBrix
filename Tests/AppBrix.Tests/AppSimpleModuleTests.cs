@@ -16,6 +16,10 @@ namespace AppBrix.Tests;
 [TestClass]
 public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
 {
+    #region Test lifecycle
+    protected override void Initialize() { }
+    #endregion
+
     #region Tests
     [Test, Functional]
     public void TestSaveConfig()

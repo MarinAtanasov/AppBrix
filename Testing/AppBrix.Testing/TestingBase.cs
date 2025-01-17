@@ -37,7 +37,7 @@ public abstract class TestingBase
     /// <summary>
     /// Initialize the class before running a test.
     /// </summary>
-    protected virtual void Initialize() { }
+    protected virtual void Initialize() => this.App.Start();
 
     /// <summary>
     /// Uninitializes the class after running a test.

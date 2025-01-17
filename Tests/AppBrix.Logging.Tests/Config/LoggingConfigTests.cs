@@ -11,10 +11,6 @@ namespace AppBrix.Logging.Tests.Config;
 [TestClass]
 public sealed class LoggingConfigTests : TestsBase<LoggingModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestErrorLevelConfig()

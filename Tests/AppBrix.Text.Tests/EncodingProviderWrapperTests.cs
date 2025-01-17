@@ -10,10 +10,6 @@ namespace AppBrix.Text.Tests;
 [TestClass]
 public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestEncodingProvider()

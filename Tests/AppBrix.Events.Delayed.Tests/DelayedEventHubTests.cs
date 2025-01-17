@@ -13,10 +13,6 @@ namespace AppBrix.Events.Delayed.Tests;
 [TestClass]
 public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestSubscribeNullHandler()

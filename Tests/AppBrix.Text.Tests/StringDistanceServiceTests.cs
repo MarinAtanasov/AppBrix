@@ -9,10 +9,6 @@ namespace AppBrix.Text.Tests;
 [TestClass]
 public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests Damerau-Levenshtein distance
     [Test, Functional]
     public void TestGetDamerauLevenshteinDistanceNullLeft()

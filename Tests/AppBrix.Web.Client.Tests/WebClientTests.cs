@@ -9,10 +9,6 @@ namespace AppBrix.Web.Client.Tests;
 [TestClass]
 public sealed class WebClientTests : TestsBase<WebClientModule>
 {
-    #region Test lifecycle
-    protected override void Initialize() => this.App.Start();
-    #endregion
-
     #region Tests
     [Test, Functional]
     public void TestSetNullHeader()
