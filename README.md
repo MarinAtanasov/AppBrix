@@ -22,11 +22,11 @@ git clone git@github.com:MarinAtanasov/AppBrix.git
 # Go to project root directory.
 cd AppBrix
 # Restore nuget dependencies and build the solution.
-dotnet build AppBrix.sln
+dotnet build
 ```
 
-## Running Tests
-The tests are using xUnit.
+## Run Tests
+By default, tests are using MSTest, but NUnit and Xunit can be used instead.
 * In [Visual Studio](https://visualstudio.microsoft.com/), Test Explorer must be opened before building test projects in order to discover the tests.
 * In [JetBrains Rider](https://www.jetbrains.com/rider/), they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
 * In [PowerShell](https://github.com/PowerShell/PowerShell), while in the project's root folder:
@@ -40,6 +40,14 @@ The tests are using xUnit.
 # Run all tests
 ./Test.ps1 -tests All  # ./Test.ps1 a
 ```
+
+## Switch Test Runners
+There are ready configuration for each test runner inside _/Tests/Directory.Build.props_.
+
+If you wish to switch to a different runner, open the file and:
+1. Comment out the _ItemGroup_ for the current provider.
+2. Uncomment the _ItemGroup_ for the desired provider.
+3. Rebuild the solution. If it doesn't work, run `./Clean.ps1` and then rebuild.
 
 ## Publishing packages
 Packaging and publishing of a new version of all projects can be done using PowerShell.
