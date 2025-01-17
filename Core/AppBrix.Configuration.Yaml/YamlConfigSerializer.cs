@@ -28,21 +28,20 @@ public sealed class YamlConfigSerializer : IConfigSerializer
             () => callingAssembly
                 .GetReferencedAssemblies(true)
                 .SelectMany(x => x.ExportedTypes)
-                .Where(x => x.IsClass && !x.IsAbstract)
+                .Where(x => x is { IsClass: true, IsAbstract: false })
                 .Where(typeof(IConfig).IsAssignableFrom)
                 .ToDictionary(x => x.Name)
         );
 
         var serializerBuilder = new SerializerBuilder()
-            .EmitDefaults()
-            .WithNamingConvention(new NullNamingConvention())
+            .WithNamingConvention(NullNamingConvention.Instance)
             .WithTypeConverter(new VersionConverter());
         this.serializer = serializerBuilder
             .WithTypeConverter(new ConfigConverter(configTypes, serializerBuilder.BuildValueSerializer()))
             .Build();
 
         var deserializerBuilder = new DeserializerBuilder()
-            .WithNamingConvention(new NullNamingConvention())
+            .WithNamingConvention(NullNamingConvention.Instance)
             .IgnoreUnmatchedProperties()
             .WithTypeConverter(new VersionConverter());
         this.deserializer = deserializerBuilder
@@ -81,12 +80,12 @@ public sealed class YamlConfigSerializer : IConfigSerializer
             throw new ArgumentNullException(nameof(type));
 
         using var reader = new StringReader(config);
-        return this.deserializer.Deserialize(reader, type);
+        return this.deserializer.Deserialize(reader, type)!;
     }
     #endregion
 
     #region Private fields and constants
-    private readonly Serializer serializer;
-    private readonly Deserializer deserializer;
+    private readonly ISerializer serializer;
+    private readonly IDeserializer deserializer;
     #endregion
 }

@@ -35,7 +35,7 @@ internal sealed class JsonStringConfigConverter : JsonConverter<Dictionary<Type,
                 reader.Read();
 
             var typeName = reader.GetString()!;
-            var type = this.configTypes.Value.TryGetValue(typeName, out var configType) ? configType : null;
+            var type = this.configTypes.Value.GetValueOrDefault(typeName);
 
             while (reader.TokenType != JsonTokenType.StartObject && reader.TokenType != JsonTokenType.Null)
                 reader.Read();

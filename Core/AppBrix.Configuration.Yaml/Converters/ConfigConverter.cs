@@ -30,7 +30,7 @@ internal sealed class ConfigConverter : IYamlTypeConverter
     #region Public and overriden methods
     public bool Accepts(Type type) => type == typeof(Dictionary<Type, IConfig>);
 
-    public object? ReadYaml(IParser parser, Type type)
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
         if (parser.Current is not MappingStart)
         {
@@ -47,7 +47,7 @@ internal sealed class ConfigConverter : IYamlTypeConverter
                 parser.MoveNext();
 
             var typeName = ((Scalar)parser.Current).Value;
-            var configType = this.configTypes.Value.TryGetValue(typeName, out var foundType) ? foundType : null;
+            var configType = this.configTypes.Value.GetValueOrDefault(typeName);
 
             parser.MoveNext();
             while (parser.Current is not MappingStart && parser.Current is not Scalar)
@@ -62,7 +62,7 @@ internal sealed class ConfigConverter : IYamlTypeConverter
             }
             else
             {
-                var config = this.deserializer!.DeserializeValue(parser, configType, new SerializerState(), this.deserializer);
+                var config = this.deserializer!.DeserializeValue(parser, configType, new SerializerState(), this.deserializer)!;
                 configs[configType] = (IConfig)config;
             }
         }
@@ -72,7 +72,7 @@ internal sealed class ConfigConverter : IYamlTypeConverter
         return configs;
     }
 
-    public void WriteYaml(IEmitter emitter, object value, Type type)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
         if (value is null)
         {

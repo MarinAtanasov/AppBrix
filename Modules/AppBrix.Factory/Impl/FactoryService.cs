@@ -41,7 +41,7 @@ internal sealed class FactoryService : IFactoryService, IApplicationLifecycle
         }
     }
 
-    public IFactory<object>? GetFactory(Type type) => this.factories.TryGetValue(type, out var factory) ? factory : null;
+    public IFactory<object>? GetFactory(Type type) => this.factories.GetValueOrDefault(type);
     #endregion
 
     #region Private fields and constants
