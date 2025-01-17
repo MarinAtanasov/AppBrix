@@ -4,38 +4,37 @@
 using AppBrix.Configuration.Files;
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Reflection;
-using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
+[TestClass]
 public sealed class FileConfigProviderTests : TestsBase
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestConstructorNullSerializer()
     {
         var action = () => new FileConfigProvider(null!, "test_dir");
         this.AssertThrows<ArgumentNullException>(action, "serializer cannot be null");;
     }
     
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestConstructorNullPath()
     {
         var action = () => new FileConfigProvider(new ConfigSerializerMock(), null!);
         this.AssertThrows<ArgumentNullException>(action, "directory cannot be null");;
     }
     
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestConstructorEmptyPath()
     {
         var action = () => new FileConfigProvider(new ConfigSerializerMock(), string.Empty);
         this.AssertThrows<ArgumentNullException>(action, "directory cannot be empty");;
     }
     
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetConfigNullType()
     {
         var path = Assembly.GetExecutingAssembly().Location;
@@ -44,7 +43,7 @@ public sealed class FileConfigProviderTests : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
     
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveConfigNullConfig()
     {
         var path = Assembly.GetExecutingAssembly().Location;

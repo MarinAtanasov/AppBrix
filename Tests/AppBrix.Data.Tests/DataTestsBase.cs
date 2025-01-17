@@ -7,11 +7,9 @@ using AppBrix.Data.Migrations.Events;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Modules;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xunit;
 
 namespace AppBrix.Data.Tests;
 
@@ -19,7 +17,7 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
     where T : class, IModule
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestCrudOperations()
     {
         using (var context = this.App.GetDbContextService().Get<DataItemDbContextMock>())
@@ -51,7 +49,7 @@ public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
         }
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestMigrationEvents()
     {
         var contexts = new HashSet<Type>();

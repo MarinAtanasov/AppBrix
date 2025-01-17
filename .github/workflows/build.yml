@@ -21,4 +21,4 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore --nologo --verbosity minimal
       - name: Test
-        run: dotnet test --filter Category=Functional --configuration Release --no-build --nologo --verbosity minimal
+        run: dotnet test --filter "Category=Functional|TestCategory=Functional" --configuration Release --no-build --nologo --verbosity minimal

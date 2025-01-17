@@ -10,10 +10,48 @@ using System.Threading.Tasks;
 namespace AppBrix.Testing;
 
 /// <summary>
-/// A base testing class that holds assertion methods.
+/// A base framework-agnostic testing class.
 /// </summary>
 public abstract class TestingBase
 {
+    #region Setup and cleanup
+    /// <summary>
+    /// Sets up the application.
+    /// </summary>
+    public virtual void Start(IApp app)
+    {
+        this.App = app;
+    }
+
+    /// <summary>
+    /// Stops the application.
+    /// </summary>
+    public virtual void Stop()
+    {
+        this.Uninitialize();
+
+        try { this.App?.Stop(); } catch (InvalidOperationException) { }
+        this.App = null!;
+    }
+
+    /// <summary>
+    /// Initialize the class before running a test.
+    /// </summary>
+    protected virtual void Initialize() { }
+
+    /// <summary>
+    /// Uninitializes the class after running a test.
+    /// </summary>
+    protected virtual void Uninitialize() { }
+    #endregion
+
+    #region Properties
+    /// <summary>
+    /// Gets the app that is being tested.
+    /// </summary>
+    protected IApp App { get; private set; } = null!;
+    #endregion
+
     #region Public and protected methods
     /// <summary>
     /// Asserts that the provided value is true.

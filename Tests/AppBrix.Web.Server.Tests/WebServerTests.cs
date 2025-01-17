@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using AppBrix.Web.Client;
 using AppBrix.Web.Client.Contracts;
 using AppBrix.Web.Server.Events;
@@ -15,20 +14,18 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Web.Server.Tests;
 
-public sealed class WebServerTests : TestsBase
+[TestClass]
+public sealed class WebServerTests : TestsBase<WebServerModule, WebClientModule>
 {
     #region Setup and cleanup
-    public WebServerTests() : base(WebServerTests.CreateApp())
-    {
-    }
+    protected override void Initialize() => WebServerTests.CreateApp(this.App);
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestConnection()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -56,7 +53,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestConnectionBetweenTwoApps()
     {
         var app1 = this.App;
@@ -85,7 +82,7 @@ public sealed class WebServerTests : TestsBase
         await webApp1.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestEchoGetString()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -106,7 +103,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestEchoPostJson()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -132,7 +129,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestEchoPostJsonDefaultModel()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -154,7 +151,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestEchoPostBytes()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -176,7 +173,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestEchoPostStream()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -200,7 +197,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestEchoPostStreamAsyncDisposable()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -224,7 +221,7 @@ public sealed class WebServerTests : TestsBase
         await webApp.StopAsync();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public async Task TestPerformanceWebServer()
     {
         await using var webApp = this.CreateTestWebApp(this.App);
@@ -250,9 +247,10 @@ public sealed class WebServerTests : TestsBase
         return webApp;
     }
 
-    private static IApp CreateApp()
+    private static IApp CreateApp() => WebServerTests.CreateApp(TestApp.Create<WebServerModule, WebClientModule>());
+
+    private static IApp CreateApp(IApp app)
     {
-        var app = TestApp.Create<WebServerModule, WebClientModule>();
         app.ConfigService.Get<AppIdConfig>().Id = Guid.NewGuid();
         app.Start();
         app.GetEventHub().Subscribe<IConfigureWebAppBuilder>(WebServerTests.ConfigureWebAppBuilder);

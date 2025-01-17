@@ -5,20 +5,19 @@ using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Testing;
 using AppBrix.Testing.Modules;
-using AppBrix.Testing.Xunit;
 using AppBrix.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Xunit;
 
 namespace AppBrix.Tests;
 
+[TestClass]
 public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveConfig()
     {
         var configService = this.App.ConfigService;
@@ -31,7 +30,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.Assert(oldConfig.Modules.Count == 0,"Original config should not be modified.");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestStartStartedApp()
     {
         this.App.Start();
@@ -39,14 +38,14 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.AssertThrows<InvalidOperationException>(action, "cannot start already started app");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestStopStoppedApp()
     {
         var action = () => this.App.Stop();
         this.AssertThrows<InvalidOperationException>(action, "cannot stop already stopped app");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInitializeInitializedApp()
     {
         this.App.Start();
@@ -54,14 +53,14 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.App.Initialize();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInitializeStoppedApp()
     {
         var action = () => this.App.Initialize();
         this.AssertThrows<InvalidOperationException>(action, "cannot initialize stopped app");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUninitializeUninitializedApp()
     {
         this.App.Start();
@@ -70,14 +69,14 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.App.Uninitialize();
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUninitializeStoppedApp()
     {
         var action = () => this.App.Uninitialize();
         this.AssertThrows<InvalidOperationException>(action, "cannot uninitialize stopped app");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInitializeModule()
     {
         this.App.Start();
@@ -91,7 +90,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInitializeDisabledModule()
     {
         this.App.ConfigService.GetAppConfig().Modules.Single().Status = ModuleStatus.Disabled;
@@ -102,7 +101,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.Assert(this.App.ConfigService.GetAppConfig().Modules.Single().Status == ModuleStatus.Disabled, "module status should not be changed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInstallMainModule()
     {
         var configService = this.App.ConfigService;
@@ -121,7 +120,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.Assert(configService.GetAppConfig().Modules.Count == 2, "Stopping the new app shouldn't change the config");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceReinitialize()
     {
         this.App.Start();
@@ -129,7 +128,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
         this.AssertPerformance(this.TestPerformanceReinitializeInternal);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceRestart()
     {
         this.App.Start();

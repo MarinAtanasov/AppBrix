@@ -4,20 +4,19 @@
 using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Logging.Tests.LogHub;
 
+[TestClass]
 public sealed class LogHubTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LogHubTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsubscribedTrace()
     {
         Action<ILogEntry> handler = _ => throw new InvalidOperationException("handler should have been unsubscribed");
@@ -27,7 +26,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         hub.Trace(string.Empty);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestErrorLog()
     {
         var message = "Test message";
@@ -48,7 +47,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(called, "the event should have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDebugLog()
     {
         var message = "Test message";
@@ -70,7 +69,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(called, "the event should have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInfoLog()
     {
         var message = "Test message";
@@ -89,7 +88,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(called, "the event should have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestWarningLog()
     {
         var message = "Test message";
@@ -111,7 +110,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(called, "the event should have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestTraceLog()
     {
         var message = "Test message";
@@ -130,7 +129,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(called, "the event should have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDisabledLogging()
     {
         var message = "Test message";
@@ -146,28 +145,28 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(called == false, "the event should not have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestCallerFile()
     {
         this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerFile.EndsWith(nameof(LogHubTests) + ".cs"), "caller file should be set to current file"));
         this.App.GetLogHub().Warning("Test message");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestCallerMemberName()
     {
         this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerMember == nameof(LogHubTests.TestCallerMemberName), "member name should be the current function"));
         this.App.GetLogHub().Error("Test message");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestThreadId()
     {
         this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.ThreadId == Environment.CurrentManagedThreadId, "thread id should be current thread id"));
         this.App.GetLogHub().Info("Test message");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestTimeLogEntry()
     {
         var message = "Test message";
@@ -179,7 +178,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
         this.Assert(executed <= this.App.GetTime(), "created date time should be greater than the time after creation");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceLogging()
     {
         this.App.GetEventHub().Subscribe<ILogEntry>(_ => { });

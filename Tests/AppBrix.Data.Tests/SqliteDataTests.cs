@@ -10,14 +10,14 @@ using AppBrix.Testing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using Xunit;
 
 namespace AppBrix.Data.Tests;
 
+[TestClass]
 public sealed class SqliteDataTests : DataTestsBase<SqliteDataModule>
 {
     #region Setup and cleanup
-    public SqliteDataTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
         this.App.Start();
@@ -32,16 +32,16 @@ public sealed class SqliteDataTests : DataTestsBase<SqliteDataModule>
         this.App.Restart();
     }
 
-    public override void Dispose()
+    public override void Stop()
     {
         this.globalDbContext.Database.CloseConnection();
         this.globalDbContext.Dispose();
-        base.Dispose();
+        base.Stop();
     }
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceGetItem() => this.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion
 
@@ -69,6 +69,6 @@ public sealed class SqliteDataTests : DataTestsBase<SqliteDataModule>
     #endregion
 
     #region Private fields and constants
-    private readonly MigrationsDbContext globalDbContext;
+    private MigrationsDbContext globalDbContext;
     #endregion
 }

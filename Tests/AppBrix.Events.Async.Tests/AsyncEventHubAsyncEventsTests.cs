@@ -5,24 +5,23 @@ using AppBrix.Events.Async.Services;
 using AppBrix.Events.Async.Tests.Mocks;
 using AppBrix.Events.Contracts;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Events.Async.Tests;
 
+[TestClass]
 public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
 {
     #region Setup and cleanup
-    public AsyncEventHubAsyncEventsTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestEvent()
     {
         var hub = this.GetAsyncEventHub();
@@ -41,7 +40,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestEventChild()
     {
         var hub = this.GetAsyncEventHub();
@@ -60,7 +59,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestEventInterface()
     {
         var hub = this.GetAsyncEventHub();
@@ -79,7 +78,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNoSubscription()
     {
         var hub = this.GetAsyncEventHub();
@@ -87,7 +86,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         hub.Raise(args);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestParentAndChildSubscription()
     {
         var hub = this.GetAsyncEventHub();
@@ -103,7 +102,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestDoubleSubscription()
     {
         var hub = this.GetAsyncEventHub();
@@ -119,7 +118,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 2, "event handler should be called exactly twice");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestDoubleRaise()
     {
         var hub = this.GetAsyncEventHub();
@@ -135,7 +134,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 2, "event handler should be called exactly twice after the second raise");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestUnsubscribe()
     {
         var hub = this.GetAsyncEventHub();
@@ -151,7 +150,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 0, "event handler should not be called after the unsubscription");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestUninitialize()
     {
         var hub = this.GetAsyncEventHub();
@@ -166,7 +165,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         return this.AssertReturns(func, 1, "event handler should be called exactly once after the first raise");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNullArgumentSubscribe()
     {
         var hub = this.GetAsyncEventHub();
@@ -174,7 +173,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNullArgumentUnsubscribe()
     {
         var hub = this.GetAsyncEventHub();
@@ -182,7 +181,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNullArgumentRaise()
     {
         var hub = this.GetAsyncEventHub();
@@ -190,7 +189,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestHandlerUnsubscribingItself()
     {
         var hub = this.GetAsyncEventHub();
@@ -224,7 +223,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         await this.AssertReturns(afterHandlerCalledFunc, 2, "after event handler should be called exactly twice");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestHandlerThrowingException()
     {
         var hub = this.GetAsyncEventHub();
@@ -256,7 +255,7 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         await this.AssertReturns(afterHandlerCalledFunc, 2, "after event handler should be called exactly twice");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestThreadManagement()
     {
         var getThreads = () => Process.GetCurrentProcess().Threads
@@ -286,13 +285,13 @@ public sealed class AsyncEventHubAsyncEventsTests : TestsBase<AsyncEventsModule>
         await this.AssertReturns(threadsAdded(threads), false, "threads should be disposed of on uninitialization");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsSubscribe() => this.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsUnsubscribe() => this.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsRaise() => this.AssertPerformance(this.TestPerformanceEventsRaiseInternal);
     #endregion
 

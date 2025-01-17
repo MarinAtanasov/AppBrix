@@ -3,17 +3,16 @@
 
 using AppBrix.Caching.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Caching.Tests;
 
+[TestClass]
 public sealed class CacheTests : TestsBase<CachingModule>
 {
     #region Setup and cleanup
-    public CacheTests()
+    protected override void Initialize()
     {
         this.App.Start();
         this.App.Container.Register(new JsonCacheSerializer());
@@ -22,13 +21,13 @@ public sealed class CacheTests : TestsBase<CachingModule>
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetCache()
     {
         this.Assert(this.App.GetCache() is not null, "cache must be registered and resolved");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestCacheItem()
     {
         const string key = "key";
@@ -43,7 +42,7 @@ public sealed class CacheTests : TestsBase<CachingModule>
         this.Assert(await cache.Get<object>(key) is null, "item should have been removed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestReplaceItem()
     {
         const string key = "key";
@@ -61,7 +60,7 @@ public sealed class CacheTests : TestsBase<CachingModule>
         this.Assert(await cache.Get<object>(key) is null, "item should have been removed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceCache() => this.AssertPerformance(this.TestPerformanceCacheInternal);
     #endregion
 

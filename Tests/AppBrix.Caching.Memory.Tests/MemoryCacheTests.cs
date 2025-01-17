@@ -3,18 +3,17 @@
 
 using AppBrix.Caching.Memory.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Caching.Memory.Tests;
 
+[TestClass]
 public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
 {
     #region Setup and cleanup
-    public MemoryCacheTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.App.ConfigService.GetMemoryCachingConfig().ExpirationCheck = TimeSpan.FromMilliseconds(1);
@@ -26,13 +25,13 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetMemoryCache()
     {
         this.Assert(this.App.GetMemoryCache() is not null, "cache must be registered and resolved");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetNullKey()
     {
         var cache = this.App.GetMemoryCache();
@@ -40,7 +39,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.AssertThrows<ArgumentNullException>(action, "key should not be null");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetUnregisteredItem()
     {
         var cache = this.App.GetMemoryCache();
@@ -48,7 +47,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.Assert(item is null, "asking for non-existing key should return null");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetUnregisteredItemGenericExtension()
     {
         var cache = this.App.GetMemoryCache();
@@ -56,7 +55,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.Assert(item == TimeSpan.Zero,"asking for non-existing struct should return its default value");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNullKey()
     {
         var cache = this.App.GetMemoryCache();
@@ -64,7 +63,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.AssertThrows<ArgumentNullException>(action, "key should not be null");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNullItem()
     {
         var cache = this.App.GetMemoryCache();
@@ -72,7 +71,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.AssertThrows<ArgumentNullException>(action, "item should not be null");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNegativeAbsoluteExpiration()
     {
         var cache = this.App.GetMemoryCache();
@@ -80,7 +79,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.AssertThrows<ArgumentException>(action, "absolute expiration should not be negative");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNegativeSlidingExpiration()
     {
         var cache = this.App.GetMemoryCache();
@@ -88,7 +87,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.AssertThrows<ArgumentException>(action, "sliding expiration should not be negative");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveNullKey()
     {
         var cache = this.App.GetMemoryCache();
@@ -96,7 +95,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.AssertThrows<ArgumentNullException>(action, "key should not be null");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetItem()
     {
         const string key = nameof(this.TestGetItem);
@@ -107,7 +106,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.Assert(cache.Get(key) == this, "returned item should be the same as the original");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveItem()
     {
         const string key = nameof(this.TestRemoveItem);
@@ -120,7 +119,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.Assert(cache.Remove(key) == false, "the item should have already been removed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestAbsoluteExpiration()
     {
         const string key = nameof(this.TestAbsoluteExpiration);
@@ -134,7 +133,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         return this.AssertReturns(func, null, "the item should have been removed from the cache");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestMixedExpiration()
     {
         const string key = nameof(MemoryCacheTests.TestMixedExpiration);
@@ -148,7 +147,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         return this.AssertReturns(func, null, "the item should have been removed from the cache");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestDisposeOnAbsoluteExpiration()
     {
         const string key = nameof(MemoryCacheTests.TestDisposeOnAbsoluteExpiration);
@@ -172,7 +171,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.Assert(cache.Get(key) is null, "the item should have been removed from the cache");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestDisposeOnSlidingExpiration()
     {
         const string key = nameof(MemoryCacheTests.TestDisposeOnSlidingExpiration);
@@ -199,7 +198,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
         this.Assert(cache.Get(key) is null, "the item should have been removed from the cache");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceMemoryCache() => this.AssertPerformance(this.TestPerformanceMemoryCacheInternal);
     #endregion
 
@@ -225,6 +224,6 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     #endregion
 
     #region Private fields and constants
-    private readonly TimeServiceMock timeService;
+    private TimeServiceMock timeService;
     #endregion
 }

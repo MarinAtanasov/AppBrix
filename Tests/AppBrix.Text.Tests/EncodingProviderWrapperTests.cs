@@ -2,21 +2,20 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using AppBrix.Text.Tests.Mocks;
 using System.Text;
-using Xunit;
 
 namespace AppBrix.Text.Tests;
 
+[TestClass]
 public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
 {
     #region Setup and cleanup
-    public EncodingProviderWrapperTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestEncodingProvider()
     {
         var encoding = Encoding.UTF8;
@@ -24,7 +23,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
         this.Assert(object.ReferenceEquals(Encoding.GetEncoding(encoding.CodePage), encoding), "provider should return encoding by code page");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestEncodingWrapper()
     {
         var encoding = Encoding.UTF8;
@@ -43,7 +42,7 @@ public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
         this.Assert(provider.IsGetEncodingWithCodePageCalled, "encoding with cade page should be called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEncodingProviderWrapper() => this.AssertPerformance(this.TestPerformanceEncodingProviderWrapperInternal);
     #endregion
 

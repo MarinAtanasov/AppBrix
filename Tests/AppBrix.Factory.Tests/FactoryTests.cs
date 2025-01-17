@@ -5,20 +5,19 @@ using AppBrix.Factory.Contracts;
 using AppBrix.Factory.Services;
 using AppBrix.Factory.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Factory.Tests;
 
+[TestClass]
 public sealed class FactoryTests : TestsBase<FactoryModule>
 {
     #region Setup and cleanup
-    public FactoryTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRegisterNullFactory()
     {
         var service = this.GetFactoryService();
@@ -26,7 +25,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.AssertThrows<ArgumentNullException>(action, "factory cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRegisterNullFactoryType()
     {
         var service = this.GetFactoryService();
@@ -35,7 +34,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRegisterNullFactoryMethod()
     {
         var service = this.GetFactoryService();
@@ -43,7 +42,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.AssertThrows<ArgumentNullException>(action, "factory method cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRegisterNullFactoryMethodType()
     {
         var service = this.GetFactoryService();
@@ -52,7 +51,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestFactoryNonRegisteredObject()
     {
         var service = this.GetFactoryService();
@@ -63,7 +62,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.AssertThrows<InvalidOperationException>(action, "no factory has been registered");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestFactoryDefaultConstructorCall()
     {
         var factory = this.GetFactoryService();
@@ -76,7 +75,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.Assert(returned2 != returned1, "the factory should always return a new object");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestFactoryNonDefaultConstructorCall()
     {
         var service = this.GetFactoryService();
@@ -93,7 +92,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.Assert(returned2 != returned1, "the factory should always return a new object");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestFactoryRegistersHierarchically()
     {
         var service = this.GetFactoryService();
@@ -107,7 +106,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.Assert(service.Get<ITestInterface>() == original, "interface object should be the same as the original object");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestFactoryCanBeWrapped()
     {
         var service = this.GetFactoryService();
@@ -126,7 +125,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
         this.Assert(returned.Modified, $"object modified should be {true}");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceFactory() => this.AssertPerformance(this.TestPerformanceFactoryInternal);
     #endregion
 

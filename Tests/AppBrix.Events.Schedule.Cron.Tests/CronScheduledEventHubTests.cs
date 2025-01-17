@@ -4,20 +4,19 @@
 using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Cron.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Events.Schedule.Cron.Tests;
 
+[TestClass]
 public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsModule>
 {
     #region Setup and cleanup
-    public CronScheduledEventHubTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.App.Start();
@@ -28,7 +27,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNullArgs()
     {
         var hub = this.App.GetCronScheduledEventHub();
@@ -36,7 +35,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNullExpression()
     {
         var hub = this.App.GetCronScheduledEventHub();
@@ -44,7 +43,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.AssertThrows<ArgumentNullException>(action, "expression is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleEmptyExpression()
     {
         var hub = this.App.GetCronScheduledEventHub();
@@ -52,7 +51,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.AssertThrows<ArgumentNullException>(action, "expression is empty");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestScheduleArgs()
     {
         var called = new bool[3];
@@ -81,7 +80,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.Assert(funcs[2]() == false, "third event shouldn't be called yet");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnscheduleNullArgs()
     {
         var hub = this.App.GetCronScheduledEventHub();
@@ -89,7 +88,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnscheduleArgs()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
@@ -104,7 +103,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.Assert(called == false, "event should be unscheduled");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceSchedule()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
@@ -112,7 +111,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
         this.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 5000));
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceUnschedule()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
@@ -154,6 +153,6 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
     #region Private fields and constants
     private const string EveryMinute = "* * * * *";
     private const string EveryHour = "* */1 * * *";
-    private readonly TimeServiceMock timeService;
+    private TimeServiceMock timeService;
     #endregion
 }

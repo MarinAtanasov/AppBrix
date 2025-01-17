@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>AppBrix.Testing.NUnit</AssemblyName>
+    <AssemblyTitle>AppBrix.Testing.NUnit</AssemblyTitle>
+    <Description>Tooling for testing AppBrix applications and modules using NUnit.</Description>
+    <IsTestProject>false</IsTestProject>
+    <PackageId>AppBrix.Testing.NUnit</PackageId>
+    <PackageTags>AppBrix Testing NUnit</PackageTags>
+    <Title>AppBrix.Testing.NUnit</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Testing\AppBrix.Testing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="4.3.2"/>
+    <PackageReference Include="NUnit.Analyzers" Version="4.6.0"/>
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0"/>
+  </ItemGroup>
+
+</Project>

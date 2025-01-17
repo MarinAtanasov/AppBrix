@@ -5,21 +5,20 @@ using AppBrix.Events.Contracts;
 using AppBrix.Events.Services;
 using AppBrix.Events.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
-using Xunit;
 
 namespace AppBrix.Events.Tests;
 
+[TestClass]
 public sealed class EventHubTests : TestsBase<EventsModule>
 {
     #region Setup and cleanup
-    public EventHubTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestEvent()
     {
         var hub = this.GetEventHub();
@@ -34,7 +33,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestEventChild()
     {
         var hub = this.GetEventHub();
@@ -49,7 +48,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestEventInterface()
     {
         var hub = this.GetEventHub();
@@ -64,7 +63,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNoSubscription()
     {
         var hub = this.GetEventHub();
@@ -72,7 +71,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Raise(args);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestParentAndChildSubscription()
     {
         var hub = this.GetEventHub();
@@ -85,7 +84,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDoubleSubscription()
     {
         var hub = this.GetEventHub();
@@ -98,7 +97,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 2, "event handler should be called exactly twice");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHierarchyCallingOrder()
     {
         var hub = this.GetEventHub();
@@ -130,7 +129,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(interfaceCalled, "interface should be called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDoubleRaise()
     {
         var hub = this.GetEventHub();
@@ -144,7 +143,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 2, "event handler should be called exactly twice after the second raise");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsubscribe()
     {
         var hub = this.GetEventHub();
@@ -159,7 +158,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "event handler should be called exactly once after the unsubscription");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUninitialize()
     {
         var hub = this.GetEventHub();
@@ -171,7 +170,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "event handler should be called exactly once after the first raise");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNullArgumentSubscribe()
     {
         var hub = this.GetEventHub();
@@ -179,7 +178,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNullArgumentUnsubscribe()
     {
         var hub = this.GetEventHub();
@@ -187,7 +186,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestNullArgumentRaise()
     {
         var hub = this.GetEventHub();
@@ -195,7 +194,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHandlerThrowingException()
     {
         var hub = this.GetEventHub();
@@ -208,7 +207,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHandlerUnsubscribingItself()
     {
         var hub = this.GetEventHub();
@@ -242,13 +241,13 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         this.Assert(afterHandlerCalled == 2, "after event handler should be called exactly twice");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsSubscribe() => this.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsUnsubscribe() => this.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsRaise() => this.AssertPerformance(this.TestPerformanceEventsRaiseInternal);
     #endregion
 

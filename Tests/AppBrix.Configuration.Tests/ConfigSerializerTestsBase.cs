@@ -3,16 +3,14 @@
 
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
 public abstract class ConfigSerializerTestsBase : TestsBase
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSerializeNullConfig()
     {
         var serializer = this.GetSerializer();
@@ -20,7 +18,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "config cannot be null");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeserializeNullConfig()
     {
         var serializer = this.GetSerializer();
@@ -28,7 +26,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeserializeEmptyConfig()
     {
         var serializer = this.GetSerializer();
@@ -36,7 +34,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "config cannot be empty");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeserializeNullType()
     {
         var serializer = this.GetSerializer();
@@ -44,7 +42,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestReserializeDefaultConfig()
     {
         var serializer = this.GetSerializer();
@@ -61,7 +59,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
         this.Assert(deserialized!.Version == config.Version, "the version should be successfully reserialized");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestReserializeModifiedConfig()
     {
         var serializer = this.GetSerializer();

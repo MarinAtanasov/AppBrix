@@ -2,52 +2,50 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Linq;
-using Xunit;
 
 namespace AppBrix.Permissions.Tests;
 
 public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
 {
     #region Tests Roles
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildNullParent()
     {
         var action = () => this.App.GetPermissionsService().AddChild(null!, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildEmptyParent()
     {
         var action = () => this.App.GetPermissionsService().AddChild(string.Empty, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildNullChild()
     {
         var action = () => this.App.GetPermissionsService().AddChild("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildEmptyChild()
     {
         var action = () => this.App.GetPermissionsService().AddChild("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildParentEqualsChild()
     {
         var action = () => this.App.GetPermissionsService().AddChild("a", "a");
         this.AssertThrows<InvalidOperationException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildDirectCircularDependency()
     {
         var service = this.App.GetPermissionsService();
@@ -56,7 +54,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.AssertThrows<InvalidOperationException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChildIndirectCircularDependency()
     {
         var service = this.App.GetPermissionsService();
@@ -66,7 +64,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.AssertThrows<InvalidOperationException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddChild()
     {
         var service = this.App.GetPermissionsService();
@@ -77,42 +75,42 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.GetChildren("b").Count == 0, "the child shouldn't have a parent");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentNullChild()
     {
         var action = () => this.App.GetPermissionsService().AddParent(null!, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentEmptyChild()
     {
         var action = () => this.App.GetPermissionsService().AddParent(string.Empty, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentNullParent()
     {
         var action = () => this.App.GetPermissionsService().AddParent("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentEmptyParent()
     {
         var action = () => this.App.GetPermissionsService().AddParent("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentParentEqualsChild()
     {
         var action = () => this.App.GetPermissionsService().AddParent("a", "a");
         this.AssertThrows<InvalidOperationException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentDirectCircularDependency()
     {
         var service = this.App.GetPermissionsService();
@@ -121,7 +119,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.AssertThrows<InvalidOperationException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParentIndirectCircularDependency()
     {
         var service = this.App.GetPermissionsService();
@@ -131,7 +129,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.AssertThrows<InvalidOperationException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAddParent()
     {
         var service = this.App.GetPermissionsService();
@@ -142,35 +140,35 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.GetChildren("b").Contains("a"), "the child has been added");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveChildNullParent()
     {
         var action = () => this.App.GetPermissionsService().RemoveChild(null!, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveChildEmptyParent()
     {
         var action = () => this.App.GetPermissionsService().RemoveChild(string.Empty, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveChildNullChild()
     {
         var action = () => this.App.GetPermissionsService().RemoveChild("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveChildEmptyChild()
     {
         var action = () => this.App.GetPermissionsService().RemoveChild("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveChildNonExisting()
     {
         var service = this.App.GetPermissionsService();
@@ -179,7 +177,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.GetChildren("b").Count == 0, "no child has been added");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveChild()
     {
         var service = this.App.GetPermissionsService();
@@ -192,35 +190,35 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.GetParents("b").Count == 0, "the parent has been removed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveParentNullChild()
     {
         var action = () => this.App.GetPermissionsService().RemoveParent(null!, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveParentEmptyChild()
     {
         var action = () => this.App.GetPermissionsService().RemoveParent(string.Empty, "a");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveParentNullParent()
     {
         var action = () => this.App.GetPermissionsService().RemoveParent("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveParentEmptyParent()
     {
         var action = () => this.App.GetPermissionsService().RemoveParent("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveParentNonExisting()
     {
         var service = this.App.GetPermissionsService();
@@ -229,7 +227,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.GetChildren("b").Count == 0, "no child has been added");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRemoveParent()
     {
         var service = this.App.GetPermissionsService();
@@ -242,55 +240,55 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.GetChildren("b").Count == 0, "the child has been removed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetParentsNullRole()
     {
         Action action = () => this.App.GetPermissionsService().GetParents(null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetParentsEmptyRole()
     {
         Action action = () => this.App.GetPermissionsService().GetParents(string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetChildrenNullRole()
     {
         Action action = () => this.App.GetPermissionsService().GetChildren(null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetChildrenEmptyRole()
     {
         Action action = () => this.App.GetPermissionsService().GetChildren(string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeleteRoleNullRole()
     {
         var action = () => this.App.GetPermissionsService().DeleteRole(null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeleteRoleEmptyRole()
     {
         var action = () => this.App.GetPermissionsService().DeleteRole(string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeleteRoleUnusedRole()
     {
         this.App.GetPermissionsService().DeleteRole("a");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDeleteRole()
     {
         var service = this.App.GetPermissionsService();
@@ -313,147 +311,147 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
     #endregion
 
     #region Tests Permissions
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAllowNullRole()
     {
         var action = () => this.App.GetPermissionsService().Allow(null!, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAllowEmptyRole()
     {
         var action = () => this.App.GetPermissionsService().Allow(string.Empty, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAllowNullPermission()
     {
         var action = () => this.App.GetPermissionsService().Allow("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAllowEmptyPermission()
     {
         var action = () => this.App.GetPermissionsService().Allow("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDenyNullRole()
     {
         var action = () => this.App.GetPermissionsService().Deny(null!, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDenyEmptyRole()
     {
         var action = () => this.App.GetPermissionsService().Deny(string.Empty, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDenyNullPermission()
     {
         var action = () => this.App.GetPermissionsService().Deny("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDenyEmptyPermission()
     {
         var action = () => this.App.GetPermissionsService().Deny("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsetNullRole()
     {
         var action = () => this.App.GetPermissionsService().Unset(null!, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsetEmptyRole()
     {
         var action = () => this.App.GetPermissionsService().Unset(string.Empty, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsetNullPermission()
     {
         var action = () => this.App.GetPermissionsService().Unset("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsetEmptyPermission()
     {
         var action = () => this.App.GetPermissionsService().Unset("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHasPermissionNullRole()
     {
         Action action = () => this.App.GetPermissionsService().Check(null!, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHasPermissionEmptyRole()
     {
         Action action = () => this.App.GetPermissionsService().Check(string.Empty, "p");
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHasPermissionNullPermission()
     {
         Action action = () => this.App.GetPermissionsService().Check("a", null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHasPermissionEmptyPermission()
     {
         Action action = () => this.App.GetPermissionsService().Check("a", string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetAllowedNullRole()
     {
         Action action = () => this.App.GetPermissionsService().GetAllowed(null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetAllowedEmptyRole()
     {
         Action action = () => this.App.GetPermissionsService().GetAllowed(string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetDeniedNullRole()
     {
         Action action = () => this.App.GetPermissionsService().GetDenied(null!);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetDeniedEmptyRole()
     {
         Action action = () => this.App.GetPermissionsService().GetDenied(string.Empty);
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAllowDenyUnset()
     {
         var service = this.App.GetPermissionsService();
@@ -479,7 +477,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p") == false, "permission has been unset");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDenyAllowUnset()
     {
         var service = this.App.GetPermissionsService();
@@ -505,7 +503,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p") == false, "permission has been unset");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestParentAllowedChildUnset()
     {
         var service = this.App.GetPermissionsService();
@@ -517,7 +515,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p"), "parent allowed permission should have been inherited");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestParentDeniedChildUnset()
     {
         var service = this.App.GetPermissionsService();
@@ -529,7 +527,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p") == false, "parent denied permission should have been inherited");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestParentAllowedChildDenied()
     {
         var service = this.App.GetPermissionsService();
@@ -540,7 +538,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p") == false, "child permission should override parent");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestParentDeniedChildAllowed()
     {
         var service = this.App.GetPermissionsService();
@@ -551,7 +549,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p"), "child permission should override parent");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGrandparentAllowedChildUnset()
     {
         var service = this.App.GetPermissionsService();
@@ -564,7 +562,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p"), "grandparent allowed permission should have been inherited");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestOneParentAllowedAnotherUnsetChildUnset()
     {
         var service = this.App.GetPermissionsService();
@@ -577,7 +575,7 @@ public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
         this.Assert(service.Check("a", "p"), "parent allowed permission should have been inherited");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestOneParentAllowedAnotherDeniedChildUnset()
     {
         var service = this.App.GetPermissionsService();

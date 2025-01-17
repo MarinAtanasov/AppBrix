@@ -4,20 +4,19 @@
 using AppBrix.Logging.Contracts;
 using AppBrix.Logging.Events;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Logging.Tests.Config;
 
+[TestClass]
 public sealed class LoggingConfigTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LoggingConfigTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestErrorLevelConfig()
     {
         var message = "Test message";
@@ -62,7 +61,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestWarningLevelConfig()
     {
         var message = "Test message";
@@ -107,7 +106,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInfoLevelConfig()
     {
         var message = "Test message";
@@ -152,7 +151,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDebugLevelConfig()
     {
         var message = "Test message";
@@ -197,7 +196,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         this.Assert(traceCalled == false, "the trace event should not have been called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestTraceLevelConfig()
     {
         var message = "Test message";

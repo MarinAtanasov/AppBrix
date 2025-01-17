@@ -6,14 +6,14 @@ using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
 using System;
 using System.Linq;
-using Xunit;
 
 namespace AppBrix.Data.Tests;
 
+[TestClass]
 public sealed class InMemoryDataTests : DataTestsBase<InMemoryDataModule>
 {
     #region Setup and cleanup
-    public InMemoryDataTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetInMemoryDataConfig().ConnectionString = Guid.NewGuid().ToString();
         this.App.Start();
@@ -21,7 +21,7 @@ public sealed class InMemoryDataTests : DataTestsBase<InMemoryDataModule>
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceGetItem() => this.AssertPerformance(this.TestPerformanceGetItemInternal);
     #endregion
 

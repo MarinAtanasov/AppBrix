@@ -3,23 +3,22 @@
 
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
+[TestClass]
 public sealed class ConfigServiceTests : TestsBase
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestConstructorNullProvider()
     {
         var action = () => new ConfigService(null!);
         this.AssertThrows<ArgumentNullException>(action, "provider cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetNullConfig()
     {
         var service = new ConfigService(new ConfigProviderMock());
@@ -27,7 +26,7 @@ public sealed class ConfigServiceTests : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveNullConfig()
     {
         var service = new ConfigService(new ConfigProviderMock());
@@ -35,7 +34,7 @@ public sealed class ConfigServiceTests : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveNullType()
     {
         IConfigService service = new ConfigService(new ConfigProviderMock());
@@ -43,7 +42,7 @@ public sealed class ConfigServiceTests : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetConfig()
     {
         var provider = new ConfigProviderMock();
@@ -59,7 +58,7 @@ public sealed class ConfigServiceTests : TestsBase
         this.Assert(provider.WrittenConfigs.Count == 0, "the service should not have tried to write the config when returning it a second time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveAllConfigs()
     {
         var provider = new ConfigProviderMock();
@@ -75,7 +74,7 @@ public sealed class ConfigServiceTests : TestsBase
         this.Assert(provider.WrittenConfigs[0].Key == typeof(ConfigMock), "the written config should be the same as the requested one");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveConfig()
     {
         var provider = new ConfigProviderMock();
@@ -87,7 +86,7 @@ public sealed class ConfigServiceTests : TestsBase
         this.Assert(provider.WrittenConfigs[0].Key == config.GetType(), "the written config should be the same as the provided one one");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceConfigService() => this.AssertPerformance(this.TestPerformanceConfigServiceInternal);
     #endregion
 

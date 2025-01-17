@@ -4,20 +4,19 @@
 using AppBrix.Application;
 using AppBrix.Configuration;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using AppBrix.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Xunit;
 
 namespace AppBrix.Tests;
 
+[TestClass]
 public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInstallModule()
     {
         this.App.Start();
@@ -35,7 +34,7 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUpgradeModule()
     {
         this.App.Start();
@@ -57,7 +56,7 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestInitializeInstallableModule()
     {
         this.App.Start();
@@ -78,7 +77,7 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         this.Assert(moduleConfig.Status == ModuleStatus.Enabled, "module status should not be changed");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUninstallEnabledModule()
     {
         this.App.Start();
@@ -104,7 +103,7 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         this.Assert(moduleConfig.Version is null, "module version should be cleared after uninstall");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUninstallDisabledModule()
     {
         this.App.Start();
@@ -132,7 +131,7 @@ public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
         this.Assert(moduleConfig.Version is null, "module version should be cleared after uninstall");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUninstallUninstallingModule()
     {
         this.App.Start();

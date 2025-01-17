@@ -4,20 +4,19 @@
 using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Events.Schedule.Timer.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Events.Schedule.Timer.Tests;
 
+[TestClass]
 public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEventsModule>
 {
     #region Setup and cleanup
-    public TimerScheduledEventHubTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.App.Start();
@@ -28,7 +27,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNullArgsTimer()
     {
         var hub = this.App.GetTimerScheduledEventHub();
@@ -36,7 +35,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNullArgsDateTime()
     {
         var hub = this.App.GetTimerScheduledEventHub();
@@ -44,7 +43,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNegativeDueTimeExpression()
     {
         var hub = this.App.GetTimerScheduledEventHub();
@@ -52,7 +51,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.AssertThrows<ArgumentException>(action, "dueTime must be non-negative");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNegativePeriodExpression()
     {
         var hub = this.App.GetTimerScheduledEventHub();
@@ -60,7 +59,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.AssertThrows<ArgumentException>(action, "period must be non-negative");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestScheduleArgs()
     {
         var called = new bool[3];
@@ -89,7 +88,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.Assert(funcs[2]() == false, "third event shouldn't be called yet");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnscheduleNullArgs()
     {
         var hub = this.App.GetTimerScheduledEventHub();
@@ -97,7 +96,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnscheduleArgs()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
@@ -112,7 +111,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.Assert(called == false, "event should be unscheduled");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestMemoryRelease()
     {
         var called = new bool[2];
@@ -139,7 +138,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.Assert(weakReference.TryGetTarget(out _) == false, "the event hub shouldn't hold references to completed non-recurring events");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceSchedule()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
@@ -147,7 +146,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
         this.AssertPerformance(() => this.TestPerformanceScheduleInternal(new EventMock(0), 50000));
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceUnschedule()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
@@ -185,6 +184,6 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
     #endregion
 
     #region Private fields and constants
-    private readonly TimeServiceMock timeService;
+    private TimeServiceMock timeService;
     #endregion
 }

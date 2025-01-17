@@ -2,20 +2,19 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Time.Tests;
 
+[TestClass]
 public sealed class TimeServiceTests : TestsBase<TimeModule>
 {
     #region Setup and cleanup
-    public TimeServiceTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetTime()
     {
         var timeBefore = DateTime.UtcNow;
@@ -26,7 +25,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         this.Assert(time <= timeAfter, "after time should be >= call time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetTimeLocal()
     {
         var timeBefore = DateTimeOffset.Now;
@@ -37,7 +36,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         this.Assert(time <= timeAfter, "after time should be >= call time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetTimeUtc()
     {
         var timeBefore = DateTimeOffset.UtcNow;
@@ -48,7 +47,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         this.Assert(time <= timeAfter, "after time should be >= call time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDateTimeSerialization()
     {
         var service = this.App.GetTimeService();
@@ -58,7 +57,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         this.Assert(service.ToDateTime(serialized) == time, "serialization and deserialization should return the same time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDateTimeOffsetLocalSerialization()
     {
         var service = this.App.GetTimeService();
@@ -68,7 +67,7 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         this.Assert(service.ToDateTimeOffset(serialized) == time, "serialization and deserialization should return the same time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestDateTimeOffsetUtcSerialization()
     {
         var service = this.App.GetTimeService();
@@ -78,19 +77,19 @@ public sealed class TimeServiceTests : TestsBase<TimeModule>
         this.Assert(service.ToDateTimeOffset(serialized) == time, "serialization and deserialization should return the same time");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceGetTime() => this.AssertPerformance(this.TestPerformanceGetTimeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceGetTimeLocal() => this.AssertPerformance(this.TestPerformanceGetTimeLocalInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceGetTimeUtc() => this.AssertPerformance(this.TestPerformanceGetTimeUtcInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceConvertDateTime() => this.AssertPerformance(this.TestPerformanceConvertDateTimeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceConvertDateTimeOffset() => this.AssertPerformance(this.TestPerformanceConvertDateTimeOffsetInternal);
     #endregion
 

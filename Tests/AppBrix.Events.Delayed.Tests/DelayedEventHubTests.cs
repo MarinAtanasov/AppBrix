@@ -5,21 +5,20 @@ using AppBrix.Events.Contracts;
 using AppBrix.Events.Delayed.Configuration;
 using AppBrix.Events.Delayed.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
-using Xunit;
 
 namespace AppBrix.Events.Delayed.Tests;
 
+[TestClass]
 public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
 {
     #region Setup and cleanup
-    public DelayedEventHubTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSubscribeNullHandler()
     {
         var hub = this.App.GetDelayedEventHub();
@@ -27,7 +26,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsubscribeNullHandler()
     {
         var hub = this.App.GetDelayedEventHub();
@@ -35,7 +34,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsubscribeImmediate()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
@@ -53,7 +52,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "event handler should be called exactly once after the unsubscription");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseImmediateNullArgument()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
@@ -62,7 +61,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseImmediateDefaultEvent()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
@@ -78,7 +77,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseImmediate()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
@@ -94,7 +93,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "event handler should be called exactly once");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHandlerThrowingExceptionImmediate()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
@@ -108,7 +107,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnsubscribeDelayed()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
@@ -128,7 +127,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "event handler should be called exactly once after the unsubscription");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseDelayedNullArgument()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
@@ -137,7 +136,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.AssertThrows<ArgumentNullException>(action);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseDelayedDefaultEvent()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
@@ -157,7 +156,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "event handler should be called exactly once after second flush");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseDelayed()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
@@ -177,7 +176,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "event handler should be called exactly once after second flush");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestHandlerThrowingExceptionDelayed()
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
@@ -192,16 +191,16 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsSubscribe() => this.AssertPerformance(this.TestPerformanceEventsSubscribeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsUnsubscribe() => this.AssertPerformance(this.TestPerformanceEventsUnsubscribeInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsRaiseImmediate() => this.AssertPerformance(this.TestPerformanceEventsRaiseImmediateInternal);
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceEventsRaiseDelayed() => this.AssertPerformance(this.TestPerformanceEventsRaiseDelayedInternal);
     #endregion
 

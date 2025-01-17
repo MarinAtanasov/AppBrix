@@ -3,47 +3,37 @@
 
 using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
-using System;
+using NUnit.Framework;
 
 namespace AppBrix.Testing;
 
 /// <summary>
-/// A base testing class that uses Xunit.
+/// A base testing class that uses NUnit.
 /// Used for testing an application without preloaded modules.
 /// </summary>
-public abstract class TestsBase : TestingBase, IDisposable
+public abstract class TestsBase : TestingBase
 {
     #region Setup and cleanup
     /// <summary>
-    /// Creates a new instance of <see cref="TestsBase"/> with a blank app.
     /// NUnit initialize method.
     /// </summary>
-    protected TestsBase() : this(AppBrix.App.Create(new MemoryConfigService())) { }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="TestsBase"/> with the provided app.
-    /// NUnit initialize method.
-    /// </summary>
-    /// <param name="app">The app to be tested.</param>
-    protected TestsBase(IApp app)
+    [SetUp]
+    public virtual void Start()
     {
-        this.Start(app);
+        this.Start(AppBrix.App.Create(new MemoryConfigService()));
         this.Initialize();
     }
 
     /// <summary>
-    /// Xunit uninitialize method.
+    /// NUnit uninitialize method.
     /// </summary>
-    public void Dispose()
-    {
-        this.Stop();
-        GC.SuppressFinalize(this);
-    }
+    [TearDown]
+    public override void Stop() => base.Stop();
     #endregion
 }
 
 /// <summary>
-/// A base testing class that uses Xunit.
+/// A base testing class that uses NUnit.
 /// Used for testing an application with one module and its dependencies.
 /// </summary>
 public abstract class TestsBase<T> : TestsBase
@@ -51,17 +41,19 @@ public abstract class TestsBase<T> : TestsBase
 {
     #region Setup and cleanup
     /// <summary>
-    /// Creates a new instance of <see cref="TestsBase{T}"/>
     /// NUnit initialize method.
     /// </summary>
-    protected TestsBase() : base(TestApp.Create<T>())
+    [SetUp]
+    public override void Start()
     {
+        this.Start(TestApp.Create<T>());
+        this.Initialize();
     }
     #endregion
 }
 
 /// <summary>
-/// A base testing class that uses Xunit.
+/// A base testing class that uses NUnit.
 /// Used for testing an application with two modules and their dependencies.
 /// </summary>
 public abstract class TestsBase<T1, T2> : TestsBase
@@ -70,11 +62,13 @@ public abstract class TestsBase<T1, T2> : TestsBase
 {
     #region Setup and cleanup
     /// <summary>
-    /// Creates a new instance of <see cref="TestsBase{T1,T2}"/>.
     /// NUnit initialize method.
     /// </summary>
-    protected TestsBase() : base(TestApp.Create<T1, T2>())
+    [SetUp]
+    public override void Start()
     {
+        this.Start(TestApp.Create<T1, T2>());
+        this.Initialize();
     }
     #endregion
 }

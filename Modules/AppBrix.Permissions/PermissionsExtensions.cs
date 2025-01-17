@@ -4,7 +4,6 @@
 using AppBrix.Configuration;
 using AppBrix.Permissions.Configuration;
 using AppBrix.Permissions.Services;
-using System;
 using System.Collections.Generic;
 
 namespace AppBrix;

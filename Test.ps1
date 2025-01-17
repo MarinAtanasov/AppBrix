@@ -17,11 +17,11 @@ if ($build)
 $filter = "";
 if ($tests -eq "functional" -or $tests -eq "f")
 {
-    $filter = "--TestCaseFilter:Category=Functional";
+    $filter = "--TestCaseFilter:Category=Functional|TestCategory=Functional";
 }
 elseif ($tests -eq "performance" -or $tests -eq "p")
 {
-    $filter = "--TestCaseFilter:Category=Performance";
+    $filter = "--TestCaseFilter:Category=Performance|TestCategory=Performance";
 }
 
 $execute = "";

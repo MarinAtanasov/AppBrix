@@ -5,21 +5,20 @@ using AppBrix.Data.Events;
 using AppBrix.Data.InMemory;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Linq;
-using Xunit;
 
 namespace AppBrix.Data.Tests;
 
+[TestClass]
 public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
 {
     #region Setup and cleanup
-    public DbContextServiceTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetNullType()
     {
         var service = this.App.GetDbContextService();
@@ -27,7 +26,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
         this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestRaiseConfigureDbContextEvent()
     {
         DataItemDbContextMock eventDbContext = null;

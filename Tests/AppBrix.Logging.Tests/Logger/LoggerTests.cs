@@ -3,21 +3,20 @@
 
 using AppBrix.Logging.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using Microsoft.Extensions.Logging;
 using System;
-using Xunit;
 
 namespace AppBrix.Logging.Tests.Logger;
 
+[TestClass]
 public sealed class LoggerTests : TestsBase<LoggingModule>
 {
     #region Setup and cleanup
-    public LoggerTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSyncLogger()
     {
         this.App.ConfigService.GetLoggingConfig().Async = false;
@@ -34,7 +33,7 @@ public sealed class LoggerTests : TestsBase<LoggingModule>
         this.Assert(logger.LoggedEntries[0].Exception == ex, "the logged exception should be the same as the passed in exception");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestAsyncLogger()
     {
         this.App.ConfigService.GetLoggingConfig().Async = true;
@@ -52,7 +51,7 @@ public sealed class LoggerTests : TestsBase<LoggingModule>
         this.Assert(logger.LoggedEntries[0].Exception == ex, "the logged exception should be the same as the passed in exception");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestLoggerLog()
     {
         this.App.ConfigService.GetLoggingConfig().Async = false;

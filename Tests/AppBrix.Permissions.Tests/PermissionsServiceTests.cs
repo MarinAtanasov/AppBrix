@@ -2,14 +2,14 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
-using Xunit;
 
 namespace AppBrix.Permissions.Tests;
 
+[TestClass]
 public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
 {
     #region Setup and cleanup
-    public PermissionsServiceTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetPermissionsConfig().EnableCaching = false;
         this.App.Start();
@@ -17,7 +17,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceHasPermission()
     {
         var service = this.App.GetPermissionsService();
@@ -35,7 +35,7 @@ public sealed class PermissionsServiceTests : PermissionsServiceTestsBase
         this.AssertPerformance(this.TestPerformanceHasPermissionInternal);
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceAddPermission()
     {
         var service = this.App.GetPermissionsService();

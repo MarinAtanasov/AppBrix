@@ -3,19 +3,18 @@
 
 using AppBrix.Events.Schedule.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace AppBrix.Events.Schedule.Tests;
 
+[TestClass]
 public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
 {
     #region Setup and cleanup
-    public ScheduledEventHubTests()
+    protected override void Initialize()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromMilliseconds(1);
         this.App.Start();
@@ -23,7 +22,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleNullArgs()
     {
         var hub = this.App.GetScheduledEventHub();
@@ -31,7 +30,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestScheduleDelayedRaise()
     {
         var called = false;
@@ -40,7 +39,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.Assert(called == false, "event should not be called immediately");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public Task TestScheduleArgs()
     {
         var called = false;
@@ -50,7 +49,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         return this.AssertReturns(func, true, "event should have been raised");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestScheduleThreeArgs()
     {
         var called = new bool[3];
@@ -69,7 +68,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.Assert(called[2] == false, "third event should not be raised");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestUnscheduleNullArgs()
     {
         var hub = this.App.GetScheduledEventHub();
@@ -77,7 +76,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.AssertThrows<ArgumentNullException>(action, "args is null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestUnscheduleArgs()
     {
         var called = new bool[2];
@@ -92,7 +91,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.Assert(called[0] == false, "first event should not be raised");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public async Task TestMemoryRelease()
     {
         var called = new bool[2];
@@ -119,7 +118,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.Assert(weakReference.TryGetTarget(out var _) == false, "the event hub shouldn't hold references to completed non-recurring events");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceSchedule()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);
@@ -131,7 +130,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
         this.AssertPerformance(() => this.TestPerformanceScheduleInternal(scheduledEvents));
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceUnschedule()
     {
         this.App.ConfigService.GetScheduledEventsConfig().ExecutionCheck = TimeSpan.FromHours(1);

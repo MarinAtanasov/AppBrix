@@ -4,16 +4,15 @@
 using AppBrix.Configuration.Memory;
 using AppBrix.Configuration.Tests.Mocks;
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Configuration.Tests;
 
+[TestClass]
 public sealed class MemoryConfigServiceTests : TestsBase
 {
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetNullType()
     {
         var service = new MemoryConfigService();
@@ -21,7 +20,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveNullConfig()
     {
         var service = new MemoryConfigService();
@@ -29,10 +28,10 @@ public sealed class MemoryConfigServiceTests : TestsBase
         this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSaveDoesNotThrow() => new MemoryConfigService().Save();
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetNewConfig()
     {
         var service = new MemoryConfigService();
@@ -41,7 +40,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
         this.Assert(service.Get(typeof(ConfigMock)) == config, "the same config should be returned");
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestGetSavedConfig()
     {
         var service = new MemoryConfigService();

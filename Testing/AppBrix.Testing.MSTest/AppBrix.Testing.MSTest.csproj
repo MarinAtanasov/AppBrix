@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>AppBrix.Testing.MSTest</AssemblyName>
+    <AssemblyTitle>AppBrix.Testing.MSTest</AssemblyTitle>
+    <Description>Tooling for testing AppBrix applications and modules using MSTest.</Description>
+    <IsTestProject>false</IsTestProject>
+    <PackageId>AppBrix.Testing.MSTest</PackageId>
+    <PackageTags>AppBrix Testing MSTest</PackageTags>
+    <Title>AppBrix.Testing.MSTest</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBrix.Testing\AppBrix.Testing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="3.7.1"/>
+    <PackageReference Include="MSTest.TestFramework" Version="3.7.1" />
+  </ItemGroup>
+
+</Project>

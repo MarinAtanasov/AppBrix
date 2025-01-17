@@ -2,20 +2,19 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using AppBrix.Testing;
-using AppBrix.Testing.Xunit;
 using System;
-using Xunit;
 
 namespace AppBrix.Web.Client.Tests;
 
+[TestClass]
 public sealed class WebClientTests : TestsBase<WebClientModule>
 {
     #region Setup and cleanup
-    public WebClientTests() => this.App.Start();
+    protected override void Initialize() => this.App.Start();
     #endregion
 
     #region Tests
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNullHeader()
     {
         var request = this.App.GetFactoryService().GetHttpRequest();
@@ -23,7 +22,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
         this.AssertThrows<ArgumentNullException>(action, "header cannot be empty");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNullMethod()
     {
         var request = this.App.GetFactoryService().GetHttpRequest();
@@ -31,7 +30,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
         this.AssertThrows<ArgumentNullException>(action, "method cannot be empty");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Functional)]
+    [Test, Functional]
     public void TestSetNullUrl()
     {
         var request = this.App.GetFactoryService().GetHttpRequest();
@@ -39,7 +38,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
         this.AssertThrows<ArgumentNullException>(action, "url cannot be empty");;
     }
 
-    [Fact, Trait(TestCategories.Category, TestCategories.Performance)]
+    [Test, Performance]
     public void TestPerformanceGetHttpRequest() => this.AssertPerformance(this.TestPerformanceGetHttpRequestInternal);
     #endregion
 
