@@ -27,17 +27,21 @@ dotnet build
 
 ## Run Tests
 By default, tests are using MSTest, but NUnit and Xunit can be used instead.
-* In [Visual Studio](https://visualstudio.microsoft.com/), Test Explorer must be opened before building test projects in order to discover the tests.
-* In [JetBrains Rider](https://www.jetbrains.com/rider/), they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
-* In [PowerShell](https://github.com/PowerShell/PowerShell), while in the project's root folder:
+* Using [Visual Studio](https://visualstudio.microsoft.com/), Test Explorer must be opened before building test projects in order to discover the tests.
+* Using [JetBrains Rider](https://www.jetbrains.com/rider/), they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
+* Using [dotnet test](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test), while in the project's root folder:
+```Bash
+dotnet test --filter TestCategory=Functional --nologo --verbosity minimal
+```
+* Using [PowerShell](https://github.com/PowerShell/PowerShell), while in the project's root folder:
 ```Powershell
 # You can add -Build to restore dependencies and build the solution.
 # You can add -Release to use the Release configuration instead of Debug.
 # Run functional tests (default). Add -Parallel for parallel execution.
 ./Test.ps1 -tests Functional  # ./Test.ps1
-# Run performance tests
+# Run performance tests.
 ./Test.ps1 -tests Performance  # ./Test.ps1 p
-# Run all tests
+# Run all tests.
 ./Test.ps1 -tests All  # ./Test.ps1 a
 ```
 
@@ -47,7 +51,7 @@ There are ready configuration for each test runner inside _/Tests/Directory.Buil
 If you wish to switch to a different runner, open the file and:
 1. Comment out the _ItemGroup_ for the current provider.
 2. Uncomment the _ItemGroup_ for the desired provider.
-3. Rebuild the solution. If it doesn't work, run `./Clean.ps1` and then rebuild.
+3. Rebuild the solution. If the rebuild isn't enough, run `./Clean.ps1` and then rebuild.
 
 ## Publish Packages
 Packaging and publishing of a new version of all projects can be done using PowerShell.
