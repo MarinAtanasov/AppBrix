@@ -49,7 +49,7 @@ If you wish to switch to a different runner, open the file and:
 2. Uncomment the _ItemGroup_ for the desired provider.
 3. Rebuild the solution. If it doesn't work, run `./Clean.ps1` and then rebuild.
 
-## Publishing packages
+## Publish Packages
 Packaging and publishing of a new version of all projects can be done using PowerShell.
 It requires Nuget CLI to be set up locally with account API key.
 ```Powershell
