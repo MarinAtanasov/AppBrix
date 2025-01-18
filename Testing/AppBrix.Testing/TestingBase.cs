@@ -57,17 +57,17 @@ public abstract class TestingBase
     /// Asserts that the provided value is true.
     /// </summary>
     /// <param name="value">The value being asserted.</param>
-    /// <param name="message">The error message if the assert fails.</param>
+    /// <param name="because">Explanation why the value must be true.</param>
     /// <param name="expression">The calling expression of the value argument.</param>
-    protected void Assert(bool value, string message = "", [CallerArgumentExpression(nameof(value))] string expression = "")
+    protected void Assert(bool value, string because = "", [CallerArgumentExpression(nameof(value))] string expression = "")
     {
         if (value)
             return;
 
-        if (string.IsNullOrEmpty(message))
-            throw new Exception($"Assertion failed: [{expression}] should be true.");
+        if (string.IsNullOrEmpty(because))
+            throw new Exception($"Assertion [{expression}] must be true.");
 
-        throw new Exception($"Assertion failed: [{expression}] should be true, because {message}.");
+        throw new Exception($"Assertion [{expression}] must be true, because {because}.");
     }
 
     /// <summary>
@@ -109,10 +109,10 @@ public abstract class TestingBase
     /// <typeparam name="T">The type of the result.</typeparam>
     /// <param name="func">The function to be called until it returns the predefined value or the timeout expires.</param>
     /// <param name="value">The result which should be returned by the function before the timeout expires.</param>
-    /// <param name="message">Explanation why the function will return the expected value.</param>
+    /// <param name="because">Explanation why the function must return the expected value.</param>
     /// <returns>A task that completes when the function returns the predefined value</returns>
-    protected Task AssertReturns<T>(Func<T> func, T value, string message = "") =>
-        this.AssertReturns(func, value, TimeSpan.FromSeconds(15), message);
+    protected Task AssertReturns<T>(Func<T> func, T value, string because = "") =>
+        this.AssertReturns(func, value, TimeSpan.FromSeconds(15), because);
 
     /// <summary>
     /// Asserts that a function will return a predefined value by a certain timeout.
@@ -121,9 +121,9 @@ public abstract class TestingBase
     /// <param name="func">The function to be called until it returns the predefined value or the timeout expires.</param>
     /// <param name="value">The result which should be returned by the function before the timeout expires.</param>
     /// <param name="timeout">The timeout.</param>
-    /// <param name="message">Explanation why the function will return the expected value.</param>
+    /// <param name="because">Explanation why the function must return the expected value.</param>
     /// <returns>A task that completes when the function returns the predefined value</returns>
-    protected async Task AssertReturns<T>(Func<T> func, T value, TimeSpan timeout, string message = "")
+    protected async Task AssertReturns<T>(Func<T> func, T value, TimeSpan timeout, string because = "")
     {
         if (func is null)
             throw new ArgumentNullException(nameof(func));
@@ -137,35 +137,35 @@ public abstract class TestingBase
             await Task.Delay(1);
         }
 
-        this.Assert(object.Equals(func(), value), message);
+        this.Assert(object.Equals(func(), value), because);
     }
 
     /// <summary>
     /// Asserts that an action throws a specific exception.
     /// </summary>
     /// <param name="action">The action being tested.</param>
-    /// <param name="message">Explanation why the action should throw.</param>
+    /// <param name="because">Explanation why the action must throw.</param>
     /// <param name="expression">The calling expression of the value argument.</param>
     /// <typeparam name="T">The type of exception to be thrown.</typeparam>
-    protected void AssertThrows<T>(Action action, string message = "", [CallerArgumentExpression(nameof(action))] string expression = "")
+    protected void AssertThrows<T>(Action action, string because = "", [CallerArgumentExpression(nameof(action))] string expression = "")
         where T : Exception
     {
         try
         {
             action();
 
-            if (string.IsNullOrEmpty(message))
-                throw new Exception($"Assertion failed: [{expression}] should have thrown an exception.");
+            if (string.IsNullOrEmpty(because))
+                throw new Exception($"Assertion [{expression}] must throw an exception.");
 
-            throw new Exception($"Assertion failed: [{expression}] should have thrown an exception, because {message}.");
+            throw new Exception($"Assertion [{expression}] must throw an exception, because {because}.");
         }
         catch (T) { }
         catch (Exception e)
         {
-            if (string.IsNullOrEmpty(message))
-                throw new Exception($"Assertion failed: [{expression}] should have thrown an exception of type {typeof(T).FullName}, but received {e.GetType().FullName}.");
+            if (string.IsNullOrEmpty(because))
+                throw new Exception($"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, but received {e.GetType().FullName}.");
 
-            throw new Exception($"Assertion failed: [{expression}] should have thrown an exception of type {typeof(T).FullName}, because {message}, but received {e.GetType().FullName}.");
+            throw new Exception($"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, because {because}, but received {e.GetType().FullName}.");
         }
     }
 
@@ -173,34 +173,15 @@ public abstract class TestingBase
     /// Asserts that a function throws a specific exception.
     /// </summary>
     /// <param name="func">The function being tested.</param>
-    /// <param name="message">Explanation why the action should throw.</param>
+    /// <param name="because">Explanation why the action must throw.</param>
     /// <param name="expression">The calling expression of the value argument.</param>
     /// <typeparam name="T">The type of exception to be thrown.</typeparam>
-    protected void AssertThrows<T>(Func<object> func, string message = "", [CallerArgumentExpression(nameof(func))] string expression = "")
-        where T : Exception
-    {
-        try
-        {
-            func();
-
-            if (string.IsNullOrEmpty(message))
-                throw new Exception($"Assertion failed: [{expression}] should have thrown an exception.");
-
-            throw new Exception($"Assertion failed: [{expression}] should have thrown an exception, because {message}.");
-        }
-        catch (T) { }
-        catch (Exception e)
-        {
-            if (string.IsNullOrEmpty(message))
-                throw new Exception($"Assertion failed: [{expression}] should have thrown an exception of type {typeof(T).FullName}, but received {e.GetType().FullName}.");
-
-            throw new Exception($"Assertion failed: [{expression}] should have thrown an exception of type {typeof(T).FullName}, because {message}, but received {e.GetType().FullName}.");
-        }
-    }
+    protected void AssertThrows<T>(Func<object> func, string because = "", [CallerArgumentExpression(nameof(func))] string expression = "")
+        where T : Exception => this.AssertThrows<T>((Action)(() => func()), because, expression);
     #endregion
 
     #region Private methods
-    private void AssertExecuteIn(Action action, TimeSpan limit, string message = "")
+    private void AssertExecuteIn(Action action, TimeSpan limit, string because = "")
     {
         var task = Task.Run(action);
         var stopwatch = Stopwatch.StartNew();
@@ -212,19 +193,16 @@ public abstract class TestingBase
                 if (task.IsCompletedSuccessfully)
                     return;
 
-                if (string.IsNullOrEmpty(message))
-                    throw new Exception($"Assertion failed: {nameof(action)} should have executed, but threw an exception.", task.Exception);
-
-                throw new Exception($"Assertion failed: {nameof(action)} should have executed, because {message}, but threw an exception.", task.Exception);
+                throw new Exception($"Assertion [{nameof(action)}] but threw an exception.", task.Exception);
             }
 
             Thread.Sleep(TimeSpan.FromMilliseconds(1));
         }
 
-        if (string.IsNullOrEmpty(message))
-            throw new Exception($"Assertion failed: {nameof(action)} should have executed within the time limit.");
+        if (string.IsNullOrEmpty(because))
+            throw new Exception($"Assertion [{nameof(action)}] must execute within the time limit.");
 
-        throw new Exception($"Assertion failed: {nameof(action)} should have executed within the time limit, because {message}.");
+        throw new Exception($"Assertion [{nameof(action)}] must execute within the time limit, because {because}.");
     }
     #endregion
 }
