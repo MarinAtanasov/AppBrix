@@ -10,4 +10,4 @@ namespace AppBrix.Testing;
 /// Marks a method as a test.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method)]
-public class TestAttribute : TestMethodAttribute;
+public sealed class TestAttribute : TestMethodAttribute;

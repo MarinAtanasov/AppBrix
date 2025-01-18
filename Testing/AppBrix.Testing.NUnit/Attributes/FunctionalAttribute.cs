@@ -10,7 +10,7 @@ namespace AppBrix.Testing;
 /// Marks a test with the <see cref="AppBrix.Testing.TestCategories.Functional"/> category.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class FunctionalAttribute : CategoryAttribute
+public sealed class FunctionalAttribute : CategoryAttribute
 {
     /// <summary>
     /// Creates a new instance of <see cref="FunctionalAttribute"/>.

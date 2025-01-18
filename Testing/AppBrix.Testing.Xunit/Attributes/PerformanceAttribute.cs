@@ -11,7 +11,7 @@ namespace AppBrix.Testing;
 /// </summary>
 [TraitDiscoverer("Xunit.Sdk.TraitDiscoverer", "xunit.core")]
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class PerformanceAttribute : Attribute, ITraitAttribute
+public sealed class PerformanceAttribute : Attribute, ITraitAttribute
 {
     /// <summary>
     /// Creates a new instance of <see cref="PerformanceAttribute"/>.

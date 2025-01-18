@@ -11,7 +11,7 @@ namespace AppBrix.Testing;
 /// Marks a test with the <see cref="AppBrix.Testing.TestCategories.Functional"/> category.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class FunctionalAttribute : TestCategoryBaseAttribute
+public sealed class FunctionalAttribute : TestCategoryBaseAttribute
 {
     /// <summary>
     /// Gets the test category that has been applied to the test.

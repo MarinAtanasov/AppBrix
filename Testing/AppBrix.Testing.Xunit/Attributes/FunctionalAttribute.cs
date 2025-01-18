@@ -11,7 +11,7 @@ namespace AppBrix.Testing;
 /// </summary>
 [TraitDiscoverer("Xunit.Sdk.TraitDiscoverer", "xunit.core")]
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class FunctionalAttribute : Attribute, ITraitAttribute
+public sealed class FunctionalAttribute : Attribute, ITraitAttribute
 {
     /// <summary>
     /// Creates a new instance of <see cref="FunctionalAttribute"/>.

@@ -11,7 +11,7 @@ namespace AppBrix.Testing;
 /// Marks a test with the <see cref="AppBrix.Testing.TestCategories.Performance"/> category.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class PerformanceAttribute : TestCategoryBaseAttribute
+public sealed class PerformanceAttribute : TestCategoryBaseAttribute
 {
     /// <summary>
     /// Gets the test category that has been applied to the test.

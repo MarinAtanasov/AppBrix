@@ -10,9 +10,9 @@ namespace AppBrix.Testing;
 public static class TestCategories
 {
     /// <summary>
-    /// Constant for storing category trait.
+    /// Constant for storing the test category trait.
     /// </summary>
-    public const string Category = "Category";
+    public const string Category = "TestCategory";
 
     /// <summary>
     /// Functional test category.
