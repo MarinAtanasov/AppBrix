@@ -2,7 +2,6 @@
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
 using System;
-using Xunit;
 
 namespace AppBrix.Testing;
 
@@ -10,4 +9,4 @@ namespace AppBrix.Testing;
 /// Marks a method as a test.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method)]
-public sealed class TestAttribute : FactAttribute;
+public sealed class TestAttribute : Xunit.FactAttribute;

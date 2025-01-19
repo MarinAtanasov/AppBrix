@@ -25,7 +25,7 @@ public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
     #endregion
 
     #region Tests
-    [Test, Functional]
+    [Test, Category("Category", TestCategories.Functional)]
     public void TestGetMemoryCache()
     {
         this.Assert(this.App.GetMemoryCache() is not null, "cache must be registered and resolved");

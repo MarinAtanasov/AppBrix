@@ -1,20 +1,17 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-
 namespace AppBrix.Testing;
 
 /// <summary>
 /// Marks a test with the <see cref="AppBrix.Testing.TestCategories.Performance"/> category.
 /// </summary>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public sealed class PerformanceAttribute : TestCategoryBaseAttribute
+public sealed class PerformanceAttribute : CategoryAttribute
 {
     /// <summary>
-    /// Gets the test category that has been applied to the test.
+    /// Creates a new instance of <see cref="FunctionalAttribute"/>.
     /// </summary>
-    public override IList<string> TestCategories { get; } = [AppBrix.Testing.TestCategories.Performance];
+    public PerformanceAttribute() : base(Testing.TestCategories.Category, Testing.TestCategories.Performance)
+    {
+    }
 }

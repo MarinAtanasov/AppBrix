@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using NUnit.Framework;
 using System;
 
 namespace AppBrix.Testing;
@@ -10,4 +9,4 @@ namespace AppBrix.Testing;
 /// Marks a class as a class containing test methods.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public sealed class TestClassAttribute : TestFixtureAttribute;
+public sealed class TestClassAttribute : NUnit.Framework.TestFixtureAttribute;

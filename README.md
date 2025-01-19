@@ -31,7 +31,7 @@ By default, tests are using MSTest, but NUnit and Xunit can be used instead.
 * Using [JetBrains Rider](https://www.jetbrains.com/rider/), they can be run with right click on *Tests* solution folder and selecting *Run Unit Tests*.
 * Using [dotnet test](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test), while in the project's root folder:
 ```Bash
-dotnet test --filter TestCategory=Functional --nologo --verbosity minimal
+dotnet test --filter "Category=Functional|TestCategory=Functional" --nologo --verbosity minimal
 ```
 * Using [PowerShell](https://github.com/PowerShell/PowerShell), while in the project's root folder:
 ```Powershell
