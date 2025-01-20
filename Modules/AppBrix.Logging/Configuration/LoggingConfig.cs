@@ -18,7 +18,7 @@ public sealed class LoggingConfig : IConfig
     public LoggingConfig()
     {
         this.Async = false;
-        this.LogLevel = LogLevel.Trace;
+        this.Level = LogLevel.Trace;
     }
     #endregion
 
@@ -32,6 +32,6 @@ public sealed class LoggingConfig : IConfig
     /// <summary>
     /// Gets or sets the minimal level in which the log entry events should be raised.
     /// </summary>
-    public LogLevel LogLevel { get; set; }
+    public LogLevel Level { get; set; }
     #endregion
 }

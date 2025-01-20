@@ -100,7 +100,7 @@ public sealed class WebServerModule : ModuleBase
 
     private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
     {
-        var level = this.App.ConfigService.GetLoggingConfig().LogLevel switch
+        var level = this.App.ConfigService.GetLoggingConfig().Level switch
         {
             AppBrix.Logging.Contracts.LogLevel.Critical => LogLevel.Critical,
             AppBrix.Logging.Contracts.LogLevel.Debug => LogLevel.Debug,

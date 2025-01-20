@@ -42,7 +42,7 @@ internal sealed class LogHub : ILogHub, IApplicationLifecycle
         this.app.GetAsyncEventHub().Unsubscribe(logger);
     }
 
-    public bool IsEnabled(LogLevel level) => this.config.LogLevel <= level;
+    public bool IsEnabled(LogLevel level) => this.config.Level <= level;
 
     public void Log(LogLevel level, string message, Exception? error = null,
         [CallerFilePath] string? callerFile = null,

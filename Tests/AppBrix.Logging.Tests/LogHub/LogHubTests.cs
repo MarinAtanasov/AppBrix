@@ -130,7 +130,7 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     {
         var message = "Test message";
         var called = false;
-        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.None;
+        this.App.ConfigService.GetLoggingConfig().Level = LogLevel.None;
         this.App.GetEventHub().Subscribe<ILogEntry>(_ => { called = true; });
         this.App.GetLogHub().Trace(message);
         this.App.GetLogHub().Debug(message);

@@ -1,6 +1,6 @@
 ﻿using AppBrix.Configuration;
 using AppBrix.Configuration.Files;
-using AppBrix.Configuration.Yaml;
+using AppBrix.Configuration.Json;
 using Microsoft.AspNetCore.Builder;
 
 namespace AppBrix.WebApp;
@@ -11,7 +11,7 @@ internal static class Program
     {
         WebApplication.CreateBuilder(args)
             .Build(App.Start<MainModule>(new ConfigService(new FilesConfigProvider(
-                new YamlConfigSerializer(), "./Config", "yaml"))))
+                new JsonConfigSerializer(), "./Config", "json"))))
             .Run();
     }
 }

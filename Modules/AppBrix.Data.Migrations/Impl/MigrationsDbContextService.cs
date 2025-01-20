@@ -73,8 +73,8 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
             using var context = this.contextService.GetMigrationsContext();
             if (type == typeof(MigrationsDbContext))
             {
-                logLevel = this.loggingConfig.LogLevel;
-                this.loggingConfig.LogLevel = LogLevel.Critical;
+                logLevel = this.loggingConfig.Level;
+                this.loggingConfig.Level = LogLevel.Critical;
             }
             snapshot = context.Snapshots.AsNoTracking().SingleOrDefault(x => x.Context == type.Name);
         }
@@ -82,7 +82,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
         finally
         {
             if (type == typeof(MigrationsDbContext))
-                this.loggingConfig.LogLevel = logLevel;
+                this.loggingConfig.Level = logLevel;
         }
 
         return snapshot;

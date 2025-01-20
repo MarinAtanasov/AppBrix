@@ -21,7 +21,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Error;
+        this.App.ConfigService.GetLoggingConfig().Level = LogLevel.Error;
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
@@ -66,7 +66,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Warning;
+        this.App.ConfigService.GetLoggingConfig().Level = LogLevel.Warning;
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
@@ -111,7 +111,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Info;
+        this.App.ConfigService.GetLoggingConfig().Level = LogLevel.Info;
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
@@ -156,7 +156,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Debug;
+        this.App.ConfigService.GetLoggingConfig().Level = LogLevel.Debug;
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)
@@ -201,7 +201,7 @@ public sealed class LoggingConfigTests : TestsBase<LoggingModule>
         var infoCalled = false;
         var debugCalled = false;
         var traceCalled = false;
-        this.App.ConfigService.GetLoggingConfig().LogLevel = LogLevel.Trace;
+        this.App.ConfigService.GetLoggingConfig().Level = LogLevel.Trace;
         this.App.GetEventHub().Subscribe<ILogEntry>(x =>
         {
             switch (x.Level)

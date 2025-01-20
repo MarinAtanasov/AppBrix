@@ -25,7 +25,7 @@ internal sealed class Logger : ILogger
     #endregion
 
     #region Public and overriden methods
-    public bool IsEnabled(LogLevel logLevel) => this.Enabled && this.config.LogLevel <= this.ToAppBrixLogLevel(logLevel);
+    public bool IsEnabled(LogLevel logLevel) => this.Enabled && this.config.Level <= this.ToAppBrixLogLevel(logLevel);
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
