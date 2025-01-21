@@ -11,21 +11,21 @@ namespace AppBrix.Time.Services;
 public interface ITimeService
 {
     /// <summary>
-    /// Gets the current date and time.
+    /// Gets the current UTC date and time.
     /// This should be used instead of <see cref="DateTime.Now"/> or <see cref="DateTime.UtcNow"/>.
     /// </summary>
     /// <returns>The current date and time.</returns>
     DateTime GetTime();
 
     /// <summary>
-    /// Gets the current date and time offset.
+    /// Gets the current local date and time offset.
     /// This should be used instead of <see cref="DateTimeOffset.Now"/>.
     /// </summary>
     /// <returns>The current date and time offset.</returns>
     DateTimeOffset GetTimeLocal();
 
     /// <summary>
-    /// Gets the current date and time offset.
+    /// Gets the current UTC date and time offset.
     /// This should be used instead of <see cref="DateTimeOffset.UtcNow"/>.
     /// </summary>
     /// <returns>The current date and time offset.</returns>

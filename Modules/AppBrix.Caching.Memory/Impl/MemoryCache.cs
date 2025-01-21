@@ -8,6 +8,7 @@ using AppBrix.Events.Schedule.Contracts;
 using AppBrix.Lifecycle;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace AppBrix.Caching.Memory.Impl;
@@ -74,14 +75,16 @@ internal sealed class MemoryCache : IMemoryCache, IApplicationLifecycle
 
         lock (this.classLock)
         {
-            this.cache.Remove(key, out var oldItem);
-
-            this.cache.Add(key, new CacheItem(item, dispose,
+            ref var cacheItemRef = ref CollectionsMarshal.GetValueRefOrAddDefault(this.cache, key, out var exists);
+            var oldItem = cacheItemRef;
+        
+            cacheItemRef = new CacheItem(item, dispose,
                 absoluteExpiration > TimeSpan.Zero ? absoluteExpiration : this.config.DefaultAbsoluteExpiration,
                 slidingExpiration > TimeSpan.Zero ? slidingExpiration : this.config.DefaultSlidingExpiration,
-                this.app.GetTime()));
-
-            oldItem?.Dispose();
+                this.app.GetTime());
+        
+            if (exists)
+                oldItem?.Dispose();
         }
     }
 
