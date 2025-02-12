@@ -11,7 +11,7 @@ if ($release)
 
 if ($build)
 {
-    dotnet build AppBrix.sln --configuration $($configuration) --nologo --verbosity minimal;
+    dotnet build --configuration $($configuration) --nologo --verbosity minimal;
 }
 
 $filter = "";

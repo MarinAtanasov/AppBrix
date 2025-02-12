@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>AppBrix</AssemblyName>
     <AssemblyTitle>AppBrix</AssemblyTitle>
-    <Description>AppBrix Core containing the application and module classes and interfaces.</Description>
+    <Description>AppBrix core containing the application and module classes and interfaces.</Description>
     <PackageId>AppBrix</PackageId>
     <PackageTags>AppBrix</PackageTags>
     <Title>AppBrix</Title>

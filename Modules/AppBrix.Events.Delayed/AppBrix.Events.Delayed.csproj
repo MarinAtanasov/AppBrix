@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Threading.Channels" Version="9.0.1" />
+    <PackageReference Include="System.Threading.Channels" Version="9.0.2" />
   </ItemGroup>
 
 </Project>

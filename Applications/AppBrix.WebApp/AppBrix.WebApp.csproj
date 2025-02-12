@@ -16,4 +16,17 @@
     <ProjectReference Include="..\..\Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Config\App.json" />
+    <_ContentIncludedByDefault Remove="Config\FileLogger.json" />
+    <_ContentIncludedByDefault Remove="Config\Logging.json" />
+    <_ContentIncludedByDefault Remove="Config\MemoryCaching.json" />
+    <_ContentIncludedByDefault Remove="Config\MigrationsData.json" />
+    <_ContentIncludedByDefault Remove="Config\Permissions.json" />
+    <_ContentIncludedByDefault Remove="Config\ScheduledEvents.json" />
+    <_ContentIncludedByDefault Remove="Config\SqliteData.json" />
+    <_ContentIncludedByDefault Remove="Config\Time.json" />
+    <_ContentIncludedByDefault Remove="Config\WebClient.json" />
+  </ItemGroup>
+
 </Project>

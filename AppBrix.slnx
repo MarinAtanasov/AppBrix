@@ -1,0 +1,88 @@
+﻿<Solution>
+  <Folder Name="/.Global/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path=".github\workflows\build.yml" />
+    <File Path="Clean.ps1" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
+    <File Path="NuGet.Config" />
+    <File Path="Publish.ps1" />
+    <File Path="README.md" />
+    <File Path="Test.ps1" />
+  </Folder>
+  <Folder Name="/Applications/">
+    <Project Path="Applications\AppBrix.ConsoleApp\AppBrix.ConsoleApp.csproj" />
+    <Project Path="Applications\AppBrix.WebApp\AppBrix.WebApp.csproj" />
+  </Folder>
+  <Folder Name="/Bundles/">
+    <Project Path="Bundles\AppBrix.All\AppBrix.All.csproj" />
+    <Project Path="Bundles\AppBrix.All.Server\AppBrix.All.Server.csproj" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="Core\AppBrix\AppBrix.csproj" />
+    <Project Path="Core\AppBrix.Configuration\AppBrix.Configuration.csproj" />
+    <Project Path="Core\AppBrix.Configuration.Files\AppBrix.Configuration.Files.csproj" />
+    <Project Path="Core\AppBrix.Configuration.Json\AppBrix.Configuration.Json.csproj" />
+    <Project Path="Core\AppBrix.Configuration.Memory\AppBrix.Configuration.Memory.csproj" />
+    <Project Path="Core\AppBrix.Configuration.Yaml\AppBrix.Configuration.Yaml.csproj" />
+    <Project Path="Core\AppBrix.Utils\AppBrix.Utils.csproj" />
+  </Folder>
+  <Folder Name="/Modules/">
+    <Project Path="Modules\AppBrix.Caching\AppBrix.Caching.csproj" />
+    <Project Path="Modules\AppBrix.Caching.Memory\AppBrix.Caching.Memory.csproj" />
+    <Project Path="Modules\AppBrix.Cloning\AppBrix.Cloning.csproj" />
+    <Project Path="Modules\AppBrix.Container\AppBrix.Container.csproj" />
+    <Project Path="Modules\AppBrix.Data\AppBrix.Data.csproj" />
+    <Project Path="Modules\AppBrix.Data.InMemory\AppBrix.Data.InMemory.csproj" />
+    <Project Path="Modules\AppBrix.Data.Migrations\AppBrix.Data.Migrations.csproj" />
+    <Project Path="Modules\AppBrix.Data.Sqlite\AppBrix.Data.Sqlite.csproj" />
+    <Project Path="Modules\AppBrix.Data.SqlServer\AppBrix.Data.SqlServer.csproj" />
+    <Project Path="Modules\AppBrix.Events\AppBrix.Events.csproj" />
+    <Project Path="Modules\AppBrix.Events.Async\AppBrix.Events.Async.csproj" />
+    <Project Path="Modules\AppBrix.Events.Delayed\AppBrix.Events.Delayed.csproj" />
+    <Project Path="Modules\AppBrix.Events.Schedule\AppBrix.Events.Schedule.csproj" />
+    <Project Path="Modules\AppBrix.Events.Schedule.Cron\AppBrix.Events.Schedule.Cron.csproj" />
+    <Project Path="Modules\AppBrix.Events.Schedule.Timer\AppBrix.Events.Schedule.Timer.csproj" />
+    <Project Path="Modules\AppBrix.Factory\AppBrix.Factory.csproj" />
+    <Project Path="Modules\AppBrix.Logging\AppBrix.Logging.csproj" />
+    <Project Path="Modules\AppBrix.Logging.Console\AppBrix.Logging.Console.csproj" />
+    <Project Path="Modules\AppBrix.Logging.File\AppBrix.Logging.File.csproj" />
+    <Project Path="Modules\AppBrix.Permissions\AppBrix.Permissions.csproj" />
+    <Project Path="Modules\AppBrix.Random\AppBrix.Random.csproj" />
+    <Project Path="Modules\AppBrix.Text\AppBrix.Text.csproj" />
+    <Project Path="Modules\AppBrix.Time\AppBrix.Time.csproj" />
+    <Project Path="Modules\AppBrix.Web.Client\AppBrix.Web.Client.csproj" />
+    <Project Path="Modules\AppBrix.Web.Server\AppBrix.Web.Server.csproj" />
+  </Folder>
+  <Folder Name="/Testing/">
+    <Project Path="Testing\AppBrix.Testing\AppBrix.Testing.csproj" />
+    <Project Path="Testing\AppBrix.Testing.MSTest\AppBrix.Testing.MSTest.csproj" />
+    <Project Path="Testing\AppBrix.Testing.NUnit\AppBrix.Testing.NUnit.csproj" />
+    <Project Path="Testing\AppBrix.Testing.Xunit\AppBrix.Testing.Xunit.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests\AppBrix.Caching.Memory.Tests\AppBrix.Caching.Memory.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Caching.Tests\AppBrix.Caching.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Cloning.Tests\AppBrix.Cloning.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Configuration.Tests\AppBrix.Configuration.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Container.Tests\AppBrix.Container.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Data.Tests\AppBrix.Data.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Events.Async.Tests\AppBrix.Events.Async.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Events.Delayed.Tests\AppBrix.Events.Delayed.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Events.Schedule.Cron.Tests\AppBrix.Events.Schedule.Cron.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Events.Schedule.Tests\AppBrix.Events.Schedule.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Events.Schedule.Timer.Tests\AppBrix.Events.Schedule.Timer.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Events.Tests\AppBrix.Events.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Factory.Tests\AppBrix.Factory.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Logging.Tests\AppBrix.Logging.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Permissions.Tests\AppBrix.Permissions.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Random.Tests\AppBrix.Random.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Tests\AppBrix.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Text.Tests\AppBrix.Text.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Time.Tests\AppBrix.Time.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Web.Client.Tests\AppBrix.Web.Client.Tests.csproj" />
+    <Project Path="Tests\AppBrix.Web.Server.Tests\AppBrix.Web.Server.Tests.csproj" />
+    <File Path="Tests\Directory.Build.props" />
+  </Folder>
+</Solution>
