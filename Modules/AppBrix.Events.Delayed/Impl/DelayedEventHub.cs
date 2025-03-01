@@ -68,16 +68,14 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
 
     public void Raise(IEvent args)
     {
-        if (args is IDelayedEvent)
+        switch (args)
         {
-            this.RaiseDelayed(args);
-            return;
-        }
-        
-        if (args is IImmediateEvent)
-        {
-            this.RaiseImmediate(args);
-            return;
+            case IDelayedEvent:
+                this.RaiseDelayed(args);
+                return;
+            case IImmediateEvent:
+                this.RaiseImmediate(args);
+                return;
         }
 
         switch (this.config.DefaultBehavior)
