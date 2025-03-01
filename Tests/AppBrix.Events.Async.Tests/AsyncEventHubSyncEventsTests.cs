@@ -21,7 +21,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestEvent()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
@@ -39,7 +39,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestEventChild()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
@@ -57,7 +57,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestEventInterface()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<IEvent>(e =>
         {
@@ -75,7 +75,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public void TestNoSubscription()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         hub.Raise(args);
     }
 
@@ -83,7 +83,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestParentAndChildSubscription()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
@@ -99,7 +99,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestDoubleSubscription()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
@@ -115,7 +115,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestDoubleRaise()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
@@ -131,7 +131,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestUnsubscribe()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
@@ -147,7 +147,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public Task TestUninitialize()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
@@ -186,7 +186,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public async Task TestHandlerUnsubscribingItself()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
 
         var beforeHandlerCalled = 0;
         var unsubscribingHandlerCalled = 0;
@@ -220,7 +220,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     public async Task TestHandlerThrowingException()
     {
         var hub = this.GetAsyncEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
 
         var beforeHandlerCalled = 0;
         var throwingHandlerCalled = 0;
@@ -340,7 +340,7 @@ public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
     {
         const int calledCount = 15000;
         var hub = this.GetAsyncEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var childCalled = 0;
         var interfaceCalled = 0;
 

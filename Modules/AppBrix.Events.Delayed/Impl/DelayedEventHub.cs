@@ -3,6 +3,7 @@
 
 using AppBrix.Events.Contracts;
 using AppBrix.Events.Delayed.Configuration;
+using AppBrix.Events.Delayed.Contracts;
 using AppBrix.Events.Delayed.Services;
 using AppBrix.Events.Services;
 using AppBrix.Lifecycle;
@@ -67,6 +68,18 @@ internal sealed class DelayedEventHub : IDelayedEventHub, IApplicationLifecycle
 
     public void Raise(IEvent args)
     {
+        if (args is IDelayedEvent)
+        {
+            this.RaiseDelayed(args);
+            return;
+        }
+        
+        if (args is IImmediateEvent)
+        {
+            this.RaiseImmediate(args);
+            return;
+        }
+
         switch (this.config.DefaultBehavior)
         {
             case EventBehavior.Immediate:

@@ -1,13 +1,15 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
+//
 
 using AppBrix.Events.Contracts;
 
-namespace AppBrix.Events.Tests.Mocks;
+namespace AppBrix.Events.Delayed.Contracts;
 
 /// <summary>
-/// A simple event used for testing purposes.
+/// Base interface for a delayed events.
+/// Sets the default behavior of the event to delayed.
 /// </summary>
-internal class EventMock : IEvent
+public interface IDelayedEvent : IEvent
 {
 }

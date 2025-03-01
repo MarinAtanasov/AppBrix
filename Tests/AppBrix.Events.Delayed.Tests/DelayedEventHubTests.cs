@@ -35,7 +35,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
 
         Action<EventMock> handler = _ => called++;
@@ -62,9 +62,25 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
+        {
+            this.Assert(e == args, "the passed arguments should be the same as provided");
+            called++;
+        });
+        hub.Raise(args);
+        this.Assert(called == 1, "event handler should be called exactly once");
+    }
+
+    [Test, Functional]
+    public void TestRaiseIImmediateEvent()
+    {
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
+        var hub = this.App.GetDelayedEventHub();
+        var args = new ImmediateEventMock();
+        var called = 0;
+        hub.Subscribe<ImmediateEventMock>(e =>
         {
             this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
@@ -78,7 +94,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
@@ -98,7 +114,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
-        var action = () => hub.RaiseImmediate(new EventMock(5));
+        var action = () => hub.RaiseImmediate(new EventMock());
         this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
         this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
@@ -108,7 +124,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
 
         Action<EventMock> handler = _ => called++;
@@ -137,9 +153,29 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
+        {
+            this.Assert(e == args, "the passed arguments should be the same as provided");
+            called++;
+        });
+        hub.Raise(args);
+        this.Assert(called == 0, "event handler should not be called before flush");
+        hub.Flush();
+        this.Assert(called == 1, "event handler should be called exactly once after flush");
+        hub.Flush();
+        this.Assert(called == 1, "event handler should be called exactly once after second flush");
+    }
+
+    [Test, Functional]
+    public void TestRaiseDelayedEvent()
+    {
+        this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
+        var hub = this.App.GetDelayedEventHub();
+        var args = new DelayedEventMock();
+        var called = 0;
+        hub.Subscribe<DelayedEventMock>(e =>
         {
             this.Assert(e == args, "the passed arguments should be the same as provided");
             called++;
@@ -157,7 +193,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Immediate;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
@@ -181,7 +217,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
-        hub.RaiseDelayed(new EventMock(5));
+        hub.RaiseDelayed(new EventMock());
         var action = () => hub.Flush();
         this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
         this.Assert(called == 1, "the handler after the failing one shouldn't be called");
@@ -250,7 +286,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
     {
         const int calledCount = 100000;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var childCalled = 0;
         var interfaceCalled = 0;
 
@@ -272,7 +308,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
         const int calledCount = 80000;
         this.App.ConfigService.GetDelayedEventsConfig().DefaultBehavior = EventBehavior.Delayed;
         var hub = this.App.GetDelayedEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var childCalled = 0;
         var interfaceCalled = 0;
 

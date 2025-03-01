@@ -18,7 +18,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestEvent()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
@@ -33,7 +33,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestEventChild()
     {
         var hub = this.GetEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var called = 0;
         hub.Subscribe<EventMock>(e =>
         {
@@ -48,7 +48,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestEventInterface()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         hub.Subscribe<IEvent>(e =>
         {
@@ -63,7 +63,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestNoSubscription()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         hub.Raise(args);
     }
 
@@ -71,7 +71,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestParentAndChildSubscription()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
@@ -84,7 +84,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestDoubleSubscription()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
@@ -97,7 +97,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestHierarchyCallingOrder()
     {
         var hub = this.GetEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var parentCalled = false;
         var childCalled = false;
         var interfaceCalled = false;
@@ -129,7 +129,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestDoubleRaise()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<IEvent> handler = _ => called++;
         hub.Subscribe(handler);
@@ -143,7 +143,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestUnsubscribe()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
@@ -158,7 +158,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestUninitialize()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
         var called = 0;
         Action<EventMock> handler = _ => called++;
         hub.Subscribe(handler);
@@ -198,7 +198,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         hub.Subscribe<EventMock>(_ => called++);
         hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
         hub.Subscribe<EventMock>(_ => called++);
-        var action = () => hub.Raise(new EventMock(5));
+        var action = () => hub.Raise(new EventMock());
         this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
         this.Assert(called == 1, "the handler after the failing one shouldn't be called");
     }
@@ -207,7 +207,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
     public void TestHandlerUnsubscribingItself()
     {
         var hub = this.GetEventHub();
-        var args = new EventMock(10);
+        var args = new EventMock();
 
         var beforeHandlerCalled = 0;
         Action<IEvent> beforeHandler = _ => beforeHandlerCalled++;
@@ -300,7 +300,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
         const int subscribers = 10;
         const int calledCount = 70000;
         var hub = this.GetEventHub();
-        var args = new EventMockChild(10);
+        var args = new EventMockChild();
         var childCalled = 0;
         var interfaceCalled = 0;
 

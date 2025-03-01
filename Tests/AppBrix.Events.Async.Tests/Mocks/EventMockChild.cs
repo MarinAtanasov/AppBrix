@@ -9,14 +9,4 @@ namespace AppBrix.Events.Async.Tests.Mocks;
 /// </summary>
 internal sealed class EventMockChild : EventMock
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="EventMockChild"/>.
-    /// </summary>
-    /// <param name="value">The value to store.</param>
-    public EventMockChild(int value)
-        : base(value)
-    {
-    }
-    #endregion
 }
