@@ -32,7 +32,6 @@ public sealed class ScheduledEventsModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.eventHub.Initialize(context);
         this.App.Container.Register(this.eventHub);
     }

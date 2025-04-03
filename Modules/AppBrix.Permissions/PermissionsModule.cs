@@ -31,7 +31,6 @@ public sealed class PermissionsModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.permissionsService = this.App.ConfigService.GetPermissionsConfig().EnableCaching ?
             new CachedPermissionsService(new PermissionsService()) : new PermissionsService();
         this.permissionsService.Initialize(context);

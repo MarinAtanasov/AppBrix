@@ -32,16 +32,7 @@ public sealed class CloningModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.App.Container.Register(this.cloningService);
-    }
-
-    /// <summary>
-    /// Uninitializes the module.
-    /// Automatically called by <see cref="ModuleBase.Uninitialize"/>
-    /// </summary>
-    protected override void Uninitialize()
-    {
     }
     #endregion
 

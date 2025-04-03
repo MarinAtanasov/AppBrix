@@ -30,7 +30,6 @@ public sealed class ConsoleLoggingModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.logger.Initialize(context);
         this.App.Container.Register(this.logger);
     }

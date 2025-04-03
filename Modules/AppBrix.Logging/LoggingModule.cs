@@ -32,8 +32,6 @@ public sealed class LoggingModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
-
         this.logHub.Initialize(context);
         this.App.Container.Register(this.logHub);
 

@@ -30,7 +30,6 @@ public sealed class SqlServerDataModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.configurer.Initialize(context);
         this.App.Container.Register(this.configurer);
     }

@@ -42,8 +42,6 @@ public sealed class WebServerModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
-
         this.App.GetEventHub().Subscribe<IConfigureWebAppBuilder>(this.ConfigureWebAppBuilder);
         this.App.GetEventHub().Subscribe<IConfigureWebApp>(this.ConfigureWebApp);
     }

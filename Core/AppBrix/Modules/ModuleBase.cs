@@ -57,6 +57,7 @@ public abstract class ModuleBase : IModule
     {
         this.App = context.App;
         this.Initialize(context);
+        this.App.Container?.Register(this);
     }
 
     void IApplicationLifecycle.Uninitialize()

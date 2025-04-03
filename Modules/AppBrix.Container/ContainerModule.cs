@@ -30,7 +30,6 @@ public sealed class ContainerModule : ModuleBase
     protected override void Initialize(IInitializeContext context)
     {
         this.container.Initialize(context);
-        this.container.Register(this);
         this.App.Container = this.container;
     }
 

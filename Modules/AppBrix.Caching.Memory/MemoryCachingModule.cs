@@ -33,7 +33,6 @@ public sealed class MemoryCachingModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.cache.Initialize(context);
         this.App.Container.Register(this.cache);
     }

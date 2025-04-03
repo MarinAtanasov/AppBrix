@@ -32,7 +32,6 @@ public sealed class TextModule : ModuleBase
     /// <param name="context">The initialization context.</param>
     protected override void Initialize(IInitializeContext context)
     {
-        this.App.Container.Register(this);
         this.App.Container.Register(this.stringDistanceService);
         this.App.Container.Register(CodePagesEncodingProvider.Instance);
 
