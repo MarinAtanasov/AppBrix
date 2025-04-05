@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>
     <Authors>Marin Atanasov</Authors>
-    <Copyright>Copyright 2015-2024</Copyright>
+    <Copyright>Copyright 2015-2025</Copyright>
     <Deterministic>true</Deterministic>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Features>strict</Features>

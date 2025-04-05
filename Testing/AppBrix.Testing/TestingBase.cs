@@ -120,7 +120,7 @@ public abstract class TestingBase
     /// <typeparam name="T">The type of the result.</typeparam>
     /// <param name="func">The function to be called until it returns the predefined value or the timeout expires.</param>
     /// <param name="value">The result which should be returned by the function before the timeout expires.</param>
-    /// <param name="timeout">The timeout.</param>
+    /// <param name="timeout">A <see cref="TimeSpan"/> timeout to wait</param>
     /// <param name="because">Explanation why the function must return the expected value.</param>
     /// <returns>A task that completes when the function returns the predefined value</returns>
     protected async Task AssertReturns<T>(Func<T> func, T value, TimeSpan timeout, string because = "")

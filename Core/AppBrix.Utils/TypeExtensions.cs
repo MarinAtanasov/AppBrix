@@ -9,9 +9,9 @@ using System.Reflection;
 namespace AppBrix;
 
 /// <summary>
-/// Used for storing commonly used extension methods.
+/// Used for storing commonly used type extension methods.
 /// </summary>
-public static class CommonExtensions
+public static class TypeExtensions
 {
     /// <summary>
     /// Get the referenced assemblies, starting with the provided assembly.
