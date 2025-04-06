@@ -69,6 +69,31 @@ public abstract class TestingBase
     }
 
     /// <summary>
+    /// Checks that the action is executed in more than a specified time.
+    /// It does one initial pass to make sure that the code path is loaded and hot.
+    /// </summary>
+    /// <param name="action">The action to be invoked.</param>
+    /// <param name="duration">The minimum allowed duration.</param>
+    protected void AssertDelay(Action action, TimeSpan duration = default)
+    {
+        if (duration == TimeSpan.Zero)
+            duration = TimeSpan.FromMilliseconds(100);
+
+        this.AssertExecuteDelay(action, duration, "this is a delay test");
+    }
+
+    /// <summary>
+    /// Checks that the action is executed in more than a specified time.
+    /// </summary>
+    /// <param name="func">The function to be invoked.</param>
+    /// <param name="duration">The minimum allowed duration.</param>
+    protected void AssertDelay(Func<Task> func, TimeSpan duration = default)
+    {
+        var action = () => func().GetAwaiter().GetResult();
+        this.AssertPerformance(action, duration);
+    }
+
+    /// <summary>
     /// Checks that the action is executed under a specified time.
     /// It does one initial pass to make sure that the code path is loaded and hot.
     /// </summary>
@@ -82,11 +107,11 @@ public abstract class TestingBase
         if (firstPass == TimeSpan.Zero)
             firstPass = TimeSpan.FromMilliseconds(5000);
 
-        this.AssertExecuteIn(action, firstPass, "this is a performance test first pass");
+        this.AssertExecuteDuration(action, firstPass, "this is a performance test first pass");
 
         GC.Collect();
 
-        this.AssertExecuteIn(action, duration, "this is a performance test");
+        this.AssertExecuteDuration(action, duration, "this is a performance test");
     }
 
     /// <summary>
@@ -184,13 +209,26 @@ public abstract class TestingBase
     #endregion
 
     #region Private methods
-    private void AssertExecuteIn(Action action, TimeSpan limit, string because = "")
+    private void AssertExecuteDelay(Action action, TimeSpan limit, string because = "")
+    {
+        var sw = Stopwatch.StartNew();
+        action();
+        sw.Stop();
+        if (sw.Elapsed < limit)
+        {
+            throw this.GetAssertException(string.IsNullOrEmpty(because) ?
+                $"Assertion [{nameof(action)}] must take more than {limit.TotalMilliseconds} ms, but took {sw.Elapsed.TotalMilliseconds} ms." :
+                $"Assertion [{nameof(action)}] must take more than {limit.TotalMilliseconds} ms, but took {sw.Elapsed.TotalMilliseconds} ms, because {because}.");
+        }
+    }
+
+    private void AssertExecuteDuration(Action action, TimeSpan limit, string because = "")
     {
         if (!Task.Run(action).Wait(limit))
         {
             throw this.GetAssertException(string.IsNullOrEmpty(because) ?
-                $"Assertion [{nameof(action)}] must execute within {limit}." :
-                $"Assertion [{nameof(action)}] must execute within {limit}, because {because}.");
+                $"Assertion [{nameof(action)}] must execute within {limit.TotalMilliseconds} ms." :
+                $"Assertion [{nameof(action)}] must execute within {limit.TotalMilliseconds} ms, because {because}.");
         }
     }
     #endregion
