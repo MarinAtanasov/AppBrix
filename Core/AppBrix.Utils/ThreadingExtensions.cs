@@ -15,7 +15,7 @@ namespace AppBrix;
 public static class ThreadingExtensions
 {
     /// <summary>
-    /// Asynchronously waits to enter the <see cref="SemaphoreSlim"/>.
+    /// Blocks the current thread until it can enter the <see cref="SemaphoreSlim"/>. 
     /// Return a disposable <see cref="ISemaphoreReleaser"/> that can be used inside a using block to release the <see cref="SemaphoreSlim"/> object. 
     /// </summary>
     /// <param name="semaphore">The <see cref="SemaphoreSlim"/>.</param>

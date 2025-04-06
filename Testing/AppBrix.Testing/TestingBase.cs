@@ -64,10 +64,9 @@ public abstract class TestingBase
         if (value)
             return;
 
-        if (string.IsNullOrEmpty(because))
-            throw new Exception($"Assertion [{expression}] must be true.");
-
-        throw new Exception($"Assertion [{expression}] must be true, because {because}.");
+        throw new Exception(string.IsNullOrEmpty(because) ?
+            $"Assertion [{expression}] must be true." :
+            $"Assertion [{expression}] must be true, because {because}.");
     }
 
     /// <summary>
@@ -154,18 +153,16 @@ public abstract class TestingBase
         {
             action();
 
-            if (string.IsNullOrEmpty(because))
-                throw new Exception($"Assertion [{expression}] must throw an exception.");
-
-            throw new Exception($"Assertion [{expression}] must throw an exception, because {because}.");
+            throw new Exception(string.IsNullOrEmpty(because) ? 
+                $"Assertion [{expression}] must throw an exception." :
+                $"Assertion [{expression}] must throw an exception, because {because}.");
         }
         catch (T) { }
         catch (Exception e)
         {
-            if (string.IsNullOrEmpty(because))
-                throw new Exception($"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, but received {e.GetType().FullName}.");
-
-            throw new Exception($"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, because {because}, but received {e.GetType().FullName}.");
+            throw new Exception(string.IsNullOrEmpty(because) ?
+                $"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, but received {e.GetType().FullName}." :
+                $"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, because {because}, but received {e.GetType().FullName}.");
         }
     }
 
@@ -183,26 +180,12 @@ public abstract class TestingBase
     #region Private methods
     private void AssertExecuteIn(Action action, TimeSpan limit, string because = "")
     {
-        var task = Task.Run(action);
-        var stopwatch = Stopwatch.StartNew();
-
-        while (stopwatch.Elapsed < limit)
+        if (!Task.Run(action).Wait(limit))
         {
-            if (task.IsCompleted)
-            {
-                if (task.IsCompletedSuccessfully)
-                    return;
-
-                throw new Exception($"Assertion [{nameof(action)}] but threw an exception.", task.Exception);
-            }
-
-            Thread.Sleep(TimeSpan.FromMilliseconds(1));
+            throw new Exception(string.IsNullOrEmpty(because) ?
+                $"Assertion [{nameof(action)}] must execute within {limit}." :
+                $"Assertion [{nameof(action)}] must execute within {limit}, because {because}.");
         }
-
-        if (string.IsNullOrEmpty(because))
-            throw new Exception($"Assertion [{nameof(action)}] must execute within the time limit.");
-
-        throw new Exception($"Assertion [{nameof(action)}] must execute within the time limit, because {because}.");
     }
     #endregion
 }
