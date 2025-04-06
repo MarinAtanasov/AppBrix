@@ -10,15 +10,15 @@ namespace AppBrix.Testing;
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
 [Xunit.Sdk.TraitDiscoverer("Xunit.Sdk.TraitDiscoverer", "xunit.core")]
-public class CategoryAttribute : Attribute, Xunit.Sdk.ITraitAttribute
+public class TestCategoryAttribute : Attribute, Xunit.Sdk.ITraitAttribute
 {
     /// <summary>
-    /// Creates a new instance of <see cref="CategoryAttribute"/>.
+    /// Creates a new instance of <see cref="TestCategoryAttribute"/>.
     /// Requires two parameters so that Xunit can detect the category.
     /// </summary>
     /// <param name="name">Must be <see cref="TestCategories.Category"/> for consistency with other providers.</param>
     /// <param name="value">The name of the category.</param>
-    public CategoryAttribute(string name, string value)
+    public TestCategoryAttribute(string name, string value)
     {
     }
 }

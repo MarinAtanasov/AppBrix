@@ -4,6 +4,7 @@
 using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
 using System;
+using Xunit.Sdk;
 
 namespace AppBrix.Testing;
 
@@ -39,6 +40,15 @@ public abstract class TestsBase : TestingBase, IDisposable
         this.Stop();
         GC.SuppressFinalize(this);
     }
+    #endregion
+
+    #region Public and overriden methods
+    /// <summary>
+    /// Gets a test runner specific assertion exception.
+    /// </summary>
+    /// <param name="message">The exception message.</param>
+    /// <returns>The assert exception.</returns>
+    protected override Exception GetAssertException(string message) => FailException.ForFailure(message);
     #endregion
 }
 

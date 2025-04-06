@@ -6,7 +6,7 @@ namespace AppBrix.Testing;
 /// <summary>
 /// Marks a test with the <see cref="AppBrix.Testing.TestCategories.Performance"/> category.
 /// </summary>
-public sealed class PerformanceAttribute : CategoryAttribute
+public sealed class PerformanceAttribute : TestCategoryAttribute
 {
     /// <summary>
     /// Creates a new instance of <see cref="FunctionalAttribute"/>.

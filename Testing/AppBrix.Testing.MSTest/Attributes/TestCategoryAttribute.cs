@@ -10,14 +10,14 @@ namespace AppBrix.Testing;
 /// Marks a test with a test category.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public class CategoryAttribute : Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryBaseAttribute
+public class TestCategoryAttribute : Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryBaseAttribute
 {
     /// <summary>
-    /// Creates a new instance of <see cref="CategoryAttribute"/>.
+    /// Creates a new instance of <see cref="TestCategoryAttribute"/>.
     /// </summary>
     /// <param name="name">Must be <see cref="TestCategories.Category"/> for consistency with other providers.</param>
     /// <param name="value">The name of the category.</param>
-    public CategoryAttribute(string name, string value)
+    public TestCategoryAttribute(string name, string value)
     {
         this.TestCategories = [value];
     }

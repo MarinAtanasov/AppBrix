@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppBrix.Testing;
@@ -64,7 +63,7 @@ public abstract class TestingBase
         if (value)
             return;
 
-        throw new Exception(string.IsNullOrEmpty(because) ?
+        throw this.GetAssertException(string.IsNullOrEmpty(because) ?
             $"Assertion [{expression}] must be true." :
             $"Assertion [{expression}] must be true, because {because}.");
     }
@@ -153,14 +152,14 @@ public abstract class TestingBase
         {
             action();
 
-            throw new Exception(string.IsNullOrEmpty(because) ? 
+            throw this.GetAssertException(string.IsNullOrEmpty(because) ? 
                 $"Assertion [{expression}] must throw an exception." :
                 $"Assertion [{expression}] must throw an exception, because {because}.");
         }
         catch (T) { }
         catch (Exception e)
         {
-            throw new Exception(string.IsNullOrEmpty(because) ?
+            throw this.GetAssertException(string.IsNullOrEmpty(because) ?
                 $"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, but received {e.GetType().FullName}." :
                 $"Assertion [{expression}] must throw an exception of type {typeof(T).FullName}, because {because}, but received {e.GetType().FullName}.");
         }
@@ -175,6 +174,13 @@ public abstract class TestingBase
     /// <typeparam name="T">The type of exception to be thrown.</typeparam>
     protected void AssertThrows<T>(Func<object> func, string because = "", [CallerArgumentExpression(nameof(func))] string expression = "")
         where T : Exception => this.AssertThrows<T>((Action)(() => func()), because, expression);
+
+    /// <summary>
+    /// Gets a test runner specific assertion exception.
+    /// </summary>
+    /// <param name="message">The exception message.</param>
+    /// <returns>The assert exception.</returns>
+    protected abstract Exception GetAssertException(string message);
     #endregion
 
     #region Private methods
@@ -182,7 +188,7 @@ public abstract class TestingBase
     {
         if (!Task.Run(action).Wait(limit))
         {
-            throw new Exception(string.IsNullOrEmpty(because) ?
+            throw this.GetAssertException(string.IsNullOrEmpty(because) ?
                 $"Assertion [{nameof(action)}] must execute within {limit}." :
                 $"Assertion [{nameof(action)}] must execute within {limit}, because {because}.");
         }

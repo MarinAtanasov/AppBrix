@@ -4,6 +4,7 @@
 using AppBrix.Configuration.Memory;
 using AppBrix.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AppBrix.Testing;
 
@@ -29,6 +30,15 @@ public abstract class TestsBase : TestingBase
     /// </summary>
     [TestCleanup]
     public override void Stop() => base.Stop();
+    #endregion
+
+    #region Public and overriden methods
+    /// <summary>
+    /// Gets a test runner specific assertion exception.
+    /// </summary>
+    /// <param name="message">The exception message.</param>
+    /// <returns>The assert exception.</returns>
+    protected override Exception GetAssertException(string message) => new AssertFailedException(message);
     #endregion
 }
 
