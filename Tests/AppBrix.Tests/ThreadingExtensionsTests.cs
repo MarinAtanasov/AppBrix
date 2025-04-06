@@ -13,73 +13,73 @@ public sealed class UtilsExtensions : TestsBase
 {
     #region Tests
     [Test, Functional]
-    public void TestWaitReleaseSuccess()
+    public void TestLockSuccess()
     {
         var semaphore = new SemaphoreSlim(1);
 
-        var waitRelease = semaphore.WaitRelease();
-        this.Assert(waitRelease.Success, "the wait should succeed");
-        this.Assert(semaphore.CurrentCount == 0, "the current count should decrease after successful wait");
+        var semaphoreLock = semaphore.Lock();
+        this.Assert(semaphoreLock.Success, "the lock should succeed");
+        this.Assert(semaphore.CurrentCount == 0, "the current count should decrease after successful lock");
 
-        waitRelease.Dispose();
+        semaphoreLock.Dispose();
 
-        this.Assert(semaphore.CurrentCount == 1, "the current count should increase after release");
+        this.Assert(semaphore.CurrentCount == 1, "the current count should increase after lock release");
     }
 
     [Test, Functional]
-    public void TestWaitReleaseFail()
+    public void TestLockFail()
     {
         var semaphore = new SemaphoreSlim(0);
 
-        var waitRelease = semaphore.WaitRelease(TimeSpan.Zero);
-        this.Assert(waitRelease.Success == false, "the wait should fail");
-        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed wait");
+        var semaphoreLock = semaphore.Lock(TimeSpan.Zero);
+        this.Assert(semaphoreLock.Success == false, "the lock should fail");
+        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed lock");
 
-        waitRelease.Dispose();
+        semaphoreLock.Dispose();
 
-        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed wait release");
+        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed lock release");
     }
 
     [Test, Functional]
-    public async Task TestWaitAsyncReleaseSuccess()
+    public async Task TestAsyncLockSuccess()
     {
         var semaphore = new SemaphoreSlim(1);
 
-        var waitRelease = await semaphore.WaitAsyncRelease();
-        this.Assert(waitRelease.Success, "the wait should succeed");
-        this.Assert(semaphore.CurrentCount == 0, "the current count should decrease after successful wait");
+        var semaphoreLock = await semaphore.AsyncLock();
+        this.Assert(semaphoreLock.Success, "the lock should succeed");
+        this.Assert(semaphore.CurrentCount == 0, "the current count should decrease after successful lock");
 
-        waitRelease.Dispose();
+        semaphoreLock.Dispose();
 
-        this.Assert(semaphore.CurrentCount == 1, "the current count should increase after release");
+        this.Assert(semaphore.CurrentCount == 1, "the current count should increase after lock release");
     }
 
     [Test, Functional]
-    public async Task TestWaitAsyncReleaseFail()
+    public async Task TestAsyncLockFail()
     {
         var semaphore = new SemaphoreSlim(0);
 
-        var waitRelease = await semaphore.WaitAsyncRelease(TimeSpan.Zero);
-        this.Assert(waitRelease.Success == false, "the wait should fail");
-        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed wait");
+        var semaphoreLock = await semaphore.AsyncLock(TimeSpan.Zero);
+        this.Assert(semaphoreLock.Success == false, "the lock should fail");
+        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed lock");
 
-        waitRelease.Dispose();
+        semaphoreLock.Dispose();
 
-        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed wait release");
+        this.Assert(semaphore.CurrentCount == 0, "the current count should not change after failed lock release");
     }
 
     [Test, Functional]
-    public async Task TestWaitAsyncReleaseQueue()
+    public async Task TestAsyncLockQueue()
     {
         var semaphore = new SemaphoreSlim(0);
 
-        var waitReleaseTask = semaphore.WaitAsyncRelease();
-        this.Assert(waitReleaseTask.IsCompleted == false, "the task should not complete while waiting in queue");
+        var semaphoreLockTask = semaphore.AsyncLock();
+        this.Assert(semaphoreLockTask.IsCompleted == false, "the task should not complete while waiting in queue");
 
         semaphore.Release();
 
-        using var waitRelease = await waitReleaseTask;
-        this.Assert(waitRelease.Success, "the wait should succeed");
+        using var semaphoreLock = await semaphoreLockTask;
+        this.Assert(semaphoreLock.Success, "the lock should succeed");
     }
     #endregion
 }
