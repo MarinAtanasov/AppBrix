@@ -28,13 +28,13 @@ public static class AppBrixExtensions
     /// </summary>
     /// <param name="module">The module.</param>
     /// <returns>All modules inside the referenced assemblies.</returns>
-    public static IEnumerable<Type> GetAllDependencies(this IModule module)
+    public static List<Type> GetAllDependencies(this IModule module)
     {
         if (module is null)
             throw new ArgumentNullException(nameof(module));
 
         var dependencies = new List<Type>();
-        AppBrixExtensions.GetAllDependencies(module.GetType(), dependencies, new HashSet<Type>());
+        AppBrixExtensions.GetAllDependencies(module.GetType(), dependencies, []);
         return dependencies;
     }
 

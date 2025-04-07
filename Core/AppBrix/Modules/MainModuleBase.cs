@@ -21,11 +21,14 @@ public abstract class MainModuleBase : ModuleBase
     protected override void Configure(IConfigureContext context)
     {
         var configModules = this.App.ConfigService.GetAppConfig().Modules;
-        var modules = this.GetAllDependencies().Select(ModuleConfigElement.Create).Reverse();
+        var modules = this.GetAllDependencies();
+        modules.Reverse();
 
         var previousIndex = configModules.Count;
-        foreach (var module in modules)
+        foreach (var moduleType in modules)
         {
+            var module = ModuleConfigElement.Create(moduleType);
+
             var index = -1;
             for (var i = 0; i < configModules.Count; i++)
             {
