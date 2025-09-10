@@ -17,13 +17,13 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Upgrade .NET to 9.0.8.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 9.0.9.</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>net9.0</TargetFramework>
-    <Version>0.60.0</Version>
+    <Version>0.61.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
