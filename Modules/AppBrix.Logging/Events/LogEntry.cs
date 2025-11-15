@@ -11,21 +11,21 @@ internal sealed class LogEntry : ILogEntry
 {
     #region Construciton
     public LogEntry(IApp app, LogLevel level, DateTime created, string message, Exception? exception = null,
-        string? callerFile = null, string? callerMember = null, int callerLineNumber = 0)
+        string callerFilePath = "", string callerMemberName = "", int callerLineNumber = -1)
     {
         this.app = app;
         this.Level = level;
         this.Exception = exception;
         this.Message = message;
-        this.CallerFile = callerFile ?? string.Empty;
-        this.CallerMember = callerMember ?? string.Empty;
+        this.CallerFilePath = callerFilePath;
+        this.CallerMemberName = callerMemberName;
         this.CallerLineNumber = callerLineNumber;
         this.ThreadId = Environment.CurrentManagedThreadId;
         this.Created = created;
 
-        for (var i = this.CallerFile.Length - 2; i >= 0; i--)
+        for (var i = this.CallerFilePath.Length - 2; i >= 0; i--)
         {
-            if (this.CallerFile[i] is '/' or '\\')
+            if (this.CallerFilePath[i] is '/' or '\\')
             {
                 this.callerFileNameIndex = i + 1;
                 break;
@@ -37,11 +37,11 @@ internal sealed class LogEntry : ILogEntry
     #region Properties
     public LogLevel Level { get; }
 
-    public string CallerFile { get; }
+    public ReadOnlySpan<char> CallerFileName => this.CallerFilePath.AsSpan(this.callerFileNameIndex);
 
-    public ReadOnlySpan<char> CallerFileName => this.CallerFile.AsSpan(this.callerFileNameIndex);
+    public string CallerFilePath { get; }
 
-    public string CallerMember { get; }
+    public string CallerMemberName { get; }
 
     public int CallerLineNumber { get; }
 
@@ -70,7 +70,7 @@ internal sealed class LogEntry : ILogEntry
         result.Append(LogEntry.LineNumberSeparator);
         result.Append(this.CallerLineNumber);
         result.Append(LogEntry.Separator);
-        result.Append(this.CallerMember);
+        result.Append(this.CallerMemberName);
         result.Append(LogEntry.Separator);
         result.Append(this.Message);
 

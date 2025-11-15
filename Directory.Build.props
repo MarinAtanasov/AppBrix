@@ -8,22 +8,24 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Features>strict</Features>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeSymbols>true</IncludeSymbols>
     <IsTestProject>false</IsTestProject>
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
     <Nullable>enable</Nullable>
     <PackageIcon>icon-64x64.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/MarinAtanasov/AppBrix/master/icon-64x64.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/MarinAtanasov/AppBrix</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Upgrade .NET to 9.0.10.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade .NET to 10.0.0.</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MarinAtanasov/AppBrix.git</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <TargetFramework>net9.0</TargetFramework>
-    <Version>0.62.0</Version>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>0.63.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

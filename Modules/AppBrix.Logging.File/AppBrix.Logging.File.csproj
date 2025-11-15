@@ -13,8 +13,4 @@
     <ProjectReference Include="..\AppBrix.Logging\AppBrix.Logging.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
-  </ItemGroup>
-
 </Project>

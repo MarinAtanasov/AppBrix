@@ -144,14 +144,14 @@ public sealed class LogHubTests : TestsBase<LoggingModule>
     [Test, Functional]
     public void TestCallerFile()
     {
-        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerFile.EndsWith(nameof(LogHubTests) + ".cs"), "caller file should be set to current file"));
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerFilePath.EndsWith(nameof(LogHubTests) + ".cs"), "caller file should be set to current file"));
         this.App.GetLogHub().Warning("Test message");
     }
 
     [Test, Functional]
     public void TestCallerMemberName()
     {
-        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerMember == nameof(LogHubTests.TestCallerMemberName), "member name should be the current function"));
+        this.App.GetEventHub().Subscribe<ILogEntry>(x => this.Assert(x.CallerMemberName == nameof(LogHubTests.TestCallerMemberName), "member name should be the current function"));
         this.App.GetLogHub().Error("Test message");
     }
 

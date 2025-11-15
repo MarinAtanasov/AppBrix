@@ -35,7 +35,7 @@ public interface ILogEntry : IEvent
     /// <summary>
     /// Gets the full path to the file of the caller.
     /// </summary>
-    string CallerFile { get; }
+    string CallerFilePath { get; }
 
     /// <summary>
     /// Gets the name of the file of the caller.
@@ -45,7 +45,7 @@ public interface ILogEntry : IEvent
     /// <summary>
     /// Gets the member name of the caller.
     /// </summary>
-    string CallerMember { get; }
+    string CallerMemberName { get; }
 
     /// <summary>
     /// Gets the caller's line number where the the log entry was created.

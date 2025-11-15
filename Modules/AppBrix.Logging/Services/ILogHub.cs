@@ -38,95 +38,95 @@ public interface ILogHub
     /// <param name="level">The log severity level.</param>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Log(LogLevel level, string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1);
 
     /// <summary>
     /// Creates and fires a critical level log entry.
     /// </summary>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Critical(string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0
-    ) => this.Log(LogLevel.Critical, message, error, callerFile, callerMember, callerLineNumber);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1
+    ) => this.Log(LogLevel.Critical, message, error, callerFilePath, callerMemberName, callerLineNumber);
 
     /// <summary>
     /// Creates and fires a debug level log entry.
     /// </summary>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Debug(string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0
-    ) => this.Log(LogLevel.Debug, message, error, callerFile, callerMember, callerLineNumber);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1
+    ) => this.Log(LogLevel.Debug, message, error, callerFilePath, callerMemberName, callerLineNumber);
 
     /// <summary>
     /// Creates and fires an error level log entry.
     /// </summary>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Error(string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0
-    ) => this.Log(LogLevel.Error, message, error, callerFile, callerMember, callerLineNumber);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1
+    ) => this.Log(LogLevel.Error, message, error, callerFilePath, callerMemberName, callerLineNumber);
 
     /// <summary>
     /// Creates and fires an info level log entry.
     /// </summary>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Info(string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0
-    ) => this.Log(LogLevel.Info, message, error, callerFile, callerMember, callerLineNumber);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1
+    ) => this.Log(LogLevel.Info, message, error, callerFilePath, callerMemberName, callerLineNumber);
 
     /// <summary>
     /// Creates and fires a trace level log entry.
     /// </summary>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Trace(string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0
-    ) => this.Log(LogLevel.Trace, message, error, callerFile, callerMember, callerLineNumber);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1
+    ) => this.Log(LogLevel.Trace, message, error, callerFilePath, callerMemberName, callerLineNumber);
 
     /// <summary>
     /// Creates and fires a warning level log entry.
     /// </summary>
     /// <param name="message">The message to be logged.</param>
     /// <param name="error">The error message to be logged. Optional.</param>
-    /// <param name="callerFile">Full path to the caller's file. Automatically filled.</param>
-    /// <param name="callerMember">The caller's member name (function name). Automatically filled.</param>
+    /// <param name="callerFilePath">Full path to the caller's file. Automatically filled.</param>
+    /// <param name="callerMemberName">The caller's member name (function name). Automatically filled.</param>
     /// <param name="callerLineNumber">The caller's executing line number. Automatically filled.</param>
     void Warning(string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0
-    ) => this.Log(LogLevel.Warning, message, error, callerFile, callerMember, callerLineNumber);
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1
+    ) => this.Log(LogLevel.Warning, message, error, callerFilePath, callerMemberName, callerLineNumber);
 }

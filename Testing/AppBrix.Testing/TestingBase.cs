@@ -177,7 +177,7 @@ public abstract class TestingBase
         {
             action();
 
-            throw this.GetAssertException(string.IsNullOrEmpty(because) ? 
+            throw this.GetAssertException(string.IsNullOrEmpty(because) ?
                 $"Assertion [{expression}] must throw an exception." :
                 $"Assertion [{expression}] must throw an exception, because {because}.");
         }

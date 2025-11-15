@@ -13,8 +13,4 @@
     <ProjectReference Include="..\AppBrix.Events\AppBrix.Events.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Threading.Channels" Version="9.0.10" />
-  </ItemGroup>
-
 </Project>

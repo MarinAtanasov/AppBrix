@@ -45,15 +45,15 @@ internal sealed class LogHub : ILogHub, IApplicationLifecycle
     public bool IsEnabled(LogLevel level) => this.config.Level <= level;
 
     public void Log(LogLevel level, string message, Exception? error = null,
-        [CallerFilePath] string? callerFile = null,
-        [CallerMemberName] string? callerMember = null,
-        [CallerLineNumber] int callerLineNumber = 0)
+        [CallerFilePath] string callerFilePath = "",
+        [CallerMemberName] string callerMemberName = "",
+        [CallerLineNumber] int callerLineNumber = -1)
     {
         if (this.IsEnabled(level))
         {
             this.app.GetEventHub()
                 .Raise(new LogEntry(this.app, level, this.app.GetTime(), message, error,
-                    callerFile: callerFile, callerMember: callerMember, callerLineNumber: callerLineNumber));
+                    callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber));
         }
     }
     #endregion
