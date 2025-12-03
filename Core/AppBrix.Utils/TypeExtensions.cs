@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace AppBrix;
@@ -57,6 +58,16 @@ public static class TypeExtensions
 
         return assemblyQueue;
     }
+
+    /// <summary>
+    /// Finds all non-abstract classes that implement a provided type.
+    /// </summary>
+    /// <param name="assemblies">The assemblies to scan.</param>
+    /// <typeparam name="T">The type to be implemented.</typeparam>
+    /// <returns>The non-abstract classes thaht implement the provided type.</returns>
+    public static IEnumerable<Type> SelectTypes<T>(this IEnumerable<Assembly> assemblies) => assemblies
+        .SelectMany(assembly => { try { return assembly.ExportedTypes; } catch (TypeLoadException) { return []; } })
+        .Where(type => type is { IsClass: true, IsAbstract: false } && typeof(T).IsAssignableFrom(type));
 
     /// <summary>
     /// Constructs an object.

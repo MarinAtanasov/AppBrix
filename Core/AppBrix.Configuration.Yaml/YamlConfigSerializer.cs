@@ -27,9 +27,7 @@ public sealed class YamlConfigSerializer : IConfigSerializer
         var configTypes = new Lazy<Dictionary<string, Type>>(
             () => callingAssembly
                 .GetReferencedAssemblies(true)
-                .SelectMany(x => x.ExportedTypes)
-                .Where(x => x is { IsClass: true, IsAbstract: false })
-                .Where(typeof(IConfig).IsAssignableFrom)
+                .SelectTypes<IConfig>()
                 .ToDictionary(x => x.Name)
         );
 

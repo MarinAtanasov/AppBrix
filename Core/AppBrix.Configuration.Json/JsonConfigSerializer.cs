@@ -26,9 +26,7 @@ public sealed class JsonConfigSerializer : IConfigSerializer
         var configTypes = new Lazy<Dictionary<string, Type>>(
             () => callingAssembly
                 .GetReferencedAssemblies(true)
-                .SelectMany(x => x.ExportedTypes)
-                .Where(x => x.IsClass && !x.IsAbstract)
-                .Where(typeof(IConfig).IsAssignableFrom)
+                .SelectTypes<IConfig>()
                 .ToDictionary(x => x.Name)
         );
 

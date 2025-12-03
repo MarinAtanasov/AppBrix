@@ -27,8 +27,7 @@ public abstract class ModuleBase : IModule
     public virtual IEnumerable<Type> Dependencies => this.GetType().Assembly
         .GetReferencedAssemblies(recursive: false)
         .Skip(1)
-        .SelectMany(assembly => assembly.ExportedTypes)
-        .Where(t => t.IsClass && !t.IsAbstract && typeof(IModule).IsAssignableFrom(t));
+        .SelectTypes<IModule>();
     #endregion
 
     #region Public and overriden methods
