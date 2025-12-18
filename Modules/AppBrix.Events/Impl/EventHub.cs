@@ -11,84 +11,84 @@ namespace AppBrix.Events.Impl;
 
 internal sealed class EventHub : IEventHub, IApplicationLifecycle
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-    }
+	#region IApplicationLifecycle implementation
+	public void Initialize(IInitializeContext context)
+	{
+	}
 
-    public void Uninitialize()
-    {
-        this.subscriptions.Clear();
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.subscriptions.Clear();
+	}
+	#endregion
 
-    #region IEventHub implementation
-    public void Subscribe<T>(Action<T> handler) where T : IEvent
-    {
-        if (handler is null)
-            throw new ArgumentNullException(nameof(handler));
+	#region IEventHub implementation
+	public void Subscribe<T>(Action<T> handler) where T : IEvent
+	{
+		if (handler is null)
+			throw new ArgumentNullException(nameof(handler));
 
-        var type = typeof(T);
-        if (!this.subscriptions.TryGetValue(type, out var handlers))
-            this.subscriptions[type] = handlers = new EventsWrapper<T>();
+		var type = typeof(T);
+		if (!this.subscriptions.TryGetValue(type, out var handlers))
+			this.subscriptions[type] = handlers = new EventsWrapper<T>();
 
-        ((IEventsWrapper<T>)handlers).Subscribe(handler);
-    }
+		((IEventsWrapper<T>)handlers).Subscribe(handler);
+	}
 
-    public void Unsubscribe<T>(Action<T> handler) where T : IEvent
-    {
-        if (handler is null)
-            throw new ArgumentNullException(nameof(handler));
+	public void Unsubscribe<T>(Action<T> handler) where T : IEvent
+	{
+		if (handler is null)
+			throw new ArgumentNullException(nameof(handler));
 
-        var type = typeof(T);
-        if (this.subscriptions.TryGetValue(type, out var h) && h is IEventsWrapper<T> handlers)
-        {
-            handlers.Unsubscribe(handler);
-            if (handlers.IsEmpty)
-                this.subscriptions.Remove(type);
-        }
-    }
+		var type = typeof(T);
+		if (this.subscriptions.TryGetValue(type, out var h) && h is IEventsWrapper<T> handlers)
+		{
+			handlers.Unsubscribe(handler);
+			if (handlers.IsEmpty)
+				this.subscriptions.Remove(type);
+		}
+	}
 
-    public void Raise(IEvent args)
-    {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
+	public void Raise(IEvent args)
+	{
+		if (args is null)
+			throw new ArgumentNullException(nameof(args));
 
-        var type = args.GetType();
-        if (!this.eventTypes.TryGetValue(type, out var types))
-            this.eventTypes[type] = types = this.GetEventTypes(type);
+		var type = args.GetType();
+		if (!this.eventTypes.TryGetValue(type, out var types))
+			this.eventTypes[type] = types = this.GetEventTypes(type);
 
-        foreach (var eventType in types)
-        {
-            if (this.subscriptions.TryGetValue(eventType, out var handlers))
-                handlers.Execute(args);
-        }
-    }
-    #endregion
+		foreach (var eventType in types)
+		{
+			if (this.subscriptions.TryGetValue(eventType, out var handlers))
+				handlers.Execute(args);
+		}
+	}
+	#endregion
 
-    #region Private methods
-    private Type[] GetEventTypes(Type type)
-    {
-        var types = new List<Type>();
+	#region Private methods
+	private Type[] GetEventTypes(Type type)
+	{
+		var types = new List<Type>();
 
-        for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
-        {
-            if (baseType.IsAssignableTo(typeof(IEvent)))
-                types.Add(baseType);
-        }
+		for (var baseType = type; baseType != typeof(object); baseType = baseType.BaseType!)
+		{
+			if (baseType.IsAssignableTo(typeof(IEvent)))
+				types.Add(baseType);
+		}
 
-        foreach (var interfaceType in type.GetInterfaces())
-        {
-            if (interfaceType.IsAssignableTo(typeof(IEvent)))
-                types.Add(interfaceType);
-        }
+		foreach (var interfaceType in type.GetInterfaces())
+		{
+			if (interfaceType.IsAssignableTo(typeof(IEvent)))
+				types.Add(interfaceType);
+		}
 
-        return types.ToArray();
-    }
-    #endregion
+		return types.ToArray();
+	}
+	#endregion
 
-    #region Private fields and constants
-    private readonly Dictionary<Type, Type[]> eventTypes = new Dictionary<Type, Type[]>();
-    private readonly Dictionary<Type, IEventsWrapper> subscriptions = new Dictionary<Type, IEventsWrapper>();
-    #endregion
+	#region Private fields and constants
+	private readonly Dictionary<Type, Type[]> eventTypes = new Dictionary<Type, Type[]>();
+	private readonly Dictionary<Type, IEventsWrapper> subscriptions = new Dictionary<Type, IEventsWrapper>();
+	#endregion
 }

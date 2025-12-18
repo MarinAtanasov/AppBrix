@@ -9,18 +9,18 @@ namespace AppBrix.Lifecycle;
 /// </summary>
 public enum RequestedAction
 {
-    /// <summary>
-    /// No action has been requested. The lifecycle workflow will continue normally.
-    /// </summary>
-    None,
+	/// <summary>
+	/// No action has been requested. The lifecycle workflow will continue normally.
+	/// </summary>
+	None,
 
-    /// <summary>
-    /// Requested reinitialization of the partially loaded application.
-    /// </summary>
-    Reinitialize,
+	/// <summary>
+	/// Requested reinitialization of the partially loaded application.
+	/// </summary>
+	Reinitialize,
 
-    /// <summary>
-    /// Requested full restart of the partially loaded application.
-    /// </summary>
-    Restart
+	/// <summary>
+	/// Requested full restart of the partially loaded application.
+	/// </summary>
+	Restart
 }

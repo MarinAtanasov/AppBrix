@@ -10,20 +10,20 @@ namespace AppBrix.Configuration;
 /// </summary>
 public sealed class AppConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="AppConfig"/>.
-    /// </summary>
-    public AppConfig()
-    {
-        this.Modules = new List<ModuleConfigElement>();
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="AppConfig"/>.
+	/// </summary>
+	public AppConfig()
+	{
+		this.Modules = new List<ModuleConfigElement>();
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets a list of modules to be loaded by the application.
-    /// </summary>
-    public List<ModuleConfigElement> Modules { get; private set; }
-    #endregion
+	#region Properties
+	/// <summary>
+	/// Gets a list of modules to be loaded by the application.
+	/// </summary>
+	public List<ModuleConfigElement> Modules { get; private set; }
+	#endregion
 }

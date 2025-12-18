@@ -9,17 +9,17 @@ namespace AppBrix.Configuration.Json.Converters;
 
 internal sealed class JsonStringTimeSpanConverter : JsonConverter<TimeSpan?>
 {
-    public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        var stringed = reader.GetString();
-        return string.IsNullOrEmpty(stringed) ? null : TimeSpan.Parse(stringed);
-    }
+	public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+	{
+		var stringed = reader.GetString();
+		return string.IsNullOrEmpty(stringed) ? null : TimeSpan.Parse(stringed);
+	}
 
-    public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
-    {
-        if (value is null)
-            writer.WriteNullValue();
-        else
-            writer.WriteStringValue(value.ToString());
-    }
+	public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
+	{
+		if (value is null)
+			writer.WriteNullValue();
+		else
+			writer.WriteStringValue(value.ToString());
+	}
 }

@@ -8,14 +8,14 @@ namespace AppBrix.Testing;
 /// </summary>
 public sealed class PerformanceAttribute : TestCategoryAttribute
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="PerformanceAttribute"/>.
-    /// Requires two parameters so that Xunit can detect the category.
-    /// No need to explicitly provide values.
-    /// </summary>
-    /// <param name="name"><see cref="TestCategories.Category"/></param>
-    /// <param name="value"><see cref="TestCategories.Performance"/></param>
-    public PerformanceAttribute(string name = TestCategories.Category, string value = TestCategories.Performance) : base(name, value)
-    {
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="PerformanceAttribute"/>.
+	/// Requires two parameters so that Xunit can detect the category.
+	/// No need to explicitly provide values.
+	/// </summary>
+	/// <param name="name"><see cref="TestCategories.Category"/></param>
+	/// <param name="value"><see cref="TestCategories.Performance"/></param>
+	public PerformanceAttribute(string name = TestCategories.Category, string value = TestCategories.Performance) : base(name, value)
+	{
+	}
 }

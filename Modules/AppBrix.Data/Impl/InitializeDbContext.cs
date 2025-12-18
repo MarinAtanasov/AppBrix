@@ -7,20 +7,20 @@ namespace AppBrix.Data.Impl;
 
 internal sealed class InitializeDbContext : IInitializeDbContext
 {
-    #region Construction
-    public InitializeDbContext(IApp app, string? migrationsAssembly = null, string migrationsHistoryTable = "__EFMigrationsHistory")
-    {
-        this.App = app;
-        this.MigrationsAssembly = migrationsAssembly;
-        this.MigrationsHistoryTable = migrationsHistoryTable;
-    }
-    #endregion
+	#region Construction
+	public InitializeDbContext(IApp app, string? migrationsAssembly = null, string migrationsHistoryTable = "__EFMigrationsHistory")
+	{
+		this.App = app;
+		this.MigrationsAssembly = migrationsAssembly;
+		this.MigrationsHistoryTable = migrationsHistoryTable;
+	}
+	#endregion
 
-    #region Propreties
-    public IApp App { get; }
+	#region Propreties
+	public IApp App { get; }
 
-    public string? MigrationsAssembly { get; }
+	public string? MigrationsAssembly { get; }
 
-    public string MigrationsHistoryTable { get; }
-    #endregion
+	public string MigrationsHistoryTable { get; }
+	#endregion
 }

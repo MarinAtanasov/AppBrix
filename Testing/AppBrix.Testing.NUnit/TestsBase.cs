@@ -14,32 +14,32 @@ namespace AppBrix.Testing;
 /// </summary>
 public abstract class TestsBase : TestingBase
 {
-    #region Test lifecycle
-    /// <summary>
-    /// NUnit initialize method.
-    /// </summary>
-    [SetUp]
-    public virtual void Start()
-    {
-        this.Start(AppBrix.App.Create(new MemoryConfigService()));
-        this.Initialize();
-    }
+	#region Test lifecycle
+	/// <summary>
+	/// NUnit initialize method.
+	/// </summary>
+	[SetUp]
+	public virtual void Start()
+	{
+		this.Start(AppBrix.App.Create(new MemoryConfigService()));
+		this.Initialize();
+	}
 
-    /// <summary>
-    /// NUnit uninitialize method.
-    /// </summary>
-    [TearDown]
-    public override void Stop() => base.Stop();
-    #endregion
+	/// <summary>
+	/// NUnit uninitialize method.
+	/// </summary>
+	[TearDown]
+	public override void Stop() => base.Stop();
+	#endregion
 
-    #region Public and overriden methods
-    /// <summary>
-    /// Gets a test runner specific assertion exception.
-    /// </summary>
-    /// <param name="message">The exception message.</param>
-    /// <returns>The assert exception.</returns>
-    protected override Exception GetAssertException(string message) => new AssertionException(message);
-    #endregion
+	#region Public and overriden methods
+	/// <summary>
+	/// Gets a test runner specific assertion exception.
+	/// </summary>
+	/// <param name="message">The exception message.</param>
+	/// <returns>The assert exception.</returns>
+	protected override Exception GetAssertException(string message) => new AssertionException(message);
+	#endregion
 }
 
 /// <summary>
@@ -47,19 +47,19 @@ public abstract class TestsBase : TestingBase
 /// Used for testing an application with one module and its dependencies.
 /// </summary>
 public abstract class TestsBase<T> : TestsBase
-    where T : class, IModule
+	where T : class, IModule
 {
-    #region Test lifecycle
-    /// <summary>
-    /// NUnit initialize method.
-    /// </summary>
-    [SetUp]
-    public override void Start()
-    {
-        this.Start(TestApp.Create<T>());
-        this.Initialize();
-    }
-    #endregion
+	#region Test lifecycle
+	/// <summary>
+	/// NUnit initialize method.
+	/// </summary>
+	[SetUp]
+	public override void Start()
+	{
+		this.Start(TestApp.Create<T>());
+		this.Initialize();
+	}
+	#endregion
 }
 
 /// <summary>
@@ -67,18 +67,18 @@ public abstract class TestsBase<T> : TestsBase
 /// Used for testing an application with two modules and their dependencies.
 /// </summary>
 public abstract class TestsBase<T1, T2> : TestsBase
-    where T1 : class, IModule
-    where T2 : class, IModule
+	where T1 : class, IModule
+	where T2 : class, IModule
 {
-    #region Test lifecycle
-    /// <summary>
-    /// NUnit initialize method.
-    /// </summary>
-    [SetUp]
-    public override void Start()
-    {
-        this.Start(TestApp.Create<T1, T2>());
-        this.Initialize();
-    }
-    #endregion
+	#region Test lifecycle
+	/// <summary>
+	/// NUnit initialize method.
+	/// </summary>
+	[SetUp]
+	public override void Start()
+	{
+		this.Start(TestApp.Create<T1, T2>());
+		this.Initialize();
+	}
+	#endregion
 }

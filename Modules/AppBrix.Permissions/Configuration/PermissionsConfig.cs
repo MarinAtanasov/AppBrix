@@ -10,20 +10,20 @@ namespace AppBrix.Permissions.Configuration;
 /// </summary>
 public sealed class PermissionsConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="PermissionsConfig"/>.
-    /// </summary>
-    public PermissionsConfig()
-    {
-        this.EnableCaching = false;
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="PermissionsConfig"/>.
+	/// </summary>
+	public PermissionsConfig()
+	{
+		this.EnableCaching = false;
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets whether parent permissions should be cached or resolved at runtime.
-    /// </summary>
-    public bool EnableCaching { get; set; }
-    #endregion
+	#region Properties
+	/// <summary>
+	/// Gets or sets whether parent permissions should be cached or resolved at runtime.
+	/// </summary>
+	public bool EnableCaching { get; set; }
+	#endregion
 }

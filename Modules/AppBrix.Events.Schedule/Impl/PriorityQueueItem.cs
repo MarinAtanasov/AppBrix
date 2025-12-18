@@ -9,48 +9,48 @@ namespace AppBrix.Events.Schedule.Impl;
 
 internal abstract class PriorityQueueItem : IEvent
 {
-    #region Properties
-    public abstract object ScheduledEvent { get; }
+	#region Properties
+	public abstract object ScheduledEvent { get; }
 
-    public DateTime Occurrence { get; protected set; }
-    #endregion
+	public DateTime Occurrence { get; protected set; }
+	#endregion
 
-    #region Public and overriden methods
-    public abstract void Execute();
+	#region Public and overriden methods
+	public abstract void Execute();
 
-    public abstract void MoveToNextOccurrence(DateTime now);
-    #endregion
+	public abstract void MoveToNextOccurrence(DateTime now);
+	#endregion
 }
 
 internal sealed class PriorityQueueItem<T> : PriorityQueueItem where T : IEvent
 {
-    #region Construction
-    public PriorityQueueItem(IApp app, IScheduledEvent<T> scheduledEvent)
-    {
-        this.app = app;
-        this.scheduledEvent = scheduledEvent;
-    }
-    #endregion
+	#region Construction
+	public PriorityQueueItem(IApp app, IScheduledEvent<T> scheduledEvent)
+	{
+		this.app = app;
+		this.scheduledEvent = scheduledEvent;
+	}
+	#endregion
 
-    #region Properties
-    public override object ScheduledEvent => this.scheduledEvent;
-    #endregion
+	#region Properties
+	public override object ScheduledEvent => this.scheduledEvent;
+	#endregion
 
-    #region Public and overriden methods
-    public override void Execute()
-    {
-        try
-        {
-            this.app.GetEventHub().Raise(this.scheduledEvent.Event);
-        }
-        catch (Exception) { }
-    }
+	#region Public and overriden methods
+	public override void Execute()
+	{
+		try
+		{
+			this.app.GetEventHub().Raise(this.scheduledEvent.Event);
+		}
+		catch (Exception) { }
+	}
 
-    public override void MoveToNextOccurrence(DateTime now) => this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);
-    #endregion
+	public override void MoveToNextOccurrence(DateTime now) => this.Occurrence = this.scheduledEvent.GetNextOccurrence(now);
+	#endregion
 
-    #region Private fields and constants
-    private readonly IApp app;
-    private readonly IScheduledEvent<T> scheduledEvent;
-    #endregion
+	#region Private fields and constants
+	private readonly IApp app;
+	private readonly IScheduledEvent<T> scheduledEvent;
+	#endregion
 }

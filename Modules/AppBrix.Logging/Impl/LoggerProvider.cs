@@ -10,45 +10,45 @@ namespace AppBrix.Logging.Impl;
 
 internal sealed class LoggerProvider : ILoggerProvider, IApplicationLifecycle
 {
-    #region Public and overriden methods
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-    }
+	#region Public and overriden methods
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+	}
 
-    public void Uninitialize()
-    {
-        foreach (var logger in this.loggers.Values)
-        {
-            logger.Enabled = false;
-        }
-        this.loggers.Clear();
-        this.app = null!;
-        this.Dispose();
-    }
+	public void Uninitialize()
+	{
+		foreach (var logger in this.loggers.Values)
+		{
+			logger.Enabled = false;
+		}
+		this.loggers.Clear();
+		this.app = null!;
+		this.Dispose();
+	}
 
-    public void Dispose()
-    {
-    }
+	public void Dispose()
+	{
+	}
 
-    public ILogger CreateLogger(string categoryName)
-    {
-        if (this.loggers.TryGetValue(categoryName, out var logger))
-            return logger;
+	public ILogger CreateLogger(string categoryName)
+	{
+		if (this.loggers.TryGetValue(categoryName, out var logger))
+			return logger;
 
-        lock (this.classLock)
-        {
-            if (!this.loggers.TryGetValue(categoryName, out logger))
-                this.loggers[categoryName] = logger = new Logger(this.app, categoryName, this.app is not null);
-        }
+		lock (this.classLock)
+		{
+			if (!this.loggers.TryGetValue(categoryName, out logger))
+				this.loggers[categoryName] = logger = new Logger(this.app, categoryName, this.app is not null);
+		}
 
-        return logger;
-    }
-    #endregion
+		return logger;
+	}
+	#endregion
 
-    #region Private fields and constants
-    private readonly Lock classLock = new Lock();
-    private readonly Dictionary<string, Logger> loggers = new Dictionary<string, Logger>();
-    private IApp app = null!;
-    #endregion
+	#region Private fields and constants
+	private readonly Lock classLock = new Lock();
+	private readonly Dictionary<string, Logger> loggers = new Dictionary<string, Logger>();
+	private IApp app = null!;
+	#endregion
 }

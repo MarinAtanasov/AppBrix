@@ -10,13 +10,13 @@ namespace AppBrix.Events.Delayed.Configuration;
 /// </summary>
 public enum EventBehavior
 {
-    /// <summary>
-    /// Events will be raised immediately by default.
-    /// </summary>
-    Immediate,
+	/// <summary>
+	/// Events will be raised immediately by default.
+	/// </summary>
+	Immediate,
 
-    /// <summary>
-    /// Events will be delayed by default and will be executed on the next <see cref="IDelayedEventHub.Flush"/>.
-    /// </summary>
-    Delayed
+	/// <summary>
+	/// Events will be delayed by default and will be executed on the next <see cref="IDelayedEventHub.Flush"/>.
+	/// </summary>
+	Delayed
 }

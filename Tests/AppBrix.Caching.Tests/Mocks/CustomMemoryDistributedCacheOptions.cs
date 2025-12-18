@@ -8,5 +8,5 @@ namespace AppBrix.Caching.Tests.Mocks;
 
 internal sealed class CustomMemoryDistributedCacheOptions : MemoryDistributedCacheOptions, IOptions<MemoryDistributedCacheOptions>
 {
-    public MemoryDistributedCacheOptions Value => this;
+	public MemoryDistributedCacheOptions Value => this;
 }

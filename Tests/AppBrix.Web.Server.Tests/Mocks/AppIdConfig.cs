@@ -8,5 +8,5 @@ namespace AppBrix.Web.Server.Tests.Mocks;
 
 public class AppIdConfig : IConfig
 {
-    public Guid Id { get; set; }
+	public Guid Id { get; set; }
 }

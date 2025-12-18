@@ -8,12 +8,12 @@ namespace AppBrix.Factory.Impl;
 
 internal class Factory<T> : IFactory<T>
 {
-    public Factory(Func<object> factory)
-    {
-        this.factory = factory;
-    }
+	public Factory(Func<object> factory)
+	{
+		this.factory = factory;
+	}
 
-    public T Get() => (T)this.factory();
+	public T Get() => (T)this.factory();
 
-    private readonly Func<object> factory;
+	private readonly Func<object> factory;
 }

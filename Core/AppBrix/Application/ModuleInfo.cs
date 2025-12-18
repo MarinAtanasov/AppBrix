@@ -11,29 +11,29 @@ namespace AppBrix.Application;
 /// </summary>
 internal sealed class ModuleInfo
 {
-    #region Construction
-    public ModuleInfo(IModule module, ModuleConfigElement config)
-    {
-        this.Module = module;
-        this.Config = config;
-        this.Status = config.Status;
-    }
-    #endregion
+	#region Construction
+	public ModuleInfo(IModule module, ModuleConfigElement config)
+	{
+		this.Module = module;
+		this.Config = config;
+		this.Status = config.Status;
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets the instance of the module which is used by the application.
-    /// </summary>
-    public IModule Module { get; }
+	#region Properties
+	/// <summary>
+	/// Gets the instance of the module which is used by the application.
+	/// </summary>
+	public IModule Module { get; }
 
-    /// <summary>
-    /// Gets the configuration element for the module.
-    /// </summary>
-    public ModuleConfigElement Config { get; }
+	/// <summary>
+	/// Gets the configuration element for the module.
+	/// </summary>
+	public ModuleConfigElement Config { get; }
 
-    /// <summary>
-    /// Gets the initial status of the module when this instance of <see cref="ModuleInfo"/> was created.
-    /// </summary>
-    public ModuleStatus Status { get; }
-    #endregion
+	/// <summary>
+	/// Gets the initial status of the module when this instance of <see cref="ModuleInfo"/> was created.
+	/// </summary>
+	public ModuleStatus Status { get; }
+	#endregion
 }

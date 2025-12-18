@@ -7,5 +7,5 @@ namespace AppBrix.Cloning.Tests.Mocks;
 
 internal sealed class DelegateWrapperMock
 {
-    public Func<DelegateWrapperMock> Delegate { get; set; }
+	public Func<DelegateWrapperMock> Delegate { get; set; }
 }

@@ -10,40 +10,40 @@ namespace AppBrix.Time.Impl;
 
 internal sealed class TimeService : IApplicationLifecycle, ITimeService
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-        this.dateTimeFormat = context.App.ConfigService.GetTimeConfig().DateTimeFormat;
-        this.offsetFormat = context.App.ConfigService.GetTimeConfig().OffsetFormat;
-    }
+	#region IApplicationLifecycle implementation
+	public void Initialize(IInitializeContext context)
+	{
+		this.dateTimeFormat = context.App.ConfigService.GetTimeConfig().DateTimeFormat;
+		this.offsetFormat = context.App.ConfigService.GetTimeConfig().OffsetFormat;
+	}
 
-    public void Uninitialize()
-    {
-        this.dateTimeFormat = string.Empty;
-        this.offsetFormat = string.Empty;
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.dateTimeFormat = string.Empty;
+		this.offsetFormat = string.Empty;
+	}
+	#endregion
 
-    #region ITimeService implementation
-    public DateTime GetTime() => DateTime.UtcNow;
+	#region ITimeService implementation
+	public DateTime GetTime() => DateTime.UtcNow;
 
-    public DateTimeOffset GetTimeLocal() => DateTimeOffset.Now;
+	public DateTimeOffset GetTimeLocal() => DateTimeOffset.Now;
 
-    public DateTimeOffset GetTimeUtc() => DateTimeOffset.UtcNow;
+	public DateTimeOffset GetTimeUtc() => DateTimeOffset.UtcNow;
 
-    public DateTime ToDateTime(string time) => 
-        DateTime.ParseExact(time, this.dateTimeFormat, CultureInfo.InvariantCulture).ToUniversalTime();
+	public DateTime ToDateTime(string time) =>
+		DateTime.ParseExact(time, this.dateTimeFormat, CultureInfo.InvariantCulture).ToUniversalTime();
 
-    public DateTimeOffset ToDateTimeOffset(string time) =>
-        DateTimeOffset.ParseExact(time, this.offsetFormat, CultureInfo.InvariantCulture);
+	public DateTimeOffset ToDateTimeOffset(string time) =>
+		DateTimeOffset.ParseExact(time, this.offsetFormat, CultureInfo.InvariantCulture);
 
-    public string ToString(DateTime time) => time.ToString(this.dateTimeFormat);
+	public string ToString(DateTime time) => time.ToString(this.dateTimeFormat);
 
-    public string ToString(DateTimeOffset time) => time.ToString(this.offsetFormat);
-    #endregion
+	public string ToString(DateTimeOffset time) => time.ToString(this.offsetFormat);
+	#endregion
 
-    #region Private fields and constants
-    private string dateTimeFormat = string.Empty;
-    private string offsetFormat = string.Empty;
-    #endregion
+	#region Private fields and constants
+	private string dateTimeFormat = string.Empty;
+	private string offsetFormat = string.Empty;
+	#endregion
 }

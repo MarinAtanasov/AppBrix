@@ -6,5 +6,5 @@ namespace AppBrix.Cloning.Tests.Mocks;
 
 internal sealed class SelfReferencingMock
 {
-    public SelfReferencingMock Other { get; set; }
+	public SelfReferencingMock Other { get; set; }
 }

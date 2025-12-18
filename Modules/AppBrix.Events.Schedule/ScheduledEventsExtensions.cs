@@ -12,17 +12,17 @@ namespace AppBrix;
 /// </summary>
 public static class ScheduledEventsExtensions
 {
-    /// <summary>
-    /// Gets the currently loaded scheduled event hub.
-    /// </summary>
-    /// <param name="app">The current application.</param>
-    /// <returns>The event hub.</returns>
-    public static IScheduledEventHub GetScheduledEventHub(this IApp app) => (IScheduledEventHub)app.Get(typeof(IScheduledEventHub));
+	/// <summary>
+	/// Gets the currently loaded scheduled event hub.
+	/// </summary>
+	/// <param name="app">The current application.</param>
+	/// <returns>The event hub.</returns>
+	public static IScheduledEventHub GetScheduledEventHub(this IApp app) => (IScheduledEventHub)app.Get(typeof(IScheduledEventHub));
 
-    /// <summary>
-    /// Gets the <see cref="ScheduledEventsConfig"/> from <see cref="IConfigService"/>.
-    /// </summary>
-    /// <param name="service">The configuration service.</param>
-    /// <returns>The <see cref="ScheduledEventsConfig"/>.</returns>
-    public static ScheduledEventsConfig GetScheduledEventsConfig(this IConfigService service) => (ScheduledEventsConfig)service.Get(typeof(ScheduledEventsConfig));
+	/// <summary>
+	/// Gets the <see cref="ScheduledEventsConfig"/> from <see cref="IConfigService"/>.
+	/// </summary>
+	/// <param name="service">The configuration service.</param>
+	/// <returns>The <see cref="ScheduledEventsConfig"/>.</returns>
+	public static ScheduledEventsConfig GetScheduledEventsConfig(this IConfigService service) => (ScheduledEventsConfig)service.Get(typeof(ScheduledEventsConfig));
 }

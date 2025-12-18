@@ -11,20 +11,20 @@ namespace AppBrix.Events.Schedule.Configuration;
 /// </summary>
 public sealed class ScheduledEventsConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="ScheduledEventsConfig"/>.
-    /// </summary>
-    public ScheduledEventsConfig()
-    {
-        this.ExecutionCheck = TimeSpan.FromSeconds(1);
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="ScheduledEventsConfig"/>.
+	/// </summary>
+	public ScheduledEventsConfig()
+	{
+		this.ExecutionCheck = TimeSpan.FromSeconds(1);
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets how often the scheduled event hub should check events' execution time.
-    /// </summary>
-    public TimeSpan ExecutionCheck { get; set; }
-    #endregion
+	#region Properties
+	/// <summary>
+	/// Gets or sets how often the scheduled event hub should check events' execution time.
+	/// </summary>
+	public TimeSpan ExecutionCheck { get; set; }
+	#endregion
 }

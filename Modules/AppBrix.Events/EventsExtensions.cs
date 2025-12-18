@@ -10,10 +10,10 @@ namespace AppBrix;
 /// </summary>
 public static class EventsExtensions
 {
-    /// <summary>
-    /// Gets the currently loaded event hub.
-    /// </summary>
-    /// <param name="app">The current application.</param>
-    /// <returns>The event hub.</returns>
-    public static IEventHub GetEventHub(this IApp app) => (IEventHub)app.Get(typeof(IEventHub));
+	/// <summary>
+	/// Gets the currently loaded event hub.
+	/// </summary>
+	/// <param name="app">The current application.</param>
+	/// <returns>The event hub.</returns>
+	public static IEventHub GetEventHub(this IApp app) => (IEventHub)app.Get(typeof(IEventHub));
 }

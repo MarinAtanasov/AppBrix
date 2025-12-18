@@ -11,23 +11,23 @@ namespace AppBrix.Text.Impl;
 /// </summary>
 internal sealed class EncodingProviderWrapper : EncodingProvider, IApplicationLifecycle
 {
-    #region Public and overriden methods
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-    }
+	#region Public and overriden methods
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+	}
 
-    public void Uninitialize()
-    {
-        this.app = null;
-    }
+	public void Uninitialize()
+	{
+		this.app = null;
+	}
 
-    public override Encoding? GetEncoding(string name) => this.app?.Get<EncodingProvider>().GetEncoding(name);
+	public override Encoding? GetEncoding(string name) => this.app?.Get<EncodingProvider>().GetEncoding(name);
 
-    public override Encoding? GetEncoding(int codepage) => this.app?.Get<EncodingProvider>().GetEncoding(codepage);
-    #endregion
+	public override Encoding? GetEncoding(int codepage) => this.app?.Get<EncodingProvider>().GetEncoding(codepage);
+	#endregion
 
-    #region Private fields and constants
-    private IApp? app;
-    #endregion
+	#region Private fields and constants
+	private IApp? app;
+	#endregion
 }

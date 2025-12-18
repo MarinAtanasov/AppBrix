@@ -10,20 +10,20 @@ namespace AppBrix.Data.InMemory.Configuration;
 /// </summary>
 public sealed class InMemoryDataConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="InMemoryDataConfig"/> with default property values.
-    /// </summary>
-    public InMemoryDataConfig()
-    {
-        this.ConnectionString = "AppBrix";
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="InMemoryDataConfig"/> with default property values.
+	/// </summary>
+	public InMemoryDataConfig()
+	{
+		this.ConnectionString = "AppBrix";
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets the connection string to the InMemory database instance.
-    /// </summary>
-    public string ConnectionString { get; set; }
-    #endregion
+	#region Properties
+	/// <summary>
+	/// Gets or sets the connection string to the InMemory database instance.
+	/// </summary>
+	public string ConnectionString { get; set; }
+	#endregion
 }

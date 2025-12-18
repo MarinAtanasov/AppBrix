@@ -12,15 +12,15 @@ namespace AppBrix.Lifecycle;
 /// </summary>
 public interface IApplicationLifecycle
 {
-    /// <summary>
-    /// Makes runtime changes required for the object to function.
-    /// </summary>
-    /// <param name="context">The initialization context.</param>
-    void Initialize(IInitializeContext context);
+	/// <summary>
+	/// Makes runtime changes required for the object to function.
+	/// </summary>
+	/// <param name="context">The initialization context.</param>
+	void Initialize(IInitializeContext context);
 
-    /// <summary>
-    /// Reverts any changes my by the Initialize method.
-    /// Unregisters and uninitializes all of its inner components.
-    /// </summary>
-    void Uninitialize();
+	/// <summary>
+	/// Reverts any changes my by the Initialize method.
+	/// Unregisters and uninitializes all of its inner components.
+	/// </summary>
+	void Uninitialize();
 }

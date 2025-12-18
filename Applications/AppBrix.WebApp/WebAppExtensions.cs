@@ -5,5 +5,5 @@ namespace AppBrix;
 
 public static class WebAppExtensions
 {
-    public static BooksDbContext GetBooksContext(this IDbContextService service) => (BooksDbContext)service.Get(typeof(BooksDbContext));
+	public static BooksDbContext GetBooksContext(this IDbContextService service) => (BooksDbContext)service.Get(typeof(BooksDbContext));
 }

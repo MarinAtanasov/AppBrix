@@ -9,7 +9,7 @@ namespace AppBrix.Configuration.Tests;
 [TestClass]
 public sealed class YamlConfigSerializerTests : ConfigSerializerTestsBase
 {
-    #region Protected methods
-    protected override IConfigSerializer GetSerializer() => new YamlConfigSerializer();
-    #endregion
+	#region Protected methods
+	protected override IConfigSerializer GetSerializer() => new YamlConfigSerializer();
+	#endregion
 }

@@ -9,16 +9,16 @@ namespace AppBrix.Events.Async.Impl;
 
 internal class SyncTaskQueueItem<T> : ITaskQueueItem<T> where T : IEvent
 {
-    public SyncTaskQueueItem(Action<T> handler)
-    {
-        this.Handler = handler;
-    }
+	public SyncTaskQueueItem(Action<T> handler)
+	{
+		this.Handler = handler;
+	}
 
-    public Action<T> Handler { get; }
+	public Action<T> Handler { get; }
 
-    public Task Execute(T args)
-    {
-        this.Handler(args);
-        return Task.CompletedTask;
-    }
+	public Task Execute(T args)
+	{
+		this.Handler(args);
+		return Task.CompletedTask;
+	}
 }

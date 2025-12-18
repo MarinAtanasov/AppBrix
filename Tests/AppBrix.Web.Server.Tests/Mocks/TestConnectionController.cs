@@ -11,36 +11,36 @@ namespace AppBrix.Web.Server.Tests.Mocks;
 [Route("api/[controller]")]
 public sealed class TestConnectionController : Controller
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="TestConnectionController"/>.
-    /// </summary>
-    /// <param name="app">The current app.</param>
-    public TestConnectionController(IApp app)
-    {
-        this.app = app;
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="TestConnectionController"/>.
+	/// </summary>
+	/// <param name="app">The current app.</param>
+	public TestConnectionController(IApp app)
+	{
+		this.app = app;
+	}
+	#endregion
 
-    #region Public and overriden methods
-    /// <summary>
-    /// Returns true to indicate that the service has been reached as expected.
-    /// Returns false if the current application is null.
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    public bool TestConnection() => this.app is not null;
+	#region Public and overriden methods
+	/// <summary>
+	/// Returns true to indicate that the service has been reached as expected.
+	/// Returns false if the current application is null.
+	/// </summary>
+	/// <returns></returns>
+	[HttpGet]
+	public bool TestConnection() => this.app is not null;
 
-    /// <summary>
-    /// Returns true to indicate that the service has been reached as expected.
-    /// Returns false if the current application is null.
-    /// </summary>
-    /// <returns></returns>
-    [HttpPost]
-    public int TestConnection([FromBody] int number) => number;
-    #endregion
+	/// <summary>
+	/// Returns true to indicate that the service has been reached as expected.
+	/// Returns false if the current application is null.
+	/// </summary>
+	/// <returns></returns>
+	[HttpPost]
+	public int TestConnection([FromBody] int number) => number;
+	#endregion
 
-    #region Private fields and constants
-    private readonly IApp app;
-    #endregion
+	#region Private fields and constants
+	private readonly IApp app;
+	#endregion
 }

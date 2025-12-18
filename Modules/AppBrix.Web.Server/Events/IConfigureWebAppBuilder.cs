@@ -11,8 +11,8 @@ namespace AppBrix.Web.Server.Events;
 /// </summary>
 public interface IConfigureWebAppBuilder : IEvent
 {
-    /// <summary>
-    /// Gets the <see cref="WebApplicationBuilder"/>.
-    /// </summary>
-    WebApplicationBuilder Builder { get; }
+	/// <summary>
+	/// Gets the <see cref="WebApplicationBuilder"/>.
+	/// </summary>
+	WebApplicationBuilder Builder { get; }
 }

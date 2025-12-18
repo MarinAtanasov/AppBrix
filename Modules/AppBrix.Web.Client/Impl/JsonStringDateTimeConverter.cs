@@ -10,24 +10,24 @@ namespace AppBrix.Web.Client.Impl;
 
 internal sealed class JsonStringDateTimeConverter : JsonConverter<DateTime?>
 {
-    public JsonStringDateTimeConverter(ITimeService timeService)
-    {
-        this.timeService = timeService;
-    }
+	public JsonStringDateTimeConverter(ITimeService timeService)
+	{
+		this.timeService = timeService;
+	}
 
-    public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        var stringed = reader.GetString();
-        return string.IsNullOrEmpty(stringed) ? null : this.timeService.ToDateTime(stringed);
-    }
+	public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+	{
+		var stringed = reader.GetString();
+		return string.IsNullOrEmpty(stringed) ? null : this.timeService.ToDateTime(stringed);
+	}
 
-    public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
-    {
-        if (value is null)
-            writer.WriteNullValue();
-        else
-            writer.WriteStringValue(this.timeService.ToString(value.Value));
-    }
+	public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+	{
+		if (value is null)
+			writer.WriteNullValue();
+		else
+			writer.WriteStringValue(this.timeService.ToString(value.Value));
+	}
 
-    private readonly ITimeService timeService;
+	private readonly ITimeService timeService;
 }

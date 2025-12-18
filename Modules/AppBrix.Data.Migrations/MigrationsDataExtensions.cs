@@ -14,16 +14,16 @@ namespace AppBrix;
 /// </summary>
 public static class MigrationsDataExtensions
 {
-    /// <summary>
-    /// Gets the <see cref="MigrationsDataConfig"/> from <see cref="IConfigService"/>.
-    /// </summary>
-    /// <param name="service">The configuration service.</param>
-    /// <returns>The <see cref="MigrationsDataConfig"/>.</returns>
-    public static MigrationsDataConfig GetMigrationsDataConfig(this IConfigService service) => (MigrationsDataConfig)service.Get(typeof(MigrationsDataConfig));
+	/// <summary>
+	/// Gets the <see cref="MigrationsDataConfig"/> from <see cref="IConfigService"/>.
+	/// </summary>
+	/// <param name="service">The configuration service.</param>
+	/// <returns>The <see cref="MigrationsDataConfig"/>.</returns>
+	public static MigrationsDataConfig GetMigrationsDataConfig(this IConfigService service) => (MigrationsDataConfig)service.Get(typeof(MigrationsDataConfig));
 
-    /// <summary>
-    /// Gets an instance of <see cref="MigrationsDbContext"/>.
-    /// </summary>
-    /// <returns>A database context.</returns>
-    internal static MigrationsDbContext GetMigrationsContext(this IDbContextService service) => (MigrationsDbContext)service.Get(typeof(MigrationsDbContext));
+	/// <summary>
+	/// Gets an instance of <see cref="MigrationsDbContext"/>.
+	/// </summary>
+	/// <returns>A database context.</returns>
+	internal static MigrationsDbContext GetMigrationsContext(this IDbContextService service) => (MigrationsDbContext)service.Get(typeof(MigrationsDbContext));
 }

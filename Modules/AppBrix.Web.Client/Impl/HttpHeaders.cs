@@ -8,11 +8,11 @@ namespace AppBrix.Web.Client.Impl;
 
 internal sealed class HttpHeaders : Dictionary<string, IEnumerable<string>>, IHttpHeaders
 {
-    public HttpHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
-    {
-        foreach (var header in headers)
-        {
-            this[header.Key] = header.Value;
-        }
-    }
+	public HttpHeaders(IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+	{
+		foreach (var header in headers)
+		{
+			this[header.Key] = header.Value;
+		}
+	}
 }

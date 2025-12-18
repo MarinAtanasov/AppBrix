@@ -13,53 +13,53 @@ namespace AppBrix.Logging.Impl;
 
 internal sealed class LogHub : ILogHub, IApplicationLifecycle
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-        this.config = this.app.ConfigService.GetLoggingConfig();
-    }
+	#region IApplicationLifecycle implementation
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+		this.config = this.app.ConfigService.GetLoggingConfig();
+	}
 
-    public void Uninitialize()
-    {
-        this.config = null!;
-        this.app = null!;
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.config = null!;
+		this.app = null!;
+	}
+	#endregion
 
-    #region ILogHub implementation
-    public void Subscribe(Action<ILogEntry> logger)
-    {
-        if (this.config.Async)
-            this.app.GetAsyncEventHub().Subscribe(logger);
-        else
-            this.app.GetEventHub().Subscribe(logger);
-    }
+	#region ILogHub implementation
+	public void Subscribe(Action<ILogEntry> logger)
+	{
+		if (this.config.Async)
+			this.app.GetAsyncEventHub().Subscribe(logger);
+		else
+			this.app.GetEventHub().Subscribe(logger);
+	}
 
-    public void Unsubscribe(Action<ILogEntry> logger)
-    {
-        this.app.GetEventHub().Unsubscribe(logger);
-        this.app.GetAsyncEventHub().Unsubscribe(logger);
-    }
+	public void Unsubscribe(Action<ILogEntry> logger)
+	{
+		this.app.GetEventHub().Unsubscribe(logger);
+		this.app.GetAsyncEventHub().Unsubscribe(logger);
+	}
 
-    public bool IsEnabled(LogLevel level) => this.config.Level <= level;
+	public bool IsEnabled(LogLevel level) => this.config.Level <= level;
 
-    public void Log(LogLevel level, string message, Exception? error = null,
-        [CallerFilePath] string callerFilePath = "",
-        [CallerMemberName] string callerMemberName = "",
-        [CallerLineNumber] int callerLineNumber = -1)
-    {
-        if (this.IsEnabled(level))
-        {
-            this.app.GetEventHub()
-                .Raise(new LogEntry(this.app, level, this.app.GetTime(), message, error,
-                    callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber));
-        }
-    }
-    #endregion
+	public void Log(LogLevel level, string message, Exception? error = null,
+		[CallerFilePath] string callerFilePath = "",
+		[CallerMemberName] string callerMemberName = "",
+		[CallerLineNumber] int callerLineNumber = -1)
+	{
+		if (this.IsEnabled(level))
+		{
+			this.app.GetEventHub()
+				.Raise(new LogEntry(this.app, level, this.app.GetTime(), message, error,
+					callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber));
+		}
+	}
+	#endregion
 
-    #region Private fields and constants
-    private IApp app = null!;
-    private LoggingConfig config = null!;
-    #endregion
+	#region Private fields and constants
+	private IApp app = null!;
+	private LoggingConfig config = null!;
+	#endregion
 }

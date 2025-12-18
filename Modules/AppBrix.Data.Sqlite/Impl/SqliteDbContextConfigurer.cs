@@ -11,29 +11,29 @@ namespace AppBrix.Data.Sqlite.Impl;
 
 internal sealed class SqliteDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
 {
-    public void Initialize(IInitializeContext context)
-    {
-        this.connectionString = context.App.ConfigService.GetSqliteDataConfig().ConnectionString;
-    }
+	public void Initialize(IInitializeContext context)
+	{
+		this.connectionString = context.App.ConfigService.GetSqliteDataConfig().ConnectionString;
+	}
 
-    public void Uninitialize()
-    {
-        this.connectionString = String.Empty;
-    }
+	public void Uninitialize()
+	{
+		this.connectionString = String.Empty;
+	}
 
-    public void Configure(IConfigureDbContext context)
-    {
-        context.OptionsBuilder.UseSqlite(
-            this.connectionString,
-            builder =>
-            {
-                if (!string.IsNullOrEmpty(context.MigrationsAssembly))
-                    builder = builder.MigrationsAssembly(context.MigrationsAssembly);
-                if (!string.IsNullOrEmpty(context.MigrationsHistoryTable))
-                    builder = builder.MigrationsHistoryTable(context.MigrationsHistoryTable);
-            }
-        );
-    }
+	public void Configure(IConfigureDbContext context)
+	{
+		context.OptionsBuilder.UseSqlite(
+			this.connectionString,
+			builder =>
+			{
+				if (!string.IsNullOrEmpty(context.MigrationsAssembly))
+					builder = builder.MigrationsAssembly(context.MigrationsAssembly);
+				if (!string.IsNullOrEmpty(context.MigrationsHistoryTable))
+					builder = builder.MigrationsHistoryTable(context.MigrationsHistoryTable);
+			}
+		);
+	}
 
-    private string connectionString = String.Empty;
+	private string connectionString = String.Empty;
 }

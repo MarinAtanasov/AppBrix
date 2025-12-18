@@ -8,27 +8,27 @@ namespace AppBrix.Events.Impl;
 
 internal interface IEventsWrapper
 {
-    void Execute(IEvent args);
+	void Execute(IEvent args);
 }
 
 internal interface IEventsWrapper<out T> : IEventsWrapper where T : IEvent
 {
-    bool IsEmpty { get; }
+	bool IsEmpty { get; }
 
-    void Subscribe(Action<T> handler);
-    
-    void Unsubscribe(Action<T> handler);
+	void Subscribe(Action<T> handler);
+
+	void Unsubscribe(Action<T> handler);
 }
 
 internal sealed class EventsWrapper<T> : IEventsWrapper<T> where T : IEvent
 {
-    public bool IsEmpty => this.Handlers is null;
+	public bool IsEmpty => this.Handlers is null;
 
-    private event Action<T>? Handlers;
+	private event Action<T>? Handlers;
 
-    public void Subscribe(Action<T> handler) => this.Handlers += handler;
+	public void Subscribe(Action<T> handler) => this.Handlers += handler;
 
-    public void Unsubscribe(Action<T> handler) => this.Handlers -= handler;
+	public void Unsubscribe(Action<T> handler) => this.Handlers -= handler;
 
-    public void Execute(IEvent args) => this.Handlers?.Invoke((T)args);
+	public void Execute(IEvent args) => this.Handlers?.Invoke((T)args);
 }

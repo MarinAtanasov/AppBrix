@@ -6,12 +6,12 @@ namespace AppBrix.Factory.Tests.Mocks;
 
 internal sealed class NonDefaultConstructorClass : DefaultConstructorClass, ITestInterface
 {
-    public NonDefaultConstructorClass(bool val)
-    {
-        this.Value = val;
-    }
+	public NonDefaultConstructorClass(bool val)
+	{
+		this.Value = val;
+	}
 
-    public bool Modified { get; set; }
+	public bool Modified { get; set; }
 
-    public bool Value { get; }
+	public bool Value { get; }
 }

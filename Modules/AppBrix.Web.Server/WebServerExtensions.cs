@@ -11,17 +11,17 @@ namespace AppBrix;
 /// </summary>
 public static class WebServerExtensions
 {
-    /// <summary>
-    /// Builds the web application using the current <see cref="IApp"/>.
-    /// </summary>
-    /// <param name="builder">The web application builder.</param>
-    /// <param name="app">The current application.</param>
-    /// <returns>The web application.</returns>
-    public static WebApplication Build(this WebApplicationBuilder builder, IApp app)
-    {
-        app.GetEventHub().Raise(new ConfigureWebAppBuilder(builder));
-        var webApp = builder.Build();
-        app.GetEventHub().Raise(new ConfigureWebApp(webApp));
-        return webApp;
-    }
+	/// <summary>
+	/// Builds the web application using the current <see cref="IApp"/>.
+	/// </summary>
+	/// <param name="builder">The web application builder.</param>
+	/// <param name="app">The current application.</param>
+	/// <returns>The web application.</returns>
+	public static WebApplication Build(this WebApplicationBuilder builder, IApp app)
+	{
+		app.GetEventHub().Raise(new ConfigureWebAppBuilder(builder));
+		var webApp = builder.Build();
+		app.GetEventHub().Raise(new ConfigureWebApp(webApp));
+		return webApp;
+	}
 }

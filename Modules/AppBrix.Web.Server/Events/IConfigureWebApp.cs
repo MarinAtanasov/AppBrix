@@ -11,8 +11,8 @@ namespace AppBrix.Web.Server.Events;
 /// </summary>
 public interface IConfigureWebApp : IEvent
 {
-    /// <summary>
-    /// Gets the <see cref="WebApplication"/>.
-    /// </summary>
-    WebApplication App { get; }
+	/// <summary>
+	/// Gets the <see cref="WebApplication"/>.
+	/// </summary>
+	WebApplication App { get; }
 }

@@ -8,10 +8,10 @@ namespace AppBrix.Testing;
 /// </summary>
 public sealed class PerformanceAttribute : TestCategoryAttribute
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="PerformanceAttribute"/>.
-    /// </summary>
-    public PerformanceAttribute() : base(TestCategories.Category, TestCategories.Performance)
-    {
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="PerformanceAttribute"/>.
+	/// </summary>
+	public PerformanceAttribute() : base(TestCategories.Category, TestCategories.Performance)
+	{
+	}
 }

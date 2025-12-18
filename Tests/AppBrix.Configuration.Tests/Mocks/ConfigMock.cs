@@ -8,9 +8,9 @@ namespace AppBrix.Configuration.Tests.Mocks;
 
 internal sealed class ConfigMock : IConfig
 {
-    public DateTimeKind Enum { get; set; }
+	public DateTimeKind Enum { get; set; }
 
-    public TimeSpan? TimeSpan { get; set; }
+	public TimeSpan? TimeSpan { get; set; }
 
-    public Version Version { get; set; }
+	public Version Version { get; set; }
 }

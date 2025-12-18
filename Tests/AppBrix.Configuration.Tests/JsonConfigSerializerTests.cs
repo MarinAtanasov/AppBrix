@@ -9,7 +9,7 @@ namespace AppBrix.Configuration.Tests;
 [TestClass]
 public sealed class JsonConfigSerializerTests : ConfigSerializerTestsBase
 {
-    #region Protected methods
-    protected override IConfigSerializer GetSerializer() => new JsonConfigSerializer();
-    #endregion
+	#region Protected methods
+	protected override IConfigSerializer GetSerializer() => new JsonConfigSerializer();
+	#endregion
 }

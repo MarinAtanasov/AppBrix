@@ -11,10 +11,10 @@ namespace AppBrix;
 /// </summary>
 public static class TextExtensions
 {
-    /// <summary>
-    /// Gets the application's currently registered <see cref="IStringDistanceService"/>
-    /// </summary>
-    /// <param name="app">The application.</param>
-    /// <returns>The registered string distance service.</returns>
-    public static IStringDistanceService GetStringDistanceService(this IApp app) => (IStringDistanceService)app.Get(typeof(IStringDistanceService));
+	/// <summary>
+	/// Gets the application's currently registered <see cref="IStringDistanceService"/>
+	/// </summary>
+	/// <param name="app">The application.</param>
+	/// <returns>The registered string distance service.</returns>
+	public static IStringDistanceService GetStringDistanceService(this IApp app) => (IStringDistanceService)app.Get(typeof(IStringDistanceService));
 }

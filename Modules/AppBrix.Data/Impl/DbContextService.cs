@@ -11,30 +11,30 @@ namespace AppBrix.Data.Impl;
 
 internal sealed class DbContextService : IDbContextService, IApplicationLifecycle
 {
-    #region Public and overriden methods
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-    }
+	#region Public and overriden methods
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+	}
 
-    public void Uninitialize()
-    {
-        this.app = null!;
-    }
+	public void Uninitialize()
+	{
+		this.app = null!;
+	}
 
-    public DbContext Get(Type type)
-    {
-        if (type is null)
-            throw new ArgumentNullException(nameof(type));
+	public DbContext Get(Type type)
+	{
+		if (type is null)
+			throw new ArgumentNullException(nameof(type));
 
-        var factory = this.app.GetFactoryService().GetFactory(type);
-        var context = factory?.Get() ?? type.CreateObject();
-        (context as DbContextBase)?.Initialize(new InitializeDbContext(this.app));
-        return (DbContext)context;
-    }
-    #endregion
+		var factory = this.app.GetFactoryService().GetFactory(type);
+		var context = factory?.Get() ?? type.CreateObject();
+		(context as DbContextBase)?.Initialize(new InitializeDbContext(this.app));
+		return (DbContext)context;
+	}
+	#endregion
 
-    #region Private fields and constants
-    private IApp app = null!;
-    #endregion
+	#region Private fields and constants
+	private IApp app = null!;
+	#endregion
 }

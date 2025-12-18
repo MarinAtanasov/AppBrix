@@ -11,10 +11,10 @@ namespace AppBrix;
 /// </summary>
 public static class FileLoggingExtensions
 {
-    /// <summary>
-    /// Gets the <see cref="FileLoggerConfig"/> from <see cref="IConfigService"/>.
-    /// </summary>
-    /// <param name="service">The configuration service.</param>
-    /// <returns>The <see cref="FileLoggerConfig"/>.</returns>
-    public static FileLoggerConfig GetFileLoggerConfig(this IConfigService service) => (FileLoggerConfig)service.Get(typeof(FileLoggerConfig));
+	/// <summary>
+	/// Gets the <see cref="FileLoggerConfig"/> from <see cref="IConfigService"/>.
+	/// </summary>
+	/// <param name="service">The configuration service.</param>
+	/// <returns>The <see cref="FileLoggerConfig"/>.</returns>
+	public static FileLoggerConfig GetFileLoggerConfig(this IConfigService service) => (FileLoggerConfig)service.Get(typeof(FileLoggerConfig));
 }

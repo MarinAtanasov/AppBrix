@@ -10,10 +10,10 @@ namespace AppBrix;
 /// </summary>
 public static class FactoryExtensions
 {
-    /// <summary>
-    /// Gets the currently loaded factory service.
-    /// </summary>
-    /// <param name="app">The current application.</param>
-    /// <returns>The factory.</returns>
-    public static IFactoryService GetFactoryService(this IApp app) => (IFactoryService)app.Get(typeof(IFactoryService));
+	/// <summary>
+	/// Gets the currently loaded factory service.
+	/// </summary>
+	/// <param name="app">The current application.</param>
+	/// <returns>The factory.</returns>
+	public static IFactoryService GetFactoryService(this IApp app) => (IFactoryService)app.Get(typeof(IFactoryService));
 }

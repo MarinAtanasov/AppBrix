@@ -12,10 +12,10 @@ namespace AppBrix;
 /// </summary>
 public static class SqlServerDataExtensions
 {
-    /// <summary>
-    /// Gets the <see cref="SqlServerDataConfig"/> from <see cref="IConfigService"/>.
-    /// </summary>
-    /// <param name="service">The configuration service.</param>
-    /// <returns>The <see cref="SqlServerDataConfig"/>.</returns>
-    public static SqlServerDataConfig GetSqlServerDataConfig(this IConfigService service) => (SqlServerDataConfig)service.Get(typeof(SqlServerDataConfig));
+	/// <summary>
+	/// Gets the <see cref="SqlServerDataConfig"/> from <see cref="IConfigService"/>.
+	/// </summary>
+	/// <param name="service">The configuration service.</param>
+	/// <returns>The <see cref="SqlServerDataConfig"/>.</returns>
+	public static SqlServerDataConfig GetSqlServerDataConfig(this IConfigService service) => (SqlServerDataConfig)service.Get(typeof(SqlServerDataConfig));
 }

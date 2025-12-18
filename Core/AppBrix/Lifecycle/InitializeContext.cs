@@ -5,16 +5,16 @@ namespace AppBrix.Lifecycle;
 
 internal sealed class InitializeContext : IInitializeContext
 {
-    #region Construction
-    public InitializeContext(IApp app)
-    {
-        this.App = app;
-    }
-    #endregion
+	#region Construction
+	public InitializeContext(IApp app)
+	{
+		this.App = app;
+	}
+	#endregion
 
-    #region Properties
-    public IApp App { get; }
+	#region Properties
+	public IApp App { get; }
 
-    public RequestedAction RequestedAction { get; set; }
-    #endregion
+	public RequestedAction RequestedAction { get; set; }
+	#endregion
 }

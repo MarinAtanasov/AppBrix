@@ -11,27 +11,27 @@ namespace AppBrix.Logging.Configuration;
 /// </summary>
 public sealed class LoggingConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="LoggingConfig"/> with default property values.
-    /// </summary>
-    public LoggingConfig()
-    {
-        this.Async = false;
-        this.Level = LogLevel.Trace;
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="LoggingConfig"/> with default property values.
+	/// </summary>
+	public LoggingConfig()
+	{
+		this.Async = false;
+		this.Level = LogLevel.Trace;
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets whether to use an asynchronous logger.
-    /// Changing this value requires module/application restart.
-    /// </summary>
-    public bool Async { get; set; }
+	#region Properties
+	/// <summary>
+	/// Gets or sets whether to use an asynchronous logger.
+	/// Changing this value requires module/application restart.
+	/// </summary>
+	public bool Async { get; set; }
 
-    /// <summary>
-    /// Gets or sets the minimal level in which the log entry events should be raised.
-    /// </summary>
-    public LogLevel Level { get; set; }
-    #endregion
+	/// <summary>
+	/// Gets or sets the minimal level in which the log entry events should be raised.
+	/// </summary>
+	public LogLevel Level { get; set; }
+	#endregion
 }

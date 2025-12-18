@@ -11,28 +11,28 @@ namespace AppBrix.Time.Configuration;
 /// </summary>
 public sealed class TimeConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="TimeConfig"/> with default values for the properties.
-    /// </summary>
-    public TimeConfig()
-    {
-        this.DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffK";
-        this.OffsetFormat = "yyyy-MM-ddTHH:mm:ss.fffK";
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="TimeConfig"/> with default values for the properties.
+	/// </summary>
+	public TimeConfig()
+	{
+		this.DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffK";
+		this.OffsetFormat = "yyyy-MM-ddTHH:mm:ss.fffK";
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets the time string format to be used inside the application.
-    /// Changing this property requires module/application reinitialization.
-    /// </summary>
-    public string DateTimeFormat { get; set; }
+	#region Properties
+	/// <summary>
+	/// Gets or sets the time string format to be used inside the application.
+	/// Changing this property requires module/application reinitialization.
+	/// </summary>
+	public string DateTimeFormat { get; set; }
 
-    /// <summary>
-    /// Gets or sets the time offset string format to be used inside the application.
-    /// Changing this property requires module/application reinitialization.
-    /// </summary>
-    public string OffsetFormat { get; set; }
-    #endregion
+	/// <summary>
+	/// Gets or sets the time offset string format to be used inside the application.
+	/// Changing this property requires module/application reinitialization.
+	/// </summary>
+	public string OffsetFormat { get; set; }
+	#endregion
 }

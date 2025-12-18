@@ -9,43 +9,43 @@ namespace AppBrix.Web.Client.Tests;
 [TestClass]
 public sealed class WebClientTests : TestsBase<WebClientModule>
 {
-    #region Tests
-    [Test, Functional]
-    public void TestSetNullHeader()
-    {
-        var request = this.App.GetFactoryService().GetHttpRequest();
-        var action = () => request.SetHeader(string.Empty);
-        this.AssertThrows<ArgumentNullException>(action, "header cannot be empty");;
-    }
+	#region Tests
+	[Test, Functional]
+	public void TestSetNullHeader()
+	{
+		var request = this.App.GetFactoryService().GetHttpRequest();
+		var action = () => request.SetHeader(string.Empty);
+		this.AssertThrows<ArgumentNullException>(action, "header cannot be empty");;
+	}
 
-    [Test, Functional]
-    public void TestSetNullMethod()
-    {
-        var request = this.App.GetFactoryService().GetHttpRequest();
-        var action = () => request.SetMethod(string.Empty);
-        this.AssertThrows<ArgumentNullException>(action, "method cannot be empty");;
-    }
+	[Test, Functional]
+	public void TestSetNullMethod()
+	{
+		var request = this.App.GetFactoryService().GetHttpRequest();
+		var action = () => request.SetMethod(string.Empty);
+		this.AssertThrows<ArgumentNullException>(action, "method cannot be empty");;
+	}
 
-    [Test, Functional]
-    public void TestSetNullUrl()
-    {
-        var request = this.App.GetFactoryService().GetHttpRequest();
-        var action = () => request.SetUrl(string.Empty);
-        this.AssertThrows<ArgumentNullException>(action, "url cannot be empty");;
-    }
+	[Test, Functional]
+	public void TestSetNullUrl()
+	{
+		var request = this.App.GetFactoryService().GetHttpRequest();
+		var action = () => request.SetUrl(string.Empty);
+		this.AssertThrows<ArgumentNullException>(action, "url cannot be empty");;
+	}
 
-    [Test, Performance]
-    public void TestPerformanceGetHttpRequest() => this.AssertPerformance(this.TestPerformanceGetHttpRequestInternal);
-    #endregion
+	[Test, Performance]
+	public void TestPerformanceGetHttpRequest() => this.AssertPerformance(this.TestPerformanceGetHttpRequestInternal);
+	#endregion
 
-    #region Private methods
-    private void TestPerformanceGetHttpRequestInternal()
-    {
-        var service = this.App.GetFactoryService();
-        for (var i = 0; i < 150000; i++)
-        {
-            service.GetHttpRequest();
-        }
-    }
-    #endregion
+	#region Private methods
+	private void TestPerformanceGetHttpRequestInternal()
+	{
+		var service = this.App.GetFactoryService();
+		for (var i = 0; i < 150000; i++)
+		{
+			service.GetHttpRequest();
+		}
+	}
+	#endregion
 }

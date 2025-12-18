@@ -11,15 +11,15 @@ namespace AppBrix.Logging.Tests.Mocks;
 /// </summary>
 internal sealed class LoggerMock
 {
-    #region Properties
-    public IReadOnlyList<ILogEntry> LoggedEntries => this.loggedEntries;
-    #endregion
+	#region Properties
+	public IReadOnlyList<ILogEntry> LoggedEntries => this.loggedEntries;
+	#endregion
 
-    #region Public and overriden methods
-    public void LogEntry(ILogEntry entry) => this.loggedEntries.Add(entry);
-    #endregion
+	#region Public and overriden methods
+	public void LogEntry(ILogEntry entry) => this.loggedEntries.Add(entry);
+	#endregion
 
-    #region Private fields and constants
-    private readonly List<ILogEntry> loggedEntries = new List<ILogEntry>();
-    #endregion
+	#region Private fields and constants
+	private readonly List<ILogEntry> loggedEntries = new List<ILogEntry>();
+	#endregion
 }

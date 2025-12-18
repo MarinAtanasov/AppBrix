@@ -10,193 +10,193 @@ namespace AppBrix.Permissions.Impl;
 
 internal sealed class PermissionsService : IPermissionsService, IApplicationLifecycle
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-    }
+	#region IApplicationLifecycle implementation
+	public void Initialize(IInitializeContext context)
+	{
+	}
 
-    public void Uninitialize()
-    {
-        this.parents.Clear();
-        this.children.Clear();
-        this.allowed.Clear();
-        this.denied.Clear();
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.parents.Clear();
+		this.children.Clear();
+		this.allowed.Clear();
+		this.denied.Clear();
+	}
+	#endregion
 
-    #region IPermissionsService implementation
-    public void AddParent(string role, string parent)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
-        if (string.IsNullOrEmpty(parent))
-            throw new ArgumentNullException(nameof(parent));
-        if (role == parent)
-            throw new InvalidOperationException($"Role cannot have itself as a parent: {role}.");
-        if (this.HasParent(parent, role))
-            throw new InvalidOperationException($"Trying to create a circular dependency between {role} and {parent}.");
+	#region IPermissionsService implementation
+	public void AddParent(string role, string parent)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
+		if (string.IsNullOrEmpty(parent))
+			throw new ArgumentNullException(nameof(parent));
+		if (role == parent)
+			throw new InvalidOperationException($"Role cannot have itself as a parent: {role}.");
+		if (this.HasParent(parent, role))
+			throw new InvalidOperationException($"Trying to create a circular dependency between {role} and {parent}.");
 
-        this.parents.AddValue(role, parent);
-        this.children.AddValue(parent, role);
-    }
+		this.parents.AddValue(role, parent);
+		this.children.AddValue(parent, role);
+	}
 
-    public void DeleteRole(string role)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
+	public void DeleteRole(string role)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
 
-        if (this.parents.Remove(role, out var roleParents))
-        {
-            foreach (var parent in roleParents)
-            {
-                this.children.RemoveValue(parent, role);
-            }
-        }
+		if (this.parents.Remove(role, out var roleParents))
+		{
+			foreach (var parent in roleParents)
+			{
+				this.children.RemoveValue(parent, role);
+			}
+		}
 
-        if (this.children.Remove(role, out var roleChildren))
-        {
-            foreach (var child in roleChildren)
-            {
-                this.parents.RemoveValue(child, role);
-            }
-        }
+		if (this.children.Remove(role, out var roleChildren))
+		{
+			foreach (var child in roleChildren)
+			{
+				this.parents.RemoveValue(child, role);
+			}
+		}
 
-        this.allowed.Remove(role);
-        this.denied.Remove(role);
-    }
+		this.allowed.Remove(role);
+		this.denied.Remove(role);
+	}
 
-    public void RemoveParent(string role, string parent)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
-        if (string.IsNullOrEmpty(parent))
-            throw new ArgumentNullException(nameof(parent));
+	public void RemoveParent(string role, string parent)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
+		if (string.IsNullOrEmpty(parent))
+			throw new ArgumentNullException(nameof(parent));
 
-        this.parents.RemoveValue(role, parent);
-        this.children.RemoveValue(parent, role);
-    }
+		this.parents.RemoveValue(role, parent);
+		this.children.RemoveValue(parent, role);
+	}
 
-    public IReadOnlyCollection<string> GetParents(string role)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
+	public IReadOnlyCollection<string> GetParents(string role)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
 
-        return this.parents.GetOrEmpty(role);
-    }
+		return this.parents.GetOrEmpty(role);
+	}
 
-    public IReadOnlyCollection<string> GetChildren(string role)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
+	public IReadOnlyCollection<string> GetChildren(string role)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
 
-        return this.children.GetOrEmpty(role);
-    }
+		return this.children.GetOrEmpty(role);
+	}
 
-    public void Allow(string role, string permission)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
-        if (string.IsNullOrEmpty(permission))
-            throw new ArgumentNullException(nameof(permission));
+	public void Allow(string role, string permission)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
+		if (string.IsNullOrEmpty(permission))
+			throw new ArgumentNullException(nameof(permission));
 
-        this.denied.RemoveValue(role, permission);
-        this.allowed.AddValue(role, permission);
-    }
+		this.denied.RemoveValue(role, permission);
+		this.allowed.AddValue(role, permission);
+	}
 
-    public void Deny(string role, string permission)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
-        if (string.IsNullOrEmpty(permission))
-            throw new ArgumentNullException(nameof(permission));
+	public void Deny(string role, string permission)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
+		if (string.IsNullOrEmpty(permission))
+			throw new ArgumentNullException(nameof(permission));
 
-        this.allowed.RemoveValue(role, permission);
-        this.denied.AddValue(role, permission);
-    }
+		this.allowed.RemoveValue(role, permission);
+		this.denied.AddValue(role, permission);
+	}
 
-    public void Unset(string role, string permission)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
-        if (string.IsNullOrEmpty(permission))
-            throw new ArgumentNullException(nameof(permission));
+	public void Unset(string role, string permission)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
+		if (string.IsNullOrEmpty(permission))
+			throw new ArgumentNullException(nameof(permission));
 
-        this.allowed.RemoveValue(role, permission);
-        this.denied.RemoveValue(role, permission);
-    }
+		this.allowed.RemoveValue(role, permission);
+		this.denied.RemoveValue(role, permission);
+	}
 
-    public bool Check(string role, string permission)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
-        if (string.IsNullOrEmpty(permission))
-            throw new ArgumentNullException(nameof(permission));
+	public bool Check(string role, string permission)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
+		if (string.IsNullOrEmpty(permission))
+			throw new ArgumentNullException(nameof(permission));
 
-        return this.HasPermission(role, permission) ?? false;
-    }
+		return this.HasPermission(role, permission) ?? false;
+	}
 
-    public IReadOnlyCollection<string> GetAllowed(string role)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
+	public IReadOnlyCollection<string> GetAllowed(string role)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
 
-        return this.allowed.GetOrEmpty(role);
-    }
+		return this.allowed.GetOrEmpty(role);
+	}
 
-    public IReadOnlyCollection<string> GetDenied(string role)
-    {
-        if (string.IsNullOrEmpty(role))
-            throw new ArgumentNullException(nameof(role));
+	public IReadOnlyCollection<string> GetDenied(string role)
+	{
+		if (string.IsNullOrEmpty(role))
+			throw new ArgumentNullException(nameof(role));
 
-        return this.denied.GetOrEmpty(role);
-    }
-    #endregion
+		return this.denied.GetOrEmpty(role);
+	}
+	#endregion
 
-    #region Private methods
-    private bool HasParent(string role, string parent)
-    {
-        if (this.parents.TryGetValue(role, out var roleParents))
-        {
-            foreach (var roleParent in roleParents)
-            {
-                if (roleParent == parent || this.HasParent(roleParent, parent))
-                    return true;
-            }
-        }
+	#region Private methods
+	private bool HasParent(string role, string parent)
+	{
+		if (this.parents.TryGetValue(role, out var roleParents))
+		{
+			foreach (var roleParent in roleParents)
+			{
+				if (roleParent == parent || this.HasParent(roleParent, parent))
+					return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    private bool? HasPermission(string role, string permission)
-    {
-        if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
-            return false;
+	private bool? HasPermission(string role, string permission)
+	{
+		if (this.denied.TryGetValue(role, out var roleDenied) && roleDenied.Contains(permission))
+			return false;
 
-        if (this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission))
-            return true;
+		if (this.allowed.TryGetValue(role, out var roleAllowed) && roleAllowed.Contains(permission))
+			return true;
 
-        bool? hasPermission = null;
+		bool? hasPermission = null;
 
-        if (this.parents.TryGetValue(role, out var roleParents))
-        {
-            foreach (var roleParent in roleParents)
-            {
-                var parentPermission = this.HasPermission(roleParent, permission);
-                if (parentPermission.HasValue)
-                    hasPermission = parentPermission;
-                if (parentPermission == false)
-                    break;
-            }
-        }
+		if (this.parents.TryGetValue(role, out var roleParents))
+		{
+			foreach (var roleParent in roleParents)
+			{
+				var parentPermission = this.HasPermission(roleParent, permission);
+				if (parentPermission.HasValue)
+					hasPermission = parentPermission;
+				if (parentPermission == false)
+					break;
+			}
+		}
 
-        return hasPermission;
-    }
-    #endregion
+		return hasPermission;
+	}
+	#endregion
 
-    #region Private fields and constants
-    private readonly Dictionary<string, HashSet<string>> parents = new Dictionary<string, HashSet<string>>();
-    private readonly Dictionary<string, HashSet<string>> children = new Dictionary<string, HashSet<string>>();
-    private readonly Dictionary<string, HashSet<string>> allowed = new Dictionary<string, HashSet<string>>();
-    private readonly Dictionary<string, HashSet<string>> denied = new Dictionary<string, HashSet<string>>();
-    #endregion
+	#region Private fields and constants
+	private readonly Dictionary<string, HashSet<string>> parents = new Dictionary<string, HashSet<string>>();
+	private readonly Dictionary<string, HashSet<string>> children = new Dictionary<string, HashSet<string>>();
+	private readonly Dictionary<string, HashSet<string>> allowed = new Dictionary<string, HashSet<string>>();
+	private readonly Dictionary<string, HashSet<string>> denied = new Dictionary<string, HashSet<string>>();
+	#endregion
 }

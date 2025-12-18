@@ -10,25 +10,25 @@ namespace AppBrix.Tests.Mocks;
 
 public class SimpleModuleMock : ModuleBase
 {
-    public override IEnumerable<Type> Dependencies => [];
+	public override IEnumerable<Type> Dependencies => [];
 
-    public bool IsInitialized { get; private set; }
+	public bool IsInitialized { get; private set; }
 
-    public bool IsUninitialized { get; private set; }
+	public bool IsUninitialized { get; private set; }
 
-    protected override void Initialize(IInitializeContext context)
-    {
-        if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+	protected override void Initialize(IInitializeContext context)
+	{
+		if (this.App != context.App)
+			throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
-        this.IsInitialized = true;
-    }
+		this.IsInitialized = true;
+	}
 
-    protected override void Uninitialize()
-    {
-        if (this.App is null)
-            throw new InvalidOperationException($"this.{nameof(this.App)} should not be null.");
+	protected override void Uninitialize()
+	{
+		if (this.App is null)
+			throw new InvalidOperationException($"this.{nameof(this.App)} should not be null.");
 
-        this.IsUninitialized = true;
-    }
+		this.IsUninitialized = true;
+	}
 }

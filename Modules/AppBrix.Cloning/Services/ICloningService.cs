@@ -9,19 +9,19 @@ namespace AppBrix.Cloning.Services;
 /// </summary>
 public interface ICloningService
 {
-    /// <summary>
-    /// Creates a deep copy of the specified object.
-    /// </summary>
-    /// <typeparam name="T">The type of the object.</typeparam>
-    /// <param name="obj">The object to be copied</param>
-    /// <returns>A deep copy of the specified object.</returns>
-    T DeepCopy<T>(T obj);
+	/// <summary>
+	/// Creates a deep copy of the specified object.
+	/// </summary>
+	/// <typeparam name="T">The type of the object.</typeparam>
+	/// <param name="obj">The object to be copied</param>
+	/// <returns>A deep copy of the specified object.</returns>
+	T DeepCopy<T>(T obj);
 
-    /// <summary>
-    /// Creates a shallow copy of the specified object.
-    /// </summary>
-    /// <typeparam name="T">The type of the object.</typeparam>
-    /// <param name="obj">The object to be copied</param>
-    /// <returns>A shallow copy of the specified object.</returns>
-    T ShallowCopy<T>(T obj);
+	/// <summary>
+	/// Creates a shallow copy of the specified object.
+	/// </summary>
+	/// <typeparam name="T">The type of the object.</typeparam>
+	/// <param name="obj">The object to be copied</param>
+	/// <returns>A shallow copy of the specified object.</returns>
+	T ShallowCopy<T>(T obj);
 }

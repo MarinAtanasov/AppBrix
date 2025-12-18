@@ -13,110 +13,110 @@ namespace AppBrix.Configuration.Yaml.Converters;
 
 internal sealed class ConfigConverter : IYamlTypeConverter
 {
-    #region Construction
-    public ConfigConverter(Lazy<Dictionary<string, Type>> configTypes, IValueSerializer serializer)
-    {
-        this.configTypes = configTypes;
-        this.serializer = serializer;
-    }
-    
-    public ConfigConverter(Lazy<Dictionary<string, Type>> configTypes, IValueDeserializer deserializer)
-    {
-        this.configTypes = configTypes;
-        this.deserializer = deserializer;
-    }
-    #endregion
+	#region Construction
+	public ConfigConverter(Lazy<Dictionary<string, Type>> configTypes, IValueSerializer serializer)
+	{
+		this.configTypes = configTypes;
+		this.serializer = serializer;
+	}
 
-    #region Public and overriden methods
-    public bool Accepts(Type type) => type == typeof(Dictionary<Type, IConfig>);
+	public ConfigConverter(Lazy<Dictionary<string, Type>> configTypes, IValueDeserializer deserializer)
+	{
+		this.configTypes = configTypes;
+		this.deserializer = deserializer;
+	}
+	#endregion
 
-    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
-    {
-        if (parser.Current is not MappingStart)
-        {
-            parser.MoveNext();
-            return null;
-        }
+	#region Public and overriden methods
+	public bool Accepts(Type type) => type == typeof(Dictionary<Type, IConfig>);
 
-        parser.MoveNext();
+	public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
+	{
+		if (parser.Current is not MappingStart)
+		{
+			parser.MoveNext();
+			return null;
+		}
 
-        var configs = new Dictionary<Type, IConfig>();
-        while (parser.Current is not MappingEnd)
-        {
-            while (parser.Current is not Scalar)
-                parser.MoveNext();
+		parser.MoveNext();
 
-            var typeName = ((Scalar)parser.Current).Value;
-            var configType = this.configTypes.Value.GetValueOrDefault(typeName);
+		var configs = new Dictionary<Type, IConfig>();
+		while (parser.Current is not MappingEnd)
+		{
+			while (parser.Current is not Scalar)
+				parser.MoveNext();
 
-            parser.MoveNext();
-            while (parser.Current is not MappingStart && parser.Current is not Scalar)
-                parser.MoveNext();
+			var typeName = ((Scalar)parser.Current).Value;
+			var configType = this.configTypes.Value.GetValueOrDefault(typeName);
 
-            if (parser.Current is Scalar)
-                throw new ArgumentNullException(typeName);
+			parser.MoveNext();
+			while (parser.Current is not MappingStart && parser.Current is not Scalar)
+				parser.MoveNext();
 
-            if (configType is null)
-            {
-                this.SkipObject(parser);
-            }
-            else
-            {
-                var config = this.deserializer!.DeserializeValue(parser, configType, new SerializerState(), this.deserializer)!;
-                configs[configType] = (IConfig)config;
-            }
-        }
+			if (parser.Current is Scalar)
+				throw new ArgumentNullException(typeName);
 
-        parser.MoveNext();
+			if (configType is null)
+			{
+				this.SkipObject(parser);
+			}
+			else
+			{
+				var config = this.deserializer!.DeserializeValue(parser, configType, new SerializerState(), this.deserializer)!;
+				configs[configType] = (IConfig)config;
+			}
+		}
 
-        return configs;
-    }
+		parser.MoveNext();
 
-    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
-    {
-        if (value is null)
-        {
-            emitter.Emit(new Scalar(string.Empty));
-            return;
-        }
+		return configs;
+	}
 
-        emitter.Emit(new MappingStart());
-        
-        var configs = (Dictionary<Type, IConfig>)value;
-        foreach (var config in configs.OrderBy(x => x.Key.Name))
-        {
-            emitter.Emit(new Scalar(config.Key.Name));
-            if (config.Value is null)
-            {
-                emitter.Emit(new Scalar(string.Empty));
-                continue;
-            }
+	public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
+	{
+		if (value is null)
+		{
+			emitter.Emit(new Scalar(string.Empty));
+			return;
+		}
 
-            this.serializer!.SerializeValue(emitter, config.Value, config.Key);
-        }
+		emitter.Emit(new MappingStart());
 
-        emitter.Emit(new MappingEnd());
-    }
-    #endregion
+		var configs = (Dictionary<Type, IConfig>)value;
+		foreach (var config in configs.OrderBy(x => x.Key.Name))
+		{
+			emitter.Emit(new Scalar(config.Key.Name));
+			if (config.Value is null)
+			{
+				emitter.Emit(new Scalar(string.Empty));
+				continue;
+			}
 
-    #region Private methods
-    private void SkipObject(IParser parser)
-    {
-        var depth = 0;
-        do {
-            if (parser.Current is MappingStart)
-                depth++;
-            else if (parser.Current is MappingEnd)
-                depth--;
+			this.serializer!.SerializeValue(emitter, config.Value, config.Key);
+		}
 
-            parser.MoveNext();
-        } while (depth > 0);
-    }
-    #endregion
+		emitter.Emit(new MappingEnd());
+	}
+	#endregion
 
-    #region Private fields and constants
-    private readonly Lazy<Dictionary<string, Type>> configTypes;
-    private readonly IValueSerializer? serializer;
-    private readonly IValueDeserializer? deserializer;
-    #endregion
+	#region Private methods
+	private void SkipObject(IParser parser)
+	{
+		var depth = 0;
+		do {
+			if (parser.Current is MappingStart)
+				depth++;
+			else if (parser.Current is MappingEnd)
+				depth--;
+
+			parser.MoveNext();
+		} while (depth > 0);
+	}
+	#endregion
+
+	#region Private fields and constants
+	private readonly Lazy<Dictionary<string, Type>> configTypes;
+	private readonly IValueSerializer? serializer;
+	private readonly IValueDeserializer? deserializer;
+	#endregion
 }

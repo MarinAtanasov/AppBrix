@@ -11,21 +11,21 @@ namespace AppBrix.Events.Delayed.Services;
 /// </summary>
 public interface IDelayedEventHub : IEventHub
 {
-    /// <summary>
-    /// Raise all delayed events.
-    /// </summary>
-    void Flush();
+	/// <summary>
+	/// Raise all delayed events.
+	/// </summary>
+	void Flush();
 
-    /// <summary>
-    /// Delays the event and all of its base class and interface events.
-    /// Event will be executed on the next <see cref="Flush"/>.
-    /// </summary>
-    /// <param name="args">The event arguments.</param>
-    void RaiseDelayed(IEvent args);
+	/// <summary>
+	/// Delays the event and all of its base class and interface events.
+	/// Event will be executed on the next <see cref="Flush"/>.
+	/// </summary>
+	/// <param name="args">The event arguments.</param>
+	void RaiseDelayed(IEvent args);
 
-    /// <summary>
-    /// Immediately raises the event and all of its base class and interface events.
-    /// </summary>
-    /// <param name="args">The event arguments.</param>
-    void RaiseImmediate(IEvent args);
+	/// <summary>
+	/// Immediately raises the event and all of its base class and interface events.
+	/// </summary>
+	/// <param name="args">The event arguments.</param>
+	void RaiseImmediate(IEvent args);
 }

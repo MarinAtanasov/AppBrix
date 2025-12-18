@@ -12,10 +12,10 @@ namespace AppBrix;
 /// </summary>
 public static class InMemoryDataExtensions
 {
-    /// <summary>
-    /// Gets the <see cref="InMemoryDataConfig"/> from <see cref="IConfigService"/>.
-    /// </summary>
-    /// <param name="service">The configuration service.</param>
-    /// <returns>The <see cref="InMemoryDataConfig"/>.</returns>
-    public static InMemoryDataConfig GetInMemoryDataConfig(this IConfigService service) => (InMemoryDataConfig)service.Get(typeof(InMemoryDataConfig));
+	/// <summary>
+	/// Gets the <see cref="InMemoryDataConfig"/> from <see cref="IConfigService"/>.
+	/// </summary>
+	/// <param name="service">The configuration service.</param>
+	/// <returns>The <see cref="InMemoryDataConfig"/>.</returns>
+	public static InMemoryDataConfig GetInMemoryDataConfig(this IConfigService service) => (InMemoryDataConfig)service.Get(typeof(InMemoryDataConfig));
 }

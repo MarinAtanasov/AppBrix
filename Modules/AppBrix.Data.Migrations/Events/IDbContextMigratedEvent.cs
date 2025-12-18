@@ -11,18 +11,18 @@ namespace AppBrix.Data.Migrations.Events;
 /// </summary>
 public interface IDbContextMigratedEvent : IEvent
 {
-    /// <summary>
-    /// Gets the previous version of the database context.
-    /// </summary>
-    Version PreviousVersion { get; }
+	/// <summary>
+	/// Gets the previous version of the database context.
+	/// </summary>
+	Version PreviousVersion { get; }
 
-    /// <summary>
-    /// Gets the current version of the database context.
-    /// </summary>
-    Version Version { get; }
+	/// <summary>
+	/// Gets the current version of the database context.
+	/// </summary>
+	Version Version { get; }
 
-    /// <summary>
-    /// Gets the type of the database context.
-    /// </summary>
-    Type Type { get; }
+	/// <summary>
+	/// Gets the type of the database context.
+	/// </summary>
+	Type Type { get; }
 }

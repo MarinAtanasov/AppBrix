@@ -9,8 +9,8 @@ namespace AppBrix.Lifecycle;
 /// </summary>
 public interface IUninstallContext
 {
-    /// <summary>
-    /// Gets the current application.
-    /// </summary>
-    IApp App { get; }
+	/// <summary>
+	/// Gets the current application.
+	/// </summary>
+	IApp App { get; }
 }

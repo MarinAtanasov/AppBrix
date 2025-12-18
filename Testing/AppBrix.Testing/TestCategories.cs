@@ -9,18 +9,18 @@ namespace AppBrix.Testing;
 /// </summary>
 public static class TestCategories
 {
-    /// <summary>
-    /// Constant for storing the test category trait.
-    /// </summary>
-    public const string Category = nameof(TestCategories.Category);
+	/// <summary>
+	/// Constant for storing the test category trait.
+	/// </summary>
+	public const string Category = nameof(TestCategories.Category);
 
-    /// <summary>
-    /// Functional test category.
-    /// </summary>
-    public const string Functional = nameof(TestCategories.Functional);
+	/// <summary>
+	/// Functional test category.
+	/// </summary>
+	public const string Functional = nameof(TestCategories.Functional);
 
-    /// <summary>
-    /// Performance test category.
-    /// </summary>
-    public const string Performance = nameof(TestCategories.Performance);
+	/// <summary>
+	/// Performance test category.
+	/// </summary>
+	public const string Performance = nameof(TestCategories.Performance);
 }

@@ -13,49 +13,49 @@ namespace AppBrix.Modules;
 /// </summary>
 public abstract class MainModuleBase : ModuleBase
 {
-    #region Protected methods
-    /// <summary>
-    /// Adds and sorts all module dependencies of the current module recursively in the <see cref="AppConfig"/>.
-    /// </summary>
-    /// <param name="context">The configure context.</param>
-    protected override void Configure(IConfigureContext context)
-    {
-        var configModules = this.App.ConfigService.GetAppConfig().Modules;
-        var modules = this.GetAllDependencies();
-        modules.Reverse();
+	#region Protected methods
+	/// <summary>
+	/// Adds and sorts all module dependencies of the current module recursively in the <see cref="AppConfig"/>.
+	/// </summary>
+	/// <param name="context">The configure context.</param>
+	protected override void Configure(IConfigureContext context)
+	{
+		var configModules = this.App.ConfigService.GetAppConfig().Modules;
+		var modules = this.GetAllDependencies();
+		modules.Reverse();
 
-        var previousIndex = configModules.Count;
-        foreach (var moduleType in modules)
-        {
-            var module = ModuleConfigElement.Create(moduleType);
+		var previousIndex = configModules.Count;
+		foreach (var moduleType in modules)
+		{
+			var module = ModuleConfigElement.Create(moduleType);
 
-            var index = -1;
-            for (var i = 0; i < configModules.Count; i++)
-            {
-                if (configModules[i].Type == module.Type)
-                {
-                    index = i;
-                    break;
-                }
-            }
+			var index = -1;
+			for (var i = 0; i < configModules.Count; i++)
+			{
+				if (configModules[i].Type == module.Type)
+				{
+					index = i;
+					break;
+				}
+			}
 
-            if (index < 0)
-            {
-                configModules.Insert(previousIndex, module);
-                context.RequestedAction = RequestedAction.Restart;
-            }
-            else if (index > previousIndex)
-            {
-                var oldModule = configModules[index];
-                configModules.RemoveAt(index);
-                configModules.Insert(previousIndex, oldModule);
-                context.RequestedAction = RequestedAction.Restart;
-            }
-            else
-            {
-                previousIndex = index;
-            }
-        }
-    }
-    #endregion
+			if (index < 0)
+			{
+				configModules.Insert(previousIndex, module);
+				context.RequestedAction = RequestedAction.Restart;
+			}
+			else if (index > previousIndex)
+			{
+				var oldModule = configModules[index];
+				configModules.RemoveAt(index);
+				configModules.Insert(previousIndex, oldModule);
+				context.RequestedAction = RequestedAction.Restart;
+			}
+			else
+			{
+				previousIndex = index;
+			}
+		}
+	}
+	#endregion
 }

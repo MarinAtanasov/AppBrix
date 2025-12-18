@@ -7,16 +7,16 @@ namespace AppBrix.Data.Migrations.Events;
 
 internal class DbContextMigratedEvent : IDbContextMigratedEvent
 {
-    public DbContextMigratedEvent(Version previousVersion, Version version, Type type)
-    {
-        this.PreviousVersion = previousVersion;
-        this.Version = version;
-        this.Type = type;
-    }
+	public DbContextMigratedEvent(Version previousVersion, Version version, Type type)
+	{
+		this.PreviousVersion = previousVersion;
+		this.Version = version;
+		this.Type = type;
+	}
 
-    public Version PreviousVersion { get; }
+	public Version PreviousVersion { get; }
 
-    public Version Version { get; }
+	public Version Version { get; }
 
-    public Type Type { get; }
+	public Type Type { get; }
 }

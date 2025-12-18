@@ -8,14 +8,14 @@ namespace AppBrix.Testing;
 /// </summary>
 public sealed class FunctionalAttribute : TestCategoryAttribute
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="FunctionalAttribute"/>.
-    /// Requires two parameters so that Xunit can detect the category.
-    /// No need to explicitly provide values.
-    /// </summary>
-    /// <param name="name"><see cref="TestCategories.Category"/></param>
-    /// <param name="value"><see cref="TestCategories.Functional"/></param>
-    public FunctionalAttribute(string name = TestCategories.Category, string value = TestCategories.Functional) : base(name, value)
-    {
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="FunctionalAttribute"/>.
+	/// Requires two parameters so that Xunit can detect the category.
+	/// No need to explicitly provide values.
+	/// </summary>
+	/// <param name="name"><see cref="TestCategories.Category"/></param>
+	/// <param name="value"><see cref="TestCategories.Functional"/></param>
+	public FunctionalAttribute(string name = TestCategories.Category, string value = TestCategories.Functional) : base(name, value)
+	{
+	}
 }

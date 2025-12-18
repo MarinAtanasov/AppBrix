@@ -11,32 +11,32 @@ namespace AppBrix.Caching.Memory.Configuration;
 /// </summary>
 public sealed class MemoryCachingConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="MemoryCachingConfig"/>.
-    /// </summary>
-    public MemoryCachingConfig()
-    {
-        this.DefaultAbsoluteExpiration = TimeSpan.FromHours(6);
-        this.DefaultSlidingExpiration = TimeSpan.FromMinutes(30);
-        this.ExpirationCheck = TimeSpan.FromSeconds(15);
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="MemoryCachingConfig"/>.
+	/// </summary>
+	public MemoryCachingConfig()
+	{
+		this.DefaultAbsoluteExpiration = TimeSpan.FromHours(6);
+		this.DefaultSlidingExpiration = TimeSpan.FromMinutes(30);
+		this.ExpirationCheck = TimeSpan.FromSeconds(15);
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets the default absolute expiration to be used when the user does not specify a value explicitly.
-    /// </summary>
-    public TimeSpan DefaultAbsoluteExpiration { get; set; }
+	#region Properties
+	/// <summary>
+	/// Gets or sets the default absolute expiration to be used when the user does not specify a value explicitly.
+	/// </summary>
+	public TimeSpan DefaultAbsoluteExpiration { get; set; }
 
-    /// <summary>
-    /// Gets or sets the default sliding expiration to be used when the user does not specify a value explicitly.
-    /// </summary>
-    public TimeSpan DefaultSlidingExpiration { get; set; }
+	/// <summary>
+	/// Gets or sets the default sliding expiration to be used when the user does not specify a value explicitly.
+	/// </summary>
+	public TimeSpan DefaultSlidingExpiration { get; set; }
 
-    /// <summary>
-    /// Gets or sets how often the local in-memory cache should check for sliding and absolute expiration.
-    /// </summary>
-    public TimeSpan ExpirationCheck { get; set; }
-    #endregion
+	/// <summary>
+	/// Gets or sets how often the local in-memory cache should check for sliding and absolute expiration.
+	/// </summary>
+	public TimeSpan ExpirationCheck { get; set; }
+	#endregion
 }

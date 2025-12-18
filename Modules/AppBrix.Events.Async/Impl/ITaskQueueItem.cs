@@ -11,10 +11,10 @@ namespace AppBrix.Events.Async.Impl;
 /// </summary>
 internal interface ITaskQueueItem<in T> where T : IEvent
 {
-    /// <summary>
-    /// Executes the wrapped event handler.
-    /// </summary>
-    /// <param name="args">The event arguments.</param>
-    /// <returns>The task that will be awaited while executing the handler.</returns>
-    Task Execute(T args);
+	/// <summary>
+	/// Executes the wrapped event handler.
+	/// </summary>
+	/// <param name="args">The event arguments.</param>
+	/// <returns>The task that will be awaited while executing the handler.</returns>
+	Task Execute(T args);
 }

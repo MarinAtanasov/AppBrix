@@ -10,17 +10,17 @@ namespace AppBrix.Data.InMemory.Impl;
 
 internal sealed class InMemoryDbContextConfigurer : IDbContextConfigurer, IApplicationLifecycle
 {
-    public void Initialize(IInitializeContext context)
-    {
-        this.connectionString = context.App.ConfigService.GetInMemoryDataConfig().ConnectionString;
-    }
+	public void Initialize(IInitializeContext context)
+	{
+		this.connectionString = context.App.ConfigService.GetInMemoryDataConfig().ConnectionString;
+	}
 
-    public void Uninitialize()
-    {
-        this.connectionString = string.Empty;
-    }
+	public void Uninitialize()
+	{
+		this.connectionString = string.Empty;
+	}
 
-    public void Configure(IConfigureDbContext context) => context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
+	public void Configure(IConfigureDbContext context) => context.OptionsBuilder.UseInMemoryDatabase(this.connectionString);
 
-    private string connectionString = string.Empty;
+	private string connectionString = string.Empty;
 }

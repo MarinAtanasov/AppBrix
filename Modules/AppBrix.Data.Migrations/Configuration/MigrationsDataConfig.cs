@@ -10,32 +10,32 @@ namespace AppBrix.Data.Migrations.Configuration;
 /// </summary>
 public sealed class MigrationsDataConfig : IConfig
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="MigrationsDataConfig"/>.
-    /// </summary>
-    public MigrationsDataConfig()
-    {
-        this.MigrationsHistoryTablePrefix = "__MH_";
-        this.MigrationsHistoryTableSuffixes =
-        [
-            "DbContext",
-            "Context"
-        ];
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="MigrationsDataConfig"/>.
+	/// </summary>
+	public MigrationsDataConfig()
+	{
+		this.MigrationsHistoryTablePrefix = "__MH_";
+		this.MigrationsHistoryTableSuffixes =
+		[
+			"DbContext",
+			"Context"
+		];
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets or sets the prefix used for migrations history table names.
-    /// This should not be changed once the application has been initialized.
-    /// </summary>
-    public string MigrationsHistoryTablePrefix { get; set; }
+	#region Properties
+	/// <summary>
+	/// Gets or sets the prefix used for migrations history table names.
+	/// This should not be changed once the application has been initialized.
+	/// </summary>
+	public string MigrationsHistoryTablePrefix { get; set; }
 
-    /// <summary>
-    /// Gets or sets the suffixes to trim from the migrations history table names.
-    /// This should not be changed once the application has been initialized.
-    /// </summary>
-    public string[] MigrationsHistoryTableSuffixes { get; set; }
-    #endregion
+	/// <summary>
+	/// Gets or sets the suffixes to trim from the migrations history table names.
+	/// This should not be changed once the application has been initialized.
+	/// </summary>
+	public string[] MigrationsHistoryTableSuffixes { get; set; }
+	#endregion
 }

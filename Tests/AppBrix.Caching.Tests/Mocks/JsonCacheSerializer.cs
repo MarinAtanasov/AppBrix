@@ -10,21 +10,21 @@ namespace AppBrix.Caching.Tests.Mocks;
 
 internal sealed class JsonCacheSerializer : ICacheSerializer
 {
-    #region Construction
-    public JsonCacheSerializer()
-    {
-        this.settings = new JsonSerializerOptions();
-        this.settings.Converters.Add(new JsonStringEnumConverter());
-    }
-    #endregion
+	#region Construction
+	public JsonCacheSerializer()
+	{
+		this.settings = new JsonSerializerOptions();
+		this.settings.Converters.Add(new JsonStringEnumConverter());
+	}
+	#endregion
 
-    #region Public and overriden methods
-    public byte[] Serialize(object item) => JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), this.settings);
+	#region Public and overriden methods
+	public byte[] Serialize(object item) => JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), this.settings);
 
-    public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings)!;
-    #endregion
+	public object Deserialize(byte[] serialized, Type type) => JsonSerializer.Deserialize(serialized, type, this.settings)!;
+	#endregion
 
-    #region Private fields and constants
-    private readonly JsonSerializerOptions settings;
-    #endregion
+	#region Private fields and constants
+	private readonly JsonSerializerOptions settings;
+	#endregion
 }

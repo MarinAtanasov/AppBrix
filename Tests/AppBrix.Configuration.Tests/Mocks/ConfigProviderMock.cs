@@ -8,29 +8,29 @@ namespace AppBrix.Configuration.Tests.Mocks;
 
 internal sealed class ConfigProviderMock : IConfigProvider
 {
-    #region Properties
-    public IList<Type> ReadConfigs { get; } = new List<Type>();
+	#region Properties
+	public IList<Type> ReadConfigs { get; } = new List<Type>();
 
-    public IList<KeyValuePair<Type, IConfig>> WrittenConfigs { get; } = new List<KeyValuePair<Type, IConfig>>();
-    #endregion
+	public IList<KeyValuePair<Type, IConfig>> WrittenConfigs { get; } = new List<KeyValuePair<Type, IConfig>>();
+	#endregion
 
-    #region Public and overriden methods
-    public IConfig Get(Type config)
-    {
-        this.ReadConfigs.Add(config);
-        return null;
-    }
+	#region Public and overriden methods
+	public IConfig Get(Type config)
+	{
+		this.ReadConfigs.Add(config);
+		return null;
+	}
 
-    public void Save(IConfig config) => 
-        this.WrittenConfigs.Add(new KeyValuePair<Type, IConfig>(config.GetType(), config));
+	public void Save(IConfig config) =>
+		this.WrittenConfigs.Add(new KeyValuePair<Type, IConfig>(config.GetType(), config));
 
-    public void Save(IEnumerable<IConfig> configs)
-    {
-        foreach (var config in configs)
-        {
-            this.Save(config);
-        }
-    }
-    #endregion
+	public void Save(IEnumerable<IConfig> configs)
+	{
+		foreach (var config in configs)
+		{
+			this.Save(config);
+		}
+	}
+	#endregion
 
 }

@@ -5,14 +5,14 @@ namespace AppBrix.Lifecycle;
 
 internal sealed class UninstallContext : IUninstallContext
 {
-    #region Construction
-    public UninstallContext(IApp app)
-    {
-        this.App = app;
-    }
-    #endregion
+	#region Construction
+	public UninstallContext(IApp app)
+	{
+		this.App = app;
+	}
+	#endregion
 
-    #region Properties
-    public IApp App { get; }
-    #endregion
+	#region Properties
+	public IApp App { get; }
+	#endregion
 }

@@ -11,21 +11,21 @@ namespace AppBrix.Events.Schedule.Cron.Tests.Mocks;
 /// </summary>
 internal sealed class EventMock : IEvent
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="EventMock"/>.
-    /// </summary>
-    /// <param name="value">The value to store.</param>
-    public EventMock(int value)
-    {
-        this.Value = value;
-    }
-    #endregion
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="EventMock"/>.
+	/// </summary>
+	/// <param name="value">The value to store.</param>
+	public EventMock(int value)
+	{
+		this.Value = value;
+	}
+	#endregion
 
-    #region Properties
-    /// <summary>
-    /// Gets the stored value.
-    /// </summary>
-    public int Value { get; }
-    #endregion
+	#region Properties
+	/// <summary>
+	/// Gets the stored value.
+	/// </summary>
+	public int Value { get; }
+	#endregion
 }

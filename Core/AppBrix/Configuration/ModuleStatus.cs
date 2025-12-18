@@ -11,19 +11,19 @@ namespace AppBrix.Configuration;
 /// </summary>
 public enum ModuleStatus
 {
-    /// <summary>
-    /// The module is enabled.
-    /// If it has not been installed yet, it will be installed.
-    /// If the module has been installed from a previous version of the module assembly, it will be upgraded.
-    /// </summary>
-    Enabled,
-    /// <summary>
-    /// The module is disabled and will not be loaded during application initialization.
-    /// </summary>
-    Disabled,
-    /// <summary>
-    /// Schedules a module for uninstallation.
-    /// The module will be uninstalled during the next application uninitialization.
-    /// </summary>
-    Uninstalling
+	/// <summary>
+	/// The module is enabled.
+	/// If it has not been installed yet, it will be installed.
+	/// If the module has been installed from a previous version of the module assembly, it will be upgraded.
+	/// </summary>
+	Enabled,
+	/// <summary>
+	/// The module is disabled and will not be loaded during application initialization.
+	/// </summary>
+	Disabled,
+	/// <summary>
+	/// Schedules a module for uninstallation.
+	/// The module will be uninstalled during the next application uninitialization.
+	/// </summary>
+	Uninstalling
 }

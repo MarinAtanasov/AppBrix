@@ -7,19 +7,19 @@ namespace AppBrix.Lifecycle;
 
 internal class InstallContext : IInstallContext
 {
-    #region Construction
-    public InstallContext(IApp app, Version previousVersion)
-    {
-        this.App = app;
-        this.PreviousVersion = previousVersion;
-    }
-    #endregion
+	#region Construction
+	public InstallContext(IApp app, Version previousVersion)
+	{
+		this.App = app;
+		this.PreviousVersion = previousVersion;
+	}
+	#endregion
 
-    #region Properties
-    public IApp App { get; }
+	#region Properties
+	public IApp App { get; }
 
-    public Version PreviousVersion { get; }
+	public Version PreviousVersion { get; }
 
-    public RequestedAction RequestedAction { get; set; }
-    #endregion
+	public RequestedAction RequestedAction { get; set; }
+	#endregion
 }

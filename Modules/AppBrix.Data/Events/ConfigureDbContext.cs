@@ -7,23 +7,23 @@ namespace AppBrix.Data.Events;
 
 internal sealed class ConfigureDbContext : IConfigureDbContext
 {
-    #region Construction
-    public ConfigureDbContext(DbContext context, DbContextOptionsBuilder builder, string? migrationsAssembly = null, string? migrationsHistoryTable = null)
-    {
-        this.Context = context;
-        this.MigrationsAssembly = migrationsAssembly;
-        this.MigrationsHistoryTable = migrationsHistoryTable;
-        this.OptionsBuilder = builder;
-    }
-    #endregion
+	#region Construction
+	public ConfigureDbContext(DbContext context, DbContextOptionsBuilder builder, string? migrationsAssembly = null, string? migrationsHistoryTable = null)
+	{
+		this.Context = context;
+		this.MigrationsAssembly = migrationsAssembly;
+		this.MigrationsHistoryTable = migrationsHistoryTable;
+		this.OptionsBuilder = builder;
+	}
+	#endregion
 
-    #region Properties
-    public DbContext Context { get; }
+	#region Properties
+	public DbContext Context { get; }
 
-    public string? MigrationsAssembly { get; }
+	public string? MigrationsAssembly { get; }
 
-    public string? MigrationsHistoryTable { get; }
+	public string? MigrationsHistoryTable { get; }
 
-    public DbContextOptionsBuilder OptionsBuilder { get; }
-    #endregion
+	public DbContextOptionsBuilder OptionsBuilder { get; }
+	#endregion
 }

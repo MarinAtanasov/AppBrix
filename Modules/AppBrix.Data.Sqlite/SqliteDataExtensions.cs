@@ -12,10 +12,10 @@ namespace AppBrix;
 /// </summary>
 public static class SqliteDataExtensions
 {
-    /// <summary>
-    /// Gets the <see cref="SqliteDataConfig"/> from <see cref="IConfigService"/>.
-    /// </summary>
-    /// <param name="service">The configuration service.</param>
-    /// <returns>The <see cref="SqliteDataConfig"/>.</returns>
-    public static SqliteDataConfig GetSqliteDataConfig(this IConfigService service) => (SqliteDataConfig)service.Get(typeof(SqliteDataConfig));
+	/// <summary>
+	/// Gets the <see cref="SqliteDataConfig"/> from <see cref="IConfigService"/>.
+	/// </summary>
+	/// <param name="service">The configuration service.</param>
+	/// <returns>The <see cref="SqliteDataConfig"/>.</returns>
+	public static SqliteDataConfig GetSqliteDataConfig(this IConfigService service) => (SqliteDataConfig)service.Get(typeof(SqliteDataConfig));
 }

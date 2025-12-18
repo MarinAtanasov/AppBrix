@@ -8,28 +8,28 @@ namespace AppBrix.Logging.Impl;
 
 internal sealed class LoggerFactory : ILoggerFactory, IApplicationLifecycle
 {
-    #region Public and overriden methods
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-    }
+	#region Public and overriden methods
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+	}
 
-    public void Uninitialize()
-    {
-        this.app = null!;
-        this.Dispose();
-    }
+	public void Uninitialize()
+	{
+		this.app = null!;
+		this.Dispose();
+	}
 
-    public void Dispose()
-    {
-    }
+	public void Dispose()
+	{
+	}
 
-    public void AddProvider(ILoggerProvider provider) => this.app.Container.Register(provider);
+	public void AddProvider(ILoggerProvider provider) => this.app.Container.Register(provider);
 
-    public ILogger CreateLogger(string categoryName) => this.app.GetLoggerProvider().CreateLogger(categoryName);
-    #endregion
+	public ILogger CreateLogger(string categoryName) => this.app.GetLoggerProvider().CreateLogger(categoryName);
+	#endregion
 
-    #region Private fields and constants
-    private IApp app = null!;
-    #endregion
+	#region Private fields and constants
+	private IApp app = null!;
+	#endregion
 }

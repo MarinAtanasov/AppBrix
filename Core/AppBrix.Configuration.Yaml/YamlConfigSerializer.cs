@@ -17,73 +17,73 @@ namespace AppBrix.Configuration.Yaml;
 /// </summary>
 public sealed class YamlConfigSerializer : IConfigSerializer
 {
-    #region Construction
-    /// <summary>
-    /// Creates a new instance of <see cref="YamlConfigSerializer"/>.
-    /// </summary>
-    public YamlConfigSerializer()
-    {
-        var callingAssembly = Assembly.GetCallingAssembly();
-        var configTypes = new Lazy<Dictionary<string, Type>>(
-            () => callingAssembly
-                .GetReferencedAssemblies(true)
-                .SelectTypes<IConfig>()
-                .ToDictionary(x => x.Name)
-        );
+	#region Construction
+	/// <summary>
+	/// Creates a new instance of <see cref="YamlConfigSerializer"/>.
+	/// </summary>
+	public YamlConfigSerializer()
+	{
+		var callingAssembly = Assembly.GetCallingAssembly();
+		var configTypes = new Lazy<Dictionary<string, Type>>(
+			() => callingAssembly
+				.GetReferencedAssemblies(true)
+				.SelectTypes<IConfig>()
+				.ToDictionary(x => x.Name)
+		);
 
-        var serializerBuilder = new SerializerBuilder()
-            .WithNamingConvention(NullNamingConvention.Instance)
-            .WithTypeConverter(new VersionConverter());
-        this.serializer = serializerBuilder
-            .WithTypeConverter(new ConfigConverter(configTypes, serializerBuilder.BuildValueSerializer()))
-            .Build();
+		var serializerBuilder = new SerializerBuilder()
+			.WithNamingConvention(NullNamingConvention.Instance)
+			.WithTypeConverter(new VersionConverter());
+		this.serializer = serializerBuilder
+			.WithTypeConverter(new ConfigConverter(configTypes, serializerBuilder.BuildValueSerializer()))
+			.Build();
 
-        var deserializerBuilder = new DeserializerBuilder()
-            .WithNamingConvention(NullNamingConvention.Instance)
-            .IgnoreUnmatchedProperties()
-            .WithTypeConverter(new VersionConverter());
-        this.deserializer = deserializerBuilder
-            .WithTypeConverter(new ConfigConverter(configTypes, deserializerBuilder.BuildValueDeserializer()))
-            .Build();
-    }
-    #endregion
+		var deserializerBuilder = new DeserializerBuilder()
+			.WithNamingConvention(NullNamingConvention.Instance)
+			.IgnoreUnmatchedProperties()
+			.WithTypeConverter(new VersionConverter());
+		this.deserializer = deserializerBuilder
+			.WithTypeConverter(new ConfigConverter(configTypes, deserializerBuilder.BuildValueDeserializer()))
+			.Build();
+	}
+	#endregion
 
-    #region Public and overriden methods
-    /// <summary>
-    /// Serializes a config to YAML.
-    /// </summary>
-    /// <param name="config">The configuration.</param>
-    /// <returns>The YAML representation of the configuration.</returns>
-    public string Serialize(object config)
-    {
-        if (config is null)
-            throw new ArgumentNullException(nameof(config));
+	#region Public and overriden methods
+	/// <summary>
+	/// Serializes a config to YAML.
+	/// </summary>
+	/// <param name="config">The configuration.</param>
+	/// <returns>The YAML representation of the configuration.</returns>
+	public string Serialize(object config)
+	{
+		if (config is null)
+			throw new ArgumentNullException(nameof(config));
 
-        using var writer = new StringWriter();
-        this.serializer.Serialize(writer, config);
-        return writer.ToString();
-    }
+		using var writer = new StringWriter();
+		this.serializer.Serialize(writer, config);
+		return writer.ToString();
+	}
 
-    /// <summary>
-    /// Deserializes a YAML string to a configuration.
-    /// </summary>
-    /// <param name="config">The YAML representation of the configuration.</param>
-    /// <param name="type">The type of the configuration.</param>
-    /// <returns>The deserialized configuration.</returns>
-    public object Deserialize(string config, Type type)
-    {
-        if (string.IsNullOrEmpty(config))
-            throw new ArgumentNullException(nameof(config));
-        if (type is null)
-            throw new ArgumentNullException(nameof(type));
+	/// <summary>
+	/// Deserializes a YAML string to a configuration.
+	/// </summary>
+	/// <param name="config">The YAML representation of the configuration.</param>
+	/// <param name="type">The type of the configuration.</param>
+	/// <returns>The deserialized configuration.</returns>
+	public object Deserialize(string config, Type type)
+	{
+		if (string.IsNullOrEmpty(config))
+			throw new ArgumentNullException(nameof(config));
+		if (type is null)
+			throw new ArgumentNullException(nameof(type));
 
-        using var reader = new StringReader(config);
-        return this.deserializer.Deserialize(reader, type)!;
-    }
-    #endregion
+		using var reader = new StringReader(config);
+		return this.deserializer.Deserialize(reader, type)!;
+	}
+	#endregion
 
-    #region Private fields and constants
-    private readonly ISerializer serializer;
-    private readonly IDeserializer deserializer;
-    #endregion
+	#region Private fields and constants
+	private readonly ISerializer serializer;
+	private readonly IDeserializer deserializer;
+	#endregion
 }

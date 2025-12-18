@@ -13,41 +13,41 @@ namespace AppBrix.Logging.File.Impl;
 /// </summary>
 internal sealed class FileLogger : IApplicationLifecycle
 {
-    #region Public and overriden methods
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-        var config = this.app.ConfigService.GetFileLoggerConfig();
-        this.writer = System.IO.File.AppendText(config.Path);
-        this.writer.AutoFlush = true;
-        this.app.GetLogHub().Subscribe(this.LogEntry);
-    }
+	#region Public and overriden methods
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+		var config = this.app.ConfigService.GetFileLoggerConfig();
+		this.writer = System.IO.File.AppendText(config.Path);
+		this.writer.AutoFlush = true;
+		this.app.GetLogHub().Subscribe(this.LogEntry);
+	}
 
-    public void Uninitialize()
-    {
-        this.app?.GetLogHub().Unsubscribe(this.LogEntry);
-        this.app = null!;
-        this.writer?.Dispose();
-        this.writer = null!;
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.app?.GetLogHub().Unsubscribe(this.LogEntry);
+		this.app = null!;
+		this.writer?.Dispose();
+		this.writer = null!;
+	}
+	#endregion
 
-    #region Private methods
-    private void LogEntry(ILogEntry entry)
-    {
-        if (this.writer is not null)
-        {
-            lock (this.logLock)
-            {
-                this.writer.WriteLine(entry.ToString());
-            }
-        }
-    }
-    #endregion
+	#region Private methods
+	private void LogEntry(ILogEntry entry)
+	{
+		if (this.writer is not null)
+		{
+			lock (this.logLock)
+			{
+				this.writer.WriteLine(entry.ToString());
+			}
+		}
+	}
+	#endregion
 
-    #region Private fields and constants
-    private readonly Lock logLock = new Lock();
-    private IApp? app;
-    private StreamWriter? writer;
-    #endregion
+	#region Private fields and constants
+	private readonly Lock logLock = new Lock();
+	private IApp? app;
+	private StreamWriter? writer;
+	#endregion
 }

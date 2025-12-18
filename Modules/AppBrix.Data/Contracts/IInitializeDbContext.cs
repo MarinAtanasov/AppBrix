@@ -11,19 +11,19 @@ namespace AppBrix.Data.Contracts;
 /// </summary>
 public interface IInitializeDbContext
 {
-    /// <summary>
-    /// Gets the current application.
-    /// </summary>
-    IApp App { get; }
+	/// <summary>
+	/// Gets the current application.
+	/// </summary>
+	IApp App { get; }
 
-    /// <summary>
-    /// Gets the migrations assembly.
-    /// </summary>
-    string? MigrationsAssembly { get; }
+	/// <summary>
+	/// Gets the migrations assembly.
+	/// </summary>
+	string? MigrationsAssembly { get; }
 
-    /// <summary>
-    /// Gets the migrations history table name.
-    /// This is used when creating automated DB migrations.
-    /// </summary>
-    string MigrationsHistoryTable { get; }
+	/// <summary>
+	/// Gets the migrations history table name.
+	/// This is used when creating automated DB migrations.
+	/// </summary>
+	string MigrationsHistoryTable { get; }
 }

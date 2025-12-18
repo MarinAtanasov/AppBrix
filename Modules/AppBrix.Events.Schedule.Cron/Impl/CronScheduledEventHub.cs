@@ -11,41 +11,41 @@ namespace AppBrix.Events.Schedule.Cron.Impl;
 
 internal sealed class CronScheduledEventHub : ICronScheduledEventHub, IApplicationLifecycle
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-        this.app = context.App;
-    }
+	#region IApplicationLifecycle implementation
+	public void Initialize(IInitializeContext context)
+	{
+		this.app = context.App;
+	}
 
-    public void Uninitialize()
-    {
-        this.app = null!;
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.app = null!;
+	}
+	#endregion
 
-    #region ICronScheduledEventHub implementation
-    public IScheduledEvent<T> Schedule<T>(T args, string expression) where T : IEvent
-    {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
-        if (string.IsNullOrEmpty(expression))
-            throw new ArgumentNullException(nameof(expression));
+	#region ICronScheduledEventHub implementation
+	public IScheduledEvent<T> Schedule<T>(T args, string expression) where T : IEvent
+	{
+		if (args is null)
+			throw new ArgumentNullException(nameof(args));
+		if (string.IsNullOrEmpty(expression))
+			throw new ArgumentNullException(nameof(expression));
 
-        var scheduled = new CronScheduledEvent<T>(args, Cronos.CronExpression.Parse(expression));
-        this.app.GetScheduledEventHub().Schedule(scheduled);
-        return scheduled;
-    }
+		var scheduled = new CronScheduledEvent<T>(args, Cronos.CronExpression.Parse(expression));
+		this.app.GetScheduledEventHub().Schedule(scheduled);
+		return scheduled;
+	}
 
-    public void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent
-    {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
+	public void Unschedule<T>(IScheduledEvent<T> args) where T : IEvent
+	{
+		if (args is null)
+			throw new ArgumentNullException(nameof(args));
 
-        this.app.GetScheduledEventHub().Unschedule(args);
-    }
-    #endregion
+		this.app.GetScheduledEventHub().Unschedule(args);
+	}
+	#endregion
 
-    #region Private fields and constants
-    private IApp app = null!;
-    #endregion
+	#region Private fields and constants
+	private IApp app = null!;
+	#endregion
 }

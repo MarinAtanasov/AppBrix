@@ -8,11 +8,11 @@ namespace AppBrix.Configuration.Memory.Impl;
 
 internal sealed class MemoryConfigProvider : IConfigProvider
 {
-    #region Public and overriden methods
-    public IConfig? Get(Type type) => null;
+	#region Public and overriden methods
+	public IConfig? Get(Type type) => null;
 
-    public void Save(IConfig config) { }
+	public void Save(IConfig config) { }
 
-    public void Save(IEnumerable<IConfig> configs) { }
-    #endregion
+	public void Save(IEnumerable<IConfig> configs) { }
+	#endregion
 }

@@ -12,13 +12,13 @@ namespace AppBrix.Testing;
 [Xunit.Sdk.TraitDiscoverer("Xunit.Sdk.TraitDiscoverer", "xunit.core")]
 public class TestCategoryAttribute : Attribute, Xunit.Sdk.ITraitAttribute
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="TestCategoryAttribute"/>.
-    /// Requires two parameters so that Xunit can detect the category.
-    /// </summary>
-    /// <param name="name">Must be <see cref="TestCategories.Category"/> for consistency with other providers.</param>
-    /// <param name="value">The name of the category.</param>
-    public TestCategoryAttribute(string name, string value)
-    {
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="TestCategoryAttribute"/>.
+	/// Requires two parameters so that Xunit can detect the category.
+	/// </summary>
+	/// <param name="name">Must be <see cref="TestCategories.Category"/> for consistency with other providers.</param>
+	/// <param name="value">The name of the category.</param>
+	public TestCategoryAttribute(string name, string value)
+	{
+	}
 }

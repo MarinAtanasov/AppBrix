@@ -8,10 +8,10 @@ namespace AppBrix.Testing;
 /// </summary>
 public sealed class FunctionalAttribute : TestCategoryAttribute
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="FunctionalAttribute"/>.
-    /// </summary>
-    public FunctionalAttribute() : base(TestCategories.Category, TestCategories.Functional)
-    {
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="FunctionalAttribute"/>.
+	/// </summary>
+	public FunctionalAttribute() : base(TestCategories.Category, TestCategories.Functional)
+	{
+	}
 }

@@ -10,10 +10,10 @@ namespace AppBrix;
 /// </summary>
 public static class TimerScheduledEventsExtensions
 {
-    /// <summary>
-    /// Gets the currently loaded cron scheduled event hub.
-    /// </summary>
-    /// <param name="app">The current application.</param>
-    /// <returns>The event hub.</returns>
-    public static ITimerScheduledEventHub GetTimerScheduledEventHub(this IApp app) => (ITimerScheduledEventHub)app.Get(typeof(ITimerScheduledEventHub));
+	/// <summary>
+	/// Gets the currently loaded cron scheduled event hub.
+	/// </summary>
+	/// <param name="app">The current application.</param>
+	/// <returns>The event hub.</returns>
+	public static ITimerScheduledEventHub GetTimerScheduledEventHub(this IApp app) => (ITimerScheduledEventHub)app.Get(typeof(ITimerScheduledEventHub));
 }

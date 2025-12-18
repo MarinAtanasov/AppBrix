@@ -8,14 +8,14 @@ namespace AppBrix.Web.Server.Impl;
 
 internal sealed class ConfigureWebAppBuilder : IConfigureWebAppBuilder
 {
-    #region Construction
-    public ConfigureWebAppBuilder(WebApplicationBuilder builder)
-    {
-        this.Builder = builder;
-    }
-    #endregion
+	#region Construction
+	public ConfigureWebAppBuilder(WebApplicationBuilder builder)
+	{
+		this.Builder = builder;
+	}
+	#endregion
 
-    #region Properties
-    public WebApplicationBuilder Builder { get; }
-    #endregion
+	#region Properties
+	public WebApplicationBuilder Builder { get; }
+	#endregion
 }

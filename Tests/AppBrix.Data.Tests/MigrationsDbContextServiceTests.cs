@@ -12,20 +12,20 @@ namespace AppBrix.Data.Tests;
 [TestClass]
 public sealed class MigrationsDbContextServiceTests : TestsBase<InMemoryDataModule, MigrationsDataModule>
 {
-    #region Tests
-    [Test, Functional]
-    public void TestGetNullType()
-    {
-        var service = this.App.GetDbContextService();
-        var action = () => service.Get(null!);
-        this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
-    }
+	#region Tests
+	[Test, Functional]
+	public void TestGetNullType()
+	{
+		var service = this.App.GetDbContextService();
+		var action = () => service.Get(null!);
+		this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
+	}
 
-    [Test, Functional]
-    public void TestCreateExternalDbContext()
-    {
-        using var context = this.App.GetDbContextService().Get<ExternalDbContextMock>();
-        this.Assert(context is not null, "the db context service should return a new instance");
-    }
-    #endregion
+	[Test, Functional]
+	public void TestCreateExternalDbContext()
+	{
+		using var context = this.App.GetDbContextService().Get<ExternalDbContextMock>();
+		this.Assert(context is not null, "the db context service should return a new instance");
+	}
+	#endregion
 }

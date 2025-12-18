@@ -11,10 +11,10 @@ namespace AppBrix;
 /// </summary>
 public static class RandomExtensions
 {
-    /// <summary>
-    /// Gets the application's currently registered <see cref="IRandomService"/>
-    /// </summary>
-    /// <param name="app">The application.</param>
-    /// <returns>The registered random service.</returns>
-    public static IRandomService GetRandomService(this IApp app) => (IRandomService)app.Get(typeof(IRandomService));
+	/// <summary>
+	/// Gets the application's currently registered <see cref="IRandomService"/>
+	/// </summary>
+	/// <param name="app">The application.</param>
+	/// <returns>The registered random service.</returns>
+	public static IRandomService GetRandomService(this IApp app) => (IRandomService)app.Get(typeof(IRandomService));
 }

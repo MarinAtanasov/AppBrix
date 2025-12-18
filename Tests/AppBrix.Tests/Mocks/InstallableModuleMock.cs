@@ -9,37 +9,37 @@ namespace AppBrix.Tests.Mocks;
 
 public sealed class InstallableModuleMock : SimpleModuleMock
 {
-    public override IEnumerable<Type> Dependencies => [];
+	public override IEnumerable<Type> Dependencies => [];
 
-    public bool IsConfigured { get; private set; }
+	public bool IsConfigured { get; private set; }
 
-    public bool IsInstalled { get; private set; }
+	public bool IsInstalled { get; private set; }
 
-    public bool IsUninstalled { get; private set; }
+	public bool IsUninstalled { get; private set; }
 
-    protected override void Configure(IConfigureContext context)
-    {
-        if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+	protected override void Configure(IConfigureContext context)
+	{
+		if (this.App != context.App)
+			throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
-        this.IsConfigured = true;
-    }
+		this.IsConfigured = true;
+	}
 
-    protected override void Install(IInstallContext context)
-    {
-        if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+	protected override void Install(IInstallContext context)
+	{
+		if (this.App != context.App)
+			throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
-        base.Install(context);
-        this.IsInstalled = true;
-    }
+		base.Install(context);
+		this.IsInstalled = true;
+	}
 
-    protected override void Uninstall(IUninstallContext context)
-    {
-        if (this.App != context.App)
-            throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
+	protected override void Uninstall(IUninstallContext context)
+	{
+		if (this.App != context.App)
+			throw new InvalidOperationException($"this.{nameof(this.App)} should be the same as {nameof(context)}.{nameof(context.App)}.");
 
-        base.Uninstall(context);
-        this.IsUninstalled = true;
-    }
+		base.Uninstall(context);
+		this.IsUninstalled = true;
+	}
 }

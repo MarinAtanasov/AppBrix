@@ -11,15 +11,15 @@ namespace AppBrix.Events.Schedule.Contracts;
 /// </summary>
 public interface IScheduledEvent<out T> where T : IEvent
 {
-    /// <summary>
-    /// Gets the event to be called at the next scheduled occurrence.
-    /// </summary>
-    T Event { get; }
+	/// <summary>
+	/// Gets the event to be called at the next scheduled occurrence.
+	/// </summary>
+	T Event { get; }
 
-    /// <summary>
-    /// Calculates when the event needs to be called next.
-    /// </summary>
-    /// <param name="now">The base time to be used.</param>
-    /// <returns>When the event needs to be called next.</returns>
-    DateTime GetNextOccurrence(DateTime now);
+	/// <summary>
+	/// Calculates when the event needs to be called next.
+	/// </summary>
+	/// <param name="now">The base time to be used.</param>
+	/// <returns>When the event needs to be called next.</returns>
+	DateTime GetNextOccurrence(DateTime now);
 }

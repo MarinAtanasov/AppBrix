@@ -10,19 +10,19 @@ namespace AppBrix.Web.Server.Tests.Mocks;
 /// </summary>
 public sealed class EchoModel
 {
-    public DateTime? DateTime { get; set; }
+	public DateTime? DateTime { get; set; }
 
-    public TimeSpan ?TimeSpan { get; set; }
+	public TimeSpan ?TimeSpan { get; set; }
 
-    public int Value { get; set; }
+	public int Value { get; set; }
 
-    public Version Version { get; set; }
+	public Version Version { get; set; }
 
-    public override bool Equals(object obj) => obj is EchoModel other &&
-        this.DateTime == other.DateTime &&
-        this.TimeSpan == other.TimeSpan &&
-        this.Value == other.Value &&
-        this.Version == other.Version;
+	public override bool Equals(object obj) => obj is EchoModel other &&
+		this.DateTime == other.DateTime &&
+		this.TimeSpan == other.TimeSpan &&
+		this.Value == other.Value &&
+		this.Version == other.Version;
 
-    public override int GetHashCode() => 0;
+	public override int GetHashCode() => 0;
 }

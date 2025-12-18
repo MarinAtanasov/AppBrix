@@ -11,40 +11,40 @@ namespace AppBrix.Factory.Impl;
 
 internal sealed class FactoryService : IFactoryService, IApplicationLifecycle
 {
-    #region IApplicationLifecycle implementation
-    public void Initialize(IInitializeContext context)
-    {
-    }
+	#region IApplicationLifecycle implementation
+	public void Initialize(IInitializeContext context)
+	{
+	}
 
-    public void Uninitialize()
-    {
-        this.factories.Clear();
-    }
-    #endregion
+	public void Uninitialize()
+	{
+		this.factories.Clear();
+	}
+	#endregion
 
-    #region IFactory implementation
-    public void Register(IFactory<object> factory, Type type)
-    {
-        if (factory is null)
-            throw new ArgumentNullException(nameof(factory));
-        if (type is null)
-            throw new ArgumentNullException(nameof(type));
+	#region IFactory implementation
+	public void Register(IFactory<object> factory, Type type)
+	{
+		if (factory is null)
+			throw new ArgumentNullException(nameof(factory));
+		if (type is null)
+			throw new ArgumentNullException(nameof(type));
 
-        for (var baseType = type; baseType != typeof(object) && baseType is not null; baseType = baseType.BaseType)
-        {
-            this.factories[baseType] = factory;
-        }
+		for (var baseType = type; baseType != typeof(object) && baseType is not null; baseType = baseType.BaseType)
+		{
+			this.factories[baseType] = factory;
+		}
 
-        foreach (var typeInterface in type.GetInterfaces())
-        {
-            this.factories[typeInterface] = factory;
-        }
-    }
+		foreach (var typeInterface in type.GetInterfaces())
+		{
+			this.factories[typeInterface] = factory;
+		}
+	}
 
-    public IFactory<object>? GetFactory(Type type) => this.factories.GetValueOrDefault(type);
-    #endregion
+	public IFactory<object>? GetFactory(Type type) => this.factories.GetValueOrDefault(type);
+	#endregion
 
-    #region Private fields and constants
-    private readonly Dictionary<Type, IFactory<object>> factories = new Dictionary<Type, IFactory<object>>();
-    #endregion
+	#region Private fields and constants
+	private readonly Dictionary<Type, IFactory<object>> factories = new Dictionary<Type, IFactory<object>>();
+	#endregion
 }

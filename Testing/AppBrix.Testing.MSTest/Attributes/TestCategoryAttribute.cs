@@ -12,18 +12,18 @@ namespace AppBrix.Testing;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
 public class TestCategoryAttribute : Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryBaseAttribute
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="TestCategoryAttribute"/>.
-    /// </summary>
-    /// <param name="name">Must be <see cref="TestCategories.Category"/> for consistency with other providers.</param>
-    /// <param name="value">The name of the category.</param>
-    public TestCategoryAttribute(string name, string value)
-    {
-        this.TestCategories = [value];
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="TestCategoryAttribute"/>.
+	/// </summary>
+	/// <param name="name">Must be <see cref="TestCategories.Category"/> for consistency with other providers.</param>
+	/// <param name="value">The name of the category.</param>
+	public TestCategoryAttribute(string name, string value)
+	{
+		this.TestCategories = [value];
+	}
 
-    /// <summary>
-    /// Gets the test category that has been applied to the test.
-    /// </summary>
-    public override IList<string> TestCategories { get; }
+	/// <summary>
+	/// Gets the test category that has been applied to the test.
+	/// </summary>
+	public override IList<string> TestCategories { get; }
 }

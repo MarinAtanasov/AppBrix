@@ -11,8 +11,8 @@ namespace AppBrix.Data.Tests.Mocks;
 /// </summary>
 public sealed class DataItemDbContextMock : DbContextBase
 {
-    /// <summary>
-    /// Gets or sets the items in the context.
-    /// </summary>
-    public DbSet<DataItemMock> Items { get; set; }
+	/// <summary>
+	/// Gets or sets the items in the context.
+	/// </summary>
+	public DbSet<DataItemMock> Items { get; set; }
 }

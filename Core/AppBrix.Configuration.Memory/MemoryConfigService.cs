@@ -10,10 +10,10 @@ namespace AppBrix.Configuration.Memory;
 /// </summary>
 public sealed class MemoryConfigService : ConfigService
 {
-    /// <summary>
-    /// Creates a new instance of <see cref="MemoryConfigService"/>.
-    /// </summary>
-    public MemoryConfigService() : base(new MemoryConfigProvider())
-    {
-    }
+	/// <summary>
+	/// Creates a new instance of <see cref="MemoryConfigService"/>.
+	/// </summary>
+	public MemoryConfigService() : base(new MemoryConfigProvider())
+	{
+	}
 }
