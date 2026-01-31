@@ -90,7 +90,7 @@ public abstract class TestingBase
 	protected void AssertDelay(Func<Task> func, TimeSpan duration = default)
 	{
 		var action = () => func().GetAwaiter().GetResult();
-		this.AssertPerformance(action, duration);
+		this.AssertDelay(action, duration);
 	}
 
 	/// <summary>
