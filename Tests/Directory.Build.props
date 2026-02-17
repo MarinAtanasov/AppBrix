@@ -17,8 +17,8 @@
   <!--MSTest-->
   <ItemGroup>
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.MSTest\AppBrix.Testing.MSTest.csproj" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.1.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.1.0" />
   </ItemGroup>
 
   <!--NUnit-->
