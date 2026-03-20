@@ -17,21 +17,21 @@ public sealed class FileConfigProviderTests : TestsBase
 	public void TestConstructorNullSerializer()
 	{
 		var action = () => new FileConfigProvider(null!, "test_dir");
-		this.AssertThrows<ArgumentNullException>(action, "serializer cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "serializer cannot be null");
 	}
 
 	[Test, Functional]
 	public void TestConstructorNullPath()
 	{
 		var action = () => new FileConfigProvider(new ConfigSerializerMock(), null!);
-		this.AssertThrows<ArgumentNullException>(action, "directory cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "directory cannot be null");
 	}
 
 	[Test, Functional]
 	public void TestConstructorEmptyPath()
 	{
 		var action = () => new FileConfigProvider(new ConfigSerializerMock(), string.Empty);
-		this.AssertThrows<ArgumentNullException>(action, "directory cannot be empty");;
+		this.AssertThrows<ArgumentNullException>(action, "directory cannot be empty");
 	}
 
 	[Test, Functional]
@@ -40,7 +40,7 @@ public sealed class FileConfigProviderTests : TestsBase
 		var path = Assembly.GetExecutingAssembly().Location;
 		var provider = new FileConfigProvider(new ConfigSerializerMock(), path);
 		var action = () => provider.Get(null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]
@@ -49,7 +49,7 @@ public sealed class FileConfigProviderTests : TestsBase
 		var path = Assembly.GetExecutingAssembly().Location;
 		var provider = new FileConfigProvider(new ConfigSerializerMock(), path);
 		var action = () => provider.Save(((IConfig)null)!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 	#endregion
 }

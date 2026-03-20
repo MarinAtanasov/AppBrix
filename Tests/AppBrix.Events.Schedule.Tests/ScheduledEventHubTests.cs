@@ -27,7 +27,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
 	{
 		var hub = this.App.GetScheduledEventHub();
 		var action = () => hub.Schedule<EventMock>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]
@@ -73,7 +73,7 @@ public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
 	{
 		var hub = this.App.GetScheduledEventHub();
 		var action = () => hub.Unschedule<EventMock>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]

@@ -32,7 +32,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
 	{
 		var hub = this.App.GetCronScheduledEventHub();
 		Action action = () => hub.Schedule<EventMock>(null, CronScheduledEventHubTests.EveryMinute);
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]
@@ -40,7 +40,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
 	{
 		var hub = this.App.GetCronScheduledEventHub();
 		Action action = () => hub.Schedule(new EventMock(0), null!);
-		this.AssertThrows<ArgumentNullException>(action, "expression is null");;
+		this.AssertThrows<ArgumentNullException>(action, "expression is null");
 	}
 
 	[Test, Functional]
@@ -48,7 +48,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
 	{
 		var hub = this.App.GetCronScheduledEventHub();
 		Action action = () => hub.Schedule(new EventMock(0), string.Empty);
-		this.AssertThrows<ArgumentNullException>(action, "expression is empty");;
+		this.AssertThrows<ArgumentNullException>(action, "expression is empty");
 	}
 
 	[Test, Functional]
@@ -85,7 +85,7 @@ public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsMo
 	{
 		var hub = this.App.GetCronScheduledEventHub();
 		var action = () => hub.Unschedule<EventMock>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]

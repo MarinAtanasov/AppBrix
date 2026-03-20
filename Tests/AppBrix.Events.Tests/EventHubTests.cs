@@ -199,7 +199,7 @@ public sealed class EventHubTests : TestsBase<EventsModule>
 		hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
 		hub.Subscribe<EventMock>(_ => called++);
 		var action = () => hub.Raise(new EventMock());
-		this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
+		this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");
 		this.Assert(called == 1, "the handler after the failing one shouldn't be called");
 	}
 

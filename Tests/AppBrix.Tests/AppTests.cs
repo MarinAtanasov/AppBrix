@@ -17,28 +17,28 @@ public sealed class AppTests : TestsBase
 	public void TestCreateAppNullConfigService()
 	{
 		var action = () => AppBrix.App.Create(null!);
-		this.AssertThrows<ArgumentNullException>(action, "config service cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "config service cannot be null");
 	}
 
 	[Test, Functional]
 	public void TestAppConfigCreateNullType()
 	{
 		var action = () => ModuleConfigElement.Create(null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]
 	public void TestAppConfigCreateInvalidType()
 	{
 		var action = () => ModuleConfigElement.Create(typeof(object));
-		this.AssertThrows<ArgumentException>(action, "type must implement IModule");;
+		this.AssertThrows<ArgumentException>(action, "type must implement IModule");
 	}
 
 	[Test, Functional]
 	public void TestGetAllDependenciesExtensionNullModule()
 	{
 		var action = () => AppBrixExtensions.GetAllDependencies(null!);
-		this.AssertThrows<ArgumentNullException>(action, "module cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "module cannot be null");
 	}
 
 	[Test, Performance]

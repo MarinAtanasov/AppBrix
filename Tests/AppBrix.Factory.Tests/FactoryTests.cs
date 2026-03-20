@@ -18,7 +18,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
 	{
 		var service = this.GetFactoryService();
 		var action = () => service.Register(((IFactory<FactoryTests>)null)!);
-		this.AssertThrows<ArgumentNullException>(action, "factory cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "factory cannot be null");
 	}
 
 	[Test, Functional]
@@ -27,7 +27,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
 		var service = this.GetFactoryService();
 		var factory = new FactoryMock<FactoryTests>(this);
 		var action = () => service.Register(factory, null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]
@@ -35,7 +35,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
 	{
 		var service = this.GetFactoryService();
 		var action = () => service.Register(((Func<FactoryTests>)null)!, typeof(FactoryTests));
-		this.AssertThrows<ArgumentNullException>(action, "factory method cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "factory method cannot be null");
 	}
 
 	[Test, Functional]
@@ -44,7 +44,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
 		var service = this.GetFactoryService();
 		var factory = () => this;
 		var action = () => service.Register(factory, null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]
@@ -55,7 +55,7 @@ public sealed class FactoryTests : TestsBase<FactoryModule>
 		this.Assert(service.GetFactory<DefaultConstructorClass>() is null, "no factory has been registered");
 
 		Action action = () => service.Get<DefaultConstructorClass>();
-		this.AssertThrows<InvalidOperationException>(action, "no factory has been registered");;
+		this.AssertThrows<InvalidOperationException>(action, "no factory has been registered");
 	}
 
 	[Test, Functional]

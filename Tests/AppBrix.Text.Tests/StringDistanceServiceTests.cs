@@ -14,14 +14,14 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 	public void TestGetDamerauLevenshteinDistanceNullLeft()
 	{
 		Action action = () => this.App.GetStringDistanceService().GetDamerauLevenshteinDistance(null!, "appbrix");
-		this.AssertThrows<ArgumentNullException>(action, "left should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "left should not be null");
 	}
 
 	[Test, Functional]
 	public void TestGetDamerauLevenshteinDistanceNullRight()
 	{
 		Action action = () => this.App.GetStringDistanceService().GetDamerauLevenshteinDistance("appbrix", null!);
-		this.AssertThrows<ArgumentNullException>(action, "right should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "right should not be null");
 	}
 
 	[Test, Functional]
@@ -63,14 +63,14 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 	public void TestGetLevenshteinDistanceNullLeft()
 	{
 		Action action = () => this.App.GetStringDistanceService().GetLevenshteinDistance(null!, "appbrix");
-		this.AssertThrows<ArgumentNullException>(action, "left should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "left should not be null");
 	}
 
 	[Test, Functional]
 	public void TestGetLevenshteinDistanceNullRight()
 	{
 		Action action = () => this.App.GetStringDistanceService().GetLevenshteinDistance("appbrix", null!);
-		this.AssertThrows<ArgumentNullException>(action, "right should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "right should not be null");
 	}
 
 	[Test, Functional]
@@ -106,14 +106,14 @@ public sealed class StringDistanceServiceTests : TestsBase<TextModule>
 	public void TestGetOptimalStringAlignmentDistanceNullLeft()
 	{
 		Action action = () => this.App.GetStringDistanceService().GetOptimalStringAlignmentDistance(null!, "appbrix");
-		this.AssertThrows<ArgumentNullException>(action, "left should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "left should not be null");
 	}
 
 	[Test, Functional]
 	public void TestGetOptimalStringAlignmentDistanceNullRight()
 	{
 		Action action = () => this.App.GetStringDistanceService().GetOptimalStringAlignmentDistance("appbrix", null!);
-		this.AssertThrows<ArgumentNullException>(action, "right should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "right should not be null");
 	}
 
 	[Test, Functional]

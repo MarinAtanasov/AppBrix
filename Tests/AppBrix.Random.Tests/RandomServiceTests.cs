@@ -17,7 +17,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
 	{
 		var service = this.App.GetRandomService();
 		Action action = () => service.GetRandomItems<object>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "items should not be null.");;
+		this.AssertThrows<ArgumentNullException>(action, "items should not be null.");
 	}
 
 	[Test, Functional]
@@ -84,7 +84,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
 	{
 		var service = this.App.GetRandomService();
 		Action action = () => service.GetUniqueItems<object>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "items should not be null.");;
+		this.AssertThrows<ArgumentNullException>(action, "items should not be null.");
 	}
 
 	[Test, Functional]
@@ -173,7 +173,7 @@ public sealed class RandomServiceTests : TestsBase<RandomModule>
 	{
 		var service = this.App.GetRandomService();
 		var action = () => service.Shuffle<object>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "items should not be null.");;
+		this.AssertThrows<ArgumentNullException>(action, "items should not be null.");
 	}
 
 	[Test, Functional]

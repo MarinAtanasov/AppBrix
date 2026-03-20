@@ -39,14 +39,14 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
 	{
 		this.App.Start();
 		var action = () => this.App.Start();
-		this.AssertThrows<InvalidOperationException>(action, "cannot start already started app");;
+		this.AssertThrows<InvalidOperationException>(action, "cannot start already started app");
 	}
 
 	[Test, Functional]
 	public void TestStopStoppedApp()
 	{
 		var action = () => this.App.Stop();
-		this.AssertThrows<InvalidOperationException>(action, "cannot stop already stopped app");;
+		this.AssertThrows<InvalidOperationException>(action, "cannot stop already stopped app");
 	}
 
 	[Test, Functional]
@@ -61,7 +61,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
 	public void TestInitializeStoppedApp()
 	{
 		var action = () => this.App.Initialize();
-		this.AssertThrows<InvalidOperationException>(action, "cannot initialize stopped app");;
+		this.AssertThrows<InvalidOperationException>(action, "cannot initialize stopped app");
 	}
 
 	[Test, Functional]
@@ -77,7 +77,7 @@ public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
 	public void TestUninitializeStoppedApp()
 	{
 		var action = () => this.App.Uninitialize();
-		this.AssertThrows<InvalidOperationException>(action, "cannot uninitialize stopped app");;
+		this.AssertThrows<InvalidOperationException>(action, "cannot uninitialize stopped app");
 	}
 
 	[Test, Functional]

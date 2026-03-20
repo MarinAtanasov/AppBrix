@@ -15,7 +15,7 @@ public sealed class ConfigServiceTests : TestsBase
 	public void TestConstructorNullProvider()
 	{
 		var action = () => new ConfigService(null!);
-		this.AssertThrows<ArgumentNullException>(action, "provider cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "provider cannot be null");
 	}
 
 	[Test, Functional]
@@ -23,7 +23,7 @@ public sealed class ConfigServiceTests : TestsBase
 	{
 		var service = new ConfigService(new ConfigProviderMock());
 		var action = () => service.Get(null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]
@@ -31,7 +31,7 @@ public sealed class ConfigServiceTests : TestsBase
 	{
 		var service = new ConfigService(new ConfigProviderMock());
 		var action = () => service.Save(((IConfig)null)!);
-		this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "config cannot be null");
 	}
 
 	[Test, Functional]
@@ -39,7 +39,7 @@ public sealed class ConfigServiceTests : TestsBase
 	{
 		IConfigService service = new ConfigService(new ConfigProviderMock());
 		var action = () => service.Save(((Type)null)!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]

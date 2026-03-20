@@ -15,7 +15,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
 	{
 		var request = this.App.GetFactoryService().GetHttpRequest();
 		var action = () => request.SetHeader(string.Empty);
-		this.AssertThrows<ArgumentNullException>(action, "header cannot be empty");;
+		this.AssertThrows<ArgumentNullException>(action, "header cannot be empty");
 	}
 
 	[Test, Functional]
@@ -23,7 +23,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
 	{
 		var request = this.App.GetFactoryService().GetHttpRequest();
 		var action = () => request.SetMethod(string.Empty);
-		this.AssertThrows<ArgumentNullException>(action, "method cannot be empty");;
+		this.AssertThrows<ArgumentNullException>(action, "method cannot be empty");
 	}
 
 	[Test, Functional]
@@ -31,7 +31,7 @@ public sealed class WebClientTests : TestsBase<WebClientModule>
 	{
 		var request = this.App.GetFactoryService().GetHttpRequest();
 		var action = () => request.SetUrl(string.Empty);
-		this.AssertThrows<ArgumentNullException>(action, "url cannot be empty");;
+		this.AssertThrows<ArgumentNullException>(action, "url cannot be empty");
 	}
 
 	[Test, Performance]

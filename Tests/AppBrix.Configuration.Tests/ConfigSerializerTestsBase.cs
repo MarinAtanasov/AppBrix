@@ -23,7 +23,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
 	{
 		var serializer = this.GetSerializer();
 		var action = () => serializer.Deserialize(null!, typeof(ConfigMock));
-		this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "config cannot be null");
 	}
 
 	[Test, Functional]
@@ -31,7 +31,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
 	{
 		var serializer = this.GetSerializer();
 		var action = () => serializer.Deserialize(string.Empty, typeof(ConfigMock));
-		this.AssertThrows<ArgumentNullException>(action, "config cannot be empty");;
+		this.AssertThrows<ArgumentNullException>(action, "config cannot be empty");
 	}
 
 	[Test, Functional]
@@ -39,7 +39,7 @@ public abstract class ConfigSerializerTestsBase : TestsBase
 	{
 		var serializer = this.GetSerializer();
 		var action = () => serializer.Deserialize(nameof(ConfigMock), null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]

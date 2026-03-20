@@ -32,7 +32,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
 	{
 		var hub = this.App.GetTimerScheduledEventHub();
 		Action action = () => hub.Schedule<EventMock>(null, TimeSpan.FromMinutes(1));
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]
@@ -40,7 +40,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
 	{
 		var hub = this.App.GetTimerScheduledEventHub();
 		Action action = () => hub.Schedule<EventMock>(null, this.timeService.GetTime().AddMinutes(1));
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]
@@ -48,7 +48,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
 	{
 		var hub = this.App.GetTimerScheduledEventHub();
 		Action action = () => hub.Schedule(new EventMock(0), TimeSpan.FromMilliseconds(-1));
-		this.AssertThrows<ArgumentException>(action, "dueTime must be non-negative");;
+		this.AssertThrows<ArgumentException>(action, "dueTime must be non-negative");
 	}
 
 	[Test, Functional]
@@ -56,7 +56,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
 	{
 		var hub = this.App.GetTimerScheduledEventHub();
 		Action action = () => hub.Schedule(new EventMock(0), this.timeService.GetTime().AddMinutes(1) , TimeSpan.FromMilliseconds(-1));
-		this.AssertThrows<ArgumentException>(action, "period must be non-negative");;
+		this.AssertThrows<ArgumentException>(action, "period must be non-negative");
 	}
 
 	[Test, Functional]
@@ -93,7 +93,7 @@ public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEvents
 	{
 		var hub = this.App.GetTimerScheduledEventHub();
 		var action = () => hub.Unschedule<EventMock>(null!);
-		this.AssertThrows<ArgumentNullException>(action, "args is null");;
+		this.AssertThrows<ArgumentNullException>(action, "args is null");
 	}
 
 	[Test, Functional]

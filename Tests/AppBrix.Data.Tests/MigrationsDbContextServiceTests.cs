@@ -18,7 +18,7 @@ public sealed class MigrationsDbContextServiceTests : TestsBase<InMemoryDataModu
 	{
 		var service = this.App.GetDbContextService();
 		var action = () => service.Get(null!);
-		this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type should not be null");
 	}
 
 	[Test, Functional]

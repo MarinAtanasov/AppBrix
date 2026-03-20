@@ -49,7 +49,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
 	{
 		var container = this.App.Container;
 		var action = () => container.Register(null!);
-		this.AssertThrows<ArgumentNullException>(action, "passing a null object is not allowed");;
+		this.AssertThrows<ArgumentNullException>(action, "passing a null object is not allowed");
 	}
 
 	[Test, Functional]
@@ -58,7 +58,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
 		var container = this.App.Container;
 		container.Register(new ChildMock());
 		Action action = () => container.Get<object>();
-		this.AssertThrows<KeyNotFoundException>(action, "items should not be registered as type of object");;
+		this.AssertThrows<KeyNotFoundException>(action, "items should not be registered as type of object");
 	}
 
 	[Test, Functional]
@@ -81,7 +81,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
 	{
 		var container = this.App.Container;
 		var action = () => container.Register(new object());
-		this.AssertThrows<ArgumentException>(action, "registering a System.Object should not be allowed.");;
+		this.AssertThrows<ArgumentException>(action, "registering a System.Object should not be allowed.");
 	}
 
 	[Test, Functional]
@@ -89,7 +89,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
 	{
 		var container = this.App.Container;
 		var action = () => container.Register("AppBrix");
-		this.AssertThrows<ArgumentException>(action, "registering a string should not be allowed");;
+		this.AssertThrows<ArgumentException>(action, "registering a string should not be allowed");
 	}
 
 	[Test, Functional]
@@ -97,7 +97,7 @@ public sealed class ContainerTests : TestsBase<ContainerModule>
 	{
 		var container = this.App.Container;
 		var action = () => container.Register(42);
-		this.AssertThrows<ArgumentException>(action, "registering a value type should not be allowed");;
+		this.AssertThrows<ArgumentException>(action, "registering a value type should not be allowed");
 	}
 
 	[Test, Performance]

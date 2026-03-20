@@ -19,7 +19,7 @@ public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
 	{
 		var service = this.App.GetDbContextService();
 		var action = () => service.Get(null!);
-		this.AssertThrows<ArgumentNullException>(action, "type should not be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type should not be null");
 	}
 
 	[Test, Functional]

@@ -115,7 +115,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
 		hub.Subscribe<EventMock>(_ => throw new InvalidOperationException());
 		hub.Subscribe<EventMock>(_ => called++);
 		var action = () => hub.RaiseImmediate(new EventMock());
-		this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
+		this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");
 		this.Assert(called == 1, "the handler after the failing one shouldn't be called");
 	}
 
@@ -219,7 +219,7 @@ public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
 		hub.Subscribe<EventMock>(_ => called++);
 		hub.RaiseDelayed(new EventMock());
 		var action = () => hub.Flush();
-		this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");;
+		this.AssertThrows<InvalidOperationException>(action, "the exception should be propagated to the called");
 		this.Assert(called == 1, "the handler after the failing one shouldn't be called");
 	}
 

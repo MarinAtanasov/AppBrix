@@ -17,7 +17,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
 	{
 		var service = new MemoryConfigService();
 		var action = () => service.Get(null!);
-		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "type cannot be null");
 	}
 
 	[Test, Functional]
@@ -25,7 +25,7 @@ public sealed class MemoryConfigServiceTests : TestsBase
 	{
 		var service = new MemoryConfigService();
 		var action = () => service.Save(null!);
-		this.AssertThrows<ArgumentNullException>(action, "config cannot be null");;
+		this.AssertThrows<ArgumentNullException>(action, "config cannot be null");
 	}
 
 	[Test, Functional]
