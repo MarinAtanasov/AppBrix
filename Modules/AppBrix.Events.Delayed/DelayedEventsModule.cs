@@ -12,7 +12,7 @@ namespace AppBrix.Events.Delayed;
 /// <summary>
 /// Module used for registering a delayed event hub.
 /// </summary>
-public sealed class DelayedEventsModule : ModuleBase
+public sealed class DelayedEventsModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -25,7 +25,7 @@ public sealed class DelayedEventsModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)
@@ -36,7 +36,7 @@ public sealed class DelayedEventsModule : ModuleBase
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// </summary>
 	protected override void Uninitialize()
 	{

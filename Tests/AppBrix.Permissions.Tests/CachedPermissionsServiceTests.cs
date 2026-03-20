@@ -6,7 +6,7 @@ using AppBrix.Testing;
 namespace AppBrix.Permissions.Tests;
 
 [TestClass]
-public sealed class CachedPermissionsServiceTests : PermissionsServiceTestsBase
+public sealed class CachedPermissionsServiceTests : ServiceTests
 {
 	#region Test lifecycle
 	protected override void Initialize()

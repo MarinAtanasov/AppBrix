@@ -7,7 +7,7 @@ using AppBrix.Testing;
 namespace AppBrix.Configuration.Tests;
 
 [TestClass]
-public sealed class JsonConfigSerializerTests : ConfigSerializerTestsBase
+public sealed class JsonConfigSerializerTests : ConfigSerializerTests
 {
 	#region Protected methods
 	protected override IConfigSerializer GetSerializer() => new JsonConfigSerializer();

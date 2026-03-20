@@ -12,7 +12,7 @@ namespace AppBrix.Events.Schedule.Cron;
 /// <summary>
 /// Module used for registering cron based scheduled events.
 /// </summary>
-public sealed class CronScheduledEventsModule : ModuleBase
+public sealed class CronScheduledEventsModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -25,7 +25,7 @@ public sealed class CronScheduledEventsModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)
@@ -36,7 +36,7 @@ public sealed class CronScheduledEventsModule : ModuleBase
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// </summary>
 	protected override void Uninitialize()
 	{

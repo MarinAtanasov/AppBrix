@@ -12,7 +12,7 @@ namespace AppBrix.Testing;
 /// A base testing class that uses MSTest.
 /// Used for testing an application without preloaded modules.
 /// </summary>
-public abstract class TestsBase : TestingBase
+public abstract class Tests : TestsBase
 {
 	#region Test lifecycle
 	/// <summary>
@@ -46,7 +46,7 @@ public abstract class TestsBase : TestingBase
 /// A base testing class that uses MSTest.
 /// Used for testing an application with one module and its dependencies.
 /// </summary>
-public abstract class TestsBase<T> : TestsBase
+public abstract class Tests<T> : Tests
 	where T : class, IModule
 {
 	#region Test lifecycle
@@ -66,7 +66,7 @@ public abstract class TestsBase<T> : TestsBase
 /// A base testing class that uses MSTest.
 /// Used for testing an application with two modules and their dependencies.
 /// </summary>
-public abstract class TestsBase<T1, T2> : TestsBase
+public abstract class Tests<T1, T2> : Tests
 	where T1 : class, IModule
 	where T2 : class, IModule
 {

@@ -16,7 +16,7 @@ namespace AppBrix.Web.Client;
 /// <summary>
 /// A module for http communication.
 /// </summary>
-public sealed class WebClientModule : ModuleBase
+public sealed class WebClientModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -29,7 +29,7 @@ public sealed class WebClientModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)
@@ -48,7 +48,7 @@ public sealed class WebClientModule : ModuleBase
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// </summary>
 	protected override void Uninitialize()
 	{

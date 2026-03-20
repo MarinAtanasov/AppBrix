@@ -9,7 +9,7 @@ using AppBrix.Tests.Mocks;
 namespace AppBrix.Tests;
 
 [TestClass]
-public sealed class MainModuleTests : TestsBase
+public sealed class MainModuleTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

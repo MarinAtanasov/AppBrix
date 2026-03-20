@@ -12,7 +12,7 @@ namespace AppBrix.Modules;
 /// Base class for application modules.
 /// This class will set <see cref="App"/> before calling the overriden methods.
 /// </summary>
-public abstract class ModuleBase : IModule
+public abstract class Module : IModule
 {
 	#region Properties
 	/// <summary>
@@ -69,7 +69,7 @@ public abstract class ModuleBase : IModule
 	#region Protected methods
 	/// <summary>
 	/// Configures the module by making any changes to the configuration required for it to be installed and initialized in the future.
-	/// Automatically called by <see cref="ModuleBase.Install"/>
+	/// Automatically called by <see cref="Module.Install"/>
 	/// There is no need to call the base method when overriding.
 	/// </summary>
 	/// <param name="context">The configure context.</param>
@@ -77,15 +77,15 @@ public abstract class ModuleBase : IModule
 
 	/// <summary>
 	/// Installs the module by making any permanent changes required for it to be initialized in the future.
-	/// Automatically called by <see cref="ModuleBase.Install"/>
+	/// Automatically called by <see cref="Module.Install"/>
 	/// There is no need to call the base method when overriding.
 	/// </summary>
 	/// <param name="context">The install context.</param>
 	protected virtual void Install(IInstallContext context) { }
 
 	/// <summary>
-	/// Uninstalls the module by reverting any changes from <see cref="ModuleBase.Install"/>.
-	/// Automatically called by <see cref="ModuleBase.Uninstall"/>.
+	/// Uninstalls the module by reverting any changes from <see cref="Module.Install"/>.
+	/// Automatically called by <see cref="Module.Uninstall"/>.
 	/// There is no need to call the base method when overriding.
 	/// </summary>
 	/// <param name="context">The uninstall context.</param>
@@ -93,7 +93,7 @@ public abstract class ModuleBase : IModule
 
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// There is no need to call the base method when overriding.
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
@@ -101,7 +101,7 @@ public abstract class ModuleBase : IModule
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// There is no need to call the base method when overriding.
 	/// </summary>
 	protected virtual void Uninitialize() { }

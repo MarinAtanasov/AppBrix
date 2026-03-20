@@ -94,7 +94,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 		{
 			lock (this.migrationLock)
 			{
-				if (!typeof(DbContextBase).IsAssignableFrom(type))
+				if (!typeof(AppBrixDbContext).IsAssignableFrom(type))
 				{
 					this.initializedContexts.Add(type);
 					return;
@@ -181,7 +181,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
 	private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)
 	{
-		using var context = (DbContextBase)this.contextService.Get(type);
+		using var context = (AppBrixDbContext)this.contextService.Get(type);
 		context.Initialize(new InitializeDbContext(this.app, oldMigrationsAssembly, this.GenerateMigrationAssemblyName(type)));
 		var scaffolder = this.CreateMigrationsScaffolder(context);
 		return scaffolder.ScaffoldMigration(migrationName, context.GetType().Namespace);
@@ -245,7 +245,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
 		var migrationAssemblyName = this.GenerateMigrationAssemblyName(type, version);
 		this.LoadAssembly(type, migrationAssemblyName, scaffoldedMigration.SnapshotCode, migration);
-		using var context = (DbContextBase)this.contextService.Get(type);
+		using var context = (AppBrixDbContext)this.contextService.Get(type);
 		context.Initialize(new InitializeDbContext(this.app, migrationAssemblyName, this.GenerateMigrationsHistoryTableName(type)));
 		context.Database.Migrate();
 		return migration;

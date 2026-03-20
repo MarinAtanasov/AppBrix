@@ -10,7 +10,7 @@ using System;
 namespace AppBrix.Data.Tests;
 
 [TestClass]
-public sealed class MigrationsDbContextServiceTests : TestsBase<InMemoryDataModule, MigrationsDataModule>
+public sealed class MigrationsDbContextServiceTests : Tests<InMemoryDataModule, MigrationsDataModule>
 {
 	#region Tests
 	[Test, Functional]

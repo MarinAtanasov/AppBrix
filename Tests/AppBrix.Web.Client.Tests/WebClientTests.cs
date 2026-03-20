@@ -7,7 +7,7 @@ using System;
 namespace AppBrix.Web.Client.Tests;
 
 [TestClass]
-public sealed class WebClientTests : TestsBase<WebClientModule>
+public sealed class WebClientTests : Tests<WebClientModule>
 {
 	#region Tests
 	[Test, Functional]

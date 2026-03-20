@@ -13,7 +13,7 @@ using System.Reflection;
 namespace AppBrix.Tests;
 
 [TestClass]
-public sealed class AppInstallableModuleTests : TestsBase<InstallableModuleMock>
+public sealed class AppInstallableModuleTests : Tests<InstallableModuleMock>
 {
 	#region Test lifecycle
 	protected override void Initialize() { }

@@ -14,7 +14,7 @@ using System.Linq;
 namespace AppBrix.Data.Tests;
 
 [TestClass]
-public sealed class SqliteDataTests : DataTestsBase<SqliteDataModule>
+public sealed class SqliteDataTests : DataTests<SqliteDataModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

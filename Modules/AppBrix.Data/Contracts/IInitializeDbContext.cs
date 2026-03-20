@@ -7,7 +7,7 @@ using AppBrix.Data.Data;
 namespace AppBrix.Data.Contracts;
 
 /// <summary>
-/// Context passed down during <see cref="DbContextBase"/> initialization.
+/// Context passed down during <see cref="AppBrixDbContext"/> initialization.
 /// </summary>
 public interface IInitializeDbContext
 {

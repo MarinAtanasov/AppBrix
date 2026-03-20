@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AppBrix.WebApp.Data;
 
-public class BooksDbContext : DbContextBase
+public class BooksDbContext : AppBrixDbContext
 {
 	public DbSet<Book> Books { get; set; }
 

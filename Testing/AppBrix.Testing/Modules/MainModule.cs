@@ -11,7 +11,7 @@ namespace AppBrix.Testing.Modules;
 /// A main module that registers the provided module type and its dependencies.
 /// </summary>
 /// <typeparam name="T">The type of the module being tested.</typeparam>
-public sealed class MainModule<T> : MainModuleBase
+public sealed class MainModule<T> : MainModule
 	where T : class, IModule
 {
 	/// <summary>
@@ -26,7 +26,7 @@ public sealed class MainModule<T> : MainModuleBase
 /// </summary>
 /// <typeparam name="T1">The type of the first module being tested.</typeparam>
 /// <typeparam name="T2">The type of the second module being tested.</typeparam>
-public sealed class MainModule<T1, T2> : MainModuleBase
+public sealed class MainModule<T1, T2> : MainModule
 	where T1 : class, IModule
 	where T2 : class, IModule
 {

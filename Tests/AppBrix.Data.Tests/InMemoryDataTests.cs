@@ -10,7 +10,7 @@ using System.Linq;
 namespace AppBrix.Data.Tests;
 
 [TestClass]
-public sealed class InMemoryDataTests : DataTestsBase<InMemoryDataModule>
+public sealed class InMemoryDataTests : DataTests<InMemoryDataModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

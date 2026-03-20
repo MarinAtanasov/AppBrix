@@ -14,7 +14,7 @@ namespace AppBrix.Factory;
 /// A module used for registering a default object factory.
 /// The object factory should be used only for simple objects which cannot be made immutable.
 /// </summary>
-public sealed class FactoryModule : ModuleBase
+public sealed class FactoryModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -27,7 +27,7 @@ public sealed class FactoryModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)
@@ -38,7 +38,7 @@ public sealed class FactoryModule : ModuleBase
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// </summary>
 	protected override void Uninitialize()
 	{

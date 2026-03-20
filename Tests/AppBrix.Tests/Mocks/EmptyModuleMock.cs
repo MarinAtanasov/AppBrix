@@ -5,6 +5,6 @@ using AppBrix.Modules;
 
 namespace AppBrix.Tests.Mocks;
 
-public sealed class EmptyModuleMock : ModuleBase
+public sealed class EmptyModuleMock : Module
 {
 }

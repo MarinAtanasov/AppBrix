@@ -7,7 +7,7 @@ using System;
 namespace AppBrix.Time.Tests;
 
 [TestClass]
-public sealed class TimeServiceTests : TestsBase<TimeModule>
+public sealed class TimeServiceTests : Tests<TimeModule>
 {
 	#region Tests
 	[Test, Functional]

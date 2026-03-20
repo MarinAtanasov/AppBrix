@@ -11,7 +11,6 @@ using AppBrix.Events.Schedule.Cron;
 using AppBrix.Events.Schedule.Timer;
 using AppBrix.Lifecycle;
 using AppBrix.Logging.File;
-using AppBrix.Modules;
 using AppBrix.Permissions;
 using AppBrix.Random;
 using AppBrix.Text;
@@ -31,7 +30,7 @@ namespace AppBrix.WebApp;
 /// <summary>
 /// Initializes web application configuration.
 /// </summary>
-public sealed class MainModule : MainModuleBase
+public sealed class MainModule : Modules.MainModule
 {
 	#region Properties
 	public override IEnumerable<Type> Dependencies =>

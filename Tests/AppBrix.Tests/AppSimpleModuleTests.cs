@@ -14,7 +14,7 @@ using System.Reflection;
 namespace AppBrix.Tests;
 
 [TestClass]
-public sealed class AppSimpleModuleTests : TestsBase<SimpleModuleMock>
+public sealed class AppSimpleModuleTests : Tests<SimpleModuleMock>
 {
 	#region Test lifecycle
 	protected override void Initialize() { }

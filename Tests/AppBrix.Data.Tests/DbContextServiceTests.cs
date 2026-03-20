@@ -11,7 +11,7 @@ using System.Linq;
 namespace AppBrix.Data.Tests;
 
 [TestClass]
-public sealed class DbContextServiceTests : TestsBase<InMemoryDataModule>
+public sealed class DbContextServiceTests : Tests<InMemoryDataModule>
 {
 	#region Tests
 	[Test, Functional]

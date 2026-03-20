@@ -12,7 +12,7 @@ namespace AppBrix.Data.Data;
 /// <summary>
 /// Base class for database contexts in the scope of an <see cref="IApp"/>.
 /// </summary>
-public abstract class DbContextBase : DbContext
+public abstract class AppBrixDbContext : DbContext
 {
 	#region Properties
 	/// <summary>
@@ -34,7 +34,7 @@ public abstract class DbContextBase : DbContext
 
 	#region Public and overriden methods
 	/// <summary>
-	/// Initializes the <see cref="DbContextBase"/> using the provided <see cref="IInitializeDbContext"/>.
+	/// Initializes the <see cref="AppBrixDbContext"/> using the provided <see cref="IInitializeDbContext"/>.
 	/// This should be called right after creating the context inside <see cref="IDbContextService"/>.
 	/// </summary>
 	/// <param name="context">The <see cref="IInitializeDbContext"/>.</param>

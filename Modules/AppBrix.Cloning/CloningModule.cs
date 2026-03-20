@@ -14,7 +14,7 @@ namespace AppBrix.Cloning;
 /// A module used for registering a default object cloner.
 /// The object cloner is used for creating deep and shallow copies of objects.
 /// </summary>
-public sealed class CloningModule : ModuleBase
+public sealed class CloningModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -27,7 +27,7 @@ public sealed class CloningModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)

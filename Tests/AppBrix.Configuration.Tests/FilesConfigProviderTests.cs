@@ -11,7 +11,7 @@ using System.Reflection;
 namespace AppBrix.Configuration.Tests;
 
 [TestClass]
-public sealed class FilesConfigProviderTests : TestsBase
+public sealed class FilesConfigProviderTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

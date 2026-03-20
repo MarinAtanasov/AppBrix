@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace AppBrix.Events.Tests;
 
 [TestClass]
-public sealed class EventHubTests : TestsBase<EventsModule>
+public sealed class EventHubTests : Tests<EventsModule>
 {
 	#region Tests
 	[Test, Functional]

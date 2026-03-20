@@ -7,7 +7,7 @@ using System;
 
 namespace AppBrix.Configuration.Tests;
 
-public abstract class ConfigSerializerTestsBase : TestsBase
+public abstract class ConfigSerializerTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

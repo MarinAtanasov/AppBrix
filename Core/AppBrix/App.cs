@@ -36,10 +36,10 @@ public static class App
 	/// Creates a default application with a specified configuration service.
 	/// Registers the provided module type in the <see cref="AppConfig"/>.
 	/// </summary>
-	/// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
+	/// <typeparam name="T">Type of the <see cref="MainModule"/> to be registered.</typeparam>
 	/// <param name="configService">The configuration service.</param>
 	/// <returns>The created app.</returns>
-	public static IApp Create<T>(IConfigService configService) where T : MainModuleBase, new()
+	public static IApp Create<T>(IConfigService configService) where T : MainModule, new()
 	{
 		var mainModuleConfigElement = ModuleConfigElement.Create<T>();
 		var type = mainModuleConfigElement.Type;
@@ -59,10 +59,10 @@ public static class App
 	/// Creates and starts a default application with a specified configuration service.
 	/// Registers the provided module type in the <see cref="AppConfig"/> before starting.
 	/// </summary>
-	/// <typeparam name="T">Type of the <see cref="MainModuleBase"/> to be registered.</typeparam>
+	/// <typeparam name="T">Type of the <see cref="MainModule"/> to be registered.</typeparam>
 	/// <param name="configService">The configuration service.</param>
 	/// <returns>The created and started app.</returns>
-	public static IApp Start<T>(IConfigService configService) where T : MainModuleBase, new()
+	public static IApp Start<T>(IConfigService configService) where T : MainModule, new()
 	{
 		var app = App.Create<T>(configService);
 		app.Start();

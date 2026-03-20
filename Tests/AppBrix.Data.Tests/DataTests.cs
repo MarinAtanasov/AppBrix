@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace AppBrix.Data.Tests;
 
-public abstract class DataTestsBase<T> : TestsBase<T, MigrationsDataModule>
+public abstract class DataTests<T> : Tests<T, MigrationsDataModule>
 	where T : class, IModule
 {
 	#region Tests

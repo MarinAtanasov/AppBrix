@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Caching.Memory.Tests;
 
 [TestClass]
-public sealed class MemoryCacheTests : TestsBase<MemoryCachingModule>
+public sealed class MemoryCacheTests : Tests<MemoryCachingModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

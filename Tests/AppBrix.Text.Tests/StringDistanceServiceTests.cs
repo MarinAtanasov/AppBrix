@@ -7,7 +7,7 @@ using System;
 namespace AppBrix.Text.Tests;
 
 [TestClass]
-public sealed class StringDistanceServiceTests : TestsBase<TextModule>
+public sealed class StringDistanceServiceTests : Tests<TextModule>
 {
 	#region Tests Damerau-Levenshtein distance
 	[Test, Functional]

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace AppBrix.Tests.Mocks;
 
-public class SimpleModuleMock : ModuleBase
+public class SimpleModuleMock : Module
 {
 	public override IEnumerable<Type> Dependencies => [];
 

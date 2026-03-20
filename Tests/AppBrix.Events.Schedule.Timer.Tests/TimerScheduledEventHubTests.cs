@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Events.Schedule.Timer.Tests;
 
 [TestClass]
-public sealed class TimerScheduledEventHubTests : TestsBase<TimerScheduledEventsModule>
+public sealed class TimerScheduledEventHubTests : Tests<TimerScheduledEventsModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

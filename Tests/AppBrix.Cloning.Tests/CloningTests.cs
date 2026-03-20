@@ -12,7 +12,7 @@ using System.Reflection;
 namespace AppBrix.Cloning.Tests;
 
 [TestClass]
-public sealed class CloningTests : TestsBase<CloningModule>
+public sealed class CloningTests : Tests<CloningModule>
 {
 	#region Deep Copy Tests
 	[Test, Functional]

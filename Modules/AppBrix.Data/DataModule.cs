@@ -16,7 +16,7 @@ namespace AppBrix.Data;
 /// <summary>
 /// Module used for enabling database functionality.
 /// </summary>
-public sealed class DataModule : ModuleBase
+public sealed class DataModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -29,7 +29,7 @@ public sealed class DataModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)
@@ -42,7 +42,7 @@ public sealed class DataModule : ModuleBase
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// </summary>
 	protected override void Uninitialize()
 	{

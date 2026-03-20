@@ -8,7 +8,7 @@ using System.Text;
 namespace AppBrix.Text.Tests;
 
 [TestClass]
-public sealed class EncodingProviderWrapperTests : TestsBase<TextModule>
+public sealed class EncodingProviderWrapperTests : Tests<TextModule>
 {
 	#region Tests
 	[Test, Functional]

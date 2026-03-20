@@ -9,13 +9,13 @@ namespace AppBrix.Data.Services;
 
 /// <summary>
 /// Defines a class which can be called during <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)"/>.
-/// This is called automatically when initializing <see cref="DbContextBase"/>.
+/// This is called automatically when initializing <see cref="AppBrixDbContext"/>.
 /// </summary>
 public interface IDbContextConfigurer
 {
 	/// <summary>
 	/// Configures a DB context.
-	/// This is called automatically when initializing <see cref="DbContextBase"/>.
+	/// This is called automatically when initializing <see cref="AppBrixDbContext"/>.
 	/// </summary>
 	/// <param name="context">The database context options builder.</param>
 	void Configure(IConfigureDbContext context);

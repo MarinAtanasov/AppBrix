@@ -10,7 +10,7 @@ using System;
 namespace AppBrix.Factory.Tests;
 
 [TestClass]
-public sealed class FactoryTests : TestsBase<FactoryModule>
+public sealed class FactoryTests : Tests<FactoryModule>
 {
 	#region Tests
 	[Test, Functional]

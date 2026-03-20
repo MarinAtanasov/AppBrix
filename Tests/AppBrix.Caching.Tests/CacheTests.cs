@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Caching.Tests;
 
 [TestClass]
-public sealed class CacheTests : TestsBase<CachingModule>
+public sealed class CacheTests : Tests<CachingModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

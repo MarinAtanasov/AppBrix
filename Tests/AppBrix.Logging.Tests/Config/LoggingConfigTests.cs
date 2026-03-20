@@ -9,7 +9,7 @@ using System;
 namespace AppBrix.Logging.Tests.Config;
 
 [TestClass]
-public sealed class LoggingConfigTests : TestsBase<LoggingModule>
+public sealed class LoggingConfigTests : Tests<LoggingModule>
 {
 	#region Tests
 	[Test, Functional]

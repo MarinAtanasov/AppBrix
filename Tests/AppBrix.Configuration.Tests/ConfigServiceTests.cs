@@ -8,7 +8,7 @@ using System;
 namespace AppBrix.Configuration.Tests;
 
 [TestClass]
-public sealed class ConfigServiceTests : TestsBase
+public sealed class ConfigServiceTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

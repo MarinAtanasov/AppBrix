@@ -9,7 +9,7 @@ using System;
 namespace AppBrix.Configuration.Tests;
 
 [TestClass]
-public sealed class MemoryConfigServiceTests : TestsBase
+public sealed class MemoryConfigServiceTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Events.Schedule.Cron.Tests;
 
 [TestClass]
-public sealed class CronScheduledEventHubTests : TestsBase<CronScheduledEventsModule>
+public sealed class CronScheduledEventHubTests : Tests<CronScheduledEventsModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

@@ -10,7 +10,7 @@ using System.Reflection;
 namespace AppBrix.Configuration.Tests;
 
 [TestClass]
-public sealed class FileConfigProviderTests : TestsBase
+public sealed class FileConfigProviderTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

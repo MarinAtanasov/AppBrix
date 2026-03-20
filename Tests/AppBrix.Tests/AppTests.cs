@@ -10,7 +10,7 @@ using System.Linq;
 namespace AppBrix.Tests;
 
 [TestClass]
-public sealed class AppTests : TestsBase
+public sealed class AppTests : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]

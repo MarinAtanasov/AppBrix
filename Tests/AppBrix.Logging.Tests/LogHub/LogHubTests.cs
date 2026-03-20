@@ -9,7 +9,7 @@ using System;
 namespace AppBrix.Logging.Tests.LogHub;
 
 [TestClass]
-public sealed class LogHubTests : TestsBase<LoggingModule>
+public sealed class LogHubTests : Tests<LoggingModule>
 {
 	#region Tests
 	[Test, Functional]

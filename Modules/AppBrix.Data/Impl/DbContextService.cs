@@ -29,7 +29,7 @@ internal sealed class DbContextService : IDbContextService, IApplicationLifecycl
 
 		var factory = this.app.GetFactoryService().GetFactory(type);
 		var context = factory?.Get() ?? type.CreateObject();
-		(context as DbContextBase)?.Initialize(new InitializeDbContext(this.app));
+		(context as AppBrixDbContext)?.Initialize(new InitializeDbContext(this.app));
 		return (DbContext)context;
 	}
 	#endregion

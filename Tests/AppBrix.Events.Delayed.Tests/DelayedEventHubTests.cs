@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace AppBrix.Events.Delayed.Tests;
 
 [TestClass]
-public sealed class DelayedEventHubTests : TestsBase<DelayedEventsModule>
+public sealed class DelayedEventHubTests : Tests<DelayedEventsModule>
 {
 	#region Tests
 	[Test, Functional]

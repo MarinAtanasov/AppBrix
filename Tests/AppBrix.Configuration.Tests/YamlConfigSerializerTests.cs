@@ -7,7 +7,7 @@ using AppBrix.Testing;
 namespace AppBrix.Configuration.Tests;
 
 [TestClass]
-public sealed class YamlConfigSerializerTests : ConfigSerializerTestsBase
+public sealed class YamlConfigSerializerTests : ConfigSerializerTests
 {
 	#region Protected methods
 	protected override IConfigSerializer GetSerializer() => new YamlConfigSerializer();

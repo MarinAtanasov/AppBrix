@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Events.Schedule.Tests;
 
 [TestClass]
-public sealed class ScheduledEventHubTests : TestsBase<ScheduledEventsModule>
+public sealed class ScheduledEventHubTests : Tests<ScheduledEventsModule>
 {
 	#region Test lifecycle
 	protected override void Initialize()

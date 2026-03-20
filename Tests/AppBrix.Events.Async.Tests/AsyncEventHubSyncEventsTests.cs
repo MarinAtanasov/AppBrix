@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Events.Async.Tests;
 
 [TestClass]
-public sealed class AsyncEventHubSyncEventsTests : TestsBase<AsyncEventsModule>
+public sealed class AsyncEventHubSyncEventsTests : Tests<AsyncEventsModule>
 {
 	#region Tests
 	[Test, Functional]

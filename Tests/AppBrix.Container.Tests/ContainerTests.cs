@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace AppBrix.Container.Tests;
 
 [TestClass]
-public sealed class ContainerTests : TestsBase<ContainerModule>
+public sealed class ContainerTests : Tests<ContainerModule>
 {
 	#region Tests
 	[Test, Functional]

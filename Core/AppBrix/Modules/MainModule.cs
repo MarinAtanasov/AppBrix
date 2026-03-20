@@ -3,7 +3,6 @@
 
 using AppBrix.Configuration;
 using AppBrix.Lifecycle;
-using System.Linq;
 
 namespace AppBrix.Modules;
 
@@ -11,7 +10,7 @@ namespace AppBrix.Modules;
 /// Base class for main application modules. Can be inherited by modules inside console or web apps.
 /// This class will add all dependent modules to the application config during configuration.
 /// </summary>
-public abstract class MainModuleBase : ModuleBase
+public abstract class MainModule : Module
 {
 	#region Protected methods
 	/// <summary>

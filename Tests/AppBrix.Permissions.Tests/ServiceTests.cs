@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AppBrix.Permissions.Tests;
 
-public abstract class PermissionsServiceTestsBase : TestsBase<PermissionsModule>
+public abstract class ServiceTests : Tests<PermissionsModule>
 {
 	#region Tests Roles
 	[Test, Functional]

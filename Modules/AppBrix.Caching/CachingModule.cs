@@ -13,7 +13,7 @@ namespace AppBrix.Caching;
 /// <summary>
 /// Module used for caching objects.
 /// </summary>
-public sealed class CachingModule : ModuleBase
+public sealed class CachingModule : Module
 {
 	#region Properties
 	/// <summary>
@@ -26,7 +26,7 @@ public sealed class CachingModule : ModuleBase
 	#region Public and overriden methods
 	/// <summary>
 	/// Initializes the module.
-	/// Automatically called by <see cref="ModuleBase.Initialize"/>
+	/// Automatically called by <see cref="Module.Initialize"/>
 	/// </summary>
 	/// <param name="context">The initialization context.</param>
 	protected override void Initialize(IInitializeContext context)
@@ -37,7 +37,7 @@ public sealed class CachingModule : ModuleBase
 
 	/// <summary>
 	/// Uninitializes the module.
-	/// Automatically called by <see cref="ModuleBase.Uninitialize"/>
+	/// Automatically called by <see cref="Module.Uninitialize"/>
 	/// </summary>
 	protected override void Uninitialize()
 	{

@@ -11,7 +11,7 @@ namespace AppBrix.Testing;
 /// <summary>
 /// A base framework-agnostic testing class.
 /// </summary>
-public abstract class TestingBase
+public abstract class TestsBase
 {
 	#region Test lifecycle
 	/// <summary>

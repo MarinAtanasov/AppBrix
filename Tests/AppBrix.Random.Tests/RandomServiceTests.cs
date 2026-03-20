@@ -9,7 +9,7 @@ using System.Linq;
 namespace AppBrix.Random.Tests;
 
 [TestClass]
-public sealed class RandomServiceTests : TestsBase<RandomModule>
+public sealed class RandomServiceTests : Tests<RandomModule>
 {
 	#region Tests
 	[Test, Functional]

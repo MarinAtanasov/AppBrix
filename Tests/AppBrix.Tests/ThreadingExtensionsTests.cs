@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Tests;
 
 [TestClass]
-public sealed class UtilsExtensions : TestsBase
+public sealed class UtilsExtensions : Testing.Tests
 {
 	#region Tests
 	[Test, Functional]
