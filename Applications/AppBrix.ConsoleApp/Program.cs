@@ -14,7 +14,7 @@ internal static class Program
 	internal static void Main()
 	{
 		var stopwatch = Stopwatch.StartNew();
-		var app = App.Start<MainModule>(new ConfigService(new FileConfigProvider(
+		var app = App.Start<ConsoleAppMainModule>(new ConfigService(new FileConfigProvider(
 			new JsonConfigSerializer(), "./Config/AppBrix.json")));
 		try
 		{

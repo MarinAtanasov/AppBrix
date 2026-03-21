@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppBrix.Modules;
+using System;
 using System.Collections.Generic;
 
 namespace AppBrix.ConsoleApp;
@@ -6,7 +7,7 @@ namespace AppBrix.ConsoleApp;
 /// <summary>
 /// Initializes application configuration.
 /// </summary>
-public sealed class MainModule : Modules.MainModule
+public sealed class ConsoleAppMainModule : MainModule
 {
 	#region Properties
 	public override IEnumerable<Type> Dependencies =>
