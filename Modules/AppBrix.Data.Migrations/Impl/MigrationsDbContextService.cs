@@ -23,6 +23,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -88,24 +89,6 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 		return snapshot;
 	}
 
-	private void MigrateContextIfNeeded(Type type)
-	{
-		if (!this.initializedContexts.Contains(type))
-		{
-			lock (this.migrationLock)
-			{
-				if (!typeof(AppBrixDbContext).IsAssignableFrom(type))
-				{
-					this.initializedContexts.Add(type);
-					return;
-				}
-
-				this.MigrateContext(typeof(MigrationsDbContext));
-				this.MigrateContext(type);
-			}
-		}
-	}
-
 	private void MigrateContext(Type type)
 	{
 		if (this.initializedContexts.Contains(type))
@@ -142,6 +125,24 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
 		this.initializedContexts.Add(type);
 		this.app.GetEventHub().Raise(new DbContextMigratedEvent(oldVersion, assemblyVersion, type));
+	}
+
+	private void MigrateContextIfNeeded(Type type)
+	{
+		if (!this.initializedContexts.Contains(type))
+		{
+			lock (this.migrationLock)
+			{
+				if (!typeof(AppBrixDbContext).IsAssignableFrom(type))
+				{
+					this.initializedContexts.Add(type);
+					return;
+				}
+
+				this.MigrateContext(typeof(MigrationsDbContext));
+				this.MigrateContext(type);
+			}
+		}
 	}
 
 	private void LoadAssembly(Type type, string assemblyName, string snapshot, MigrationData? migration = null)
@@ -297,7 +298,7 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
 	#region Private fields and constants
 	private static readonly Version EmptyVersion = new Version();
-	private readonly HashSet<Type> initializedContexts = [];
+	private readonly ConcurrentBag<Type> initializedContexts = [];
 	private readonly Lock migrationLock = new Lock();
 	private IApp app = null!;
 	private MigrationsDataConfig config = null!;
