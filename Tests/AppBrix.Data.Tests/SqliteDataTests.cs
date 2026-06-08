@@ -1,13 +1,10 @@
 // Copyright (c) MarinAtanasov. All rights reserved.
 // Licensed under the MIT License (MIT). See License.txt in the project root for license information.
 
-using AppBrix.Configuration;
-using AppBrix.Data.Migrations;
-using AppBrix.Data.Migrations.Data;
 using AppBrix.Data.Sqlite;
 using AppBrix.Data.Tests.Mocks;
 using AppBrix.Testing;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Linq;
 
@@ -19,24 +16,19 @@ public sealed class SqliteDataTests : DataTests<SqliteDataModule>
 	#region Test lifecycle
 	protected override void Initialize()
 	{
-		this.App.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.sqlite3; Mode=Memory; Cache=Shared;";
-		this.App.Start();
+		this.connection = new SqliteConnection($"Data Source={Guid.NewGuid()}.sqlite3; Mode=Memory; Cache=Shared;");
+		this.connection.Open();
+		this.App.ConfigService.GetSqliteDataConfig().ConnectionString = this.connection.ConnectionString;
 
-		this.App.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
-		this.App.Restart();
-
-		this.globalDbContext = this.App.GetDbContextService().Get<MigrationsDbContext>();
-		this.globalDbContext.Database.OpenConnection();
-
-		this.App.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Enabled;
-		this.App.Restart();
+		base.Initialize();
 	}
 
-	public override void Stop()
+	protected override void Uninitialize()
 	{
-		this.globalDbContext.Database.CloseConnection();
-		this.globalDbContext.Dispose();
-		base.Stop();
+		base.Uninitialize();
+
+		this.connection.Close();
+		this.connection.Dispose();
 	}
 	#endregion
 
@@ -69,6 +61,6 @@ public sealed class SqliteDataTests : DataTests<SqliteDataModule>
 	#endregion
 
 	#region Private fields and constants
-	private MigrationsDbContext globalDbContext;
+	private SqliteConnection connection;
 	#endregion
 }
