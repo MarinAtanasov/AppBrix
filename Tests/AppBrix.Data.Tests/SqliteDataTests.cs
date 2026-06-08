@@ -19,7 +19,7 @@ public sealed class SqliteDataTests : DataTests<SqliteDataModule>
 	#region Test lifecycle
 	protected override void Initialize()
 	{
-		this.App.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.db; Mode=Memory; Cache=Shared";
+		this.App.ConfigService.GetSqliteDataConfig().ConnectionString = $"Data Source={Guid.NewGuid()}.sqlite3; Mode=Memory; Cache=Shared";
 		this.App.Start();
 
 		this.App.ConfigService.GetAppConfig().Modules.Single(x => x.Type == typeof(MigrationsDataModule).GetAssemblyQualifiedName()).Status = ModuleStatus.Disabled;
