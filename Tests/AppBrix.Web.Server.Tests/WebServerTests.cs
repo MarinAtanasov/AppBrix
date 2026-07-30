@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace AppBrix.Web.Server.Tests;
 
 [TestClass]
-public sealed class WebServerTests : Tests<WebServerModule, WebClientModule>
+public sealed class WebServerTests : Tests<WebServerModule>
 {
 	#region Test lifecycle
 	protected override void Initialize() => WebServerTests.CreateApp(this.App);
