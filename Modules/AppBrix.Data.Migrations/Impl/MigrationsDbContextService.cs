@@ -27,6 +27,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.Loader;
 using System.Threading;
 
@@ -176,9 +178,22 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 		return trees;
 	}
 
+	private MetadataReference GetRawMetadataReference(Assembly assembly)
+	{
+		if (!string.IsNullOrEmpty(assembly.Location))
+			return MetadataReference.CreateFromFile(assembly.Location);
+
+		unsafe
+		{
+			return assembly.TryGetRawMetadata(out var blob, out var length) ?
+				AssemblyMetadata.Create(ModuleMetadata.CreateFromMetadata((nint)blob, length)).GetReference() :
+				throw new InvalidOperationException($"Could not get raw metadata for assembly {assembly}");
+		}
+	}
+
 	private IEnumerable<MetadataReference> GetReferences(Type type) => type.Assembly
 		.GetReferencedAssemblies(recursive: true)
-		.Select(x => MetadataReference.CreateFromFile(x.Location));
+		.Select(this.GetRawMetadataReference);
 
 	private ScaffoldedMigration CreateMigration(Type type, string oldMigrationsAssembly, string migrationName)
 	{

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>AppBrix.Data.Migrations</AssemblyName>
     <AssemblyTitle>AppBrix.Data.Migrations</AssemblyTitle>
     <Description>Module which enables database code first migrations functionality.</Description>
