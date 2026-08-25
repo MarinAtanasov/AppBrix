@@ -23,7 +23,9 @@ public static class TypeExtensions
 	public static IEnumerable<Assembly> GetReferencedAssemblies(this Assembly current, bool recursive)
 	{
 		var names = new HashSet<string> { current.GetName().FullName };
-		var locations = new HashSet<string> { current.Location };
+		var location = current.Location;
+		location = string.IsNullOrEmpty(location) ? current.ToString() : location;
+		var locations = new HashSet<string> { location };
 		var assemblyQueue = new List<Assembly> { current };
 
 		for (var i = 0; i < assemblyQueue.Count; i++)
@@ -44,7 +46,9 @@ public static class TypeExtensions
 					continue;
 				}
 
-				if (locations.Add(referencedAssembly.Location))
+				location = referencedAssembly.Location;
+				location = string.IsNullOrEmpty(location) ? referencedAssembly.ToString() : location;
+				if (locations.Add(location))
 				{
 					assemblyQueue.Add(referencedAssembly);
 				}

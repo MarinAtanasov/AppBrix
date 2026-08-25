@@ -180,8 +180,9 @@ internal sealed class MigrationsDbContextService : IDbContextService, IApplicati
 
 	private MetadataReference GetRawMetadataReference(Assembly assembly)
 	{
-		if (!string.IsNullOrEmpty(assembly.Location))
-			return MetadataReference.CreateFromFile(assembly.Location);
+		var location = assembly.Location;
+		if (!string.IsNullOrEmpty(location))
+			return MetadataReference.CreateFromFile(location);
 
 		unsafe
 		{
