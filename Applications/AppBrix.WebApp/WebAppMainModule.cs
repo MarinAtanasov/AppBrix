@@ -25,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AppBrix.WebApp;
 
@@ -83,6 +84,7 @@ public sealed class WebAppMainModule : MainModule
 	#endregion
 
 	#region Private methods
+	[SuppressMessage("Trimming", "IL2026")]
 	private void ConfigureWebAppBuilder(IConfigureWebAppBuilder args)
 	{
 		args.Builder.Services.AddControllers();
