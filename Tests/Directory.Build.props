@@ -11,14 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
   </ItemGroup>
 
   <!--MSTest-->
   <ItemGroup>
     <ProjectReference Include="..\..\Testing\AppBrix.Testing.MSTest\AppBrix.Testing.MSTest.csproj" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.4.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.5.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.5.1" />
   </ItemGroup>
 
   <!--NUnit-->
