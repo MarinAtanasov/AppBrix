@@ -1,0 +1,35 @@
+@WebApp_HostAddress = http://localhost:5047
+@Book_Id = 00000000-0000-0000-0000-000000000001
+
+### 1. Get All Books
+
+GET {{WebApp_HostAddress}}/api/books
+Accept: application/json
+
+### 2. Get Book
+
+GET {{WebApp_HostAddress}}/api/books/{{Book_Id}}
+Accept: application/json
+
+### 3. Insert Book
+
+POST {{WebApp_HostAddress}}/api/books
+Accept: application/json
+Content-Type: application/json
+
+{ "Id": "{{Book_Id}}", "Author": "Tester", "Title": "Tested" }
+
+### 4. Update Book
+
+PUT {{WebApp_HostAddress}}/api/books
+Accept: application/json
+Content-Type: application/json
+
+{ "Id": "{{Book_Id}}", "Author": "Editor", "Title": "Edited" }
+
+### 5. Remove Book
+
+DELETE {{WebApp_HostAddress}}/api/books/{{Book_Id}}
+Accept: application/json
+
+###
